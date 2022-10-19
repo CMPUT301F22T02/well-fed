@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:contentDescription="@string/content_description_ingredient_storage"
+        android:icon="@drawable/ic_mdi_carrot"
+        android:id="@+id/ingredient_storage"
+        android:title="@string/ingredient_storage"
+        app:showAsAction="always" />
+    <item
+        android:contentDescription="@string/content_description_ingredient_storage"
+        android:icon="@drawable/ic_baseline_receipt_long_24"
+        android:id="@+id/recipe_book"
+        android:title="@string/recipe_book"
+        app:showAsAction="always" />
+    <item
+        android:checked="true"
+        android:contentDescription="@string/content_description_ingredient_storage"
+        android:icon="@drawable/ic_mdi_notebook"
+        android:id="@+id/meal_book"
+        android:title="@string/meal_book"
+        app:showAsAction="always" />
+    <item
+        android:contentDescription="@string/content_description_ingredient_storage"
+        android:icon="@drawable/ic_baseline_shopping_basket_24"
+        android:id="@+id/shopping_cart"
+        android:title="@string/shopping_cart"
+        app:showAsAction="always" />
+</menu>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Well Fed</string>
+    <string name="content_description_ingredient_storage">Ingredient Storage</string>
+    <string name="content_description_recipe_book">Recipe Book</string>
+    <string name="content_description_meal_book">Meal Book</string>
+    <string name="content_description_shopping_cart">Shopping Cart</string>
+    <string name="ingredient_storage">Ingredient Storage</string>
+    <string name="recipe_book">Recipe Book</string>
+    <string name="meal_book">Meal Book</string>
+    <string name="shopping_cart">Shopping Cart</string>
 </resources>
