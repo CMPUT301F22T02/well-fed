@@ -24,12 +24,13 @@ public class MainActivity extends FragmentActivity {
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(navigationCollectionAdapter);
         bottomAppBar = findViewById(R.id.bottomAppBar);
-
+        Menu menu = bottomAppBar.getMenu();
         bottomAppBar.setOnMenuItemClickListener(menuItem -> {
-            Menu menu = bottomAppBar.getMenu();
             for (int i = 0; i < menu.size(); ++i) {
                 menu.getItem(i).getIcon().setTint(
-                        getResources().getColor(com.google.android.material.R.color.material_dynamic_neutral10)
+                        getResources().getColor(
+                                com.google.android.material.R.color.material_dynamic_neutral10
+                        )
                 );
             }
             int j;
@@ -51,12 +52,18 @@ public class MainActivity extends FragmentActivity {
             }
             viewPager.setCurrentItem(j);
             menu.getItem(j).getIcon().setTint(
-                    getResources().getColor(com.google.android.material.R.color.m3_sys_color_dynamic_light_primary)
+                    getResources().getColor(
+                            com.google.android.material.R.color.m3_sys_color_dynamic_light_primary
+                    )
             );
             return true;
         });
         viewPager.setCurrentItem(2);
-        bottomAppBar.getMenu().getItem(2).setChecked(true);
+        menu.getItem(2).getIcon().setTint(
+                getResources().getColor(
+                        com.google.android.material.R.color.m3_sys_color_dynamic_light_primary
+                )
+        );
     }
 }
 
