@@ -22,17 +22,13 @@ public class RecipeBookFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-
-
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
-                startRecipeBtn = (Button) getView().findViewById(R.id.recipe_start_btn);
+        startRecipeBtn = (Button) getView().findViewById(R.id.recipe_start_btn);
         startRecipeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
