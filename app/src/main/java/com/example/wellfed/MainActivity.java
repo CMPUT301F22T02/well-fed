@@ -58,12 +58,32 @@ public class MainActivity extends FragmentActivity {
             );
             return true;
         });
+
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                bottomAppBar = findViewById(R.id.bottomAppBar);
+                Menu menu = bottomAppBar.getMenu();
+
+                for (int i = 0; i < menu.size(); ++i) {
+                    menu.getItem(i).getIcon().setTint(
+                            getResources().getColor(com.google.android.material.R.color.material_dynamic_neutral10)
+                    );
+                }
+
+                menu.getItem(position).getIcon().setTint(
+                        getResources().getColor(com.google.android.material.R.color.m3_sys_color_dynamic_light_primary)
+                );
+            }
+        });
+
         viewPager.setCurrentItem(2);
-        menu.getItem(2).getIcon().setTint(
-                getResources().getColor(
-                        com.google.android.material.R.color.m3_sys_color_dynamic_light_primary
-                )
+        bottomAppBar.getMenu().getItem(2).setChecked(true);
+
+        bottomAppBar.getMenu().getItem(2).getIcon().setTint(
+                getResources().getColor(com.google.android.material.R.color.m3_sys_color_dynamic_light_primary)
         );
     }
 }
-
