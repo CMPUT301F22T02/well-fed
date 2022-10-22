@@ -1,75 +1,72 @@
+/**
+ * StoredIngredient
+ *
+ * Version 1.0
+ *
+ * 21 October, 2022
+ *
+ * Copyright (c) 2022.  0xFFFFFF
+ * All rights reserved.
+ */
+
 package com.example.wellfed.entity;
 
 import java.util.Date;
 
-public class StoredIngredient extends Ingredient{
+/**
+ * This class represents a StoredIngredient, which are Ingredients that can be added to FoodStorage.
+ *
+ * @version 1.0
+ * @see FoodStorage
+ */
+public class StoredIngredient extends Ingredient {
+    /**
+     * Holds the location of a StoredIngredient.
+     */
     private String location;
+    /**
+     * Holds the best before date of a StoredIngredient.
+     */
     private Date bestBefore;
-    private int amountStored;
-    private String unitStored;
 
-    public StoredIngredient(String category, String description) {
-        super(category, description);
+    /**
+     * Creates a StoredIngredient object which represents an Ingredient that can be added
+     * to FoodStorage.
+     * @param name A String representing the name of a StoredIngredient.
+     */
+    public StoredIngredient(String name) {
+        super(name);
     }
 
-    public StoredIngredient(String category, String description, Date bestBefore) {
-        super(category, description);
-        this.bestBefore = bestBefore;
-    }
-
-    public StoredIngredient(String category, String description, String location) {
-        super(category, description);
-        this.location = location;
-    }
-
-    public StoredIngredient(String category, String description, String location, Date bestBefore) {
-        super(category, description);
-        this.bestBefore = bestBefore;
-        this.location = location;
-    }
-
-    public StoredIngredient(String category,
-                            String description,
-                            String location,
-                            Date bestBefore,
-                            int amountStored,
-                            String unitStored) {
-        super(category, description);
-        this.location = location;
-        this.bestBefore = bestBefore;
-        this.amountStored = amountStored;
-        this.unitStored = unitStored;
-    }
-
+    /**
+     * Gets the location of a StoredIngredient
+     * @return A String representing the location of a StoredIngredient
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * Sets the location of a StoredIngredient
+     * @param location A String representing the location of a StoredIngredient
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * Gets the best before date of a StoredIngredient
+     * @return A Date representing the best before of a StoredIngredient
+     */
     public Date getBestBefore() {
         return bestBefore;
     }
 
+    /**
+     * Sets the best before date of a StoredIngredient
+     * @param bestBefore A Date representing the best before of a StoredIngredient
+     */
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
-    }
-
-    public int getAmountStored() {
-        return amountStored;
-    }
-
-    public void setAmountStored(int amountStored) {
-        this.amountStored = amountStored;
-    }
-
-    public String getUnitStored() {
-        return unitStored;
-    }
-
-    public void setUnitStored(String unitStored) {
-        this.unitStored = unitStored;
     }
 }
