@@ -13,6 +13,7 @@ package com.example.wellfed.entity;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,7 +23,7 @@ import java.util.Date;
  *
  * @version 1.0
  */
-public class MealPlan {
+public class MealPlan implements Serializable {
     /**
      * Holds the title of a MealPlan.
      */

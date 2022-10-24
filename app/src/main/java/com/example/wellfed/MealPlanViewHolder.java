@@ -43,8 +43,13 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author Steven Tang
  **/
 public class MealPlanViewHolder extends RecyclerView.ViewHolder {
+    private final View itemView;
     private final TextView titleTextView;
     private final TextView categoryTextView;
+
+    public View getItemView() {
+        return itemView;
+    }
 
     public TextView getTitleTextView() {
         return titleTextView;
@@ -56,6 +61,7 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
 
     public MealPlanViewHolder(@NonNull View itemView) {
         super(itemView);
+        this.itemView = itemView;
         this.titleTextView = itemView.findViewById(
                 R.id.titleTextView);
         this.categoryTextView = itemView.findViewById(

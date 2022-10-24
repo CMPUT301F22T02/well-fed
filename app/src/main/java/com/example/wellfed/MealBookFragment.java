@@ -65,10 +65,12 @@ public class MealBookFragment extends Fragment {
         ArrayList<MealPlan> mealPlans = new ArrayList<>();
         MealPlan mealPlan = new MealPlan("Cereal and Banana");
         mealPlan.setCategory("Breakfast");
+        mealPlan.setServings(2);
         mealPlans.add(mealPlan);
         MealPlan mealPlan2 = new MealPlan("Butter Chicken");
         mealPlan2.setCategory("Lunch");
         mealPlans.add(mealPlan2);
+        mealPlan.setServings(6);
 
         this.userFirstNameTextView =
                 view.findViewById(R.id.userFirstNameTextView);

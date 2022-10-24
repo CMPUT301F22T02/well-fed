@@ -5,10 +5,10 @@
 
     <Button
         android:id="@+id/iconButton"
-        style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+        style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_baseline_add_24" />
+        android:icon="@drawable/ic_mdi_carrot"/>
 
     <com.google.android.material.card.MaterialCardView
         style="?attr/materialCardViewFilledStyle"

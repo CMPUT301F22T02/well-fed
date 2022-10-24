@@ -84,9 +84,22 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull MealPlanViewHolder holder, int position) {
-        MealPlan MealPlan = this.mealPlans.get(position);
-        holder.getTitleTextView().setText(MealPlan.getTitle());
-        holder.getCategoryTextView().setText(MealPlan.getCategory());
+        MealPlan mealPlan = this.mealPlans.get(position);
+        holder.getTitleTextView().setText(mealPlan.getTitle());
+        holder.getCategoryTextView().setText(mealPlan.getCategory());
+        View itemView = holder.getItemView();
+        itemView.setOnClickListener((view) -> {
+            Fragment mealPlanFragment =
+                    MealPlanFragment.newInstance(mealPlan);
+//            start mealPlanFragment
+            ((FragmentActivity) this.CONTEXT.getContext())
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.pager, mealPlanFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
     }
 
     @Override
