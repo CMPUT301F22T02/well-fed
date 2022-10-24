@@ -5,20 +5,35 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.color.DynamicColors;
+
+import java.util.Stack;
 
 public class MainActivity extends FragmentActivity {
     final String TAG = "Sample";
+    Stack<Integer> history;
     NavigationCollectionAdapter navigationCollectionAdapter;
     ViewPager2 viewPager;
     BottomAppBar bottomAppBar;
 
     @Override
+    public void onBackPressed() {
+        if (history.size() < 2) {
+            super.onBackPressed();
+        } else {
+            history.pop();
+            viewPager.setCurrentItem(history.peek());
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        history = new Stack<>();
 
         navigationCollectionAdapter = new NavigationCollectionAdapter(this);
         viewPager = findViewById(R.id.pager);
@@ -51,6 +66,7 @@ public class MainActivity extends FragmentActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 bottomAppBar = findViewById(R.id.bottomAppBar);
+
                 Menu menu = bottomAppBar.getMenu();
 
                 for (int i = 0; i < menu.size(); ++i) {
@@ -62,6 +78,9 @@ public class MainActivity extends FragmentActivity {
                 menu.getItem(position).getIcon().setTint(
                         getResources().getColor(R.color.purple_200)
                 );
+                if (history.size() == 0 || history.peek() != position) {
+                    history.push(position);
+                }
             }
         });
 
