@@ -1,6 +1,7 @@
 package com.example.wellfed.recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +26,12 @@ public class RecipeActivity extends ActivityBase {
 
         TextView title = findViewById(R.id.recipe_title_textView);
         title.setText(recipe.getTitle());
+        showDeleteDialog();
+    }
 
+    private void showDeleteDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        new DeleteDialogFragment().show(fm, "Delete Recipe");
     }
 
 

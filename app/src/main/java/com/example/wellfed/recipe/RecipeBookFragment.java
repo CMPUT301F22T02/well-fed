@@ -12,12 +12,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 
 import java.util.ArrayList;
+
+// todo create sample data for recipes
+// todo setup recycleview for recipe-ingredients
+// todo setup recipe delete button
+// todo setup recipe edit button
 
 public class RecipeBookFragment extends Fragment {
     Button startRecipeBtn;
@@ -36,16 +42,49 @@ public class RecipeBookFragment extends Fragment {
         Bundle args = getArguments();
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
-        String[] titles = {"taco", "bell", "apple","taco", "bell", "apple","taco",
-                "bell", "apple","taco", "bell", "apple","taco", "bell", "apple2"};
+        String[] titles = {
+                "Banana Cake                 ",
+                "Blueberry Coffee Cake       ",
+                "Chocolate Cake              ",
+                "Chocolate Mayonaise Cake    ",
+                "Crazy Cake                  ",
+                "Fresh Apple Cake            ",
+                "Fresh Pear Cake             ",
+                "Graham Cracker Cake         ",
+                "Hot Water Chocolate Cake    ",
+                "Hungry Bear Cheese Cake     ",
+                "Lemon Poppy Cake            ",
+                "Light Old Fashioned Fruit Cake",
+                "My Best Gingerbread         ",
+                "Oatmeal Cake                ",
+                "Orange Angel Food Cake      ",
+                "Orange-Poppy Seed Pound Cake",
+                "Pineapple Cake              ",
+                "Pineapple-Carrot Cake*      ",
+                "Potatoe Cake                ",
+                "Pumpkin Swirl Cheesecake    ",
+                "Refrigerator Cheesecake     ",
+                "Sherry Wine Cake            ",
+                "Special Prune Cake*         ",
+                "Spicy Fruit and Nut Cake*   ",
+                "Strawberry Spice Loaf       ",
+                "Three Layer Chocolate Mayonnaise Cake",
+                "Upside Down Cake            ",
+                "Blue Chip Cookies           ",
+                "Bourbon Balls               ",
+                "Chocolate Crisp Bran Cookies",
+                "Chocolate Peanut Brunch Bars"
+        };
 
-        for(String t: titles){
+        for (String t : titles) {
             recipes.add(new Recipe(t));
         }
 
-        RecipeAdapter adapter = new RecipeAdapter(getActivity(),recipes);
+        RecipeAdapter adapter = new RecipeAdapter(getActivity(), recipes);
         rvRecipes.setAdapter(adapter);
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
 
 
     }
