@@ -13,16 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
     private List<Recipe> recipes;
     private FragmentActivity parent;
+    private RecipeController recipeController;
 
-    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes) {
+
+    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes, RecipeController recipeController) {
         this.parent = parent;
         this.recipes = recipes;
+        this.recipeController = recipeController;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,7 +61,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(parent,RecipeActivity.class);
-                    intent.putExtra("Recipe", recipes.get(position));
+                    intent.putExtra("Recipe", recipe);
+                    intent.putExtra("Position", holder.getAdapterPosition() );
                     parent.startActivity(intent);
                 }
             });

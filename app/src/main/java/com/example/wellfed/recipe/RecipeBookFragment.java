@@ -29,11 +29,19 @@ public class RecipeBookFragment extends Fragment {
     Button startRecipeBtn;
     ArrayList<Recipe> recipes;
 
+    public static RecipeController getRecipeController() {
+        return recipeController;
+    }
+
+    private static RecipeController recipeController;
+    RecipeAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
+        recipeController = RecipeController.getInstance();
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
@@ -80,12 +88,12 @@ public class RecipeBookFragment extends Fragment {
             recipes.add(new Recipe(t));
         }
 
-        RecipeAdapter adapter = new RecipeAdapter(getActivity(), recipes);
+        adapter = new RecipeAdapter(getActivity(), recipes, recipeController);
+        recipeController.setRecipes(recipes);
+        recipeController.setRecipeAdapter(adapter);
         rvRecipes.setAdapter(adapter);
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-
-
     }
+
 }

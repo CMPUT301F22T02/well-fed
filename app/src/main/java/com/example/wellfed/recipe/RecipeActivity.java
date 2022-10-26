@@ -13,15 +13,19 @@ import android.widget.TextView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 
-public class RecipeActivity extends ActivityBase {
+public class RecipeActivity extends ActivityBase implements DeleteDialogFragment.DeleteRecipe {
     private ListView ingredientList;
+    private RecipeController recipeController;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
+        getParent();
         Intent intent = getIntent();
+        position = intent.getIntExtra("Position", -1);
         Recipe recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
         TextView title = findViewById(R.id.recipe_title_textView);
@@ -31,7 +35,17 @@ public class RecipeActivity extends ActivityBase {
 
     private void showDeleteDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        new DeleteDialogFragment().show(fm, "Delete Recipe");
+        fm.findFragmentById(R.id.recipe_book);
+        new DeleteDialogFragment(RecipeActivity.this).show(fm, "Delete Recipe");
+    }
+
+    public void setRecipeController(RecipeController recipeController){
+        this.recipeController = recipeController;
+    }
+
+    @Override
+    public void deleteRecipe(){
+        recipeController.deleteRecipe(position);
     }
 
 

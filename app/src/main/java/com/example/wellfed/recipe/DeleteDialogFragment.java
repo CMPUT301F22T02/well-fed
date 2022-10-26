@@ -7,9 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -19,9 +17,14 @@ import com.example.wellfed.R;
 import javax.annotation.Nullable;
 
 public class DeleteDialogFragment extends DialogFragment {
-    public DeleteDialogFragment() {
+    private DeleteRecipe deleteRecipe;
+    public DeleteDialogFragment(DeleteRecipe deleteRecipe) {
+        this.deleteRecipe = deleteRecipe;
     }
 
+    public interface DeleteRecipe{
+        public void deleteRecipe();
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -40,7 +43,7 @@ public class DeleteDialogFragment extends DialogFragment {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        deleteRecipe.deleteRecipe();
                     }
                 }).create();
 
