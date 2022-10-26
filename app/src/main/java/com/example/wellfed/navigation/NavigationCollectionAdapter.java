@@ -7,6 +7,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.wellfed.Recipe2.RecipeBookFragment;
 
+import com.example.wellfed.ingredient.IngredientStorageFragment;
+import com.example.wellfed.mealplan.MealBookFragment;
+import com.example.wellfed.recipe.RecipeBookFragment;
+import com.example.wellfed.shoppingcart.ShoppingCartFragment;
+
 public class NavigationCollectionAdapter extends FragmentStateAdapter {
     public NavigationCollectionAdapter(FragmentActivity fa) {
         super(fa);
