@@ -9,7 +9,10 @@
  * All rights reserved.
  */
 
-package com.example.wellfed.entity;
+package com.example.wellfed.ingredient;
+
+import com.example.wellfed.ingredient.FoodStorage;
+import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.Date;
 
