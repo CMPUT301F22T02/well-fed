@@ -9,10 +9,10 @@
  * All rights reserved.
  */
 
-package com.example.wellfed.entity;
+package com.example.wellfed.ingredient;
 
 import java.util.ArrayList;
-
+// todo what is this?
 /**
  * This class represents <i>food that is stored.</i>
  *

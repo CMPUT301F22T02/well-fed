@@ -9,11 +9,13 @@
  * All rights reserved.
  */
 
-package com.example.wellfed.entity;
+package com.example.wellfed.recipe;
 
 import android.media.Image;
 
 import androidx.annotation.Nullable;
+
+import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 
