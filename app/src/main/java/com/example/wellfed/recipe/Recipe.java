@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.example.wellfed.ingredient.Ingredient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +26,7 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-public class Recipe {
+public class Recipe implements Serializable {
     /**
      * Holds the title of a Recipe.
      */

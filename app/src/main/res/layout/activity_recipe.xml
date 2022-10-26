@@ -72,7 +72,7 @@ in this classic easy recipe that's better than take out"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_description_textView" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipe_ingredient_listView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

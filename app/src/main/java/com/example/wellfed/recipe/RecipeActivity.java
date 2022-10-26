@@ -2,14 +2,17 @@ package com.example.wellfed.recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends ActivityBase {
     private ListView ingredientList;
 
     @Override
@@ -17,21 +20,13 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        String ingredients[] = {"1 lb Ground Beef", "1 table spoon chili powder", "1 teaspoon ground cumin"};
-        ingredientList = findViewById(R.id.recipe_ingredient_listView);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.activity_recipe_list, ingredients);
+        Intent intent = getIntent();
+        Recipe recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
-        ingredientList.setAdapter(arrayAdapter);
+        TextView title = findViewById(R.id.recipe_title_textView);
+        title.setText(recipe.getTitle());
 
     }
 
-    // helps to go back to the previous active fragment
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }
