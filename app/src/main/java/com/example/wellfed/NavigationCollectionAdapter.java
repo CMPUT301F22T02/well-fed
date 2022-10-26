@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.wellfed.Recipe.RecipeBookFragment;
+import com.example.wellfed.Recipe2.RecipeBookFragment;
 
 public class NavigationCollectionAdapter extends FragmentStateAdapter {
     public NavigationCollectionAdapter(FragmentActivity fa) {

@@ -1,8 +1,6 @@
-package com.example.wellfed.Recipe;
+package com.example.wellfed.Recipe2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;

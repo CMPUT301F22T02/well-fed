@@ -1,4 +1,4 @@
-package com.example.wellfed.Recipe;
+package com.example.wellfed.Recipe2;
 
 // mock class for testing
 // Todo will require to be replaced
