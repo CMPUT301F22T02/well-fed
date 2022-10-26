@@ -56,12 +56,12 @@ public class MainActivity extends FragmentActivity {
 
                 for (int i = 0; i < menu.size(); ++i) {
                     menu.getItem(i).getIcon().setTint(
-                            getResources().getColor(com.google.android.material.R.color.material_dynamic_neutral10)
+                            getResources().getColor(R.color.black)
                     );
                 }
 
                 menu.getItem(position).getIcon().setTint(
-                        getResources().getColor(com.google.android.material.R.color.m3_sys_color_dynamic_light_primary)
+                        getResources().getColor(R.color.purple_200)
                 );
             }
         });
