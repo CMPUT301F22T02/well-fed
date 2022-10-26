@@ -1,15 +1,14 @@
-package com.example.wellfed;
+package com.example.wellfed.navigation;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.wellfed.Recipe2.RecipeBookFragment;
+import com.example.wellfed.recipe.RecipeBookFragment;
 
 import com.example.wellfed.ingredient.IngredientStorageFragment;
 import com.example.wellfed.mealplan.MealBookFragment;
-import com.example.wellfed.recipe.RecipeBookFragment;
 import com.example.wellfed.shoppingcart.ShoppingCartFragment;
 
 public class NavigationCollectionAdapter extends FragmentStateAdapter {

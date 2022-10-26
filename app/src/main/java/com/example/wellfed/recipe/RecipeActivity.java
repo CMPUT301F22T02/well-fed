@@ -1,4 +1,4 @@
-package com.example.wellfed.Recipe2;
+package com.example.wellfed.recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
