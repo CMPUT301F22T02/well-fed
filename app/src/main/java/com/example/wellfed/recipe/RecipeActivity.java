@@ -2,6 +2,8 @@ package com.example.wellfed.recipe;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,27 +15,43 @@ import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.ingredient.Ingredient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeActivity extends ActivityBase implements DeleteDialogFragment.DeleteRecipe {
-    private ListView ingredientList;
-    private RecipeController recipeController;
-    private int position;
+    private List<RecipeIngredient> ingredientList;
     private Recipe recipe;
+    private RecyclerView ingredientRv;
+    private RecipeIngredientAdapter recipeIngredientAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
+        ingredientList = new ArrayList<>();
+
+
         getParent();
         Intent intent = getIntent();
-        position = intent.getIntExtra("Position", -1);
         this.recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        for (RecipeIngredient ingredient: recipe.getIngredients()){
+            ingredientList.add(ingredient);
+        }
+
 
         TextView title = findViewById(R.id.recipe_title_textView);
         title.setText(recipe.getTitle());
 
-        showDeleteDialog();
+        ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
+        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList);
+        ingredientRv.setAdapter(recipeIngredientAdapter);
+        ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
+
+
+//        showDeleteDialog();
     }
 
     @Override
@@ -59,8 +77,5 @@ public class RecipeActivity extends ActivityBase implements DeleteDialogFragment
         finish();
     }
 
-    public void setRecipeController(RecipeController recipeController) {
-        this.recipeController = recipeController;
-    }
 
 }

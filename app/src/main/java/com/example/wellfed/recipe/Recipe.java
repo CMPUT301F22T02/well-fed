@@ -19,6 +19,7 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a Recipe, which contains ingredients and instructions on how to prepare
@@ -40,7 +41,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the Ingredients needed for a Recipe.
      */
-    private final ArrayList<Ingredient> ingredients;
+    private final List<RecipeIngredient> ingredients;
 
     /**
      * Holds the user comments on a Recipe.
@@ -77,7 +78,7 @@ public class Recipe implements Serializable {
      * Adds an Ingredient as part of a Recipe
      * @param ingredient An Ingredient object to be added to the Recipe
      */
-    public void addIngredient(Ingredient ingredient) {
+    public void addIngredient(RecipeIngredient ingredient) {
         this.ingredients.add(ingredient);
     }
 
@@ -102,7 +103,7 @@ public class Recipe implements Serializable {
      * Gets the entire ArrayList of Ingredients that make up a Recipe
      * @return The ArrayList of all Ingredients
      */
-    public ArrayList<Ingredient> getIngredients() {
+    public List<RecipeIngredient> getIngredients() {
         return this.ingredients;
     }
 
@@ -221,4 +222,5 @@ public class Recipe implements Serializable {
     public void setPhotograph(Image photograph) {
         this.photograph = photograph;
     }
+
 }
