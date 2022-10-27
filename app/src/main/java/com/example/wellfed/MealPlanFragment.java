@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.wellfed.entity.MealPlan;
+import com.example.wellfed.mealplan.MealPlan;
 
 /**
  * A simple {@link Fragment} subclass.

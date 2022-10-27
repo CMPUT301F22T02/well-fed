@@ -33,7 +33,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wellfed.entity.MealPlan;
+import com.example.wellfed.mealplan.MealPlan;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
