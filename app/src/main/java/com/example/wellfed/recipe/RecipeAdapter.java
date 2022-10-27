@@ -32,7 +32,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
 
     public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes,
-                         FragmentActivity recipeBookFragment) {
+                         RecipeBookFragment recipeBookFragment) {
         this.parent = parent;
         this.recipes = recipes;
         this.recipeLauncher = (RecipeLauncher) recipeBookFragment;
@@ -73,14 +73,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         TextView recipeTitle = holder.recipeTitleTextView;
         recipeTitle.setText(recipe.getTitle());
-        if (recipeLauncher != null) {
-            recipeTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recipeLauncher.launch(holder.getAdapterPosition());
-                }
-            });
-        }
+        recipeTitle.setOnClickListener(
+                view -> recipeLauncher.launch(holder.getAdapterPosition()));
     }
 
     @Override
