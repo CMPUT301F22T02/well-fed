@@ -8,15 +8,8 @@ public class RecipeController {
     private List<Recipe> recipes;
     private RecipeAdapter recipeAdapter;
 
-    private RecipeController(){
+    public RecipeController(){
 
-    }
-
-    public static synchronized RecipeController getInstance(){
-        if (instance == null ) {
-            return new RecipeController();
-        }
-        return instance;
     }
 
     public void setRecipeAdapter(RecipeAdapter recipeAdapter) {
