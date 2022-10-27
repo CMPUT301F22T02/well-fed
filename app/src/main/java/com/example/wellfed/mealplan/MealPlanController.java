@@ -3,14 +3,13 @@ package com.example.wellfed.mealplan;
 import com.example.wellfed.recipe.Recipe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MealPlanController {
-    private List<MealPlan> mealPlans;
+    private ArrayList<MealPlan> mealPlans;
 
     private MealPlanAdapter adapter;
 
-    public List<MealPlan> getMealPlans() {
+    public ArrayList<MealPlan> getMealPlans() {
         return mealPlans;
     }
 
