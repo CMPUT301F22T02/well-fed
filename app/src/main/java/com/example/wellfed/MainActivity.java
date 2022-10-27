@@ -6,8 +6,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.view.Menu;
 
-import com.example.wellfed.navigation.NavigationCollectionAdapter;
+
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.example.wellfed.navigation.NavigationCollectionAdapter;
 
 public class MainActivity extends FragmentActivity {
     final String TAG = "Sample";
