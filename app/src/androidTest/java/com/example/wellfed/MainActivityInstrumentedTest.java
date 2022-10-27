@@ -1,33 +1,22 @@
 package com.example.wellfed;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.swipeRight;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 
 import android.content.Context;
-import android.view.View;
-import android.widget.EditText;
 
-import androidx.lifecycle.Lifecycle;
 import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.action.ViewActions;
-import androidx.test.espresso.matcher.BoundedMatcher;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.internal.util.Checks;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -118,9 +107,6 @@ public class MainActivityInstrumentedTest {
         onView(withId(R.id.fragment_shopping_cart)).check(matches(isDisplayed()));
         pressBack();
         onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
-        pressBack();
-        assertEquals(activityRule.getScenario().getState(),
-                Lifecycle.State.DESTROYED);
     }
     // TODO: test menu item tinting
 }
