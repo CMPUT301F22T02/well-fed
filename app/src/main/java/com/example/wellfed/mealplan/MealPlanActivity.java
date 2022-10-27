@@ -1,5 +1,6 @@
 package com.example.wellfed.mealplan;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,15 @@ public class MealPlanActivity extends ActivityBase {
     private Button deleteButton;
     private int position;
     private MealPlan mealPlan;
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("mealPlan", mealPlan);
+        returnIntent.putExtra("Reason", "BackPressed");
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

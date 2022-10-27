@@ -41,9 +41,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
-import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeContract;
-import com.example.wellfed.recipe.RecipeController;
 
 import java.util.ArrayList;
 
@@ -63,9 +60,9 @@ public class MealBookFragment extends Fragment implements MealPlanAdapter.Launch
                 @Override
                 public void onActivityResult(MealPlan result) {
                     if (result == null) {
+                        controller.deleteMealPlan(position);
                         return;
                     }
-                    controller.deleteMealPlan(position);
                 }
             }
     );
