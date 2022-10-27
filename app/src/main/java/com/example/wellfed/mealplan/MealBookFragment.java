@@ -21,7 +21,7 @@
  * You should have received a copy of the GNU General Public License along
  * with well-fed. If not, see <https://www.gnu.org/licenses/>.
  */
-package com.example.wellfed;
+package com.example.wellfed.mealplan;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -35,13 +35,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wellfed.entity.MealPlan;
-
-import java.util.ArrayList;
-
+import com.example.wellfed.R;
 
 public class MealBookFragment extends Fragment {
     private TextView userFirstNameTextView;

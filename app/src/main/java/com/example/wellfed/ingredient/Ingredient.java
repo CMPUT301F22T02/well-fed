@@ -9,7 +9,7 @@
  * All rights reserved.
  */
 
-package com.example.wellfed.entity;
+package com.example.wellfed.ingredient;
 
 import java.util.ArrayList;
 

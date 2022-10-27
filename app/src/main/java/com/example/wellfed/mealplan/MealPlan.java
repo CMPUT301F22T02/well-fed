@@ -9,11 +9,14 @@
  * All rights reserved.
  */
 
-package com.example.wellfed.entity;
+package com.example.wellfed.mealplan;
 
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.ingredient.Ingredient;
+
 import java.util.ArrayList;
 import java.util.Date;
 
