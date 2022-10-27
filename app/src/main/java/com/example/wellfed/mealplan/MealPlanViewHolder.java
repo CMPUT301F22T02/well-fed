@@ -22,13 +22,15 @@
  * with well-fed. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.wellfed;
+package com.example.wellfed.mealplan;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.wellfed.R;
 
 /**
  * The MealPlanViewHolder class contains the layout for each individual

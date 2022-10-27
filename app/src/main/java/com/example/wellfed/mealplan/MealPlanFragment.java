@@ -1,4 +1,4 @@
-package com.example.wellfed;
+package com.example.wellfed.mealplan;
 
 import android.os.Bundle;
 
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.wellfed.mealplan.MealPlan;
+import com.example.wellfed.R;
 
 /**
  * A simple {@link Fragment} subclass.

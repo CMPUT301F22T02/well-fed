@@ -38,7 +38,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wellfed.MealPlanAdapter;
 import com.example.wellfed.R;
 
 import java.util.ArrayList;

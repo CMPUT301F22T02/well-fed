@@ -22,7 +22,7 @@
  * with well-fed. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.example.wellfed;
+package com.example.wellfed.mealplan;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wellfed.mealplan.MealPlan;
+import com.example.wellfed.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
