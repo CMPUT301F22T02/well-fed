@@ -124,7 +124,7 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
             recipes.add(new Recipe(t));
         }
 
-        adapter = new RecipeAdapter(getActivity(), recipes);
+        adapter = new RecipeAdapter(getActivity(), recipes, RecipeBookFragment.this);
         recipeController.setRecipes(recipes);
         recipeController.setRecipeAdapter(adapter);
         rvRecipes.setAdapter(adapter);

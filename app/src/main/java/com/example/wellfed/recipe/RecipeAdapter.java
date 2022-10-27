@@ -32,10 +32,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
 
     public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes,
-                         FragmentActivity recipeBookFragment) {
+                         RecipeLauncher recipeLauncher) {
         this.parent = parent;
         this.recipes = recipes;
-        this.recipeLauncher = (RecipeLauncher) recipeBookFragment;
+        this.recipeLauncher = recipeLauncher;
     }
 
     // TODO: make Adapter callable by any fragment
