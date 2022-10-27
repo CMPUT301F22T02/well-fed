@@ -32,6 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -39,29 +41,44 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.recipe.RecipeContract;
+import com.example.wellfed.recipe.RecipeController;
 
 import java.util.ArrayList;
 
-public class MealBookFragment extends Fragment {
+public class MealBookFragment extends Fragment implements MealPlanAdapter.Launcher {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
     private MealPlanAdapter mealPlanAdapter;
+    private MealPlanController controller;
+    private int position;
+//    TODO: isolate to controller
+    ArrayList<MealPlan> mealPlans;
+
+    ActivityResultLauncher<MealPlan> launcher = registerForActivityResult(new
+                    MealPlanContract(),
+            new ActivityResultCallback<MealPlan>() {
+                @Override
+                public void onActivityResult(MealPlan result) {
+                    if (result == null) {
+                        return;
+                    }
+                    controller.deleteMealPlan(position);
+                }
+            }
+    );
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_meal_book, container, false);
-    }
+        mealPlans = new ArrayList<>();
+        controller = new MealPlanController();
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Bundle args = getArguments();
-
-//        TODO: REMOVE THIS DEMO DATA
-        ArrayList<MealPlan> mealPlans = new ArrayList<>();
+        //        TODO: REMOVE THIS DEMO DATA
         MealPlan mealPlan = new MealPlan("Cereal and Banana");
         mealPlan.setCategory("Breakfast");
         mealPlan.setServings(2);
@@ -70,6 +87,14 @@ public class MealBookFragment extends Fragment {
         mealPlan2.setCategory("Lunch");
         mealPlans.add(mealPlan2);
         mealPlan.setServings(6);
+
+        return inflater.inflate(R.layout.fragment_meal_book, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Bundle args = getArguments();
+
 
         this.userFirstNameTextView =
                 view.findViewById(R.id.userFirstNameTextView);
@@ -101,5 +126,10 @@ public class MealBookFragment extends Fragment {
             this.callToActionTextView.setText(
                     R.string.call_to_action_add_meal_plan);
         }
+    }
+
+    @Override public void launch(int pos) {
+        position = pos;
+        launcher.launch(mealPlans.get(pos));
     }
 }

@@ -27,6 +27,7 @@ package com.example.wellfed.mealplan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -52,11 +53,15 @@ import java.util.Locale;
  * @author Steven Tang
  **/
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
-    private final Fragment CONTEXT;
+    private final MealBookFragment CONTEXT;
     private final ArrayList<MealPlan> mealPlans;
     private final DateFormat DATE_FORMAT;
 
-    public MealPlanAdapter(Fragment context,
+    public interface Launcher {
+        public void launch(int pos);
+    }
+
+    public MealPlanAdapter(MealBookFragment context,
                            ArrayList<MealPlan> mealPlans) {
         this.CONTEXT = context;
         this.mealPlans = mealPlans;
@@ -88,17 +93,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
         View itemView = holder.getItemView();
-        itemView.setOnClickListener((view) -> {
-            Fragment mealPlanFragment =
-                    MealPlanFragment.newInstance(mealPlan);
-//            start mealPlanFragment
-            ((FragmentActivity) this.CONTEXT.getContext())
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.pager, mealPlanFragment)
-                    .addToBackStack(null)
-                    .commit();
-        });
+        itemView.setOnClickListener(
+                view -> CONTEXT.launch(holder.getAdapterPosition()));
 
     }
 
