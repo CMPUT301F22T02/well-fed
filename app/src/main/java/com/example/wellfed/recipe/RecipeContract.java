@@ -22,7 +22,7 @@ public class RecipeContract extends ActivityResultContract<Recipe, Recipe> {
 
     @Override
     public Recipe parseResult(int i, @Nullable Intent intent) {
-        if (i != Activity.RESULT_OK && intent.getIntExtra("RequestCode", - 1) != 101) {
+        if (i != Activity.RESULT_OK && intent.getStringExtra("Reason").equals("Delete")) {
             return null;
         } else {
             return (Recipe) intent.getSerializableExtra("Recipe");

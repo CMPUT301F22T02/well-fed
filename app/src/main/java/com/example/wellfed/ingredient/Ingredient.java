@@ -11,6 +11,7 @@
 
 package com.example.wellfed.ingredient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-public class Ingredient {
+public class Ingredient implements Serializable {
     /**
      * Holds the description of an Ingredient. This can also be considered to be a title.
      */
@@ -28,13 +29,7 @@ public class Ingredient {
      */
     private final ArrayList<String> categories;
     /**
-     * Holds the amount of one Ingredient, in units
-     * @see #unit
-     */
-    private int amount;
-    /**
      * Holds the units that an amount of an Ingredient is in
-     * @see #amount
      */
     private String unit;
 
@@ -97,22 +92,6 @@ public class Ingredient {
     }
 
     /**
-     * Gets the amount of an Ingredient
-     * @return An int representing the amount of an ingredient
-     */
-    public int getAmount() {
-        return amount;
-    }
-
-    /**
-     * Sets the amount of an Ingredient
-     * @param amount The amount to set of an Ingredient
-     */
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    /**
      * Gets a String representing the unit of an amount
      * @return A String representing the unit
      */
@@ -126,5 +105,9 @@ public class Ingredient {
      */
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public Ingredient(){
+        this.categories = new ArrayList<>();
     }
 }
