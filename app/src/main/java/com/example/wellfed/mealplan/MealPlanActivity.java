@@ -7,8 +7,15 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.recipe.RecipeAdapter;
+
+import java.util.ArrayList;
 
 public class MealPlanActivity extends ActivityBase {
     private static final String ARG_MEAL_PLAN = "mealPlan";
@@ -46,6 +53,15 @@ public class MealPlanActivity extends ActivityBase {
         mealPlanNumberOfServingsTextView.setText(
                 "Number of servings: " + mealPlan.getServings()
         );
+        ArrayList<Recipe> recipes = mealPlan.getRecipes();
+        RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
+        RecipeAdapter recipeAdapter = new RecipeAdapter(
+                this, recipes
+        );
+        recipeRecyclerView.setAdapter(recipeAdapter);
+        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
         deleteButton.setOnClickListener(v -> {
             Intent returnIntent = new Intent();
             returnIntent.putExtra("Position", position);
