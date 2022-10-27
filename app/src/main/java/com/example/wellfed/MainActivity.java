@@ -5,7 +5,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 
@@ -61,29 +60,32 @@ public class MainActivity extends FragmentActivity {
             return true;
         });
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                bottomAppBar = findViewById(R.id.bottomAppBar);
+        viewPager.registerOnPageChangeCallback(
+                new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        bottomAppBar = findViewById(R.id.bottomAppBar);
 
-                Menu menu = bottomAppBar.getMenu();
+                        Menu menu = bottomAppBar.getMenu();
 
-                for (int i = 0; i < menu.size(); ++i) {
-                    menu.getItem(i).getIcon().setTint(
-                            getResources().getColor(R.color.black)
-                    );
-                }
+                        for (int i = 0; i < menu.size(); ++i) {
+                            menu.getItem(i).getIcon().setTint(
+                                    getResources().getColor(R.color.black)
+                            );
+                            menu.getItem(i).setChecked(false);
+                        }
 
-                menu.getItem(position).getIcon().setTint(
-                        getResources().getColor(R.color.purple_200)
-                );
-                if (history.size() == 0 || history.peek() != position) {
-                    history.push(position);
-                }
-            }
-        });
+                        menu.getItem(position).getIcon().setTint(
+                                getResources().getColor(R.color.purple_200)
+                        );
+                        menu.getItem(position).isChecked();
+                        if (history.size() == 0 || history.peek() != position) {
+                            history.push(position);
+                        }
+                    }
+                });
 
-        viewPager.setCurrentItem(2);
+        viewPager.setCurrentItem(2, false);
     }
 }
