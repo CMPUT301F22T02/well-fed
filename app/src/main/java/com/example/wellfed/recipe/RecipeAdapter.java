@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +23,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private List<Recipe> recipes;
     private FragmentActivity parent;
-    private RecipeController recipeController;
+    private RecipeLauncher recipeLauncher;
 
 
-    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes, RecipeController recipeController) {
+    public interface RecipeLauncher{
+        public void launch(int pos);
+    }
+
+
+    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes, RecipeBookFragment recipeBookFragment) {
         this.parent = parent;
         this.recipes = recipes;
-        this.recipeController = recipeController;
+        this.recipeLauncher = (RecipeLauncher) recipeBookFragment;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,10 +68,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         recipeTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(parent,RecipeActivity.class);
-                    intent.putExtra("Recipe", recipe);
-                    intent.putExtra("Position", holder.getAdapterPosition() );
-                    parent.startActivity(intent);
+                    recipeLauncher.launch(holder.getAdapterPosition());
                 }
             });
     }

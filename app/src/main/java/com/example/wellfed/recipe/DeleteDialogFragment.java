@@ -17,13 +17,8 @@ import com.example.wellfed.R;
 import javax.annotation.Nullable;
 
 public class DeleteDialogFragment extends DialogFragment {
-    private DeleteRecipe deleteRecipe;
-    public DeleteDialogFragment(DeleteRecipe deleteRecipe) {
-        this.deleteRecipe = deleteRecipe;
-    }
+    public DeleteDialogFragment() {
 
-    public interface DeleteRecipe{
-        public void deleteRecipe();
     }
 
     @Override
@@ -43,7 +38,7 @@ public class DeleteDialogFragment extends DialogFragment {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteRecipe.deleteRecipe();
+
                     }
                 }).create();
 
