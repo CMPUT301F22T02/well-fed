@@ -1,13 +1,17 @@
 package com.example.wellfed;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
-import com.google.android.material.bottomappbar.BottomAppBar;
 
+import com.example.wellfed.recipe.RecipeController;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.example.wellfed.navigation.NavigationCollectionAdapter;
 import java.util.Stack;
 
 public class MainActivity extends FragmentActivity {
@@ -16,6 +20,14 @@ public class MainActivity extends FragmentActivity {
     NavigationCollectionAdapter navigationCollectionAdapter;
     ViewPager2 viewPager;
     BottomAppBar bottomAppBar;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -69,17 +81,15 @@ public class MainActivity extends FragmentActivity {
 
                         Menu menu = bottomAppBar.getMenu();
 
-                        for (int i = 0; i < menu.size(); ++i) {
-                            menu.getItem(i).getIcon().setTint(
-                                    getResources().getColor(R.color.black)
-                            );
-                            menu.getItem(i).setChecked(false);
-                        }
+                for (int i = 0; i < menu.size(); ++i) {
+                    menu.getItem(i).getIcon().setTint(
+                            getResources().getColor(R.color.black)
+                    );
+                }
 
                         menu.getItem(position).getIcon().setTint(
                                 getResources().getColor(R.color.purple_200)
                         );
-                        menu.getItem(position).isChecked();
                         if (history.size() == 0 || history.peek() != position) {
                             history.push(position);
                         }

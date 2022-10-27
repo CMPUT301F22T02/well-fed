@@ -4,7 +4,7 @@
     android:id="@+id/fragment_meal_book"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MealBookFragment">
+    tools:context=".mealplan.MealBookFragment">
 
     <TextView
         android:id="@+id/text1"
