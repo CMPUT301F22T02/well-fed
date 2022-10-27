@@ -47,9 +47,9 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
                 @Override
                 public void onActivityResult(Recipe result) {
                     if (result == null) {
+                        recipeController.deleteRecipe(position);
                         return;
                     }
-                    recipeController.deleteRecipe(position);
                 }
             }
     );

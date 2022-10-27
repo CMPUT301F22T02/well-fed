@@ -14,10 +14,11 @@ import android.widget.TextView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 
-public class RecipeActivity extends ActivityBase {
+public class RecipeActivity extends ActivityBase implements DeleteDialogFragment.DeleteRecipe {
     private ListView ingredientList;
     private RecipeController recipeController;
     private int position;
+    private Recipe recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,25 +28,36 @@ public class RecipeActivity extends ActivityBase {
         getParent();
         Intent intent = getIntent();
         position = intent.getIntExtra("Position", -1);
-        Recipe recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        this.recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
         TextView title = findViewById(R.id.recipe_title_textView);
         title.setText(recipe.getTitle());
 
-
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Recipe", recipe);
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
-
-//        showDeleteDialog();
+        showDeleteDialog();
     }
 
-//    private void showDeleteDialog() {
-//        FragmentManager fm = getSupportFragmentManager();
-//        fm.findFragmentById(R.id.recipe_book);
-//        new DeleteDialogFragment(RecipeActivity.this).show(fm, "Delete Recipe");
-//    }
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("Recipe", recipe);
+        returnIntent.putExtra("Reason", "BackPressed");
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    private void showDeleteDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.findFragmentById(R.id.recipe_book);
+        new DeleteDialogFragment(RecipeActivity.this).show(fm, "Delete Recipe");
+    }
+
+    @Override
+    public void delete() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("Reason", "Delete");
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
 
     public void setRecipeController(RecipeController recipeController) {
         this.recipeController = recipeController;
