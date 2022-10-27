@@ -8,16 +8,12 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeActivity;
-
 public class MealPlanContract extends ActivityResultContract<MealPlan, MealPlan> {
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, MealPlan mealPlan) {
         Intent intent = new Intent(context, MealPlanActivity.class);
         intent.putExtra("mealPlan", mealPlan);
-        intent.putExtra("RequestCode", 101);
         return intent;
     }
 

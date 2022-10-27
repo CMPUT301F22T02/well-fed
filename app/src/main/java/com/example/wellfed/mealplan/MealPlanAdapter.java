@@ -53,9 +53,8 @@ import java.util.Locale;
  * @author Steven Tang
  **/
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
-    private final MealBookFragment CONTEXT;
+    private final MealBookFragment context;
     private final ArrayList<MealPlan> mealPlans;
-    private final DateFormat DATE_FORMAT;
 
     public interface Launcher {
         public void launch(int pos);
@@ -63,10 +62,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
 
     public MealPlanAdapter(MealBookFragment context,
                            ArrayList<MealPlan> mealPlans) {
-        this.CONTEXT = context;
+        this.context = context;
         this.mealPlans = mealPlans;
-        this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        this.notifyItemRangeInserted(0, this.mealPlans.size());
     }
 
     /*
@@ -94,7 +91,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
         holder.getCategoryTextView().setText(mealPlan.getCategory());
         View itemView = holder.getItemView();
         itemView.setOnClickListener(
-                view -> CONTEXT.launch(holder.getAdapterPosition()));
+                view -> context.launch(holder.getAdapterPosition()));
 
     }
 
