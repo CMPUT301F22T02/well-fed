@@ -23,7 +23,7 @@ public class MealPlanContract extends ActivityResultContract<MealPlan, MealPlan>
 
     @Override
     public MealPlan parseResult(int i, @Nullable Intent intent) {
-        if (i != Activity.RESULT_OK && intent.getIntExtra("RequestCode", - 1) != 101) {
+        if (i != Activity.RESULT_OK && intent.getStringExtra("Reason").equals("Delete")) {
             return null;
         } else {
             return (MealPlan) intent.getSerializableExtra("mealPlan");

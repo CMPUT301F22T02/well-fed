@@ -1,34 +1,41 @@
 package com.example.wellfed.mealplan;
 
 import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MealPlanController {
-    private static MealPlanController instance;
     private List<MealPlan> mealPlans;
-    private MealPlanAdapter mealPlanAdapter;
 
+    private MealPlanAdapter adapter;
 
-
-    public MealPlanController(){
-
+    public List<MealPlan> getMealPlans() {
+        return mealPlans;
     }
 
-    public void setMealPlanAdapter(MealPlanAdapter mealPlanAdapter) {
-        this.mealPlanAdapter = mealPlanAdapter;
+    public void setAdapter(MealPlanAdapter adapter) {
+        this.adapter = adapter;
     }
 
-    public void deleteMealPlan(int position){
-        if(position >= 0 && position < mealPlans.size()){
-            mealPlans.remove(position);
-            mealPlanAdapter.notifyItemRemoved(position);
+    public MealPlanController() {
+        mealPlans = new ArrayList<>();
+        // TODO: REMOVE THIS DEMO DATA
+        MealPlan mealPlan = new MealPlan("Cereal and Banana");
+        mealPlan.setCategory("Breakfast");
+        mealPlan.setServings(2);
+        mealPlan.addRecipe(new Recipe("Cereal"));
+        mealPlans.add(mealPlan);
+        MealPlan mealPlan2 = new MealPlan("Butter Chicken");
+        mealPlan2.setCategory("Lunch");
+        mealPlans.add(mealPlan2);
+        mealPlan.setServings(6);
+    }
+
+    public void deleteMealPlan(int index) {
+        if (0 <= index && index < this.mealPlans.size()) {
+            this.mealPlans.remove(index);
+            this.adapter.notifyItemRemoved(index);
         }
     }
-
-    public void setRecipes(List<MealPlan> recipes){
-        this.mealPlans = recipes;
-    }
-
 }
