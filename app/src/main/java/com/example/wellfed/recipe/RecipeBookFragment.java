@@ -1,5 +1,6 @@
 package com.example.wellfed.recipe;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wellfed.MainActivity;
 import com.example.wellfed.R;
 
 import java.util.ArrayList;
@@ -25,23 +29,39 @@ import java.util.ArrayList;
 // todo setup recipe delete button
 // todo setup recipe edit button
 
-public class RecipeBookFragment extends Fragment {
+
+// recipe object that has been modified
+// update our controller here -> to reflect these changes
+
+public class RecipeBookFragment extends Fragment implements RecipeAdapter.RecipeLauncher {
     Button startRecipeBtn;
     ArrayList<Recipe> recipes;
+    int position;
 
-    public static RecipeController getRecipeController() {
-        return recipeController;
-    }
-
-    private static RecipeController recipeController;
+    private RecipeController recipeController;
     RecipeAdapter adapter;
+
+    ActivityResultLauncher<Recipe> recipeLauncher = registerForActivityResult(new
+                    RecipeContract(),
+            new ActivityResultCallback<Recipe>() {
+                @Override
+                public void onActivityResult(Recipe result) {
+                    if (result == null) {
+                        return;
+                    }
+                    recipeController.deleteRecipe(position);
+                }
+            }
+    );
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
-        recipeController = RecipeController.getInstance();
+        recipeController = new RecipeController();
+
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
@@ -88,7 +108,7 @@ public class RecipeBookFragment extends Fragment {
             recipes.add(new Recipe(t));
         }
 
-        adapter = new RecipeAdapter(getActivity(), recipes, recipeController);
+        adapter = new RecipeAdapter(getActivity(), recipes, this);
         recipeController.setRecipes(recipes);
         recipeController.setRecipeAdapter(adapter);
         rvRecipes.setAdapter(adapter);
@@ -96,4 +116,10 @@ public class RecipeBookFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void launch(int pos) {
+        position = pos;
+        recipeLauncher.launch(recipes.get(pos));
+    }
 }
