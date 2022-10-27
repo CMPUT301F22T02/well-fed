@@ -9,7 +9,7 @@
  * All rights reserved.
  */
 
-package com.example.wellfed.entity;
+package com.example.wellfed.shoppingcart;
 
 import java.util.ArrayList;
 
