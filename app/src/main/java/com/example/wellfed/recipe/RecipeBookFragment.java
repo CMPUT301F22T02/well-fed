@@ -21,12 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.MainActivity;
 import com.example.wellfed.R;
+import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 
 // todo create sample data for recipes
 // todo setup recycleview for recipe-ingredients
-// todo setup recipe delete button
 // todo setup recipe edit button
 
 
@@ -47,9 +47,9 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
                 @Override
                 public void onActivityResult(Recipe result) {
                     if (result == null) {
+                        recipeController.deleteRecipe(position);
                         return;
                     }
-                    recipeController.deleteRecipe(position);
                 }
             }
     );
@@ -103,7 +103,23 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
                 "Chocolate Crisp Bran Cookies",
                 "Chocolate Peanut Brunch Bars"
         };
-
+        Recipe temp = new Recipe("Apple pie");
+        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        recipeIngredient.setDescription("Cinnamon Sugar");
+        recipeIngredient.setAmount(1);
+        recipeIngredient.setUnit("tbsp");
+        RecipeIngredient recipeIngredient1 = new RecipeIngredient();
+        recipeIngredient1.setDescription("Apple Slices");
+        recipeIngredient1.setAmount(3);
+        recipeIngredient1.setUnit("slice");
+        RecipeIngredient recipeIngredient2 = new RecipeIngredient();
+        recipeIngredient2.setDescription("Dough");
+        recipeIngredient2.setAmount(1);
+        recipeIngredient2.setUnit("cup");
+        temp.addIngredient(recipeIngredient);
+        temp.addIngredient(recipeIngredient1);
+        temp.addIngredient(recipeIngredient2);
+        recipes.add(temp);
         for (String t : titles) {
             recipes.add(new Recipe(t));
         }
