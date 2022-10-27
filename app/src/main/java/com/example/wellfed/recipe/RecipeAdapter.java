@@ -31,10 +31,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
 
-    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes) {
+    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes, RecipeBookFragment recipeBookFragment) {
         this.parent = parent;
         this.recipes = recipes;
-        this.recipeLauncher = (RecipeLauncher) parent;
+        this.recipeLauncher = (RecipeLauncher) recipeBookFragment;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,7 +68,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         recipeTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    recipeLauncher.launch(position);
+                    recipeLauncher.launch(holder.getAdapterPosition());
                 }
             });
     }

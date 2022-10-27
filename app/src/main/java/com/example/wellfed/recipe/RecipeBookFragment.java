@@ -36,13 +36,12 @@ import java.util.ArrayList;
 public class RecipeBookFragment extends Fragment implements RecipeAdapter.RecipeLauncher {
     Button startRecipeBtn;
     ArrayList<Recipe> recipes;
+    int position;
 
     private RecipeController recipeController;
     RecipeAdapter adapter;
 
-//    ActivityResultLauncher<Recipe> recipeLauncher;
-
-        ActivityResultLauncher<Recipe> recipeLauncher = getActivity().registerForActivityResult(new
+    ActivityResultLauncher<Recipe> recipeLauncher = registerForActivityResult(new
                     RecipeContract(),
             new ActivityResultCallback<Recipe>() {
                 @Override
@@ -50,43 +49,11 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
                     if (result == null) {
                         return;
                     }
+                    recipeController.deleteRecipe(position);
                 }
             }
     );
-//
-//
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//         recipeLauncher = getActivity().registerForActivityResult(new
-//                        RecipeContract(),
-//                new ActivityResultCallback<Recipe>() {
-//                    @Override
-//                    public void onActivityResult(Recipe result) {
-//                        if (result == null) {
-//                            return;
-//                        }
-//                    }
-//                }
-//        );
-//
-//    }
-//
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        ActivityResultLauncher<Recipe> recipeLauncher = getActivity().registerForActivityResult(new
-//                        RecipeContract(),
-//                new ActivityResultCallback<Recipe>() {
-//                    @Override
-//                    public void onActivityResult(Recipe result) {
-//                        if (result == null) {
-//                            return;
-//                        }
-//                    }
-//                }
-//        );
-//    }
+
 
     @Nullable
     @Override
@@ -94,7 +61,6 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
         recipeController = new RecipeController();
-
 
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
@@ -142,7 +108,7 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
             recipes.add(new Recipe(t));
         }
 
-        adapter = new RecipeAdapter(getActivity(), recipes);
+        adapter = new RecipeAdapter(getActivity(), recipes, this);
         recipeController.setRecipes(recipes);
         recipeController.setRecipeAdapter(adapter);
         rvRecipes.setAdapter(adapter);
@@ -153,6 +119,7 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
 
     @Override
     public void launch(int pos) {
-//        recipeLauncher.launch(recipes.get(pos));
+        position = pos;
+        recipeLauncher.launch(recipes.get(pos));
     }
 }
