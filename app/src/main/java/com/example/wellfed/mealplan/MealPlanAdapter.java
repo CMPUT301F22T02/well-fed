@@ -50,10 +50,6 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
     private final MealBookFragment context;
     private final ArrayList<MealPlan> mealPlans;
 
-    public interface Launcher {
-        void launch(int pos);
-    }
-
     public MealPlanAdapter(MealBookFragment context,
                            ArrayList<MealPlan> mealPlans) {
         this.context = context;

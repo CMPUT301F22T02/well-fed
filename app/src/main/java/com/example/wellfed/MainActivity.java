@@ -2,6 +2,7 @@ package com.example.wellfed;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -9,9 +10,11 @@ import android.os.Bundle;
 import android.view.Menu;
 
 
-import com.example.wellfed.recipe.RecipeController;
+import com.example.wellfed.common.Launcher;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.example.wellfed.navigation.NavigationCollectionAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Stack;
 
 public class MainActivity extends FragmentActivity {
@@ -20,6 +23,7 @@ public class MainActivity extends FragmentActivity {
     NavigationCollectionAdapter navigationCollectionAdapter;
     ViewPager2 viewPager;
     BottomAppBar bottomAppBar;
+    FloatingActionButton fab;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -70,6 +74,16 @@ public class MainActivity extends FragmentActivity {
             }
             viewPager.setCurrentItem(j);
             return true;
+        });
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            int i = viewPager.getCurrentItem();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Launcher launcher =
+                    (Launcher) fragmentManager.findFragmentByTag("f" + i);
+            if (launcher != null) {
+                launcher.launch();
+            }
         });
 
         viewPager.registerOnPageChangeCallback(

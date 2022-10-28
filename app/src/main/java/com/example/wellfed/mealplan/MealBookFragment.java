@@ -41,15 +41,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.AdapterDataObserver;
+import com.example.wellfed.common.Launcher;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MealBookFragment extends Fragment
-        implements MealPlanAdapter.Launcher,
+        implements Launcher,
                    AdapterDataObserver.OnAdapterDataChangedListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
     private MealPlanAdapter mealPlanAdapter;
     private MealPlanController controller;
+    private FloatingActionButton fab;
     private int selected;
 
     ActivityResultLauncher<MealPlan> launcher =
@@ -62,6 +65,21 @@ public class MealBookFragment extends Fragment
                     case "delete":
                         controller.deleteMealPlan(this.selected);
                         break;
+                    case "launch":
+                        this.launch(this.selected);
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+    ActivityResultLauncher<MealPlan> editLauncher =
+            registerForActivityResult(new MealPlanEditContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                switch (type) {
                     case "launch":
                         this.launch(this.selected);
                         break;
@@ -109,6 +127,11 @@ public class MealBookFragment extends Fragment
     @Override public void launch(int pos) {
         selected = selected;
         launcher.launch(this.controller.getMealPlans().get(pos));
+    }
+
+    @Override
+    public void launch() {
+        editLauncher.launch(null);
     }
 
     private void updateCallToAction() {
