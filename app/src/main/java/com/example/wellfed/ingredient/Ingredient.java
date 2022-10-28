@@ -34,11 +34,20 @@ public class Ingredient implements Serializable {
     private String unit;
 
     /**
+     * Holds the number of items in an Ingredient
+     */
+    private float amount;
+
+    /**
      * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
      * @param description The description/title of an Ingredient
      */
     public Ingredient(String description) {
         this.description = description;
+    }
+
+    public Ingredient() {
+        this.description = null;
     }
 
     /**
@@ -89,7 +98,15 @@ public class Ingredient implements Serializable {
         this.unit = unit;
     }
 
-    public Ingredient(){
-        this.categories = new ArrayList<>();
+    /**
+     * Sets the amount of an ingredient
+     * @param amount the amount
+     */
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public float getAmount() {
+        return amount;
     }
 }

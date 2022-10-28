@@ -34,7 +34,7 @@ public class StoredIngredientDBTest {
         Date bestBefore = new Date(2022, 10, 1);
         storedIngredient.setBestBefore(bestBefore);
         storedIngredient.setLocation("Fridge");
-        storedIngredient.setAmount(5);
+        storedIngredient.setAmount(5.0f);
         storedIngredient.setUnit("kg");
 
         // testing whether it was what was inserted into db
@@ -44,7 +44,7 @@ public class StoredIngredientDBTest {
         assertEquals("Vegetable", resultIngredient.getCategory());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
         assertEquals("Fridge", resultIngredient.getLocation());
-        assertEquals(5, resultIngredient.getAmount());
+        assertEquals(5.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("kg", resultIngredient.getUnit());
 
 
@@ -67,7 +67,7 @@ public class StoredIngredientDBTest {
         assertNull(resultIngredient.getCategory());
         assertNull(resultIngredient.getBestBefore());
         assertNull(resultIngredient.getLocation());
-        assertEquals(0, resultIngredient.getAmount());
+        assertEquals(0.0f, resultIngredient.getAmount(), 0.01);
         assertNull(resultIngredient.getUnit());
 
         // removing it afterward
@@ -95,7 +95,7 @@ public class StoredIngredientDBTest {
         assertNull(resultIngredient.getCategory());
         assertNull(resultIngredient.getBestBefore());
         assertNull(resultIngredient.getLocation());
-        assertEquals(0, resultIngredient.getAmount());
+        assertEquals(0.0f, resultIngredient.getAmount(), 0.01);
         assertNull(resultIngredient.getUnit());
     }
 
@@ -106,7 +106,7 @@ public class StoredIngredientDBTest {
     @Test
     public void testUpdateIngredient() throws InterruptedException {
         StoredIngredient oldIngredient = new StoredIngredient("Test");
-        oldIngredient.setAmount(5);
+        oldIngredient.setAmount(5.0f);
         oldIngredient.setUnit("Test");
         Date bestBefore = new Date(2022, 10, 1);
         oldIngredient.setBestBefore(bestBefore);
@@ -121,18 +121,18 @@ public class StoredIngredientDBTest {
         storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
         StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
-        assertEquals(5, resultIngredient.getAmount());
+        assertEquals(5.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("Test", resultIngredient.getUnit());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
         assertEquals("Test", resultIngredient.getCategory());
         assertEquals("Test", resultIngredient.getLocation());
 
         // change amount to 4
-        updatedIngredient.setAmount(4);
+        updatedIngredient.setAmount(4.0f);
         storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
-        assertEquals(4, resultIngredient.getAmount());
+        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("Test", resultIngredient.getUnit());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
         assertEquals("Test", resultIngredient.getCategory());
@@ -143,7 +143,7 @@ public class StoredIngredientDBTest {
         storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
-        assertEquals(4, resultIngredient.getAmount());
+        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("Test2", resultIngredient.getUnit());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
         assertEquals("Test", resultIngredient.getCategory());
@@ -155,7 +155,7 @@ public class StoredIngredientDBTest {
         storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
-        assertEquals(4, resultIngredient.getAmount());
+        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("Test2", resultIngredient.getUnit());
         assertEquals(newBestBefore, resultIngredient.getBestBefore());
         assertEquals("Test", resultIngredient.getCategory());
@@ -166,7 +166,7 @@ public class StoredIngredientDBTest {
         storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
-        assertEquals(4, resultIngredient.getAmount());
+        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("Test2", resultIngredient.getUnit());
         assertEquals(newBestBefore, resultIngredient.getBestBefore());
         assertEquals("Test2", resultIngredient.getCategory());
@@ -177,7 +177,7 @@ public class StoredIngredientDBTest {
         storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
-        assertEquals(4, resultIngredient.getAmount());
+        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("Test2", resultIngredient.getUnit());
         assertEquals(newBestBefore, resultIngredient.getBestBefore());
         assertEquals("Test2", resultIngredient.getCategory());

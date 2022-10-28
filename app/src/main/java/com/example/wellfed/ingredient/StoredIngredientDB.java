@@ -261,7 +261,7 @@ public class StoredIngredientDB {
                             }
 
                             if (document.get("amount") != null) {
-                                obtainedIngredient.setAmount(((Long) document.get("amount")).intValue());
+                                obtainedIngredient.setAmount(((Double) document.get("amount")).floatValue());
                             } else {
                                 obtainedIngredient.setAmount(0);
                             }
