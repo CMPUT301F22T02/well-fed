@@ -51,16 +51,24 @@ public class MealBookFragment extends Fragment
     private RecyclerView mealPlanRecyclerView;
     private MealPlanAdapter mealPlanAdapter;
     private MealPlanController controller;
-    private int position;
+    private int selected;
 
     ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanContract(),
-                    new ActivityResultCallback<MealPlan>() {
-                        @Override
-                        public void onActivityResult(MealPlan result) {
-                            if (result == null) {
-                                controller.deleteMealPlan(position);
-                            }
+                    result -> {
+                        if (result == null) {
+                            return;
+                        }
+                        String type = result.first;
+                        switch (type) {
+                            case "delete":
+                                controller.deleteMealPlan(this.selected);
+                                break;
+                            case "launch":
+                                this.launch(this.selected);
+                                break;
+                            default:
+                                break;
                         }
                     });
 
@@ -101,7 +109,7 @@ public class MealBookFragment extends Fragment
     }
 
     @Override public void launch(int pos) {
-        position = pos;
+        selected = selected;
         launcher.launch(this.controller.getMealPlans().get(pos));
     }
 
