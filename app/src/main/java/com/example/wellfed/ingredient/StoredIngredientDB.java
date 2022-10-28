@@ -236,12 +236,14 @@ public class StoredIngredientDB {
     /**
      * Gets an ingredient from the Firebase DB
      * @param id the ID of the ingredient to get
-     * @return the ingredient queried
+     * @return The ingredient queried. If there is no result, it will return a StoredIngredient
+     *          with a null description.
      * @throws InterruptedException when the onComplete listener is interrupted
      */
     public StoredIngredient getStoredIngredient(String id) throws InterruptedException {
-        StoredIngredient obtainedIngredient = new StoredIngredient("temp");
+        StoredIngredient obtainedIngredient = new StoredIngredient(null);
         CountDownLatch complete = new CountDownLatch(2);
+        CountDownLatch found = new CountDownLatch(2);
         this.collection
                 .document(id)
                 .get()
@@ -266,6 +268,7 @@ public class StoredIngredientDB {
 
                             obtainedIngredient.setLocation((String) document.get("location"));
                             obtainedIngredient.setUnit((String) document.get("unit"));
+                            found.countDown();
                             complete.countDown();
                         } else {
                             Log.d(TAG, "Error getting document. ");
@@ -289,6 +292,7 @@ public class StoredIngredientDB {
                             } else {
                                 Log.d(TAG, "No such document");
                             }
+                            found.countDown();
                             complete.countDown();
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
@@ -297,6 +301,7 @@ public class StoredIngredientDB {
                     }
                 });
         complete.await();
+
         return obtainedIngredient;
     }
 }
