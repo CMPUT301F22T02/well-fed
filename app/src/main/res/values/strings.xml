@@ -10,4 +10,6 @@
     <string name="shopping_cart">Shopping Cart</string>
     <string name="storage">Storage</string>
     <string name="search_for_ingredients">Search for ingredients</string>
+    <string name="ingredientName">Ingredient Name</string>
+    <string name="ingredient_subtext">Ingredient Subtext</string>
 </resources>
