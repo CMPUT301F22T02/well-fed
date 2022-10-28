@@ -23,4 +23,6 @@
     <string name="category">Category</string>
     <string name="number_of_servings">Number of Servings</string>
     <string name="search_for_ingredients">Search for ingredients</string>
+    <string name="ingredientName">Ingredient Name</string>
+    <string name="ingredient_subtext">Ingredient Subtext</string>
 </resources>
