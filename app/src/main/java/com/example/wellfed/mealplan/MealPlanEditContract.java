@@ -24,8 +24,12 @@ public class MealPlanEditContract extends ActivityResultContract<MealPlan,
     public Pair<String, MealPlan> parseResult(int i, Intent intent) {
         switch (i) {
             case Activity.RESULT_OK:
-                return new Pair<>("edit", (MealPlan) intent.getSerializableExtra(
-                        "mealPlan"));
+                if (intent == null) {
+                    return null;
+                }
+                MealPlan mealPlan = (MealPlan) intent.getSerializableExtra(
+                        "mealPlan");
+                return new Pair<>("edit", mealPlan);
             case Activity.RESULT_CANCELED:
                 return new Pair<>("quit", null);
             default:

@@ -15,26 +15,23 @@ import com.example.wellfed.common.ConfirmQuitDialog;
 import com.example.wellfed.common.OnQuitListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MealPlanEditActivity extends ActivityBase implements
-                                                            OnQuitListener {
+public class MealPlanEditActivity extends ActivityBase
+        implements OnQuitListener {
     private FloatingActionButton fab;
     private MealPlan mealPlan;
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         new ConfirmQuitDialog(this, this).show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             new ConfirmQuitDialog(this, this).show();
         }
         return true;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan_edit);
         this.fab = findViewById(R.id.fab);
@@ -48,8 +45,7 @@ public class MealPlanEditActivity extends ActivityBase implements
         finish();
     }
 
-    @Override
-    public void onQuit() {
+    @Override public void onQuit() {
         Intent intent = new Intent();
         setResult(Activity.RESULT_CANCELED, intent);
         finish();

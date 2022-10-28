@@ -32,7 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,23 +53,22 @@ public class MealBookFragment extends Fragment
     private int selected;
 
     ActivityResultLauncher<MealPlan> launcher =
-            registerForActivityResult(new MealPlanContract(),
-                    result -> {
-                        if (result == null) {
-                            return;
-                        }
-                        String type = result.first;
-                        switch (type) {
-                            case "delete":
-                                controller.deleteMealPlan(this.selected);
-                                break;
-                            case "launch":
-                                this.launch(this.selected);
-                                break;
-                            default:
-                                break;
-                        }
-                    });
+            registerForActivityResult(new MealPlanContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                switch (type) {
+                    case "delete":
+                        controller.deleteMealPlan(this.selected);
+                        break;
+                    case "launch":
+                        this.launch(this.selected);
+                        break;
+                    default:
+                        break;
+                }
+            });
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -120,7 +118,8 @@ public class MealBookFragment extends Fragment
                     new SpannableStringBuilder().append(
                                     getString(R.string.call_to_action_make_meal_plan))
                             .append(" ").append(currentMealPlan.getTitle(),
-                                    new StyleSpan(Typeface.ITALIC), 0).append("?");
+                                    new StyleSpan(Typeface.ITALIC), 0)
+                            .append("?");
             this.callToActionTextView.setText(calltoAction);
         } else {
             this.callToActionTextView.setText(

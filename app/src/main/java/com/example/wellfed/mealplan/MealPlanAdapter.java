@@ -43,14 +43,14 @@ import java.util.Locale;
 
 /**
  * The MealPlanAdapter class binds ArrayList<MealPlan> to RecyclerView.
- *
+ * <p>
  * Citation:
  * Create dynamic lists with RecyclerView. Android Developers. (n.d.).
  * Retrieved September 26, 2022, from
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  *
- * @version v1.0.0 2022-10-24
  * @author Steven Tang
+ * @version v1.0.0 2022-10-24
  **/
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
     private final MealBookFragment context;
@@ -67,25 +67,25 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
     }
 
     /*
-     * The onCreateViewHolder method returns a new MealPlanViewHolder object using
+     * The onCreateViewHolder method returns a new MealPlanViewHolder object
+     * using
      * the viewholder_MealPlan.xml view.
      */
-    @NonNull
-    @Override
-    public MealPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                             int viewType) {
+    @NonNull @Override public MealPlanViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_holder_meal_plan, parent, false);
         return new MealPlanViewHolder(view);
     }
 
     /*
-     * The onBindViewHolder method binds a MealPlan object and a MealPlanViewHolder,
+     * The onBindViewHolder method binds a MealPlan object and a
+     * MealPlanViewHolder,
      * taking the data in the MealPlan object and mapping it into a human
      * readable format to be presented in the RecyclerView.
      */
-    @Override
-    public void onBindViewHolder(@NonNull MealPlanViewHolder holder, int position) {
+    @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
+                                           int position) {
         MealPlan mealPlan = this.mealPlans.get(position);
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
@@ -95,8 +95,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
 
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return this.mealPlans.size();
     }
 

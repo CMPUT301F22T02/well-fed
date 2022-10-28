@@ -35,14 +35,14 @@ import com.example.wellfed.R;
 /**
  * The MealPlanViewHolder class contains the layout for each individual
  * item in the RecyclerView.
- *
+ * <p>
  * Citation:
  * Create dynamic lists with RecyclerView. Android Developers. (n.d.).
  * Retrieved September 26, 2022, from
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  *
- * @version v1.0.0 2022-10-24
  * @author Steven Tang
+ * @version v1.0.0 2022-10-24
  **/
 public class MealPlanViewHolder extends RecyclerView.ViewHolder {
     private final View itemView;
