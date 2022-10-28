@@ -34,9 +34,9 @@ public class Recipe implements Serializable {
     private String title;
 
     /**
-     * Holds the categories (aka tags) of a Recipe.
+     * Holds the category (aka tag) of a Recipe.
      */
-    private final ArrayList<String> categories;
+    private  String category;
 
     /**
      * Holds the Ingredients needed for a Recipe.
@@ -70,7 +70,6 @@ public class Recipe implements Serializable {
      */
     public Recipe(String title) {
         this.title = title;
-        categories = new ArrayList<>();
         ingredients = new ArrayList<>();
     }
 
@@ -111,35 +110,19 @@ public class Recipe implements Serializable {
      * Adds a category (aka tag) to a Recipe
      * @param category The String representing category to add to the Recipe
      */
-    public void addCategory(String category) {
-        categories.add(category);
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     /**
-     * Removes a category (aka tag) from a Recipe
-     * @param category The String representing a category to remove from the Recipe
-     */
-    public void removeCategory(String category) {
-        categories.remove(category);
-    }
-
-    /**
-     * Gets the category (aka tag) at the specified index
-     * @param index The index of the desired category
+     * Gets the category (aka tag) of the Recipe
      * @return A String representing the category indexed
      */
     @Nullable
     public String getCategory(int index) {
-        return categories.get(index);
+        return this.category;
     }
 
-    /**
-     * Gets the entire list of categories
-     * @return An ArrayList of Strings containing all categories in a Recipe
-     */
-    public ArrayList<String> getCategories() {
-        return categories;
-    }
 
     /** Gets the title of a Recipe
      * @return A String representing the title of a Recipe
