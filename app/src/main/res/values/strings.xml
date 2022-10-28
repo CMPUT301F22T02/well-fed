@@ -12,4 +12,7 @@
     <string name="search_for_ingredients">Search for ingredients</string>
     <string name="ingredientName">Ingredient Name</string>
     <string name="ingredient_subtext">Ingredient Subtext</string>
+    <string name="sort_category">Category</string>
+    <string name="sort_description">Description</string>
+    <string name="sort_best_before">Best Before</string>
 </resources>
