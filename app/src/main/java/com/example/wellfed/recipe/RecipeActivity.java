@@ -36,21 +36,6 @@ public class RecipeActivity extends ActivityBase {
         TextView title = findViewById(R.id.recipe_title_textView);
         title.setText(recipe.getTitle());
 
-        StoredIngredientDB db = new StoredIngredientDB();
-        StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
-        storedIngredient.setCategory("Vegetable");
-        Date bestBefore = new Date(2022, 10, 1);
-        storedIngredient.setBestBefore(bestBefore);
-        storedIngredient.setLocation("Fridge");
-        storedIngredient.setAmount(5);
-        storedIngredient.setUnit("kg");
-
-        try {
-            db.addStoredIngredient(storedIngredient);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Recipe", recipe);
         setResult(Activity.RESULT_OK, returnIntent);

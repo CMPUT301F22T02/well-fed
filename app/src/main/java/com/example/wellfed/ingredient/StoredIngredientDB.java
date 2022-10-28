@@ -24,25 +24,42 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class StoredIngredientDB {
+    /**
+     * Holds the instance of the Firebase Firestore DB.
+     */
     private FirebaseFirestore db;
+    /**
+     * Holds a reference to the StoredIngredients collection in the Firebase DB.
+     */
     private CollectionReference collection;
+    /**
+     * Holds a reference to the Ingredients collection in the Firebase DB.
+     */
     private CollectionReference ingredients;
-    private CountDownLatch signal = null;
 
+    /**
+     * Creates a reference to the Firebase DB.
+     */
     public StoredIngredientDB() {
         this.db = FirebaseFirestore.getInstance();
         this.collection = db.collection("StoredIngredients");
         this.ingredients = db.collection("Ingredients");
     }
 
+    /**
+     * Adds an ingredient in storage to the Firebase DB.
+     * @param storedIngredient the ingredient to be added
+     * @return the ID of the added ingredient
+     * @throws InterruptedException when the on success listeners cannot complete
+     */
     public String addStoredIngredient(@NonNull StoredIngredient storedIngredient) throws InterruptedException {
         // Some of the fields of a StoredIngredient may be empty.
         Map<String, Object> ingredient = new HashMap<>();
-        ingredient.put("Categories", storedIngredient.getCategory());
-        ingredient.put("Description", storedIngredient.getDescription());
+        ingredient.put("category", storedIngredient.getCategory());
+        ingredient.put("description", storedIngredient.getDescription());
 
         String id = this.ingredients.document().getId();
-        //CountDownLatch ingredientComplete = new CountDownLatch(1);
+        CountDownLatch ingredientComplete = new CountDownLatch(1);
         this.ingredients
                 .document(id)
                 .set(ingredient)
@@ -51,7 +68,7 @@ public class StoredIngredientDB {
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot written with ID: " + id);
                         System.out.println("added");
-                        //ingredientComplete.countDown();
+                        ingredientComplete.countDown();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -59,11 +76,12 @@ public class StoredIngredientDB {
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
                         System.out.println("not added");
-                        //ingredientComplete.countDown();
+                        ingredientComplete.countDown();
                     }
                 });
-        //ingredientComplete.await();
-        System.out.println("added ingredient...");
+        // waiting for it to be finished
+        ingredientComplete.await();
+
         // add it to stored ingredients now
         Map<String, Object> stored = new HashMap<>();
         stored.put("unit", storedIngredient.getUnit());
@@ -73,6 +91,7 @@ public class StoredIngredientDB {
         DocumentReference documentReference = db.document("Ingredients/"+id);
         stored.put("ingredient", documentReference);
 
+        CountDownLatch storageComplete = new CountDownLatch(1);
         this.collection
                 .document(id)
                 .set(stored)
@@ -80,17 +99,26 @@ public class StoredIngredientDB {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot written with ID: " + id);
+                        storageComplete.countDown();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
+                        storageComplete.countDown();
                     }
                 });
+        storageComplete.await();
         return id;
     }
 
+    /**
+     * Updates a stored ingredient in the Firebase DB.
+     * @param id the ID of the ingredient to update
+     * @param storedIngredient the Ingredient containing the updated fields
+     * @throws InterruptedException when the on success listeners cannot complete
+     */
     public void updateStoredIngredient(String id, StoredIngredient storedIngredient) throws InterruptedException {
 
         Map<String, Object> ingredient = new HashMap<>();
@@ -132,6 +160,7 @@ public class StoredIngredientDB {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot updated with ID: " + id);
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -142,6 +171,10 @@ public class StoredIngredientDB {
                 });
     }
 
+    /**
+     * Removes an ingredient from storage, but keeps the Ingredient reference
+     * @param id the ID of an ingredient to remove
+     */
     public void removeFromStorage(String id) {
         // removes ingredient from storage
         this.collection
@@ -161,107 +194,97 @@ public class StoredIngredientDB {
                 });
     }
 
-    public StoredIngredient getStoredIngredient(String name) throws InterruptedException {
-        StoredIngredient obtainedIngredient = new StoredIngredient("temp");
-        CountDownLatch complete = new CountDownLatch(1);
+    /**
+     * Removes an ingredient from storage, and the ingredient collection
+     * @param id the ID of the ingredient to remove
+     */
+    public void removeFromIngredients(String id) {
+        // removes ingredient from storage AND ingredients
         this.collection
-                .whereEqualTo("description", name)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+
+        this.ingredients
+                .document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
+
+    /**
+     * Gets an ingredient from the Firebase DB
+     * @param id the ID of the ingredient to get
+     * @return the ingredient queried
+     * @throws InterruptedException when the onComplete listener is interrupted
+     */
+    public StoredIngredient getStoredIngredient(String id) throws InterruptedException {
+        StoredIngredient obtainedIngredient = new StoredIngredient("temp");
+        CountDownLatch complete = new CountDownLatch(2);
+        this.collection
+                .document(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                obtainedIngredient.setBestBefore((Date) document.get("best-before"));
-                                obtainedIngredient.setLocation((String) document.get("location"));
-                                obtainedIngredient.setAmount((Integer) document.get("amount"));
-                                obtainedIngredient.setUnit((String) document.get("unit"));
-
-                                DocumentReference ingredient =
-                                        document.getDocumentReference("ingredient");
-
-                                ingredient
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    DocumentSnapshot document = task.getResult();
-
-                                                    if (document.exists()) {
-                                                        obtainedIngredient.setDescription((String) document.get("description"));
-                                                        obtainedIngredient.setCategory((String) document.get("category"));
-                                                    } else {
-                                                        Log.d(TAG, "No such document");
-                                                    }
-                                                    complete.countDown();
-                                                } else {
-                                                    Log.d(TAG, "get failed with ", task.getException());
-                                                    complete.countDown();
-                                                }
-                                            }
-                                        });
-                            }
+                            DocumentSnapshot document = task.getResult();
+                            obtainedIngredient.setBestBefore((Date) document.getTimestamp("best-before").toDate());
+                            obtainedIngredient.setLocation((String) document.get("location"));
+                            obtainedIngredient.setAmount(((Long) document.get("amount")).intValue());
+                            obtainedIngredient.setUnit((String) document.get("unit"));
+                            complete.countDown();
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "Error getting document. ");
+                            complete.countDown();
+                        }
+                    }
+                });
+
+        this.ingredients
+                .document(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d(TAG, document.getId() + " => " + document.get("description"));
+                                obtainedIngredient.setDescription((String) document.get("description"));
+                                obtainedIngredient.setCategory((String) document.get("category"));
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                            complete.countDown();
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
                             complete.countDown();
                         }
                     }
                 });
         complete.await();
         return obtainedIngredient;
-    }
-
-    public ArrayList<StoredIngredient> getStoredIngredients() throws InterruptedException {
-        ArrayList<StoredIngredient> newIngredientList = new ArrayList<>();
-        CountDownLatch complete = new CountDownLatch(1);
-        this.collection
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                StoredIngredient obtainedIngredient = new StoredIngredient("temp");
-                                obtainedIngredient.setBestBefore((Date) document.get("best-before"));
-                                obtainedIngredient.setLocation((String) document.get("location"));
-                                obtainedIngredient.setAmount((Integer) document.get("amount"));
-                                obtainedIngredient.setUnit((String) document.get("unit"));
-
-                                DocumentReference ingredient =
-                                        document.getDocumentReference("ingredient");
-
-                                ingredient
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    DocumentSnapshot document = task.getResult();
-                                                    if (document.exists()) {
-                                                        obtainedIngredient.setDescription((String) document.get("description"));
-                                                        obtainedIngredient.setCategory((String) document.get("category"));
-                                                    } else {
-                                                        Log.d(TAG, "No such document");
-                                                    }
-                                                    complete.countDown();
-                                                } else {
-                                                    Log.d(TAG, "get failed with ", task.getException());
-                                                    complete.countDown();
-                                                }
-                                            }
-                                        });
-                                newIngredientList.add(obtainedIngredient);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                            complete.countDown();
-                        }
-                    }
-                });
-        complete.await();
-        return newIngredientList;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.wellfed;
 
+import static org.junit.Assert.assertEquals;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.wellfed.ingredient.StoredIngredient;
@@ -19,6 +21,10 @@ public class StoredIngredientDBTest {
          storedIngredientDB = new StoredIngredientDB();
     }
 
+    /**
+     * This class tests the add functionality and get functionality of db.
+     * @throws InterruptedException
+     */
     @Test
     public void testAddFull() throws InterruptedException {
         StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
@@ -29,7 +35,20 @@ public class StoredIngredientDBTest {
         storedIngredient.setAmount(5);
         storedIngredient.setUnit("kg");
 
-        storedIngredientDB.addStoredIngredient(storedIngredient);
+        // testing whether it was what was inserted into db
+        String id = storedIngredientDB.addStoredIngredient(storedIngredient);
+        StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
+        assertEquals("Broccoli", resultIngredient.getDescription());
+        assertEquals("Vegetable", resultIngredient.getCategory());
+        assertEquals(bestBefore, resultIngredient.getBestBefore());
+        assertEquals("Fridge", resultIngredient.getLocation());
+        assertEquals(5, resultIngredient.getAmount());
+        assertEquals("kg", resultIngredient.getUnit());
 
+
+        // removing it afterward
+        storedIngredientDB.removeFromIngredients(id);
     }
+
+    
 }
