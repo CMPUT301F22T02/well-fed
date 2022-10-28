@@ -182,5 +182,7 @@ public class StoredIngredientDBTest {
         assertEquals(newBestBefore, resultIngredient.getBestBefore());
         assertEquals("Test2", resultIngredient.getCategory());
         assertEquals("Test2", resultIngredient.getLocation());
+
+        storedIngredientDB.removeFromIngredients(id);
     }
 }
