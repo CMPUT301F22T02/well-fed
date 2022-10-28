@@ -27,19 +27,13 @@ package com.example.wellfed.mealplan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * The MealPlanAdapter class binds ArrayList<MealPlan> to RecyclerView.
@@ -57,7 +51,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
     private final ArrayList<MealPlan> mealPlans;
 
     public interface Launcher {
-        public void launch(int pos);
+        void launch(int pos);
     }
 
     public MealPlanAdapter(MealBookFragment context,
