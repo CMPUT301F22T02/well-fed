@@ -41,8 +41,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.AdapterDataObserver;
 
-public class MealBookFragment extends Fragment implements MealPlanAdapter.Launcher {
+public class MealBookFragment extends Fragment
+        implements MealPlanAdapter.Launcher,
+                   AdapterDataObserver.OnAdapterDataChangedListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
@@ -50,29 +53,26 @@ public class MealBookFragment extends Fragment implements MealPlanAdapter.Launch
     private MealPlanController controller;
     private int position;
 
-    ActivityResultLauncher<MealPlan> launcher = registerForActivityResult(new
-                    MealPlanContract(),
-            new ActivityResultCallback<MealPlan>() {
-                @Override
-                public void onActivityResult(MealPlan result) {
-                    if (result == null) {
-                        controller.deleteMealPlan(position);
-                        return;
-                    }
-                }
-            }
-    );
+    ActivityResultLauncher<MealPlan> launcher =
+            registerForActivityResult(new MealPlanContract(),
+                    new ActivityResultCallback<MealPlan>() {
+                        @Override
+                        public void onActivityResult(MealPlan result) {
+                            if (result == null) {
+                                controller.deleteMealPlan(position);
+                            }
+                        }
+                    });
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
-            ViewGroup container,
+    @Nullable @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_meal_book, container, false);
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(@NonNull View view,
+                                        @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
 
         this.userFirstNameTextView =
@@ -82,38 +82,45 @@ public class MealBookFragment extends Fragment implements MealPlanAdapter.Launch
         this.mealPlanRecyclerView =
                 view.findViewById(R.id.mealPlanRecyclerView);
         this.mealPlanRecyclerView.setLayoutManager(
-                new LinearLayoutManager(getContext())
-        );
+                new LinearLayoutManager(getContext()));
+
         controller = new MealPlanController();
 
-        this.mealPlanAdapter = new MealPlanAdapter(this,
-                this.controller.getMealPlans());
+        this.mealPlanAdapter =
+                new MealPlanAdapter(this, this.controller.getMealPlans());
+        this.mealPlanAdapter.registerAdapterDataObserver(
+                new AdapterDataObserver(this));
         this.controller.setAdapter(this.mealPlanAdapter);
         this.mealPlanRecyclerView.setAdapter(this.mealPlanAdapter);
-        this.mealPlanAdapter.notifyItemRangeChanged(
-                0, this.controller.getMealPlans().size()
-        );
 
-        this.userFirstNameTextView.setText(getString(
-                R.string.greeting, "Akshat"));
-        if (mealPlanAdapter.getItemCount() > 0) {
-            MealPlan currentMealPlan = this.controller.getMealPlans().get(0);
-            SpannableStringBuilder calltoAction = new SpannableStringBuilder()
-                    .append(getString(R.string.call_to_action_make_meal_plan))
-                    .append(" ")
-                    .append(currentMealPlan.getTitle(), new StyleSpan(
-                            Typeface.ITALIC), 0)
-                    .append("?");
-            this.callToActionTextView.setText(calltoAction);
-        } else {
-            this.callToActionTextView.setText(
-                    R.string.call_to_action_add_meal_plan);
-        }
-//        TODO: needs listener to figure out what call to action to display
+        this.mealPlanAdapter.notifyItemRangeChanged(0,
+                this.controller.getMealPlans().size());
+
+        this.userFirstNameTextView.setText(
+                getString(R.string.greeting, "Akshat"));
     }
 
     @Override public void launch(int pos) {
         position = pos;
         launcher.launch(this.controller.getMealPlans().get(pos));
+    }
+
+    private void updateCallToAction() {
+        if (this.mealPlanAdapter.getItemCount() > 0) {
+            MealPlan currentMealPlan = this.controller.getMealPlans().get(0);
+            SpannableStringBuilder calltoAction =
+                    new SpannableStringBuilder().append(
+                                    getString(R.string.call_to_action_make_meal_plan))
+                            .append(" ").append(currentMealPlan.getTitle(),
+                                    new StyleSpan(Typeface.ITALIC), 0).append("?");
+            this.callToActionTextView.setText(calltoAction);
+        } else {
+            this.callToActionTextView.setText(
+                    R.string.call_to_action_add_meal_plan);
+        }
+    }
+
+    @Override public void onAdapterDataChanged() {
+        this.updateCallToAction();
     }
 }

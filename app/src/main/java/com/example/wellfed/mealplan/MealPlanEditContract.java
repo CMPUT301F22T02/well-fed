@@ -6,23 +6,21 @@ import android.content.Intent;
 
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-public class MealPlanContract extends ActivityResultContract<MealPlan, MealPlan> {
+public class MealPlanEditContract extends ActivityResultContract<MealPlan, MealPlan> {
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, MealPlan mealPlan) {
-        Intent intent = new Intent(context, MealPlanActivity.class);
+        Intent intent = new Intent(context, MealPlanEditContract.class);
         intent.putExtra("mealPlan", mealPlan);
         return intent;
     }
 
     @Override
-    public MealPlan parseResult(int i, @Nullable Intent intent) {
-        if (i == Activity.RESULT_OK && intent.getStringExtra("Reason").equals("Delete")) {
+    public MealPlan parseResult(int i, Intent intent) {
+        if (i != Activity.RESULT_OK) {
             return null;
-        } else {
-            return (MealPlan) intent.getSerializableExtra("mealPlan");
         }
+        return (MealPlan) intent.getSerializableExtra("mealPlan");
     }
 }
