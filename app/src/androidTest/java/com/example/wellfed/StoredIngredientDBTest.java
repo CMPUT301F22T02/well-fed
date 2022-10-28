@@ -1,6 +1,7 @@
 package com.example.wellfed;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -50,5 +51,21 @@ public class StoredIngredientDBTest {
         storedIngredientDB.removeFromIngredients(id);
     }
 
-    
+    @Test
+    public void testAddMissingFields() throws InterruptedException {
+        StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
+
+        // testing whether it was what was inserted into db
+        String id = storedIngredientDB.addStoredIngredient(storedIngredient);
+        StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
+        assertEquals("Broccoli", resultIngredient.getDescription());
+        assertNull(resultIngredient.getCategory());
+        assertNull(resultIngredient.getBestBefore());
+        assertNull(resultIngredient.getLocation());
+        assertEquals(0, resultIngredient.getAmount());
+        assertNull(resultIngredient.getUnit());
+
+        // removing it afterward
+        storedIngredientDB.removeFromIngredients(id);
+    }
 }

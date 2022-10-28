@@ -250,9 +250,21 @@ public class StoredIngredientDB {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            obtainedIngredient.setBestBefore((Date) document.getTimestamp("best-before").toDate());
+
+                            // ensuring that methods don't get called on null values
+                            if (document.getTimestamp("best-before") != null) {
+                                obtainedIngredient.setBestBefore((Date) document.getTimestamp("best-before").toDate());
+                            } else {
+                                obtainedIngredient.setBestBefore(null);
+                            }
+
+                            if (document.get("amount") != null) {
+                                obtainedIngredient.setAmount(((Long) document.get("amount")).intValue());
+                            } else {
+                                obtainedIngredient.setAmount(0);
+                            }
+
                             obtainedIngredient.setLocation((String) document.get("location"));
-                            obtainedIngredient.setAmount(((Long) document.get("amount")).intValue());
                             obtainedIngredient.setUnit((String) document.get("unit"));
                             complete.countDown();
                         } else {

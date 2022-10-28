@@ -44,7 +44,6 @@ public class Ingredient {
      */
     public Ingredient(String description) {
         this.description = description;
-        this.category = "";
     }
 
     /**
