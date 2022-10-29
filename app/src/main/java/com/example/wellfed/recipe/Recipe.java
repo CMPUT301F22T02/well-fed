@@ -11,6 +11,8 @@
 
 package com.example.wellfed.recipe;
 
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
 import android.media.Image;
 
 import androidx.annotation.Nullable;
@@ -28,6 +30,11 @@ import java.util.List;
  * @version 1.0
  */
 public class Recipe implements Serializable {
+    /**
+     * Holds the Database id of a Recipe
+     */
+    private String id = NULL;
+
     /**
      * Holds the title of a Recipe.
      */
@@ -206,4 +213,19 @@ public class Recipe implements Serializable {
         this.photograph = photograph;
     }
 
+    /**
+     * Sets the id of a Recipe
+     * @param id A string representing the id of the document in the db
+     */
+    public void setId(String id){
+        this.id = id;
+    }
+
+    /**
+     * Gets the id of a Recipe, the id of the document in the db the Recipe is based off of
+     * @return A string representing the id of the dcucment in the db
+     */
+    public String getId(){
+        return this.id;
+    }
 }
