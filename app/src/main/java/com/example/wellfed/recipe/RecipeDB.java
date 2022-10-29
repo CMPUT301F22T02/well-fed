@@ -207,4 +207,38 @@ public class RecipeDB {
 
         return recipe;
     }
+
+    public ArrayList<Recipe> getRecipes() throws InterruptedException {
+        CountDownLatch recipesLatch = new CountDownLatch(1);
+
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        db.runTransaction((Transaction.Function<Void>) transaction -> {
+
+                    List<DocumentSnapshot> recipeSnapshots = recipesCollection.get().getResult().getDocuments();
+
+                    for(DocumentSnapshot recipeSnapshot: recipeSnapshots){
+                        Recipe recipe = null;
+                        try {
+                            recipe = this.getRecipe(recipeSnapshot.getId());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        recipes.add(recipe);
+                    }
+
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    recipesLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    recipesLatch.countDown();
+                });
+
+        recipesLatch.await();
+
+        return recipes;
+    }
 }
