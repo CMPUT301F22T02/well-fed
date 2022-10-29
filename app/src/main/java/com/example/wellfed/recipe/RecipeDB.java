@@ -1,58 +1,52 @@
 package com.example.wellfed.recipe;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
+import android.media.Image;
 import android.util.Log;
 
-import com.example.wellfed.ingredient.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
 
 public class RecipeDB {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference recipesCollection;
-    final CollectionReference recipeIngredientsCollection;
-    final CollectionReference ingredientsCollection;
+    final RecipeIngredientDB recipeIngredientDB;
 
-    RecipeDB(){
-        recipesCollection = db.collection("Recipes");
-        recipeIngredientsCollection = db.collection("RecipeIngredients");
-        ingredientsCollection = db.collection("Ingredients");
+    public RecipeDB(){
+        this.recipesCollection = db.collection("Recipes");
+        recipeIngredientDB = new RecipeIngredientDB();
     }
 
-    public void addRecipe(Recipe recipe){
+    public void addRecipe(Recipe recipe) throws InterruptedException {
+        CountDownLatch addLatch = new CountDownLatch(1);
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
 
-        for(Ingredient i: recipe.getIngredients()){
-            //add as ingredient
-            String newIngredientId = ingredientsCollection.document().getId();
-
-            //TODO Add a check to make sure this document id isn't in recipeIngredient collection already
-
-            Map<String, Object> ingredientMap = new HashMap<>();
-            ingredientMap.put("description", i.getDescription());
-            ingredientMap.put("category", i.getCategory());
-            this.ingredientsCollection.
-                    document(newIngredientId)
-                    .set(ingredientMap)
-                    .addOnSuccessListener(unused -> Log.d("Add Recipe", "Ingredient was added"))
-                    .addOnFailureListener(e -> Log.d("Add Recipe", "Ingredient not added"));
-
-            ingredientMap.clear();
-            ingredientMap.put("amount", i.getAmount());
-            ingredientMap.put("unit", i.getUnit());
-            ingredientMap.put("ingredient", this.ingredientsCollection.document(newIngredientId));
-            this.recipeIngredientsCollection
-                    .document(newIngredientId)
-                    .set(ingredientMap)
-                    .addOnSuccessListener(unused -> Log.d("Add Recipe", "Recipe Ingredient was added"))
-                    .addOnFailureListener(e -> Log.d("Add Recipe", "Recipe Ingredient not added"));
-
-            recipeIngredientDocuments.add(recipeIngredientsCollection.document(newIngredientId));
+        for(RecipeIngredient i: recipe.getIngredients()) {
+            if (i.getId() == null) {
+                DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
+                recipeIngredientDocuments.add(newDocumentReference);
+            }
+            else{
+                try {
+                    recipeIngredientDB.getRecipeIngredient(i.getId());
+                }
+                catch(Exception err){
+                    Log.d(TAG, "addRecipe: Failed to get recipe");
+                }
+            }
         }
 
         Map<String, Object> recipeMap = new HashMap<>();
@@ -61,27 +55,156 @@ public class RecipeDB {
 
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
-        recipeMap.put("category", recipe.getCategory(0));
+        recipeMap.put("category", recipe.getCategory());
+        recipeMap.put("prep-time-minutes", recipe.getPrepTimeMinutes());
+        recipeMap.put("servings", recipe.getServings());
+        recipeMap.put("photograph", recipe.getPhotograph());
+        recipeMap.put("ingredients", recipeIngredientDocuments);
+
+        DocumentReference newRecipe = recipesCollection.document(newRecipeId);
+
+        db.runTransaction((Transaction.Function<Void>) transaction -> {
+
+            transaction.set(newRecipe, recipeMap);
+
+            return null;
+        })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    addLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    addLatch.countDown();
+                });
+
+        addLatch.await();
+
+        recipe.setId(newRecipeId);
+    }
+
+    public void delRecipe(Recipe recipe) throws InterruptedException {
+        CountDownLatch deleteLatch = new CountDownLatch(1);
+
+        if(recipe.getId().equals(NULL)){
+            Log.d("Delete Recipe", "The Recipe does not have an id");
+            return;
+        }
+
+        DocumentReference recipeToDelete = recipesCollection.document(recipe.getId());
+
+        db.runTransaction((Transaction.Function<Void>) transaction -> {
+
+            transaction.delete(recipeToDelete);
+
+            return null;
+        })
+        .addOnSuccessListener(unused -> {
+            Log.d(TAG, "onSuccess: ");
+            deleteLatch.countDown();
+        })
+        .addOnFailureListener(e -> {
+            Log.d(TAG, "onFailure: ");
+            deleteLatch.countDown();
+        });
+
+        deleteLatch.await();
+    }
+
+    public void editRecipe(Recipe recipe) throws InterruptedException {
+        String id = recipe.getId();
+
+        CountDownLatch editLatch = new CountDownLatch(1);
+
+        ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
+
+        for(RecipeIngredient i: recipe.getIngredients()) {
+            if (i.getId() == null) {
+                DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
+                recipeIngredientDocuments.add(newDocumentReference);
+            }
+            else{
+                try {
+                    recipeIngredientDB.getRecipeIngredient(i.getId());
+                }
+                catch(Exception err){
+                    Log.d(TAG, "addRecipe: Failed to get recipe");
+                }
+            }
+        }
+
+        Map<String, Object> recipeMap = new HashMap<>();
+
+        recipeMap.put("title", recipe.getTitle());
+        recipeMap.put("comments", recipe.getComments());
+        recipeMap.put("category", recipe.getCategory());
         recipeMap.put("prep-time-minutes", recipe.getPrepTimeMinutes());
         recipeMap.put("servings", recipe.getServings());
         recipeMap.put("photograph", recipe.getPhotograph());
         recipeMap.put("ingredients", recipeIngredientDocuments);
 
 
-        this.recipesCollection
-                .document(newRecipeId)
-                .set(recipeMap)
-                .addOnSuccessListener(unused -> Log.d("Add Recipe", "Recipe added"))
-                .addOnFailureListener(e -> Log.d("Add Recipe", "Recipe not added"));
+        DocumentReference newRecipe = recipesCollection.document(id);
 
-        recipe.setId(newRecipeId);
+        db.runTransaction((Transaction.Function<Void>) transaction -> {
+
+            transaction.update(newRecipe, recipeMap);
+
+            return null;
+        })
+        .addOnSuccessListener(unused -> {
+            Log.d(TAG, "onSuccess: ");
+            editLatch.countDown();
+        })
+        .addOnFailureListener(e -> {
+            Log.d(TAG, "onFailure: ");
+            editLatch.countDown();
+        });
+
+        editLatch.await();
     }
 
-    public void delRecipe(Recipe recipe){
+    public Recipe getRecipe(String id) throws InterruptedException {
+        CountDownLatch getLatch = new CountDownLatch(1);
 
-    }
+        Recipe recipe = new Recipe(null);
+        recipe.setId(id);
+        DocumentReference recipeDocument = recipesCollection.document(id);
+        final DocumentSnapshot[] recipeSnapshot = new DocumentSnapshot[1];
+        db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-    public void editRecipe(Recipe recipe){
+            recipeSnapshot[0] = transaction.get(recipeDocument);
 
+            return null;
+        })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    getLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    getLatch.countDown();
+                });
+
+        getLatch.await();
+
+        recipe.setTitle(recipeSnapshot[0].getString("title"));
+        recipe.setCategory(recipeSnapshot[0].getString("category"));
+        recipe.setComments(recipeSnapshot[0].getString("comments"));
+        recipe.setPhotograph((Image) recipeSnapshot[0].get("phototgraph"));
+        recipe.setPrepTimeMinutes(Objects.requireNonNull(recipeSnapshot[0].getLong("prep-time-minutes")).intValue());
+        recipe.setServings(Objects.requireNonNull(recipeSnapshot[0].getLong("servings")).intValue());
+
+        List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(recipeSnapshot[0].get("ingredients"));
+        for(DocumentReference ingredient: recipeIngredients){
+            try {
+                recipeIngredientDB.getRecipeIngredient(ingredient.getId());
+            }
+            catch(Exception err){
+                Log.d(TAG, "addRecipe: Failed to get recipe");
+            }
+        }
+
+        return recipe;
     }
 }
