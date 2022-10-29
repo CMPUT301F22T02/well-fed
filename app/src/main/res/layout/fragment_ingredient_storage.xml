@@ -11,8 +11,8 @@
         android:id="@+id/ingredient_storage_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="12dp"
         android:text="@string/storage"
         android:textSize="38sp"
@@ -27,21 +27,25 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
 
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/ic_baseline_filter_list_24"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="328dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginTop="111dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -49,9 +53,9 @@
             android:id="@+id/ingredient_storage_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_for_ingredients"
             android:drawableStart="@drawable/ic_baseline_search_24"
             android:drawablePadding="8dp"
+            android:hint="@string/search_for_ingredients"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,12 +63,15 @@
         android:id="@+id/ingredient_storage_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="80dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

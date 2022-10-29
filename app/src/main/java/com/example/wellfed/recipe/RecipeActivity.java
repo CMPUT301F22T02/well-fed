@@ -70,6 +70,15 @@ public class RecipeActivity extends ActivityBase implements DeleteDialogFragment
     }
 
     @Override
+    public void deleteIngredient() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("Recipe", recipe);
+        returnIntent.putExtra("Reason", "Delete");
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    @Override
     public void delete() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Reason", "Delete");
@@ -78,4 +87,8 @@ public class RecipeActivity extends ActivityBase implements DeleteDialogFragment
     }
 
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
 }
