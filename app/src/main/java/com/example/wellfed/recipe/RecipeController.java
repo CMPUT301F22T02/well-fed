@@ -22,20 +22,6 @@ public class RecipeController {
     public void setRecipeAdapter(RecipeAdapter recipeAdapter) {
         this.recipeAdapter = recipeAdapter;
 
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
-        testIngredient.setAmount(1);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
-
-        Recipe testRecipe = new Recipe("Test");
-        testRecipe.setComments("Test");
-        testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(1);
-        testRecipe.addIngredient(testIngredient);
-        testRecipe.setCategory("Test");
-
-        recipeDB.addRecipe(testRecipe);
     }
 
     public void deleteRecipe(int position){
