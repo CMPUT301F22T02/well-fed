@@ -2,6 +2,7 @@ package com.example.wellfed.ingredient;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class StorageIngredient extends Ingredient {
     /**
@@ -17,6 +18,11 @@ public class StorageIngredient extends Ingredient {
      * The location of the ingredient in the storage.
      */
     private String location;
+
+    /**
+     * The best before date of the ingredient in the storage.
+     */
+    private Date bestBefore;
 
     /**
      * Creates a new StorageIngredient object that represents an Ingredient used for various meal purposes.
@@ -100,5 +106,21 @@ public class StorageIngredient extends Ingredient {
      */
     public void setDescription(String description) {
         super.setDescription(description);
+    }
+
+    /**
+     * Sets the best before date of the ingredient in the storage.
+     */
+    public void setBestBefore(Date bestBefore) {
+        this.bestBefore = bestBefore;
+    }
+
+    /**
+     * Gets the best before date of the ingredient in the storage.
+     * @return The best before date of the ingredient in the storage
+     */
+    public String getBestBefore() {
+        // Return the best before date of the ingredient as String
+        return bestBefore.toString();
     }
 }
