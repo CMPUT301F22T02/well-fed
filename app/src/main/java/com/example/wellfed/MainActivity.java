@@ -1,24 +1,50 @@
 package com.example.wellfed;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
+
+import com.example.wellfed.recipe.RecipeController;
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.color.DynamicColors;
+import com.example.wellfed.navigation.NavigationCollectionAdapter;
+import java.util.Stack;
 
 public class MainActivity extends FragmentActivity {
     final String TAG = "Sample";
+    Stack<Integer> history;
     NavigationCollectionAdapter navigationCollectionAdapter;
     ViewPager2 viewPager;
     BottomAppBar bottomAppBar;
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (history.size() < 2) {
+            super.onBackPressed();
+        } else {
+            history.pop();
+            viewPager.setCurrentItem(history.peek());
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        history = new Stack<>();
 
         navigationCollectionAdapter = new NavigationCollectionAdapter(this);
         viewPager = findViewById(R.id.pager);
@@ -46,25 +72,30 @@ public class MainActivity extends FragmentActivity {
             return true;
         });
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                bottomAppBar = findViewById(R.id.bottomAppBar);
-                Menu menu = bottomAppBar.getMenu();
+        viewPager.registerOnPageChangeCallback(
+                new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+                        bottomAppBar = findViewById(R.id.bottomAppBar);
+
+                        Menu menu = bottomAppBar.getMenu();
 
                 for (int i = 0; i < menu.size(); ++i) {
                     menu.getItem(i).getIcon().setTint(
-                            getResources().getColor(com.google.android.material.R.color.material_dynamic_neutral10)
+                            getResources().getColor(R.color.black)
                     );
                 }
 
-                menu.getItem(position).getIcon().setTint(
-                        getResources().getColor(com.google.android.material.R.color.m3_sys_color_dynamic_light_primary)
-                );
-            }
-        });
+                        menu.getItem(position).getIcon().setTint(
+                                getResources().getColor(R.color.purple_200)
+                        );
+                        if (history.size() == 0 || history.peek() != position) {
+                            history.push(position);
+                        }
+                    }
+                });
 
-        viewPager.setCurrentItem(2);
+        viewPager.setCurrentItem(2, false);
     }
 }
