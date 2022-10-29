@@ -1,20 +1,14 @@
 package com.example.wellfed.recipe;
 
-import android.media.Image;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.example.wellfed.ingredient.Ingredient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RecipeDB {
@@ -45,18 +39,8 @@ public class RecipeDB {
             this.ingredientsCollection.
                     document(newIngredientId)
                     .set(ingredientMap)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d("Add Recipe", "Ingredient was added");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("Add Recipe", "Ingredient not added");
-                        }
-                    });
+                    .addOnSuccessListener(unused -> Log.d("Add Recipe", "Ingredient was added"))
+                    .addOnFailureListener(e -> Log.d("Add Recipe", "Ingredient not added"));
 
             ingredientMap.clear();
             ingredientMap.put("amount", i.getAmount());
@@ -65,18 +49,8 @@ public class RecipeDB {
             this.recipeIngredientsCollection
                     .document(newIngredientId)
                     .set(ingredientMap)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d("Add Recipe", "Recipe Ingredient was added");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("Add Recipe", "Recipe Ingredient not added");
-                        }
-                    });
+                    .addOnSuccessListener(unused -> Log.d("Add Recipe", "Recipe Ingredient was added"))
+                    .addOnFailureListener(e -> Log.d("Add Recipe", "Recipe Ingredient not added"));
 
             recipeIngredientDocuments.add(recipeIngredientsCollection.document(newIngredientId));
         }
@@ -97,18 +71,10 @@ public class RecipeDB {
         this.recipesCollection
                 .document(newRecipeId)
                 .set(recipeMap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("Add Recipe", "Recipe added");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Add Recipe", "Recipe not added");
-                    }
-                });
+                .addOnSuccessListener(unused -> Log.d("Add Recipe", "Recipe added"))
+                .addOnFailureListener(e -> Log.d("Add Recipe", "Recipe not added"));
+
+        recipe.setId(newRecipeId);
     }
 
     public void delRecipe(Recipe recipe){
