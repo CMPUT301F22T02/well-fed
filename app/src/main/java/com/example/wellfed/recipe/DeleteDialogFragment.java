@@ -49,10 +49,5 @@ public class DeleteDialogFragment extends DialogFragment {
                 }).create();
 
         return dialog;
-
-    }
-
-    public interface DeleteIngredient {
-        public void delete();
     }
 }

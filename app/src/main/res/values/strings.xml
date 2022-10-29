@@ -26,4 +26,5 @@
     <string name="location">Location:</string>
     <string name="delete">Delete</string>
     <string name="freezer">Freezer</string>
+    <string name="delete_ingredient">Delete ingredient?</string>
 </resources>
