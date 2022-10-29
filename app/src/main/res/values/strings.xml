@@ -16,4 +16,10 @@
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
+    <string name="edit_meal_plan">Edit Meal Plan</string>
+    <string name="add_meal_plan">Add Meal Plan</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="category">Category</string>
+    <string name="number_of_servings">Number of Servings</string>
 </resources>
