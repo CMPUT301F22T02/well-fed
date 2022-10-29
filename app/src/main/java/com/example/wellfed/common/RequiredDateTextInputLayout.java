@@ -26,8 +26,6 @@ package com.example.wellfed.common;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.DatePicker;
@@ -43,12 +41,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
  * class such that it can show a DatePickerDialog to allow the user to
  * input dates.
- *
+ * <p>
  * Citation:
  * DatePickerDialog. Android Developers. (n.d.). Retrieved September 26,
  * 2022, from
@@ -90,9 +89,20 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
     }
 
     /*
-    * The showDatePickerDialog method opens the DatePickerDialog with
-    * the current date.
-    */
+     * The onEditTextAttached method sets an OnClickListener on the
+     * TextInputLayout.
+     */
+    @Override
+    public void onEditTextAttached(@NonNull TextInputLayout textInputLayout) {
+        super.onEditTextAttached(textInputLayout);
+        Objects.requireNonNull(textInputLayout.getEditText())
+                .setOnClickListener(this);
+    }
+
+    /*
+     * The showDatePickerDialog method opens the DatePickerDialog with
+     * the current date.
+     */
     private void showDatePickerDialog() {
         final Calendar c = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -106,18 +116,10 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
     }
 
     /*
-     * The onEditTextAttached method sets an OnClickListener on the
-     * TextInputLayout.
+     * The onFocusChange shows the Date Picker Dialog when the
+     * TextInputLayout is
+     * focused.
      */
-    @Override
-    public void onEditTextAttached(@NonNull TextInputLayout textInputLayout) {
-        textInputLayout.getEditText().setOnClickListener(this);
-    }
-
-    /*
-    * The onFocusChange shows the Date Picker Dialog when the TextInputLayout is
-    * focused.
-    */
     @Override
     public void onFocusChange(View view, boolean focused) {
         if (focused) {
@@ -152,8 +154,18 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
      * The setDate method updates the TextInputLayout with a
      * formatted representation of the date.
      */
-    public void setDate(Date date) {
+    private void setDate(Date date) {
         this.date = date;
-        this.getEditText().setText(this.DATE_FORMAT.format(this.date));
+        Objects.requireNonNull(this.getEditText())
+                .setText(this.DATE_FORMAT.format(this.date));
+    }
+
+    /*
+     * The setDate method updates the TextInputLayout with a
+     * formatted representation of the date.
+     */
+    public void setPlaceholderDate(Date date) {
+        this.date = date;
+        this.setPlaceholderText(this.DATE_FORMAT.format(this.date));
     }
 }

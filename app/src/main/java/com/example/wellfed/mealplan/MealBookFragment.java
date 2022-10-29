@@ -52,7 +52,6 @@ public class MealBookFragment extends Fragment
     private RecyclerView mealPlanRecyclerView;
     private MealPlanAdapter mealPlanAdapter;
     private MealPlanController controller;
-    private FloatingActionButton fab;
     private int selected;
 
     ActivityResultLauncher<MealPlan> launcher =
@@ -61,15 +60,19 @@ public class MealBookFragment extends Fragment
                     return;
                 }
                 String type = result.first;
+                MealPlan mealPlan = result.second;
                 switch (type) {
                     case "delete":
                         controller.deleteMealPlan(this.selected);
+                        break;
+                    case "edit":
+                        controller.editMealPlan(selected, mealPlan);
                         break;
                     case "launch":
                         this.launch(this.selected);
                         break;
                     default:
-                        break;
+                        throw new IllegalArgumentException();
                 }
             });
 
@@ -79,12 +82,15 @@ public class MealBookFragment extends Fragment
                     return;
                 }
                 String type = result.first;
+                MealPlan mealPlan = result.second;
                 switch (type) {
-                    case "launch":
-                        this.launch(this.selected);
+                    case "add":
+                        controller.addMealPlan(mealPlan);
+                        break;
+                    case "quit":
                         break;
                     default:
-                        break;
+                        throw new IllegalArgumentException();
                 }
             });
 
@@ -124,9 +130,9 @@ public class MealBookFragment extends Fragment
                 getString(R.string.greeting, "Akshat"));
     }
 
-    @Override public void launch(int pos) {
-        selected = selected;
-        launcher.launch(this.controller.getMealPlans().get(pos));
+    @Override public void launch(int selected) {
+        this.selected = selected;
+        launcher.launch(this.controller.getMealPlans().get(selected));
     }
 
     @Override

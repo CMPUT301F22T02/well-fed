@@ -61,7 +61,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:longClickable="false"
+            android:inputType="date" />
 
     </com.example.wellfed.common.RequiredDateTextInputLayout>
 
@@ -83,7 +87,7 @@
 
     </com.example.wellfed.common.RequiredTextInputLayout>
 
-    <com.example.wellfed.common.RequiredTextInputLayout
+    <com.example.wellfed.common.RequiredNumberTextInputLayout
         android:id="@+id/numberOfServingsTextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,7 +101,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
 
-    </com.example.wellfed.common.RequiredTextInputLayout>
+    </com.example.wellfed.common.RequiredNumberTextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

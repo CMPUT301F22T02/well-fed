@@ -26,7 +26,9 @@ package com.example.wellfed.common;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +36,8 @@ import androidx.annotation.Nullable;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
+
+// TODO: https://developer.android.com/reference/android/text/TextWatcher
 
 /**
  * The RequiredTextInputLayout class extends the TextInputLayout
@@ -47,30 +51,60 @@ import java.util.Objects;
  * @author Steven Tang
  * @version v1.0.0 2022-09-26
  **/
-public class RequiredTextInputLayout extends TextInputLayout {
+public class RequiredTextInputLayout extends TextInputLayout
+        implements TextInputLayout.OnEditTextAttachedListener, TextWatcher {
+    protected EditText editText;
+    private String initialText;
 
     public RequiredTextInputLayout(@NonNull Context context) {
         super(context);
+        this.addOnEditTextAttachedListener(this);
     }
 
     public RequiredTextInputLayout(@NonNull Context context,
                                    @Nullable AttributeSet attrs) {
         super(context, attrs);
+        this.addOnEditTextAttachedListener(this);
     }
 
     public RequiredTextInputLayout(@NonNull Context context,
                                    @Nullable AttributeSet attrs,
                                    int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.addOnEditTextAttachedListener(this);
+    }
+
+    /*
+     * The onEditTextAttached method sets an OnClickListener on the
+     * TextInputLayout.
+     */
+    @Override
+    public void onEditTextAttached(
+            @NonNull TextInputLayout textInputLayout) {
+        this.editText = Objects.requireNonNull(textInputLayout.getEditText());
+        this.editText.addTextChangedListener(this);
+        this.initialText = this.editText.getText().toString();
+    }
+
+    public void setPlaceholderText(String initialText) {
+        this.initialText = initialText;
+        this.editText.setText(initialText);
+    }
+
+    public String getText() {
+        return this.editText.getText().toString();
+    }
+
+    public Boolean hasChanges() {
+        return !this.initialText.equals(this.getText());
     }
 
     /*
      * The isNonEmpty method validates that the EditText is non-empty.
      * If it is empty, it displays an error message.
      */
-    public Boolean isNonEmpty() {
-        if (Objects.requireNonNull(this.getEditText()).getText().toString()
-                .isEmpty()) {
+    private Boolean isNonEmpty() {
+        if (this.editText.getText().toString().isEmpty()) {
             this.setError(this.getHint() + " is required");
             return false;
         } else {
@@ -79,30 +113,21 @@ public class RequiredTextInputLayout extends TextInputLayout {
         }
     }
 
-    /*
-     * The isValidPositiveNumber method validates that the EditText is
-     * a valid positive number. If it is not a positive number, it displays
-     * an error message.
-     */
-    public Boolean isValidPositiveNumber() {
-        if (this.isNonEmpty()) {
-            double value;
-            try {
-                value = Double.parseDouble(
-                        Objects.requireNonNull(this.getEditText()).getText()
-                                .toString());
-            } catch (NumberFormatException exception) {
-                value = 0;
-            }
-            if (value <= 0) {
-                this.setError(this.getHint() + " must be a positive number");
-                return false;
-            } else {
-                this.setError(null);
-                return true;
-            }
-        } else {
-            return false;
-        }
+    public Boolean isValid() {
+        return this.isNonEmpty();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1,
+                                  int i2) {
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1,
+                              int i2) {
+    }
+
+    @Override public void afterTextChanged(Editable editable) {
+        this.isValid();
     }
 }

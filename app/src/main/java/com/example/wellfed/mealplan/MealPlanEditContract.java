@@ -29,7 +29,8 @@ public class MealPlanEditContract extends ActivityResultContract<MealPlan,
                 }
                 MealPlan mealPlan = (MealPlan) intent.getSerializableExtra(
                         "mealPlan");
-                return new Pair<>("edit", mealPlan);
+                String type = intent.getStringExtra("type");
+                return new Pair<>(type, mealPlan);
             case Activity.RESULT_CANCELED:
                 return new Pair<>("quit", null);
             default:

@@ -37,6 +37,16 @@ public class MealPlanController {
         mealPlan.setServings(6);
     }
 
+    public void addMealPlan(MealPlan mealPlan) {
+        this.mealPlans.add(mealPlan);
+        this.adapter.notifyItemInserted(this.mealPlans.size() - 1);
+    }
+
+    public void editMealPlan(int index, MealPlan modifiedMealPlan) {
+        this.mealPlans.set(index, modifiedMealPlan);
+        this.adapter.notifyItemChanged(index);
+    }
+
     public void deleteMealPlan(int index) {
         if (0 <= index && index < this.mealPlans.size()) {
             this.mealPlans.remove(index);
