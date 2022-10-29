@@ -15,4 +15,15 @@
     <string name="sort_category">Category</string>
     <string name="sort_description">Description</string>
     <string name="sort_best_before">Best Before</string>
+    <string name="ingredient_name">Ground beef</string>
+    <string name="back_button">Back</string>
+    <string name="best_before">Best Before:</string>
+    <string name="dummy_date">October 14, 2022</string>
+    <string name="amount">Amount:</string>
+    <string name="dummy_quantity">5 lb</string>
+    <string name="category">Category:</string>
+    <string name="dummy_category">Meat</string>
+    <string name="location">Location:</string>
+    <string name="delete">Delete</string>
+    <string name="freezer">Freezer</string>
 </resources>
