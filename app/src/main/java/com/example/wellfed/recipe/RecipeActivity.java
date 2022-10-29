@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
-import com.example.wellfed.common.OnDeleteListener;
 import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
@@ -62,6 +61,12 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
         returnIntent.putExtra("Reason", "BackPressed");
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+    private void showDeleteDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.findFragmentById(R.id.recipe_book);
+        new DeleteDialogFragment(RecipeActivity.this).show(fm, "Delete Recipe");
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.wellfed.ingredient;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class StorageIngredient extends Ingredient {
@@ -28,13 +27,15 @@ public class StorageIngredient extends Ingredient {
      * Creates a new StorageIngredient object that represents an Ingredient used for various meal purposes.
      *
      * @param description The description/title of an Ingredient
+     * @param s
      */
     public StorageIngredient(String description, int amount,
-                             String unit, String location) {
+                             String unit, String location, Date bestBefore) {
         super(description);
         this.amount = amount;
         this.unit = unit;
         this.location = location;
+        this.bestBefore = bestBefore;
     }
 
     /**
