@@ -33,7 +33,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the Database id of a Recipe
      */
-    private String id = NULL;
+    private String id;
 
     /**
      * Holds the title of a Recipe.
@@ -77,7 +77,8 @@ public class Recipe implements Serializable {
      */
     public Recipe(String title) {
         this.title = title;
-        ingredients = new ArrayList<>();
+        this.ingredients = new ArrayList<>();
+        this.id = NULL;
     }
 
     /**
@@ -126,7 +127,7 @@ public class Recipe implements Serializable {
      * @return A String representing the category indexed
      */
     @Nullable
-    public String getCategory(int index) {
+    public String getCategory() {
         return this.category;
     }
 
@@ -223,7 +224,7 @@ public class Recipe implements Serializable {
 
     /**
      * Gets the id of a Recipe, the id of the document in the db the Recipe is based off of
-     * @return A string representing the id of the dcucment in the db
+     * @return A string representing the id of the document in the db
      */
     public String getId(){
         return this.id;
