@@ -1,6 +1,7 @@
 package com.example.wellfed;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -8,11 +9,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.wellfed.ingredient.StoredIngredient;
 import com.example.wellfed.ingredient.StoredIngredientDB;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Date;
+import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class StoredIngredientDBTest {
@@ -67,36 +70,53 @@ public class StoredIngredientDBTest {
         assertNull(resultIngredient.getCategory());
         assertNull(resultIngredient.getBestBefore());
         assertNull(resultIngredient.getLocation());
-        assertEquals(0.0f, resultIngredient.getAmount(), 0.01);
+        assertNull(resultIngredient.getAmount());
         assertNull(resultIngredient.getUnit());
 
         // removing it afterward
         storedIngredientDB.removeFromIngredients(id);
+    }
+    @Test
+    public void testDeleteIngredient() throws InterruptedException {
+        StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
+        String id = storedIngredientDB.addStoredIngredient(storedIngredient);
+        storedIngredientDB.removeFromIngredients(id);
+
+        //TODO: Replace with assertThrows
+        boolean present = true;
+        try {
+            storedIngredientDB.getStoredIngredient(id);
+        } catch (IllegalArgumentException e) {
+            present = false;
+        }
+        assertFalse(present);
+
     }
 
     /**
      * This method tests deleting a non-existing ingredient.
      */
     @Test
-    public void deleteNonExistingIngredient() {
+    public void deleteNonExistingIngredient() throws InterruptedException {
         // attempting to remove non-existing ingredient from db
         // this test will succeed if no error is thrown
         storedIngredientDB.removeFromIngredients("-1");
     }
 
     /**
-     * This method tests whether all of the fields are null if an ingredient does not exist.
+     * This method tests whether an exception is thrown upon getting an invalid ingredient.
      * @throws InterruptedException
      */
     @Test
     public void getNonExistingIngredient() throws InterruptedException {
-        StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient("-1");
-        assertNull(resultIngredient.getDescription());
-        assertNull(resultIngredient.getCategory());
-        assertNull(resultIngredient.getBestBefore());
-        assertNull(resultIngredient.getLocation());
-        assertEquals(0.0f, resultIngredient.getAmount(), 0.01);
-        assertNull(resultIngredient.getUnit());
+        // TODO: change this to a assertThrows()
+        boolean valid = true;
+        try {
+            storedIngredientDB.getStoredIngredient("-1");
+        } catch (IllegalArgumentException e) {
+            valid = false;
+        }
+        assertFalse(valid);
     }
 
     /**
