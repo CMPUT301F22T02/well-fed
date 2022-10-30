@@ -111,9 +111,14 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
             }
         }
         UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
-        String weekLabel =
-                eatDateFirstDayOfWeek.format("MMMM d") + " - " +
-                        eatDateLastDayOfWeek.format("d");
+        String eatDateFirstDayOfWeekMonth = eatDateFirstDayOfWeek.format("MMMM ");
+        String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
+        String weekLabel = eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
+        String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
+        if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
+            weekLabel += eatDateLastDayOfWeekMonth;
+        }
+        weekLabel += eatDateLastDayOfWeek.format("d");
         holder.getWeekTextView().setText(weekLabel);
         holder.getWeekTextView().setVisibility(View.VISIBLE);
         if (today.equals(eatDate)) {
