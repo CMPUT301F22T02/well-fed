@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
 import com.example.wellfed.recipe.RecipeIngredient;
+import com.example.wellfed.recipe.RecipeIngredientDB;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +16,12 @@ import java.util.Objects;
 @RunWith(AndroidJUnit4.class)
 public class RecipeDBTest {
     RecipeDB recipeDB;
+    RecipeIngredientDB recipeIngredientDB;
 
     @Before
     public void before(){
         recipeDB = new RecipeDB();
+        recipeIngredientDB = new RecipeIngredientDB();
     }
 
     @Test
@@ -71,6 +74,12 @@ public class RecipeDBTest {
 
         try {
             recipeDB.delRecipe(testRecipe);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            recipeIngredientDB.delIngredient(testIngredient.getId());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
