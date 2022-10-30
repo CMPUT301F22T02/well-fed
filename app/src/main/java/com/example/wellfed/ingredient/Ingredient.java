@@ -25,13 +25,18 @@ public class Ingredient implements Serializable {
      */
     private String description;
     /**
-     * Holds an ArrayList of all of the categories associated with one Ingredient.
+     * Holds the category of an Ingredient.
      */
-    private final ArrayList<String> categories;
+    private String category;
     /**
      * Holds the units that an amount of an Ingredient is in
      */
     private String unit;
+
+    /**
+     * Holds the number of items in an Ingredient
+     */
+    private Float amount;
 
     /**
      * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
@@ -39,40 +44,26 @@ public class Ingredient implements Serializable {
      */
     public Ingredient(String description) {
         this.description = description;
-        this.categories = new ArrayList<>();
+    }
+
+    public Ingredient() {
+        this.description = null;
     }
 
     /**
-     * Adds a category (aka tag) to an Ingredient object.
+     * Sets the category (aka tag) of an Ingredient object.
      * @param category The category to add
      */
-    public void addCategory(String category) {
-        categories.add(category);
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     /**
-     * Removes a category (aka tag) from an Ingredient object.
-     * @param category The category to remove
-     */
-    public void removeCategory(String category) {
-        categories.remove(category);
-    }
-
-    /**
-     * Gets the category at the specified index.
-     * @param index The index where the category is at
+     * Gets the category.
      * @return The String representing the category
      */
-    public String getCategory(int index) {
-        return categories.get(index);
-    }
-
-    /**
-     * Gets the entire ArrayList of categories.
-     * @return The ArrayList of Strings containing all categories
-     */
-    public ArrayList<String> getCategories() {
-        return categories;
+    public String getCategory() {
+        return category;
     }
 
     /**
@@ -107,7 +98,15 @@ public class Ingredient implements Serializable {
         this.unit = unit;
     }
 
-    public Ingredient(){
-        this.categories = new ArrayList<>();
+    /**
+     * Sets the amount of an ingredient
+     * @param amount the amount
+     */
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
+
+    public Float getAmount() {
+        return amount;
     }
 }
