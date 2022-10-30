@@ -44,9 +44,6 @@ public class UTCDate extends Date {
         if (!(o instanceof UTCDate)) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
         UTCDate utcDate = (UTCDate) o;
         return Objects.equals(this.hashCode(), utcDate.hashCode());
     }
