@@ -2,7 +2,6 @@ package com.example.wellfed.ingredient;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.res.Resources;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,10 +14,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,74 +47,51 @@ public class StoredIngredientDB {
     /**
      * Adds an ingredient in storage to the Firebase DB.
      * @param storedIngredient the ingredient to be added
-     * @return the ID of the added ingredient
+     * @return a map containing the ID of the Ingredient and StoredIngredient
      * @throws InterruptedException when the on success listeners cannot complete
      */
     public String addStoredIngredient(@NonNull StoredIngredient storedIngredient) throws InterruptedException {
-        // Some of the fields of a StoredIngredient may be empty.
+        // creating batch and return value
+        WriteBatch batch = db.batch();
+        Map<String, String> result = new HashMap<>();
+
+        // add ingredient info to batch
+        String ingredientId = this.ingredients.document().getId();
+        DocumentReference ingredientRef = ingredients.document(ingredientId);
         Map<String, Object> ingredient = new HashMap<>();
         ingredient.put("category", storedIngredient.getCategory());
         ingredient.put("description", storedIngredient.getDescription());
+        batch.set(ingredientRef, ingredient);
 
-        String id = this.ingredients.document().getId();
-        CountDownLatch ingredientComplete = new CountDownLatch(1);
-        this.ingredients
-                .document(id)
-                .set(ingredient)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + id);
-                        System.out.println("added");
-                        
-                        ingredientComplete.countDown();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                        System.out.println("not added");
-                        ingredientComplete.countDown();
-                    }
-                });
-        // waiting for it to be finished
-        ingredientComplete.await();
-
-        // add it to stored ingredients now
+        // add stored ingredient info to batch
+        String storedId = this.ingredients.document().getId();
+        DocumentReference storedIngredientRef = collection.document(ingredientId);
         Map<String, Object> stored = new HashMap<>();
         stored.put("unit", storedIngredient.getUnit());
         stored.put("amount", storedIngredient.getAmount());
         stored.put("location", storedIngredient.getLocation());
         stored.put("best-before", storedIngredient.getBestBefore());
-        DocumentReference documentReference = db.document("Ingredients/"+id);
+        DocumentReference documentReference = db.document("Ingredients/"+ingredientId);
         stored.put("ingredient", documentReference);
+        batch.set(storedIngredientRef, stored);
 
-        CountDownLatch storageComplete = new CountDownLatch(1);
-        this.collection
-                .document(id)
-                .set(stored)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + id);
-                        storageComplete.countDown();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                        storageComplete.countDown();
-                    }
-                });
-        storageComplete.await();
-        return id;
+        CountDownLatch batchComplete = new CountDownLatch(1);
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "Ingredient written with ID: " + ingredientId);
+
+                batchComplete.countDown();
+            }
+        });
+
+        batchComplete.await();
+        return ingredientId;
     }
 
     /**
      * Updates a stored ingredient in the Firebase DB.
-     * @param id the ID of the ingredient to update
+     * @param id the ID of the StoredIngredient to update
      * @param storedIngredient the Ingredient containing the updated fields
      * @throws InterruptedException when the on success listeners cannot complete
      */
