@@ -32,14 +32,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.UTCDate;
 import com.google.android.material.color.MaterialColors;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * The MealPlanAdapter class binds ArrayList<MealPlan> to RecyclerView.
@@ -89,15 +85,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
         holder.getMaterialCardView().setOnClickListener(
                 view -> context.launch(holder.getAdapterPosition()));
 
-        Date today = new Date();
-        Date eatDate = mealPlan.getEatDate();
-
-        SimpleDateFormat hashDateFormat = new SimpleDateFormat("yyyy-MM-dd",
-                Locale.US);
-        hashDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-        String todayHash = hashDateFormat.format(today);
-        String eatDayHash = hashDateFormat.format(eatDate);
+        UTCDate today = new UTCDate();
+        UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
 
         int colorPrimary = MaterialColors.getColor(context.getView(),
                 com.google.android.material.R.attr.colorPrimary);
@@ -108,16 +97,29 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
         int colorOnSurface = MaterialColors.getColor(context.getView(),
                 com.google.android.material.R.attr.colorOnSurface);
 
-        if (position == 0 || !this.mealPlans.get(position - 1).getEatDate()
-                .equals(mealPlan.getEatDate())) {
-            // TODO: implement week span detection
-            holder.getWeekTextView().setText("October 10 - 15");
-            holder.getWeekTextView().setVisibility(View.VISIBLE);
-            if (todayHash.equals(eatDayHash)) {
-                holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
-            } else {
-                holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
+        UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
+        if (position > 0) {
+            MealPlan priorMealPlan = this.mealPlans.get(position - 1);
+            UTCDate priorEatDate = UTCDate.from(priorMealPlan.getEatDate());
+            if (priorEatDate.equals(eatDate)) {
+                return;
             }
+            UTCDate priorEatDateFirstDayOfWeek =
+                    priorEatDate.getFirstDayOfWeek();
+            if (eatDateFirstDayOfWeek.equals(priorEatDateFirstDayOfWeek)) {
+                return;
+            }
+        }
+        UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
+        String weekLabel =
+                eatDateFirstDayOfWeek.format("MMMM d") + " - " +
+                        eatDateLastDayOfWeek.format("d");
+        holder.getWeekTextView().setText(weekLabel);
+        holder.getWeekTextView().setVisibility(View.VISIBLE);
+        if (today.equals(eatDate)) {
+            holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
+        } else {
+            holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
         }
     }
 
