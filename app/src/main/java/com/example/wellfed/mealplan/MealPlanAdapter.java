@@ -32,8 +32,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.google.android.material.color.MaterialColors;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * The MealPlanAdapter class binds ArrayList<MealPlan> to RecyclerView.
@@ -76,13 +81,48 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
      */
     @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
                                            int position) {
+
         MealPlan mealPlan = this.mealPlans.get(position);
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
-        View itemView = holder.getItemView();
-        itemView.setOnClickListener(
+        holder.getMaterialCardView().setOnClickListener(
                 view -> context.launch(holder.getAdapterPosition()));
 
+        Date today = new Date();
+        Date eatDate = mealPlan.getEatDate();
+
+        SimpleDateFormat hashDateFormat = new SimpleDateFormat("yyyy-MM-dd",
+                Locale.US);
+        hashDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        String todayHash = hashDateFormat.format(today);
+        String eatDayHash = hashDateFormat.format(eatDate);
+
+        int colorPrimary = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorPrimary);
+        int colorOnPrimary = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorOnPrimary);
+        int colorSurface = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorSurface);
+        int colorOnSurface = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorOnSurface);
+
+        if (position > 0) {
+            MealPlan previousMealPlan = this.mealPlans.get(position - 1);
+            if (!previousMealPlan.getEatDate().equals(mealPlan.getEatDate())) {
+                if (todayHash.equals(eatDayHash)) {
+                    holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
+                } else {
+                    holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
+                }
+            }
+        } else {
+            if (todayHash.equals(eatDayHash)) {
+                holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
+            } else {
+                holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
+            }
+        }
     }
 
     @Override public int getItemCount() {

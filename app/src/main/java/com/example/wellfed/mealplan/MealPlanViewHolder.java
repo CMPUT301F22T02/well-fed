@@ -24,6 +24,7 @@
 
 package com.example.wellfed.mealplan;
 
+import android.content.res.ColorStateList;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,6 +32,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.google.android.material.card.MaterialCardView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * The MealPlanViewHolder class contains the layout for each individual
@@ -45,12 +52,18 @@ import com.example.wellfed.R;
  * @version v1.0.0 2022-10-24
  **/
 public class MealPlanViewHolder extends RecyclerView.ViewHolder {
-    private final View itemView;
+    private final SimpleDateFormat circleDateFormat;
+    private final MaterialCardView materialCardView;
+    private final TextView dateTextView;
     private final TextView titleTextView;
     private final TextView categoryTextView;
 
-    public View getItemView() {
-        return itemView;
+    public MaterialCardView getMaterialCardView() {
+        return materialCardView;
+    }
+
+    public TextView getDateTextView() {
+        return dateTextView;
     }
 
     public TextView getTitleTextView() {
@@ -61,12 +74,21 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
         return categoryTextView;
     }
 
+    public void setDateCircle(Date date, int backgroundTint, int textColor) {
+        circleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        dateTextView.setText(circleDateFormat.format(date));
+
+        dateTextView.setBackgroundTintList(ColorStateList.valueOf(
+                backgroundTint));
+        dateTextView.setTextColor(textColor);
+    }
+
     public MealPlanViewHolder(@NonNull View itemView) {
         super(itemView);
-        this.itemView = itemView;
-        this.titleTextView = itemView.findViewById(
-                R.id.titleTextView);
-        this.categoryTextView = itemView.findViewById(
-                R.id.categoryTextView);
+        this.circleDateFormat = new SimpleDateFormat("d", Locale.US);
+        this.materialCardView = itemView.findViewById(R.id.materialCardView);
+        this.dateTextView = itemView.findViewById(R.id.dateTextView);
+        this.titleTextView = itemView.findViewById(R.id.titleTextView);
+        this.categoryTextView = itemView.findViewById(R.id.categoryTextView);
     }
 }

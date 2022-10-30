@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -76,7 +77,8 @@ public class MealPlanActivity extends ActivityBase implements OnDeleteListener {
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
         RecipeAdapter recipeAdapter = new RecipeAdapter(this, recipes);
         recipeRecyclerView.setAdapter(recipeAdapter);
-        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recipeRecyclerView.setLayoutManager(linearLayoutManager);
 
         deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
                 "Delete Meal Plan", this);
