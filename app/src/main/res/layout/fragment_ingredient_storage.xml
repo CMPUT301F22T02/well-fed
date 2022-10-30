@@ -17,13 +17,13 @@
         android:text="@string/storage"
         android:textSize="38sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/text_input_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.utils.widget.ImageFilterButton
-        android:id="@+id/imageFilterButton"
+        android:id="@+id/image_filter_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
 
@@ -31,13 +31,13 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/ic_baseline_filter_list_24"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/text_input_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/text_input_layout"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="100dp"
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_layout"
         app:layout_constraintVertical_bias="1.0" />
 
 

@@ -27,4 +27,9 @@
     <string name="delete">Delete</string>
     <string name="freezer">Freezer</string>
     <string name="delete_ingredient">Delete ingredient?</string>
+    <string name="description">Description</string>
+    <string name="best_before_date">Best Before Date</string>
+    <string name="categories">Categories</string>
+    <string name="unit">Unit</string>
+    <string name="amount_hint">Amount</string>
 </resources>

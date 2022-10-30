@@ -61,7 +61,7 @@ public class FoodStorage {
      * Gets the entire ArrayList where all StoredIngredients are kept.
      * @return the ArrayList of all stored ingredients
      */
-    public ArrayList<StorageIngredient> getStoredIngredients() {
+    public ArrayList<StorageIngredient> getIngredients() {
         return this.storedIngredients;
     }
 }
