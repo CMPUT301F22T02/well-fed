@@ -9,7 +9,7 @@ public class RecipeIngredient extends Ingredient implements Serializable {
     private float amount;
 
 
-    public float getAmount() {
+    public Float getAmount() {
         return amount;
     }
 

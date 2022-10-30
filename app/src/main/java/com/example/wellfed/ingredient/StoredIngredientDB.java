@@ -2,6 +2,7 @@ package com.example.wellfed.ingredient;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,7 @@ public class StoredIngredientDB {
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot written with ID: " + id);
                         System.out.println("added");
+                        
                         ingredientComplete.countDown();
                     }
                 })
@@ -263,7 +265,7 @@ public class StoredIngredientDB {
                             if (document.get("amount") != null) {
                                 obtainedIngredient.setAmount(((Double) document.get("amount")).floatValue());
                             } else {
-                                obtainedIngredient.setAmount(0);
+                                obtainedIngredient.setAmount(null);
                             }
 
                             obtainedIngredient.setLocation((String) document.get("location"));
@@ -301,6 +303,10 @@ public class StoredIngredientDB {
                     }
                 });
         complete.await();
+
+        if (obtainedIngredient.getDescription() == null) {
+            throw new IllegalArgumentException("Item not found in database.");
+        }
 
         return obtainedIngredient;
     }

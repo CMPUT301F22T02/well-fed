@@ -36,7 +36,7 @@ public class Ingredient implements Serializable {
     /**
      * Holds the number of items in an Ingredient
      */
-    private float amount;
+    private Float amount;
 
     /**
      * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
@@ -102,11 +102,11 @@ public class Ingredient implements Serializable {
      * Sets the amount of an ingredient
      * @param amount the amount
      */
-    public void setAmount(float amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
-    public float getAmount() {
+    public Float getAmount() {
         return amount;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.wellfed;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -8,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.wellfed.ingredient.StoredIngredient;
 import com.example.wellfed.ingredient.StoredIngredientDB;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +69,7 @@ public class StoredIngredientDBTest {
         assertNull(resultIngredient.getCategory());
         assertNull(resultIngredient.getBestBefore());
         assertNull(resultIngredient.getLocation());
-        assertEquals(0.0f, resultIngredient.getAmount(), 0.01);
+        assertNull(resultIngredient.getAmount());
         assertNull(resultIngredient.getUnit());
 
         // removing it afterward
@@ -85,18 +87,19 @@ public class StoredIngredientDBTest {
     }
 
     /**
-     * This method tests whether all of the fields are null if an ingredient does not exist.
+     * This method tests whether an exception is thrown upon getting an invalid ingredient.
      * @throws InterruptedException
      */
     @Test
     public void getNonExistingIngredient() throws InterruptedException {
-        StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient("-1");
-        assertNull(resultIngredient.getDescription());
-        assertNull(resultIngredient.getCategory());
-        assertNull(resultIngredient.getBestBefore());
-        assertNull(resultIngredient.getLocation());
-        assertEquals(0.0f, resultIngredient.getAmount(), 0.01);
-        assertNull(resultIngredient.getUnit());
+        // TODO: change this to a assertThrows()
+        boolean valid = true;
+        try {
+            storedIngredientDB.getStoredIngredient("-1");
+        } catch (IllegalArgumentException e) {
+            valid = false;
+        }
+        assertFalse(valid);
     }
 
     /**
