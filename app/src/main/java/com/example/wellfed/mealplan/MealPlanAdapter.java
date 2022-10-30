@@ -110,6 +110,9 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
         if (position > 0) {
             MealPlan previousMealPlan = this.mealPlans.get(position - 1);
             if (!previousMealPlan.getEatDate().equals(mealPlan.getEatDate())) {
+                // TODO: implement week span detection
+                holder.getWeekTextView().setText("October 10 - 15");
+                holder.getWeekTextView().setVisibility(View.VISIBLE);
                 if (todayHash.equals(eatDayHash)) {
                     holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
                 } else {
@@ -117,12 +120,18 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
                 }
             }
         } else {
+            // TODO: implement week span detection
+            holder.getWeekTextView().setText("October 10 - 15");
+            holder.getWeekTextView().setVisibility(View.VISIBLE);
             if (todayHash.equals(eatDayHash)) {
                 holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
             } else {
                 holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
             }
         }
+
+
+
     }
 
     @Override public int getItemCount() {

@@ -66,6 +66,7 @@ public class MealPlanController {
 
     public MealPlan getNextMealPlan() {
         Date today = new Date();
+        //        TODO: refactor move all date logic to its own class?
         SimpleDateFormat hashDateFormat =
                 new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         hashDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

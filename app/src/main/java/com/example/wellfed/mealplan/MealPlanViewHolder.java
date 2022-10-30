@@ -53,8 +53,11 @@ import java.util.TimeZone;
  **/
 public class MealPlanViewHolder extends RecyclerView.ViewHolder {
     private final SimpleDateFormat circleDateFormat;
+    private final SimpleDateFormat weekDayDateFormat;
     private final MaterialCardView materialCardView;
-    private final TextView dateTextView;
+    private final TextView weekTextView;
+    private final TextView weekDayTextView;
+    private final TextView dayTextView;
     private final TextView titleTextView;
     private final TextView categoryTextView;
 
@@ -62,8 +65,8 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
         return materialCardView;
     }
 
-    public TextView getDateTextView() {
-        return dateTextView;
+    public TextView getWeekTextView() {
+        return weekTextView;
     }
 
     public TextView getTitleTextView() {
@@ -75,19 +78,24 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setDateCircle(Date date, int backgroundTint, int textColor) {
-        circleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        dateTextView.setText(circleDateFormat.format(date));
-
-        dateTextView.setBackgroundTintList(ColorStateList.valueOf(
+        dayTextView.setText(circleDateFormat.format(date));
+        weekDayTextView.setText(weekDayDateFormat.format(date));
+        dayTextView.setBackgroundTintList(ColorStateList.valueOf(
                 backgroundTint));
-        dateTextView.setTextColor(textColor);
+        dayTextView.setTextColor(textColor);
     }
 
     public MealPlanViewHolder(@NonNull View itemView) {
         super(itemView);
         this.circleDateFormat = new SimpleDateFormat("d", Locale.US);
+        this.circleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        this.weekDayDateFormat = new SimpleDateFormat("E",
+                Locale.US);
+        this.weekDayDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         this.materialCardView = itemView.findViewById(R.id.materialCardView);
-        this.dateTextView = itemView.findViewById(R.id.dateTextView);
+        this.weekTextView = itemView.findViewById(R.id.weekTextView);
+        this.weekDayTextView = itemView.findViewById(R.id.weekDayTextView);
+        this.dayTextView = itemView.findViewById(R.id.dayTextView);
         this.titleTextView = itemView.findViewById(R.id.titleTextView);
         this.categoryTextView = itemView.findViewById(R.id.categoryTextView);
     }
