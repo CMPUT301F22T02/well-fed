@@ -35,6 +35,7 @@ import com.example.wellfed.R;
 import com.google.android.material.color.MaterialColors;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -107,19 +108,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
         int colorOnSurface = MaterialColors.getColor(context.getView(),
                 com.google.android.material.R.attr.colorOnSurface);
 
-        if (position > 0) {
-            MealPlan previousMealPlan = this.mealPlans.get(position - 1);
-            if (!previousMealPlan.getEatDate().equals(mealPlan.getEatDate())) {
-                // TODO: implement week span detection
-                holder.getWeekTextView().setText("October 10 - 15");
-                holder.getWeekTextView().setVisibility(View.VISIBLE);
-                if (todayHash.equals(eatDayHash)) {
-                    holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
-                } else {
-                    holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
-                }
-            }
-        } else {
+        if (position == 0 || !this.mealPlans.get(position - 1).getEatDate()
+                .equals(mealPlan.getEatDate())) {
             // TODO: implement week span detection
             holder.getWeekTextView().setText("October 10 - 15");
             holder.getWeekTextView().setVisibility(View.VISIBLE);
@@ -129,9 +119,6 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
                 holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
             }
         }
-
-
-
     }
 
     @Override public int getItemCount() {
