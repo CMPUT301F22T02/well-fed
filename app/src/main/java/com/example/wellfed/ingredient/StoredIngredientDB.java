@@ -53,7 +53,6 @@ public class StoredIngredientDB {
     public String addStoredIngredient(@NonNull StoredIngredient storedIngredient) throws InterruptedException {
         // creating batch and return value
         WriteBatch batch = db.batch();
-        Map<String, String> result = new HashMap<>();
 
         // add ingredient info to batch
         String ingredientId = this.ingredients.document().getId();
@@ -64,7 +63,6 @@ public class StoredIngredientDB {
         batch.set(ingredientRef, ingredient);
 
         // add stored ingredient info to batch
-        String storedId = this.ingredients.document().getId();
         DocumentReference storedIngredientRef = collection.document(ingredientId);
         Map<String, Object> stored = new HashMap<>();
         stored.put("unit", storedIngredient.getUnit());
@@ -96,55 +94,30 @@ public class StoredIngredientDB {
      * @throws InterruptedException when the on success listeners cannot complete
      */
     public void updateStoredIngredient(String id, StoredIngredient storedIngredient) throws InterruptedException {
+        WriteBatch batch = db.batch();
 
-        Map<String, Object> ingredient = new HashMap<>();
-        ingredient.put("category", storedIngredient.getCategory());
-        ingredient.put("description", storedIngredient.getDescription());
+        DocumentReference ingredientDocument = ingredients.document(id);
+        batch.update(ingredientDocument, "category", storedIngredient.getCategory());
+        batch.update(ingredientDocument, "description", storedIngredient.getDescription());
 
-        CountDownLatch ingredientComplete = new CountDownLatch(1);
-        this.ingredients
-                .document(id)
-                .set(ingredient)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot updated with ID: " + id);
-                        ingredientComplete.countDown();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                        ingredientComplete.countDown();
-                    }
-                });
-
-        ingredientComplete.await();
         DocumentReference storedDocument = collection.document(id);
         // update object in stored ingredients now
-        Map<String, Object> stored = new HashMap<>();
-        stored.put("unit", storedIngredient.getUnit());
-        stored.put("amount", storedIngredient.getAmount());
-        stored.put("location", storedIngredient.getLocation());
-        stored.put("best-before", storedIngredient.getBestBefore());
+        batch.update(storedDocument, "unit", storedIngredient.getUnit());
+        batch.update(storedDocument, "amount", storedIngredient.getAmount());
+        batch.update(storedDocument, "location", storedIngredient.getLocation());
+        batch.update(storedDocument, "best-before", storedIngredient.getBestBefore());
 
-        this.collection
-                .document(id)
-                .set(stored)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot updated with ID: " + id);
+        CountDownLatch batchComplete = new CountDownLatch(1);
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "StoredIngredient updated with ID: " + id);
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
+                batchComplete.countDown();
+            }
+        });
+
+        batchComplete.await();
     }
 
     /**
