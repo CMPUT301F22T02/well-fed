@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.wellfed.R;
-import com.example.wellfed.ingredient.IngredientAdapter;
 
 import java.util.ArrayList;
 
