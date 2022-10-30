@@ -57,8 +57,7 @@ public class RequiredTextInputLayout extends TextInputLayout
     private String initialText;
 
     public RequiredTextInputLayout(@NonNull Context context) {
-        super(context);
-        this.addOnEditTextAttachedListener(this);
+        this(context, null);
     }
 
     public RequiredTextInputLayout(@NonNull Context context,

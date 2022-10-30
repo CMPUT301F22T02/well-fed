@@ -24,24 +24,26 @@
 
 package com.example.wellfed.common;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.AttributeSet;
+
 import android.view.View;
-import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 /**
  * The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
@@ -58,34 +60,28 @@ import java.util.Objects;
  **/
 public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         implements View.OnFocusChangeListener, View.OnClickListener,
-                   DatePickerDialog.OnDateSetListener,
+                   MaterialPickerOnPositiveButtonClickListener<Long>,
                    TextInputLayout.OnEditTextAttachedListener {
-    private final Context CONTEXT;
     private final DateFormat DATE_FORMAT;
     private Date date;
 
     public RequiredDateTextInputLayout(@NonNull Context context) {
-        super(context);
-        this.CONTEXT = context;
-        this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        this.addOnEditTextAttachedListener(this);
+        this(context, null);
     }
 
     public RequiredDateTextInputLayout(@NonNull Context context,
                                        @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.CONTEXT = context;
         this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        this.addOnEditTextAttachedListener(this);
+        this.DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public RequiredDateTextInputLayout(@NonNull Context context,
                                        @Nullable AttributeSet attrs,
                                        int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.CONTEXT = context;
         this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        this.addOnEditTextAttachedListener(this);
+        this.DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     /*
@@ -104,15 +100,21 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
      * the current date.
      */
     private void showDatePickerDialog() {
-        final Calendar c = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this.CONTEXT,
-                this,
-                c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
+        Long selectedTime;
+        if (this.date == null) {
+            selectedTime = MaterialDatePicker.todayInUtcMilliseconds();
+        } else {
+            selectedTime = this.date.getTime();
+        }
+        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .setSelection(selectedTime)
+                .build();
+        ContextThemeWrapper wrapper = (ContextThemeWrapper) getContext();
+        AppCompatActivity activity =
+                (AppCompatActivity) wrapper.getBaseContext();
+        picker.show(activity.getSupportFragmentManager(), null);
+        picker.addOnPositiveButtonClickListener(this);
     }
 
     /*
@@ -136,16 +138,6 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         this.showDatePickerDialog();
     }
 
-    /*
-     * The onDateSet method calls setDate with the date from the data picker.
-     */
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        Date date = new GregorianCalendar(year, month, day).getTime();
-        this.setDate(date);
-    }
-
-
     public Date getDate() {
         return date;
     }
@@ -167,5 +159,16 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
     public void setPlaceholderDate(Date date) {
         this.date = date;
         this.setPlaceholderText(this.DATE_FORMAT.format(this.date));
+    }
+
+    /**
+     * Called with the current {@code MaterialCalendar<S>} selection.
+     *
+     * @param selection
+     */
+    @Override
+    public void onPositiveButtonClick(Long selection) {
+        Date date = new Date(selection);
+        this.setDate(date);
     }
 }
