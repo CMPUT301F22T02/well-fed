@@ -28,7 +28,7 @@ public class RecipeDBTest {
     public void testAddRecipe() {
         RecipeIngredient testIngredient = new RecipeIngredient();
         testIngredient.setDescription("Description");
-        testIngredient.setAmount(1);
+        testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
 
