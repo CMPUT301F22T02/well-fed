@@ -18,16 +18,15 @@ import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MealPlanActivity extends ActivityBase implements OnDeleteListener {
     private static final String ARG_MEAL_PLAN = "mealPlan";
-    private TextView mealPlanTitleTextView;
-    private TextView mealPlanNumberOfServingsTextView;
-    private DeleteButton deleteButton;
-    private FloatingActionButton fab;
-    private MealPlan mealPlan;
-    private ActivityResultLauncher<MealPlan> launcher =
+    private final ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanEditContract(), result -> {
                 String type = result.first;
                 MealPlan mealPlan = result.second;
@@ -42,20 +41,35 @@ public class MealPlanActivity extends ActivityBase implements OnDeleteListener {
                         break;
                 }
             });
-
+    private DateFormat dateFormat;
+    private TextView mealPlanTitleTextView;
+    private TextView mealPlanDateTextView;
+    private TextView mealPlanNumberOfServingsTextView;
+    private DeleteButton deleteButton;
+    private FloatingActionButton fab;
+    private MealPlan mealPlan;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
         getParent();
         Intent intent = getIntent();
+
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
 
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         mealPlanTitleTextView = findViewById(R.id.mealPlanTitleTextView);
+        mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
         mealPlanNumberOfServingsTextView =
                 findViewById(R.id.mealPlanNumberOfServingsTextView);
 
         mealPlanTitleTextView.setText(mealPlan.getTitle());
+        if (mealPlan.getEatDate() != null) {
+            mealPlanDateTextView.setText(
+                    dateFormat.format(mealPlan.getEatDate()));
+        }
         mealPlanNumberOfServingsTextView.setText(
                 "Number of servings: " + mealPlan.getServings());
         ArrayList<Recipe> recipes = mealPlan.getRecipes();
