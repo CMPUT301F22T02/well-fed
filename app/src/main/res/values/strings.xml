@@ -8,4 +8,5 @@
     <string name="recipe_book">Recipe Book</string>
     <string name="meal_book">Meal Book</string>
     <string name="shopping_cart">Shopping Cart</string>
+    <string name="search_for_ingredients">Search for ingredients</string>
 </resources>
