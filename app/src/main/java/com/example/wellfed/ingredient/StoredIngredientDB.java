@@ -147,39 +147,24 @@ public class StoredIngredientDB {
      * Removes an ingredient from storage, and the ingredient collection
      * @param id the ID of the ingredient to remove
      */
-    public void removeFromIngredients(String id) {
+    public void removeFromIngredients(String id) throws InterruptedException {
         // removes ingredient from storage AND ingredients
-        this.collection
-                .document(id)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+        WriteBatch batch = db.batch();
+        DocumentReference ingredientRef = this.ingredients.document(id);
+        DocumentReference storedRef = this.collection.document(id);
+        batch.delete(ingredientRef);
+        batch.delete(storedRef);
 
-        this.ingredients
-                .document(id)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+        CountDownLatch batchComplete = new CountDownLatch(1);
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "StoredIngredient deleted with ID: " + id);
+
+                batchComplete.countDown();
+            }
+        });
+        batchComplete.await();
     }
 
     /**

@@ -76,12 +76,28 @@ public class StoredIngredientDBTest {
         // removing it afterward
         storedIngredientDB.removeFromIngredients(id);
     }
+    @Test
+    public void testDeleteIngredient() throws InterruptedException {
+        StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
+        String id = storedIngredientDB.addStoredIngredient(storedIngredient);
+        storedIngredientDB.removeFromIngredients(id);
+
+        //TODO: Replace with assertThrows
+        boolean present = true;
+        try {
+            storedIngredientDB.getStoredIngredient(id);
+        } catch (IllegalArgumentException e) {
+            present = false;
+        }
+        assertFalse(present);
+
+    }
 
     /**
      * This method tests deleting a non-existing ingredient.
      */
     @Test
-    public void deleteNonExistingIngredient() {
+    public void deleteNonExistingIngredient() throws InterruptedException {
         // attempting to remove non-existing ingredient from db
         // this test will succeed if no error is thrown
         storedIngredientDB.removeFromIngredients("-1");
