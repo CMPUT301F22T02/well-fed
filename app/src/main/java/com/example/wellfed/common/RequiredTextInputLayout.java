@@ -54,7 +54,7 @@ import java.util.Objects;
 public class RequiredTextInputLayout extends TextInputLayout
         implements TextInputLayout.OnEditTextAttachedListener, TextWatcher {
     protected EditText editText;
-    private String initialText;
+    protected String initialText;
 
     public RequiredTextInputLayout(@NonNull Context context) {
         this(context, null);

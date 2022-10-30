@@ -69,8 +69,9 @@
 
     </com.example.wellfed.common.RequiredDateTextInputLayout>
 
-    <com.example.wellfed.common.RequiredTextInputLayout
+    <com.example.wellfed.common.RequiredDropdownTextInputLayout
         android:id="@+id/categoryTextInput"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -81,11 +82,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateTextInput">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <AutoCompleteTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            app:simpleItems="@array/mealPlanCategories"
+            />
 
-    </com.example.wellfed.common.RequiredTextInputLayout>
+    </com.example.wellfed.common.RequiredDropdownTextInputLayout>
 
     <com.example.wellfed.common.RequiredNumberTextInputLayout
         android:id="@+id/numberOfServingsTextInput"

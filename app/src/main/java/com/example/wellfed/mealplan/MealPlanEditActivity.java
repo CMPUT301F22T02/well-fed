@@ -11,6 +11,7 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmQuitDialog;
 import com.example.wellfed.common.OnQuitListener;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
+import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,7 +22,7 @@ public class MealPlanEditActivity extends ActivityBase
         implements OnQuitListener {
     private RequiredTextInputLayout titleTextInput;
     private RequiredDateTextInputLayout dateTextInput;
-    // TODO: menu for category
+    private RequiredDropdownTextInputLayout categoryTextInput;
     private RequiredNumberTextInputLayout numberOfServingsTextInput;
     private FloatingActionButton fab;
     private MealPlan mealPlan;
@@ -53,6 +54,7 @@ public class MealPlanEditActivity extends ActivityBase
         TextView titleTextView = findViewById(R.id.titleTextView);
         this.titleTextInput = findViewById(R.id.titleTextInput);
         this.dateTextInput = findViewById(R.id.dateTextInput);
+        this.categoryTextInput = findViewById(R.id.categoryTextInput);
         this.numberOfServingsTextInput =
                 findViewById(R.id.numberOfServingsTextInput);
         this.numberOfServingsTextInput.requireInteger();
@@ -67,7 +69,8 @@ public class MealPlanEditActivity extends ActivityBase
             titleTextView.setText(R.string.edit_meal_plan);
             this.titleTextInput.setPlaceholderText(this.mealPlan.getTitle());
             this.dateTextInput.setPlaceholderDate(this.mealPlan.getEatDate());
-            // TODO: menu for category
+            this.categoryTextInput.setPlaceholderText(
+                    this.mealPlan.getCategory());
             this.numberOfServingsTextInput.setPlaceholderText(
                     String.format(Locale.US, "%d", mealPlan.getServings()));
         } else {
@@ -83,7 +86,9 @@ public class MealPlanEditActivity extends ActivityBase
         if (this.dateTextInput.hasChanges()) {
             return true;
         }
-//        TODO: category
+        if (this.categoryTextInput.hasChanges()) {
+            return true;
+        }
         if (this.numberOfServingsTextInput.hasChanges()) {
             return true;
         }
@@ -91,17 +96,15 @@ public class MealPlanEditActivity extends ActivityBase
     }
 
     private void onSave() {
-        if (!hasUnsavedChanges()) {
-            onQuit();
-            return;
-        }
         if (!this.titleTextInput.isValid()) {
             return;
         }
         if (!this.dateTextInput.isValid()) {
             return;
         }
-//        TODO: category
+        if (!this.categoryTextInput.isValid()) {
+            return;
+        }
         if (!this.numberOfServingsTextInput.isValid()) {
             return;
         }
@@ -111,7 +114,7 @@ public class MealPlanEditActivity extends ActivityBase
         } else {
             this.mealPlan = new MealPlan(title);
         }
-        this.mealPlan.setCategory("null");
+        this.mealPlan.setCategory(this.categoryTextInput.getText());
         this.mealPlan.setEatDate(this.dateTextInput.getDate());
         this.mealPlan.setServings(this.numberOfServingsTextInput.getInteger());
         Intent intent = new Intent();
