@@ -6,15 +6,16 @@ import java.io.Serializable;
 
 public class RecipeIngredient extends Ingredient implements Serializable {
 
-    private float amount;
+    private String id;
 
 
-    public float getAmount() {
-        return amount;
+
+    public String getId() {
+        return id;
     }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
+    public void setId(String id) {
+        this.id = id;
     }
 
 
