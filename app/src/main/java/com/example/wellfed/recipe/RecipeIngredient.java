@@ -9,6 +9,7 @@ public class RecipeIngredient extends Ingredient implements Serializable {
     private String id;
 
 
+
     public String getId() {
         return id;
     }
