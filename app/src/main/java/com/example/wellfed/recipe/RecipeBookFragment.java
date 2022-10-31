@@ -106,15 +106,15 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
         Recipe temp = new Recipe("Apple pie");
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setDescription("Cinnamon Sugar");
-        recipeIngredient.setAmount(1);
+        recipeIngredient.setAmount(1.0F);
         recipeIngredient.setUnit("tbsp");
         RecipeIngredient recipeIngredient1 = new RecipeIngredient();
         recipeIngredient1.setDescription("Apple Slices");
-        recipeIngredient1.setAmount(3);
+        recipeIngredient1.setAmount(3.0F);
         recipeIngredient1.setUnit("slice");
         RecipeIngredient recipeIngredient2 = new RecipeIngredient();
         recipeIngredient2.setDescription("Dough");
-        recipeIngredient2.setAmount(1);
+        recipeIngredient2.setAmount(1.0F);
         recipeIngredient2.setUnit("cup");
         temp.addIngredient(recipeIngredient);
         temp.addIngredient(recipeIngredient1);
@@ -124,7 +124,7 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
             recipes.add(new Recipe(t));
         }
 
-        adapter = new RecipeAdapter(getActivity(), recipes, RecipeBookFragment.this);
+        adapter = new RecipeAdapter(getActivity(), recipes, this);
         recipeController.setRecipes(recipes);
         recipeController.setRecipeAdapter(adapter);
         rvRecipes.setAdapter(adapter);

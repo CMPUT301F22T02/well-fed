@@ -27,79 +27,108 @@ package com.example.wellfed.mealplan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.UTCDate;
+import com.google.android.material.color.MaterialColors;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * The MealPlanAdapter class binds ArrayList<MealPlan> to RecyclerView.
- *
+ * <p>
  * Citation:
  * Create dynamic lists with RecyclerView. Android Developers. (n.d.).
  * Retrieved September 26, 2022, from
  * https://developer.android.com/develop/ui/views/layout/recyclerview
  *
- * @version v1.0.0 2022-10-24
  * @author Steven Tang
+ * @version v1.0.0 2022-10-24
  **/
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
-    private final MealBookFragment CONTEXT;
+    private final MealBookFragment context;
     private final ArrayList<MealPlan> mealPlans;
-    private final DateFormat DATE_FORMAT;
-
-    public interface Launcher {
-        public void launch(int pos);
-    }
 
     public MealPlanAdapter(MealBookFragment context,
                            ArrayList<MealPlan> mealPlans) {
-        this.CONTEXT = context;
+        this.context = context;
         this.mealPlans = mealPlans;
-        this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        this.notifyItemRangeInserted(0, this.mealPlans.size());
     }
 
     /*
-     * The onCreateViewHolder method returns a new MealPlanViewHolder object using
+     * The onCreateViewHolder method returns a new MealPlanViewHolder object
+     * using
      * the viewholder_MealPlan.xml view.
      */
-    @NonNull
-    @Override
-    public MealPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-                                             int viewType) {
+    @NonNull @Override public MealPlanViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_holder_meal_plan, parent, false);
         return new MealPlanViewHolder(view);
     }
 
     /*
-     * The onBindViewHolder method binds a MealPlan object and a MealPlanViewHolder,
+     * The onBindViewHolder method binds a MealPlan object and a
+     * MealPlanViewHolder,
      * taking the data in the MealPlan object and mapping it into a human
      * readable format to be presented in the RecyclerView.
      */
-    @Override
-    public void onBindViewHolder(@NonNull MealPlanViewHolder holder, int position) {
+    @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
+                                           int position) {
+
         MealPlan mealPlan = this.mealPlans.get(position);
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
-        View itemView = holder.getItemView();
-        itemView.setOnClickListener(
-                view -> CONTEXT.launch(holder.getAdapterPosition()));
+        holder.getMaterialCardView().setOnClickListener(
+                view -> context.launch(holder.getAdapterPosition()));
 
+        UTCDate today = new UTCDate();
+        UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
+
+        int colorPrimary = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorPrimary);
+        int colorOnPrimary = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorOnPrimary);
+        int colorSurface = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorSurface);
+        int colorOnSurface = MaterialColors.getColor(context.getView(),
+                com.google.android.material.R.attr.colorOnSurface);
+
+        UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
+        if (position > 0) {
+            MealPlan priorMealPlan = this.mealPlans.get(position - 1);
+            UTCDate priorEatDate = UTCDate.from(priorMealPlan.getEatDate());
+            if (priorEatDate.equals(eatDate)) {
+                return;
+            }
+            UTCDate priorEatDateFirstDayOfWeek =
+                    priorEatDate.getFirstDayOfWeek();
+            if (eatDateFirstDayOfWeek.equals(priorEatDateFirstDayOfWeek)) {
+                return;
+            }
+        }
+        UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
+        String eatDateFirstDayOfWeekMonth = eatDateFirstDayOfWeek.format("MMMM ");
+        String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
+        String weekLabel = eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
+        String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
+        if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
+            weekLabel += eatDateLastDayOfWeekMonth;
+        }
+        weekLabel += eatDateLastDayOfWeek.format("d");
+        holder.getWeekTextView().setText(weekLabel);
+        holder.getWeekTextView().setVisibility(View.VISIBLE);
+        if (today.equals(eatDate)) {
+            holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
+        } else {
+            holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
+        }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return this.mealPlans.size();
     }
 

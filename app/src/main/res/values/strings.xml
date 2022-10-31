@@ -13,4 +13,14 @@
     <string name="call_to_action_add_meal_plan">Add a meal plan to get started!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="edit_meal_plan">Edit Meal Plan</string>
+    <string name="add_meal_plan">Add Meal Plan</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="category">Category</string>
+    <string name="number_of_servings">Number of Servings</string>
+    <string name="search_for_ingredients">Search for ingredients</string>
 </resources>

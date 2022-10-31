@@ -3,30 +3,29 @@ package com.example.wellfed.mealplan;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeActivity;
-
-public class MealPlanContract extends ActivityResultContract<MealPlan, MealPlan> {
+public class MealPlanContract extends ActivityResultContract<MealPlan,
+        Pair<String, MealPlan>> {
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, MealPlan mealPlan) {
         Intent intent = new Intent(context, MealPlanActivity.class);
         intent.putExtra("mealPlan", mealPlan);
-        intent.putExtra("RequestCode", 101);
         return intent;
     }
 
     @Override
-    public MealPlan parseResult(int i, @Nullable Intent intent) {
-        if (i != Activity.RESULT_OK && intent.getStringExtra("Reason").equals("Delete")) {
+    public Pair<String, MealPlan> parseResult(int i, @Nullable Intent intent) {
+        if (i != Activity.RESULT_OK || intent == null) {
             return null;
-        } else {
-            return (MealPlan) intent.getSerializableExtra("mealPlan");
         }
+        String type = intent.getStringExtra("type");
+        MealPlan mealPlan = (MealPlan) intent.getSerializableExtra("mealPlan");
+        return new Pair<>(type, mealPlan);
     }
 }
