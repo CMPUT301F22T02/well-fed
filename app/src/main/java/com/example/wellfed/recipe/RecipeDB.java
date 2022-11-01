@@ -204,6 +204,7 @@ public class RecipeDB {
      *
      * @param id A String with the id of the document who recipe we want
      * @return The Recipe object that corresponds to the document in the collection
+     * If it does not exist then return null
      * @throws InterruptedException If the transaction in the method was not complete
      */
     public Recipe getRecipe(String id) throws InterruptedException {
@@ -229,6 +230,10 @@ public class RecipeDB {
         });
 
         getLatch.await();
+
+        if(!recipeSnapshot[0].exists()){
+            return null;
+        }
 
         recipe.setTitle(recipeSnapshot[0].getString("title"));
         recipe.setCategory(recipeSnapshot[0].getString("category"));

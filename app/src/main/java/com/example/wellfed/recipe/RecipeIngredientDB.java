@@ -233,7 +233,8 @@ public class RecipeIngredientDB {
     /**
      * Get the RecipeIngredient Object from the recipe ingredient document with the same id provided
      * @param id A String of the id that corresponds to the id of the Recipe Ingredient document
-     * @return RecipeIngredient corresponding to the document in the collection
+     * @return RecipeIngredient corresponding to the document in the collection if it does not exist
+     * return null
      * @throws InterruptedException If any transaction in the method was not complete
      */
     public RecipeIngredient getRecipeIngredient(String id) throws InterruptedException {
@@ -261,6 +262,10 @@ public class RecipeIngredientDB {
         });
 
         readRecipeIngredient.await();
+
+        if(!recipeIngredientSnapshot[0].exists()){
+            return null;
+        }
 
         DocumentReference ingredientDocument = (DocumentReference) recipeIngredientSnapshot[0].get("ingredient");
 
