@@ -18,6 +18,10 @@ import android.media.Image;
 import androidx.annotation.Nullable;
 
 import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.recipe.category.BreakfastCategory;
+import com.example.wellfed.recipe.category.Category;
+import com.example.wellfed.recipe.category.DinnerCategory;
+import com.example.wellfed.recipe.category.LunchCategory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,7 +47,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the category (aka tag) of a Recipe.
      */
-    private  String category;
+    private Category category;
 
     /**
      * Holds the Ingredients needed for a Recipe.
@@ -79,6 +83,7 @@ public class Recipe implements Serializable {
         this.title = title;
         this.ingredients = new ArrayList<>();
         this.id = NULL;
+        this.category = null;
     }
 
     /**
@@ -119,7 +124,17 @@ public class Recipe implements Serializable {
      * @param category The String representing category to add to the Recipe
      */
     public void setCategory(String category) {
-        this.category = category;
+        switch (category) {
+            case "Breakfast":
+                this.category = new BreakfastCategory();
+                break;
+            case "Lunch":
+                this.category = new LunchCategory();
+                break;
+            case "Dinner":
+                this.category = new DinnerCategory();
+                break;
+        }
     }
 
     /**
@@ -128,7 +143,10 @@ public class Recipe implements Serializable {
      */
     @Nullable
     public String getCategory() {
-        return this.category;
+        if(category != null)
+            return category.getCategory();
+        else
+            return "";
     }
 
 

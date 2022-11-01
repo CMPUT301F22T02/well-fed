@@ -45,7 +45,7 @@ public class RecipeDBTest {
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(1);
         testRecipe.addIngredient(testIngredient);
-        testRecipe.setCategory("Test");
+        testRecipe.setCategory("Breakfast");
 
         String recipeId = recipeDB.addRecipe(testRecipe);
 
@@ -86,7 +86,7 @@ public class RecipeDBTest {
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(1);
         testRecipe.addIngredient(testIngredient);
-        testRecipe.setCategory("Test");
+        testRecipe.setCategory("Breakfast");
 
         String recipeId = recipeDB.addRecipe(testRecipe);
 
@@ -118,7 +118,7 @@ public class RecipeDBTest {
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(1);
         testRecipe.addIngredient(testIngredient);
-        testRecipe.setCategory("Test");
+        testRecipe.setCategory("Breakfast");
 
         String recipeId = recipeDB.addRecipe(testRecipe);
 
@@ -126,7 +126,7 @@ public class RecipeDBTest {
         testRecipe.setComments("Test2");
         testRecipe.setServings(2);
         testRecipe.setPrepTimeMinutes(2);
-        testRecipe.setCategory("Test2");
+        testRecipe.setCategory("Lunch");
 
         recipeDB.editRecipe(testRecipe);
         Recipe fromDbTestRecipe = recipeDB.getRecipe(testRecipe.getId());
