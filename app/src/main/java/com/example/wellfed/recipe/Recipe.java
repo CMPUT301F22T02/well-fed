@@ -11,6 +11,8 @@
 
 package com.example.wellfed.recipe;
 
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
 import android.media.Image;
 
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a Recipe, which contains ingredients and instructions on how to prepare
@@ -28,19 +31,24 @@ import java.util.ArrayList;
  */
 public class Recipe implements Serializable {
     /**
+     * Holds the Database id of a Recipe
+     */
+    private String id;
+
+    /**
      * Holds the title of a Recipe.
      */
     private String title;
 
     /**
-     * Holds the categories (aka tags) of a Recipe.
+     * Holds the category (aka tag) of a Recipe.
      */
-    private final ArrayList<String> categories;
+    private  String category;
 
     /**
      * Holds the Ingredients needed for a Recipe.
      */
-    private final ArrayList<Ingredient> ingredients;
+    private final List<RecipeIngredient> ingredients;
 
     /**
      * Holds the user comments on a Recipe.
@@ -69,15 +77,15 @@ public class Recipe implements Serializable {
      */
     public Recipe(String title) {
         this.title = title;
-        categories = new ArrayList<>();
-        ingredients = new ArrayList<>();
+        this.ingredients = new ArrayList<>();
+        this.id = NULL;
     }
 
     /**
      * Adds an Ingredient as part of a Recipe
      * @param ingredient An Ingredient object to be added to the Recipe
      */
-    public void addIngredient(Ingredient ingredient) {
+    public void addIngredient(RecipeIngredient ingredient) {
         this.ingredients.add(ingredient);
     }
 
@@ -102,7 +110,7 @@ public class Recipe implements Serializable {
      * Gets the entire ArrayList of Ingredients that make up a Recipe
      * @return The ArrayList of all Ingredients
      */
-    public ArrayList<Ingredient> getIngredients() {
+    public List<RecipeIngredient> getIngredients() {
         return this.ingredients;
     }
 
@@ -110,35 +118,19 @@ public class Recipe implements Serializable {
      * Adds a category (aka tag) to a Recipe
      * @param category The String representing category to add to the Recipe
      */
-    public void addCategory(String category) {
-        categories.add(category);
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     /**
-     * Removes a category (aka tag) from a Recipe
-     * @param category The String representing a category to remove from the Recipe
-     */
-    public void removeCategory(String category) {
-        categories.remove(category);
-    }
-
-    /**
-     * Gets the category (aka tag) at the specified index
-     * @param index The index of the desired category
+     * Gets the category (aka tag) of the Recipe
      * @return A String representing the category indexed
      */
     @Nullable
-    public String getCategory(int index) {
-        return categories.get(index);
+    public String getCategory() {
+        return this.category;
     }
 
-    /**
-     * Gets the entire list of categories
-     * @return An ArrayList of Strings containing all categories in a Recipe
-     */
-    public ArrayList<String> getCategories() {
-        return categories;
-    }
 
     /** Gets the title of a Recipe
      * @return A String representing the title of a Recipe
@@ -220,5 +212,21 @@ public class Recipe implements Serializable {
      */
     public void setPhotograph(Image photograph) {
         this.photograph = photograph;
+    }
+
+    /**
+     * Sets the id of a Recipe
+     * @param id A string representing the id of the document in the db
+     */
+    public void setId(String id){
+        this.id = id;
+    }
+
+    /**
+     * Gets the id of a Recipe, the id of the document in the db the Recipe is based off of
+     * @return A string representing the id of the document in the db
+     */
+    public String getId(){
+        return this.id;
     }
 }

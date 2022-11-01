@@ -11,6 +11,7 @@
 
 package com.example.wellfed.ingredient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -18,25 +19,24 @@ import java.util.ArrayList;
  *
  * @version 1.0
  */
-public class Ingredient {
+public class Ingredient implements Serializable {
     /**
      * Holds the description of an Ingredient. This can also be considered to be a title.
      */
     private String description;
     /**
-     * Holds an ArrayList of all of the categories associated with one Ingredient.
+     * Holds the category of an Ingredient.
      */
-    private final ArrayList<String> categories;
-    /**
-     * Holds the amount of one Ingredient, in units
-     * @see #unit
-     */
-    private int amount;
+    private String category;
     /**
      * Holds the units that an amount of an Ingredient is in
-     * @see #amount
      */
     private String unit;
+
+    /**
+     * Holds the number of items in an Ingredient
+     */
+    private Float amount;
 
     /**
      * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
@@ -44,40 +44,26 @@ public class Ingredient {
      */
     public Ingredient(String description) {
         this.description = description;
-        this.categories = new ArrayList<>();
+    }
+
+    public Ingredient() {
+        this.description = null;
     }
 
     /**
-     * Adds a category (aka tag) to an Ingredient object.
+     * Sets the category (aka tag) of an Ingredient object.
      * @param category The category to add
      */
-    public void addCategory(String category) {
-        categories.add(category);
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     /**
-     * Removes a category (aka tag) from an Ingredient object.
-     * @param category The category to remove
-     */
-    public void removeCategory(String category) {
-        categories.remove(category);
-    }
-
-    /**
-     * Gets the category at the specified index.
-     * @param index The index where the category is at
+     * Gets the category.
      * @return The String representing the category
      */
-    public String getCategory(int index) {
-        return categories.get(index);
-    }
-
-    /**
-     * Gets the entire ArrayList of categories.
-     * @return The ArrayList of Strings containing all categories
-     */
-    public ArrayList<String> getCategories() {
-        return categories;
+    public String getCategory() {
+        return category;
     }
 
     /**
@@ -97,22 +83,6 @@ public class Ingredient {
     }
 
     /**
-     * Gets the amount of an Ingredient
-     * @return An int representing the amount of an ingredient
-     */
-    public int getAmount() {
-        return amount;
-    }
-
-    /**
-     * Sets the amount of an Ingredient
-     * @param amount The amount to set of an Ingredient
-     */
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    /**
      * Gets a String representing the unit of an amount
      * @return A String representing the unit
      */
@@ -126,5 +96,17 @@ public class Ingredient {
      */
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    /**
+     * Sets the amount of an ingredient
+     * @param amount the amount
+     */
+    public void setAmount(Float amount) {
+        this.amount = amount;
+    }
+
+    public Float getAmount() {
+        return amount;
     }
 }
