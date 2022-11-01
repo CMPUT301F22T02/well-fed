@@ -18,32 +18,52 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class RecipeIngredientDB {
-    FirebaseFirestore db;
-    final CollectionReference recipeIngredientsCollection;
-    final CollectionReference ingredientsCollection;
+    /**
+     * Holds an instance of the Firebase Firestore database
+     */
+    private final FirebaseFirestore db;
+    /**
+     * Holds an instance of the collection of RecipeIngredients stored in the FireStore db database
+     */
+    private final CollectionReference recipeIngredientsCollection;
+    /**
+     * Holds an instance of the collection of Ingredients stored in the FireStore db database
+     */
+    private final CollectionReference ingredientsCollection;
 
+    /**
+     * Creates a RecipeIngredientDB object
+     */
     public RecipeIngredientDB(){
         db = FirebaseFirestore.getInstance();
         this.recipeIngredientsCollection = db.collection("RecipeIngredients");
         this.ingredientsCollection = db.collection("Ingredients");
     }
 
-    public String addRecipeIngredient(RecipeIngredient i) throws InterruptedException {
+    /**
+     * Adds a RecipeIngredient to the RecipeIngredient Collection. Adds an Ingredient to Ingredient
+     * Collection. The new RecipeIngredient document has a reference to the new Ingredient document.
+     * The RecipeIngredient has it's id set to the new RecipeIngredient document id.
+     * @param ingredient The RecipeIngredient to be added
+     * @return The id of the RecipeIngredient that was added
+     * @throws InterruptedException If any transaction in the method was not complete
+     */
+    public String addRecipeIngredient(RecipeIngredient ingredient) throws InterruptedException {
         String newIngredientId = ingredientsCollection.document().getId();
         String newRecipeIngredientId = recipeIngredientsCollection.document().getId();
         CountDownLatch addIngredient = new CountDownLatch(1);
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
             Map<String, Object> ingredientMap = new HashMap<>();
-            ingredientMap.put("description", i.getDescription());
-            ingredientMap.put("category", i.getCategory());
+            ingredientMap.put("description", ingredient.getDescription());
+            ingredientMap.put("category", ingredient.getCategory());
 
             DocumentReference newIngredientDocument = ingredientsCollection.document(newIngredientId);
             DocumentReference newRecipeIngredientDocument = recipeIngredientsCollection.document(newRecipeIngredientId);
 
             Map<String, Object> recipeIngredientMap = new HashMap<>();
-            recipeIngredientMap.put("amount", i.getAmount());
-            recipeIngredientMap.put("unit", i.getUnit());
+            recipeIngredientMap.put("amount", ingredient.getAmount());
+            recipeIngredientMap.put("unit", ingredient.getUnit());
             recipeIngredientMap.put("ingredient", newIngredientDocument);
 
             transaction.set(newIngredientDocument, ingredientMap);
@@ -62,11 +82,16 @@ public class RecipeIngredientDB {
 
         addIngredient.await();
 
-        i.setId(newRecipeIngredientId);
+        ingredient.setId(newRecipeIngredientId);
 
         return newRecipeIngredientId;
     }
 
+    /**
+     * Delete the RecipeIngredient document
+     * @param id The String of the RecipeIngredient document we want to delete
+     * @throws InterruptedException If any transaction in the method was not complete
+     */
     public void delRecipeIngredient(String id) throws InterruptedException {
         DocumentReference delRecipe = recipeIngredientsCollection.document(id);
 
@@ -90,6 +115,11 @@ public class RecipeIngredientDB {
         delLatch.await();
     }
 
+    /**
+     * Delete the RecipeIngredient and the referenced Ingredient document in the relevant collections
+     * @param id The String of the RecipeIngredient document we want to delete
+     * @throws InterruptedException If any transaction in the method was not complete
+     */
     public void delIngredient(String id) throws InterruptedException {
 
         final DocumentReference[] recipeIngredientDocument = new DocumentReference[1];
@@ -105,8 +135,6 @@ public class RecipeIngredientDB {
             DocumentSnapshot recipeIngredientSnapshot = transaction.get(recipeIngredientDocument[0]);
 
             ingredientDocument[0] = recipeIngredientSnapshot.getDocumentReference("ingredient");
-
-
 
             return null;
         })
@@ -140,6 +168,11 @@ public class RecipeIngredientDB {
         deleteCount.await();
     }
 
+    /**
+     * Update the RecipeIngredient document in the database with the new RecipeIngredient fields
+     * @param recipeIngredient The RecipeIngredient with the updated information
+     * @throws InterruptedException If any transaction in the method was not complete
+     */
     public void updateRecipeIngredient(RecipeIngredient recipeIngredient) throws InterruptedException {
         String recipeIngredientId = recipeIngredient.getId();
 
@@ -197,6 +230,12 @@ public class RecipeIngredientDB {
         updateDocuments.await();
     }
 
+    /**
+     * Get the RecipeIngredient Object from the recipe ingredient document with the same id provided
+     * @param id A String of the id that corresponds to the id of the Recipe Ingredient document
+     * @return RecipeIngredient corresponding to the document in the collection
+     * @throws InterruptedException If any transaction in the method was not complete
+     */
     public RecipeIngredient getRecipeIngredient(String id) throws InterruptedException {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
 
@@ -251,11 +290,21 @@ public class RecipeIngredientDB {
         return recipeIngredient;
     }
 
+    /**
+     * Get the DocumentReference from RecipeIngredients collection for the given id
+     * @param id The String of the document in RecipeIngredients collection we want
+     * @return DocumentReference of the RecipeIngredient
+     */
     public DocumentReference getDocumentReference(String id){
         return recipeIngredientsCollection.document(id);
     }
 
-    public ArrayList<RecipeIngredient> getDocumentReferences() throws InterruptedException {
+    /**
+     * Gets all the corresponding RecipeIngredients from the Recipe Ingredient collection
+     * @return ArrayList<RecipeIngredient> containing all RecipeIngredients/
+     * @throws InterruptedException If any transaction in the method was not complete
+     */
+    public ArrayList<RecipeIngredient> getRecipeIngredients() throws InterruptedException {
         CountDownLatch recipesLatch = new CountDownLatch(1);
 
         ArrayList<RecipeIngredient> recipeIngredients = new ArrayList<>();
