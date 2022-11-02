@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.common.OnDeleteListener;
 import com.example.wellfed.ingredient.Ingredient;
 
@@ -39,7 +40,7 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
         getParent();
         Intent intent = getIntent();
         this.recipe = (Recipe) intent.getSerializableExtra("Recipe");
-        for (RecipeIngredient ingredient: recipe.getIngredients()){
+        for (RecipeIngredient ingredient : recipe.getIngredients()) {
             ingredientList.add(ingredient);
         }
 
@@ -54,8 +55,10 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
 
 
 //        TODO: implement delete button
-        Button deleteBtn = findViewById(R.id.recipe_delete_btn);
-        deleteBtn.setOnClickListener(view -> {onDelete();});
+        DeleteButton deleteBtn = new DeleteButton(this,
+                findViewById(R.id.recipe_delete_btn),
+                "Delete Recipe",
+                this);
     }
 
     @Override
