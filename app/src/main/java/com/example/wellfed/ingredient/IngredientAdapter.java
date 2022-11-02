@@ -1,17 +1,18 @@
 package com.example.wellfed.ingredient;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // This class is used to display the list of ingredients in the ingredient storage
 // It displays the name of the ingredient and one of its attributes depending
@@ -20,32 +21,45 @@ import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
-    private ArrayList<StorageIngredient> ingredients;
+    private FragmentActivity parent;
+    private final ArrayList<StorageIngredient> ingredients;
+    private final IngredientLauncher ingredientLauncher;
 
-    public IngredientAdapter(ArrayList<StorageIngredient> ingredients) {
+    public interface IngredientLauncher {
+        public void launch(int pos);
+    }
+
+    public IngredientAdapter(FragmentActivity parent, ArrayList<StorageIngredient> ingredients,
+                             IngredientStorageFragment ingredientStorageFragment) {
+        this.parent = parent;
         this.ingredients = ingredients;
+        this.ingredientLauncher = (IngredientLauncher) ingredientStorageFragment;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView ingredientNameTextView;
         public TextView ingredientAttributeTextView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ingredientNameTextView = (TextView) itemView.findViewById(R.id.ingredient_name);
-            ingredientAttributeTextView = (TextView) itemView.findViewById(R.id.ingredient_subtext);
+            ingredientNameTextView = itemView.findViewById(R.id.ingredient_name_textView);
+            ingredientAttributeTextView =
+                    itemView.findViewById(R.id.ingredient_subtext);
+
         }
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
-        View ingredientView = layoutInflater.inflate(R.layout.ingredient_element_subtext, parent,
-                false);
+        View ingredientView = inflater.inflate(R.layout.ingredient_element_subtext, parent, false);
 
-        return new ViewHolder(ingredientView);
+        ViewHolder viewHolder = new ViewHolder(ingredientView);
+        return viewHolder;
     }
 
     @Override
@@ -56,14 +70,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         ingredientNameTextView.setText(ingredient.getDescription());
 
         TextView ingredientAttributeTextView = holder.ingredientAttributeTextView;
-        String quantity = String.valueOf(ingredient.getAmount());
-        String unit = ingredient.getUnit();
-        String quantityAndUnit = quantity + " " + unit;
-        ingredientAttributeTextView.setText(quantityAndUnit);
+        ingredientAttributeTextView.setText(ingredient.getBestBefore());
+
+        holder.itemView.setOnClickListener(v -> ingredientLauncher.launch(position));
     }
 
     @Override
     public int getItemCount() {
         return ingredients.size();
     }
+
 }

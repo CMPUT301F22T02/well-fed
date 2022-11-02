@@ -64,4 +64,20 @@ public class FoodStorage {
     public ArrayList<StorageIngredient> getIngredients() {
         return this.storedIngredients;
     }
+
+    /**
+     * Delete the given ingredient from the food storage.
+     * @param result the ingredient to delete
+     */
+    public void deleteIngredient(StorageIngredient result) {
+        this.storedIngredients.remove(result);
+    }
+
+    /**
+     * Update the given ingredient in the food storage.
+     * @param result the ingredient to update
+     */
+    public void updateIngredient(StorageIngredient result) {
+        this.storedIngredients.set(this.storedIngredients.indexOf(result), result);
+    }
 }
