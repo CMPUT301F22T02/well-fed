@@ -73,7 +73,7 @@ public class IngredientTest {
     }
 
     /**
-     * Tests the setter and getter functionality of the categories.
+     * Tests the set and get functionality of the category.
      */
     @Test
     public void testCategory() {
@@ -90,6 +90,9 @@ public class IngredientTest {
         assertEquals("test2", mock.getCategory());
     }
 
+    /**
+     * Tests the set and get functionality of the unit.
+     */
     @Test
     public void testUnit() {
         Ingredient mock = mockIngredient();
@@ -105,6 +108,9 @@ public class IngredientTest {
         assertEquals("test2", mock.getUnit());
     }
 
+    /**
+     * Tests the set and get functionality of the description.
+     */
     @Test
     public void testAmount() {
         Ingredient mock = mockIngredient();
