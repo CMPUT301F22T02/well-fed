@@ -49,22 +49,22 @@ public class IngredientStorageFragment extends Fragment {
         foodStorage = new FoodStorage();
 
         // Add ingredients to food storage
-        foodStorage.addIngredient(new StorageIngredient("Milk", 1, "l",
+        foodStorage.addIngredient(new StorageIngredient("Milk", 1.0f, "l",
                 "Freezer",
                 new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Eggs", 12, "count",
+        foodStorage.addIngredient(new StorageIngredient("Eggs", 12.0f, "count",
                 "Fridge",
                 new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Bread", 1, "loaf",
+        foodStorage.addIngredient(new StorageIngredient("Bread", 1.0f, "loaf",
                 "Pantry",
                 new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Butter", 1, "stick",
+        foodStorage.addIngredient(new StorageIngredient("Butter", 1.0f, "stick",
                 "Fridge",
                 new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Cheese", 1, "block",
+        foodStorage.addIngredient(new StorageIngredient("Cheese", 1.0f, "block",
                 "Fridge",
                 new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Chicken", 1, "lb",
+        foodStorage.addIngredient(new StorageIngredient("Chicken", 1.0f, "lb",
                 "Freezer",
                 new Date(2021, 12, 12)));
 
@@ -97,7 +97,7 @@ public class IngredientStorageFragment extends Fragment {
 
                     // Create a new ingredient with the text from the text fields
                     StorageIngredient ingredient = new StorageIngredient(name.getText().toString(),
-                            Integer.parseInt(quantity.getText().toString()),
+                            Float.parseFloat(quantity.getText().toString()),
                             unit.getText().toString(),
                             location.getText().toString(),
                             new Date(expiration.getText().toString()));

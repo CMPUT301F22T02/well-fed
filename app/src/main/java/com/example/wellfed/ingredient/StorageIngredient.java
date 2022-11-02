@@ -7,7 +7,7 @@ public class StorageIngredient extends Ingredient {
     /**
      * The amount of the ingredient in the storage.
      */
-    private int amount;
+    private Float amount;
     /**
      * The unit of the ingredient in the storage.
      */
@@ -23,13 +23,24 @@ public class StorageIngredient extends Ingredient {
      */
     private Date bestBefore;
 
+
+    /**
+     * Creates a new StorageIngredient object without data.
+     */
+    public StorageIngredient(String name) {
+        super(name);
+    }
+
     /**
      * Creates a new StorageIngredient object that represents an Ingredient used for various meal purposes.
      *
      * @param description The description/title of an Ingredient
-     * @param s
+     * @param amount      The amount of the ingredient in the storage.
+     * @param unit        The unit of the ingredient in the storage.
+     * @param location    The location of the ingredient in the storage.
+     * @param bestBefore  The best before date of the ingredient in the storage.
      */
-    public StorageIngredient(String description, int amount,
+    public StorageIngredient(String description, Float amount,
                              String unit, String location, Date bestBefore) {
         super(description);
         this.amount = amount;
@@ -43,7 +54,7 @@ public class StorageIngredient extends Ingredient {
      *
      * @return The amount of the ingredient in the storage
      */
-    public int getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
@@ -52,7 +63,7 @@ public class StorageIngredient extends Ingredient {
      *
      * @param amount The amount of the ingredient in the storage
      */
-    public void setAmount(int amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
@@ -67,14 +78,13 @@ public class StorageIngredient extends Ingredient {
 
     /**
      * Sets the unit of the ingredient in the storage.
-     *
      */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
     /**
-     *  Gets the location of the ingredient in the storage.
+     * Gets the location of the ingredient in the storage.
      *
      * @return The location of the ingredient in the storage
      */
@@ -118,6 +128,7 @@ public class StorageIngredient extends Ingredient {
 
     /**
      * Gets the best before date of the ingredient in the storage.
+     *
      * @return The best before date of the ingredient in the storage
      */
     public String getBestBefore() {
