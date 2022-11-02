@@ -47,6 +47,16 @@ public class MealPlanEditActivity extends ActivityBase
         return true;
     }
 
+    @Override
+    public void deleteIngredient() {
+
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan_edit);
@@ -129,5 +139,10 @@ public class MealPlanEditActivity extends ActivityBase
         Intent intent = new Intent();
         setResult(Activity.RESULT_CANCELED, intent);
         finish();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }
