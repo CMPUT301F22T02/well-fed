@@ -1,5 +1,8 @@
 package com.example.wellfed;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import com.example.wellfed.recipe.RecipeIngredient;
 import com.example.wellfed.recipe.RecipeIngredientDB;
 
@@ -35,11 +38,11 @@ public class RecipeIngredientDBTest {
         testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
 
 
-        assert Objects.equals(testIngredient.getId(), testIngredientFromDb.getId());
-        assert Objects.equals(testIngredient.getAmount(), testIngredientFromDb.getAmount());
-        assert Objects.equals(testIngredient.getCategory(), testIngredientFromDb.getCategory());
-        assert Objects.equals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
-        assert Objects.equals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
+        assertEquals(testIngredient.getId(), testIngredientFromDb.getId());
+        assertEquals(testIngredient.getAmount(), testIngredientFromDb.getAmount());
+        assertEquals(testIngredient.getCategory(), testIngredientFromDb.getCategory());
+        assertEquals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
+        assertEquals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
 
 
         recipeIngredientDB.delIngredient(testIngredient.getId());
@@ -51,7 +54,16 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testDelRecipeIngredient() throws InterruptedException{
+        RecipeIngredient testIngredient = new RecipeIngredient();
+        testIngredient.setDescription("Description");
+        testIngredient.setAmount(1.0F);
+        testIngredient.setCategory("Test");
+        testIngredient.setUnit("TestUnits");
+        recipeIngredientDB.addRecipeIngredient(testIngredient);
 
+        recipeIngredientDB.delIngredient(testIngredient.getId());
+
+        assertNull(recipeIngredientDB.getRecipeIngredient(testIngredient.getId()));
     }
 
     /**
@@ -71,11 +83,11 @@ public class RecipeIngredientDBTest {
         RecipeIngredient testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
 
 
-        assert Objects.equals(testIngredient.getId(), testIngredientFromDb.getId());
-        assert Objects.equals(testIngredient.getAmount(), testIngredientFromDb.getAmount());
-        assert Objects.equals(testIngredient.getCategory(), testIngredientFromDb.getCategory());
-        assert Objects.equals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
-        assert Objects.equals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
+        assertEquals(testIngredient.getId(), testIngredientFromDb.getId());
+        assertEquals(testIngredient.getAmount(), testIngredientFromDb.getAmount());
+        assertEquals(testIngredient.getCategory(), testIngredientFromDb.getCategory());
+        assertEquals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
+        assertEquals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
 
         testIngredient.setDescription("Description2");
         testIngredient.setAmount(5.0F);
@@ -85,11 +97,11 @@ public class RecipeIngredientDBTest {
 
         testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
 
-        assert Objects.equals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
-        assert Objects.equals(testIngredient.getAmount(), testIngredientFromDb.getAmount());
-        assert Objects.equals(testIngredient.getCategory(), testIngredientFromDb.getCategory());
-        assert Objects.equals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
-        assert Objects.equals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
+        assertEquals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
+        assertEquals(testIngredient.getAmount(), testIngredientFromDb.getAmount());
+        assertEquals(testIngredient.getCategory(), testIngredientFromDb.getCategory());
+        assertEquals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
+        assertEquals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
 
         recipeIngredientDB.delIngredient(testIngredient.getId());
     }
@@ -100,7 +112,7 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testGetOnNonExistentRecipeIngredient() throws InterruptedException{
-        assert recipeIngredientDB.getRecipeIngredient("-1") == null;
+        assertNull(recipeIngredientDB.getRecipeIngredient("-1"));
     }
 
     /**
@@ -126,6 +138,6 @@ public class RecipeIngredientDBTest {
         recipeIngredient.setId("-1");
         recipeIngredientDB.updateRecipeIngredient(recipeIngredient);
 
-        assert recipeIngredientDB.getRecipeIngredient(recipeIngredient.getId()) == null;
+        assertNull(recipeIngredientDB.getRecipeIngredient(recipeIngredient.getId()));
     }
 }

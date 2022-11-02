@@ -1,5 +1,8 @@
 package com.example.wellfed;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.wellfed.recipe.Recipe;
@@ -55,13 +58,13 @@ public class RecipeDBTest {
 
         Recipe testRecipe2 = recipeDB.getRecipe(testRecipeId);
 
-        assert Objects.equals(testRecipe2.getTitle(), testRecipe.getTitle());
-        assert Objects.equals(testRecipe2.getCategory(), testRecipe.getCategory());
-        assert Objects.equals(testRecipe2.getId(), testRecipe.getId());
-        assert Objects.equals(testRecipe2.getServings(), testRecipe.getServings());
-        assert Objects.equals(testRecipe2.getPrepTimeMinutes(), testRecipe.getPrepTimeMinutes());
-        assert Objects.equals(testRecipe2.getComments(), testRecipe.getComments());
-        assert Objects.equals(testRecipe2.getPhotograph(), testRecipe.getPhotograph());
+        assertEquals(testRecipe2.getTitle(), testRecipe.getTitle());
+        assertEquals(testRecipe2.getCategory(), testRecipe.getCategory());
+        assertEquals(testRecipe2.getId(), testRecipe.getId());
+        assertEquals(testRecipe2.getServings(), testRecipe.getServings());
+        assertEquals(testRecipe2.getPrepTimeMinutes(), testRecipe.getPrepTimeMinutes());
+        assertEquals(testRecipe2.getComments(), testRecipe.getComments());
+        assertEquals(testRecipe2.getPhotograph(), testRecipe.getPhotograph());
 
         recipeDB.delRecipe(testRecipe.getId());
         recipeIngredientDB.delIngredient(testIngredient.getId());
@@ -93,7 +96,7 @@ public class RecipeDBTest {
         recipeDB.delRecipe(testRecipe.getId());
         recipeIngredientDB.delIngredient(testIngredient.getId());
 
-        assert recipeDB.getRecipe(testRecipe.getId()) == null;
+        assertNull(recipeDB.getRecipe(testRecipe.getId()));
     }
 
     /**
@@ -130,11 +133,11 @@ public class RecipeDBTest {
 
         recipeDB.editRecipe(testRecipe);
         Recipe fromDbTestRecipe = recipeDB.getRecipe(testRecipe.getId());
-        assert Objects.equals(testRecipe.getTitle(), fromDbTestRecipe.getTitle());
-        assert Objects.equals(testRecipe.getCategory(), fromDbTestRecipe.getCategory());
-        assert Objects.equals(testRecipe.getComments(), fromDbTestRecipe.getComments());
-        assert Objects.equals(testRecipe.getId(), fromDbTestRecipe.getId());
-        assert testRecipe.getPrepTimeMinutes() == fromDbTestRecipe.getPrepTimeMinutes();
+        assertEquals(testRecipe.getTitle(), fromDbTestRecipe.getTitle());
+        assertEquals(testRecipe.getCategory(), fromDbTestRecipe.getCategory());
+        assertEquals(testRecipe.getComments(), fromDbTestRecipe.getComments());
+        assertEquals(testRecipe.getId(), fromDbTestRecipe.getId());
+        assertEquals(testRecipe.getPrepTimeMinutes(), fromDbTestRecipe.getPrepTimeMinutes());
 
         recipeDB.delRecipe(testRecipe.getId());
         recipeIngredientDB.delIngredient(testIngredient.getId());
@@ -150,6 +153,6 @@ public class RecipeDBTest {
         testRecipe.setId("-1");
         recipeDB.editRecipe(testRecipe);
 
-        assert recipeDB.getRecipe(testRecipe.getId()) == null;
+        assertNull(recipeDB.getRecipe(testRecipe.getId()));
     }
 }
