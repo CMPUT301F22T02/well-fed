@@ -10,12 +10,12 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
-public class IngredientContract extends ActivityResultContract<Ingredient,
-        Ingredient> {
+public class IngredientContract extends ActivityResultContract<StorageIngredient,
+        StorageIngredient> {
 
     @NonNull
     @Override
-    public Intent createIntent(@NonNull Context context, Ingredient ingredient) {
+    public Intent createIntent(@NonNull Context context, StorageIngredient ingredient) {
         Intent intent = new Intent(context, IngredientActivity.class);
         intent.putExtra("Ingredient", ingredient);
         intent.putExtra("RequestCode", 101);
@@ -23,12 +23,13 @@ public class IngredientContract extends ActivityResultContract<Ingredient,
     }
 
     @Override
-    public Ingredient parseResult(int i, @Nullable Intent intent) {
-        if (i != Activity.RESULT_OK && Objects.requireNonNull(intent).getStringExtra("Reason").equals("Delete")) {
+    public StorageIngredient parseResult(int i, @Nullable Intent intent) {
+        if (i != Activity.RESULT_OK && Objects.requireNonNull(intent).getStringExtra("Reason")
+                .equals("Delete")) {
             return null;
         } else {
             assert intent != null;
-            return (Ingredient) intent.getSerializableExtra("Ingredient");
+            return (StorageIngredient) intent.getSerializableExtra("Ingredient");
         }
     }
 }
