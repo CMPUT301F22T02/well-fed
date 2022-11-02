@@ -3,6 +3,7 @@ package com.example.wellfed.recipe;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
@@ -10,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.wellfed.MainActivity;
 
-public class RecipeContract extends ActivityResultContract<Recipe, Recipe> {
+public class RecipeContract extends ActivityResultContract<Recipe, Pair<String, Recipe>> {
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, Recipe recipe) {
@@ -21,11 +22,13 @@ public class RecipeContract extends ActivityResultContract<Recipe, Recipe> {
     }
 
     @Override
-    public Recipe parseResult(int i, @Nullable Intent intent) {
-        if (i != Activity.RESULT_OK && intent.getStringExtra("Reason").equals("Delete")) {
+    public Pair<String, Recipe> parseResult(int i, @Nullable Intent intent) {
+        if (i != Activity.RESULT_OK) {
             return null;
         } else {
-            return (Recipe) intent.getSerializableExtra("Recipe");
+            String type = intent.getStringExtra("type");
+            Recipe recipe = (Recipe) intent.getSerializableExtra("Recipe");
+            return new Pair<>(type,recipe);
         }
     }
 }

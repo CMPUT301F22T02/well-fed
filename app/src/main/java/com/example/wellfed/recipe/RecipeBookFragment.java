@@ -3,6 +3,7 @@ package com.example.wellfed.recipe;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,8 +27,8 @@ import com.example.wellfed.ingredient.Ingredient;
 import java.util.ArrayList;
 
 // todo create sample data for recipes
-// todo setup recycleview for recipe-ingredients
 // todo setup recipe edit button
+// todo setup recipe add button
 
 
 // recipe object that has been modified
@@ -36,23 +37,29 @@ import java.util.ArrayList;
 public class RecipeBookFragment extends Fragment implements RecipeAdapter.RecipeLauncher {
     Button startRecipeBtn;
     ArrayList<Recipe> recipes;
-    int position;
+    private int selected;
 
     private RecipeController recipeController;
     RecipeAdapter adapter;
 
-    ActivityResultLauncher<Recipe> recipeLauncher = registerForActivityResult(new
-                    RecipeContract(),
-            new ActivityResultCallback<Recipe>() {
-                @Override
-                public void onActivityResult(Recipe result) {
-                    if (result == null) {
-                        recipeController.deleteRecipe(position);
-                        return;
+    ActivityResultLauncher<Recipe> recipeLauncher =
+            registerForActivityResult(new RecipeContract(), result -> {
+                        if (result == null) {
+                            return;
+                        }
+                        String type = result.first;
+                        Recipe recipe = result.second;
+
+                        switch (type) {
+                            case "Delete":
+                                recipeController.deleteRecipe(this.selected);
+                                break;
+                            default:
+                                new IllegalArgumentException();
+                        }
                     }
-                }
-            }
-    );
+
+            );
 
 
     @Nullable
@@ -135,7 +142,7 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
 
     @Override
     public void launch(int pos) {
-        position = pos;
+        selected = pos;
         recipeLauncher.launch(recipes.get(pos));
     }
 }

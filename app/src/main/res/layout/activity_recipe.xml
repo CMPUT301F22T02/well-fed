@@ -80,6 +80,18 @@ in this classic easy recipe that's better than take out"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_ingredient_textView" />
+        app:layout_constraintTop_toTopOf="@+id/recipe_ingredient_textView"/>
+
+    <Button
+        android:id="@+id/recipe_delete_btn"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,6 +54,8 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
 
 
 //        TODO: implement delete button
+        Button deleteBtn = findViewById(R.id.recipe_delete_btn);
+        deleteBtn.setOnClickListener(view -> {onDelete();});
     }
 
     @Override
@@ -67,7 +70,7 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
     @Override
     public void onDelete() {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("Reason", "Delete");
+        returnIntent.putExtra("type", "Delete");
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
