@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.wellfed.R;
 
 public class DeleteDialogFragment extends DialogFragment {
-    private DeleteIngredient ingredient;
+    private final DeleteIngredient ingredient;
 
     public interface DeleteIngredient{
         public void delete();

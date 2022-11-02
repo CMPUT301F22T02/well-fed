@@ -3,7 +3,6 @@ package com.example.wellfed.ingredient;
 import java.util.ArrayList;
 
 public class IngredientController {
-    private static IngredientController instance;
     private ArrayList<StorageIngredient> ingredients;
     private IngredientAdapter ingredientAdapter;
 

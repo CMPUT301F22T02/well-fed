@@ -132,7 +132,17 @@ public class StorageIngredient extends Ingredient {
      * @return The best before date of the ingredient in the storage
      */
     public String getBestBefore() {
-        // Return the best before date of the ingredient as String
-        return bestBefore.toString();
+        String bestBeforeString = bestBefore.toString();
+        String[] bestBeforeSplit = bestBeforeString.split(" ");
+        return bestBeforeSplit[0] + ", " + bestBeforeSplit[1] + " " + bestBeforeSplit[2];
+    }
+
+    /**
+     * Combines the amount and unit of the ingredient in the storage.
+     *
+     * @return The amount and unit of the ingredient in the storage
+     */
+    public String getAmountAndUnit() {
+        return amount + " " + unit;
     }
 }
