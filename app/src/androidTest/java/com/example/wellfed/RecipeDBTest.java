@@ -39,7 +39,6 @@ public class RecipeDBTest {
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
-
         Recipe testRecipe = new Recipe("Test");
         testRecipe.setComments("Test");
         testRecipe.setServings(1);
@@ -50,7 +49,6 @@ public class RecipeDBTest {
         String recipeId = recipeDB.addRecipe(testRecipe);
 
         String testRecipeId = testRecipe.getId();
-
         assert testRecipeId.equals(recipeId);
 
         Recipe testRecipe2 = recipeDB.getRecipe(testRecipeId);
