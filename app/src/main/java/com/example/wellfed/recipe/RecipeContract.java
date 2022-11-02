@@ -17,13 +17,12 @@ public class RecipeContract extends ActivityResultContract<Recipe, Pair<String, 
     public Intent createIntent(@NonNull Context context, Recipe recipe) {
         Intent intent = new Intent(context, RecipeActivity.class);
         intent.putExtra("Recipe", recipe);
-        intent.putExtra("RequestCode", 101);
         return intent;
     }
 
     @Override
     public Pair<String, Recipe> parseResult(int i, @Nullable Intent intent) {
-        if (i != Activity.RESULT_OK) {
+        if (i != Activity.RESULT_OK || intent == null) {
             return null;
         } else {
             String type = intent.getStringExtra("type");

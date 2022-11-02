@@ -62,15 +62,6 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
     }
 
     @Override
-    public void onBackPressed() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Recipe", recipe);
-        returnIntent.putExtra("Reason", "BackPressed");
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
-    }
-
-    @Override
     public void onDelete() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("type", "Delete");
