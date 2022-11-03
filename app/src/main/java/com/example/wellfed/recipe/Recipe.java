@@ -177,7 +177,7 @@ public class Recipe implements Serializable {
      * Sets the number of servings that a Recipe makes
      * @param servings An integer representing the number of servings a Recipe makes
      */
-    public void setServings(int servings) {
+    public void setServings(Integer servings) {
         this.servings = servings;
     }
 
@@ -193,7 +193,7 @@ public class Recipe implements Serializable {
      * Sets the prep time in minutes that it takes a Recipe to be prepared
      * @param prepTimeMinutes An integer representing the prep time in minutes.
      */
-    public void setPrepTimeMinutes(int prepTimeMinutes) {
+    public void setPrepTimeMinutes(Integer prepTimeMinutes) {
         this.prepTimeMinutes = prepTimeMinutes;
     }
 

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 
+import android.media.Image;
+
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeIngredient;
@@ -16,6 +18,7 @@ import java.util.List;
 
 /**
  * Unit tests for the Ingredient model class.
+ * Note: Getters and setters for basic data are often tested together.
  */
 public class RecipeTest {
     /**
@@ -124,5 +127,87 @@ public class RecipeTest {
 
         assertEquals(ingredient, ingredientList.get(0));
         assertEquals(ingredient2, ingredientList.get(1));
+    }
+
+    @Test
+    public void testCategory() {
+        Recipe recipe = mockRecipe();
+
+        // test with string
+        String string = "test";
+        recipe.setCategory(string);
+        assertEquals(string, recipe.getCategory());
+
+        // test with literal
+        recipe.setCategory("test");
+        assertEquals("test", recipe.getCategory());
+    }
+
+    @Test
+    public void testTitle() {
+        Recipe recipe = mockRecipe();
+
+        // test with string
+        String string = "test";
+        recipe.setTitle(string);
+        assertEquals(string, recipe.getTitle());
+
+        // test with literal
+        recipe.setTitle("test");
+        assertEquals("test", recipe.getTitle());
+    }
+
+    @Test
+    public void testComments() {
+        Recipe recipe = mockRecipe();
+
+        // test with string
+        String string = "test";
+        recipe.setComments(string);
+        assertEquals(string, recipe.getTitle());
+
+        // test with literal
+        recipe.setComments("test");
+        assertEquals("test", recipe.getComments());
+    }
+
+    @Test
+    public void testServings() {
+        Recipe recipe = mockRecipe();
+
+        // test with integer
+        Integer servings = 6;
+        recipe.setServings(servings);
+        assertEquals(servings, recipe.getServings());
+    }
+
+    @Test
+    public void testPrepTime() {
+        Recipe recipe = mockRecipe();
+
+        // test with integer
+        Integer minutes = 6;
+        recipe.setPrepTimeMinutes(minutes);
+        assertEquals(minutes, recipe.getPrepTimeMinutes());
+    }
+
+    // todo: not sure how to do this properly
+    @Test
+    public void testImage() {
+
+    }
+
+    @Test
+    public void testID() {
+        Recipe recipe = mockRecipe();
+
+        // test with string
+        String string = "test";
+        recipe.setId(string);
+        assertEquals(string, recipe.getId());
+
+        // test with literal
+        recipe.setId("test");
+        assertEquals("test", recipe.getId());
     }
 }
