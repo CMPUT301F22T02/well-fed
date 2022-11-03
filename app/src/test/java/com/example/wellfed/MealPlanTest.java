@@ -232,6 +232,4 @@ public class MealPlanTest {
         mealPlan.setEatDate(eatDate);
         assertEquals(eatDate, mealPlan.getEatDate());
     }
-
-
 }
