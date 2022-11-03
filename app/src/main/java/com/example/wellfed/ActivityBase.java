@@ -16,8 +16,4 @@ public abstract class ActivityBase extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public abstract void deleteIngredient();
-
-    public abstract void delete();
 }

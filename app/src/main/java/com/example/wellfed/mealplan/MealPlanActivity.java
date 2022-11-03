@@ -108,12 +108,4 @@ public class MealPlanActivity extends ActivityBase implements OnDeleteListener {
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
-
-    @Override
-    public void deleteIngredient() {
-    }
-
-    @Override
-    public void delete() {
-    }
 }

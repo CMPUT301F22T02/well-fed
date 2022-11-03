@@ -47,16 +47,6 @@ public class MealPlanEditActivity extends ActivityBase
         return true;
     }
 
-    @Override
-    public void deleteIngredient() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan_edit);

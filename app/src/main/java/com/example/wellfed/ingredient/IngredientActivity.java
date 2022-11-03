@@ -3,12 +3,11 @@ package com.example.wellfed.ingredient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.common.OnDeleteListener;
 
 import java.util.Objects;
@@ -46,10 +45,9 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Set delete button
-        Button deleteButton = findViewById(R.id.ingredient_delete_button);
-        deleteButton.setOnClickListener(v -> {
-            delete();
-        });
+        DeleteButton deleteButton = new DeleteButton(this,
+                findViewById(R.id.ingredient_delete_button), "Delete ingredient?", this);
+
     }
 
     @Override
@@ -82,21 +80,6 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
             ingredient = (StorageIngredient) data.getSerializableExtra("Ingredient");
             controller.updateIngredient(ingredient);
         }
-    }
-
-
-    @Override
-    public void deleteIngredient() {
-        controller.deleteIngredient(ingredient);
-    }
-
-    @Override
-    public void delete() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Ingredient", ingredient);
-        returnIntent.putExtra("Reason", "Delete");
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
     }
 
     @Override

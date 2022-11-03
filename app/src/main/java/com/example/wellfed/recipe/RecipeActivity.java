@@ -77,15 +77,4 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
-
-
-    @Override
-    public void deleteIngredient() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
 }
