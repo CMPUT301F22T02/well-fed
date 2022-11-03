@@ -15,6 +15,8 @@ import com.example.wellfed.R;
 
 import java.util.ArrayList;
 
+// TODO: switch to another activity to display details of an item when it's clicked
+// TODO: add swipe delete feature
 public class ShoppingCartFragment extends Fragment {
     ArrayList<ShoppingCartIngredient> shoppingCartIngredients;
 
