@@ -15,12 +15,13 @@ import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.OnDeleteListener;
 import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeActivity extends ActivityBase implements DeleteDialogFragment.DeleteRecipe {
+public class RecipeActivity extends ActivityBase implements OnDeleteListener {
     private List<RecipeIngredient> ingredientList;
     private Recipe recipe;
     private RecyclerView ingredientRv;
@@ -51,7 +52,7 @@ public class RecipeActivity extends ActivityBase implements DeleteDialogFragment
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
 
-//        showDeleteDialog();
+//        TODO: implement delete button
     }
 
     @Override
@@ -66,16 +67,14 @@ public class RecipeActivity extends ActivityBase implements DeleteDialogFragment
     private void showDeleteDialog() {
         FragmentManager fm = getSupportFragmentManager();
         fm.findFragmentById(R.id.recipe_book);
-        new DeleteDialogFragment(RecipeActivity.this).show(fm, "Delete Recipe");
+        new DeleteDialogFragment((DeleteDialogFragment.DeleteRecipe) RecipeActivity.this).show(fm, "Delete Recipe");
     }
 
     @Override
-    public void delete() {
+    public void onDelete() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Reason", "Delete");
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
-
-
 }
