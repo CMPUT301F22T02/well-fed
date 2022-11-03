@@ -12,6 +12,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Transaction;
 
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -292,5 +294,14 @@ public class RecipeDB {
         recipesLatch.await();
 
         return recipes;
+    }
+
+    /**
+     * Get the DocumentReference from Recipes collection for the given id
+     * @param id The String of the document in Recipes collection we want
+     * @return DocumentReference of the Recipe
+     */
+    public DocumentReference getDocumentReference(String id){
+        return recipesCollection.document(id);
     }
 }
