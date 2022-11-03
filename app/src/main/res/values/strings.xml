@@ -23,4 +23,25 @@
     <string name="category">Category</string>
     <string name="number_of_servings">Number of Servings</string>
     <string name="search_for_ingredients">Search for ingredients</string>
+    <string name="ingredientName">Ingredient Name</string>
+    <string name="ingredient_subtext">Ingredient Subtext</string>
+    <string name="sort_category">Category</string>
+    <string name="sort_description">Description</string>
+    <string name="sort_best_before">Best Before</string>
+    <string name="ingredient_name">Ground beef</string>
+    <string name="back_button">Back</string>
+    <string name="best_before">Best Before:</string>
+    <string name="dummy_date">October 14, 2022</string>
+    <string name="amount">Amount:</string>
+    <string name="storage">Storage:</string>
+    <string name="dummy_quantity">5 lb</string>
+    <string name="dummy_category">Meat</string>
+    <string name="location">Location:</string>
+    <string name="freezer">Freezer</string>
+    <string name="delete_ingredient">Delete ingredient?</string>
+    <string name="description">Description</string>
+    <string name="best_before_date">Best Before Date</string>
+    <string name="categories">Categories</string>
+    <string name="unit">Unit</string>
+    <string name="amount_hint">Amount</string>
 </resources>
