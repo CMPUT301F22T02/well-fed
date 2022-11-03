@@ -34,15 +34,15 @@ public class ShoppingCartFragment extends Fragment {
         RecyclerView rvShoppingCart = view.findViewById(R.id.shopping_cart_list);
 
         ShoppingCartIngredient ingredient1 = new ShoppingCartIngredient("Banana");
-        ingredient1.setUnit("chad");
+        ingredient1.setUnit("1 banana");
         shoppingCartIngredients.add(ingredient1);
 
-        ShoppingCartIngredient ingredient2 = new ShoppingCartIngredient("Anana");
-        ingredient2.setUnit("megachad");
+        ShoppingCartIngredient ingredient2 = new ShoppingCartIngredient("Apple");
+        ingredient2.setUnit("2 apples");
         shoppingCartIngredients.add(ingredient2);
 
-        ShoppingCartIngredient ingredient3 = new ShoppingCartIngredient("Nana");
-        ingredient3.setUnit("gigachad");
+        ShoppingCartIngredient ingredient3 = new ShoppingCartIngredient("Salt");
+        ingredient3.setUnit("500 g");
         shoppingCartIngredients.add(ingredient3);
 
         ShoppingCartIngredientAdapter adapter = new ShoppingCartIngredientAdapter(shoppingCartIngredients);
