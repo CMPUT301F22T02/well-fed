@@ -14,12 +14,6 @@ public class IngredientController {
         this.ingredientAdapter = ingredientAdapter;
     }
 
-    public void deleteIngredient(StorageIngredient ingredient){
-        if(ingredient != null){
-            ingredients.remove(ingredient);
-            ingredientAdapter.notifyItemRemoved(ingredients.indexOf(ingredient));
-        }
-    }
     public void deleteIngredient(int pos){
         if(pos >= 0 && pos < ingredients.size()){
             ingredients.remove(pos);
