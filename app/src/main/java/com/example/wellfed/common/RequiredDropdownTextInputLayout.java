@@ -1,25 +1,25 @@
 /*
- * RequiredTextInputLayout
+ * RequiredDropdownTextInputLayout
  *
  * Version: v1.0.0
  *
- * Date: 2022-09-26
+ * Date: 2022-11-03
  *
  * Copyright notice:
- * This file is part of stang5-Foodbook.
+ * This file is part of well-fed.
  *
- * stang5-Foodbook is free software: you can redistribute it and/or modify it
- *  under the terms of the GNU General Public License as published by the
+ * well-fed is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or (at your
  * option) any later version.
  *
- * stang5-Foodbook is distributed in the hope that it will be useful, but
+ * well-fed is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *  or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
  * for more details.
  *
  * You should have received a copy of the GNU General Public License along
- * with stang5-Foodbook. If not, see <https://www.gnu.org/licenses/>.
+ * with well-fed. If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.example.wellfed.common;
