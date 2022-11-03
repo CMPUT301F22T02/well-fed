@@ -64,6 +64,8 @@ public class MealPlanEditActivity extends ActivityBase
 
         Intent intent = this.getIntent();
         this.mealPlan = (MealPlan) intent.getSerializableExtra("mealPlan");
+        this.categoryTextInput.setSimpleItems(
+                new String[]{"Breakfast", "Lunch", "Dinner"});
         if (this.mealPlan != null) {
             this.type = "edit";
             titleTextView.setText(R.string.edit_meal_plan);

@@ -34,24 +34,24 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
 /**
- * The RequiredTextInputLayout class extends the TextInputLayout
- * class to provide methods for performing data validation.
- * <p>
+ * The RequiredDropdownTextInputLayout class extends the RequiredTextInputLayout
+ * class to provide methods for compatibility with Dropdowns.
  * Citation:
- * TextInputLayout. Android Developers. (n.d.). Retrieved September 26, 2022,
+ * TextInputLayout. Android Developers. (n.d.). Retrieved November 3, 2022,
  * from https://developer.android.com/reference/com/google/android/material/
- * textfield/TextInputLayout
+ * textfield/MaterialAutoCompleteTextView
  *
  * @author Steven Tang
- * @version v1.0.0 2022-09-26
+ * @version v1.0.0 2022-10-29
  **/
 public class RequiredDropdownTextInputLayout extends RequiredTextInputLayout {
-    private AutoCompleteTextView autoCompleteTextView;
+    private MaterialAutoCompleteTextView autoCompleteTextView;
 
     public RequiredDropdownTextInputLayout(@NonNull Context context) {
         this(context, null);
@@ -68,22 +68,24 @@ public class RequiredDropdownTextInputLayout extends RequiredTextInputLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void setPlaceholderText(String initialText) {
-        this.initialText = initialText;
-        this.autoCompleteTextView.setText(initialText, false);
+    @Override public void setPlaceholderText(String placeholderText) {
+        super.setPlaceholderText(placeholderText);
+        this.autoCompleteTextView.setText(placeholderText, false);
+    }
+
+    public void setSimpleItems(String[] items) {
+        this.autoCompleteTextView.setSimpleItems(items);
     }
 
     /*
      * The onEditTextAttached method sets an OnClickListener on the
      * TextInputLayout.
      */
-    @Override
-    public void onEditTextAttached(
+    @Override public void onEditTextAttached(
             @NonNull TextInputLayout textInputLayout) {
         super.onEditTextAttached(textInputLayout);
         this.autoCompleteTextView =
-                (AutoCompleteTextView) Objects.requireNonNull(
+                (MaterialAutoCompleteTextView) Objects.requireNonNull(
                         textInputLayout.getEditText());
     }
 }
