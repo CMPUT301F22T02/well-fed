@@ -20,16 +20,38 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class RecipeDB {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    /**
+     * Holds an instance of the Firebase Firestore database
+     */
+    private final FirebaseFirestore db;
+    /**
+     * Holds a collection to the Recipes stored in the FireStore db database
+     */
     final CollectionReference recipesCollection;
+    /**
+     * Holds a collection to the Recipe Ingredients stored in the FireStore db database
+     */
     final RecipeIngredientDB recipeIngredientDB;
 
+    /**
+     * Create a RecipeDB object
+     */
     public RecipeDB(){
+        db = FirebaseFirestore.getInstance();
         this.recipesCollection = db.collection("Recipes");
         recipeIngredientDB = new RecipeIngredientDB();
     }
 
-    public void addRecipe(Recipe recipe) throws InterruptedException {
+    /**
+     * Adds a recipe to the Recipe collection in db and any ingredients
+     * not already in Recipe Ingredients. This method will set the Recipe id
+     * to the corresponding document id in the collection
+     * @param recipe A Recipe object we want to add to the collection of Recipes
+     *               and whose id we want to set
+     * @return Returns the id of the Recipe document
+     * @throws InterruptedException If any transaction in the method was not complete
+     */
+    public String addRecipe(Recipe recipe) throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
@@ -69,29 +91,37 @@ public class RecipeDB {
 
             return null;
         })
-                .addOnSuccessListener(unused -> {
-                    Log.d(TAG, "onSuccess: ");
-                    addLatch.countDown();
-                })
-                .addOnFailureListener(e -> {
-                    Log.d(TAG, "onFailure: ");
-                    addLatch.countDown();
-                });
+        .addOnSuccessListener(unused -> {
+            Log.d(TAG, "onSuccess: ");
+            addLatch.countDown();
+        })
+        .addOnFailureListener(e -> {
+            Log.d(TAG, "onFailure: ");
+            addLatch.countDown();
+        });
 
         addLatch.await();
 
         recipe.setId(newRecipeId);
+
+        return newRecipeId;
     }
 
-    public void delRecipe(Recipe recipe) throws InterruptedException {
+    /**
+     * Deletes a recipe document with the id  from the collection
+     * of recipes
+     * @param id The id of recipe document we want to delete
+     * @throws InterruptedException If the transaction in the method was not complete
+     */
+    public void delRecipe(String id) throws InterruptedException {
         CountDownLatch deleteLatch = new CountDownLatch(1);
 
-        if(recipe.getId().equals(NULL)){
+        if(id.equals(NULL)){
             Log.d("Delete Recipe", "The Recipe does not have an id");
             return;
         }
 
-        DocumentReference recipeToDelete = recipesCollection.document(recipe.getId());
+        DocumentReference recipeToDelete = recipesCollection.document(id);
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
@@ -111,6 +141,12 @@ public class RecipeDB {
         deleteLatch.await();
     }
 
+    /**
+     * Updates the corresponding recipe document in the collection with the fields of the
+     * recipe object.
+     * @param recipe A Recipe object whose changes we want to push to the collection of Recipes
+     * @throws InterruptedException If the transaction in the method was not complete
+     */
     public void editRecipe(Recipe recipe) throws InterruptedException {
         String id = recipe.getId();
 
@@ -164,6 +200,13 @@ public class RecipeDB {
         editLatch.await();
     }
 
+    /**
+     *
+     * @param id A String with the id of the document who recipe we want
+     * @return The Recipe object that corresponds to the document in the collection
+     * If it does not exist then return null
+     * @throws InterruptedException If the transaction in the method was not complete
+     */
     public Recipe getRecipe(String id) throws InterruptedException {
         CountDownLatch getLatch = new CountDownLatch(1);
 
@@ -177,16 +220,20 @@ public class RecipeDB {
 
             return null;
         })
-                .addOnSuccessListener(unused -> {
-                    Log.d(TAG, "onSuccess: ");
-                    getLatch.countDown();
-                })
-                .addOnFailureListener(e -> {
-                    Log.d(TAG, "onFailure: ");
-                    getLatch.countDown();
-                });
+        .addOnSuccessListener(unused -> {
+            Log.d(TAG, "onSuccess: ");
+            getLatch.countDown();
+        })
+        .addOnFailureListener(e -> {
+            Log.d(TAG, "onFailure: ");
+            getLatch.countDown();
+        });
 
         getLatch.await();
+
+        if(!recipeSnapshot[0].exists()){
+            return null;
+        }
 
         recipe.setTitle(recipeSnapshot[0].getString("title"));
         recipe.setCategory(recipeSnapshot[0].getString("category"));
@@ -208,34 +255,39 @@ public class RecipeDB {
         return recipe;
     }
 
+    /**
+     * Makes an ArrayList of Recipes out of all the documents in the collection of Recipes
+     * @return ArrayList<Recipe> The List of all Recipes contained in the database
+     * @throws InterruptedException If the transaction in the method was not complete
+     */
     public ArrayList<Recipe> getRecipes() throws InterruptedException {
         CountDownLatch recipesLatch = new CountDownLatch(1);
 
         ArrayList<Recipe> recipes = new ArrayList<>();
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-                    List<DocumentSnapshot> recipeSnapshots = recipesCollection.get().getResult().getDocuments();
+            List<DocumentSnapshot> recipeSnapshots = recipesCollection.get().getResult().getDocuments();
 
-                    for(DocumentSnapshot recipeSnapshot: recipeSnapshots){
-                        Recipe recipe = null;
-                        try {
-                            recipe = this.getRecipe(recipeSnapshot.getId());
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        recipes.add(recipe);
-                    }
+            for(DocumentSnapshot recipeSnapshot: recipeSnapshots){
+                Recipe recipe = null;
+                try {
+                    recipe = this.getRecipe(recipeSnapshot.getId());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                recipes.add(recipe);
+            }
 
-                    return null;
-                })
-                .addOnSuccessListener(unused -> {
-                    Log.d(TAG, "onSuccess: ");
-                    recipesLatch.countDown();
-                })
-                .addOnFailureListener(e -> {
-                    Log.d(TAG, "onFailure: ");
-                    recipesLatch.countDown();
-                });
+            return null;
+        })
+        .addOnSuccessListener(unused -> {
+            Log.d(TAG, "onSuccess: ");
+            recipesLatch.countDown();
+        })
+        .addOnFailureListener(e -> {
+            Log.d(TAG, "onFailure: ");
+            recipesLatch.countDown();
+        });
 
         recipesLatch.await();
 
