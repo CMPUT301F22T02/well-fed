@@ -26,7 +26,7 @@ public class StoredIngredientDBTest {
     }
 
     /**
-     * This method tests the add functionality and get functionality of db,
+     * Tests the add functionality and get functionality of db,
      * with a complete ingredient.
      * @throws InterruptedException
      */
@@ -56,7 +56,7 @@ public class StoredIngredientDBTest {
     }
 
     /**
-     * This method tests the add and get functionality, when fields are blank.
+     * Tests the add and get functionality, when fields are blank.
      * @throws InterruptedException
      */
     @Test
@@ -76,6 +76,11 @@ public class StoredIngredientDBTest {
         // removing it afterward
         storedIngredientDB.removeFromIngredients(id);
     }
+
+    /**
+     * Tests deleting an ingredient from the database
+     * @throws InterruptedException
+     */
     @Test
     public void testDeleteIngredient() throws InterruptedException {
         StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
@@ -94,7 +99,7 @@ public class StoredIngredientDBTest {
     }
 
     /**
-     * This method tests deleting a non-existing ingredient.
+     * Tests deleting a non-existing ingredient.
      */
     @Test
     public void deleteNonExistingIngredient() throws InterruptedException {
@@ -104,7 +109,7 @@ public class StoredIngredientDBTest {
     }
 
     /**
-     * This method tests whether an exception is thrown upon getting an invalid ingredient.
+     * Tests whether an exception is thrown upon getting an invalid ingredient.
      * @throws InterruptedException
      */
     @Test
@@ -120,7 +125,7 @@ public class StoredIngredientDBTest {
     }
 
     /**
-     * This method tests whether all of the updated fields are reflected in the database.
+     * Tests whether all of the updated fields are reflected in the database.
      * @throws InterruptedException
      */
     @Test
