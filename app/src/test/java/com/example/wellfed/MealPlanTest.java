@@ -13,6 +13,9 @@ import org.junit.Test;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Unit tests for the MealPlan model class.
+ */
 public class MealPlanTest {
     /**
      * Creates a mock MealPlan to be used in the tests.
@@ -21,7 +24,17 @@ public class MealPlanTest {
     private MealPlan mockMealPlan() {
         return new MealPlan("test");
     }
+
+    /**
+     * Creates a mock MealIngredient to be used in the tests.
+     * @return the mock MealIngredient created
+     */
     private Ingredient mockMealIngredient(){return new Ingredient();}
+
+    /**
+     * Creates a mock Recipe to be used in the tests.
+     * @return the mock Recipe created
+     */
     private Recipe mockMealRecipe(){
         Recipe recipe = new Recipe("test");
         return recipe;
@@ -186,6 +199,9 @@ public class MealPlanTest {
         assertEquals(recipe2, recipeList.get(1));
     }
 
+    /**
+     * Tests and setting the category of a MealPlan.
+     */
     @Test
     public void testCategory() {
         MealPlan mealPlan = mockMealPlan();
@@ -200,6 +216,9 @@ public class MealPlanTest {
         assertEquals("test", mealPlan.getCategory());
     }
 
+    /**
+     * Tests getting and setting the title of a MealPlan.
+     */
     @Test
     public void testTitle() {
         MealPlan mealPlan = mockMealPlan();
@@ -214,6 +233,9 @@ public class MealPlanTest {
         assertEquals("test", mealPlan.getTitle());
     }
 
+    /**
+     * Tests getting and setting the servings of a MealPlan.
+     */
     @Test
     public void testServings() {
         MealPlan mealPlan = mockMealPlan();
@@ -224,6 +246,9 @@ public class MealPlanTest {
         assertEquals(servings, mealPlan.getServings());
     }
 
+    /**
+     * Tests getting and setting the eat date of the MealPlan
+     */
     @Test
     public void testEatDate() {
         MealPlan mealPlan = mockMealPlan();

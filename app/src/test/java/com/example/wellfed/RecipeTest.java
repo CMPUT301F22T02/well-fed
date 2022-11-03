@@ -129,6 +129,9 @@ public class RecipeTest {
         assertEquals(ingredient2, ingredientList.get(1));
     }
 
+    /**
+     * Tests getting and setting the category of a Recipe.
+     */
     @Test
     public void testCategory() {
         Recipe recipe = mockRecipe();
@@ -143,6 +146,9 @@ public class RecipeTest {
         assertEquals("test", recipe.getCategory());
     }
 
+    /**
+     * Tests getting/setting title of the Recipe.
+     */
     @Test
     public void testTitle() {
         Recipe recipe = mockRecipe();
@@ -157,6 +163,9 @@ public class RecipeTest {
         assertEquals("test", recipe.getTitle());
     }
 
+    /**
+     * Tests getting/setting comments of a Recipe.
+     */
     @Test
     public void testComments() {
         Recipe recipe = mockRecipe();
@@ -171,6 +180,9 @@ public class RecipeTest {
         assertEquals("test", recipe.getComments());
     }
 
+    /**
+     * Tests getting/setting servings of a Recipe.
+     */
     @Test
     public void testServings() {
         Recipe recipe = mockRecipe();
@@ -181,6 +193,9 @@ public class RecipeTest {
         assertEquals(servings, recipe.getServings());
     }
 
+    /**
+     * Tests getting/setting prep time of a Recipe.
+     */
     @Test
     public void testPrepTime() {
         Recipe recipe = mockRecipe();
@@ -197,6 +212,9 @@ public class RecipeTest {
 
     }
 
+    /**
+     * Tests getting/setting the ID of a Recipe.
+     */
     @Test
     public void testID() {
         Recipe recipe = mockRecipe();

@@ -12,10 +12,22 @@ import org.junit.Test;
 
 import java.util.List;
 
+/**
+ * Unit tests for the ShoppingCart model class.
+ */
 public class ShoppingCartTest {
+    /**
+     * Creates a mock shopping cart for use in the unit tests.
+     * @return the created mock shopping cart
+     */
     private ShoppingCart mockShoppingCart() {
         return new ShoppingCart();
     }
+
+    /**
+     * Creates a shopping cart ingredient for use in the unit tests.
+     * @return the created mock ingredient
+     */
     private ShoppingCartIngredient mockShoppingCartIngredient(){return new ShoppingCartIngredient("test");}
 
     /**
