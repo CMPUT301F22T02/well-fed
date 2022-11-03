@@ -38,7 +38,6 @@ public class IngredientController {
 
     public void setIngredients(ArrayList<StorageIngredient> ingredients){
         this.ingredients = ingredients;
-        ingredientAdapter.notifyAll();
     }
 
     public ArrayList<StorageIngredient> getIngredients() {
