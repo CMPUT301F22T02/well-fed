@@ -29,6 +29,7 @@ public class IngredientController {
 
     public void setIngredients(ArrayList<StorageIngredient> ingredients){
         this.ingredients = ingredients;
+        ingredientAdapter.notifyAll();
     }
 
     public ArrayList<StorageIngredient> getIngredients() {
@@ -36,10 +37,8 @@ public class IngredientController {
     }
 
     public void updateIngredient(int position, StorageIngredient ingredient){
-        if(position >= 0 && position < ingredients.size()){
-            ingredients.set(position, ingredient);
-            ingredientAdapter.notifyItemChanged(position);
-        }
+        ingredients.set(position, ingredient);
+        ingredientAdapter.notifyItemChanged(position);
     }
 
     public void updateIngredient(StorageIngredient ingredient){
