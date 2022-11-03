@@ -13,6 +13,12 @@ import com.example.wellfed.R;
 
 import java.util.ArrayList;
 
+/**
+ * The ShoppingCartIngredientAdapter class binds ArrayList<ShoppingCartIngredient> to RecyclerView.
+ * <p>
+ * @author Weiguo Jiang
+ * @version v1.0.0 2022-10-28
+ **/
 public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<ShoppingCartIngredientAdapter.ViewHolder> {
     ArrayList<ShoppingCartIngredient> ingredients;
 
