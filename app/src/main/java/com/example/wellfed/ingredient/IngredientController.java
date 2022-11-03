@@ -27,6 +27,15 @@ public class IngredientController {
         }
     }
 
+    public void addIngredient(StorageIngredient ingredient){
+        if(ingredient != null){
+            if(!ingredients.contains(ingredient)){
+                ingredients.add(ingredient);
+                ingredientAdapter.notifyItemInserted(ingredients.size() - 1);
+            }
+        }
+    }
+
     public void setIngredients(ArrayList<StorageIngredient> ingredients){
         this.ingredients = ingredients;
         ingredientAdapter.notifyAll();
