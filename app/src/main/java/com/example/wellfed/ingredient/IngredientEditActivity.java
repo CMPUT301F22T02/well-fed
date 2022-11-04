@@ -24,12 +24,6 @@ public class IngredientEditActivity extends AppCompatActivity implements Confirm
     private EditText bestBefore;
     private EditText category;
     private StorageIngredient ingredient;
-    private RequiredTextInputLayout nameLayout;
-    private RequiredTextInputLayout amountLayout;
-    private RequiredTextInputLayout unitLayout;
-    private RequiredTextInputLayout locationLayout;
-    private RequiredDateTextInputLayout bestBeforeLayout;
-    private RequiredTextInputLayout categoryLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +37,8 @@ public class IngredientEditActivity extends AppCompatActivity implements Confirm
         bestBefore = findViewById(R.id.ingredient_expiration);
         category = findViewById(R.id.ingredient_category_value);
 
-        nameLayout = findViewById(R.id.textInputLayout);
-        amountLayout = findViewById(R.id.textInputLayout4);
-        unitLayout = findViewById(R.id.textInputLayout5);
-        locationLayout = findViewById(R.id.textInputLayout6);
-        bestBeforeLayout = findViewById(R.id.textInputLayout2);
-        categoryLayout = findViewById(R.id.textInputLayout3);
+
+        RequiredDateTextInputLayout bestBeforeLayout = findViewById(R.id.textInputLayout2);
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
@@ -109,16 +99,14 @@ public class IngredientEditActivity extends AppCompatActivity implements Confirm
                 ingredient = new StorageIngredient(name.getText().toString(),
                         Float.parseFloat(amount.getText().toString()),
                         unit.getText().toString(), location.getText().toString(),
-                        new Date(Integer.parseInt(date[0]),
-                                Integer.parseInt(date[1]),
-                                Integer.parseInt(date[2])));
+                        new Date(Integer.parseInt(date[0]) - 1900,
+                                Integer.parseInt(date[1]) - 1, Integer.parseInt(date[2])));
             } else {
                 ingredient = new StorageIngredient(name.getText().toString(),
                         Float.parseFloat(amount.getText().toString()),
                         unit.getText().toString(), location.getText().toString(),
-                        new Date(Integer.parseInt(date[0]),
-                                Integer.parseInt(date[1]),
-                                Integer.parseInt(date[2])),
+                        new Date(Integer.parseInt(date[0]) - 1900,
+                                Integer.parseInt(date[1]) - 1, Integer.parseInt(date[2])),
                         category.getText().toString());
             }
             Intent intent = new Intent();
