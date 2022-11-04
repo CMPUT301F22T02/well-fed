@@ -39,6 +39,7 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         switch (type) {
             case "delete":
                 ingredientController.deleteIngredient(position);
+                ingredientAdapter.notifyItemRangeChanged(position, foodStorage.getIngredients().size());
                 break;
             case "edit":
                 ingredientController.updateIngredient(position, ingredient);

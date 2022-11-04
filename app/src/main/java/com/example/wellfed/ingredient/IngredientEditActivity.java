@@ -8,7 +8,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wellfed.R;
-import com.example.wellfed.common.OnQuitListener;
+import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Date;
 import java.util.Objects;
 
-public class IngredientEditActivity extends AppCompatActivity implements OnQuitListener {
+public class IngredientEditActivity extends AppCompatActivity implements ConfirmDialog.OnConfirmListener {
     private EditText name;
     private EditText amount;
     private EditText unit;
@@ -159,16 +159,16 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
     }
 
     @Override
-    public void onQuit() {
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+
+    @Override
+    public void onConfirm() {
         Intent intent = new Intent();
         intent.putExtra("type", "quit");
         intent.putExtra("ingredient", ingredient);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
     }
 }

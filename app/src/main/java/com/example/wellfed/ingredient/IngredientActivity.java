@@ -12,14 +12,13 @@ import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
-import com.example.wellfed.common.OnDeleteListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.Objects;
 
 public class IngredientActivity extends ActivityBase implements
-                                                     ConfirmDialog.OnConfirmListener {
+        ConfirmDialog.OnConfirmListener {
     private IngredientContract contract;
     private StorageIngredient ingredient;
     private IngredientController controller;
@@ -100,15 +99,6 @@ public class IngredientActivity extends ActivityBase implements
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
-    
-    @Override
-    public void onDelete() {
-        Intent intent = new Intent();
-        intent.putExtra("ingredient", ingredient);
-        intent.putExtra("type", "delete");
-        setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
 
     private void onQuitEdit() {
         Intent intent = new Intent();
@@ -138,5 +128,14 @@ public class IngredientActivity extends ActivityBase implements
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    @Override
+    public void onConfirm() {
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "delete");
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }
