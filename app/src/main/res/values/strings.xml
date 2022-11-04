@@ -29,7 +29,6 @@
     <string name="authorities">com.example.fileprovider</string>
     <string name="comments">Comments</string>
     <string name="ingredients">Ingredients</string>
-    <string name="amount">Amount</string>
     <string name="ingredientName">Ingredient Name</string>
     <string name="ingredient_subtext">Ingredient Subtext</string>
     <string name="sort_category">Category</string>

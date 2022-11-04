@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
-import com.example.wellfed.common.OnDeleteListener;
-import com.example.wellfed.ingredient.Ingredient;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeActivity extends ActivityBase implements OnDeleteListener {
+public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
     private List<RecipeIngredient> ingredientList;
     private Recipe recipe;
     private RecyclerView ingredientRv;
@@ -68,13 +68,12 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
 
     }
 
+
     @Override
-    public void onDelete() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("type", "Delete");
-        setResult(Activity.RESULT_OK, returnIntent);
+    public void onConfirm() {
+        Intent intent = new Intent();
+        intent.putExtra("type", "delete");
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
-
-
 }
