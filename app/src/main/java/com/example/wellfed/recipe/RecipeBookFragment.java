@@ -106,7 +106,7 @@ public class RecipeBookFragment extends Fragment implements Launcher {
             return null;
         }
 
-        protected void onPostExecute() {
+        protected void onPostExecute(Void result) {
             new RecipeBookFragment.GetRecipesTask().execute();
         }
     }

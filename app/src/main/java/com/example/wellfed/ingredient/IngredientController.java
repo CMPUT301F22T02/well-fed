@@ -14,16 +14,19 @@ public class IngredientController {
         this.ingredientAdapter = ingredientAdapter;
     }
 
-    public void deleteIngredient(StorageIngredient ingredient){
-        if(ingredient != null){
-            ingredients.remove(ingredient);
-            ingredientAdapter.notifyItemRemoved(ingredients.indexOf(ingredient));
-        }
-    }
     public void deleteIngredient(int pos){
         if(pos >= 0 && pos < ingredients.size()){
             ingredients.remove(pos);
             ingredientAdapter.notifyItemRemoved(pos);
+        }
+    }
+
+    public void addIngredient(StorageIngredient ingredient){
+        if(ingredient != null){
+            if(!ingredients.contains(ingredient)){
+                ingredients.add(ingredient);
+                ingredientAdapter.notifyItemInserted(ingredients.size() - 1);
+            }
         }
     }
 
@@ -36,10 +39,8 @@ public class IngredientController {
     }
 
     public void updateIngredient(int position, StorageIngredient ingredient){
-        if(position >= 0 && position < ingredients.size()){
-            ingredients.set(position, ingredient);
-            ingredientAdapter.notifyItemChanged(position);
-        }
+        ingredients.set(position, ingredient);
+        ingredientAdapter.notifyItemChanged(position);
     }
 
     public void updateIngredient(StorageIngredient ingredient){

@@ -16,8 +16,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
-import org.w3c.dom.Document;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,8 +78,6 @@ public class RecipeDB {
         }
 
         Map<String, Object> recipeMap = new HashMap<>();
-
-
 
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
@@ -283,7 +279,7 @@ public class RecipeDB {
                 recipeSnapshot.get("ingredients"));
         for(DocumentReference ingredient: recipeIngredients){
             try {
-                recipeIngredientDB.getRecipeIngredient(ingredient.getId());
+                Ingredient res = recipeIngredientDB.getRecipeIngredient(ingredient.getId());
             }
             catch(Exception err){
                 Log.d(TAG, "addRecipe: Failed to get recipe");
@@ -332,4 +328,3 @@ public class RecipeDB {
         return recipesCollection.document(id);
     }
 }
-

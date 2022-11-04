@@ -20,6 +20,7 @@ import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
 
+import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
         // ingredient recycle view
         ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
-        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList, R.layout.recipe_ingredient);
+        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList,
+                R.layout.recipe_ingredient);
         ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
@@ -65,8 +67,6 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                 findViewById(R.id.recipe_delete_btn),
                 "Delete Recipe",
                 this);
-
-
     }
 
 

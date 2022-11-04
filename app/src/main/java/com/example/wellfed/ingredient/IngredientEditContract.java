@@ -9,13 +9,11 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Objects;
-
-public class IngredientContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
+public class IngredientEditContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, StorageIngredient storageIngredient) {
-        Intent intent = new Intent(context, IngredientActivity.class);
+        Intent intent = new Intent(context, IngredientEditActivity.class);
         intent.putExtra("ingredient", storageIngredient);
         return intent;
     }
@@ -30,3 +28,4 @@ public class IngredientContract extends ActivityResultContract<StorageIngredient
         return new Pair<>(type, ingredient);
     }
 }
+
