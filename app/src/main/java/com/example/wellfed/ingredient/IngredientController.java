@@ -50,9 +50,4 @@ public class IngredientController {
             ingredientAdapter.notifyItemChanged(position);
         }
     }
-
-    public void editIngredient(int position, StorageIngredient ingredient) {
-        ingredients.set(position, ingredient);
-        ingredientAdapter.notifyItemChanged(position);
-    }
 }

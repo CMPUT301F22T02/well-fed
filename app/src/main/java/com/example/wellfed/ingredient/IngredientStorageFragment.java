@@ -37,12 +37,10 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
                         ingredientController.deleteIngredient(position);
                         break;
                     case "edit":
-                        ingredientController.editIngredient(position, ingredient);
+                        ingredientController.updateIngredient(position, ingredient);
                         break;
-                    case "back":
-                            break;
                     default:
-                        throw new IllegalArgumentException();
+                        break;
                 }
             });
 
@@ -76,8 +74,6 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         ingredientController.setIngredientAdapter(ingredientAdapter);
         recyclerView.setAdapter(ingredientAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
     }
 
     @Override

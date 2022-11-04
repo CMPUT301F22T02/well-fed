@@ -20,6 +20,22 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
     private StorageIngredient ingredient;
     private IngredientController controller;
 
+    // Edit ingredient launcher
+    private final ActivityResultLauncher<StorageIngredient> editIngredient = registerForActivityResult(new IngredientEditContract(), result -> {
+        String type = result.first;
+        StorageIngredient ingredient = result.second;
+        switch (type) {
+            case "quit":
+                onQuitEdit();
+                break;
+            case "edit":
+                onEdit(ingredient);
+                break;
+            default:
+                break;
+        }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +61,16 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
         TextView ingredientLocation = findViewById(R.id.ingredient_location_value);
         ingredientLocation.setText(ingredient.getLocation());
 
-        // Enable back button in action bar
+        // Enable back button in action bar to go back to previous activity
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Set delete button
         DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.ingredient_delete_button), "Delete " + "ingredient?", this);
+
+        FloatingActionButton editButton = findViewById(R.id.ingredient_edit_button);
+        editButton.setOnClickListener(v -> {
+            editIngredient.launch(ingredient);
+        });
 
     }
 
@@ -79,7 +100,7 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
         finish();
     }
 
-    public void onEdit() {
+    public void onEdit(StorageIngredient ingredient) {
         Intent intent = new Intent();
         intent.putExtra("ingredient", ingredient);
         intent.putExtra("type", "edit");
