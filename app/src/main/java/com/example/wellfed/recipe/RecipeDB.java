@@ -160,8 +160,7 @@ public class RecipeDB {
             return;
         }
 
-        delRecipe(id);
-        recipeIngredientDB.delIngredient(id);
+        //TODO: delete recipe along with its associated ingredient here
     }
 
     /**
