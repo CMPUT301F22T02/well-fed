@@ -1,20 +1,14 @@
-name: Android CI
+name: Generate Javadoc
 
 on:
   push:
     branches: [ "main" ]
     paths-ignore:
       - 'doc/**'
-  pull_request:
-    branches: [ "main" ]
-    paths-ignore:
-      - 'doc/**'
 
 jobs:
-  build:
-
+  generate_javadoc:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 11
@@ -27,8 +21,18 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Test with Gradle
-      run: ./gradlew test
-
     - name: Build with Gradle
       run: ./gradlew build --parallel
+
+    - name: Generate Javadoc
+      run: ./gradlew generateReleaseJavadoc
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        add-paths: doc/javadoc
+        body: Automated Update Javadocs
+        branch: docs-update-javadoc
+        commit-message: "docs: update javadocs"
+        delete-branch: true
+        title: "Docs: Update Javadocs"
