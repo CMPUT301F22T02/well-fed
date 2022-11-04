@@ -318,15 +318,15 @@ public class RecipeIngredientDB {
 
                     List<DocumentSnapshot> recipeIngredientSnapshots = recipeIngredientsCollection.get().getResult().getDocuments();
 
-                    for(DocumentSnapshot recipeIngredientSnapshot: recipeIngredientSnapshots){
-                        Ingredient recipe = null;
-                        try {
-                            recipe = this.getRecipeIngredient(recipeIngredientSnapshot.getId());
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        recipeIngredients.add(recipe);
-                    }
+            for(DocumentSnapshot recipeIngredientSnapshot: recipeIngredientSnapshots){
+                Ingredient recipe = null;
+                try {
+                    recipe = this.getRecipeIngredient(recipeIngredientSnapshot.getId());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                recipeIngredients.add(recipe);
+            }
 
                     return null;
                 })
