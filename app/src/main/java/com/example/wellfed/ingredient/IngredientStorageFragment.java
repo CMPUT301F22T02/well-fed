@@ -24,12 +24,32 @@ import java.util.Date;
 
 
 public class IngredientStorageFragment extends Fragment implements IngredientAdapter.IngredientLauncher, Launcher {
+    /**
+     * FoodStorage is a singleton class that stores all the ingredients.
+     */
     private FoodStorage foodStorage;
+    /**
+     * The adapter for the recycler view.
+     */
     private IngredientAdapter ingredientAdapter;
+    /**
+     * The ingredientController is the controller for the ingredient.
+     */
     private IngredientController ingredientController;
+    /**
+     * The recycler view for the ingredients.
+     */
     RecyclerView recyclerView;
+    /**
+     * The text input for the search bar.
+     */
     int position;
 
+    /**
+     * ActivityResultLauncher for the IngredientEditActivity to edit an ingredient.
+     * The result is a StorageIngredient.
+     * The result is null if the user cancels the edit.
+     */
     ActivityResultLauncher<StorageIngredient> ingredientLauncher = registerForActivityResult(new IngredientContract(), result -> {
         if (result == null) {
             return;
@@ -49,7 +69,11 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         }
     });
 
-    // Add ingredient launcher
+    /**
+     * ActivityResultLauncher for the IngredientAddActivity to add an ingredient.
+     * The result is a StorageIngredient.
+     * The result is null if the user cancels the add.
+     */
     ActivityResultLauncher<StorageIngredient> addIngredientLauncher = registerForActivityResult(new IngredientEditContract(), result -> {
         if (result == null) {
             return;
@@ -67,7 +91,13 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         }
     });
 
-
+    /**
+     * onCreate method for the IngredientStorageFragment.
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,6 +107,11 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         return inflater.inflate(R.layout.fragment_ingredient_storage, container, false);
     }
 
+    /**
+     * onViewCreated method for the IngredientStorageFragment.
+     * @param view The View returned by onCreateView.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -119,17 +154,28 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         });
     }
 
+    /**
+     * Launches the IngredientEditActivity to edit an ingredient.
+     * @param pos The position of the ingredient in the list.
+     */
     @Override
     public void launch(int pos) {
         position = pos;
         ingredientLauncher.launch(foodStorage.getIngredients().get(pos));
     }
 
+    /**
+     * Launches the IngredientAddActivity to add an ingredient.
+     */
     @Override
     public void launch() {
         addIngredientLauncher.launch(null);
     }
 
+    /**
+     * getDefaultViewModelProviderFactory method for the IngredientStorageFragment.
+     * @return A default ViewModelProviderFactory.
+     */
     @NonNull
     @Override
     public CreationExtras getDefaultViewModelCreationExtras() {

@@ -3,7 +3,7 @@ package com.example.wellfed.ingredient;
 
 import java.util.Date;
 
-public class StorageIngredient extends Ingredient {
+public class StorageIngredient extends Ingredient implements Comparable<StorageIngredient> {
     public String first;
     /**
      * The amount of the ingredient in the storage.
@@ -76,14 +76,14 @@ public class StorageIngredient extends Ingredient {
     /**
      * Set categories of the ingredient.
      */
-    public void setCategories(String categories) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
     /**
      * Get categories of the ingredient.
      */
-    public String getCategories() {
+    public String getCategory() {
         return category;
     }
 
@@ -170,6 +170,9 @@ public class StorageIngredient extends Ingredient {
      * @return The best before date of the ingredient in the storage
      */
     public String getBestBefore() {
+        if (bestBefore == null) {
+            return null;
+        }
         String bestBeforeString = bestBefore.toString();
         String[] bestBeforeSplit = bestBeforeString.split(" ");
         return bestBeforeSplit[0] + ", " + bestBeforeSplit[1] + " " + bestBeforeSplit[2];
@@ -195,10 +198,31 @@ public class StorageIngredient extends Ingredient {
 
     /**
      * Checks if the ingredient is equal to another ingredient.
-     * @param ingredient The ingredient to compare to.
+     * @param o The ingredient to compare to.
      * @return True if the ingredients are equal, false otherwise.
      */
-    public boolean equals(StorageIngredient ingredient) {
-        return this.getDescription().equalsIgnoreCase(ingredient.getDescription());
+    @Override
+    public int compareTo(StorageIngredient o) {
+        return this.getDescription().compareTo(o.getDescription());
+    }
+
+    /**
+     * Checks if the ingredient is equal to another ingredient.
+     * @param o The ingredient to compare to.
+     * @return True if the ingredients are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof StorageIngredient)) {
+            return false;
+        }
+        StorageIngredient other = (StorageIngredient) o;
+        return this.getDescription().equalsIgnoreCase(other.getDescription());
     }
 }
