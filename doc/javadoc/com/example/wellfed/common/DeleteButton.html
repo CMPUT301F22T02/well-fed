@@ -137,6 +137,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">DeleteButton</span>
 extends java.lang.Object
 implements android.view.View.OnClickListener</pre>
+<div class="block">The DeleteButton class attaches an OnClickListener to a Button that
+ opens a deletion confirmation dialog.</div>
 </li>
 </ul>
 </div>
@@ -157,11 +159,13 @@ implements android.view.View.OnClickListener</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.widget.Button,java.lang.String,com.example.wellfed.common.OnDeleteListener)">DeleteButton</a></span>&#8203;(android.content.Context&nbsp;context,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.widget.Button,java.lang.String,com.example.wellfed.common.ConfirmDialog.OnConfirmListener)">DeleteButton</a></span>&#8203;(android.content.Context&nbsp;context,
             android.widget.Button&nbsp;button,
             java.lang.String&nbsp;title,
-            <a href="OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a>&nbsp;onDeleteListener)</code></th>
-<td class="colLast">&nbsp;</td>
+            <a href="ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>&nbsp;onConfirmListener)</code></th>
+<td class="colLast">
+<div class="block">Constructs a DeleteButton</div>
+</td>
 </tr>
 </table>
 </li>
@@ -183,8 +187,10 @@ implements android.view.View.OnClickListener</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(android.view.View)">onClick</a></span>&#8203;(android.view.View&nbsp;v)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(android.view.View)">onClick</a></span>&#8203;(android.view.View&nbsp;view)</code></th>
+<td class="colLast">
+<div class="block">Shows the DeleteDialog when the button is clicked</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -210,7 +216,7 @@ implements android.view.View.OnClickListener</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(android.content.Context,android.widget.Button,java.lang.String,com.example.wellfed.common.OnDeleteListener)">
+<a id="&lt;init&gt;(android.content.Context,android.widget.Button,java.lang.String,com.example.wellfed.common.ConfirmDialog.OnConfirmListener)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -219,7 +225,15 @@ implements android.view.View.OnClickListener</pre>
 <pre>public&nbsp;DeleteButton&#8203;(android.content.Context&nbsp;context,
                     android.widget.Button&nbsp;button,
                     java.lang.String&nbsp;title,
-                    <a href="OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a>&nbsp;onDeleteListener)</pre>
+                    <a href="ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>&nbsp;onConfirmListener)</pre>
+<div class="block">Constructs a DeleteButton</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>button</code> - the button</dd>
+<dd><code>title</code> - the title</dd>
+<dd><code>onConfirmListener</code> - the OnConfirmListener</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -238,10 +252,13 @@ implements android.view.View.OnClickListener</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>onClick</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(android.view.View&nbsp;v)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(android.view.View&nbsp;view)</pre>
+<div class="block">Shows the DeleteDialog when the button is clicked</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onClick</code>&nbsp;in interface&nbsp;<code>android.view.View.OnClickListener</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - the view</dd>
 </dl>
 </li>
 </ul>

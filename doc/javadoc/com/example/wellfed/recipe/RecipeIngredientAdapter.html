@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -122,7 +122,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&gt;</li>
+<li>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.example.wellfed.recipe.RecipeIngredientAdapter</li>
@@ -136,36 +136,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeIngredientAdapter</span>
-extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&gt;</pre>
+extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&gt;</pre>
+<div class="block">Adapter that manages the view and data for the ingredients
+ in the <a href="Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a></div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- =========== FIELD SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
@@ -181,9 +160,18 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>(package private) java.util.List&lt;<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&gt;</code></td>
+<td class="colFirst"><code>(package private) int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#layoutId">layoutId</a></span></code></th>
+<td class="colLast">
+<div class="block">layout id that specifies which layout to use</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>(package private) java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipeIngredientList">recipeIngredientList</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">list of <a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient"><code>Ingredient</code></a></div>
+</td>
 </tr>
 </table>
 </li>
@@ -203,7 +191,8 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List)">RecipeIngredientAdapter</a></span>&#8203;(java.util.List&lt;<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&gt;&nbsp;recipeIngredientList)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List,int)">RecipeIngredientAdapter</a></span>&#8203;(java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;recipeIngredientList,
+                       int&nbsp;layoutId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -231,15 +220,19 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.recipe.RecipeIngredientAdapter.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&nbsp;holder,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.recipe.RecipeIngredientViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&nbsp;holder,
                 int&nbsp;position)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Binds the data in our list to the views</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a></code></td>
+<td class="colFirst"><code><a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder</a></span>&#8203;(android.view.ViewGroup&nbsp;parent,
                   int&nbsp;viewType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">inflates the view</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -275,10 +268,21 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <a id="recipeIngredientList">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>recipeIngredientList</h4>
-<pre>java.util.List&lt;<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&gt; recipeIngredientList</pre>
+<pre>java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt; recipeIngredientList</pre>
+<div class="block">list of <a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient"><code>Ingredient</code></a></div>
+</li>
+</ul>
+<a id="layoutId">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>layoutId</h4>
+<pre>int layoutId</pre>
+<div class="block">layout id that specifies which layout to use</div>
 </li>
 </ul>
 </li>
@@ -291,13 +295,19 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.util.List)">
+<a id="&lt;init&gt;(java.util.List,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RecipeIngredientAdapter</h4>
-<pre>RecipeIngredientAdapter&#8203;(java.util.List&lt;<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&gt;&nbsp;recipeIngredientList)</pre>
+<pre>RecipeIngredientAdapter&#8203;(java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;recipeIngredientList,
+                        int&nbsp;layoutId)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipeIngredientList</code> - helps initialize our list</dd>
+<dd><code>layoutId</code> - id of the layout</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -317,27 +327,36 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <li class="blockList">
 <h4>onCreateViewHolder</h4>
 <pre class="methodSignature">@NonNull
-public&nbsp;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&nbsp;onCreateViewHolder&#8203;(@NonNull
-                                                             android.view.ViewGroup&nbsp;parent,
-                                                             int&nbsp;viewType)</pre>
+public&nbsp;<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&nbsp;onCreateViewHolder&#8203;(@NonNull
+                                                     android.view.ViewGroup&nbsp;parent,
+                                                     int&nbsp;viewType)</pre>
+<div class="block">inflates the view</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>onCreateViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dd><code>onCreateViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - activity that handles the ingredients</dd>
+<dd><code>viewType</code> - </dd>
+<dt><span class="returnLabel">Returns:</span></dt>
 </dl>
 </li>
 </ul>
-<a id="onBindViewHolder(com.example.wellfed.recipe.RecipeIngredientAdapter.ViewHolder,int)">
+<a id="onBindViewHolder(com.example.wellfed.recipe.RecipeIngredientViewHolder,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>onBindViewHolder</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onBindViewHolder&#8203;(@NonNull
-                             <a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&nbsp;holder,
+                             <a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&nbsp;holder,
                              int&nbsp;position)</pre>
+<div class="block">Binds the data in our list to the views</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>onBindViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dd><code>onBindViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>holder</code> - holds the inflated view</dd>
+<dd><code>position</code> - gives the position in the list</dd>
 </dl>
 </li>
 </ul>
@@ -350,7 +369,9 @@ public&nbsp;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in co
 <pre class="methodSignature">public&nbsp;int&nbsp;getItemCount()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getItemCount</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dd><code>getItemCount</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>count of the number of ingredients in our list</dd>
 </dl>
 </li>
 </ul>
@@ -405,7 +426,7 @@ public&nbsp;<a href="RecipeIngredientAdapter.ViewHolder.html" title="class in co
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

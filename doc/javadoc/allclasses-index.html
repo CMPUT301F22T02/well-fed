@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":2,"i1":2,"i2":1,"i3":2,"i4":2,"i5":2,"i6":2,"i7":2,"i8":2,"i9":1,"i10":1,"i11":2,"i12":2,"i13":2,"i14":2,"i15":1,"i16":2,"i17":2,"i18":2,"i19":1,"i20":2,"i21":2,"i22":2,"i23":2,"i24":2,"i25":2,"i26":2,"i27":2,"i28":2,"i29":2,"i30":2,"i31":1,"i32":1,"i33":2,"i34":2,"i35":2,"i36":1,"i37":2,"i38":2,"i39":2,"i40":2,"i41":2,"i42":2,"i43":2,"i44":2,"i45":2,"i46":2,"i47":2,"i48":2,"i49":2,"i50":2,"i51":2,"i52":2,"i53":2,"i54":2,"i55":2,"i56":2,"i57":2};
+var data = {"i0":2,"i1":2,"i2":1,"i3":2,"i4":2,"i5":2,"i6":1,"i7":2,"i8":2,"i9":2,"i10":1,"i11":2,"i12":2,"i13":2,"i14":2,"i15":1,"i16":2,"i17":2,"i18":2,"i19":2,"i20":2,"i21":1,"i22":2,"i23":2,"i24":2,"i25":2,"i26":2,"i27":2,"i28":2,"i29":2,"i30":2,"i31":2,"i32":2,"i33":2,"i34":2,"i35":2,"i36":2,"i37":2,"i38":2,"i39":2,"i40":2,"i41":2,"i42":2,"i43":2,"i44":2,"i45":2,"i46":2,"i47":2,"i48":2,"i49":2,"i50":2,"i51":2,"i52":2,"i53":2,"i54":2,"i55":2,"i56":2,"i57":2,"i58":2,"i59":2};
 var tabs = {65535:["t0","All Classes"],1:["t1","Interface Summary"],2:["t2","Class Summary"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -115,43 +115,65 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/common/AdapterDataObserver.html" title="class in com.example.wellfed.common">AdapterDataObserver</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">The AdapterDataObserver class extends RecyclerView.AdapterDataObserver to
+ provide a listener for changes in RecyclerView.Adapter data.</div>
+</th>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/common/AdapterDataObserver.OnAdapterDataChangedListener.html" title="interface in com.example.wellfed.common">AdapterDataObserver.OnAdapterDataChangedListener</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">The OnDataChangedListener interface requires a handler for changes in
+ RecyclerView.Adapter data.</div>
+</th>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/BuildConfig.html" title="class in com.example.wellfed">BuildConfig</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/common/ConfirmQuitDialog.html" title="class in com.example.wellfed.common">ConfirmQuitDialog</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/common/ConfirmDeleteDialog.html" title="class in com.example.wellfed.common">ConfirmDeleteDialog</a></td>
+<th class="colLast" scope="row">
+<div class="block">The ConfirmDeleteDialog class provides a dialog for confirming whether the
+ user intends to delete an item.</div>
+</th>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/common/DeleteButton.html" title="class in com.example.wellfed.common">DeleteButton</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/common/ConfirmDialog.html" title="class in com.example.wellfed.common">ConfirmDialog</a></td>
+<th class="colLast" scope="row">
+<div class="block">The ConfirmDialog class provides a dialog for confirming user intentions.</div>
+</th>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/common/DeleteDialog.html" title="class in com.example.wellfed.common">DeleteDialog</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></td>
+<th class="colLast" scope="row">
+<div class="block">The OnQuitListener interface defines the onConfirm handler that is
+ called when the user confirms.</div>
+</th>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><a href="com/example/wellfed/common/ConfirmQuitDialog.html" title="class in com.example.wellfed.common">ConfirmQuitDialog</a></td>
+<th class="colLast" scope="row">
+<div class="block">The ConfirmQuitDialog class provides a dialog for confirming whether the
+ user intends to quit the an activity where they have unsaved changes.</div>
+</th>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><a href="com/example/wellfed/common/DeleteButton.html" title="class in com.example.wellfed.common">DeleteButton</a></td>
+<th class="colLast" scope="row">
+<div class="block">The DeleteButton class attaches an OnClickListener to a Button that
+ opens a deletion confirmation dialog.</div>
+</th>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/ingredient/DeleteDialogFragment.html" title="class in com.example.wellfed.ingredient">DeleteDialogFragment</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/recipe/DeleteDialogFragment.html" title="class in com.example.wellfed.recipe">DeleteDialogFragment</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/ingredient/DeleteDialogFragment.DeleteIngredient.html" title="interface in com.example.wellfed.ingredient">DeleteDialogFragment.DeleteIngredient</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
-</tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/recipe/DeleteDialogFragment.DeleteRecipe.html" title="interface in com.example.wellfed.recipe">DeleteDialogFragment.DeleteRecipe</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/ingredient/DeleteDialogFragment.DeleteIngredient.html" title="interface in com.example.wellfed.ingredient">DeleteDialogFragment.DeleteIngredient</a></td>
+<th class="colLast" scope="row">
+<div class="block">Constructor for the DeleteDialogFragment.</div>
+</th>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/ingredient/FoodStorage.html" title="class in com.example.wellfed.ingredient">FoodStorage</a></td>
@@ -175,7 +197,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/ingredient/IngredientAdapter.IngredientLauncher.html" title="interface in com.example.wellfed.ingredient">IngredientAdapter.IngredientLauncher</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Constructor for the launcher.</div>
+</th>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/ingredient/IngredientContract.html" title="class in com.example.wellfed.ingredient">IngredientContract</a></td>
@@ -186,22 +210,32 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/ingredient/IngredientStorageFragment.html" title="class in com.example.wellfed.ingredient">IngredientStorageFragment</a></td>
+<td class="colFirst"><a href="com/example/wellfed/ingredient/IngredientEditActivity.html" title="class in com.example.wellfed.ingredient">IngredientEditActivity</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></td>
+<td class="colFirst"><a href="com/example/wellfed/ingredient/IngredientEditContract.html" title="class in com.example.wellfed.ingredient">IngredientEditContract</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/MainActivity.html" title="class in com.example.wellfed">MainActivity</a></td>
+<td class="colFirst"><a href="com/example/wellfed/ingredient/IngredientStorageFragment.html" title="class in com.example.wellfed.ingredient">IngredientStorageFragment</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
 <tr id="i21" class="rowColor">
+<td class="colFirst"><a href="com/example/wellfed/common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></td>
+<th class="colLast" scope="row">
+<div class="block">The Launcher class provides a method for launching an activity.</div>
+</th>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><a href="com/example/wellfed/MainActivity.html" title="class in com.example.wellfed">MainActivity</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealBookFragment.html" title="class in com.example.wellfed.mealplan">MealBookFragment</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class represents a MealPlan, which contains recipes and ingredients
@@ -209,174 +243,197 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  specific date.</div>
 </th>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanActivity.html" title="class in com.example.wellfed.mealplan">MealPlanActivity</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanAdapter.html" title="class in com.example.wellfed.mealplan">MealPlanAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanAdapter class binds ArrayList to RecyclerView.</div>
 </th>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanContract.html" title="class in com.example.wellfed.mealplan">MealPlanContract</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanController.html" title="class in com.example.wellfed.mealplan">MealPlanController</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
+<td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanDB.html" title="class in com.example.wellfed.mealplan">MealPlanDB</a></td>
+<th class="colLast" scope="row">&nbsp;</th>
+</tr>
+<tr id="i30" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanEditActivity.html" title="class in com.example.wellfed.mealplan">MealPlanEditActivity</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanEditContract.html" title="class in com.example.wellfed.mealplan">MealPlanEditContract</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/mealplan/MealPlanViewHolder.html" title="class in com.example.wellfed.mealplan">MealPlanViewHolder</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanViewHolder class contains the layout for each individual
  item in the RecyclerView.</div>
 </th>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/navigation/NavigationCollectionAdapter.html" title="class in com.example.wellfed.navigation">NavigationCollectionAdapter</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i31" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/common/OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
-</tr>
-<tr id="i32" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/common/OnQuitListener.html" title="interface in com.example.wellfed.common">OnQuitListener</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
-</tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class represents a Recipe, which contains ingredients and instructions on how to prepare
  a recipe.</div>
 </th>
 </tr>
-<tr id="i34" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeActivity.html" title="class in com.example.wellfed.recipe">RecipeActivity</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
-</tr>
 <tr id="i35" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeActivity.html" title="class in com.example.wellfed.recipe">RecipeActivity</a></td>
+<th class="colLast" scope="row">
+<div class="block">Activity that holds the view for Recipe showing all it's detail</div>
+</th>
 </tr>
 <tr id="i36" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe">RecipeAdapter.RecipeLauncher</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a></td>
+<th class="colLast" scope="row">
+<div class="block">Adapter for the recipes in the <a href="com/example/wellfed/recipe/RecipeBookFragment.html" title="class in com.example.wellfed.recipe"><code>RecipeBookFragment</code></a>
+ binds the view to the data</div>
+</th>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/recipe/RecipeBookFragment.html" title="class in com.example.wellfed.recipe">RecipeBookFragment</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">MealBookFragment contains a list Recipes <a href="com/example/wellfed/recipe/Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a></div>
+</th>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/recipe/RecipeContract.html" title="class in com.example.wellfed.recipe">RecipeContract</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Contract for launching new activities that return a Recipe</div>
+</th>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/recipe/RecipeController.html" title="class in com.example.wellfed.recipe">RecipeController</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">Handles the business logic for the Recipes</div>
+</th>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/recipe/RecipeDB.html" title="class in com.example.wellfed.recipe">RecipeDB</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
 <tr id="i41" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeEditActivity.html" title="class in com.example.wellfed.recipe">RecipeEditActivity</a></td>
+<th class="colLast" scope="row">
+<div class="block">Activity which allows user to edit an existing recipe</div>
+</th>
 </tr>
 <tr id="i42" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeIngredientAdapter.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeEditContract.html" title="class in com.example.wellfed.recipe">RecipeEditContract</a></td>
+<th class="colLast" scope="row">
+<div class="block">Contract that launches a RecipeEditActivity</div>
+</th>
 </tr>
 <tr id="i43" class="rowColor">
+<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeIngredientAdapter.html" title="class in com.example.wellfed.recipe">RecipeIngredientAdapter</a></td>
+<th class="colLast" scope="row">
+<div class="block">Adapter that manages the view and data for the ingredients
+ in the <a href="com/example/wellfed/recipe/Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a></div>
+</th>
+</tr>
+<tr id="i44" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/recipe/RecipeIngredientDB.html" title="class in com.example.wellfed.recipe">RecipeIngredientDB</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i44" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/common/RequiredDateTextInputLayout.html" title="class in com.example.wellfed.common">RequiredDateTextInputLayout</a></td>
-<th class="colLast" scope="row">
-<div class="block">The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
- class such that it can show a DatePickerDialog to allow the user to
- input dates.</div>
-</th>
-</tr>
 <tr id="i45" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/common/RequiredDropdownTextInputLayout.html" title="class in com.example.wellfed.common">RequiredDropdownTextInputLayout</a></td>
+<td class="colFirst"><a href="com/example/wellfed/recipe/RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientViewHolder</a></td>
 <th class="colLast" scope="row">
-<div class="block">The RequiredTextInputLayout class extends the TextInputLayout
- class to provide methods for performing data validation.</div>
+<div class="block">Viewholder for the ingredients in the recipe</div>
 </th>
 </tr>
 <tr id="i46" class="altColor">
-<td class="colFirst"><a href="com/example/wellfed/common/RequiredNumberTextInputLayout.html" title="class in com.example.wellfed.common">RequiredNumberTextInputLayout</a></td>
+<td class="colFirst"><a href="com/example/wellfed/common/RequiredDateTextInputLayout.html" title="class in com.example.wellfed.common">RequiredDateTextInputLayout</a></td>
 <th class="colLast" scope="row">
-<div class="block">The RequiredTextInputLayout class extends the TextInputLayout
- class to provide methods for performing data validation.</div>
+<div class="block">The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
+ class such that it can show a MaterialDatePicker to allow the user to
+ input dates.</div>
 </th>
 </tr>
 <tr id="i47" class="rowColor">
-<td class="colFirst"><a href="com/example/wellfed/common/RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></td>
+<td class="colFirst"><a href="com/example/wellfed/common/RequiredDropdownTextInputLayout.html" title="class in com.example.wellfed.common">RequiredDropdownTextInputLayout</a></td>
 <th class="colLast" scope="row">
-<div class="block">The RequiredTextInputLayout class extends the TextInputLayout
- class to provide methods for performing data validation.</div>
+<div class="block">The RequiredDropdownTextInputLayout class extends the RequiredTextInputLayout
+ class to provide methods for compatibility with Dropdowns.</div>
 </th>
 </tr>
 <tr id="i48" class="altColor">
+<td class="colFirst"><a href="com/example/wellfed/common/RequiredNumberTextInputLayout.html" title="class in com.example.wellfed.common">RequiredNumberTextInputLayout</a></td>
+<th class="colLast" scope="row">
+<div class="block">The RequiredNumberTextInputLayout class extends the RequiredTextInputLayout
+ class with methods for performing number data validation.</div>
+</th>
+</tr>
+<tr id="i49" class="rowColor">
+<td class="colFirst"><a href="com/example/wellfed/common/RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></td>
+<th class="colLast" scope="row">
+<div class="block">The RequiredTextInputLayout class extends the TextInputLayout
+ class with methods for performing data validation.</div>
+</th>
+</tr>
+<tr id="i50" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/shoppingcart/ShoppingCart.html" title="class in com.example.wellfed.shoppingcart">ShoppingCart</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class represents a ShoppingCart, which represents a cart that ingredients are picked up in,
  and information is added to.</div>
 </th>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/shoppingcart/ShoppingCartActivity.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartActivity</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartController</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/shoppingcart/ShoppingCartDB.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartDB</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/shoppingcart/ShoppingCartFragment.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartFragment</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/shoppingcart/ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class represents a ShoppingCartIngredient, which are Ingredients that can be added to a
  ShoppingCart.</div>
 </th>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/shoppingcart/ShoppingCartIngredientAdapter.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">The ShoppingCartIngredientAdapter class binds ArrayList<ShoppingCartIngredient> to RecyclerView.</div>
 </th>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/ingredient/StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><a href="com/example/wellfed/ingredient/StorageIngredientDB.html" title="class in com.example.wellfed.ingredient">StorageIngredientDB</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><a href="com/example/wellfed/common/UTCDate.html" title="class in com.example.wellfed.common">UTCDate</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
+<th class="colLast" scope="row">
+<div class="block">The UTCDate class provides extends the Date class with methods for managing
+ dates in UTC time.</div>
+</th>
 </tr>
 </table>
 </li>

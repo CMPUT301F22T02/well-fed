@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -161,13 +161,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">RequiredDropdownTextInputLayout</span>
 extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></pre>
-<div class="block">The RequiredTextInputLayout class extends the TextInputLayout
- class to provide methods for performing data validation.
- <p>
+<div class="block">The RequiredDropdownTextInputLayout class extends the RequiredTextInputLayout
+ class to provide methods for compatibility with Dropdowns.
  Citation:
- TextInputLayout. Android Developers. (n.d.). Retrieved September 26, 2022,
- from https://developer.android.com/reference/com/google/android/material/
- textfield/TextInputLayout</div>
+ MaterialAutoCompleteTextView. Android Developers. (n.d.).
+ Retrieved November 3, 2022, from https://developer.android.com/reference/com/
+ google/android/material/textfield/MaterialAutoCompleteTextView</div>
 </li>
 </ul>
 </div>
@@ -227,13 +226,6 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.com.example.wellfed.common.RequiredTextInputLayout">
-<!--   -->
-</a>
-<h3>Fields inherited from class&nbsp;com.example.wellfed.common.<a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></h3>
-<code><a href="RequiredTextInputLayout.html#editText">editText</a>, <a href="RequiredTextInputLayout.html#initialText">initialText</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.google.android.material.textfield.TextInputLayout">
 <!--   -->
 </a>
@@ -279,18 +271,24 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context)">RequiredDropdownTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredDropdownTextInputLayout object</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet)">RequiredDropdownTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                                android.util.AttributeSet&nbsp;attrs)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredDropdownTextInputLayout object</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet,int)">RequiredDropdownTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                                android.util.AttributeSet&nbsp;attrs,
                                int&nbsp;defStyleAttr)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredDropdownTextInputLayout object</div>
+</td>
 </tr>
 </table>
 </li>
@@ -313,12 +311,23 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEditTextAttached(com.google.android.material.textfield.TextInputLayout)">onEditTextAttached</a></span>&#8203;(com.google.android.material.textfield.TextInputLayout&nbsp;textInputLayout)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets autoCompleteTextView to the MaterialAutoCompleteTextView</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlaceholderText(java.lang.String)">setPlaceholderText</a></span>&#8203;(java.lang.String&nbsp;initialText)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlaceholderText(java.lang.String)">setPlaceholderText</a></span>&#8203;(java.lang.String&nbsp;placeholderText)</code></th>
+<td class="colLast">
+<div class="block">Set the placeholder text of the MaterialAutoCompleteTextView</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSimpleItems(java.lang.String%5B%5D)">setSimpleItems</a></span>&#8203;(java.lang.String[]&nbsp;items)</code></th>
+<td class="colLast">
+<div class="block">Set the dropdown items of the MaterialAutoCompleteTextView</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -326,7 +335,7 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.common.<a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></h3>
-<code><a href="RequiredTextInputLayout.html#afterTextChanged(android.text.Editable)">afterTextChanged</a>, <a href="RequiredTextInputLayout.html#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a>, <a href="RequiredTextInputLayout.html#getText()">getText</a>, <a href="RequiredTextInputLayout.html#hasChanges()">hasChanges</a>, <a href="RequiredTextInputLayout.html#isValid()">isValid</a>, <a href="RequiredTextInputLayout.html#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a></code></li>
+<code><a href="RequiredTextInputLayout.html#afterTextChanged(android.text.Editable)">afterTextChanged</a>, <a href="RequiredTextInputLayout.html#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a>, <a href="RequiredTextInputLayout.html#getText()">getText</a>, <a href="RequiredTextInputLayout.html#hasChanges()">hasChanges</a>, <a href="RequiredTextInputLayout.html#isValid()">isValid</a>, <a href="RequiredTextInputLayout.html#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a>, <a href="RequiredTextInputLayout.html#setText(java.lang.String)">setText</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.google.android.material.textfield.TextInputLayout">
@@ -394,6 +403,11 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <h4>RequiredDropdownTextInputLayout</h4>
 <pre>public&nbsp;RequiredDropdownTextInputLayout&#8203;(@NonNull
                                        android.content.Context&nbsp;context)</pre>
+<div class="block">Constructs a RequiredDropdownTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet)">
@@ -406,6 +420,12 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
                                        android.content.Context&nbsp;context,
                                        @Nullable
                                        android.util.AttributeSet&nbsp;attrs)</pre>
+<div class="block">Constructs a RequiredDropdownTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet,int)">
@@ -419,6 +439,13 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
                                        @Nullable
                                        android.util.AttributeSet&nbsp;attrs,
                                        int&nbsp;defStyleAttr)</pre>
+<div class="block">Constructs a RequiredDropdownTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+<dd><code>defStyleAttr</code> - the default style attribute</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -437,10 +464,27 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <ul class="blockList">
 <li class="blockList">
 <h4>setPlaceholderText</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPlaceholderText&#8203;(java.lang.String&nbsp;initialText)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPlaceholderText&#8203;(java.lang.String&nbsp;placeholderText)</pre>
+<div class="block">Set the placeholder text of the MaterialAutoCompleteTextView</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="RequiredTextInputLayout.html#setPlaceholderText(java.lang.String)">setPlaceholderText</a></code>&nbsp;in class&nbsp;<code><a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>placeholderText</code> - the placeholder text</dd>
+</dl>
+</li>
+</ul>
+<a id="setSimpleItems(java.lang.String[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSimpleItems</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSimpleItems&#8203;(java.lang.String[]&nbsp;items)</pre>
+<div class="block">Set the dropdown items of the MaterialAutoCompleteTextView</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>items</code> - the items to populate the dropdown</dd>
 </dl>
 </li>
 </ul>
@@ -452,11 +496,14 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <h4>onEditTextAttached</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onEditTextAttached&#8203;(@NonNull
                                com.google.android.material.textfield.TextInputLayout&nbsp;textInputLayout)</pre>
+<div class="block">Sets autoCompleteTextView to the MaterialAutoCompleteTextView</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onEditTextAttached</code>&nbsp;in interface&nbsp;<code>com.google.android.material.textfield.TextInputLayout.OnEditTextAttachedListener</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="RequiredTextInputLayout.html#onEditTextAttached(com.google.android.material.textfield.TextInputLayout)">onEditTextAttached</a></code>&nbsp;in class&nbsp;<code><a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>textInputLayout</code> - the TextInputLayout</dd>
 </dl>
 </li>
 </ul>

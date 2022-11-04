@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -88,13 +88,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -136,11 +136,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>java.io.Serializable</code></dd>
+<dd><code>java.io.Serializable</code>, <code>java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">StorageIngredient</span>
-extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a></pre>
+extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>
+implements java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.example.wellfed.ingredient.StorageIngredient">Serialized Form</a></dd>
@@ -151,6 +152,29 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#first">first</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -180,6 +204,17 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <div class="block">Creates a new StorageIngredient object that represents an Ingredient used for various meal purposes.</div>
 </td>
 </tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.Float,java.lang.String,java.lang.String,java.util.Date,java.lang.String)">StorageIngredient</a></span>&#8203;(java.lang.String&nbsp;description,
+                 java.lang.Float&nbsp;amount,
+                 java.lang.String&nbsp;unit,
+                 java.lang.String&nbsp;location,
+                 java.util.Date&nbsp;bestBefore,
+                 java.lang.String&nbsp;category)</code></th>
+<td class="colLast">
+<div class="block">Creates a new StorageIngredient object that represents an Ingredient used for various meal purposes.</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -199,76 +234,111 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compareTo(com.example.wellfed.ingredient.StorageIngredient)">compareTo</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;o)</code></th>
+<td class="colLast">
+<div class="block">Checks if the ingredient is equal to another ingredient.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">
+<div class="block">Checks if the ingredient is equal to another ingredient.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmount()">getAmount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the amount of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmountAndUnit()">getAmountAndUnit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Combines the amount and unit of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBestBefore()">getBestBefore</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the best before date of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.util.Date</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBestBeforeDate()">getBestBeforeDate</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Gets the best before date of the ingredient in the storage.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategory()">getCategory</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get categories of the ingredient.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDescription()">getDescription</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the description (aka title) of an Ingredient</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLocation()">getLocation</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the location of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUnit()">getUnit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the unit of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmount(java.lang.Float)">setAmount</a></span>&#8203;(java.lang.Float&nbsp;amount)</code></th>
 <td class="colLast">
 <div class="block">Sets the amount of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBestBefore(java.util.Date)">setBestBefore</a></span>&#8203;(java.util.Date&nbsp;bestBefore)</code></th>
 <td class="colLast">
 <div class="block">Sets the best before date of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCategory(java.lang.String)">setCategory</a></span>&#8203;(java.lang.String&nbsp;category)</code></th>
+<td class="colLast">
+<div class="block">Set categories of the ingredient.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDescription(java.lang.String)">setDescription</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
 <td class="colLast">
 <div class="block">Sets the description (aka title) of an Ingredient</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLocation(java.lang.String)">setLocation</a></span>&#8203;(java.lang.String&nbsp;location)</code></th>
 <td class="colLast">
 <div class="block">Sets the location of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUnit(java.lang.String)">setUnit</a></span>&#8203;(java.lang.String&nbsp;unit)</code></th>
 <td class="colLast">
@@ -281,14 +351,14 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.ingredient.<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a></h3>
-<code><a href="Ingredient.html#getCategory()">getCategory</a>, <a href="Ingredient.html#setCategory(java.lang.String)">setCategory</a></code></li>
+<code><a href="Ingredient.html#getId()">getId</a>, <a href="Ingredient.html#setId(java.lang.String)">setId</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<code>clone, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -299,6 +369,25 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="first">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>first</h4>
+<pre>public&nbsp;java.lang.String first</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -319,7 +408,7 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <a id="&lt;init&gt;(java.lang.String,java.lang.Float,java.lang.String,java.lang.String,java.util.Date)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>StorageIngredient</h4>
 <pre>public&nbsp;StorageIngredient&#8203;(java.lang.String&nbsp;description,
@@ -338,6 +427,30 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 </dl>
 </li>
 </ul>
+<a id="&lt;init&gt;(java.lang.String,java.lang.Float,java.lang.String,java.lang.String,java.util.Date,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>StorageIngredient</h4>
+<pre>public&nbsp;StorageIngredient&#8203;(java.lang.String&nbsp;description,
+                         java.lang.Float&nbsp;amount,
+                         java.lang.String&nbsp;unit,
+                         java.lang.String&nbsp;location,
+                         java.util.Date&nbsp;bestBefore,
+                         java.lang.String&nbsp;category)</pre>
+<div class="block">Creates a new StorageIngredient object that represents an Ingredient used for various meal purposes.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>description</code> - The description/title of an Ingredient</dd>
+<dd><code>amount</code> - The amount of the ingredient in the storage.</dd>
+<dd><code>unit</code> - The unit of the ingredient in the storage.</dd>
+<dd><code>location</code> - The location of the ingredient in the storage.</dd>
+<dd><code>bestBefore</code> - The best before date of the ingredient in the storage.</dd>
+<dd><code>category</code> - The categories of the ingredient.</dd>
+</dl>
+</li>
+</ul>
 </li>
 </ul>
 </section>
@@ -348,6 +461,38 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="setCategory(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCategory</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCategory&#8203;(java.lang.String&nbsp;category)</pre>
+<div class="block">Set categories of the ingredient.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="Ingredient.html#setCategory(java.lang.String)">setCategory</a></code>&nbsp;in class&nbsp;<code><a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>category</code> - The category to add</dd>
+</dl>
+</li>
+</ul>
+<a id="getCategory()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCategory</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getCategory()</pre>
+<div class="block">Get categories of the ingredient.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="Ingredient.html#getCategory()">getCategory</a></code>&nbsp;in class&nbsp;<code><a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The String representing the category</dd>
+</dl>
+</li>
+</ul>
 <a id="getAmount()">
 <!--   -->
 </a>
@@ -496,10 +641,24 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 </dl>
 </li>
 </ul>
+<a id="getBestBeforeDate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBestBeforeDate</h4>
+<pre class="methodSignature">public&nbsp;java.util.Date&nbsp;getBestBeforeDate()</pre>
+<div class="block">Gets the best before date of the ingredient in the storage.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The best before date of the ingredient in the storage</dd>
+</dl>
+</li>
+</ul>
 <a id="getAmountAndUnit()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getAmountAndUnit</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAmountAndUnit()</pre>
@@ -507,6 +666,42 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The amount and unit of the ingredient in the storage</dd>
+</dl>
+</li>
+</ul>
+<a id="compareTo(com.example.wellfed.ingredient.StorageIngredient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compareTo</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;compareTo&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;o)</pre>
+<div class="block">Checks if the ingredient is equal to another ingredient.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>compareTo</code>&nbsp;in interface&nbsp;<code>java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - The ingredient to compare to.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the ingredients are equal, false otherwise.</dd>
+</dl>
+</li>
+</ul>
+<a id="equals(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>equals</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="block">Checks if the ingredient is equal to another ingredient.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - The ingredient to compare to.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the ingredients are equal, false otherwise.</dd>
 </dl>
 </li>
 </ul>
@@ -562,13 +757,13 @@ extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
