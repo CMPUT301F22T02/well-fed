@@ -1,5 +1,7 @@
 package com.example.wellfed.shoppingcart;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -8,11 +10,13 @@ import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmQuitDialog;
 import com.example.wellfed.common.OnQuitListener;
+import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Locale;
 
 public class ShoppingCartEditActivity extends ActivityBase implements OnQuitListener {
     private RequiredTextInputLayout labelTextInput;
@@ -61,5 +65,20 @@ public class ShoppingCartEditActivity extends ActivityBase implements OnQuitList
 
         this.amountTextInput.requireDouble();
         this.amountTextInput.setRequirePositiveNumber(true);
+        this.fab = findViewById(R.id.fab);
+        this.fab.setOnClickListener(view -> onSave());
+
+        Intent intent = this.getIntent();
+        this.shoppingCartIngredient = (ShoppingCartIngredient) intent.getSerializableExtra("shoppingCartIngredient");
+        if (this.shoppingCartIngredient != null) {
+            this.type = "edit";
+            this.labelTextInput.setPlaceholderText(this.shoppingCartIngredient.getDescription());
+            this.categoryTextInput.setPlaceholderText(
+                    this.shoppingCartIngredient.getCategory());
+            this.unitTextInput.setPlaceholderText(this.shoppingCartIngredient.getUnit());
+            this.amountTextInput.setPlaceholderText(
+                    String.format(Locale.US, "%d", shoppingCartIngredient.getAmount())
+            );
+        }
     }
 }
