@@ -31,11 +31,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
 
-    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes, RecipeBookFragment recipeBookFragment) {
+    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes,
+                         RecipeBookFragment recipeBookFragment) {
         this.parent = parent;
         this.recipes = recipes;
         this.recipeLauncher = (RecipeLauncher) recipeBookFragment;
     }
+
+    // TODO: make Adapter callable by any fragment
+    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes) {
+        this.parent = parent;
+        this.recipes = recipes;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView recipeTitleTextView;
@@ -65,12 +73,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         TextView recipeTitle = holder.recipeTitleTextView;
         recipeTitle.setText(recipe.getTitle());
-        recipeTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recipeLauncher.launch(holder.getAdapterPosition());
-                }
-            });
+        recipeTitle.setOnClickListener(
+                view -> recipeLauncher.launch(holder.getAdapterPosition()));
     }
 
     @Override

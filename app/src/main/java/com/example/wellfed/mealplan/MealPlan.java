@@ -1,10 +1,10 @@
 /**
  * MealPlan
- *
+ * <p>
  * Version 1.0
- *
+ * <p>
  * 21 October, 2022
- *
+ * <p>
  * Copyright (c) 2022.  0xFFFFFF
  * All rights reserved.
  */
@@ -13,6 +13,8 @@ package com.example.wellfed.mealplan;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
+
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.ingredient.Ingredient;
 
@@ -20,19 +22,21 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * This class represents a MealPlan, which contains recipes and ingredients to be eaten on a
+ * This class represents a MealPlan, which contains recipes and ingredients
+ * to be eaten on a
  * specific date.
  *
  * @version 1.0
  */
-public class MealPlan {
+public class MealPlan implements Serializable {
     /**
      * Holds the title of a MealPlan.
      */
     private String title;
 
     /**
-     * Holds the category of a MealPlan. Note that a MealPlan has only one category, unlike
+     * Holds the category of a MealPlan. Note that a MealPlan has only one
+     * category, unlike
      * Recipe and Ingredient.
      */
     private String category;
@@ -43,7 +47,8 @@ public class MealPlan {
     private Date eatDate;
 
     /**
-     * Holds the number of servings that a MealPlan serves. Any recipes should be scaled up to fit
+     * Holds the number of servings that a MealPlan serves. Any recipes
+     * should be scaled up to fit
      * this number.
      */
     private int servings;
@@ -59,7 +64,8 @@ public class MealPlan {
     private final ArrayList<Recipe> recipes;
 
     /**
-     * Creates a new MealPlan object which represents a meal to be eaten on a certain date.
+     * Creates a new MealPlan object which represents a meal to be eaten on a
+     * certain date.
      * @param title The title of the MealPlan
      */
     public MealPlan(String title) {
@@ -179,7 +185,8 @@ public class MealPlan {
 
     /**
      * Sets the eat date that a MealPlan is to be eaten on
-     * @param eatDate a Date representing the day that a MealPlan is to be eaten on
+     * @param eatDate a Date representing the day that a MealPlan is to be
+     *                eaten on
      */
     public void setEatDate(Date eatDate) {
         this.eatDate = eatDate;
