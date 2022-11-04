@@ -42,7 +42,7 @@ public class RecipeDB {
     /**
      * Create a RecipeDB object
      */
-    public RecipeDB(){
+    public RecipeDB() {
         db = FirebaseFirestore.getInstance();
         this.recipesCollection = db.collection("Recipes");
         recipeIngredientDB = new RecipeIngredientDB();
@@ -52,6 +52,7 @@ public class RecipeDB {
      * Adds a recipe to the Recipe collection in db and any ingredients
      * not already in Recipe Ingredients. This method will set the Recipe id
      * to the corresponding document id in the collection
+     *
      * @param recipe A Recipe object we want to add to the collection of Recipes
      *               and whose id we want to set
      * @return Returns the id of the Recipe document
@@ -63,24 +64,21 @@ public class RecipeDB {
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
         String newRecipeId = recipesCollection.document().getId();
 
-        for(Ingredient i: recipe.getIngredients()) {
+        for (Ingredient i : recipe.getIngredients()) {
             if (i.getId() == null) {
                 i.setId(newRecipeId);
                 DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
                 recipeIngredientDocuments.add(newDocumentReference);
-            }
-            else{
+            } else {
                 try {
                     recipeIngredientDB.getRecipeIngredient(i.getId());
-                }
-                catch(Exception err){
+                } catch (Exception err) {
                     Log.d(TAG, "addRecipe: Failed to get recipe");
                 }
             }
         }
 
         Map<String, Object> recipeMap = new HashMap<>();
-
 
 
         recipeMap.put("title", recipe.getTitle());
@@ -118,13 +116,14 @@ public class RecipeDB {
     /**
      * Deletes a recipe document with the id  from the collection
      * of recipes
+     *
      * @param id The id of recipe document we want to delete
      * @throws InterruptedException If the transaction in the method was not complete
      */
     public void delRecipe(String id) throws InterruptedException {
         CountDownLatch deleteLatch = new CountDownLatch(1);
 
-        if(id.equals(NULL)){
+        if (id.equals(NULL)) {
             Log.d("Delete Recipe", "The Recipe does not have an id");
             return;
         }
@@ -152,13 +151,14 @@ public class RecipeDB {
     /**
      * Deletes a recipe document with the id  from the recipe collection (AND Ingredients)
      * of recipes
+     *
      * @param id The id of recipe document we want to delete
      * @throws InterruptedException If the transaction in the method was not complete
      */
     public void delRecipeAndIngredient(String id) throws InterruptedException {
         CountDownLatch deleteLatch = new CountDownLatch(1);
 
-        if(id.equals(NULL)){
+        if (id.equals(NULL)) {
             Log.d("Delete Recipe", "The Recipe does not have an id");
             return;
         }
@@ -169,6 +169,7 @@ public class RecipeDB {
     /**
      * Updates the corresponding recipe document in the collection with the fields of the
      * recipe object.
+     *
      * @param recipe A Recipe object whose changes we want to push to the collection of Recipes
      * @throws InterruptedException If the transaction in the method was not complete
      */
@@ -179,16 +180,14 @@ public class RecipeDB {
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
 
-        for(Ingredient i: recipe.getIngredients()) {
+        for (Ingredient i : recipe.getIngredients()) {
             if (i.getId() == null) {
                 DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
                 recipeIngredientDocuments.add(newDocumentReference);
-            }
-            else{
+            } else {
                 try {
                     recipeIngredientDB.getRecipeIngredient(i.getId());
-                }
-                catch(Exception err){
+                } catch (Exception err) {
                     Log.d(TAG, "addRecipe: Failed to get recipe");
                 }
             }
@@ -226,7 +225,6 @@ public class RecipeDB {
     }
 
     /**
-     *
      * @param id A String with the id of the document who recipe we want
      * @return The Recipe object that corresponds to the document in the collection
      * If it does not exist then return null
@@ -256,7 +254,7 @@ public class RecipeDB {
 
         getLatch.await();
 
-        if(!recipeSnapshot[0].exists()){
+        if (!recipeSnapshot[0].exists()) {
             return null;
         }
 
@@ -264,10 +262,11 @@ public class RecipeDB {
         recipe = getRecipe(recipeSnapshot[0]);
 
         return recipe;
-}
+    }
 
     /**
      * Gets a recipe from its DocumentSnapshot
+     *
      * @param recipeSnapshot The DocumentSnapshot of the recipe we want to get
      * @return The Recipe object that corresponds to the document in the collection
      */
@@ -276,6 +275,7 @@ public class RecipeDB {
         recipe.setId(recipeSnapshot.getId());
         recipe.setCategory(recipeSnapshot.getString("category"));
         recipe.setComments(recipeSnapshot.getString("comments"));
+        recipe.setPhotograph(recipeSnapshot.getString("photograph"));
 //        TODO: manpreet fix
 //        recipe.setPhotograph(recipeSnapshot.getString("photograph"));
         recipe.setPrepTimeMinutes(Objects.requireNonNull(recipeSnapshot.getLong("prep-time-minutes")).intValue());
@@ -283,11 +283,11 @@ public class RecipeDB {
 
         List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(
                 recipeSnapshot.get("ingredients"));
-        for(DocumentReference ingredient: recipeIngredients){
+
+        for (DocumentReference ingredient : recipeIngredients) {
             try {
-                recipeIngredientDB.getRecipeIngredient(ingredient.getId());
-            }
-            catch(Exception err){
+                recipe.addIngredient(recipeIngredientDB.getRecipeIngredient(ingredient.getId()));
+            } catch (Exception err) {
                 Log.d(TAG, "addRecipe: Failed to get recipe");
             }
         }
@@ -297,6 +297,7 @@ public class RecipeDB {
 
     /**
      * Makes an ArrayList of Recipes out of all the documents in the collection of Recipes
+     *
      * @return ArrayList The List of all Recipes contained in the
      * database
      * @throws InterruptedException If the transaction in the method was not complete
@@ -327,10 +328,11 @@ public class RecipeDB {
 
     /**
      * Get the DocumentReference from Recipes collection for the given id
+     *
      * @param id The String of the document in Recipes collection we want
      * @return DocumentReference of the Recipe
      */
-    public DocumentReference getDocumentReference(String id){
+    public DocumentReference getDocumentReference(String id) {
         return recipesCollection.document(id);
     }
 }
