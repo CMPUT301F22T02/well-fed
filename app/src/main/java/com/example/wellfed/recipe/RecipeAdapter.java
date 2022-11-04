@@ -20,15 +20,34 @@ import com.example.wellfed.common.Launcher;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Adapter for the recipes in the {@link RecipeBookFragment}
+ * binds the view to the data
+ * @version 1.0.0
+ */
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
+    /**
+     * stores the reference to list of {@link Recipe}
+     */
     private List<Recipe> recipes;
+
+    /**
+     * parent class that initialized the adapter
+     */
     private FragmentActivity parent;
+
+    /**
+     * launcher to launch to a new activity
+     */
     private Launcher recipeLauncher;
 
-
-
-
+    /**
+     * constructor the adapter
+     * @param parent
+     * @param recipes
+     * @param recipeLauncher
+     */
     public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes,
                          Launcher recipeLauncher) {
         this.parent = parent;
@@ -36,13 +55,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         this.recipeLauncher = recipeLauncher;
     }
 
-    // TODO: make Adapter callable by any fragment
+    /**
+     * generic constructor for recipeAdapter
+     * @param parent
+     * @param recipes
+     */
     public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes) {
         this.parent = parent;
         this.recipes = recipes;
     }
 
 
+    /**
+     * Stores the view for the recipes
+     * @version 1.0.0
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView recipeTitleTextView;
         public ViewHolder(@NonNull View itemView) {
@@ -53,6 +80,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         }
     }
 
+    /**
+     * Inflate the layout with the parent context
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,6 +98,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         return viewHolder;
     }
 
+    /**
+     * Bind the data with the views
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe recipe = recipes.get(position);
@@ -81,6 +119,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         }
     }
 
+    /**
+     *
+     * @return the count of items in the recycle view
+     */
     @Override
     public int getItemCount() {
         return recipes.size();

@@ -1,18 +1,12 @@
 package com.example.wellfed.recipe;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
@@ -22,25 +16,53 @@ import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
 import com.squareup.picasso.Picasso;
 
-import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity that holds the view for Recipe showing all it's detail
+ * @version 1.0.0
+ */
 public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
+    /**
+     * stores the list of Ingredient{@link Ingredient}
+     */
     private List<Ingredient> ingredientList;
+
+    /**
+     * stores the recipe {@link Recipe}
+     */
     private Recipe recipe;
+
+    /**
+     * RecyclerView for the ingredients in the recipe
+     */
     private RecyclerView ingredientRv;
+
+    /**
+     * Adapter that works with ingredentRv{@link RecipeActivity#ingredientRv}
+     */
     private RecipeIngredientAdapter recipeIngredientAdapter;
 
+    /**
+     * method that is called when the activity is created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        // intialize variables
+        // Initialize the variables
         ingredientList = new ArrayList<>();
+
+        /**
+         * Stores the intent the activity was created with
+         */
         Intent intent = getIntent();
+
+
         recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
         // add ingredients to the recipe
@@ -70,7 +92,9 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
-
+        /**
+         * DeleteBtn to create a dialog asking for delete confirmation
+         */
         DeleteButton deleteBtn = new DeleteButton(
                 this,
                 findViewById(R.id.recipe_delete_btn),
@@ -78,7 +102,10 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                 this);
     }
 
-
+    /**
+     * method that stops the activity with a result
+     * when delete confirmation is complete
+     */
     @Override
     public void onConfirm() {
         Intent intent = new Intent();
