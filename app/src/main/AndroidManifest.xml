@@ -39,6 +39,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ingredient.IngredientActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".recipe.RecipeActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">

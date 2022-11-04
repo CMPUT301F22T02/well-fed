@@ -7,8 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  unit_test:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,4 +26,4 @@ jobs:
       run: ./gradlew test
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build --parallel

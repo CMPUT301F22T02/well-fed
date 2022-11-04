@@ -306,7 +306,7 @@ public class RecipeIngredientDB {
 
     /**
      * Gets all the corresponding RecipeIngredients from the Recipe Ingredient collection
-     * @return ArrayList<RecipeIngredient> containing all RecipeIngredients/
+     * @return ArrayList containing all RecipeIngredients
      * @throws InterruptedException If any transaction in the method was not complete
      */
     public ArrayList<RecipeIngredient> getRecipeIngredients() throws InterruptedException {

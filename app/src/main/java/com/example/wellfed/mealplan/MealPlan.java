@@ -51,7 +51,7 @@ public class MealPlan implements Serializable {
      * should be scaled up to fit
      * this number.
      */
-    private int servings;
+    private Integer servings;
 
     /**
      * Holds a list of all Ingredients in a MealPlan.
@@ -196,7 +196,7 @@ public class MealPlan implements Serializable {
      * Gets the number of servings in a MealPlan
      * @return an int representing the number of servings in a MealPlan
      */
-    public int getServings() {
+    public Integer getServings() {
         return servings;
     }
 
@@ -204,7 +204,7 @@ public class MealPlan implements Serializable {
      * Sets the number of servings in a MealPlan
      * @param servings an int representing the number of servings in a MealPlan
      */
-    public void setServings(int servings) {
+    public void setServings(Integer servings) {
         this.servings = servings;
     }
 }
