@@ -9,7 +9,17 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * Contract that launches a RecipeEditActivity
+ */
 public class RecipeEditContract extends ActivityResultContract<Recipe, Pair<String, Recipe>> {
+
+    /**
+     * creates an intent for the recipe
+     * @param context context that launches the activity
+     * @param recipe recipe to include in the intent
+     * @return
+     */
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, Recipe recipe) {
@@ -18,6 +28,13 @@ public class RecipeEditContract extends ActivityResultContract<Recipe, Pair<Stri
         return intent;
     }
 
+
+    /**
+     * parses the result from the activity
+     * @param i result code of the activity
+     * @param intent intent returned in the result
+     * @return
+     */
     @Override
     public Pair<String, Recipe> parseResult(int i, @Nullable Intent intent) {
         if (i != Activity.RESULT_OK || intent == null) {
