@@ -132,9 +132,7 @@ public class RecipeDB {
         DocumentReference recipeToDelete = recipesCollection.document(id);
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
-
                     transaction.delete(recipeToDelete);
-
                     return null;
                 })
                 .addOnSuccessListener(unused -> {
