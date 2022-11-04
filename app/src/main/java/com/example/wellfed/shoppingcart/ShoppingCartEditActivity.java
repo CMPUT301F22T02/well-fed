@@ -115,4 +115,9 @@ public class ShoppingCartEditActivity extends ActivityBase implements OnQuitList
         setResult(Activity.RESULT_CANCELED, intent);
         finish();
     }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
 }
