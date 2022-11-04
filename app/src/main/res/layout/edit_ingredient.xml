@@ -112,7 +112,7 @@
             android:id="@+id/ingredient_location"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/location"
+            android:hint="@string/location_tag"
             android:inputType="text" />
     </com.example.wellfed.common.RequiredTextInputLayout>
 

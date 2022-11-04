@@ -92,8 +92,9 @@
         app:layout_constraintTop_toBottomOf="@+id/ingredient_quantity_value" />
 
     <TextView
+        android:paddingHorizontal="10dp"
         android:id="@+id/ingredient_category"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"

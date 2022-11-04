@@ -44,4 +44,5 @@
     <string name="categories">Categories</string>
     <string name="unit">Unit</string>
     <string name="amount_hint">Amount</string>
+    <string name="location_tag">Location</string>
 </resources>
