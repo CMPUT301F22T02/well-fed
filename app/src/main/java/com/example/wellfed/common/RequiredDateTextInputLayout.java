@@ -47,28 +47,44 @@ import java.util.TimeZone;
 
 /**
  * The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
- * class such that it can show a DatePickerDialog to allow the user to
+ * class such that it can show a MaterialDatePicker to allow the user to
  * input dates.
- * <p>
  * Citation:
- * DatePickerDialog. Android Developers. (n.d.). Retrieved September 26,
- * 2022, from
- * https://developer.android.com/reference/android/app/DatePickerDialog
+ * MaterialDatePicker. Android Developers. (n.d.). Retrieved November 3,
+ * 2022, from https://developer.android.com/reference/com/google/android/
+ * material/datepicker/MaterialDatePicker
  *
  * @author Steven Tang
- * @version v1.0.0 2022-09-26
+ * @version v1.1.0 2022-10-29
  **/
 public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         implements View.OnFocusChangeListener, View.OnClickListener,
                    MaterialPickerOnPositiveButtonClickListener<Long>,
                    TextInputLayout.OnEditTextAttachedListener {
+    /**
+     * Holds the date format used to display the date
+     */
     private final DateFormat DATE_FORMAT;
+    /**
+     * Holds the date currently selected
+     */
     private Date date;
 
+    /**
+     * Constructs a RequiredDateTextInputLayout object
+     *
+     * @param context the context
+     */
     public RequiredDateTextInputLayout(@NonNull Context context) {
         this(context, null);
     }
 
+    /**
+     * Constructs a RequiredDateTextInputLayout object
+     *
+     * @param context the context
+     * @param attrs   the attributes
+     */
     public RequiredDateTextInputLayout(@NonNull Context context,
                                        @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -76,6 +92,13 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         this.DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
+    /**
+     * Constructs a RequiredDateTextInputLayout object
+     *
+     * @param context      the context
+     * @param attrs        the attributes
+     * @param defStyleAttr the default style attribute
+     */
     public RequiredDateTextInputLayout(@NonNull Context context,
                                        @Nullable AttributeSet attrs,
                                        int defStyleAttr) {
@@ -84,31 +107,31 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         this.DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    /*
-     * The onEditTextAttached method sets an OnClickListener on the
-     * TextInputLayout.
+    /**
+     * Sets the EditText's OnClickListener to this
+     *
+     * @param textInputLayout the TextInputLayout
      */
-    @Override
-    public void onEditTextAttached(@NonNull TextInputLayout textInputLayout) {
+    @Override public void onEditTextAttached(
+            @NonNull TextInputLayout textInputLayout) {
         super.onEditTextAttached(textInputLayout);
         Objects.requireNonNull(textInputLayout.getEditText())
                 .setOnClickListener(this);
     }
 
-    /*
-     * The showDatePickerDialog method opens the DatePickerDialog with
-     * the current date.
+    /**
+     * Opens the MaterialDatePicker dialog with the selected date.
      */
     private void showDatePickerDialog() {
-        Long selectedTime;
+        long selectedTime;
         if (this.date == null) {
             selectedTime = MaterialDatePicker.todayInUtcMilliseconds();
         } else {
             selectedTime = this.date.getTime();
         }
-        MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select date")
-                .setSelection(selectedTime)
+        MaterialDatePicker<Long> picker =
+                MaterialDatePicker.Builder.datePicker()
+                        .setTitleText("Select date").setSelection(selectedTime)
                         .build();
         ContextThemeWrapper wrapper = (ContextThemeWrapper) getContext();
         AppCompatActivity activity =
@@ -117,44 +140,51 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         picker.addOnPositiveButtonClickListener(this);
     }
 
-    /*
-     * The onFocusChange shows the Date Picker Dialog when the
-     * TextInputLayout is
-     * focused.
+    /**
+     * Opens the MaterialDatePicker dialog when the TextInputLayout is focused.
+     *
+     * @param view    the view that has changed focus.
+     * @param focused true if the view is focused.
      */
-    @Override
-    public void onFocusChange(View view, boolean focused) {
+    @Override public void onFocusChange(View view, boolean focused) {
         if (focused) {
             this.showDatePickerDialog();
         }
     }
 
-    /*
-     * The onClick shows the Date Picker Dialog when the TextInputLayout is
-     * clicked.
+    /**
+     * Opens the MaterialDatePicker dialog when the TextInputLayout is clicked.
+     *
+     * @param view the view that was clicked
      */
-    @Override
-    public void onClick(View view) {
+    @Override public void onClick(View view) {
         this.showDatePickerDialog();
     }
 
+    /**
+     * Gets the date selected by the user.
+     *
+     * @return the date selected by the user
+     */
     public Date getDate() {
         return date;
     }
 
-    /*
-     * The setDate method updates the TextInputLayout with a
-     * formatted representation of the date.
+    /**
+     * Updates the text with the formatted representation of the date.
+     *
+     * @param date the date to be set
      */
-    private void setDate(Date date) {
+    public void setDate(Date date) {
         this.date = date;
-        Objects.requireNonNull(this.getEditText())
-                .setText(this.DATE_FORMAT.format(this.date));
+        this.setText(this.DATE_FORMAT.format(this.date));
     }
 
-    /*
-     * The setDate method updates the TextInputLayout with a
-     * formatted representation of the date.
+    /**
+     * Updates the placeholder text with the formatted representation of the
+     * date.
+     *
+     * @param date the date to set
      */
     public void setPlaceholderDate(Date date) {
         this.date = date;
@@ -162,12 +192,11 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
     }
 
     /**
-     * Called with the current {@code MaterialCalendar<S>} selection.
+     * Handler for MaterialDatePicker positive button click.
      *
-     * @param selection
+     * @param selection the selected date in milliseconds since epoch
      */
-    @Override
-    public void onPositiveButtonClick(Long selection) {
+    @Override public void onPositiveButtonClick(Long selection) {
         Date date = new Date(selection);
         this.setDate(date);
     }

@@ -26,28 +26,21 @@ package com.example.wellfed.common;
 
 import android.content.Context;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.example.wellfed.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-public class ConfirmQuitDialog {
-    private final AlertDialog dialog;
-
-    public ConfirmQuitDialog(Context context, OnQuitListener onQuitListener) {
-        this.dialog = new MaterialAlertDialogBuilder(context,
-                com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
-        )
-                .setIcon(R.drawable.ic_baseline_cancel_24)
-                .setTitle("Quit editing?")
-                .setMessage("Changes that you have made are not saved")
-                .setNeutralButton("Cancel", null)
-                .setPositiveButton("Quit",
-                        (dialog, which) -> onQuitListener.onQuit())
-                .create();
-    }
-
-    public void show() {
-        this.dialog.show();
+/**
+ * The ConfirmQuitDialog class provides a dialog for confirming whether the
+ * user intends to quit the an activity where they have unsaved changes.
+ */
+public class ConfirmQuitDialog extends ConfirmDialog {
+    /**
+     * Constructs a ConfirmQuitDialog
+     *
+     * @param context           the context
+     * @param onConfirmListener the OnConfirmListener
+     */
+    public ConfirmQuitDialog(Context context,
+                             OnConfirmListener onConfirmListener) {
+        super(context, "Quit editing?",
+                "Changes that you have made are not " + "saved?", "Quit",
+                onConfirmListener);
     }
 }

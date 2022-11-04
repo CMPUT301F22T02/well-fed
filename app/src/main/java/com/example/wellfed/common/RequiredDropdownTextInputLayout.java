@@ -25,11 +25,7 @@
 package com.example.wellfed.common;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,43 +39,76 @@ import java.util.Objects;
  * The RequiredDropdownTextInputLayout class extends the RequiredTextInputLayout
  * class to provide methods for compatibility with Dropdowns.
  * Citation:
- * TextInputLayout. Android Developers. (n.d.). Retrieved November 3, 2022,
- * from https://developer.android.com/reference/com/google/android/material/
- * textfield/MaterialAutoCompleteTextView
+ * MaterialAutoCompleteTextView. Android Developers. (n.d.).
+ * Retrieved November 3, 2022, from https://developer.android.com/reference/com/
+ * google/android/material/textfield/MaterialAutoCompleteTextView
  *
  * @author Steven Tang
- * @version v1.0.0 2022-10-29
+ * @version v1.0.0 2022-11-03
  **/
 public class RequiredDropdownTextInputLayout extends RequiredTextInputLayout {
+    /**
+     * Holds the MaterialAutoCompleteTextView associated with the
+     * TextInputLayout
+     */
     private MaterialAutoCompleteTextView autoCompleteTextView;
 
+    /**
+     * Constructs a RequiredDropdownTextInputLayout object
+     *
+     * @param context the context
+     */
     public RequiredDropdownTextInputLayout(@NonNull Context context) {
         this(context, null);
     }
 
+    /**
+     * Constructs a RequiredDropdownTextInputLayout object
+     *
+     * @param context the context
+     * @param attrs   the attributes
+     */
     public RequiredDropdownTextInputLayout(@NonNull Context context,
                                            @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
+    /**
+     * Constructs a RequiredDropdownTextInputLayout object
+     *
+     * @param context      the context
+     * @param attrs        the attributes
+     * @param defStyleAttr the default style attribute
+     */
     public RequiredDropdownTextInputLayout(@NonNull Context context,
                                            @Nullable AttributeSet attrs,
                                            int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * Set the placeholder text of the MaterialAutoCompleteTextView
+     *
+     * @param placeholderText the placeholder text
+     */
     @Override public void setPlaceholderText(String placeholderText) {
         super.setPlaceholderText(placeholderText);
         this.autoCompleteTextView.setText(placeholderText, false);
     }
 
+    /**
+     * Set the dropdown items of the MaterialAutoCompleteTextView
+     *
+     * @param items the items to populate the dropdown
+     */
     public void setSimpleItems(String[] items) {
         this.autoCompleteTextView.setSimpleItems(items);
     }
 
-    /*
-     * The onEditTextAttached method sets an OnClickListener on the
-     * TextInputLayout.
+    /**
+     * Sets autoCompleteTextView to the MaterialAutoCompleteTextView
+     *
+     * @param textInputLayout the TextInputLayout
      */
     @Override public void onEditTextAttached(
             @NonNull TextInputLayout textInputLayout) {

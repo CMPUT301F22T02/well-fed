@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
-    private OnAdapterDataChangedListener listener;
+    private final OnAdapterDataChangedListener listener;
 
     public interface OnAdapterDataChangedListener {
         void onAdapterDataChanged();
@@ -38,8 +38,7 @@ public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
         this.listener = listener;
     }
 
-    @Override
-    public void onChanged() {
+    @Override public void onChanged() {
         super.onChanged();
         listener.onAdapterDataChanged();
     }
@@ -67,8 +66,7 @@ public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
         listener.onAdapterDataChanged();
     }
 
-    @Override public void onItemRangeRemoved(int positionStart,
-                                             int itemCount) {
+    @Override public void onItemRangeRemoved(int positionStart, int itemCount) {
         super.onItemRangeRemoved(positionStart, itemCount);
         listener.onAdapterDataChanged();
     }

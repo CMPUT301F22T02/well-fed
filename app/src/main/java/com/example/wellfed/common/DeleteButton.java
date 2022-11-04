@@ -28,17 +28,37 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * The DeleteButton class attaches an OnClickListener to a Button that
+ * opens a deletion confirmation dialog.
+ */
 public class DeleteButton implements View.OnClickListener {
-    private final DeleteDialog deleteDialog;
+    /**
+     * Holds the DeleteDialog
+     */
+    private final ConfirmDeleteDialog confirmDeleteDialog;
 
+    /**
+     * Constructs a DeleteButton
+     *
+     * @param context           the context
+     * @param button            the button
+     * @param title             the title
+     * @param onConfirmListener the OnConfirmListener
+     */
     public DeleteButton(Context context, Button button, String title,
-                        OnDeleteListener onDeleteListener) {
+                        ConfirmDialog.OnConfirmListener onConfirmListener) {
         button.setOnClickListener(this);
-        this.deleteDialog = new DeleteDialog(context, onDeleteListener, title);
+        this.confirmDeleteDialog =
+                new ConfirmDeleteDialog(context, onConfirmListener, title);
     }
 
-    @Override
-    public void onClick(View v) {
-        this.deleteDialog.show();
+    /**
+     * Shows the DeleteDialog when the button is clicked
+     *
+     * @param view the view
+     */
+    @Override public void onClick(View view) {
+        this.confirmDeleteDialog.show();
     }
 }

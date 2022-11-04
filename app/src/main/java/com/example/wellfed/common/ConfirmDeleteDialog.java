@@ -31,23 +31,23 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.wellfed.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class DeleteDialog {
-    private final AlertDialog dialog;
+/**
+ * The ConfirmDeleteDialog class provides a dialog for confirming whether the
+ * user intends to delete an item.
+ */
+public class ConfirmDeleteDialog extends ConfirmDialog {
 
-    public DeleteDialog(Context context, OnDeleteListener onDeleteListener,
-                        String title) {
-        this.dialog = new MaterialAlertDialogBuilder(context,
-                com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered
-        )
-                .setIcon(R.drawable.ic_baseline_delete_24)
-                .setTitle(title)
-                .setNeutralButton("Cancel", null)
-                .setPositiveButton("Delete",
-                        (dialog, which) -> onDeleteListener.onDelete())
-                .create();
-    }
-
-    public void show() {
-        this.dialog.show();
+    /**
+     * Constructs a ConfirmDeleteDialog
+     *
+     * @param context           the context
+     * @param onConfirmListener the OnConfirmListener
+     * @param title             the title of the dialog
+     */
+    public ConfirmDeleteDialog(Context context,
+                               OnConfirmListener onConfirmListener,
+                               String title) {
+        super(context, title, "Are you sure you want to delete this item?",
+                "Delete", onConfirmListener);
     }
 }
