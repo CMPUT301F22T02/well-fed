@@ -6,6 +6,7 @@ import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.N
 import android.media.Image;
 import android.util.Log;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -58,7 +59,7 @@ public class RecipeDB {
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
 
-        for(RecipeIngredient i: recipe.getIngredients()) {
+        for(Ingredient i: recipe.getIngredients()) {
             if (i.getId() == null) {
                 DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
                 recipeIngredientDocuments.add(newDocumentReference);
@@ -156,7 +157,7 @@ public class RecipeDB {
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
 
-        for(RecipeIngredient i: recipe.getIngredients()) {
+        for(Ingredient i: recipe.getIngredients()) {
             if (i.getId() == null) {
                 DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
                 recipeIngredientDocuments.add(newDocumentReference);
@@ -247,7 +248,7 @@ public class RecipeDB {
         List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(recipeSnapshot[0].get("ingredients"));
         for(DocumentReference ingredient: recipeIngredients){
             try {
-                recipeIngredientDB.getRecipeIngredient(ingredient.getId());
+                Ingredient res = recipeIngredientDB.getRecipeIngredient(ingredient.getId());
             }
             catch(Exception err){
                 Log.d(TAG, "addRecipe: Failed to get recipe");

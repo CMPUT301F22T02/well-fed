@@ -143,7 +143,7 @@ public class StoredIngredientDBTest {
         // change description to Test2
         StoredIngredient updatedIngredient = oldIngredient;
         updatedIngredient.setDescription("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        storedIngredientDB.updateStoredIngredient(updatedIngredient);
         StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
         assertEquals(5.0f, resultIngredient.getAmount(), 0.01);
@@ -154,7 +154,7 @@ public class StoredIngredientDBTest {
 
         // change amount to 4
         updatedIngredient.setAmount(4.0f);
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        storedIngredientDB.updateStoredIngredient(updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
@@ -165,7 +165,7 @@ public class StoredIngredientDBTest {
 
         // change unit to Test2
         updatedIngredient.setUnit("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        storedIngredientDB.updateStoredIngredient(updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
@@ -177,7 +177,7 @@ public class StoredIngredientDBTest {
         // change best-before to new date
         Date newBestBefore = new Date(2023, 11, 2);
         updatedIngredient.setBestBefore(newBestBefore);
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        storedIngredientDB.updateStoredIngredient(updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
@@ -188,7 +188,7 @@ public class StoredIngredientDBTest {
 
         // change category
         updatedIngredient.setCategory("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        storedIngredientDB.updateStoredIngredient(updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
@@ -199,7 +199,7 @@ public class StoredIngredientDBTest {
 
         // change location
         updatedIngredient.setLocation("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        storedIngredientDB.updateStoredIngredient(updatedIngredient);
         resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);

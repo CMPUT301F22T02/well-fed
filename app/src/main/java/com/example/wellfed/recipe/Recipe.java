@@ -48,7 +48,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the Ingredients needed for a Recipe.
      */
-    private final List<RecipeIngredient> ingredients;
+    private final List<Ingredient> ingredients;
 
     /**
      * Holds the user comments on a Recipe.
@@ -85,7 +85,7 @@ public class Recipe implements Serializable {
      * Adds an Ingredient as part of a Recipe
      * @param ingredient An Ingredient object to be added to the Recipe
      */
-    public void addIngredient(RecipeIngredient ingredient) {
+    public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
 
@@ -110,7 +110,7 @@ public class Recipe implements Serializable {
      * Gets the entire ArrayList of Ingredients that make up a Recipe
      * @return The ArrayList of all Ingredients
      */
-    public List<RecipeIngredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return this.ingredients;
     }
 

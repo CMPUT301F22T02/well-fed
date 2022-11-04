@@ -104,15 +104,15 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
                 "Chocolate Peanut Brunch Bars"
         };
         Recipe temp = new Recipe("Apple pie");
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        Ingredient recipeIngredient = new Ingredient();
         recipeIngredient.setDescription("Cinnamon Sugar");
         recipeIngredient.setAmount(1.0F);
         recipeIngredient.setUnit("tbsp");
-        RecipeIngredient recipeIngredient1 = new RecipeIngredient();
+        Ingredient recipeIngredient1 = new Ingredient();
         recipeIngredient1.setDescription("Apple Slices");
         recipeIngredient1.setAmount(3.0F);
         recipeIngredient1.setUnit("slice");
-        RecipeIngredient recipeIngredient2 = new RecipeIngredient();
+        Ingredient recipeIngredient2 = new Ingredient();
         recipeIngredient2.setDescription("Dough");
         recipeIngredient2.setAmount(1.0F);
         recipeIngredient2.setUnit("cup");
