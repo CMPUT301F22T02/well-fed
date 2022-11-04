@@ -27,10 +27,10 @@ public class RecipeIngredientDBTest {
     public void testAddRecipeIngredients() throws InterruptedException {
 
         RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
-        testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setDescription("Egg");
+        testIngredient.setAmount(2.0F);
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
         RecipeIngredient testIngredientFromDb = null;
@@ -55,10 +55,10 @@ public class RecipeIngredientDBTest {
     @Test
     public void testDelRecipeIngredient() throws InterruptedException{
         RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
-        testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setDescription("Egg");
+        testIngredient.setAmount(2.0F);
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
         recipeIngredientDB.delIngredient(testIngredient.getId());
@@ -74,10 +74,10 @@ public class RecipeIngredientDBTest {
     @Test
     public void testUpdateRecipeIngredient() throws InterruptedException{
         RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
         RecipeIngredient testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
@@ -89,10 +89,10 @@ public class RecipeIngredientDBTest {
         assertEquals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
         assertEquals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
 
-        testIngredient.setDescription("Description2");
-        testIngredient.setAmount(5.0F);
-        testIngredient.setCategory("Test2");
-        testIngredient.setUnit("TestUnits2");
+        testIngredient.setDescription("Scrambled eggs");
+        testIngredient.setAmount(500.0F);
+        testIngredient.setCategory("Breakfast");
+        testIngredient.setUnit("grams");
         recipeIngredientDB.updateRecipeIngredient(testIngredient);
 
         testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
