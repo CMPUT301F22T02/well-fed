@@ -69,11 +69,20 @@ public class FoodStorage {
         this.storedIngredients.remove(index);
     }
 
+    /**
+     * Set ingredients to the given list of ingredients.
+     * @param ingredients the list of ingredients to set
+     */
     public void setIngredients(ArrayList<StorageIngredient> ingredients) {
         this.storedIngredients.clear();
         this.storedIngredients.addAll(ingredients);
     }
 
+    /**
+     * Update the ingredient at the given index from the food storage.
+     * @param i the index of the ingredient to update
+     * @param ingredient2 the ingredient to update with
+     */
     public void updateIngredient(int i, StorageIngredient ingredient2) {
         this.storedIngredients.remove(i);
         if (this.storedIngredients.size() > i) {

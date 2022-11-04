@@ -51,6 +51,9 @@ public class Ingredient implements Serializable {
         this.description = description;
     }
 
+    /**
+     * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
+     */
     public Ingredient() {
         this.description = null;
     }

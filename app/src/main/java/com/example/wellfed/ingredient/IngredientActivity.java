@@ -19,11 +19,22 @@ import java.util.Objects;
 
 public class IngredientActivity extends ActivityBase implements
         ConfirmDialog.OnConfirmListener {
+    /**
+     * The ingredientContract is the contract for the ingredient.
+     */
     private IngredientContract contract;
+    /**
+     * The StorageIngredient object for the ingredient.
+     */
     private StorageIngredient ingredient;
+    /**
+     * The ingredientController is the controller for the ingredient.
+     */
     private IngredientController controller;
 
-    // Edit ingredient launcher
+    /**
+     * ActivityResultLauncher for the IngredientEditActivity to edit an ingredient.
+     */
     private final ActivityResultLauncher<StorageIngredient> editIngredient = registerForActivityResult(new IngredientEditContract(), result -> {
         String type = result.first;
         StorageIngredient ingredient = result.second;
@@ -39,6 +50,11 @@ public class IngredientActivity extends ActivityBase implements
         }
     });
 
+    /**
+     * onCreate method for the activity.
+     *
+     * @param savedInstanceState Bundle object for the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +90,6 @@ public class IngredientActivity extends ActivityBase implements
         }
 
 
-
         // Enable back button in action bar to go back to previous activity
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -86,11 +101,11 @@ public class IngredientActivity extends ActivityBase implements
         editButton.setOnClickListener(v -> {
             editIngredient.launch(ingredient);
         });
-
-
-
     }
 
+    /**
+     * onBackButtonPressed method for the activity. This method is called when the back button is pressed.
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
@@ -100,6 +115,9 @@ public class IngredientActivity extends ActivityBase implements
         finish();
     }
 
+    /**
+     * onConfirm method for the activity. This method is called when the user confirms the delete action.
+     */
     private void onQuitEdit() {
         Intent intent = new Intent();
         intent.putExtra("ingredient", ingredient);
@@ -108,6 +126,11 @@ public class IngredientActivity extends ActivityBase implements
         finish();
     }
 
+    /**
+     * onEdit method for the activity. This method is called when the user edits an ingredient.
+     *
+     * @param ingredient
+     */
     public void onEdit(StorageIngredient ingredient) {
         Intent intent = new Intent();
         intent.putExtra("ingredient", ingredient);
@@ -116,6 +139,13 @@ public class IngredientActivity extends ActivityBase implements
         finish();
     }
 
+    /**
+     * onActivityResults method for the activity. This method is called when the user confirms the delete action.
+     *
+     * @param requestCode The request code.
+     * @param resultCode  The result code.
+     * @param data        The data.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,11 +155,17 @@ public class IngredientActivity extends ActivityBase implements
         }
     }
 
+    /**
+     * onPointerCaputerChanged method for the activity. This method is called when the user confirms the delete action.
+     */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
 
+    /**
+     * onConfirm method for the activity. This method is called when the user confirms the delete action.
+     */
     @Override
     public void onConfirm() {
         Intent intent = new Intent();
