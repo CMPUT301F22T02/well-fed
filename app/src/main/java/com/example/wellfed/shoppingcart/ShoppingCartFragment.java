@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,16 +17,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.Launcher;
 
 import java.util.ArrayList;
 
-// TODO: switch to another activity to display details of an item when it's clicked
-// TODO: add swipe delete feature
-public class ShoppingCartFragment extends Fragment {
+public class ShoppingCartFragment extends Fragment
+        implements Launcher,
+                    RecyclerView.AdapterDataObserver.OnAdapterDataChangedListener {
     ShoppingCartIngredientAdapter shoppingCartIngredientAdapter;
     private RecyclerView shoppingCartRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private ShoppingCartController controller;
+    private int selected;
+
+    ActivityResultLauncher<ShoppingCartIngredient> launcher =
+            registerForActivityResult(new )
 
     @Nullable
     @Override
