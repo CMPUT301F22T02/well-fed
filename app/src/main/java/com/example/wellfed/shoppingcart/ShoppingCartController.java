@@ -50,4 +50,9 @@ public class ShoppingCartController {
         shoppingCartIngredients.add(ingredient3);
         shoppingCartIngredients.add(ingredient4);
     }
+
+    public void addShoppingCartIngredient(ShoppingCartIngredient shoppingCartIngredient) {
+        this.shoppingCartIngredients.add(shoppingCartIngredient);
+        this.adapter.notifyItemInserted(this.shoppingCartIngredients.size() - 1);
+    }
 }
