@@ -1,56 +1,87 @@
 package com.example.wellfed.recipe;
 
-import android.content.Context;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wellfed.MainActivity;
 import com.example.wellfed.R;
-import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.common.Launcher;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 // todo create sample data for recipes
-// todo setup recycleview for recipe-ingredients
 // todo setup recipe edit button
+// todo setup recipe add button
 
 
 // recipe object that has been modified
 // update our controller here -> to reflect these changes
 
-public class RecipeBookFragment extends Fragment implements RecipeAdapter.RecipeLauncher {
+public class RecipeBookFragment extends Fragment implements Launcher {
     Button startRecipeBtn;
     ArrayList<Recipe> recipes;
-    int position;
+    private int selected;
+    private FirebaseFirestore db;
 
     private RecipeController recipeController;
     RecipeAdapter adapter;
 
-    ActivityResultLauncher<Recipe> recipeLauncher = registerForActivityResult(new
-                    RecipeContract(),
-            new ActivityResultCallback<Recipe>() {
-                @Override
-                public void onActivityResult(Recipe result) {
-                    if (result == null) {
-                        recipeController.deleteRecipe(position);
-                        return;
+    ActivityResultLauncher<Recipe> recipeLauncher =
+            registerForActivityResult(new RecipeContract(), result -> {
+                        if (result == null) {
+                            return;
+                        }
+                        String type = result.first;
+                        Recipe recipe = result.second;
+                        switch (type) {
+                            case "delete":
+                                new DeleteRecipeTask().execute(recipe);
+                                break;
+                            default:
+                                new IllegalArgumentException();
+                        }
                     }
+            );
+
+
+    private class DeleteRecipeTask extends
+            AsyncTask<Recipe, Void, Void> {
+        protected Void doInBackground(Recipe... recipes) {
+            for (Recipe recipe : recipes) {
+                RecipeBookFragment.this.recipeController.deleteRecipe(recipe.getId());
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            new RecipeBookFragment.GetRecipesTask().execute();
+        }
+    }
+
+
+    ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
+            new RecipeEditContract(), result -> {
+                if (result == null) {
+                    return;
                 }
+                String type = result.first;
+                Recipe recipe = result.second;
+                switch (type) {
+                    case "save":
+                        new AddRecipeTask().execute(recipe);
+                }
+                return;
             }
     );
 
@@ -61,8 +92,41 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
         recipeController = new RecipeController();
+        db = FirebaseFirestore.getInstance();
 
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
+    }
+
+    private class AddRecipeTask extends
+            AsyncTask<Recipe, Void, Void> {
+        protected Void doInBackground(Recipe... recipes) {
+            for (Recipe recipe : recipes) {
+                RecipeBookFragment.this.recipeController.addRecipe(recipe);
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            new RecipeBookFragment.GetRecipesTask().execute();
+        }
+    }
+
+    protected class GetRecipesTask extends
+            AsyncTask<Void, Void, ArrayList<Recipe>> {
+        protected ArrayList<Recipe> doInBackground(Void... voids) {
+            try {
+                return RecipeBookFragment.this.recipeController.getRecipes();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(ArrayList<Recipe> recipes) {
+            RecipeBookFragment.this.recipes.clear();
+            RecipeBookFragment.this.recipes.addAll(recipes);
+            RecipeBookFragment.this.adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -70,59 +134,6 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
         Bundle args = getArguments();
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
-        String[] titles = {
-                "Banana Cake                 ",
-                "Blueberry Coffee Cake       ",
-                "Chocolate Cake              ",
-                "Chocolate Mayonaise Cake    ",
-                "Crazy Cake                  ",
-                "Fresh Apple Cake            ",
-                "Fresh Pear Cake             ",
-                "Graham Cracker Cake         ",
-                "Hot Water Chocolate Cake    ",
-                "Hungry Bear Cheese Cake     ",
-                "Lemon Poppy Cake            ",
-                "Light Old Fashioned Fruit Cake",
-                "My Best Gingerbread         ",
-                "Oatmeal Cake                ",
-                "Orange Angel Food Cake      ",
-                "Orange-Poppy Seed Pound Cake",
-                "Pineapple Cake              ",
-                "Pineapple-Carrot Cake*      ",
-                "Potatoe Cake                ",
-                "Pumpkin Swirl Cheesecake    ",
-                "Refrigerator Cheesecake     ",
-                "Sherry Wine Cake            ",
-                "Special Prune Cake*         ",
-                "Spicy Fruit and Nut Cake*   ",
-                "Strawberry Spice Loaf       ",
-                "Three Layer Chocolate Mayonnaise Cake",
-                "Upside Down Cake            ",
-                "Blue Chip Cookies           ",
-                "Bourbon Balls               ",
-                "Chocolate Crisp Bran Cookies",
-                "Chocolate Peanut Brunch Bars"
-        };
-        Recipe temp = new Recipe("Apple pie");
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
-        recipeIngredient.setDescription("Cinnamon Sugar");
-        recipeIngredient.setAmount(1.0F);
-        recipeIngredient.setUnit("tbsp");
-        RecipeIngredient recipeIngredient1 = new RecipeIngredient();
-        recipeIngredient1.setDescription("Apple Slices");
-        recipeIngredient1.setAmount(3.0F);
-        recipeIngredient1.setUnit("slice");
-        RecipeIngredient recipeIngredient2 = new RecipeIngredient();
-        recipeIngredient2.setDescription("Dough");
-        recipeIngredient2.setAmount(1.0F);
-        recipeIngredient2.setUnit("cup");
-        temp.addIngredient(recipeIngredient);
-        temp.addIngredient(recipeIngredient1);
-        temp.addIngredient(recipeIngredient2);
-        recipes.add(temp);
-        for (String t : titles) {
-            recipes.add(new Recipe(t));
-        }
 
         adapter = new RecipeAdapter(getActivity(), recipes, this);
         recipeController.setRecipes(recipes);
@@ -130,12 +141,20 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
         rvRecipes.setAdapter(adapter);
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        new GetRecipesTask().execute();
     }
 
+    /**
+     * launches activity to create new recipe
+     */
+    @Override
+    public void launch() {
+        recipeEditLauncher.launch(null);
+    }
 
     @Override
     public void launch(int pos) {
-        position = pos;
+        selected = pos;
         recipeLauncher.launch(recipes.get(pos));
     }
 }

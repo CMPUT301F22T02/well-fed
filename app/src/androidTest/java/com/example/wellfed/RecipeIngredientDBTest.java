@@ -3,13 +3,11 @@ package com.example.wellfed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import com.example.wellfed.recipe.RecipeIngredient;
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.RecipeIngredientDB;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Objects;
 
 public class RecipeIngredientDBTest {
     RecipeIngredientDB recipeIngredientDB;
@@ -25,15 +23,14 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testAddRecipeIngredients() throws InterruptedException {
-
-        RecipeIngredient testIngredient = new RecipeIngredient();
+        Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
         testIngredient.setAmount(2.0F);
         testIngredient.setCategory("Protein");
         testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
-        RecipeIngredient testIngredientFromDb = null;
+        Ingredient testIngredientFromDb = null;
 
         testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
 
@@ -54,7 +51,7 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testDelRecipeIngredient() throws InterruptedException{
-        RecipeIngredient testIngredient = new RecipeIngredient();
+        Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
         testIngredient.setAmount(2.0F);
         testIngredient.setCategory("Protein");
@@ -73,14 +70,14 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testUpdateRecipeIngredient() throws InterruptedException{
-        RecipeIngredient testIngredient = new RecipeIngredient();
+        Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Protein");
         testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
-        RecipeIngredient testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
+        Ingredient testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
 
 
         assertEquals(testIngredient.getId(), testIngredientFromDb.getId());
@@ -134,7 +131,7 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testUpdateOnNonExistentRecipeIngredient() throws InterruptedException{
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        Ingredient recipeIngredient = new Ingredient();
         recipeIngredient.setId("-1");
         recipeIngredientDB.updateRecipeIngredient(recipeIngredient);
 

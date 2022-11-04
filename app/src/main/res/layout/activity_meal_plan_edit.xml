@@ -86,8 +86,6 @@
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            app:simpleItems="@array/mealPlanCategories"
             />
 
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>

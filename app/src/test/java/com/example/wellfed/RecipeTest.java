@@ -4,16 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 
-import android.media.Image;
 
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeIngredient;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +29,7 @@ public class RecipeTest {
      * Creates a mock RecipeIngredient to be used in the tests.
      * @return the mock RecipeIngredient created
      */
-    public RecipeIngredient mockRecipeIngredient() {return new RecipeIngredient();}
+    public Ingredient mockRecipeIngredient() {return new Ingredient();}
 
     /**
      * Tests whether a new Ingredient has the correctly initialized fields.
@@ -54,8 +50,8 @@ public class RecipeTest {
     @Test
     public void testAddAndGetIngredient() {
         Recipe recipe = mockRecipe();
-        RecipeIngredient ingredient1 = mockRecipeIngredient();
-        RecipeIngredient ingredient2 = mockRecipeIngredient();
+        Ingredient ingredient1 = mockRecipeIngredient();
+        Ingredient ingredient2 = mockRecipeIngredient();
         ingredient1.setDescription("Bread");
         ingredient2.setDescription("Cashews");
 
@@ -75,8 +71,8 @@ public class RecipeTest {
     @Test
     public void testRemoveIngredient() {
         Recipe recipe = mockRecipe();
-        RecipeIngredient ingredient1 = mockRecipeIngredient();
-        RecipeIngredient ingredient2 = mockRecipeIngredient();
+        Ingredient ingredient1 = mockRecipeIngredient();
+        Ingredient ingredient2 = mockRecipeIngredient();
         ingredient1.setDescription("Bread");
         ingredient2.setDescription("Cashews");
 
@@ -101,8 +97,8 @@ public class RecipeTest {
     @Test
     public void testRemoveIngredientNotInRecipe() {
         Recipe recipe = mockRecipe();
-        RecipeIngredient ingredient = mockRecipeIngredient();
-        RecipeIngredient ingredient2 = mockRecipeIngredient();
+        Ingredient ingredient = mockRecipeIngredient();
+        Ingredient ingredient2 = mockRecipeIngredient();
         // no error should be thrown, as deleting a non existing ingredient is fine
         recipe.removeIngredient(ingredient);
 
@@ -118,12 +114,12 @@ public class RecipeTest {
     @Test
     public void testGetIngredients() {
         Recipe recipe = mockRecipe();
-        RecipeIngredient ingredient = mockRecipeIngredient();
-        RecipeIngredient ingredient2 = mockRecipeIngredient();
+        Ingredient ingredient = mockRecipeIngredient();
+        Ingredient ingredient2 = mockRecipeIngredient();
 
         recipe.addIngredient(ingredient);
         recipe.addIngredient(ingredient2);
-        List<RecipeIngredient> ingredientList = recipe.getIngredients();
+        List<Ingredient> ingredientList = recipe.getIngredients();
 
         assertEquals(ingredient, ingredientList.get(0));
         assertEquals(ingredient2, ingredientList.get(1));
