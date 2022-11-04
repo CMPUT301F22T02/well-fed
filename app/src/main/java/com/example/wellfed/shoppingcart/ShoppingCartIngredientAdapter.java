@@ -82,6 +82,7 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         // Fetch the current binding object and create a view for it
         ShoppingCartIngredient shoppingCartIngredient = this.ingredients.get(position);
         holder.getName().setText(shoppingCartIngredient.getDescription());
+        holder.getSubtext().setText(String.valueOf(shoppingCartIngredient.getAmount()) + " " + shoppingCartIngredient.getUnit());
     }
 
     @Override public int getItemCount() { return this.ingredients.size(); }

@@ -18,31 +18,31 @@ public class ShoppingCartController {
         // Initialize mock data
         ShoppingCartIngredient ingredient = new ShoppingCartIngredient("Banana");
         ingredient.setUnit("banana(s)");
-        ingredient.setAmount((float)1);
+        ingredient.setAmount((float) 3);
         ingredient.setCategory("Fruit");
         ingredient.setComplete(false);
         ingredient.setPickedUp(false);
 
         ShoppingCartIngredient ingredient2 = new ShoppingCartIngredient("Apple");
-        ingredient.setUnit("apple(s)");
-        ingredient.setAmount((float)2);
-        ingredient.setCategory("Fruit");
-        ingredient.setComplete(false);
-        ingredient.setPickedUp(false);
+        ingredient2.setUnit("apple(s)");
+        ingredient2.setAmount((float) 2);
+        ingredient2.setCategory("Fruit");
+        ingredient2.setComplete(false);
+        ingredient2.setPickedUp(false);
 
         ShoppingCartIngredient ingredient3 = new ShoppingCartIngredient("Salt");
-        ingredient.setUnit("g");
-        ingredient.setAmount((float)100.35);
-        ingredient.setCategory("seasoning");
-        ingredient.setComplete(false);
-        ingredient.setPickedUp(false);
+        ingredient3.setUnit("g");
+        ingredient3.setAmount((float) 100.35);
+        ingredient3.setCategory("seasoning");
+        ingredient3.setComplete(false);
+        ingredient3.setPickedUp(false);
 
         ShoppingCartIngredient ingredient4 = new ShoppingCartIngredient("Pie");
-        ingredient.setUnit("pie(s)");
-        ingredient.setAmount((float)3);
-        ingredient.setCategory("Food");
-        ingredient.setComplete(false);
-        ingredient.setPickedUp(false);
+        ingredient4.setUnit("pie(s)");
+        ingredient4.setAmount((float) 3.4);
+        ingredient4.setCategory("Food");
+        ingredient4.setComplete(false);
+        ingredient4.setPickedUp(false);
 
         // add each ingredient to arraylist
         shoppingCartIngredients.add(ingredient);

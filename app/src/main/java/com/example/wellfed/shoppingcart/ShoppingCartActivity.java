@@ -9,6 +9,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_shopping_cart_add);
+        setContentView(R.layout.activity_shopping_cart_ingredient_edit);
     }
 }
