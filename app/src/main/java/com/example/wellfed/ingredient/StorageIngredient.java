@@ -3,7 +3,7 @@ package com.example.wellfed.ingredient;
 
 import java.util.Date;
 
-public class StorageIngredient extends Ingredient {
+public class StorageIngredient extends Ingredient implements Comparable<StorageIngredient> {
     public String first;
     /**
      * The amount of the ingredient in the storage.
@@ -198,10 +198,11 @@ public class StorageIngredient extends Ingredient {
 
     /**
      * Checks if the ingredient is equal to another ingredient.
-     * @param ingredient The ingredient to compare to.
+     * @param o The ingredient to compare to.
      * @return True if the ingredients are equal, false otherwise.
      */
-    public boolean equals(StorageIngredient ingredient) {
-        return this.getDescription().equalsIgnoreCase(ingredient.getDescription());
+    @Override
+    public int compareTo(StorageIngredient o) {
+        return this.getDescription().compareTo(o.getDescription());
     }
 }
