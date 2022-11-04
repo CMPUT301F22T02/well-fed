@@ -44,7 +44,7 @@
             android:inputType="date" />
     </com.example.wellfed.common.RequiredDateTextInputLayout>
 
-    <com.example.wellfed.common.RequiredTextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -58,7 +58,7 @@
             android:layout_height="match_parent"
             android:hint="@string/category"
             android:inputType="text" />
-    </com.example.wellfed.common.RequiredTextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Amount and Unit on the same line below categories half the width each -->
 

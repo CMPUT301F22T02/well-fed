@@ -26,6 +26,10 @@ public class IngredientController {
             if(!ingredients.contains(ingredient)){
                 ingredients.add(ingredient);
                 ingredientAdapter.notifyItemInserted(ingredients.size() - 1);
+            } else {
+                int index = ingredients.indexOf(ingredient);
+                ingredients.set(index, ingredient);
+                ingredientAdapter.notifyItemChanged(index);
             }
         }
     }

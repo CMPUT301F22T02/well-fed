@@ -205,4 +205,24 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
     public int compareTo(StorageIngredient o) {
         return this.getDescription().compareTo(o.getDescription());
     }
+
+    /**
+     * Checks if the ingredient is equal to another ingredient.
+     * @param o The ingredient to compare to.
+     * @return True if the ingredients are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof StorageIngredient)) {
+            return false;
+        }
+        StorageIngredient other = (StorageIngredient) o;
+        return this.getDescription().equalsIgnoreCase(other.getDescription());
+    }
 }
