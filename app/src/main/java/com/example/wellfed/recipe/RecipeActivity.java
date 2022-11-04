@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
+import com.squareup.picasso.Picasso;
 
 import com.example.wellfed.ingredient.Ingredient;
 
@@ -50,9 +52,16 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         TextView title = findViewById(R.id.recipe_title_textView);
         TextView prepTime = findViewById(R.id.recipe_prep_time_textView);
         TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
+        TextView category = findViewById(R.id.recipe_category);
+        ImageView img = findViewById(R.id.recipe_img);
         title.setText(recipe.getTitle());
         prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
         servings.setText("Servings: " + Integer.toString(recipe.getServings()));
+        category.setText("Category: " + recipe.getCategory());
+        Picasso.get()
+                .load(recipe.getPhotograph())
+                .rotate(90)
+                .into(img);
 
         // ingredient recycle view
         ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
