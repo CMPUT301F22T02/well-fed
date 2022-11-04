@@ -3,11 +3,8 @@ package com.example.wellfed.recipe;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,11 +35,9 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 // todo create an xml file for this class
 
 /**
@@ -81,7 +76,7 @@ public class RecipeEditActivity extends ActivityBase {
         recipeIngredients = new ArrayList<>();
         comments = new ArrayList<>();
         recipe = (Recipe) intent.getSerializableExtra("Recipe");
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.save_fab);
 
 
         // views
@@ -110,14 +105,12 @@ public class RecipeEditActivity extends ActivityBase {
                 for (Ingredient ingredient : recipeIngredients) {
                     recipe.addIngredient(ingredient);
                 }
-                // TODO: fix
                 recipe.setPhotograph(downloadUrl);
                 onSave();
             });
         } else {
 
         }
-        fillIngredients();
 
         // ingredient recycle viewer and it's adapter
         recipeIngredientAdapter = new RecipeIngredientAdapter(recipeIngredients, R.layout.recipe_ingredient_edit);
@@ -143,17 +136,6 @@ public class RecipeEditActivity extends ActivityBase {
                     .setNeutralButton("Cancel", null).show();
         });
 
-    }
-
-    public void fillIngredients() {
-        // temp data
-        Ingredient recipeIngredient = new Ingredient();
-        recipeIngredient.setDescription("Cinnamon Sugar");
-        recipeIngredient.setAmount(1.0F);
-        recipeIngredient.setCategory("Fruit");
-        recipeIngredient.setUnit("tbsp");
-        recipeIngredients.add(recipeIngredient);
-        comments.add("nice");
     }
 
     public void onSave() {

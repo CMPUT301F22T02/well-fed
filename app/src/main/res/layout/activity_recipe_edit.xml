@@ -30,7 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Tacos"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/recipe_title_textView"
         app:layout_constraintStart_toEndOf="@+id/recipe_title_textView" />
@@ -51,7 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="10"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/recipe_prep_time_textView"
         app:layout_constraintStart_toEndOf="@+id/recipe_prep_time_textView" />
@@ -71,7 +69,6 @@
         android:id="@+id/recipe_no_of_servings_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12"
         android:textSize="12sp"
         app:layout_constraintBaseline_toBaselineOf="@id/recipe_no_of_servings_textView"
         app:layout_constraintStart_toEndOf="@+id/recipe_no_of_servings_textView" />
@@ -90,6 +87,7 @@
         app:layout_constraintTop_toBottomOf="@id/recipe_no_of_servings_textView">
 
         <AutoCompleteTextView
+            android:id="@+id/recipe_category_textEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
@@ -103,11 +101,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
         android:text="@string/ingredients"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_category" />
+        app:layout_constraintTop_toBottomOf="@+id/commentsTextInput" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/ingredient_search_btn"
@@ -160,7 +157,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/save_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -177,14 +174,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_ingredient_recycleViewer">
+        app:layout_constraintTop_toBottomOf="@+id/recipe_category">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/commentsEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
