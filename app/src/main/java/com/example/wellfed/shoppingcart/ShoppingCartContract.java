@@ -1,11 +1,13 @@
 package com.example.wellfed.shoppingcart;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Pair;
 
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class ShoppingCartContract extends ActivityResultContract<ShoppingCartIngredient,
         Pair<String, ShoppingCartIngredient>> {
@@ -18,5 +20,12 @@ public class ShoppingCartContract extends ActivityResultContract<ShoppingCartIng
     }
 
     @Override
-    public Pair<String>
+    public Pair<String, ShoppingCartIngredient> parseResult(int i, @Nullable Intent intent) {
+        if (i != Activity.RESULT_OK || intent == null) {
+            return null;
+        }
+        String type = intent.getStringExtra("type");
+        ShoppingCartIngredient shoppingCartIngredient = (ShoppingCartIngredient) intent.getSerializableExtra("shoppingCartIngredient");
+        return new Pair<>(type, shoppingCartIngredient);
+    }
 }
