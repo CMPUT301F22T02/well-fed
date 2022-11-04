@@ -7,7 +7,6 @@ import android.media.Image;
 import android.util.Log;
 
 import com.example.wellfed.ingredient.Ingredient;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -15,8 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
-
-import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,7 +78,7 @@ public class RecipeDB {
 
         Map<String, Object> recipeMap = new HashMap<>();
 
-
+        String newRecipeId = recipesCollection.document().getId();
 
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
@@ -285,7 +282,7 @@ public class RecipeDB {
                 recipeSnapshot.get("ingredients"));
         for(DocumentReference ingredient: recipeIngredients){
             try {
-                recipeIngredientDB.getRecipeIngredient(ingredient.getId());
+                Ingredient res = recipeIngredientDB.getRecipeIngredient(ingredient.getId());
             }
             catch(Exception err){
                 Log.d(TAG, "addRecipe: Failed to get recipe");
@@ -334,4 +331,3 @@ public class RecipeDB {
         return recipesCollection.document(id);
     }
 }
-

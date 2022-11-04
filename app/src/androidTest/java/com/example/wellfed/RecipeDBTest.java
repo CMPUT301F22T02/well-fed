@@ -2,6 +2,7 @@ package com.example.wellfed;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
 import com.example.wellfed.recipe.RecipeIngredientDB;
@@ -35,7 +36,7 @@ public class RecipeDBTest {
     @Test
     public void testAddRecipe() throws InterruptedException {
         RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
@@ -73,8 +74,8 @@ public class RecipeDBTest {
      */
     @Test
     public void testDelRecipe() throws InterruptedException {
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
@@ -105,8 +106,8 @@ public class RecipeDBTest {
 
     @Test
     public void testUpdateOnRecipe() throws InterruptedException{
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");

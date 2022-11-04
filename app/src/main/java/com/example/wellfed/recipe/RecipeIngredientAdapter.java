@@ -19,9 +19,8 @@ import java.util.List;
 public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder> {
 
     List<Ingredient> recipeIngredientList;
-    int layoutId;
 
-    RecipeIngredientAdapter(List<Ingredient> recipeIngredientList, int layoutId) {
+    RecipeIngredientAdapter(List<Ingredient> recipeIngredientList){
         this.recipeIngredientList = recipeIngredientList;
         this.layoutId = layoutId;
     }

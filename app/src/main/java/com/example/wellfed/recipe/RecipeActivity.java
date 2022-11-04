@@ -20,6 +20,7 @@ import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
 
+import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
