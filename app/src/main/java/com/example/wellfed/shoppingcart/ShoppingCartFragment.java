@@ -17,13 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.AdapterDataObserver;
 import com.example.wellfed.common.Launcher;
 
 import java.util.ArrayList;
 
 public class ShoppingCartFragment extends Fragment
         implements Launcher,
-                    RecyclerView.AdapterDataObserver.OnAdapterDataChangedListener {
+                    AdapterDataObserver.OnAdapterDataChangedListener {
     ShoppingCartIngredientAdapter shoppingCartIngredientAdapter;
     private RecyclerView shoppingCartRecyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -101,4 +102,6 @@ public class ShoppingCartFragment extends Fragment
 
     @Override
     public void launch() { editLauncher.launch(null); }
+
+    @Override public void onAdapterDataChanged() {;}
 }
