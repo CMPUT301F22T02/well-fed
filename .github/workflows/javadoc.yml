@@ -19,6 +19,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: Build with Gradle
+      run: ./gradlew build
+
     - name: Generate Javadoc
       run: ./gradlew generateReleaseJavadoc
 
@@ -27,11 +30,11 @@ jobs:
       with:
         default_author: github_actions
         message: Update Javadoc
-        add: 'doc/javadoc/*'
+        add: 'doc/javadoc'
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
         clean: true
-        folder: docs/javadoc
-        target_folder: javadoc
+        folder: doc/javadoc
+        target-folder: javadoc
