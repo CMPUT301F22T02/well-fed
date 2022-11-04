@@ -257,7 +257,8 @@ public class RecipeDB {
 
     /**
      * Makes an ArrayList of Recipes out of all the documents in the collection of Recipes
-     * @return ArrayList<Recipe> The List of all Recipes contained in the database
+     * @return ArrayList The List of all Recipes contained in the
+     * database
      * @throws InterruptedException If the transaction in the method was not complete
      */
     public ArrayList<Recipe> getRecipes() throws InterruptedException {
