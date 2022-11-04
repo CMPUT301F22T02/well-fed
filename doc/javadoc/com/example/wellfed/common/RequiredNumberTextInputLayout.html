@@ -161,13 +161,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">RequiredNumberTextInputLayout</span>
 extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></pre>
-<div class="block">The RequiredTextInputLayout class extends the TextInputLayout
- class to provide methods for performing data validation.
- <p>
- Citation:
- TextInputLayout. Android Developers. (n.d.). Retrieved September 26, 2022,
- from https://developer.android.com/reference/com/google/android/material/
- textfield/TextInputLayout</div>
+<div class="block">The RequiredNumberTextInputLayout class extends the RequiredTextInputLayout
+ class with methods for performing number data validation.</div>
 </li>
 </ul>
 </div>
@@ -227,13 +222,6 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.com.example.wellfed.common.RequiredTextInputLayout">
-<!--   -->
-</a>
-<h3>Fields inherited from class&nbsp;com.example.wellfed.common.<a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></h3>
-<code><a href="RequiredTextInputLayout.html#editText">editText</a>, <a href="RequiredTextInputLayout.html#initialText">initialText</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.google.android.material.textfield.TextInputLayout">
 <!--   -->
 </a>
@@ -279,18 +267,24 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context)">RequiredNumberTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredNumberTextInputLayout object</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet)">RequiredNumberTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                              android.util.AttributeSet&nbsp;attrs)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredNumberTextInputLayout object</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet,int)">RequiredNumberTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                              android.util.AttributeSet&nbsp;attrs,
                              int&nbsp;defStyleAttr)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredNumberTextInputLayout object</div>
+</td>
 </tr>
 </table>
 </li>
@@ -313,32 +307,45 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDouble()">getDouble</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the double value of the text</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInteger()">getInteger</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the integer value of the text</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid()">isValid</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Validates that the EditText is valid.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requireDouble()">requireDouble</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequireDouble()">setRequireDouble</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Validate data to require a double</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requireInteger()">requireInteger</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequireInteger()">setRequireInteger</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Validate data to require a integer</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequirePositiveNumber(java.lang.Boolean)">setRequirePositiveNumber</a></span>&#8203;(java.lang.Boolean&nbsp;requirePositiveNumber)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Validate data to require a positive number if requirePositiveNumber is
+ true.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -346,7 +353,7 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.common.<a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></h3>
-<code><a href="RequiredTextInputLayout.html#afterTextChanged(android.text.Editable)">afterTextChanged</a>, <a href="RequiredTextInputLayout.html#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a>, <a href="RequiredTextInputLayout.html#getText()">getText</a>, <a href="RequiredTextInputLayout.html#hasChanges()">hasChanges</a>, <a href="RequiredTextInputLayout.html#onEditTextAttached(com.google.android.material.textfield.TextInputLayout)">onEditTextAttached</a>, <a href="RequiredTextInputLayout.html#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a>, <a href="RequiredTextInputLayout.html#setPlaceholderText(java.lang.String)">setPlaceholderText</a></code></li>
+<code><a href="RequiredTextInputLayout.html#afterTextChanged(android.text.Editable)">afterTextChanged</a>, <a href="RequiredTextInputLayout.html#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a>, <a href="RequiredTextInputLayout.html#getText()">getText</a>, <a href="RequiredTextInputLayout.html#hasChanges()">hasChanges</a>, <a href="RequiredTextInputLayout.html#onEditTextAttached(com.google.android.material.textfield.TextInputLayout)">onEditTextAttached</a>, <a href="RequiredTextInputLayout.html#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a>, <a href="RequiredTextInputLayout.html#setPlaceholderText(java.lang.String)">setPlaceholderText</a>, <a href="RequiredTextInputLayout.html#setText(java.lang.String)">setText</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.google.android.material.textfield.TextInputLayout">
@@ -414,6 +421,11 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <h4>RequiredNumberTextInputLayout</h4>
 <pre>public&nbsp;RequiredNumberTextInputLayout&#8203;(@NonNull
                                      android.content.Context&nbsp;context)</pre>
+<div class="block">Constructs a RequiredNumberTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet)">
@@ -426,6 +438,12 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
                                      android.content.Context&nbsp;context,
                                      @Nullable
                                      android.util.AttributeSet&nbsp;attrs)</pre>
+<div class="block">Constructs a RequiredNumberTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet,int)">
@@ -439,6 +457,13 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
                                      @Nullable
                                      android.util.AttributeSet&nbsp;attrs,
                                      int&nbsp;defStyleAttr)</pre>
+<div class="block">Constructs a RequiredNumberTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+<dd><code>defStyleAttr</code> - the default style attribute</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -451,22 +476,24 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="requireDouble()">
+<a id="setRequireDouble()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>requireDouble</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;requireDouble()</pre>
+<h4>setRequireDouble</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRequireDouble()</pre>
+<div class="block">Validate data to require a double</div>
 </li>
 </ul>
-<a id="requireInteger()">
+<a id="setRequireInteger()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>requireInteger</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;requireInteger()</pre>
+<h4>setRequireInteger</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRequireInteger()</pre>
+<div class="block">Validate data to require a integer</div>
 </li>
 </ul>
 <a id="setRequirePositiveNumber(java.lang.Boolean)">
@@ -476,6 +503,13 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <li class="blockList">
 <h4>setRequirePositiveNumber</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setRequirePositiveNumber&#8203;(java.lang.Boolean&nbsp;requirePositiveNumber)</pre>
+<div class="block">Validate data to require a positive number if requirePositiveNumber is
+ true.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>requirePositiveNumber</code> - the Boolean for whether to require a
+                              positive number</dd>
+</dl>
 </li>
 </ul>
 <a id="getDouble()">
@@ -486,9 +520,12 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <h4>getDouble</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Double&nbsp;getDouble()
                            throws java.lang.NumberFormatException</pre>
+<div class="block">Returns the double value of the text</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>double value of the text</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NumberFormatException</code></dd>
+<dd><code>java.lang.NumberFormatException</code> - if the text is not a double</dd>
 </dl>
 </li>
 </ul>
@@ -500,9 +537,12 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <h4>getInteger</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getInteger()
                              throws java.lang.NumberFormatException</pre>
+<div class="block">Returns the integer value of the text</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>double value of the text</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.NumberFormatException</code></dd>
+<dd><code>java.lang.NumberFormatException</code> - if the text is not an integer</dd>
 </dl>
 </li>
 </ul>
@@ -513,9 +553,14 @@ extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellf
 <li class="blockList">
 <h4>isValid</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;isValid()</pre>
+<div class="block">Validates that the EditText is valid. Valid refers to the EditText
+ is non-empty and satisfies the number validation requirements. If it is
+ invalid, it displays an error message.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="RequiredTextInputLayout.html#isValid()">isValid</a></code>&nbsp;in class&nbsp;<code><a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the EditText is valid.</dd>
 </dl>
 </li>
 </ul>

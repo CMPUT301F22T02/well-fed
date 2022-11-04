@@ -109,20 +109,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>dayNameInWeekDayNumberOfWeekMap</h4>
-<pre>java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Integer&gt; dayNameInWeekDayNumberOfWeekMap</pre>
-</li>
-<li class="blockList">
 <h4>dayNameInWeekFormat</h4>
 <pre>java.text.SimpleDateFormat dayNameInWeekFormat</pre>
+<div class="block">Holds the day name in week date format</div>
 </li>
 <li class="blockList">
 <h4>hashFormat</h4>
 <pre>java.text.SimpleDateFormat hashFormat</pre>
+<div class="block">Holds the hash date format</div>
 </li>
 <li class="blockListLast">
 <h4>utc</h4>
 <pre>java.util.TimeZone utc</pre>
+<div class="block">Holds the UTC time zone</div>
 </li>
 </ul>
 </li>
@@ -158,6 +157,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>java.lang.String description</pre>
 <div class="block">Holds the description of an Ingredient. This can also be considered to be a title.</div>
 </li>
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.String id</pre>
+<div class="block">Holds the database ID of an Ingredient</div>
+</li>
 <li class="blockListLast">
 <h4>unit</h4>
 <pre>java.lang.String unit</pre>
@@ -184,6 +188,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>bestBefore</h4>
 <pre>java.util.Date bestBefore</pre>
 <div class="block">The best before date of the ingredient in the storage.</div>
+</li>
+<li class="blockList">
+<h4>category</h4>
+<pre>java.lang.String category</pre>
+<div class="block">The category of the ingredient.</div>
+</li>
+<li class="blockList">
+<h4>first</h4>
+<pre>java.lang.String first</pre>
 </li>
 <li class="blockList">
 <h4>location</h4>
@@ -225,6 +238,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>eatDate</h4>
 <pre>java.util.Date eatDate</pre>
 <div class="block">Holds the date that a MealPlan is planned to be eaten on.</div>
+</li>
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.String id</pre>
+<div class="block">Holds the Database id of a Recipe</div>
 </li>
 <li class="blockList">
 <h4>ingredients</h4>
@@ -284,12 +302,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="blockList">
 <h4>ingredients</h4>
-<pre>java.util.List&lt;<a href="com/example/wellfed/recipe/RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&gt; ingredients</pre>
+<pre>java.util.List&lt;<a href="com/example/wellfed/ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt; ingredients</pre>
 <div class="block">Holds the Ingredients needed for a Recipe.</div>
 </li>
 <li class="blockList">
 <h4>photograph</h4>
-<pre>android.media.Image photograph</pre>
+<pre>java.lang.String photograph</pre>
 <div class="block">Holds a photograph of the result of a Recipe.</div>
 </li>
 <li class="blockList">
@@ -306,22 +324,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>title</h4>
 <pre>java.lang.String title</pre>
 <div class="block">Holds the title of a Recipe.</div>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="blockList"><a id="com.example.wellfed.recipe.RecipeIngredient">
-<!--   -->
-</a>
-<h3>Class <a href="com/example/wellfed/recipe/RecipeIngredient.html" title="class in com.example.wellfed.recipe">com.example.wellfed.recipe.RecipeIngredient</a> extends <a href="com/example/wellfed/ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a> implements Serializable</h3>
-<ul class="blockList">
-<li class="blockList">
-<h3>Serialized Fields</h3>
-<ul class="blockList">
-<li class="blockListLast">
-<h4>id</h4>
-<pre>java.lang.String id</pre>
 </li>
 </ul>
 </li>
