@@ -3,16 +3,11 @@ name: Android CI
 on:
   push:
     branches: [ "main" ]
-    paths-ignore:
-      - 'doc/**'
   pull_request:
     branches: [ "main" ]
-    paths-ignore:
-      - 'doc/**'
 
 jobs:
-  build:
-
+  unit_test:
     runs-on: ubuntu-latest
 
     steps:
