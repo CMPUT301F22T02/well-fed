@@ -15,7 +15,7 @@ public class RecipeController {
     private RecipeAdapter recipeAdapter;
     private RecipeDB recipeDB;
 
-    public RecipeController(){
+    public RecipeController() {
         recipeDB = new RecipeDB();
     }
 
@@ -24,19 +24,22 @@ public class RecipeController {
 
     }
 
-    public void deleteRecipe(int position){
-        if(position >= 0 && position < recipes.size()){
+    public void deleteRecipe(int position) {
+        if (position >= 0 && position < recipes.size()) {
             recipes.remove(position);
             recipeAdapter.notifyItemRemoved(position);
         }
     }
 
-    public void addRecipe(Recipe recipe){
-        recipes.add(recipe);
-        recipeAdapter.notifyItemInserted(recipes.size() - 1);
+    public void addRecipe(Recipe recipe) {
+
+            recipeDB.addRecipe(recipe);
+            recipes.add(recipe);
+            recipeAdapter.notifyItemInserted(recipes.size() - 1);
+
     }
 
-    public void setRecipes(List<Recipe> recipes){
+    public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 

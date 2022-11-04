@@ -51,59 +51,32 @@ public class RecipeDB {
      * @return Returns the id of the Recipe document
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public String addRecipe(Recipe recipe) throws InterruptedException {
+    public String addRecipe(Recipe recipe){
         CountDownLatch addLatch = new CountDownLatch(1);
-
-        ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
-
-        for(RecipeIngredient i: recipe.getIngredients()) {
-            if (i.getId() == null) {
-                DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
-                recipeIngredientDocuments.add(newDocumentReference);
-            }
-            else{
-                try {
-                    recipeIngredientDB.getRecipeIngredient(i.getId());
-                }
-                catch(Exception err){
-                    Log.d(TAG, "addRecipe: Failed to get recipe");
-                }
-            }
-        }
-
         Map<String, Object> recipeMap = new HashMap<>();
-
         String newRecipeId = recipesCollection.document().getId();
 
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
         recipeMap.put("category", recipe.getCategory());
-        recipeMap.put("prep-time-minutes", recipe.getPrepTimeMinutes());
-        recipeMap.put("servings", recipe.getServings());
+        recipeMap.put("prep-time-minutes",(int) recipe.getPrepTimeMinutes());
+        recipeMap.put("servings",(int) recipe.getServings());
         recipeMap.put("photograph", recipe.getPhotoUrl());
-        recipeMap.put("ingredients", recipeIngredientDocuments);
+        recipeMap.put("ingredients", recipe.getIngredients());
 
         DocumentReference newRecipe = recipesCollection.document(newRecipeId);
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
-
             transaction.set(newRecipe, recipeMap);
-
             return null;
         })
         .addOnSuccessListener(unused -> {
             Log.d(TAG, "onSuccess: ");
-            addLatch.countDown();
         })
         .addOnFailureListener(e -> {
             Log.d(TAG, "onFailure: ");
-            addLatch.countDown();
         });
-
-        addLatch.await();
-
         recipe.setId(newRecipeId);
-
         return newRecipeId;
     }
 

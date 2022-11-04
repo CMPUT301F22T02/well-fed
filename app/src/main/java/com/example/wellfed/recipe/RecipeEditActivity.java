@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -87,6 +88,7 @@ public class RecipeEditActivity extends ActivityBase {
         commentsRV = findViewById(R.id.recipe_comments_recycleViewer);
         Button addComment = findViewById(R.id.recipe_comment_add_btn);
         Button addIngredient = findViewById(R.id.ingredient_add_btn);
+        RequiredDropdownTextInputLayout recipeCategory = findViewById(R.id.recipe_category);
 
         recipeImg = findViewById(R.id.recipe_img);
 
@@ -96,11 +98,12 @@ public class RecipeEditActivity extends ActivityBase {
             fab.setImageDrawable(getDrawable(R.drawable.ic_baseline_save_24)); // fab is save button
             fab.setOnClickListener(view -> {
                 recipe = new Recipe(title.getText().toString());
-                recipe.setCategory("Test");
+                recipe.setCategory(recipeCategory.getText());
                 recipe.addComments(comments);
                 recipe.setServings(Integer.parseInt(servings.getText().toString()));
                 recipe.setPrepTimeMinutes(Integer.parseInt(prepTime.getText().toString()));
                 recipe.addIngredients(recipeIngredients);
+                recipe.setPhotoUrl(downloadUrl);
                 onSave();
             });
         } else {
@@ -152,18 +155,9 @@ public class RecipeEditActivity extends ActivityBase {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
         recipeIngredient.setDescription("Cinnamon Sugar");
         recipeIngredient.setAmount(1.0F);
+        recipeIngredient.setCategory("Fruit");
         recipeIngredient.setUnit("tbsp");
-        RecipeIngredient recipeIngredient1 = new RecipeIngredient();
-        recipeIngredient1.setDescription("Apple Slices");
-        recipeIngredient1.setAmount(3.0F);
-        recipeIngredient1.setUnit("slice");
-        RecipeIngredient recipeIngredient2 = new RecipeIngredient();
-        recipeIngredient2.setDescription("Dough");
-        recipeIngredient2.setAmount(1.0F);
-        recipeIngredient2.setUnit("cup");
         recipeIngredients.add(recipeIngredient);
-        recipeIngredients.add(recipeIngredient1);
-        recipeIngredients.add(recipeIngredient2);
         comments.add("nice");
     }
 
