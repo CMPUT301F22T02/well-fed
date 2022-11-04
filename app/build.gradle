@@ -33,6 +33,24 @@ android {
     }
 }
 
+android.applicationVariants.all { variant ->
+    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+        description "Generate $variant.name Javadoc"
+
+        source = variant.javaCompile.source
+        destinationDir = file("$rootDir/doc/javadoc/")
+        // TODO: change to true
+        failOnError false
+
+        doFirst {
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+            options.addStringOption "-show-members", "package"
+        }
+    }
+}
+
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
