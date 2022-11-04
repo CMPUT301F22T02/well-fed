@@ -5,26 +5,48 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 import java.util.Objects;
 
 public class IngredientActivity extends ActivityBase implements
-                                                     ConfirmDialog.OnConfirmListener {
+        ConfirmDialog.OnConfirmListener {
     private IngredientContract contract;
     private StorageIngredient ingredient;
     private IngredientController controller;
+
+    // Edit ingredient launcher
+    private final ActivityResultLauncher<StorageIngredient> editIngredient = registerForActivityResult(new IngredientEditContract(), result -> {
+        String type = result.first;
+        StorageIngredient ingredient = result.second;
+        switch (type) {
+            case "quit":
+                onQuitEdit();
+                break;
+            case "edit":
+                onEdit(ingredient);
+                break;
+            default:
+                break;
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient_activity);
 
+        // Get ingredient from intent
         Intent intent = getIntent();
-        this.ingredient = (StorageIngredient) intent.getSerializableExtra("Ingredient");
+        ingredient = (StorageIngredient) intent.getSerializableExtra("ingredient");
 
         // Set ingredient name
         TextView ingredientName = findViewById(R.id.ingredient_name);
@@ -42,36 +64,56 @@ public class IngredientActivity extends ActivityBase implements
         TextView ingredientLocation = findViewById(R.id.ingredient_location_value);
         ingredientLocation.setText(ingredient.getLocation());
 
-        // Enable back button in action bar
+        // Set ingredient category with id=ingredient_categories_recycler_view
+        TextView ingredientCategories = findViewById(R.id.ingredient_category);
+        // Hide ingredient category if there is no category
+        if (ingredient.getCategory() == null) {
+            ingredientCategories.setVisibility(TextView.GONE);
+        } else {
+            ingredientCategories.setText(ingredient.getCategory());
+        }
+
+
+
+        // Enable back button in action bar to go back to previous activity
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Set delete button
-        DeleteButton deleteButton = new DeleteButton(this,
-                findViewById(R.id.ingredient_delete_button), "Delete ingredient?", this);
+        DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.ingredient_delete_button), "Delete " + "ingredient?", this);
+
+        // Set edit button
+        FloatingActionButton editButton = findViewById(R.id.ingredient_edit_button);
+        editButton.setOnClickListener(v -> {
+            editIngredient.launch(ingredient);
+        });
+
+
 
     }
 
     @Override
     public void onBackPressed() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Ingredient", ingredient);
-        returnIntent.putExtra("Reason", "BackPressed");
-        setResult(Activity.RESULT_OK, returnIntent);
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "back");
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
-    @Override
-    public void onConfirm() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Ingredient", ingredient);
-        returnIntent.putExtra("Reason", "Delete");
-        setResult(Activity.RESULT_OK, returnIntent);
+    private void onQuitEdit() {
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "quit");
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
-    public void onEdit() {
-        Intent intent = contract.createIntent(this, ingredient);
-        startActivityForResult(intent, 101);
+    public void onEdit(StorageIngredient ingredient) {
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "edit");
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -86,5 +128,14 @@ public class IngredientActivity extends ActivityBase implements
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    @Override
+    public void onConfirm() {
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "delete");
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }

@@ -20,6 +20,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".ingredient.IngredientEditActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ingredient.IngredientActivity"
             android:exported="false">
             <meta-data
