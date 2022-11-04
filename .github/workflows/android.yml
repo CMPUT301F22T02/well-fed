@@ -3,8 +3,12 @@ name: Android CI
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'doc/**'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'doc/**'
 
 jobs:
   build:
@@ -27,4 +31,4 @@ jobs:
       run: ./gradlew test
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build --parallel
