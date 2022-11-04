@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 @RunWith(AndroidJUnit4.class)
@@ -149,5 +150,26 @@ public class RecipeDBTest {
         recipeDB.editRecipe(testRecipe);
 
         assert recipeDB.getRecipe(testRecipe.getId()) == null;
+    }
+
+    /**
+     * Test getRecipes functionality by requesting a list of all recipes.
+     * @throws InterruptedException If getRecipes transactions cannot
+     * complete successfully
+     */
+    @Test
+    public void testGetRecipes() throws InterruptedException {
+        ArrayList<Recipe> recipes = recipeDB.getRecipes();
+        int count = recipes.size();
+        Recipe testRecipe = new Recipe("Cake");
+        testRecipe.setPrepTimeMinutes(90);
+        testRecipe.setServings(12);
+
+        recipeDB.addRecipe(testRecipe);
+        recipes = recipeDB.getRecipes();
+        assert recipes.size() == count + 1;
+        recipeDB.delRecipe(testRecipe.getId());
+        recipes = recipeDB.getRecipes();
+        assert recipes.size() == count;
     }
 }
