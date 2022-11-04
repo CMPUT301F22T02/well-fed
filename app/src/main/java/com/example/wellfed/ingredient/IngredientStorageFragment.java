@@ -1,9 +1,12 @@
 package com.example.wellfed.ingredient;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Date;
 
@@ -92,6 +96,26 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         ingredientController.setIngredientAdapter(ingredientAdapter);
         recyclerView.setAdapter(ingredientAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // Search bar
+        TextInputEditText searchBar =
+                view.findViewById(R.id.ingredient_storage_search);
+
+        // On search bar text change show "Functionality not implemented yet" message
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Toast.makeText(getActivity(), "Functionality not implemented yet", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     @Override
