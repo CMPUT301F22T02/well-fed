@@ -3,9 +3,11 @@ name: Generate Javadoc
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'doc/**'
 
 jobs:
-  javadoc:
+  generate_javadoc:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -20,21 +22,17 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build --parallel
 
     - name: Generate Javadoc
       run: ./gradlew generateReleaseJavadoc
 
-    - name: Commit
-      uses: EndBug/add-and-commit@v9
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
       with:
-        default_author: github_actions
-        message: Update Javadoc
-        add: 'doc/javadoc'
-
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@v4.4.1
-      with:
-        clean: true
-        folder: doc/javadoc
-        target-folder: javadoc
+        add-paths: doc/javadoc
+        body: Automated Update Javadocs
+        branch: docs-update-javadoc
+        commit-message: "docs: update javadocs"
+        delete-branch: true
+        title: "Docs: Update Javadocs"
