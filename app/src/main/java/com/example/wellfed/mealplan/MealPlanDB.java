@@ -252,8 +252,11 @@ public class MealPlanDB {
         mealPlan.setTitle(mealSnapshot[0].getString("title"));
         mealPlan.setCategory(mealSnapshot[0].getString("category"));
         mealPlan.setEatDate(mealSnapshot[0].getDate("eat-date"));
-        mealPlan.setServings(Objects.requireNonNull(mealSnapshot[0].getLong("servings")).intValue());
-
+        if (mealSnapshot[0].getLong("servings") == null) {
+            mealPlan.setServings(null);
+        } else {
+            mealPlan.setServings(Objects.requireNonNull(mealSnapshot[0].getLong("servings")).intValue());
+        }
         // getting the ingredients
         List<DocumentReference> mealPlanIngredients =
                 (List<DocumentReference>) Objects.requireNonNull(mealSnapshot[0].get("ingredients"));
@@ -264,7 +267,7 @@ public class MealPlanDB {
                 mealPlan.addIngredient(result);
             }
             catch(Exception err){
-                Log.d(TAG, "addRecipe: Failed to get recipe");
+                Log.d(TAG, "addMealPlan: Failed to get ingredient");
             }
         }
 
@@ -272,13 +275,18 @@ public class MealPlanDB {
         List<DocumentReference> mealPlanRecipes =
                 (List<DocumentReference>) Objects.requireNonNull(mealSnapshot[0].get("recipes"));
 
-        for(DocumentReference ingredient: mealPlanRecipes){
+        for(DocumentReference recipe: mealPlanRecipes){
             try {
-                Ingredient result = ingredientDB.getStoredIngredient(ingredient.getId());
-                mealPlan.addIngredient(result);
+                Recipe result = recipeDB.getRecipe(recipe.getId());
+                mealPlan.addRecipe(result);
+                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getId());
+                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getCategory());
+                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getIngredients());
+                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getServings());
+
             }
             catch(Exception err){
-                Log.d(TAG, "addRecipe: Failed to get recipe");
+                Log.d(TAG, "addMealPlan: Failed to get recipe with id: " + recipe.getId());
             }
         }
 
