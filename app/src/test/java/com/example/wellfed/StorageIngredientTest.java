@@ -22,8 +22,8 @@ public class StorageIngredientTest {
      */
     @Test
     public void testConstructor() {
-        StorageIngredient ingredient = new StorageIngredient("Test");
-        assertEquals("Test", ingredient.getDescription());
+        StorageIngredient ingredient = new StorageIngredient("Apple");
+        assertEquals("Apple", ingredient.getDescription());
         assertNull(ingredient.getAmount());
         assertNull(ingredient.getUnit());
         assertNull(ingredient.getLocation());
@@ -36,11 +36,13 @@ public class StorageIngredientTest {
      */
     @Test
     public void testConstructor2() {
-        StorageIngredient ingredient = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1));
-        assertEquals("Test", ingredient.getDescription());
+        StorageIngredient ingredient = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1));
+        assertEquals("Apple", ingredient.getDescription());
         assertEquals((Float) 1.0f, ingredient.getAmount());
         assertEquals("g", ingredient.getUnit());
-        assertEquals("A1", ingredient.getLocation());
+        assertEquals("Pantry", ingredient.getLocation());
         assertEquals(new Date(2020, 1, 1), ingredient.getBestBeforeDate());
         Date bestBefore = new Date(2020, 1, 1);
         String bestBeforeString = bestBefore.toString();
@@ -56,11 +58,13 @@ public class StorageIngredientTest {
      */
     @Test
     public void testConstructor3() {
-        StorageIngredient ingredient = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1), "Fruit");
-        assertEquals("Test", ingredient.getDescription());
+        StorageIngredient ingredient = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1), "Fruit");
+        assertEquals("Apple", ingredient.getDescription());
         assertEquals((Float) 1.0f, ingredient.getAmount());
         assertEquals("g", ingredient.getUnit());
-        assertEquals("A1", ingredient.getLocation());
+        assertEquals("Pantry", ingredient.getLocation());
         assertEquals(new Date(2020, 1, 1), ingredient.getBestBeforeDate());
         Date bestBefore = new Date(2020, 1, 1);
         String bestBeforeString = bestBefore.toString();
@@ -76,19 +80,21 @@ public class StorageIngredientTest {
      */
     @Test
     public void testGetters() {
-        StorageIngredient ingredient = new StorageIngredient("Test");
-        assertEquals("Test", ingredient.getDescription());
+        StorageIngredient ingredient = new StorageIngredient("Apple");
+        assertEquals("Apple", ingredient.getDescription());
         assertNull(ingredient.getAmount());
         assertNull(ingredient.getUnit());
         assertNull(ingredient.getLocation());
         assertNull(ingredient.getBestBefore());
         assertNull(ingredient.getCategory());
 
-        StorageIngredient ingredient2 = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1));
-        assertEquals("Test", ingredient2.getDescription());
+        StorageIngredient ingredient2 = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1));
+        assertEquals("Apple", ingredient2.getDescription());
         assertEquals((Float) 1.0f, ingredient2.getAmount());
         assertEquals("g", ingredient2.getUnit());
-        assertEquals("A1", ingredient2.getLocation());
+        assertEquals("Pantry", ingredient2.getLocation());
         assertEquals(new Date(2020, 1, 1), ingredient2.getBestBeforeDate());
         Date bestBefore = new Date(2020, 1, 1);
         String bestBeforeString = bestBefore.toString();
@@ -98,11 +104,13 @@ public class StorageIngredientTest {
         assertEquals(bestBeforeString, ingredient2.getBestBefore());
         assertNull(ingredient2.getCategory());
 
-        StorageIngredient ingredient3 = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1), "Fruit");
-        assertEquals("Test", ingredient3.getDescription());
+        StorageIngredient ingredient3 = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1), "Fruit");
+        assertEquals("Apple", ingredient3.getDescription());
         assertEquals((Float) 1.0f, ingredient3.getAmount());
         assertEquals("g", ingredient3.getUnit());
-        assertEquals("A1", ingredient3.getLocation());
+        assertEquals("Pantry", ingredient3.getLocation());
 
         assertEquals(new Date(2020, 1, 1), ingredient3.getBestBeforeDate());
         Date bestBefore2 = new Date(2020, 1, 1);
@@ -119,15 +127,15 @@ public class StorageIngredientTest {
      */
     @Test
     public void testSetters() {
-        StorageIngredient ingredient = new StorageIngredient("Test");
-        ingredient.setDescription("Test2");
-        assertEquals("Test2", ingredient.getDescription());
+        StorageIngredient ingredient = new StorageIngredient("Apple");
+        ingredient.setDescription("Banana");
+        assertEquals("Banana", ingredient.getDescription());
         ingredient.setAmount(1.0f);
         assertEquals((Float) 1.0f, ingredient.getAmount());
         ingredient.setUnit("g");
         assertEquals("g", ingredient.getUnit());
-        ingredient.setLocation("A1");
-        assertEquals("A1", ingredient.getLocation());
+        ingredient.setLocation("Pantry");
+        assertEquals("Pantry", ingredient.getLocation());
         ingredient.setBestBefore(new Date(2020, 1, 1));
         assertEquals(new Date(2020, 1, 1), ingredient.getBestBeforeDate());
         Date bestBefore = new Date(2020, 1, 1);
@@ -139,15 +147,17 @@ public class StorageIngredientTest {
         ingredient.setCategory("Fruit");
         assertEquals("Fruit", ingredient.getCategory());
 
-        StorageIngredient ingredient2 = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1));
-        ingredient2.setDescription("Test2");
-        assertEquals("Test2", ingredient2.getDescription());
+        StorageIngredient ingredient2 = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1));
+        ingredient2.setDescription("Banana");
+        assertEquals("Banana", ingredient2.getDescription());
         ingredient2.setAmount(1.0f);
         assertEquals((Float) 1.0f, ingredient2.getAmount());
         ingredient2.setUnit("g");
         assertEquals("g", ingredient2.getUnit());
-        ingredient2.setLocation("A1");
-        assertEquals("A1", ingredient2.getLocation());
+        ingredient2.setLocation("Pantry");
+        assertEquals("Pantry", ingredient2.getLocation());
         ingredient2.setBestBefore(new Date(2020, 1, 2));
         assertEquals(new Date(2020, 1, 2), ingredient2.getBestBeforeDate());
         Date bestBefore2 = new Date(2020, 1, 2);
@@ -159,15 +169,17 @@ public class StorageIngredientTest {
         ingredient2.setCategory("Fruit");
         assertEquals("Fruit", ingredient2.getCategory());
 
-        StorageIngredient ingredient3 = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1), "Fruit");
-        ingredient3.setDescription("Test2");
-        assertEquals("Test2", ingredient3.getDescription());
+        StorageIngredient ingredient3 = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1), "Fruit");
+        ingredient3.setDescription("Banana");
+        assertEquals("Banana", ingredient3.getDescription());
         ingredient3.setAmount(1.0f);
         assertEquals((Float) 1.0f, ingredient3.getAmount());
         ingredient3.setUnit("g");
         assertEquals("g", ingredient3.getUnit());
-        ingredient3.setLocation("A1");
-        assertEquals("A1", ingredient3.getLocation());
+        ingredient3.setLocation("Pantry");
+        assertEquals("Pantry", ingredient3.getLocation());
         ingredient3.setBestBefore(new Date(2020, 1, 2));
         assertEquals(new Date(2020, 1, 2), ingredient3.getBestBeforeDate());
         Date bestBefore3 = new Date(2020, 1, 2);
@@ -185,18 +197,24 @@ public class StorageIngredientTest {
      */
     @Test
     public void testEquals() {
-        StorageIngredient ingredient = new StorageIngredient("Test");
-        StorageIngredient ingredient2 = new StorageIngredient("Test");
-        StorageIngredient ingredient3 = new StorageIngredient("Test2");
-        StorageIngredient ingredient4 = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1));
-        StorageIngredient ingredient5 = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 1));
-        StorageIngredient ingredient6 = new StorageIngredient("Test", 1.0f, "g", "A1", new Date(2020, 1, 2));
+        StorageIngredient ingredient = new StorageIngredient("Apple");
+        StorageIngredient ingredient2 = new StorageIngredient("Apple");
+        StorageIngredient ingredient3 = new StorageIngredient("Banana");
+        StorageIngredient ingredient4 = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1));
+        StorageIngredient ingredient5 = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 1));
+        StorageIngredient ingredient6 = new StorageIngredient("Apple", 1.0f,
+                "g",
+                "Pantry", new Date(2020, 1, 2));
         StorageIngredient ingredient7 = new StorageIngredient("Test4", 1.0f,
-                "g", "A1", new Date(2020, 1, 1), "Fruit");
+                "g", "Pantry", new Date(2020, 1, 1), "Fruit");
         StorageIngredient ingredient8 = new StorageIngredient("Test5", 1.0f,
-                "g", "A1", new Date(2020, 1, 1), "Fruit");
+                "g", "Pantry", new Date(2020, 1, 1), "Fruit");
         StorageIngredient ingredient9 = new StorageIngredient("Test7", 1.0f,
-                "g", "A1", new Date(2020, 1, 1), "Fruit2");
+                "g", "Pantry", new Date(2020, 1, 1), "Fruit2");
         assertTrue(ingredient.equals(ingredient2));
         assertFalse(ingredient.equals(ingredient3));
         assertTrue(ingredient4.equals(ingredient5));
