@@ -60,4 +60,11 @@ public class ShoppingCartController {
         this.shoppingCartIngredients.set(index, modifiedShoppingCartIngredient);
         this.adapter.notifyItemChanged(index);
     }
+
+    public void deleteShoppingCartIngredient(int index) {
+        if (0 <= index && index < this.shoppingCartIngredients.size()) {
+            this.shoppingCartIngredients.remove(index);
+            this.adapter.notifyItemRemoved(index);
+        }
+    }
 }

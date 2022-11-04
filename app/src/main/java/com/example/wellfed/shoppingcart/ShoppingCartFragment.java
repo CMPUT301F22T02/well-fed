@@ -39,7 +39,7 @@ public class ShoppingCartFragment extends Fragment
                 ShoppingCartIngredient shoppingCartIngredient = result.second;
                 switch (type) {
                     case "delete":
-                        controller.deleteShoppingCartIngredient
+                        controller.deleteShoppingCartIngredient(this.selected);
                 }
             })
 
