@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.OnQuitListener;
+import com.example.wellfed.common.RequiredDateTextInputLayout;
+import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
@@ -21,6 +23,11 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
     private EditText location;
     private EditText bestBefore;
     private StorageIngredient ingredient;
+    private RequiredTextInputLayout nameLayout;
+    private RequiredTextInputLayout amountLayout;
+    private RequiredTextInputLayout unitLayout;
+    private RequiredTextInputLayout locationLayout;
+    private RequiredDateTextInputLayout bestBeforeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,14 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
         unit = findViewById(R.id.ingredient_unit_value);
         location = findViewById(R.id.ingredient_location);
         bestBefore = findViewById(R.id.ingredient_expiration);
+
+        nameLayout = findViewById(R.id.textInputLayout);
+        amountLayout = findViewById(R.id.textInputLayout4);
+        unitLayout = findViewById(R.id.textInputLayout5);
+        locationLayout = findViewById(R.id.textInputLayout6);
+        bestBeforeLayout = findViewById(R.id.textInputLayout2);
+
+        // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
 
         if (ingredient != null) {
@@ -39,7 +54,8 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
             amount.setText(String.valueOf(ingredient.getAmount()));
             unit.setText(ingredient.getUnit());
             location.setText(ingredient.getLocation());
-            bestBefore.setText(ingredient.getBestBefore());
+            // Set date in yyyy-MM-dd format
+            bestBeforeLayout.setPlaceholderDate(ingredient.getBestBeforeDate());
         }
 
         // Enable back button in action bar to go back to previous activity
@@ -97,11 +113,14 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
 
 
         if (ingredient == null) {
+            String[] date = bestBefore.getText().toString().split("-");
             ingredient = new StorageIngredient(name.getText().toString(),
-                    (float) Double.parseDouble(amount.getText().toString()),
+                    Float.parseFloat(amount.getText().toString()),
                     unit.getText().toString(),
                     location.getText().toString(),
-                    new Date(bestBefore.getText().toString()));
+                    new Date(Integer.parseInt(date[0]) - 1900,
+                            Integer.parseInt(date[1]) - 1,
+                            Integer.parseInt(date[2])));
             Intent intent = new Intent();
             intent.putExtra("type", "add");
             intent.putExtra("ingredient", ingredient);
@@ -109,10 +128,15 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
             finish();
         } else {
             ingredient.setDescription(name.getText().toString());
-            ingredient.setAmount((float) Double.parseDouble(amount.getText().toString()));
+            ingredient.setAmount(Float.parseFloat(amount.getText().toString()));
             ingredient.setUnit(unit.getText().toString());
             ingredient.setLocation(location.getText().toString());
-            ingredient.setBestBefore(new Date(2020, 1, 1));
+            // Get date in yyyy-MM-dd format
+            String[] date = bestBefore.getText().toString().split("-");
+            ingredient.setBestBefore(new Date(Integer.parseInt(date[0]) - 1900,
+                    Integer.parseInt(date[1]) - 1,
+                    Integer.parseInt(date[2])));
+
             Intent intent = new Intent();
             intent.putExtra("type", "edit");
             intent.putExtra("ingredient", ingredient);

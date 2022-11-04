@@ -138,6 +138,10 @@ public class StorageIngredient extends Ingredient {
         return bestBeforeSplit[0] + ", " + bestBeforeSplit[1] + " " + bestBeforeSplit[2];
     }
 
+    public Date getBestBeforeDate() {
+        return bestBefore;
+    }
+
     /**
      * Combines the amount and unit of the ingredient in the storage.
      *

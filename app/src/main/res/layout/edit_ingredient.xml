@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.wellfed.common.RequiredTextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -21,9 +21,9 @@
             android:hint="@string/description"
             android:inputType="text" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.example.wellfed.common.RequiredTextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.wellfed.common.RequiredDateTextInputLayout
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -39,9 +39,9 @@
             android:drawablePadding="16dp"
             android:hint="@string/best_before_date"
             android:inputType="date" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.example.wellfed.common.RequiredDateTextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.wellfed.common.RequiredTextInputLayout
         android:id="@+id/textInputLayout3"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -55,11 +55,11 @@
             android:layout_height="match_parent"
             android:hint="@string/categories"
             android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.example.wellfed.common.RequiredTextInputLayout>
 
     <!-- Amount and Unit on the same line below categories half the width each -->
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.wellfed.common.RequiredTextInputLayout
         android:id="@+id/textInputLayout4"
         android:layout_width="150dp"
         android:layout_height="80dp"
@@ -75,10 +75,10 @@
             android:layout_height="match_parent"
             android:hint="@string/amount_hint"
             android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.example.wellfed.common.RequiredTextInputLayout>
 
     <!-- Create a dropdown menu for the unit -->
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.wellfed.common.RequiredTextInputLayout
         android:id="@+id/textInputLayout5"
         android:layout_width="150dp"
         android:layout_height="80dp"
@@ -92,13 +92,13 @@
             android:id="@+id/ingredient_unit_value"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
             android:hint="@string/unit"
             android:inputType="textAutoComplete" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.example.wellfed.common.RequiredTextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.wellfed.common.RequiredTextInputLayout
+        android:id="@+id/textInputLayout6"
         android:layout_width="match_parent"
         android:layout_height="87dp"
         android:layout_marginTop="28dp"
@@ -109,10 +109,9 @@
             android:id="@+id/ingredient_location"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_24"
             android:hint="@string/location"
             android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.example.wellfed.common.RequiredTextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ingredient_save_button"
