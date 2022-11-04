@@ -2,7 +2,7 @@ name: Generate Javadoc
 
 on:
   push:
-    branches: [ "main", "setup-javadoc" ]
+    branches: [ "main" ]
 
 jobs:
   javadoc:
