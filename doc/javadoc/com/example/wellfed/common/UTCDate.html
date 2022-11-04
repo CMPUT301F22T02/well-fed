@@ -141,6 +141,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">UTCDate</span>
 extends java.util.Date</pre>
+<div class="block">The UTCDate class provides extends the Date class with methods for managing
+ dates in UTC time.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.example.wellfed.common.UTCDate">Serialized Form</a></dd>
@@ -166,11 +168,15 @@ extends java.util.Date</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">UTCDate</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a UTCDate object with the current date and time.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(long)">UTCDate</a></span>&#8203;(long&nbsp;date)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a UTCDate object with the specified date</div>
+</td>
 </tr>
 </table>
 </li>
@@ -193,17 +199,23 @@ extends java.util.Date</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns true if the object is a UTCDate object with the same date</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#format(java.lang.String)">format</a></span>&#8203;(java.lang.String&nbsp;pattern)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the date as a string in the format specified by the pattern</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="UTCDate.html" title="class in com.example.wellfed.common">UTCDate</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#from(java.util.Date)">from</a></span>&#8203;(java.util.Date&nbsp;date)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a UTCDate object from a Date object</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="UTCDate.html" title="class in com.example.wellfed.common">UTCDate</a></code></td>
@@ -213,12 +225,16 @@ extends java.util.Date</pre>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="UTCDate.html" title="class in com.example.wellfed.common">UTCDate</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastDayOfWeek()">getLastDayOfWeek</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the date of the last day of the week.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the hash code of the UTCDate object</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -258,6 +274,7 @@ extends java.util.Date</pre>
 <li class="blockList">
 <h4>UTCDate</h4>
 <pre>public&nbsp;UTCDate()</pre>
+<div class="block">Constructs a UTCDate object with the current date and time.</div>
 </li>
 </ul>
 <a id="&lt;init&gt;(long)">
@@ -267,6 +284,11 @@ extends java.util.Date</pre>
 <li class="blockList">
 <h4>UTCDate</h4>
 <pre>public&nbsp;UTCDate&#8203;(long&nbsp;date)</pre>
+<div class="block">Constructs a UTCDate object with the specified date</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>date</code> - the date in milliseconds since epoch</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -286,6 +308,11 @@ extends java.util.Date</pre>
 <li class="blockList">
 <h4>from</h4>
 <pre class="methodSignature">public static&nbsp;<a href="UTCDate.html" title="class in com.example.wellfed.common">UTCDate</a>&nbsp;from&#8203;(java.util.Date&nbsp;date)</pre>
+<div class="block">Constructs a UTCDate object from a Date object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>date</code> - the date object</dd>
+</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
@@ -295,9 +322,14 @@ extends java.util.Date</pre>
 <li class="blockList">
 <h4>equals</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="block">Returns true if the object is a UTCDate object with the same date</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.util.Date</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - the object to compare</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the object is a UTCDate object with the same date</dd>
 </dl>
 </li>
 </ul>
@@ -308,9 +340,12 @@ extends java.util.Date</pre>
 <li class="blockList">
 <h4>hashCode</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;hashCode()</pre>
+<div class="block">Returns the hash code of the UTCDate object</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.util.Date</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the hash code of the UTCDate object</dd>
 </dl>
 </li>
 </ul>
@@ -330,6 +365,11 @@ extends java.util.Date</pre>
 <li class="blockList">
 <h4>getLastDayOfWeek</h4>
 <pre class="methodSignature">public&nbsp;<a href="UTCDate.html" title="class in com.example.wellfed.common">UTCDate</a>&nbsp;getLastDayOfWeek()</pre>
+<div class="block">Returns the date of the last day of the week.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the date of the last day of the week</dd>
+</dl>
 </li>
 </ul>
 <a id="format(java.lang.String)">
@@ -339,6 +379,13 @@ extends java.util.Date</pre>
 <li class="blockList">
 <h4>format</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;format&#8203;(java.lang.String&nbsp;pattern)</pre>
+<div class="block">Returns the date as a string in the format specified by the pattern</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pattern</code> - the pattern <code>SimpleDateFormat</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the date as a string in the format specified by the pattern</dd>
+</dl>
 </li>
 </ul>
 </li>

@@ -122,7 +122,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</li>
+<li>androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.example.wellfed.ingredient.IngredientContract</li>
@@ -136,7 +136,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">IngredientContract</span>
-extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</pre>
+extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&gt;</pre>
 </li>
 </ul>
 </div>
@@ -198,14 +198,18 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Sto
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>android.content.Intent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIntent(android.content.Context,com.example.wellfed.ingredient.StorageIngredient)">createIntent</a></span>&#8203;(android.content.Context&nbsp;context,
-            <a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient)</code></th>
-<td class="colLast">&nbsp;</td>
+            <a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</code></th>
+<td class="colLast">
+<div class="block">Creates an Intent for the IngredientEditActivity.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a></code></td>
+<td class="colFirst"><code>android.util.Pair&lt;java.lang.String,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseResult(int,android.content.Intent)">parseResult</a></span>&#8203;(int&nbsp;i,
            android.content.Intent&nbsp;intent)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Pair object for the result of the IngredientEditActivity.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -266,10 +270,16 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Sto
 <pre class="methodSignature">@NonNull
 public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
                                            android.content.Context&nbsp;context,
-                                           <a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient)</pre>
+                                           <a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</pre>
+<div class="block">Creates an Intent for the IngredientEditActivity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>createIntent</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code></dd>
+<dd><code>createIntent</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - Context object for the activity.</dd>
+<dd><code>storageIngredient</code> - StorageIngredient object for the ingredient.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Intent object for the IngredientEditActivity.</dd>
 </dl>
 </li>
 </ul>
@@ -279,12 +289,18 @@ public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
 <ul class="blockListLast">
 <li class="blockList">
 <h4>parseResult</h4>
-<pre class="methodSignature">public&nbsp;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;parseResult&#8203;(int&nbsp;i,
-                                     @Nullable
-                                     android.content.Intent&nbsp;intent)</pre>
+<pre class="methodSignature">public&nbsp;android.util.Pair&lt;java.lang.String,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&nbsp;parseResult&#8203;(int&nbsp;i,
+                                                                               @Nullable
+                                                                               android.content.Intent&nbsp;intent)</pre>
+<div class="block">Pair object for the result of the IngredientEditActivity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>parseResult</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code></dd>
+<dd><code>parseResult</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>i</code> - index of the ingredient.</dd>
+<dd><code>intent</code> - Intent object for the IngredientEditActivity.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Pair object for the result of the IngredientEditActivity.</dd>
 </dl>
 </li>
 </ul>
