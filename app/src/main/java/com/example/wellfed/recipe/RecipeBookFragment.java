@@ -56,16 +56,18 @@ public class RecipeBookFragment extends Fragment implements Launcher {
 
 
     private class DeleteRecipeTask extends
-            AsyncTask<Recipe, Void, Void> {
-        protected Void doInBackground(Recipe... recipes) {
+            AsyncTask<Recipe, Void, Recipe> {
+        protected Recipe doInBackground(Recipe... recipes) {
             for (Recipe recipe : recipes) {
                 RecipeBookFragment.this.recipeController.deleteRecipe(recipe.getId());
+                return recipe;
             }
             return null;
         }
 
-        protected void onPostExecute(Void result) {
-            new RecipeBookFragment.GetRecipesTask().execute();
+        protected void onPostExecute(Recipe recipe) {
+            RecipeBookFragment.this.recipes.remove(recipe);
+            RecipeBookFragment.this.adapter.notifyDataSetChanged();
         }
     }
 
@@ -98,16 +100,18 @@ public class RecipeBookFragment extends Fragment implements Launcher {
     }
 
     private class AddRecipeTask extends
-            AsyncTask<Recipe, Void, Void> {
-        protected Void doInBackground(Recipe... recipes) {
+            AsyncTask<Recipe, Void, Recipe> {
+        protected Recipe doInBackground(Recipe... recipes) {
             for (Recipe recipe : recipes) {
                 RecipeBookFragment.this.recipeController.addRecipe(recipe);
+                return recipe;
             }
             return null;
         }
 
-        protected void onPostExecute(Void result) {
-            new RecipeBookFragment.GetRecipesTask().execute();
+        protected void onPostExecute(Recipe recipe) {
+            RecipeBookFragment.this.recipes.add(recipe);
+            RecipeBookFragment.this.adapter.notifyDataSetChanged();
         }
     }
 

@@ -1,13 +1,18 @@
 package com.example.wellfed;
 
+import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -47,21 +52,19 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_prep_time_editText)).perform(typeText("10"));
         onView(withId(R.id.recipe_no_of_servings_editText)).perform(
                 clearText());
-//        onView(withId(R.id.recipe_no_of_servings_editText)).perform(
-//                typeText("2"));
-//        onView(withId(R.id.recipe_category_textEdit)).perform(click());
-//        onView(withText("Lunch")).inRoot(RootMatchers.isPlatformPopup())
-//                .perform(click());
-//        onView(withId(R.id.commentsEditText)).perform(typeText(
-//                "Ground beef and homemade taco seasoning" +
-//                        "make the best taco meat in this classic easy" +
-//                        "recipe that's better than take out."));
-//        closeSoftKeyboard();
-//        onView(withId(R.id.save_fab)).perform(click());
-//
-//        onView(withId(R.id.recipeRecyclerView))
-//                .perform(RecyclerViewActions.actionOnItem(
-//                hasDescendant(withText("Tacos")), click()));
-//        onView(withId(R.id.deleteButton)).perform(click());
+        onView(withId(R.id.recipe_no_of_servings_editText)).perform(
+                typeText("2"));
+        onView(withId(R.id.recipe_category_textEdit)).perform(click());
+        onView(withText("Lunch")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        onView(withId(R.id.commentsEditText)).perform(typeText(
+                "Ground beef and homemade taco seasoning" +
+                        "make the best taco meat in this classic easy" +
+                        "recipe that's better than take out."));
+        closeSoftKeyboard();
+        onView(withId(R.id.save_fab)).perform(click());
+        onView(withText("Tacos")).perform(click());
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
     }
 }
