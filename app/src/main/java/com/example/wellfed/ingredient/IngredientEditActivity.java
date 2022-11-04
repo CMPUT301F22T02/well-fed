@@ -17,14 +17,39 @@ import java.util.Date;
 import java.util.Objects;
 
 public class IngredientEditActivity extends AppCompatActivity implements ConfirmDialog.OnConfirmListener {
+    /**
+     * EditText for the ingredient's name.
+     */
     private EditText name;
+    /**
+     * EditText for the ingredient's amount.
+     */
     private EditText amount;
+    /**
+     * EditText for the ingredient's unit.
+     */
     private EditText unit;
+    /**
+     * EditText for the ingredient's location.
+     */
     private EditText location;
+    /**
+     * EditText for the ingredient's expiration date.
+     */
     private EditText bestBefore;
+    /**
+     * EditText for category of the ingredient.
+     */
     private EditText category;
+    /**
+     * StorageIngredient object for the ingredient.
+     */
     private StorageIngredient ingredient;
 
+    /**
+     * OnCreate method for the activity.
+     * @param savedInstanceState Bundle object for the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +90,9 @@ public class IngredientEditActivity extends AppCompatActivity implements Confirm
         });
     }
 
+    /**
+     * Method to save the ingredient.
+     */
     private void onSave() {
         // Verify that all fields are filled
         if (name.getText().toString().isEmpty()) {
@@ -137,6 +165,9 @@ public class IngredientEditActivity extends AppCompatActivity implements Confirm
         }
     }
 
+    /**
+     * Method to handle the back button.
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
@@ -146,11 +177,18 @@ public class IngredientEditActivity extends AppCompatActivity implements Confirm
         finish();
     }
 
+    /**
+     * onPointerCaptureChanged method for the activity.
+     * @param hasCapture boolean for the activity.
+     */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
 
+    /**
+     * onConfirm method for the activity to handle the back button.
+     */
     @Override
     public void onConfirm() {
         Intent intent = new Intent();
