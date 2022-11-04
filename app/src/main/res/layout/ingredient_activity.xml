@@ -5,15 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Back button -->
-
-
-    <!-- Ingredient name -->
-
-    <!-- Ingredient best before date -->
-
-    <!-- Ingredient quantity -->
-
     <TextView
         android:id="@+id/ingredient_name"
         android:layout_width="wrap_content"
@@ -64,8 +55,6 @@
         app:layout_constraintTop_toBottomOf="@+id/ingredient_best_before_date_label" />
 
 
-    <!-- Ingredient location -->
-
     <TextView
         android:id="@+id/ingredient_quantity_value"
         android:layout_width="wrap_content"
@@ -90,8 +79,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredient_quantity_label" />
 
-
-    <!-- Dynamically added categories -->
     <TextView
         android:id="@+id/ingredient_location_value"
         android:layout_width="wrap_content"
@@ -114,8 +101,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ingredient_location_label"
         app:reverseLayout="true" />
-
-    <!-- Ingredient Delete button -->
 
     <Button
         android:id="@+id/ingredient_delete_button"
