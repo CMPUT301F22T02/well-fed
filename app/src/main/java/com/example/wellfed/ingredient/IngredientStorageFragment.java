@@ -25,26 +25,26 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
     RecyclerView recyclerView;
     int position;
 
-    ActivityResultLauncher<StorageIngredient> ingredientLauncher = registerForActivityResult(new IngredientContract(), result -> {
-        if (result == null) {
-            return;
-        }
-        String type = result.first;
-        StorageIngredient ingredient = result.second;
-        switch (type) {
-            case "delete":
-                ingredientController.deleteIngredient(position);
-                break;
-            case "edit":
-                ingredientController.editIngredient(position, ingredient);
-                break;
-            case "launch":
-                this.launch(position);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-    });
+    ActivityResultLauncher<StorageIngredient> ingredientLauncher =
+            registerForActivityResult(new IngredientContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                StorageIngredient ingredient = result.second;
+                switch (type) {
+                    case "delete":
+                        ingredientController.deleteIngredient(position);
+                        break;
+                    case "edit":
+                        ingredientController.editIngredient(position, ingredient);
+                        break;
+                    case "back":
+                            break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            });
 
 
     @Nullable

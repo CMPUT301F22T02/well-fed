@@ -25,8 +25,9 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient_activity);
 
+        // Get ingredient from intent
         Intent intent = getIntent();
-        this.ingredient = (StorageIngredient) intent.getSerializableExtra("Ingredient");
+        ingredient = (StorageIngredient) intent.getSerializableExtra("ingredient");
 
         // Set ingredient name
         TextView ingredientName = findViewById(R.id.ingredient_name);
@@ -48,42 +49,40 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Set delete button
-        DeleteButton deleteButton = new DeleteButton(this,
-                findViewById(R.id.ingredient_delete_button), "Delete " +
-                "ingredient?", this);
+        DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.ingredient_delete_button), "Delete " + "ingredient?", this);
 
-        FloatingActionButton fab = findViewById(R.id.ingredient_edit_button);
     }
 
     @Override
     public void onBackPressed() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Ingredient", ingredient);
-        returnIntent.putExtra("Reason", "BackPressed");
-        setResult(Activity.RESULT_OK, returnIntent);
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "back");
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
     @Override
     public void onDelete() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Ingredient", ingredient);
-        returnIntent.putExtra("Reason", "Delete");
-        setResult(Activity.RESULT_OK, returnIntent);
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "delete");
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
     private void onQuitEdit() {
         Intent intent = new Intent();
         intent.putExtra("ingredient", ingredient);
+        intent.putExtra("type", "quit");
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
     public void onEdit() {
         Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
         intent.putExtra("type", "edit");
-        intent.putExtra("mealPlan", ingredient);
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
