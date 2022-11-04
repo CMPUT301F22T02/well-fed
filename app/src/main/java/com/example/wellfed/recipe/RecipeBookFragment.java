@@ -99,39 +99,45 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         rvRecipes.setAdapter(adapter);
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        final CollectionReference recipesCollection = db.collection("Recipes");
-        recipesCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                recipes.clear();
-                for (QueryDocumentSnapshot doc : value) {
-                    String title = (String) doc.getData().get("title");
-                    List<String> comments = (List<String>) doc.getData().get("comments");
-                    String category = (String) doc.getData().get("category");
-                    Integer prepTime = Integer.parseInt(Long.toString((Long) doc.getData().get("prep-time-minutes")));
-                    Integer servings = Integer.parseInt(Long.toString((Long) doc.getData().get("servings")));
-                    String url = (String) doc.getData().get("photograph");
-                    Recipe recipe = new Recipe(title);
-                    for (HashMap<String, Object> ri : (List<HashMap<String, Object>>) doc.getData().get("ingredients")) {
-                        RecipeIngredient recipeIngredient = new RecipeIngredient();
-                        recipeIngredient.setId((String) ri.get("id"));
-                        recipeIngredient.setDescription((String) ri.get("description"));
-                        recipeIngredient.setUnit((String) ri.get("unit"));
-                        recipeIngredient.setAmount(Float.parseFloat(Double.toString((Double) ri.get("amount"))));
-                        recipeIngredient.setCategory((String) ri.get("category"));
-                        recipe.addIngredient(recipeIngredient);
-                    }
-//                    List<RecipeIngredient> recipeIngredients = (List<RecipeIngredient>) doc.getData().get("ingredients");
-                    recipe.setPhotoUrl(url);
-                    recipe.setServings(servings);
-                    recipe.setCategory(category);
-                    recipe.setPrepTimeMinutes(prepTime);
-                    recipe.addComments(comments);
-                    recipes.add(recipe);
-                }
-                adapter.notifyDataSetChanged();
-            }
-        });
+        try {
+            recipes = recipeController.getRecipes();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        adapter.notifyDataSetChanged();
+//        final CollectionReference recipesCollection = db.collection("Recipes");
+//        recipesCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                recipes.clear();
+//                for (QueryDocumentSnapshot doc : value) {
+//                    String title = (String) doc.getData().get("title");
+//                    List<String> comments = (List<String>) doc.getData().get("comments");
+//                    String category = (String) doc.getData().get("category");
+//                    Integer prepTime = Integer.parseInt(Long.toString((Long) doc.getData().get("prep-time-minutes")));
+//                    Integer servings = Integer.parseInt(Long.toString((Long) doc.getData().get("servings")));
+//                    String url = (String) doc.getData().get("photograph");
+//                    Recipe recipe = new Recipe(title);
+//                    for (HashMap<String, Object> ri : (List<HashMap<String, Object>>) doc.getData().get("ingredients")) {
+//                        RecipeIngredient recipeIngredient = new RecipeIngredient();
+//                        recipeIngredient.setId((String) ri.get("id"));
+//                        recipeIngredient.setDescription((String) ri.get("description"));
+//                        recipeIngredient.setUnit((String) ri.get("unit"));
+//                        recipeIngredient.setAmount(Float.parseFloat(Double.toString((Double) ri.get("amount"))));
+//                        recipeIngredient.setCategory((String) ri.get("category"));
+//                        recipe.addIngredient(recipeIngredient);
+//                    }
+////                    List<RecipeIngredient> recipeIngredients = (List<RecipeIngredient>) doc.getData().get("ingredients");
+//                    recipe.setPhotoUrl(url);
+//                    recipe.setServings(servings);
+//                    recipe.setCategory(category);
+//                    recipe.setPrepTimeMinutes(prepTime);
+//                    recipe.addComments(comments);
+//                    recipes.add(recipe);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
 
     }
 

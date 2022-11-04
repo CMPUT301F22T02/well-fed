@@ -53,7 +53,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the user comments on a Recipe.
      */
-    private List<String> comments;
+    private String comments;
 
     /**
      * Holds the number of servings that a Recipe makes.
@@ -78,7 +78,6 @@ public class Recipe implements Serializable {
     public Recipe(String title) {
         this.title = title;
         this.ingredients = new ArrayList<>();
-        this.comments = new ArrayList<>();
         this.id = NULL;
     }
 
@@ -154,7 +153,7 @@ public class Recipe implements Serializable {
      * @return A String representing the comments on a Recipe
      */
     @Nullable
-    public List<String> getComments() {
+    public String getComments() {
         return comments;
     }
 
@@ -162,12 +161,8 @@ public class Recipe implements Serializable {
      * Sets the comments associated with a Recipe
      * @param comments A String representing the comments on a Recipe
      */
-    public void addComments(List<String > comments) {
-        this.comments.addAll(comments);
-    }
-
-    public void addComment(String comment){
-        this.comments.add(comment);
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.example.wellfed.recipe;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
 import android.media.Image;
@@ -20,6 +19,7 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 public class RecipeDB {
+    public static final String TAG = "RecipeDB";
     /**
      * Holds an instance of the Firebase Firestore database
      */
@@ -51,7 +51,7 @@ public class RecipeDB {
      * @return Returns the id of the Recipe document
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public String addRecipe(Recipe recipe){
+    public String addRecipe(Recipe recipe) throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
         Map<String, Object> recipeMap = new HashMap<>();
         String newRecipeId = recipesCollection.document().getId();
@@ -72,10 +72,13 @@ public class RecipeDB {
         })
         .addOnSuccessListener(unused -> {
             Log.d(TAG, "onSuccess: ");
+            addLatch.countDown();
         })
         .addOnFailureListener(e -> {
             Log.d(TAG, "onFailure: ");
+            addLatch.countDown();
         });
+        addLatch.await();
         recipe.setId(newRecipeId);
         return newRecipeId;
     }
@@ -207,14 +210,27 @@ public class RecipeDB {
         if(!recipeSnapshot[0].exists()){
             return null;
         }
+        recipe = getRecipe(recipeSnapshot[0]);
 
-        recipe.setTitle(recipeSnapshot[0].getString("title"));
-        recipe.setCategory(recipeSnapshot[0].getString("category"));
-        recipe.setPhotoUrl(recipeSnapshot[0].getString("phototgraph"));
-        recipe.setPrepTimeMinutes(Objects.requireNonNull(recipeSnapshot[0].getLong("prep-time-minutes")).intValue());
-        recipe.setServings(Objects.requireNonNull(recipeSnapshot[0].getLong("servings")).intValue());
+        return recipe;
+    }
 
-        List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(recipeSnapshot[0].get("ingredients"));
+    /**
+     * Gets a recipe from its DocumentSnapshot
+     * @param recipeSnapshot The DocumentSnapshot of the recipe we want to get
+     * @return The Recipe object that corresponds to the document in the collection
+     */
+    private Recipe getRecipe(DocumentSnapshot recipeSnapshot) {
+        Recipe recipe = new Recipe(recipeSnapshot.getString("title"));
+        recipe.setId(recipeSnapshot.getId());
+        recipe.setCategory(recipeSnapshot.getString("category"));
+        recipe.setComments(recipeSnapshot.getString("comments"));
+        recipe.setPhotoUrl(recipeSnapshot.getString("photograph"));
+        recipe.setPrepTimeMinutes(Objects.requireNonNull(recipeSnapshot.getLong("prep-time-minutes")).intValue());
+        recipe.setServings(Objects.requireNonNull(recipeSnapshot.getLong("servings")).intValue());
+
+        List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(
+                recipeSnapshot.get("ingredients"));
         for(DocumentReference ingredient: recipeIngredients){
             try {
                 recipeIngredientDB.getRecipeIngredient(ingredient.getId());
@@ -223,7 +239,6 @@ public class RecipeDB {
                 Log.d(TAG, "addRecipe: Failed to get recipe");
             }
         }
-
         return recipe;
     }
 
@@ -234,6 +249,7 @@ public class RecipeDB {
      * @throws InterruptedException If the transaction in the method was not complete
      */
     public ArrayList<Recipe> getRecipes() throws InterruptedException {
+        Log.d(TAG, "getRecipes:");
         CountDownLatch recipesLatch = new CountDownLatch(1);
 
         ArrayList<Recipe> recipes = new ArrayList<>();
@@ -254,11 +270,11 @@ public class RecipeDB {
             return null;
         })
         .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
+            Log.d(TAG, "getRecipes: OnSuccess");
             recipesLatch.countDown();
         })
         .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
+            Log.d(TAG, "getRecipes: OnFailure");
             recipesLatch.countDown();
         });
 

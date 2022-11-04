@@ -85,7 +85,7 @@ public class RecipeEditActivity extends ActivityBase {
         EditText prepTime = findViewById(R.id.recipe_prep_time_editText);
         EditText servings = findViewById(R.id.recipe_no_of_servings_editText);
         ingredientRV = findViewById(R.id.recipe_ingredient_recycleViewer);
-        commentsRV = findViewById(R.id.recipe_comments_recycleViewer);
+//        commentsRV = findViewById(R.id.recipe_comments_recycleViewer);
         Button addComment = findViewById(R.id.recipe_comment_add_btn);
         Button addIngredient = findViewById(R.id.ingredient_add_btn);
         RequiredDropdownTextInputLayout recipeCategory = findViewById(R.id.recipe_category);
@@ -99,7 +99,7 @@ public class RecipeEditActivity extends ActivityBase {
             fab.setOnClickListener(view -> {
                 recipe = new Recipe(title.getText().toString());
                 recipe.setCategory(recipeCategory.getText());
-                recipe.addComments(comments);
+                recipe.setComments("TODO: add comments");
                 recipe.setServings(Integer.parseInt(servings.getText().toString()));
                 recipe.setPrepTimeMinutes(Integer.parseInt(prepTime.getText().toString()));
                 recipe.addIngredients(recipeIngredients);
