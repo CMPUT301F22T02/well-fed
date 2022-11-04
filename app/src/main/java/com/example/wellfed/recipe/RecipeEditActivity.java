@@ -111,7 +111,7 @@ public class RecipeEditActivity extends ActivityBase {
                     recipe.addIngredient(ingredient);
                 }
                 // TODO: fix
-                recipe.setPhotograph(null);
+                recipe.setPhotograph(downloadUrl);
                 onSave();
             });
         } else {
@@ -218,7 +218,6 @@ public class RecipeEditActivity extends ActivityBase {
                             .load(downloadUrl)
                             .rotate(90)
                             .into(recipeImg);
-
                 });
             }
 
