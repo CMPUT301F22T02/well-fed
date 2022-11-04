@@ -77,8 +77,30 @@ public class ShoppingCartEditActivity extends ActivityBase implements OnQuitList
                     this.shoppingCartIngredient.getCategory());
             this.unitTextInput.setPlaceholderText(this.shoppingCartIngredient.getUnit());
             this.amountTextInput.setPlaceholderText(
-                    String.format(Locale.US, "%d", shoppingCartIngredient.getAmount())
-            );
+                    String.format(Locale.US, "%d", shoppingCartIngredient.getAmount()));
+        } else {
+            this.type = "add";
+        }
+    }
+
+    private Boolean hasUnsavedChanges() {
+        if (this.labelTextInput.hasChanges()) {
+            return true;
+        }
+        if (this.dateTextInput.hasChanges()) {
+            return true;
+        }
+        if (this.categoryTextInput.hasChanges()) {
+            return true;
+        }
+        if (this.amountTextInput.hasChanges()) {
+            return true;
+        }
+        if (this.unitTextInput.hasChanges()) {
+            return true;
+        }
+        if (this.locationTextInput.hasChanges()) {
+            return true;
         }
     }
 }
