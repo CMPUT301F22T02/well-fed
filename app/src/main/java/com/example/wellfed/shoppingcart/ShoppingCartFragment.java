@@ -31,7 +31,17 @@ public class ShoppingCartFragment extends Fragment
     private int selected;
 
     ActivityResultLauncher<ShoppingCartIngredient> launcher =
-            registerForActivityResult(new )
+            registerForActivityResult(new ShoppingCartContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                ShoppingCartIngredient shoppingCartIngredient = result.second;
+                switch (type) {
+                    case "delete":
+                        controller.deleteShoppingCartIngredient
+                }
+            })
 
     @Nullable
     @Override
