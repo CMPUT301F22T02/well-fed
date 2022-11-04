@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -183,27 +183,34 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>com.google.firebase.firestore.DocumentReference</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocumentReference(java.lang.String)">getDocumentReference</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Get the DocumentReference from Recipes collection for the given id</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStoredIngredient(java.lang.String)">getStoredIngredient</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Gets an ingredient from the Firebase DB</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeFromIngredients(java.lang.String)">removeFromIngredients</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Removes an ingredient from storage, and the ingredient collection</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeFromStorage(java.lang.String)">removeFromStorage</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Removes an ingredient from storage, but keeps the Ingredient reference</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateStoredIngredient(java.lang.String,com.example.wellfed.ingredient.StorageIngredient)">updateStoredIngredient</a></span>&#8203;(java.lang.String&nbsp;id,
                       <a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storedIngredient)</code></th>
@@ -287,7 +294,6 @@ extends java.lang.Object</pre>
 <div class="block">Updates a stored ingredient in the Firebase DB.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - the ID of the StoredIngredient to update</dd>
 <dd><code>storedIngredient</code> - the Ingredient containing the updated fields</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.InterruptedException</code> - when the on success listeners cannot complete</dd>
@@ -328,7 +334,7 @@ extends java.lang.Object</pre>
 <a id="getStoredIngredient(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getStoredIngredient</h4>
 <pre class="methodSignature">public&nbsp;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;getStoredIngredient&#8203;(java.lang.String&nbsp;id)
@@ -342,6 +348,22 @@ extends java.lang.Object</pre>
           with a null description.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.InterruptedException</code> - when the onComplete listener is interrupted</dd>
+</dl>
+</li>
+</ul>
+<a id="getDocumentReference(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getDocumentReference</h4>
+<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.DocumentReference&nbsp;getDocumentReference&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Get the DocumentReference from Recipes collection for the given id</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The String of the document in Recipes collection we want</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>DocumentReference of the Recipe</dd>
 </dl>
 </li>
 </ul>

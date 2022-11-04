@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -163,13 +163,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 extends <a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a>
 implements android.view.View.OnFocusChangeListener, android.view.View.OnClickListener, com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener&lt;java.lang.Long&gt;, com.google.android.material.textfield.TextInputLayout.OnEditTextAttachedListener</pre>
 <div class="block">The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
- class such that it can show a DatePickerDialog to allow the user to
+ class such that it can show a MaterialDatePicker to allow the user to
  input dates.
- <p>
  Citation:
- DatePickerDialog. Android Developers. (n.d.). Retrieved September 26,
- 2022, from
- https://developer.android.com/reference/android/app/DatePickerDialog</div>
+ MaterialDatePicker. Android Developers. (n.d.). Retrieved November 3,
+ 2022, from https://developer.android.com/reference/com/google/android/
+ material/datepicker/MaterialDatePicker</div>
 </li>
 </ul>
 </div>
@@ -229,13 +228,6 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.com.example.wellfed.common.RequiredTextInputLayout">
-<!--   -->
-</a>
-<h3>Fields inherited from class&nbsp;com.example.wellfed.common.<a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></h3>
-<code><a href="RequiredTextInputLayout.html#editText">editText</a>, <a href="RequiredTextInputLayout.html#initialText">initialText</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.google.android.material.textfield.TextInputLayout">
 <!--   -->
 </a>
@@ -281,18 +273,24 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context)">RequiredDateTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredDateTextInputLayout object</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet)">RequiredDateTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                            android.util.AttributeSet&nbsp;attrs)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredDateTextInputLayout object</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet,int)">RequiredDateTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                            android.util.AttributeSet&nbsp;attrs,
                            int&nbsp;defStyleAttr)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredDateTextInputLayout object</div>
+</td>
 </tr>
 </table>
 </li>
@@ -315,35 +313,53 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.Date</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDate()">getDate</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets the date selected by the user.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(android.view.View)">onClick</a></span>&#8203;(android.view.View&nbsp;view)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Opens the MaterialDatePicker dialog when the TextInputLayout is clicked.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEditTextAttached(com.google.android.material.textfield.TextInputLayout)">onEditTextAttached</a></span>&#8203;(com.google.android.material.textfield.TextInputLayout&nbsp;textInputLayout)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets the EditText's OnClickListener to this</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onFocusChange(android.view.View,boolean)">onFocusChange</a></span>&#8203;(android.view.View&nbsp;view,
              boolean&nbsp;focused)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Opens the MaterialDatePicker dialog when the TextInputLayout is focused.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onPositiveButtonClick(java.lang.Long)">onPositiveButtonClick</a></span>&#8203;(java.lang.Long&nbsp;selection)</code></th>
 <td class="colLast">
-<div class="block">Called with the current <code>MaterialCalendar&lt;S&gt;</code> selection.</div>
+<div class="block">Handler for MaterialDatePicker positive button click.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDate(java.util.Date)">setDate</a></span>&#8203;(java.util.Date&nbsp;date)</code></th>
+<td class="colLast">
+<div class="block">Updates the text with the formatted representation of the date.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlaceholderDate(java.util.Date)">setPlaceholderDate</a></span>&#8203;(java.util.Date&nbsp;date)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Updates the placeholder text with the formatted representation of the
+ date.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -351,7 +367,7 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.common.<a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></h3>
-<code><a href="RequiredTextInputLayout.html#afterTextChanged(android.text.Editable)">afterTextChanged</a>, <a href="RequiredTextInputLayout.html#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a>, <a href="RequiredTextInputLayout.html#getText()">getText</a>, <a href="RequiredTextInputLayout.html#hasChanges()">hasChanges</a>, <a href="RequiredTextInputLayout.html#isValid()">isValid</a>, <a href="RequiredTextInputLayout.html#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a>, <a href="RequiredTextInputLayout.html#setPlaceholderText(java.lang.String)">setPlaceholderText</a></code></li>
+<code><a href="RequiredTextInputLayout.html#afterTextChanged(android.text.Editable)">afterTextChanged</a>, <a href="RequiredTextInputLayout.html#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a>, <a href="RequiredTextInputLayout.html#getText()">getText</a>, <a href="RequiredTextInputLayout.html#hasChanges()">hasChanges</a>, <a href="RequiredTextInputLayout.html#isValid()">isValid</a>, <a href="RequiredTextInputLayout.html#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a>, <a href="RequiredTextInputLayout.html#setPlaceholderText(java.lang.String)">setPlaceholderText</a>, <a href="RequiredTextInputLayout.html#setText(java.lang.String)">setText</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.google.android.material.textfield.TextInputLayout">
@@ -419,6 +435,11 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <h4>RequiredDateTextInputLayout</h4>
 <pre>public&nbsp;RequiredDateTextInputLayout&#8203;(@NonNull
                                    android.content.Context&nbsp;context)</pre>
+<div class="block">Constructs a RequiredDateTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet)">
@@ -431,6 +452,12 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
                                    android.content.Context&nbsp;context,
                                    @Nullable
                                    android.util.AttributeSet&nbsp;attrs)</pre>
+<div class="block">Constructs a RequiredDateTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet,int)">
@@ -444,6 +471,13 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
                                    @Nullable
                                    android.util.AttributeSet&nbsp;attrs,
                                    int&nbsp;defStyleAttr)</pre>
+<div class="block">Constructs a RequiredDateTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+<dd><code>defStyleAttr</code> - the default style attribute</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -464,11 +498,14 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <h4>onEditTextAttached</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onEditTextAttached&#8203;(@NonNull
                                com.google.android.material.textfield.TextInputLayout&nbsp;textInputLayout)</pre>
+<div class="block">Sets the EditText's OnClickListener to this</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onEditTextAttached</code>&nbsp;in interface&nbsp;<code>com.google.android.material.textfield.TextInputLayout.OnEditTextAttachedListener</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="RequiredTextInputLayout.html#onEditTextAttached(com.google.android.material.textfield.TextInputLayout)">onEditTextAttached</a></code>&nbsp;in class&nbsp;<code><a href="RequiredTextInputLayout.html" title="class in com.example.wellfed.common">RequiredTextInputLayout</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>textInputLayout</code> - the TextInputLayout</dd>
 </dl>
 </li>
 </ul>
@@ -480,9 +517,13 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <h4>onFocusChange</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onFocusChange&#8203;(android.view.View&nbsp;view,
                           boolean&nbsp;focused)</pre>
+<div class="block">Opens the MaterialDatePicker dialog when the TextInputLayout is focused.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onFocusChange</code>&nbsp;in interface&nbsp;<code>android.view.View.OnFocusChangeListener</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - the view that has changed focus.</dd>
+<dd><code>focused</code> - true if the view is focused.</dd>
 </dl>
 </li>
 </ul>
@@ -493,9 +534,12 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <li class="blockList">
 <h4>onClick</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(android.view.View&nbsp;view)</pre>
+<div class="block">Opens the MaterialDatePicker dialog when the TextInputLayout is clicked.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onClick</code>&nbsp;in interface&nbsp;<code>android.view.View.OnClickListener</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - the view that was clicked</dd>
 </dl>
 </li>
 </ul>
@@ -506,6 +550,25 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <li class="blockList">
 <h4>getDate</h4>
 <pre class="methodSignature">public&nbsp;java.util.Date&nbsp;getDate()</pre>
+<div class="block">Gets the date selected by the user.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the date selected by the user</dd>
+</dl>
+</li>
+</ul>
+<a id="setDate(java.util.Date)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDate</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDate&#8203;(java.util.Date&nbsp;date)</pre>
+<div class="block">Updates the text with the formatted representation of the date.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>date</code> - the date to be set</dd>
+</dl>
 </li>
 </ul>
 <a id="setPlaceholderDate(java.util.Date)">
@@ -515,6 +578,12 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <li class="blockList">
 <h4>setPlaceholderDate</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setPlaceholderDate&#8203;(java.util.Date&nbsp;date)</pre>
+<div class="block">Updates the placeholder text with the formatted representation of the
+ date.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>date</code> - the date to set</dd>
+</dl>
 </li>
 </ul>
 <a id="onPositiveButtonClick(java.lang.Long)">
@@ -524,12 +593,12 @@ implements android.view.View.OnFocusChangeListener, android.view.View.OnClickLis
 <li class="blockList">
 <h4>onPositiveButtonClick</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onPositiveButtonClick&#8203;(java.lang.Long&nbsp;selection)</pre>
-<div class="block">Called with the current <code>MaterialCalendar&lt;S&gt;</code> selection.</div>
+<div class="block">Handler for MaterialDatePicker positive button click.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onPositiveButtonClick</code>&nbsp;in interface&nbsp;<code>com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener&lt;java.lang.Long&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>selection</code> - </dd>
+<dd><code>selection</code> - the selected date in milliseconds since epoch</dd>
 </dl>
 </li>
 </ul>

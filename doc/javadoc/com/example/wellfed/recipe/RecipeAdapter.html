@@ -137,6 +137,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeAdapter</span>
 extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a>&gt;</pre>
+<div class="block">Adapter for the recipes in the <a href="RecipeBookFragment.html" title="class in com.example.wellfed.recipe"><code>RecipeBookFragment</code></a>
+ binds the view to the data</div>
 </li>
 </ul>
 </div>
@@ -158,14 +160,11 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdap
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe">RecipeAdapter.RecipeLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Stores the view for the recipes</div>
+</td>
 </tr>
 </table>
 </li>
@@ -187,13 +186,17 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdap
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(androidx.fragment.app.FragmentActivity,java.util.List)">RecipeAdapter</a></span>&#8203;(androidx.fragment.app.FragmentActivity&nbsp;parent,
              java.util.List&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">generic constructor for recipeAdapter</div>
+</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(androidx.fragment.app.FragmentActivity,java.util.List,com.example.wellfed.recipe.RecipeBookFragment)">RecipeAdapter</a></span>&#8203;(androidx.fragment.app.FragmentActivity&nbsp;parent,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(androidx.fragment.app.FragmentActivity,java.util.List,com.example.wellfed.common.Launcher)">RecipeAdapter</a></span>&#8203;(androidx.fragment.app.FragmentActivity&nbsp;parent,
              java.util.List&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes,
-             <a href="RecipeBookFragment.html" title="class in com.example.wellfed.recipe">RecipeBookFragment</a>&nbsp;recipeBookFragment)</code></th>
-<td class="colLast">&nbsp;</td>
+             <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&nbsp;recipeLauncher)</code></th>
+<td class="colLast">
+<div class="block">constructor the adapter</div>
+</td>
 </tr>
 </table>
 </li>
@@ -222,13 +225,17 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdap
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.recipe.RecipeAdapter.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a>&nbsp;holder,
                 int&nbsp;position)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Bind the data with the views</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder</a></span>&#8203;(android.view.ViewGroup&nbsp;parent,
                   int&nbsp;viewType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Inflate the layout with the parent context</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -261,7 +268,7 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdap
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(androidx.fragment.app.FragmentActivity,java.util.List,com.example.wellfed.recipe.RecipeBookFragment)">
+<a id="&lt;init&gt;(androidx.fragment.app.FragmentActivity,java.util.List,com.example.wellfed.common.Launcher)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -269,7 +276,14 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdap
 <h4>RecipeAdapter</h4>
 <pre>public&nbsp;RecipeAdapter&#8203;(androidx.fragment.app.FragmentActivity&nbsp;parent,
                      java.util.List&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes,
-                     <a href="RecipeBookFragment.html" title="class in com.example.wellfed.recipe">RecipeBookFragment</a>&nbsp;recipeBookFragment)</pre>
+                     <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&nbsp;recipeLauncher)</pre>
+<div class="block">constructor the adapter</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - </dd>
+<dd><code>recipes</code> - </dd>
+<dd><code>recipeLauncher</code> - </dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(androidx.fragment.app.FragmentActivity,java.util.List)">
@@ -280,6 +294,12 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdap
 <h4>RecipeAdapter</h4>
 <pre>public&nbsp;RecipeAdapter&#8203;(androidx.fragment.app.FragmentActivity&nbsp;parent,
                      java.util.List&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes)</pre>
+<div class="block">generic constructor for recipeAdapter</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - </dd>
+<dd><code>recipes</code> - </dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -302,9 +322,14 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdap
 public&nbsp;<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a>&nbsp;onCreateViewHolder&#8203;(@NonNull
                                                    android.view.ViewGroup&nbsp;parent,
                                                    int&nbsp;viewType)</pre>
+<div class="block">Inflate the layout with the parent context</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onCreateViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - </dd>
+<dd><code>viewType</code> - </dd>
+<dt><span class="returnLabel">Returns:</span></dt>
 </dl>
 </li>
 </ul>
@@ -317,9 +342,13 @@ public&nbsp;<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.
 <pre class="methodSignature">public&nbsp;void&nbsp;onBindViewHolder&#8203;(@NonNull
                              <a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a>&nbsp;holder,
                              int&nbsp;position)</pre>
+<div class="block">Bind the data with the views</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onBindViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>holder</code> - </dd>
+<dd><code>position</code> - </dd>
 </dl>
 </li>
 </ul>
@@ -333,6 +362,8 @@ public&nbsp;<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getItemCount</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the count of items in the recycle view</dd>
 </dl>
 </li>
 </ul>
