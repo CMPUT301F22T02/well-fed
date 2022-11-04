@@ -58,7 +58,7 @@ public class MealPlanEditActivity extends ActivityBase
                 findViewById(R.id.numberOfServingsTextInput);
         this.numberOfServingsTextInput.setRequireInteger();
         this.numberOfServingsTextInput.setRequirePositiveNumber(true);
-        this.fab = findViewById(R.id.fab);
+        this.fab = findViewById(R.id.save_fab);
         this.fab.setOnClickListener(view -> onSave());
         this.confirmQuitDialog = new ConfirmQuitDialog(this, this);
 

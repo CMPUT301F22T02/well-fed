@@ -83,7 +83,7 @@ public class MealPlanActivity extends ActivityBase implements
         deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
                 "Delete Meal Plan", this);
 
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.save_fab);
         fab.setOnClickListener(view -> launcher.launch(mealPlan));
     }
 
