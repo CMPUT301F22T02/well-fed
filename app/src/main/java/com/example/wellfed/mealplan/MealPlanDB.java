@@ -279,11 +279,6 @@ public class MealPlanDB {
             try {
                 Recipe result = recipeDB.getRecipe(recipe.getId());
                 mealPlan.addRecipe(result);
-                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getId());
-                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getCategory());
-                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getIngredients());
-                Log.d(TAG, "recipe: " + mealPlan.getRecipe(0).getServings());
-
             }
             catch(Exception err){
                 Log.d(TAG, "addMealPlan: Failed to get recipe with id: " + recipe.getId());

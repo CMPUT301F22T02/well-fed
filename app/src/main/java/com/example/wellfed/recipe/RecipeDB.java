@@ -58,9 +58,11 @@ public class RecipeDB {
         CountDownLatch addLatch = new CountDownLatch(1);
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
+        String newRecipeId = recipesCollection.document().getId();
 
         for(Ingredient i: recipe.getIngredients()) {
             if (i.getId() == null) {
+                i.setId(newRecipeId);
                 DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
                 recipeIngredientDocuments.add(newDocumentReference);
             }
@@ -76,7 +78,7 @@ public class RecipeDB {
 
         Map<String, Object> recipeMap = new HashMap<>();
 
-        String newRecipeId = recipesCollection.document().getId();
+
 
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
@@ -142,6 +144,24 @@ public class RecipeDB {
         });
 
         deleteLatch.await();
+    }
+
+    /**
+     * Deletes a recipe document with the id  from the recipe collection (AND Ingredients)
+     * of recipes
+     * @param id The id of recipe document we want to delete
+     * @throws InterruptedException If the transaction in the method was not complete
+     */
+    public void delRecipeAndIngredient(String id) throws InterruptedException {
+        CountDownLatch deleteLatch = new CountDownLatch(1);
+
+        if(id.equals(NULL)){
+            Log.d("Delete Recipe", "The Recipe does not have an id");
+            return;
+        }
+
+        delRecipe(id);
+        recipeIngredientDB.delIngredient(id);
     }
 
     /**

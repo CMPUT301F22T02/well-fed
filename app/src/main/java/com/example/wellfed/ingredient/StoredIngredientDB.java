@@ -205,6 +205,7 @@ public class StoredIngredientDB {
 
                             obtainedIngredient.setLocation((String) document.get("location"));
                             obtainedIngredient.setUnit((String) document.get("unit"));
+                            obtainedIngredient.setId(id);
                             found.countDown();
                             complete.countDown();
                         } else {
