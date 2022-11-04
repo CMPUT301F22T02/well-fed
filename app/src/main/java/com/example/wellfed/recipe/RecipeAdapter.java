@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.Launcher;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,19 +24,16 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private List<Recipe> recipes;
     private FragmentActivity parent;
-    private RecipeLauncher recipeLauncher;
+    private Launcher recipeLauncher;
 
 
-    public interface RecipeLauncher{
-        public void launch(int pos);
-    }
 
 
     public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes,
-                         RecipeBookFragment recipeBookFragment) {
+                         Launcher recipeLauncher) {
         this.parent = parent;
         this.recipes = recipes;
-        this.recipeLauncher = (RecipeLauncher) recipeBookFragment;
+        this.recipeLauncher = recipeLauncher;
     }
 
     // TODO: make Adapter callable by any fragment
@@ -73,8 +71,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         TextView recipeTitle = holder.recipeTitleTextView;
         recipeTitle.setText(recipe.getTitle());
-        recipeTitle.setOnClickListener(
-                view -> recipeLauncher.launch(holder.getAdapterPosition()));
+        if (recipeLauncher != null) {
+            recipeTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recipeLauncher.launch(holder.getAdapterPosition());
+                }
+            });
+        }
     }
 
     @Override

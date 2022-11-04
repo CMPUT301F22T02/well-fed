@@ -7,13 +7,14 @@ import android.media.Image;
 import android.util.Log;
 
 import com.example.wellfed.ingredient.Ingredient;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
-
-import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,8 +79,6 @@ public class RecipeDB {
 
         Map<String, Object> recipeMap = new HashMap<>();
 
-
-
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
         recipeMap.put("category", recipe.getCategory());
@@ -92,18 +91,18 @@ public class RecipeDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            transaction.set(newRecipe, recipeMap);
+                    transaction.set(newRecipe, recipeMap);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            addLatch.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            addLatch.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    addLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    addLatch.countDown();
+                });
 
         addLatch.await();
 
@@ -130,18 +129,18 @@ public class RecipeDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            transaction.delete(recipeToDelete);
+                    transaction.delete(recipeToDelete);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            deleteLatch.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            deleteLatch.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    deleteLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    deleteLatch.countDown();
+                });
 
         deleteLatch.await();
     }
@@ -206,18 +205,18 @@ public class RecipeDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            transaction.update(newRecipe, recipeMap);
+                    transaction.update(newRecipe, recipeMap);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            editLatch.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            editLatch.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    editLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    editLatch.countDown();
+                });
 
         editLatch.await();
     }
@@ -238,18 +237,18 @@ public class RecipeDB {
         final DocumentSnapshot[] recipeSnapshot = new DocumentSnapshot[1];
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            recipeSnapshot[0] = transaction.get(recipeDocument);
+                    recipeSnapshot[0] = transaction.get(recipeDocument);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            getLatch.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            getLatch.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    getLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    getLatch.countDown();
+                });
 
         getLatch.await();
 
@@ -257,14 +256,29 @@ public class RecipeDB {
             return null;
         }
 
-        recipe.setTitle(recipeSnapshot[0].getString("title"));
-        recipe.setCategory(recipeSnapshot[0].getString("category"));
-        recipe.setComments(recipeSnapshot[0].getString("comments"));
-        recipe.setPhotograph((Image) recipeSnapshot[0].get("phototgraph"));
-        recipe.setPrepTimeMinutes(Objects.requireNonNull(recipeSnapshot[0].getLong("prep-time-minutes")).intValue());
-        recipe.setServings(Objects.requireNonNull(recipeSnapshot[0].getLong("servings")).intValue());
 
-        List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(recipeSnapshot[0].get("ingredients"));
+        recipe = getRecipe(recipeSnapshot[0]);
+
+        return recipe;
+}
+
+    /**
+     * Gets a recipe from its DocumentSnapshot
+     * @param recipeSnapshot The DocumentSnapshot of the recipe we want to get
+     * @return The Recipe object that corresponds to the document in the collection
+     */
+    private Recipe getRecipe(DocumentSnapshot recipeSnapshot) {
+        Recipe recipe = new Recipe(recipeSnapshot.getString("title"));
+        recipe.setId(recipeSnapshot.getId());
+        recipe.setCategory(recipeSnapshot.getString("category"));
+        recipe.setComments(recipeSnapshot.getString("comments"));
+//        TODO: manpreet fix
+//        recipe.setPhotograph(recipeSnapshot.getString("photograph"));
+        recipe.setPrepTimeMinutes(Objects.requireNonNull(recipeSnapshot.getLong("prep-time-minutes")).intValue());
+        recipe.setServings(Objects.requireNonNull(recipeSnapshot.getLong("servings")).intValue());
+
+        List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(
+                recipeSnapshot.get("ingredients"));
         for(DocumentReference ingredient: recipeIngredients){
             try {
                 Ingredient res = recipeIngredientDB.getRecipeIngredient(ingredient.getId());
@@ -284,35 +298,25 @@ public class RecipeDB {
      * @throws InterruptedException If the transaction in the method was not complete
      */
     public ArrayList<Recipe> getRecipes() throws InterruptedException {
+        Log.d(TAG, "getRecipes:");
         CountDownLatch recipesLatch = new CountDownLatch(1);
-
-        ArrayList<Recipe> recipes = new ArrayList<>();
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
-
-            List<DocumentSnapshot> recipeSnapshots = recipesCollection.get().getResult().getDocuments();
-
-            for(DocumentSnapshot recipeSnapshot: recipeSnapshots){
-                Recipe recipe = null;
-                try {
-                    recipe = this.getRecipe(recipeSnapshot.getId());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                recipes.add(recipe);
-            }
-
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            recipesLatch.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            recipesLatch.countDown();
-        });
-
+        final QuerySnapshot[] recipesSnapshot = new QuerySnapshot[1];
+        Task<QuerySnapshot> task = recipesCollection.get()
+                .addOnSuccessListener(value -> {
+                    recipesSnapshot[0] = value;
+                    Log.d(TAG, "getRecipes: OnSuccess");
+                    recipesLatch.countDown();
+                }).addOnFailureListener(e -> {
+                    Log.d(TAG, "getRecipes: OnFailure");
+                    recipesLatch.countDown();
+                });
         recipesLatch.await();
+        Log.d(TAG, "getRecipes:3");
+        ArrayList<Recipe> recipes = new ArrayList<>();
+
+        for (QueryDocumentSnapshot recipeSnapshot : recipesSnapshot[0]) {
+            recipes.add(this.getRecipe(recipeSnapshot));
+        }
 
         return recipes;
     }
