@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.Launcher;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,16 +24,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private List<Recipe> recipes;
     private FragmentActivity parent;
-    private RecipeLauncher recipeLauncher;
+    private Launcher recipeLauncher;
 
 
-    public interface RecipeLauncher{
-        public void launch(int pos);
-    }
 
 
     public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes,
-                         RecipeLauncher recipeLauncher) {
+                         Launcher recipeLauncher) {
         this.parent = parent;
         this.recipes = recipes;
         this.recipeLauncher = recipeLauncher;

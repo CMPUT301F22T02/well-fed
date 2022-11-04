@@ -13,59 +13,89 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/recipe_title_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Tacos"
-        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:text="Recipe Title: "
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_img" />
+        app:layout_constraintTop_toBottomOf="@id/recipe_img" />
+
+    <EditText
+        android:id="@+id/recipe_title_editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Tacos"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_title_textView"
+        app:layout_constraintStart_toEndOf="@+id/recipe_title_textView" />
 
     <TextView
         android:id="@+id/recipe_prep_time_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="16dp"
-        android:textSize="12sp"
+        android:paddingBottom="8dp"
         android:text="Preparation time:"
-        app:layout_constraintTop_toBottomOf="@id/recipe_title_textView"/>
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recipe_title_editText" />
 
     <EditText
         android:id="@+id/recipe_prep_time_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:text="10"
         android:textSize="12sp"
-        android:hint="10 min"
-        app:layout_constraintStart_toEndOf="@+id/recipe_prep_time_textView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_prep_time_textView"/>
+        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_prep_time_textView"
+        app:layout_constraintStart_toEndOf="@+id/recipe_prep_time_textView" />
 
     <TextView
         android:id="@+id/recipe_no_of_servings_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Number of Servings: 12"
+        android:paddingBottom="8dp"
+        android:text="Number of Servings"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_prep_time_textView" />
 
-    <TextView
-        android:id="@+id/recipe_description_textView"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/recipe_no_of_servings_editText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:text="12"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/recipe_no_of_servings_textView"
+        app:layout_constraintStart_toEndOf="@+id/recipe_no_of_servings_textView" />
+
+    <com.example.wellfed.common.RequiredDropdownTextInputLayout
+        android:id="@+id/recipe_category"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Ground Beef and homemade taco seasoning make the best taco meat
-in this classic easy recipe that's better than take out"
-        android:textSize="16sp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_no_of_servings_textView" />
+        app:layout_constraintTop_toBottomOf="@id/recipe_no_of_servings_textView">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            app:simpleItems="@array/recipeCategories" />
+    </com.example.wellfed.common.RequiredDropdownTextInputLayout>
+
 
     <TextView
         android:id="@+id/recipe_ingredient_textView"
@@ -74,11 +104,38 @@ in this classic easy recipe that's better than take out"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:text="Ingredients"
-        android:textSize="16sp"
+        android:text="@string/ingredients"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_description_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/recipe_category" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ingredient_search_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
+        android:text="s"
+        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_ingredient_textView"
+        app:layout_constraintEnd_toStartOf="@+id/ingredient_add_btn" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ingredient_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="0dp"
+        android:text="+"
+        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_ingredient_textView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipe_ingredient_recycleViewer"
@@ -100,5 +157,51 @@ in this classic easy recipe that's better than take out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/recipe_comments_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comments"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recipe_ingredient_recycleViewer"/>
+
+    <Button
+        android:id="@+id/recipe_comment_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="+"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/recipe_comments_textView"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipe_comments_recycleViewer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_comments_textView" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/edit"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_edit_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

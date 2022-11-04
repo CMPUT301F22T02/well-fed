@@ -34,31 +34,38 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
+        // intialize variables
         ingredientList = new ArrayList<>();
-
-
-        getParent();
         Intent intent = getIntent();
-        this.recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        recipe = (Recipe) intent.getSerializableExtra("Recipe");
+
+        // add ingredients to the recipe
         for (RecipeIngredient ingredient : recipe.getIngredients()) {
             ingredientList.add(ingredient);
         }
 
-
+        // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
+        TextView prepTime = findViewById(R.id.recipe_prep_time_textView);
+        TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
         title.setText(recipe.getTitle());
+        prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+        servings.setText("Servings: " + Integer.toString(recipe.getServings()));
 
+        // ingredient recycle view
         ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
-        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList);
+        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList, R.layout.recipe_ingredient);
         ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
 
-//        TODO: implement delete button
-        DeleteButton deleteBtn = new DeleteButton(this,
+        DeleteButton deleteBtn = new DeleteButton(
+                this,
                 findViewById(R.id.recipe_delete_btn),
                 "Delete Recipe",
                 this);
+
+
     }
 
     @Override

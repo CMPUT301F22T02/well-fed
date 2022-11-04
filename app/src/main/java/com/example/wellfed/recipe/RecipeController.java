@@ -31,6 +31,11 @@ public class RecipeController {
         }
     }
 
+    public void addRecipe(Recipe recipe){
+        recipes.add(recipe);
+        recipeAdapter.notifyItemInserted(recipes.size() - 1);
+    }
+
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
     }

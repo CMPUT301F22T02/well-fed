@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.MainActivity;
 import com.example.wellfed.R;
+import com.example.wellfed.common.Launcher;
 import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 // recipe object that has been modified
 // update our controller here -> to reflect these changes
 
-public class RecipeBookFragment extends Fragment implements RecipeAdapter.RecipeLauncher {
+public class RecipeBookFragment extends Fragment implements Launcher {
     Button startRecipeBtn;
     ArrayList<Recipe> recipes;
     private int selected;
@@ -49,7 +50,6 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
                         }
                         String type = result.first;
                         Recipe recipe = result.second;
-
                         switch (type) {
                             case "Delete":
                                 recipeController.deleteRecipe(this.selected);
@@ -58,8 +58,22 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
                                 new IllegalArgumentException();
                         }
                     }
-
             );
+
+    ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
+            new RecipeEditContract(), result -> {
+                if (result == null){
+                    return;
+                }
+                String type = result.first;
+                Recipe recipe = result.second;
+                switch (type){
+                    case "save":
+                        recipeController.addRecipe(recipe);
+                }
+                return;
+            }
+    );
 
 
     @Nullable
@@ -77,59 +91,6 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
         Bundle args = getArguments();
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
-        String[] titles = {
-                "Banana Cake                 ",
-                "Blueberry Coffee Cake       ",
-                "Chocolate Cake              ",
-                "Chocolate Mayonaise Cake    ",
-                "Crazy Cake                  ",
-                "Fresh Apple Cake            ",
-                "Fresh Pear Cake             ",
-                "Graham Cracker Cake         ",
-                "Hot Water Chocolate Cake    ",
-                "Hungry Bear Cheese Cake     ",
-                "Lemon Poppy Cake            ",
-                "Light Old Fashioned Fruit Cake",
-                "My Best Gingerbread         ",
-                "Oatmeal Cake                ",
-                "Orange Angel Food Cake      ",
-                "Orange-Poppy Seed Pound Cake",
-                "Pineapple Cake              ",
-                "Pineapple-Carrot Cake*      ",
-                "Potatoe Cake                ",
-                "Pumpkin Swirl Cheesecake    ",
-                "Refrigerator Cheesecake     ",
-                "Sherry Wine Cake            ",
-                "Special Prune Cake*         ",
-                "Spicy Fruit and Nut Cake*   ",
-                "Strawberry Spice Loaf       ",
-                "Three Layer Chocolate Mayonnaise Cake",
-                "Upside Down Cake            ",
-                "Blue Chip Cookies           ",
-                "Bourbon Balls               ",
-                "Chocolate Crisp Bran Cookies",
-                "Chocolate Peanut Brunch Bars"
-        };
-        Recipe temp = new Recipe("Apple pie");
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
-        recipeIngredient.setDescription("Cinnamon Sugar");
-        recipeIngredient.setAmount(1.0F);
-        recipeIngredient.setUnit("tbsp");
-        RecipeIngredient recipeIngredient1 = new RecipeIngredient();
-        recipeIngredient1.setDescription("Apple Slices");
-        recipeIngredient1.setAmount(3.0F);
-        recipeIngredient1.setUnit("slice");
-        RecipeIngredient recipeIngredient2 = new RecipeIngredient();
-        recipeIngredient2.setDescription("Dough");
-        recipeIngredient2.setAmount(1.0F);
-        recipeIngredient2.setUnit("cup");
-        temp.addIngredient(recipeIngredient);
-        temp.addIngredient(recipeIngredient1);
-        temp.addIngredient(recipeIngredient2);
-        recipes.add(temp);
-        for (String t : titles) {
-            recipes.add(new Recipe(t));
-        }
 
         adapter = new RecipeAdapter(getActivity(), recipes, this);
         recipeController.setRecipes(recipes);
@@ -139,6 +100,13 @@ public class RecipeBookFragment extends Fragment implements RecipeAdapter.Recipe
 
     }
 
+    /**
+     * launches activity to create new recipe
+     */
+    @Override
+    public void launch() {
+        recipeEditLauncher.launch(null);
+    }
 
     @Override
     public void launch(int pos) {

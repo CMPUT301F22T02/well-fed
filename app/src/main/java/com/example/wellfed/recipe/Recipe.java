@@ -53,7 +53,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the user comments on a Recipe.
      */
-    private String comments;
+    private List<String> comments;
 
     /**
      * Holds the number of servings that a Recipe makes.
@@ -68,7 +68,7 @@ public class Recipe implements Serializable {
     /**
      * Holds a photograph of the result of a Recipe.
      */
-    private Image photograph;
+    private String photoUrl;
 
 
     /**
@@ -78,6 +78,7 @@ public class Recipe implements Serializable {
     public Recipe(String title) {
         this.title = title;
         this.ingredients = new ArrayList<>();
+        this.comments = new ArrayList<>();
         this.id = NULL;
     }
 
@@ -153,7 +154,7 @@ public class Recipe implements Serializable {
      * @return A String representing the comments on a Recipe
      */
     @Nullable
-    public String getComments() {
+    public List<String> getComments() {
         return comments;
     }
 
@@ -161,8 +162,12 @@ public class Recipe implements Serializable {
      * Sets the comments associated with a Recipe
      * @param comments A String representing the comments on a Recipe
      */
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void addComments(List<String > comments) {
+        this.comments.addAll(comments);
+    }
+
+    public void addComment(String comment){
+        this.comments.add(comment);
     }
 
     /**
@@ -202,16 +207,16 @@ public class Recipe implements Serializable {
      * @return An Image object representing the photograph.
      */
     @Nullable
-    public Image getPhotograph() {
-        return photograph;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
     /**
      * Sets the photograph associated with a Recipe.
      * @param photograph An Image object representing the photograph to be set.
      */
-    public void setPhotograph(Image photograph) {
-        this.photograph = photograph;
+    public void setPhotoUrl(String photograph) {
+        this.photoUrl = photograph;
     }
 
     /**
@@ -228,5 +233,9 @@ public class Recipe implements Serializable {
      */
     public String getId(){
         return this.id;
+    }
+
+    public void addIngredients(List<RecipeIngredient> recipeIngredients){
+        this.ingredients.addAll(recipeIngredients);
     }
 }

@@ -80,7 +80,7 @@ public class RecipeDB {
         recipeMap.put("category", recipe.getCategory());
         recipeMap.put("prep-time-minutes", recipe.getPrepTimeMinutes());
         recipeMap.put("servings", recipe.getServings());
-        recipeMap.put("photograph", recipe.getPhotograph());
+        recipeMap.put("photograph", recipe.getPhotoUrl());
         recipeMap.put("ingredients", recipeIngredientDocuments);
 
         DocumentReference newRecipe = recipesCollection.document(newRecipeId);
@@ -176,7 +176,7 @@ public class RecipeDB {
         recipeMap.put("category", recipe.getCategory());
         recipeMap.put("prep-time-minutes", recipe.getPrepTimeMinutes());
         recipeMap.put("servings", recipe.getServings());
-        recipeMap.put("photograph", recipe.getPhotograph());
+        recipeMap.put("photograph", recipe.getPhotoUrl());
         recipeMap.put("ingredients", recipeIngredientDocuments);
 
 
@@ -237,8 +237,7 @@ public class RecipeDB {
 
         recipe.setTitle(recipeSnapshot[0].getString("title"));
         recipe.setCategory(recipeSnapshot[0].getString("category"));
-        recipe.setComments(recipeSnapshot[0].getString("comments"));
-        recipe.setPhotograph((Image) recipeSnapshot[0].get("phototgraph"));
+        recipe.setPhotoUrl(recipeSnapshot[0].getString("phototgraph"));
         recipe.setPrepTimeMinutes(Objects.requireNonNull(recipeSnapshot[0].getLong("prep-time-minutes")).intValue());
         recipe.setServings(Objects.requireNonNull(recipeSnapshot[0].getLong("servings")).intValue());
 

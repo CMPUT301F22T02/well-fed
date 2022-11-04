@@ -23,4 +23,11 @@
     <string name="category">Category</string>
     <string name="number_of_servings">Number of Servings</string>
     <string name="search_for_ingredients">Search for ingredients</string>
+    <string name="button_takePicture">Take Picture</string>
+    <string name="temp_images_dir">temp_images</string>
+    <string name="temp_image">temp_image.jpg</string>
+    <string name="authorities">com.example.fileprovider</string>
+    <string name="comments">Comments</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="amount">Amount</string>
 </resources>
