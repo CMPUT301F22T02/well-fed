@@ -6,16 +6,16 @@ import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.wellfed.ingredient.StoredIngredient;
+import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StoredIngredientDB;
 
-import org.junit.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Date;
-import java.util.Map;
+
 
 @RunWith(AndroidJUnit4.class)
 public class StoredIngredientDBTest {
@@ -32,7 +32,7 @@ public class StoredIngredientDBTest {
      */
     @Test
     public void testAddFull() throws InterruptedException {
-        StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
+        StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
         storedIngredient.setCategory("Vegetable");
         Date bestBefore = new Date(2022, 10, 1);
         storedIngredient.setBestBefore(bestBefore);
@@ -42,7 +42,7 @@ public class StoredIngredientDBTest {
 
         // testing whether it was what was inserted into db
         String id = storedIngredientDB.addStoredIngredient(storedIngredient);
-        StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
+        StorageIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Broccoli", resultIngredient.getDescription());
         assertEquals("Vegetable", resultIngredient.getCategory());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
@@ -61,11 +61,11 @@ public class StoredIngredientDBTest {
      */
     @Test
     public void testAddMissingFields() throws InterruptedException {
-        StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
+        StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
 
         // testing whether it was what was inserted into db
         String id = storedIngredientDB.addStoredIngredient(storedIngredient);
-        StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
+        StorageIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
         assertEquals("Broccoli", resultIngredient.getDescription());
         assertNull(resultIngredient.getCategory());
         assertNull(resultIngredient.getBestBefore());
@@ -83,7 +83,7 @@ public class StoredIngredientDBTest {
      */
     @Test
     public void testDeleteIngredient() throws InterruptedException {
-        StoredIngredient storedIngredient = new StoredIngredient("Broccoli");
+        StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
         String id = storedIngredientDB.addStoredIngredient(storedIngredient);
         storedIngredientDB.removeFromIngredients(id);
 
@@ -130,7 +130,7 @@ public class StoredIngredientDBTest {
      */
     @Test
     public void testUpdateIngredient() throws InterruptedException {
-        StoredIngredient oldIngredient = new StoredIngredient("Test");
+        StorageIngredient oldIngredient = new StorageIngredient("Test");
         oldIngredient.setAmount(5.0f);
         oldIngredient.setUnit("Test");
         Date bestBefore = new Date(2022, 10, 1);
@@ -141,10 +141,11 @@ public class StoredIngredientDBTest {
         String id = storedIngredientDB.addStoredIngredient(oldIngredient);
 
         // change description to Test2
-        StoredIngredient updatedIngredient = oldIngredient;
+        StorageIngredient updatedIngredient = oldIngredient;
         updatedIngredient.setDescription("Test2");
         storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
-        StoredIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
+        StorageIngredient resultIngredient =
+                storedIngredientDB.getStoredIngredient(id);
         assertEquals("Test2", updatedIngredient.getDescription());
         assertEquals(5.0f, resultIngredient.getAmount(), 0.01);
         assertEquals("Test", resultIngredient.getUnit());

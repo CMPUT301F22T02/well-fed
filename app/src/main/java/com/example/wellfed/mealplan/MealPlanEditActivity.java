@@ -132,4 +132,9 @@ public class MealPlanEditActivity extends ActivityBase
         setResult(Activity.RESULT_CANCELED, intent);
         finish();
     }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
 }
