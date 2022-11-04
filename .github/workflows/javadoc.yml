@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  publish:
+  javadoc:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -22,11 +22,16 @@ jobs:
     - name: Generate Javadoc
       run: ./gradlew generateReleaseJavadoc
 
+    - name: Commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: Update Javadoc
+          add: 'doc/javadoc/*'
+
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.4.1
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        CLEAN: true
-        FOLDER: docs/javadoc
-        TARGET_FOLDER: javadoc
+        clean: true
+        folder: docs/javadoc
+        target_folder: javadoc
