@@ -40,8 +40,17 @@ public class ShoppingCartFragment extends Fragment
                 switch (type) {
                     case "delete":
                         controller.deleteShoppingCartIngredient(this.selected);
+                        break;
+                    case "edit":
+                        controller.editShoppingCartIngredient(selected, shoppingCartIngredient);
+                        break;
+                    case "launch":
+                        this.launch(this.selected);
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
                 }
-            })
+            });
 
     @Nullable
     @Override
