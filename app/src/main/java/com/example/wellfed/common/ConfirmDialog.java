@@ -41,10 +41,13 @@ public class ConfirmDialog {
     private final AlertDialog dialog;
 
     /**
-     * The OnQuitListener interface defines the onConfirm method that is
+     * The OnQuitListener interface defines the onConfirm handler that is
      * called when the user confirms.
      */
     public interface OnConfirmListener {
+        /**
+         * Handler for when the user confirms.
+         */
         void onConfirm();
     }
 
@@ -52,16 +55,19 @@ public class ConfirmDialog {
      * Constructs a ConfirmQuitDialog
      *
      * @param context           the context
+     * @param title             the title of the dialog
+     * @param message           the message of the dialog
+     * @param confirmButtonText the text of the confirm button
      * @param onConfirmListener the OnConfirmListener
      */
     public ConfirmDialog(Context context, String title, String message,
-                         String positiveButtonText,
+                         String confirmButtonText,
                          ConfirmDialog.OnConfirmListener onConfirmListener) {
         this.dialog = new MaterialAlertDialogBuilder(context,
                 style.ThemeOverlay_Material3_MaterialAlertDialog_Centered).setIcon(
                         R.drawable.ic_baseline_cancel_24).setTitle(title)
                 .setMessage(message).setNeutralButton("Cancel", null)
-                .setPositiveButton(positiveButtonText,
+                .setPositiveButton(confirmButtonText,
                         (dialog, which) -> onConfirmListener.onConfirm())
                 .create();
     }
