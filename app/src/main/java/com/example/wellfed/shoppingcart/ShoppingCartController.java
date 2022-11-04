@@ -55,4 +55,9 @@ public class ShoppingCartController {
         this.shoppingCartIngredients.add(shoppingCartIngredient);
         this.adapter.notifyItemInserted(this.shoppingCartIngredients.size() - 1);
     }
+
+    public void editShoppingCartIngredient(int index, ShoppingCartIngredient modifiedShoppingCartIngredient) {
+        this.shoppingCartIngredients.set(index, modifiedShoppingCartIngredient);
+        this.adapter.notifyItemChanged(index);
+    }
 }
