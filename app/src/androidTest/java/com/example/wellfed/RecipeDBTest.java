@@ -35,13 +35,13 @@ public class RecipeDBTest {
      */
     @Test
     public void testAddRecipe() throws InterruptedException {
-        RecipeIngredient testIngredient = new RecipeIngredient();
+        Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
         Recipe testRecipe = new Recipe("Test");
-//        testRecipe.setComments("Test");
+        testRecipe.setComments("Test");
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(1);
         testRecipe.addIngredient(testIngredient);
@@ -81,7 +81,7 @@ public class RecipeDBTest {
         testIngredient.setUnit("TestUnits");
 
         Recipe testRecipe = new Recipe("Test");
-//        testRecipe.setComments("Test");
+        testRecipe.setComments("Test");
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(1);
         testRecipe.addIngredient(testIngredient);
@@ -113,7 +113,7 @@ public class RecipeDBTest {
         testIngredient.setUnit("TestUnits");
 
         Recipe testRecipe = new Recipe("Test");
-//        testRecipe.setComments("Test");
+        testRecipe.setComments("Test");
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(1);
         testRecipe.addIngredient(testIngredient);
@@ -122,7 +122,7 @@ public class RecipeDBTest {
         String recipeId = recipeDB.addRecipe(testRecipe);
 
         testRecipe.setTitle("Test2");
-//        testRecipe.setComments("Test2");
+        testRecipe.setComments("Test2");
         testRecipe.setServings(2);
         testRecipe.setPrepTimeMinutes(2);
         testRecipe.setCategory("Test2");
@@ -131,7 +131,7 @@ public class RecipeDBTest {
         Recipe fromDbTestRecipe = recipeDB.getRecipe(testRecipe.getId());
         assert Objects.equals(testRecipe.getTitle(), fromDbTestRecipe.getTitle());
         assert Objects.equals(testRecipe.getCategory(), fromDbTestRecipe.getCategory());
-//        assert Objects.equals(testRecipe.getComments(), fromDbTestRecipe.getComments());
+        assert Objects.equals(testRecipe.getComments(), fromDbTestRecipe.getComments());
         assert Objects.equals(testRecipe.getId(), fromDbTestRecipe.getId());
         assert testRecipe.getPrepTimeMinutes() == fromDbTestRecipe.getPrepTimeMinutes();
 

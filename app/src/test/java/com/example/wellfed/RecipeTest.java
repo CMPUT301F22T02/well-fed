@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 
+
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 
 import org.junit.Test;
