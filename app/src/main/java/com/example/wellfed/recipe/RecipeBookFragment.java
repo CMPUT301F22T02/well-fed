@@ -28,15 +28,39 @@ import java.util.ArrayList;
 // recipe object that has been modified
 // update our controller here -> to reflect these changes
 
+/**
+ * MealBookFragment contains a list Recipes {@link Recipe}
+ *
+ * @version 1.0.0
+ */
 public class RecipeBookFragment extends Fragment implements Launcher {
-    Button startRecipeBtn;
+    /**
+     * Recipes contains a list of Recipes {@link Recipe}
+     */
     ArrayList<Recipe> recipes;
+    /**
+     * Stores the value of selected recipe in recipes
+     */
     private int selected;
+    /**
+     * Instance of FirebaseFirestore {@link FirebaseFirestore}
+     */
     private FirebaseFirestore db;
 
+
+    /**
+     * Controller class that handles the business logic for recipes
+     */
     private RecipeController recipeController;
+
+    /**
+     * Adapter for list of recipes
+     */
     RecipeAdapter adapter;
 
+    /**
+     * Launcher that launches an RecipeActivity {@link RecipeActivity}
+     */
     ActivityResultLauncher<Recipe> recipeLauncher =
             registerForActivityResult(new RecipeContract(), result -> {
                         if (result == null) {
@@ -54,7 +78,9 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                     }
             );
 
-
+    /**
+     * Asynchronous task to delete a recipe in the bg
+     */
     private class DeleteRecipeTask extends
             AsyncTask<Recipe, Void, Recipe> {
         protected Recipe doInBackground(Recipe... recipes) {
@@ -71,7 +97,9 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         }
     }
 
-
+    /**
+     * Launcher that launches RecipeEditActivity {@link RecipeEditActivity}
+     */
     ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
             new RecipeEditContract(), result -> {
                 if (result == null) {
@@ -88,6 +116,17 @@ public class RecipeBookFragment extends Fragment implements Launcher {
     );
 
 
+    /**
+     * method that is called upon creation of view
+     * initializes the variables such as
+     * recipes {@link RecipeBookFragment#recipes}
+     * recipeController {@link RecipeBookFragment#recipeController}
+     * db {@link RecipeBookFragment#db}
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return inflated view
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
@@ -99,6 +138,9 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
+    /**
+     * Asynchronous task to add recipe to db in the bg
+     */
     private class AddRecipeTask extends
             AsyncTask<Recipe, Void, Recipe> {
         protected Recipe doInBackground(Recipe... recipes) {
@@ -115,6 +157,9 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         }
     }
 
+    /**
+     * Asynchronous task that gets list of recipes in the bg
+     */
     protected class GetRecipesTask extends
             AsyncTask<Void, Void, ArrayList<Recipe>> {
         protected ArrayList<Recipe> doInBackground(Void... voids) {
@@ -133,6 +178,11 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         }
     }
 
+    /**
+     * method that is called when the view is created
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
@@ -156,6 +206,11 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         recipeEditLauncher.launch(null);
     }
 
+    /**
+     * launches activity for a Recipe{@link Recipe} in
+     * the recipes at pos.
+     * @param pos
+     */
     @Override
     public void launch(int pos) {
         selected = pos;

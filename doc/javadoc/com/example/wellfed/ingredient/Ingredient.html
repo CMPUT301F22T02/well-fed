@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -135,7 +135,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../recipe/RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a></code>, <code><a href="../shoppingcart/ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a></code>, <code><a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a></code></dd>
+<dd><code><a href="../shoppingcart/ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a></code>, <code><a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">Ingredient</span>
@@ -167,7 +167,9 @@ implements java.io.Serializable</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Ingredient</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Creates a new Ingredient object that represents an Ingredient used for various meal purposes.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">Ingredient</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
@@ -196,7 +198,9 @@ implements java.io.Serializable</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmount()">getAmount</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets the amount of an ingredient</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -214,33 +218,47 @@ implements java.io.Serializable</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Get the database ID of an ingredient.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUnit()">getUnit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets a String representing the unit of an amount</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmount(java.lang.Float)">setAmount</a></span>&#8203;(java.lang.Float&nbsp;amount)</code></th>
 <td class="colLast">
 <div class="block">Sets the amount of an ingredient</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCategory(java.lang.String)">setCategory</a></span>&#8203;(java.lang.String&nbsp;category)</code></th>
 <td class="colLast">
 <div class="block">Sets the category (aka tag) of an Ingredient object.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDescription(java.lang.String)">setDescription</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
 <td class="colLast">
 <div class="block">Sets the description (aka title) of an Ingredient</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(java.lang.String)">setId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Sets the database ID of an ingredient.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUnit(java.lang.String)">setUnit</a></span>&#8203;(java.lang.String&nbsp;unit)</code></th>
 <td class="colLast">
@@ -292,6 +310,7 @@ implements java.io.Serializable</pre>
 <li class="blockList">
 <h4>Ingredient</h4>
 <pre>public&nbsp;Ingredient()</pre>
+<div class="block">Creates a new Ingredient object that represents an Ingredient used for various meal purposes.</div>
 </li>
 </ul>
 </li>
@@ -405,10 +424,43 @@ implements java.io.Serializable</pre>
 <a id="getAmount()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getAmount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Float&nbsp;getAmount()</pre>
+<div class="block">Gets the amount of an ingredient</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the amount</dd>
+</dl>
+</li>
+</ul>
+<a id="getId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getId()</pre>
+<div class="block">Get the database ID of an ingredient. This returns null if the ingredient is not in DB.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the ID of the ingredient</dd>
+</dl>
+</li>
+</ul>
+<a id="setId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setId</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setId&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Sets the database ID of an ingredient.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - the ID of the ingredient</dd>
+</dl>
 </li>
 </ul>
 </li>

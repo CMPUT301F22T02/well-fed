@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -136,12 +136,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe">RecipeAdapter.RecipeLauncher</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeBookFragment</span>
 extends androidx.fragment.app.Fragment
-implements <a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe">RecipeAdapter.RecipeLauncher</a></pre>
+implements <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></pre>
+<div class="block">MealBookFragment contains a list Recipes <a href="Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a></div>
 </li>
 </ul>
 </div>
@@ -155,6 +156,21 @@ implements <a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.e
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
+<table class="memberSummary">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeBookFragment.GetRecipesTask.html" title="class in com.example.wellfed.recipe">RecipeBookFragment.GetRecipesTask</a></span></code></th>
+<td class="colLast">
+<div class="block">Asynchronous task that gets list of recipes in the bg</div>
+</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.androidx.fragment.app.Fragment">
 <!--   -->
@@ -182,27 +198,30 @@ implements <a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.e
 <tr class="altColor">
 <td class="colFirst"><code>(package private) <a href="RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adapter">adapter</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Adapter for list of recipes</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>(package private) int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#position">position</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipeEditLauncher">recipeEditLauncher</a></span></code></th>
+<td class="colLast">
+<div class="block">Launcher that launches RecipeEditActivity <a href="RecipeEditActivity.html" title="class in com.example.wellfed.recipe"><code>RecipeEditActivity</code></a></div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipeLauncher">recipeLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Launcher that launches an RecipeActivity <a href="RecipeActivity.html" title="class in com.example.wellfed.recipe"><code>RecipeActivity</code></a></div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>(package private) java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipes">recipes</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>(package private) android.widget.Button</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startRecipeBtn">startRecipeBtn</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Recipes contains a list of Recipes <a href="Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a></div>
+</td>
 </tr>
 </table>
 </li>
@@ -245,21 +264,39 @@ implements <a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.e
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(int)">launch</a></span>&#8203;(int&nbsp;pos)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch()">launch</a></span>()</code></th>
+<td class="colLast">
+<div class="block">launches activity to create new recipe</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(int)">launch</a></span>&#8203;(int&nbsp;pos)</code></th>
+<td class="colLast">
+<div class="block">launches activity for a Recipe<a href="Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a> in
+ the recipes at pos.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>android.view.View</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">onCreateView</a></span>&#8203;(android.view.LayoutInflater&nbsp;inflater,
             android.view.ViewGroup&nbsp;container,
             android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">method that is called upon creation of view
+ initializes the variables such as
+ recipes <a href="#recipes"><code>recipes</code></a>
+ recipeController <a href="#recipeController"><code>recipeController</code></a>
+ db <a href="#db"><code>db</code></a></div>
+</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onViewCreated(android.view.View,android.os.Bundle)">onViewCreated</a></span>&#8203;(android.view.View&nbsp;view,
              android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">method that is called when the view is created</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -299,15 +336,6 @@ implements <a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.e
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="startRecipeBtn">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>startRecipeBtn</h4>
-<pre>android.widget.Button startRecipeBtn</pre>
-</li>
-</ul>
 <a id="recipes">
 <!--   -->
 </a>
@@ -315,15 +343,7 @@ implements <a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.e
 <li class="blockList">
 <h4>recipes</h4>
 <pre>java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt; recipes</pre>
-</li>
-</ul>
-<a id="position">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>position</h4>
-<pre>int position</pre>
+<div class="block">Recipes contains a list of Recipes <a href="Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a></div>
 </li>
 </ul>
 <a id="adapter">
@@ -333,15 +353,27 @@ implements <a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.e
 <li class="blockList">
 <h4>adapter</h4>
 <pre><a href="RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a> adapter</pre>
+<div class="block">Adapter for list of recipes</div>
 </li>
 </ul>
 <a id="recipeLauncher">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>recipeLauncher</h4>
 <pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt; recipeLauncher</pre>
+<div class="block">Launcher that launches an RecipeActivity <a href="RecipeActivity.html" title="class in com.example.wellfed.recipe"><code>RecipeActivity</code></a></div>
+</li>
+</ul>
+<a id="recipeEditLauncher">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>recipeEditLauncher</h4>
+<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt; recipeEditLauncher</pre>
+<div class="block">Launcher that launches RecipeEditActivity <a href="RecipeEditActivity.html" title="class in com.example.wellfed.recipe"><code>RecipeEditActivity</code></a></div>
 </li>
 </ul>
 </li>
@@ -386,9 +418,20 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
                                       android.view.ViewGroup&nbsp;container,
                                       @Nullable
                                       android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">method that is called upon creation of view
+ initializes the variables such as
+ recipes <a href="#recipes"><code>recipes</code></a>
+ recipeController <a href="#recipeController"><code>recipeController</code></a>
+ db <a href="#db"><code>db</code></a></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onCreateView</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inflater</code> - </dd>
+<dd><code>container</code> - </dd>
+<dd><code>savedInstanceState</code> - </dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>inflated view</dd>
 </dl>
 </li>
 </ul>
@@ -402,9 +445,27 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
                           android.view.View&nbsp;view,
                           @Nullable
                           android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">method that is called when the view is created</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onViewCreated</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - </dd>
+<dd><code>savedInstanceState</code> - </dd>
+</dl>
+</li>
+</ul>
+<a id="launch()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>launch</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;launch()</pre>
+<div class="block">launches activity to create new recipe</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../common/Launcher.html#launch()">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -415,9 +476,13 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>launch</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;launch&#8203;(int&nbsp;pos)</pre>
+<div class="block">launches activity for a Recipe<a href="Recipe.html" title="class in com.example.wellfed.recipe"><code>Recipe</code></a> in
+ the recipes at pos.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="RecipeAdapter.RecipeLauncher.html#launch(int)">launch</a></code>&nbsp;in interface&nbsp;<code><a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe">RecipeAdapter.RecipeLauncher</a></code></dd>
+<dd><code><a href="../common/Launcher.html#launch(int)">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pos</code> - </dd>
 </dl>
 </li>
 </ul>

@@ -11,7 +11,18 @@ import androidx.annotation.Nullable;
 
 import com.example.wellfed.MainActivity;
 
+/**
+ * Contract for launching new activities that return a Recipe
+ * @version 1.0.0
+ */
 public class RecipeContract extends ActivityResultContract<Recipe, Pair<String, Recipe>> {
+
+    /**
+     * Creates an intent that contains recipe{@link Recipe}
+     * @param context
+     * @param recipe
+     * @return
+     */
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, Recipe recipe) {
@@ -20,6 +31,12 @@ public class RecipeContract extends ActivityResultContract<Recipe, Pair<String, 
         return intent;
     }
 
+    /**
+     * Parse the response from the activity as required
+     * @param i
+     * @param intent
+     * @return null if activity was interrupted or failed to return anything
+     */
     @Override
     public Pair<String, Recipe> parseResult(int i, @Nullable Intent intent) {
         if (i != Activity.RESULT_OK || intent == null) {

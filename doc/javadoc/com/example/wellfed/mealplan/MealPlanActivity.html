@@ -176,12 +176,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">MealPlanActivity</span>
 extends <a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a>
-implements <a href="../common/OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a></pre>
+implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></pre>
 </li>
 </ul>
 </div>
@@ -272,13 +272,15 @@ implements <a href="../common/OnDeleteListener.html" title="interface in com.exa
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onConfirm()">onConfirm</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Handler for when the user confirms.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDelete()">onDelete</a></span>()</code></th>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -407,16 +409,18 @@ implements <a href="../common/OnDeleteListener.html" title="interface in com.exa
 </dl>
 </li>
 </ul>
-<a id="onDelete()">
+<a id="onConfirm()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>onDelete</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onDelete()</pre>
+<h4>onConfirm</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onConfirm()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">ConfirmDialog.OnConfirmListener</a></code></span></div>
+<div class="block">Handler for when the user confirms.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/OnDeleteListener.html#onDelete()">onDelete</a></code>&nbsp;in interface&nbsp;<code><a href="../common/OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a></code></dd>
+<dd><code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code>&nbsp;in interface&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
 </dl>
 </li>
 </ul>

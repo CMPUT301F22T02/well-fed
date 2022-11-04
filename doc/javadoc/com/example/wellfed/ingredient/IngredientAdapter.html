@@ -160,12 +160,16 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="Ingredient
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientAdapter.IngredientLauncher.html" title="interface in com.example.wellfed.ingredient">IngredientAdapter.IngredientLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructor for the launcher.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">ViewHolder class for the IngredientAdapter.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -188,7 +192,9 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="Ingredient
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(androidx.fragment.app.FragmentActivity,java.util.ArrayList,com.example.wellfed.ingredient.IngredientStorageFragment)">IngredientAdapter</a></span>&#8203;(androidx.fragment.app.FragmentActivity&nbsp;parent,
                  java.util.ArrayList&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&nbsp;ingredients,
                  <a href="IngredientStorageFragment.html" title="class in com.example.wellfed.ingredient">IngredientStorageFragment</a>&nbsp;ingredientStorageFragment)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructor for the IngredientAdapter.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -211,19 +217,25 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="Ingredient
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getItemCount()">getItemCount</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">getItemCount method for the IngredientAdapter.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.ingredient.IngredientAdapter.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a>&nbsp;holder,
                 int&nbsp;position)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onBindViewHolder method for the IngredientAdapter.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder</a></span>&#8203;(android.view.ViewGroup&nbsp;parent,
                   int&nbsp;viewType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onCreateViewHolder method for the IngredientAdapter.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -265,6 +277,13 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="Ingredient
 <pre>public&nbsp;IngredientAdapter&#8203;(androidx.fragment.app.FragmentActivity&nbsp;parent,
                          java.util.ArrayList&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&nbsp;ingredients,
                          <a href="IngredientStorageFragment.html" title="class in com.example.wellfed.ingredient">IngredientStorageFragment</a>&nbsp;ingredientStorageFragment)</pre>
+<div class="block">Constructor for the IngredientAdapter.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - FragmentActivity for the adapter.</dd>
+<dd><code>ingredients</code> - ArrayList of StorageIngredient objects for the adapter.</dd>
+<dd><code>ingredientStorageFragment</code> - IngredientStorageFragment object for the adapter.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -287,9 +306,15 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="Ingredient
 public&nbsp;<a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a>&nbsp;onCreateViewHolder&#8203;(@NonNull
                                                        android.view.ViewGroup&nbsp;parent,
                                                        int&nbsp;viewType)</pre>
+<div class="block">onCreateViewHolder method for the IngredientAdapter.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onCreateViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - ViewGroup for the adapter.</dd>
+<dd><code>viewType</code> - int for the adapter.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>ViewHolder object for the adapter.</dd>
 </dl>
 </li>
 </ul>
@@ -302,9 +327,13 @@ public&nbsp;<a href="IngredientAdapter.ViewHolder.html" title="class in com.exam
 <pre class="methodSignature">public&nbsp;void&nbsp;onBindViewHolder&#8203;(@NonNull
                              <a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a>&nbsp;holder,
                              int&nbsp;position)</pre>
+<div class="block">onBindViewHolder method for the IngredientAdapter.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onBindViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>holder</code> - ViewHolder object for the adapter.</dd>
+<dd><code>position</code> - int for the adapter.</dd>
 </dl>
 </li>
 </ul>
@@ -315,9 +344,12 @@ public&nbsp;<a href="IngredientAdapter.ViewHolder.html" title="class in com.exam
 <li class="blockList">
 <h4>getItemCount</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;getItemCount()</pre>
+<div class="block">getItemCount method for the IngredientAdapter.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getItemCount</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">IngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>int for the adapter.</dd>
 </dl>
 </li>
 </ul>

@@ -176,12 +176,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">IngredientActivity</span>
 extends <a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a>
-implements <a href="../common/OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a></pre>
+implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></pre>
 </li>
 </ul>
 </div>
@@ -276,32 +276,44 @@ implements <a href="../common/OnDeleteListener.html" title="interface in com.exa
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onActivityResult(int,int,android.content.Intent)">onActivityResult</a></span>&#8203;(int&nbsp;requestCode,
                 int&nbsp;resultCode,
                 android.content.Intent&nbsp;data)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onActivityResults method for the activity.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBackPressed()">onBackPressed</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onBackButtonPressed method for the activity.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onConfirm()">onConfirm</a></span>()</code></th>
+<td class="colLast">
+<div class="block">onConfirm method for the activity.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDelete()">onDelete</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
+<td class="colLast">
+<div class="block">onCreate method for the activity.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEdit()">onEdit</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEdit(com.example.wellfed.ingredient.StorageIngredient)">onEdit</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient)</code></th>
+<td class="colLast">
+<div class="block">onEdit method for the activity.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onPointerCaptureChanged(boolean)">onPointerCaptureChanged</a></span>&#8203;(boolean&nbsp;hasCapture)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onPointerCaputerChanged method for the activity.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -416,9 +428,12 @@ implements <a href="../common/OnDeleteListener.html" title="interface in com.exa
 <li class="blockList">
 <h4>onCreate</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onCreate&#8203;(android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">onCreate method for the activity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>savedInstanceState</code> - Bundle object for the activity.</dd>
 </dl>
 </li>
 </ul>
@@ -429,32 +444,25 @@ implements <a href="../common/OnDeleteListener.html" title="interface in com.exa
 <li class="blockList">
 <h4>onBackPressed</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onBackPressed()</pre>
+<div class="block">onBackButtonPressed method for the activity. This method is called when the back button is pressed.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onBackPressed</code>&nbsp;in class&nbsp;<code>androidx.activity.ComponentActivity</code></dd>
 </dl>
 </li>
 </ul>
-<a id="onDelete()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>onDelete</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onDelete()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/OnDeleteListener.html#onDelete()">onDelete</a></code>&nbsp;in interface&nbsp;<code><a href="../common/OnDeleteListener.html" title="interface in com.example.wellfed.common">OnDeleteListener</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="onEdit()">
+<a id="onEdit(com.example.wellfed.ingredient.StorageIngredient)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>onEdit</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onEdit()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;onEdit&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient)</pre>
+<div class="block">onEdit method for the activity. This method is called when the user edits an ingredient.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredient</code> - </dd>
+</dl>
 </li>
 </ul>
 <a id="onActivityResult(int,int,android.content.Intent)">
@@ -466,22 +474,42 @@ implements <a href="../common/OnDeleteListener.html" title="interface in com.exa
 <pre class="methodSignature">protected&nbsp;void&nbsp;onActivityResult&#8203;(int&nbsp;requestCode,
                                 int&nbsp;resultCode,
                                 android.content.Intent&nbsp;data)</pre>
+<div class="block">onActivityResults method for the activity. This method is called when the user confirms the delete action.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onActivityResult</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>requestCode</code> - The request code.</dd>
+<dd><code>resultCode</code> - The result code.</dd>
+<dd><code>data</code> - The data.</dd>
 </dl>
 </li>
 </ul>
 <a id="onPointerCaptureChanged(boolean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onPointerCaptureChanged</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onPointerCaptureChanged&#8203;(boolean&nbsp;hasCapture)</pre>
+<div class="block">onPointerCaputerChanged method for the activity. This method is called when the user confirms the delete action.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onPointerCaptureChanged</code>&nbsp;in interface&nbsp;<code>android.view.Window.Callback</code></dd>
+</dl>
+</li>
+</ul>
+<a id="onConfirm()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>onConfirm</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onConfirm()</pre>
+<div class="block">onConfirm method for the activity. This method is called when the user confirms the delete action.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code>&nbsp;in interface&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
 </dl>
 </li>
 </ul>
