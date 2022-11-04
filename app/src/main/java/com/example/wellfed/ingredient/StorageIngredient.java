@@ -4,6 +4,7 @@ package com.example.wellfed.ingredient;
 import java.util.Date;
 
 public class StorageIngredient extends Ingredient {
+    public String first;
     /**
      * The amount of the ingredient in the storage.
      */

@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.common.OnDeleteListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
@@ -46,8 +49,10 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
 
         // Set delete button
         DeleteButton deleteButton = new DeleteButton(this,
-                findViewById(R.id.ingredient_delete_button), "Delete ingredient?", this);
+                findViewById(R.id.ingredient_delete_button), "Delete " +
+                "ingredient?", this);
 
+        FloatingActionButton fab = findViewById(R.id.ingredient_edit_button);
     }
 
     @Override
@@ -68,9 +73,19 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
         finish();
     }
 
+    private void onQuitEdit() {
+        Intent intent = new Intent();
+        intent.putExtra("ingredient", ingredient);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
     public void onEdit() {
-        Intent intent = contract.createIntent(this, ingredient);
-        startActivityForResult(intent, 101);
+        Intent intent = new Intent();
+        intent.putExtra("type", "edit");
+        intent.putExtra("mealPlan", ingredient);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     @Override
