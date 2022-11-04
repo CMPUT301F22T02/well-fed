@@ -37,6 +37,9 @@
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_baseline_calendar_today_24"
             android:drawablePadding="16dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:longClickable="false"
             android:hint="@string/best_before_date"
             android:inputType="date" />
     </com.example.wellfed.common.RequiredDateTextInputLayout>

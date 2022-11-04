@@ -138,6 +138,11 @@ public class StorageIngredient extends Ingredient {
         return bestBeforeSplit[0] + ", " + bestBeforeSplit[1] + " " + bestBeforeSplit[2];
     }
 
+    /**
+     * Gets the best before date of the ingredient in the storage.
+     *
+     * @return The best before date of the ingredient in the storage
+     */
     public Date getBestBeforeDate() {
         return bestBefore;
     }
@@ -149,5 +154,14 @@ public class StorageIngredient extends Ingredient {
      */
     public String getAmountAndUnit() {
         return amount + " " + unit;
+    }
+
+    /**
+     * Checks if the ingredient is equal to another ingredient.
+     * @param ingredient The ingredient to compare to.
+     * @return True if the ingredients are equal, false otherwise.
+     */
+    public boolean equals(StorageIngredient ingredient) {
+        return this.getDescription().equalsIgnoreCase(ingredient.getDescription());
     }
 }

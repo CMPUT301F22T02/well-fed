@@ -14,35 +14,53 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.Launcher;
 
 import java.util.Date;
 
 
-public class IngredientStorageFragment extends Fragment implements IngredientAdapter.IngredientLauncher {
+public class IngredientStorageFragment extends Fragment implements IngredientAdapter.IngredientLauncher, Launcher {
     private FoodStorage foodStorage;
     private IngredientAdapter ingredientAdapter;
     private IngredientController ingredientController;
     RecyclerView recyclerView;
     int position;
 
-    ActivityResultLauncher<StorageIngredient> ingredientLauncher =
-            registerForActivityResult(new IngredientContract(), result -> {
-                if (result == null) {
-                    return;
-                }
-                String type = result.first;
-                StorageIngredient ingredient = result.second;
-                switch (type) {
-                    case "delete":
-                        ingredientController.deleteIngredient(position);
-                        break;
-                    case "edit":
-                        ingredientController.updateIngredient(position, ingredient);
-                        break;
-                    default:
-                        break;
-                }
-            });
+    ActivityResultLauncher<StorageIngredient> ingredientLauncher = registerForActivityResult(new IngredientContract(), result -> {
+        if (result == null) {
+            return;
+        }
+        String type = result.first;
+        StorageIngredient ingredient = result.second;
+        switch (type) {
+            case "delete":
+                ingredientController.deleteIngredient(position);
+                break;
+            case "edit":
+                ingredientController.updateIngredient(position, ingredient);
+                break;
+            default:
+                break;
+        }
+    });
+
+    // Add ingredient launcher
+    ActivityResultLauncher<StorageIngredient> addIngredientLauncher = registerForActivityResult(new IngredientEditContract(), result -> {
+        if (result == null) {
+            return;
+        }
+        String type = result.first;
+        StorageIngredient ingredient = result.second;
+        switch (type) {
+            case "add":
+                ingredientController.addIngredient(ingredient);
+                break;
+            case "quit":
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    });
 
 
     @Nullable
@@ -80,6 +98,11 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
     public void launch(int pos) {
         position = pos;
         ingredientLauncher.launch(foodStorage.getIngredients().get(pos));
+    }
+
+    @Override
+    public void launch() {
+        addIngredientLauncher.launch(null);
     }
 
     @NonNull
