@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class StoredIngredientDB {
+public class StorageIngredientDB {
     /**
      * Holds the instance of the Firebase Firestore DB.
      */
@@ -38,7 +38,7 @@ public class StoredIngredientDB {
     /**
      * Creates a reference to the Firebase DB.
      */
-    public StoredIngredientDB() {
+    public StorageIngredientDB() {
         this.db = FirebaseFirestore.getInstance();
         this.collection = db.collection("StoredIngredients");
         this.ingredients = db.collection("Ingredients");
@@ -50,7 +50,7 @@ public class StoredIngredientDB {
      * @return a map containing the ID of the Ingredient and StoredIngredient
      * @throws InterruptedException when the on success listeners cannot complete
      */
-    public String addStoredIngredient(@NonNull StoredIngredient storedIngredient) throws InterruptedException {
+    public String addStoredIngredient(@NonNull StorageIngredient storedIngredient) throws InterruptedException {
         // creating batch and return value
         WriteBatch batch = db.batch();
 
@@ -78,7 +78,6 @@ public class StoredIngredientDB {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Log.d(TAG, "Ingredient written with ID: " + ingredientId);
-
                 batchComplete.countDown();
             }
         });
@@ -93,7 +92,7 @@ public class StoredIngredientDB {
      * @param storedIngredient the Ingredient containing the updated fields
      * @throws InterruptedException when the on success listeners cannot complete
      */
-    public void updateStoredIngredient(String id, StoredIngredient storedIngredient) throws InterruptedException {
+    public void updateStoredIngredient(String id, StorageIngredient storedIngredient) throws InterruptedException {
         WriteBatch batch = db.batch();
 
         DocumentReference ingredientDocument = ingredients.document(id);
@@ -174,8 +173,8 @@ public class StoredIngredientDB {
      *          with a null description.
      * @throws InterruptedException when the onComplete listener is interrupted
      */
-    public StoredIngredient getStoredIngredient(String id) throws InterruptedException {
-        StoredIngredient obtainedIngredient = new StoredIngredient(null);
+    public StorageIngredient getStoredIngredient(String id) throws InterruptedException {
+        StorageIngredient obtainedIngredient = new StorageIngredient(null);
         CountDownLatch complete = new CountDownLatch(2);
         CountDownLatch found = new CountDownLatch(2);
         this.collection
