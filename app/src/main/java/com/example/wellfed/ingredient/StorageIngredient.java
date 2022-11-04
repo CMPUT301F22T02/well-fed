@@ -24,9 +24,9 @@ public class StorageIngredient extends Ingredient {
      */
     private Date bestBefore;
     /**
-     * The categories of the ingredient.
+     * The category of the ingredient.
      */
-    private String[] categories;
+    private String category;
 
     /**
      * Creates a new StorageIngredient object without data.
@@ -61,30 +61,30 @@ public class StorageIngredient extends Ingredient {
      * @param unit        The unit of the ingredient in the storage.
      * @param location    The location of the ingredient in the storage.
      * @param bestBefore  The best before date of the ingredient in the storage.
-     * @param categories  The categories of the ingredient.
+     * @param category  The categories of the ingredient.
      */
     public StorageIngredient(String description, Float amount,
-                             String unit, String location, Date bestBefore, String[] categories) {
+                             String unit, String location, Date bestBefore, String category) {
         super(description);
         this.amount = amount;
         this.unit = unit;
         this.location = location;
         this.bestBefore = bestBefore;
-        this.categories = categories;
+        this.category = category;
     }
 
     /**
      * Set categories of the ingredient.
      */
-    public void setCategories(String[] categories) {
-        this.categories = categories;
+    public void setCategories(String categories) {
+        this.category = category;
     }
 
     /**
      * Get categories of the ingredient.
      */
-    public String[] getCategories() {
-        return categories;
+    public String getCategories() {
+        return category;
     }
 
     /**

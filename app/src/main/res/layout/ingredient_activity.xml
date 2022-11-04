@@ -91,16 +91,19 @@
         app:layout_constraintStart_toEndOf="@+id/ingredient_location_label"
         app:layout_constraintTop_toBottomOf="@+id/ingredient_quantity_value" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ingredient_categories_recycler_view"
-        android:layout_width="331dp"
-        android:layout_height="36dp"
+    <TextView
+        android:id="@+id/ingredient_category"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
+        android:gravity="center"
+        android:text="@string/category"
+        android:background="@drawable/border"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredient_location_label"
-        app:reverseLayout="true" />
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_location_label" />
 
     <Button
         android:id="@+id/ingredient_delete_button"

@@ -22,12 +22,14 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
     private EditText unit;
     private EditText location;
     private EditText bestBefore;
+    private EditText category;
     private StorageIngredient ingredient;
     private RequiredTextInputLayout nameLayout;
     private RequiredTextInputLayout amountLayout;
     private RequiredTextInputLayout unitLayout;
     private RequiredTextInputLayout locationLayout;
     private RequiredDateTextInputLayout bestBeforeLayout;
+    private RequiredTextInputLayout categoryLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,14 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
         unit = findViewById(R.id.ingredient_unit_value);
         location = findViewById(R.id.ingredient_location);
         bestBefore = findViewById(R.id.ingredient_expiration);
+        category = findViewById(R.id.ingredient_category_value);
 
         nameLayout = findViewById(R.id.textInputLayout);
         amountLayout = findViewById(R.id.textInputLayout4);
         unitLayout = findViewById(R.id.textInputLayout5);
         locationLayout = findViewById(R.id.textInputLayout6);
         bestBeforeLayout = findViewById(R.id.textInputLayout2);
+        categoryLayout = findViewById(R.id.textInputLayout3);
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
@@ -54,6 +58,9 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
             amount.setText(String.valueOf(ingredient.getAmount()));
             unit.setText(ingredient.getUnit());
             location.setText(ingredient.getLocation());
+            if (ingredient.getCategory() != null) {
+                category.setText(ingredient.getCategory());
+            }
             // Set date in yyyy-MM-dd format
             bestBeforeLayout.setPlaceholderDate(ingredient.getBestBeforeDate());
         }
@@ -66,22 +73,6 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
         saveButton.setOnClickListener(view -> {
             onSave();
         });
-    }
-
-    private Boolean hasUnsavedChanges() {
-        if (ingredient == null) {
-            return !name.getText().toString().isEmpty() ||
-                    !amount.getText().toString().isEmpty() ||
-                    !unit.getText().toString().isEmpty() ||
-                    !location.getText().toString().isEmpty() ||
-                    !bestBefore.getText().toString().isEmpty();
-        } else {
-            return !name.getText().toString().equals(ingredient.getDescription()) ||
-                    !amount.getText().toString().equals(String.valueOf(ingredient.getAmount())) ||
-                    !unit.getText().toString().equals(ingredient.getUnit()) ||
-                    !location.getText().toString().equals(ingredient.getLocation()) ||
-                    !bestBefore.getText().toString().equals(ingredient.getBestBefore());
-        }
     }
 
     private void onSave() {
@@ -114,13 +105,22 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
 
         if (ingredient == null) {
             String[] date = bestBefore.getText().toString().split("-");
-            ingredient = new StorageIngredient(name.getText().toString(),
-                    Float.parseFloat(amount.getText().toString()),
-                    unit.getText().toString(),
-                    location.getText().toString(),
-                    new Date(Integer.parseInt(date[0]) - 1900,
-                            Integer.parseInt(date[1]) - 1,
-                            Integer.parseInt(date[2])));
+            if (category.getText().toString().isEmpty()) {
+                ingredient = new StorageIngredient(name.getText().toString(),
+                        Float.parseFloat(amount.getText().toString()),
+                        unit.getText().toString(), location.getText().toString(),
+                        new Date(Integer.parseInt(date[0]),
+                                Integer.parseInt(date[1]),
+                                Integer.parseInt(date[2])));
+            } else {
+                ingredient = new StorageIngredient(name.getText().toString(),
+                        Float.parseFloat(amount.getText().toString()),
+                        unit.getText().toString(), location.getText().toString(),
+                        new Date(Integer.parseInt(date[0]),
+                                Integer.parseInt(date[1]),
+                                Integer.parseInt(date[2])),
+                        category.getText().toString());
+            }
             Intent intent = new Intent();
             intent.putExtra("type", "add");
             intent.putExtra("ingredient", ingredient);
@@ -136,7 +136,11 @@ public class IngredientEditActivity extends AppCompatActivity implements OnQuitL
             ingredient.setBestBefore(new Date(Integer.parseInt(date[0]) - 1900,
                     Integer.parseInt(date[1]) - 1,
                     Integer.parseInt(date[2])));
-
+            if (!category.getText().toString().isEmpty()) {
+                ingredient.setCategory(category.getText().toString());
+            } else {
+                ingredient.setCategory(null);
+            }
             Intent intent = new Intent();
             intent.putExtra("type", "edit");
             intent.putExtra("ingredient", ingredient);

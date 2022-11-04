@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
@@ -61,16 +62,30 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
         TextView ingredientLocation = findViewById(R.id.ingredient_location_value);
         ingredientLocation.setText(ingredient.getLocation());
 
+        // Set ingredient category with id=ingredient_categories_recycler_view
+        TextView ingredientCategories = findViewById(R.id.ingredient_category);
+        // Hide ingredient category if there is no category
+        if (ingredient.getCategory() == null) {
+            ingredientCategories.setVisibility(TextView.GONE);
+        } else {
+            ingredientCategories.setText(ingredient.getCategory());
+        }
+
+
+
         // Enable back button in action bar to go back to previous activity
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Set delete button
         DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.ingredient_delete_button), "Delete " + "ingredient?", this);
 
+        // Set edit button
         FloatingActionButton editButton = findViewById(R.id.ingredient_edit_button);
         editButton.setOnClickListener(v -> {
             editIngredient.launch(ingredient);
         });
+
+
 
     }
 

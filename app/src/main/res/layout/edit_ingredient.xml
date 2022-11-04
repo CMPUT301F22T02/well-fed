@@ -53,10 +53,10 @@
         tools:layout_editor_absoluteX="0dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ingredient_categories"
+            android:id="@+id/ingredient_category_value"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/categories"
+            android:hint="@string/category"
             android:inputType="text" />
     </com.example.wellfed.common.RequiredTextInputLayout>
 
