@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -179,6 +179,11 @@ extends androidx.fragment.app.Fragment</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>(package private) <a href="ShoppingCartIngredientAdapter.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adapter">adapter</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>(package private) java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shoppingCartIngredients">shoppingCartIngredients</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -223,13 +228,18 @@ extends androidx.fragment.app.Fragment</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addShoppingCartIngredient(android.view.View)">addShoppingCartIngredient</a></span>&#8203;(android.view.View&nbsp;view)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>android.view.View</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">onCreateView</a></span>&#8203;(android.view.LayoutInflater&nbsp;inflater,
             android.view.ViewGroup&nbsp;container,
             android.os.Bundle&nbsp;savedInstanceState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onViewCreated(android.view.View,android.os.Bundle)">onViewCreated</a></span>&#8203;(android.view.View&nbsp;view,
              android.os.Bundle&nbsp;savedInstanceState)</code></th>
@@ -276,10 +286,19 @@ extends androidx.fragment.app.Fragment</pre>
 <a id="shoppingCartIngredients">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>shoppingCartIngredients</h4>
 <pre>java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt; shoppingCartIngredients</pre>
+</li>
+</ul>
+<a id="adapter">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>adapter</h4>
+<pre><a href="ShoppingCartIngredientAdapter.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a> adapter</pre>
 </li>
 </ul>
 </li>
@@ -333,7 +352,7 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <a id="onViewCreated(android.view.View,android.os.Bundle)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onViewCreated</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onViewCreated&#8203;(@NonNull
@@ -344,6 +363,15 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onViewCreated</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
 </dl>
+</li>
+</ul>
+<a id="addShoppingCartIngredient(android.view.View)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>addShoppingCartIngredient</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addShoppingCartIngredient&#8203;(android.view.View&nbsp;view)</pre>
 </li>
 </ul>
 </li>

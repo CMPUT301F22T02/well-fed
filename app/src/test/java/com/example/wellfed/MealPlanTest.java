@@ -22,7 +22,7 @@ public class MealPlanTest {
      * @return the mock MealPlan created
      */
     private MealPlan mockMealPlan() {
-        return new MealPlan("test");
+        return new MealPlan("Thanksgiving Dinner");
     }
 
     /**
@@ -36,7 +36,7 @@ public class MealPlanTest {
      * @return the mock Recipe created
      */
     private Recipe mockMealRecipe(){
-        Recipe recipe = new Recipe("test");
+        Recipe recipe = new Recipe("Stuffing");
         return recipe;
     }
 
@@ -48,8 +48,8 @@ public class MealPlanTest {
         MealPlan mealPlan = mockMealPlan();
         Ingredient ingredient1 = mockMealIngredient();
         Ingredient ingredient2 = mockMealIngredient();
-        ingredient1.setDescription("hello");
-        ingredient2.setDescription("hello2");
+        ingredient1.setDescription("Milk");
+        ingredient2.setDescription("Dinner rolls");
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             mealPlan.getIngredient(0);
@@ -69,8 +69,8 @@ public class MealPlanTest {
         MealPlan mealPlan = mockMealPlan();
         Ingredient ingredient1 = mockMealIngredient();
         Ingredient ingredient2 = mockMealIngredient();
-        ingredient1.setDescription("hello");
-        ingredient2.setDescription("hello2");
+        ingredient1.setDescription("Milk");
+        ingredient2.setDescription("Dinner rolls");
 
         mealPlan.addIngredient(ingredient1);
         mealPlan.addIngredient(ingredient2);
@@ -207,13 +207,13 @@ public class MealPlanTest {
         MealPlan mealPlan = mockMealPlan();
 
         // test with string
-        String string = "test";
+        String string = "Dinner";
         mealPlan.setCategory(string);
         assertEquals(string, mealPlan.getCategory());
 
         // test with literal
-        mealPlan.setCategory("test");
-        assertEquals("test", mealPlan.getCategory());
+        mealPlan.setCategory("Supper");
+        assertEquals("Supper", mealPlan.getCategory());
     }
 
     /**
@@ -224,13 +224,13 @@ public class MealPlanTest {
         MealPlan mealPlan = mockMealPlan();
 
         // test with string
-        String string = "test";
+        String string = "Christmas Dinner";
         mealPlan.setTitle(string);
         assertEquals(string, mealPlan.getTitle());
 
         // test with literal
-        mealPlan.setTitle("test");
-        assertEquals("test", mealPlan.getTitle());
+        mealPlan.setTitle("Christmas Dinner");
+        assertEquals("Christmas Dinner", mealPlan.getTitle());
     }
 
     /**
