@@ -23,17 +23,9 @@ import java.util.ArrayList;
  **/
 public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<ShoppingCartIngredientAdapter.ViewHolder> {
     ArrayList<ShoppingCartIngredient> ingredients;
-    private FragmentActivity parent;
-    private  ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
 
-    public interface ShoppingCartIngredientLauncher {
-        public void launch(int pos);
-    }
-
-    public ShoppingCartIngredientAdapter(FragmentActivity parent, ArrayList<ShoppingCartIngredient> ingredients, ShoppingCartFragment shoppingCartFragment) {
+    public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> ingredients) {
         this.ingredients = ingredients;
-        this.parent = parent;
-        this.shoppingCartIngredientLauncher = (ShoppingCartIngredientLauncher) shoppingCartFragment;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,13 +61,6 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         TextView ingredientAttributeTextView = holder.ingredientAttributeTextView;
         String unit = ingredient.getUnit();
         ingredientAttributeTextView.setText(unit);
-
-        ingredientNameTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shoppingCartIngredientLauncher.launch(holder.getAdapterPosition());
-            }
-        });
     }
 
     @Override

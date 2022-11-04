@@ -14,7 +14,7 @@
         android:layout_marginTop="86dp"
         android:layout_marginEnd="330dp"
         android:layout_marginBottom="626dp"
-        android:text="Edit Ingredient"
+        android:text="Add Ingredient"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
