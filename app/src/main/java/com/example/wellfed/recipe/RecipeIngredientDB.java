@@ -4,10 +4,15 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
@@ -287,10 +292,14 @@ public class RecipeIngredientDB {
         readIngredient.await();
 
         recipeIngredient.setId(id);
-        recipeIngredient.setAmount(Objects.requireNonNull(recipeIngredientSnapshot[0].getDouble("amount")).floatValue());
-        recipeIngredient.setDescription(Objects.requireNonNull(ingredientSnapshot[0].getString("description")));
-        recipeIngredient.setUnit(Objects.requireNonNull(recipeIngredientSnapshot[0].getString("unit")));
-        recipeIngredient.setCategory((String) Objects.requireNonNull(ingredientSnapshot[0].getString("category")));
+        if(!Objects.isNull(recipeIngredientSnapshot[0].getDouble("amount")))
+            recipeIngredient.setAmount(Objects.requireNonNull(recipeIngredientSnapshot[0].getDouble("amount")).floatValue());
+        if(!Objects.isNull(ingredientSnapshot[0].getString("description")))
+            recipeIngredient.setDescription(Objects.requireNonNull(ingredientSnapshot[0].getString("description")));
+        if(!Objects.isNull(recipeIngredientSnapshot[0].getString("unit")))
+            recipeIngredient.setUnit(Objects.requireNonNull(recipeIngredientSnapshot[0].getString("unit")));
+        if(!Objects.isNull(ingredientSnapshot[0].getString("category")))
+            recipeIngredient.setCategory(Objects.requireNonNull(ingredientSnapshot[0].getString("category")));
 
         return recipeIngredient;
     }
@@ -311,34 +320,47 @@ public class RecipeIngredientDB {
      */
     public ArrayList<RecipeIngredient> getRecipeIngredients() throws InterruptedException {
         CountDownLatch recipesLatch = new CountDownLatch(1);
-
+        final List<DocumentSnapshot>[] recipeIngredientSnapshots = new List[]{null};
         ArrayList<RecipeIngredient> recipeIngredients = new ArrayList<>();
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            List<DocumentSnapshot> recipeIngredientSnapshots = recipeIngredientsCollection.get().getResult().getDocuments();
-
-            for(DocumentSnapshot recipeIngredientSnapshot: recipeIngredientSnapshots){
-                RecipeIngredient recipe = null;
-                try {
-                    recipe = this.getRecipeIngredient(recipeIngredientSnapshot.getId());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            recipeIngredientsCollection.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    recipeIngredientSnapshots[0] = queryDocumentSnapshots.getDocuments();
+                    Log.d(TAG, "onSuccess: ");
+                    recipesLatch.countDown();
                 }
-                recipeIngredients.add(recipe);
-            }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    recipesLatch.countDown();
+                    Log.d(TAG, "onFailure: Could not get documents");
+                }
+            });
 
             return null;
         })
         .addOnSuccessListener(unused -> {
             Log.d(TAG, "onSuccess: ");
-            recipesLatch.countDown();
         })
         .addOnFailureListener(e -> {
             Log.d(TAG, "onFailure: ");
-            recipesLatch.countDown();
         });
 
         recipesLatch.await();
+
+        for(DocumentSnapshot recipeIngredientSnapshot: recipeIngredientSnapshots[0]){
+            RecipeIngredient recipe = null;
+            try {
+                recipe = this.getRecipeIngredient(recipeIngredientSnapshot.getId());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            recipeIngredients.add(recipe);
+        }
+
+
 
         return recipeIngredients;
     }

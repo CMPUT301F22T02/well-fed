@@ -6,10 +6,15 @@ import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.N
 import android.media.Image;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
@@ -18,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class RecipeDB {
     /**
@@ -262,34 +268,43 @@ public class RecipeDB {
      */
     public ArrayList<Recipe> getRecipes() throws InterruptedException {
         CountDownLatch recipesLatch = new CountDownLatch(1);
-
         ArrayList<Recipe> recipes = new ArrayList<>();
+        final List<DocumentSnapshot>[] recipeSnapshots = new List[]{null};
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            List<DocumentSnapshot> recipeSnapshots = recipesCollection.get().getResult().getDocuments();
-
-            for(DocumentSnapshot recipeSnapshot: recipeSnapshots){
-                Recipe recipe = null;
-                try {
-                    recipe = this.getRecipe(recipeSnapshot.getId());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            recipesCollection.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    recipeSnapshots[0] = queryDocumentSnapshots.getDocuments();
+                    recipesLatch.countDown();
                 }
-                recipes.add(recipe);
-            }
-
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    recipesLatch.countDown();
+                    Log.d(TAG, "onFailure: Not able to retrieve snapshot");
+                }
+            });
             return null;
         })
         .addOnSuccessListener(unused -> {
             Log.d(TAG, "onSuccess: ");
-            recipesLatch.countDown();
         })
         .addOnFailureListener(e -> {
             Log.d(TAG, "onFailure: ");
-            recipesLatch.countDown();
         });
 
         recipesLatch.await();
+
+        for(DocumentSnapshot recipeSnapshot: recipeSnapshots[0]){
+            Recipe recipe = null;
+            try {
+                recipe = this.getRecipe(recipeSnapshot.getId());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            recipes.add(recipe);
+        }
 
         return recipes;
     }

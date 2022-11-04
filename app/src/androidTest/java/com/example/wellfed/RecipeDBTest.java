@@ -155,4 +155,9 @@ public class RecipeDBTest {
 
         assertNull(recipeDB.getRecipe(testRecipe.getId()));
     }
+
+    @Test
+    public void testGetRecipes() throws InterruptedException{
+        recipeDB.getRecipes();
+    }
 }

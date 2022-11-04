@@ -140,4 +140,9 @@ public class RecipeIngredientDBTest {
 
         assertNull(recipeIngredientDB.getRecipeIngredient(recipeIngredient.getId()));
     }
+
+    @Test
+    public void testGetRecipeIngredients() throws InterruptedException{
+        recipeIngredientDB.getRecipeIngredients();
+    }
 }
