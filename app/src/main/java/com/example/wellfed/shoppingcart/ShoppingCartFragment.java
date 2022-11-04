@@ -53,7 +53,22 @@ public class ShoppingCartFragment extends Fragment
             });
 
     ActivityResultLauncher<ShoppingCartIngredient> editLauncher =
-            registerForActivityResult()
+            registerForActivityResult(new ShoppingCartContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                ShoppingCartIngredient shoppingCartIngredient = result.second;
+                switch (type) {
+                    case "add":
+                        controller.addShoppingCartIngredient(shoppingCartIngredient);
+                        break;
+                    case "quit":
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            });
 
     @Nullable
     @Override
