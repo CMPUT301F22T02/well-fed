@@ -3,13 +3,10 @@ package com.example.wellfed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import com.example.wellfed.recipe.RecipeIngredient;
 import com.example.wellfed.recipe.RecipeIngredientDB;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Objects;
 
 public class RecipeIngredientDBTest {
     RecipeIngredientDB recipeIngredientDB;

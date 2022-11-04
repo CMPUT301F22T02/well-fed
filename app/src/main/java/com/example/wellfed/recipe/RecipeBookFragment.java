@@ -1,5 +1,6 @@
 package com.example.wellfed.recipe;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 // todo create sample data for recipes
 // todo setup recipe edit button
@@ -60,6 +54,8 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                     }
             );
 
+
+
     ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
             new RecipeEditContract(), result -> {
                 if (result == null) {
@@ -69,7 +65,7 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        recipeController.addRecipe(recipe);
+                        new AddRecipeTask().execute(recipe);
                 }
                 return;
             }
@@ -87,6 +83,38 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
+    private class AddRecipeTask extends
+                                 AsyncTask<Recipe, Void, Void> {
+        protected Void doInBackground(Recipe... recipes) {
+            for (Recipe recipe : recipes) {
+                RecipeBookFragment.this.recipeController.addRecipe(recipe);
+            }
+            return null;
+        }
+
+        protected void onPostExecute() {
+            new RecipeBookFragment.GetRecipesTask().execute();
+        }
+    }
+
+    protected class GetRecipesTask extends
+                                 AsyncTask<Void, Void, ArrayList<Recipe>> {
+        protected ArrayList<Recipe> doInBackground(Void... voids) {
+            try {
+                return RecipeBookFragment.this.recipeController.getRecipes();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(ArrayList<Recipe> recipes) {
+            RecipeBookFragment.this.recipes.clear();
+            RecipeBookFragment.this.recipes.addAll(recipes);
+            RecipeBookFragment.this.adapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Bundle args = getArguments();
@@ -99,46 +127,7 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         rvRecipes.setAdapter(adapter);
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        try {
-            recipes = recipeController.getRecipes();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        adapter.notifyDataSetChanged();
-//        final CollectionReference recipesCollection = db.collection("Recipes");
-//        recipesCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                recipes.clear();
-//                for (QueryDocumentSnapshot doc : value) {
-//                    String title = (String) doc.getData().get("title");
-//                    List<String> comments = (List<String>) doc.getData().get("comments");
-//                    String category = (String) doc.getData().get("category");
-//                    Integer prepTime = Integer.parseInt(Long.toString((Long) doc.getData().get("prep-time-minutes")));
-//                    Integer servings = Integer.parseInt(Long.toString((Long) doc.getData().get("servings")));
-//                    String url = (String) doc.getData().get("photograph");
-//                    Recipe recipe = new Recipe(title);
-//                    for (HashMap<String, Object> ri : (List<HashMap<String, Object>>) doc.getData().get("ingredients")) {
-//                        RecipeIngredient recipeIngredient = new RecipeIngredient();
-//                        recipeIngredient.setId((String) ri.get("id"));
-//                        recipeIngredient.setDescription((String) ri.get("description"));
-//                        recipeIngredient.setUnit((String) ri.get("unit"));
-//                        recipeIngredient.setAmount(Float.parseFloat(Double.toString((Double) ri.get("amount"))));
-//                        recipeIngredient.setCategory((String) ri.get("category"));
-//                        recipe.addIngredient(recipeIngredient);
-//                    }
-////                    List<RecipeIngredient> recipeIngredients = (List<RecipeIngredient>) doc.getData().get("ingredients");
-//                    recipe.setPhotoUrl(url);
-//                    recipe.setServings(servings);
-//                    recipe.setCategory(category);
-//                    recipe.setPrepTimeMinutes(prepTime);
-//                    recipe.addComments(comments);
-//                    recipes.add(recipe);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//        });
-
+        new GetRecipesTask().execute();
     }
 
     /**

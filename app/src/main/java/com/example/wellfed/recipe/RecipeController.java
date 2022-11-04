@@ -33,14 +33,12 @@ public class RecipeController {
     }
 
     public void addRecipe(Recipe recipe) {
-            try {
-                recipeDB.addRecipe(recipe);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            recipeDB.addRecipe(recipe);
             recipes.add(recipe);
-            recipeAdapter.notifyItemInserted(recipes.size() - 1);
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Recipe> getRecipes() throws InterruptedException {

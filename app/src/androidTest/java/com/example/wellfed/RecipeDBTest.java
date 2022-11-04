@@ -4,7 +4,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
-import com.example.wellfed.recipe.RecipeIngredient;
 import com.example.wellfed.recipe.RecipeIngredientDB;
 
 import org.junit.Before;

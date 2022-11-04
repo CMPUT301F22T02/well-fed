@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.util.Log;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -48,36 +49,36 @@ public class RecipeIngredientDB {
      * @return The id of the RecipeIngredient that was added
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public String addRecipeIngredient(RecipeIngredient ingredient) throws InterruptedException {
+    public String addRecipeIngredient(Ingredient ingredient) throws InterruptedException {
         String newIngredientId = ingredientsCollection.document().getId();
         String newRecipeIngredientId = recipeIngredientsCollection.document().getId();
         CountDownLatch addIngredient = new CountDownLatch(1);
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
-            Map<String, Object> ingredientMap = new HashMap<>();
-            ingredientMap.put("description", ingredient.getDescription());
-            ingredientMap.put("category", ingredient.getCategory());
+                    Map<String, Object> ingredientMap = new HashMap<>();
+                    ingredientMap.put("description", ingredient.getDescription());
+                    ingredientMap.put("category", ingredient.getCategory());
 
-            DocumentReference newIngredientDocument = ingredientsCollection.document(newIngredientId);
-            DocumentReference newRecipeIngredientDocument = recipeIngredientsCollection.document(newRecipeIngredientId);
+                    DocumentReference newIngredientDocument = ingredientsCollection.document(newIngredientId);
+                    DocumentReference newRecipeIngredientDocument = recipeIngredientsCollection.document(newRecipeIngredientId);
 
-            Map<String, Object> recipeIngredientMap = new HashMap<>();
-            recipeIngredientMap.put("amount", ingredient.getAmount());
-            recipeIngredientMap.put("unit", ingredient.getUnit());
-            recipeIngredientMap.put("ingredient", newIngredientDocument);
+                    Map<String, Object> recipeIngredientMap = new HashMap<>();
+                    recipeIngredientMap.put("amount", ingredient.getAmount());
+                    recipeIngredientMap.put("unit", ingredient.getUnit());
+                    recipeIngredientMap.put("ingredient", newIngredientDocument);
 
-            transaction.set(newIngredientDocument, ingredientMap);
-            transaction.set(newRecipeIngredientDocument, recipeIngredientMap);
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            addIngredient.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            addIngredient.countDown();
-        });
+                    transaction.set(newIngredientDocument, ingredientMap);
+                    transaction.set(newRecipeIngredientDocument, recipeIngredientMap);
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    addIngredient.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    addIngredient.countDown();
+                });
 
 
         addIngredient.await();
@@ -99,18 +100,18 @@ public class RecipeIngredientDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            transaction.delete(delRecipe);
+                    transaction.delete(delRecipe);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            delLatch.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            delLatch.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    delLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    delLatch.countDown();
+                });
 
         delLatch.await();
     }
@@ -130,40 +131,40 @@ public class RecipeIngredientDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            recipeIngredientDocument[0] = recipeIngredientsCollection.document(id);
+                    recipeIngredientDocument[0] = recipeIngredientsCollection.document(id);
 
-            DocumentSnapshot recipeIngredientSnapshot = transaction.get(recipeIngredientDocument[0]);
+                    DocumentSnapshot recipeIngredientSnapshot = transaction.get(recipeIngredientDocument[0]);
 
-            ingredientDocument[0] = recipeIngredientSnapshot.getDocumentReference("ingredient");
+                    ingredientDocument[0] = recipeIngredientSnapshot.getDocumentReference("ingredient");
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            getDocuments.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            getDocuments.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    getDocuments.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    getDocuments.countDown();
+                });
 
         getDocuments.await();
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            transaction.delete(ingredientDocument[0]);
-            transaction.delete(recipeIngredientDocument[0]);
+                    transaction.delete(ingredientDocument[0]);
+                    transaction.delete(recipeIngredientDocument[0]);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            deleteCount.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            deleteCount.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    deleteCount.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    deleteCount.countDown();
+                });
 
         deleteCount.await();
     }
@@ -173,7 +174,7 @@ public class RecipeIngredientDB {
      * @param recipeIngredient The RecipeIngredient with the updated information
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public void updateRecipeIngredient(RecipeIngredient recipeIngredient) throws InterruptedException {
+    public void updateRecipeIngredient(Ingredient recipeIngredient) throws InterruptedException {
         String recipeIngredientId = recipeIngredient.getId();
 
         CountDownLatch readSnapshot = new CountDownLatch(1);
@@ -186,18 +187,18 @@ public class RecipeIngredientDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            DocumentSnapshot recipeIngredientSnapshot = transaction.get(recipeDocument);
-            ingredientDocument[0] = recipeIngredientSnapshot.getDocumentReference("ingredient");
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            readSnapshot.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            readSnapshot.countDown();
-        });
+                    DocumentSnapshot recipeIngredientSnapshot = transaction.get(recipeDocument);
+                    ingredientDocument[0] = recipeIngredientSnapshot.getDocumentReference("ingredient");
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    readSnapshot.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    readSnapshot.countDown();
+                });
 
         readSnapshot.await();
 
@@ -213,19 +214,19 @@ public class RecipeIngredientDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            transaction.update(ingredientDocument[0], ingredientMap);
-            transaction.update(recipeDocument, recipeIngredientMap);
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            updateDocuments.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: Update Failed", e);
+                    transaction.update(ingredientDocument[0], ingredientMap);
+                    transaction.update(recipeDocument, recipeIngredientMap);
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    updateDocuments.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: Update Failed", e);
 
-            updateDocuments.countDown();
-        });
+                    updateDocuments.countDown();
+                });
 
         updateDocuments.await();
     }
@@ -237,8 +238,8 @@ public class RecipeIngredientDB {
      * return null
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public RecipeIngredient getRecipeIngredient(String id) throws InterruptedException {
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
+    public Ingredient getRecipeIngredient(String id) throws InterruptedException {
+        Ingredient recipeIngredient = new Ingredient();
 
         CountDownLatch readRecipeIngredient = new CountDownLatch(1);
         CountDownLatch readIngredient = new CountDownLatch(1);
@@ -248,18 +249,18 @@ public class RecipeIngredientDB {
         final DocumentSnapshot[] ingredientSnapshot = new DocumentSnapshot[1];
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            recipeIngredientSnapshot[0] = transaction.get(recipeIngredientDocument);
+                    recipeIngredientSnapshot[0] = transaction.get(recipeIngredientDocument);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            readRecipeIngredient.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            readRecipeIngredient.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    readRecipeIngredient.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    readRecipeIngredient.countDown();
+                });
 
         readRecipeIngredient.await();
 
@@ -271,18 +272,18 @@ public class RecipeIngredientDB {
 
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            ingredientSnapshot[0] = transaction.get(ingredientDocument);
+                    ingredientSnapshot[0] = transaction.get(ingredientDocument);
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            readIngredient.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            readIngredient.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    readIngredient.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    readIngredient.countDown();
+                });
 
         readIngredient.await();
 
@@ -309,34 +310,34 @@ public class RecipeIngredientDB {
      * @return ArrayList containing all RecipeIngredients
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public ArrayList<RecipeIngredient> getRecipeIngredients() throws InterruptedException {
+    public ArrayList<Ingredient> getRecipeIngredients() throws InterruptedException {
         CountDownLatch recipesLatch = new CountDownLatch(1);
 
-        ArrayList<RecipeIngredient> recipeIngredients = new ArrayList<>();
+        ArrayList<Ingredient> recipeIngredients = new ArrayList<>();
         db.runTransaction((Transaction.Function<Void>) transaction -> {
 
-            List<DocumentSnapshot> recipeIngredientSnapshots = recipeIngredientsCollection.get().getResult().getDocuments();
+                    List<DocumentSnapshot> recipeIngredientSnapshots = recipeIngredientsCollection.get().getResult().getDocuments();
 
-            for(DocumentSnapshot recipeIngredientSnapshot: recipeIngredientSnapshots){
-                RecipeIngredient recipe = null;
-                try {
-                    recipe = this.getRecipeIngredient(recipeIngredientSnapshot.getId());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                recipeIngredients.add(recipe);
-            }
+                    for(DocumentSnapshot recipeIngredientSnapshot: recipeIngredientSnapshots){
+                        Ingredient recipe = null;
+                        try {
+                            recipe = this.getRecipeIngredient(recipeIngredientSnapshot.getId());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        recipeIngredients.add(recipe);
+                    }
 
-            return null;
-        })
-        .addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            recipesLatch.countDown();
-        })
-        .addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            recipesLatch.countDown();
-        });
+                    return null;
+                })
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "onSuccess: ");
+                    recipesLatch.countDown();
+                })
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "onFailure: ");
+                    recipesLatch.countDown();
+                });
 
         recipesLatch.await();
 

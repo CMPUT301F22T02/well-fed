@@ -18,13 +18,14 @@ import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
+import com.example.wellfed.ingredient.Ingredient;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
-    private List<RecipeIngredient> ingredientList;
+    private List<Ingredient> ingredientList;
     private Recipe recipe;
     private RecyclerView ingredientRv;
     private RecipeIngredientAdapter recipeIngredientAdapter;
@@ -40,7 +41,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
         // add ingredients to the recipe
-        for (RecipeIngredient ingredient : recipe.getIngredients()) {
+        for (Ingredient ingredient : recipe.getIngredients()) {
             ingredientList.add(ingredient);
         }
 

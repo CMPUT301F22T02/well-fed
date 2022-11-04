@@ -12,15 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.List;
 
 public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder> {
 
-    List<RecipeIngredient> recipeIngredientList;
+    List<Ingredient> recipeIngredientList;
     int layoutId;
 
-    RecipeIngredientAdapter(List<RecipeIngredient> recipeIngredientList, int layoutId) {
+    RecipeIngredientAdapter(List<Ingredient> recipeIngredientList, int layoutId) {
         this.recipeIngredientList = recipeIngredientList;
         this.layoutId = layoutId;
     }
@@ -38,7 +39,7 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
     @Override
     public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {
-        RecipeIngredient recipeIngredient = recipeIngredientList.get(position);
+        Ingredient recipeIngredient = recipeIngredientList.get(position);
         TextView ingredientQuantity = holder.ingredientQuantity;
         TextView ingredientName = holder.ingredientName;
 

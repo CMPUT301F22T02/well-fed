@@ -48,7 +48,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the Ingredients needed for a Recipe.
      */
-    private final List<RecipeIngredient> ingredients;
+    private final List<Ingredient> ingredients;
 
     /**
      * Holds the user comments on a Recipe.
@@ -68,7 +68,7 @@ public class Recipe implements Serializable {
     /**
      * Holds a photograph of the result of a Recipe.
      */
-    private String photoUrl;
+    private Image photograph;
 
 
     /**
@@ -85,7 +85,7 @@ public class Recipe implements Serializable {
      * Adds an Ingredient as part of a Recipe
      * @param ingredient An Ingredient object to be added to the Recipe
      */
-    public void addIngredient(RecipeIngredient ingredient) {
+    public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
 
@@ -110,7 +110,7 @@ public class Recipe implements Serializable {
      * Gets the entire ArrayList of Ingredients that make up a Recipe
      * @return The ArrayList of all Ingredients
      */
-    public List<RecipeIngredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return this.ingredients;
     }
 
@@ -202,16 +202,16 @@ public class Recipe implements Serializable {
      * @return An Image object representing the photograph.
      */
     @Nullable
-    public String getPhotoUrl() {
-        return photoUrl;
+    public Image getPhotograph() {
+        return photograph;
     }
 
     /**
      * Sets the photograph associated with a Recipe.
      * @param photograph An Image object representing the photograph to be set.
      */
-    public void setPhotoUrl(String photograph) {
-        this.photoUrl = photograph;
+    public void setPhotograph(Image photograph) {
+        this.photograph = photograph;
     }
 
     /**
@@ -228,9 +228,5 @@ public class Recipe implements Serializable {
      */
     public String getId(){
         return this.id;
-    }
-
-    public void addIngredients(List<RecipeIngredient> recipeIngredients){
-        this.ingredients.addAll(recipeIngredients);
     }
 }

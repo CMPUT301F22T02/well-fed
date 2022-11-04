@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThrows;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.mealplan.MealPlan;
 import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeIngredient;
 
 import org.junit.Test;
 

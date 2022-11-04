@@ -3,6 +3,7 @@ package com.example.wellfed.recipe;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
+import com.example.wellfed.common.RequiredTextInputLayout;
+import com.example.wellfed.ingredient.Ingredient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -35,6 +38,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +53,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class RecipeEditActivity extends ActivityBase {
     private RecyclerView ingredientRV;
     private RecyclerView commentsRV;
-    private List<RecipeIngredient> recipeIngredients;
+    private List<Ingredient> recipeIngredients;
     private List<String> comments;
     private RecipeIngredientAdapter recipeIngredientAdapter;
     private Recipe recipe;
@@ -86,7 +90,8 @@ public class RecipeEditActivity extends ActivityBase {
         EditText servings = findViewById(R.id.recipe_no_of_servings_editText);
         ingredientRV = findViewById(R.id.recipe_ingredient_recycleViewer);
 //        commentsRV = findViewById(R.id.recipe_comments_recycleViewer);
-        Button addComment = findViewById(R.id.recipe_comment_add_btn);
+        RequiredTextInputLayout commentsTextInput =
+                findViewById(R.id.commentsTextInput);
         Button addIngredient = findViewById(R.id.ingredient_add_btn);
         RequiredDropdownTextInputLayout recipeCategory = findViewById(R.id.recipe_category);
 
@@ -99,11 +104,14 @@ public class RecipeEditActivity extends ActivityBase {
             fab.setOnClickListener(view -> {
                 recipe = new Recipe(title.getText().toString());
                 recipe.setCategory(recipeCategory.getText());
-                recipe.setComments("TODO: add comments");
+                recipe.setComments(commentsTextInput.getText());
                 recipe.setServings(Integer.parseInt(servings.getText().toString()));
                 recipe.setPrepTimeMinutes(Integer.parseInt(prepTime.getText().toString()));
-                recipe.addIngredients(recipeIngredients);
-                recipe.setPhotoUrl(downloadUrl);
+                for (Ingredient ingredient : recipeIngredients) {
+                    recipe.addIngredient(ingredient);
+                }
+                // TODO: fix
+                recipe.setPhotograph(null);
                 onSave();
             });
         } else {
@@ -116,9 +124,9 @@ public class RecipeEditActivity extends ActivityBase {
         ingredientRV.setAdapter(recipeIngredientAdapter);
         ingredientRV.setLayoutManager(new LinearLayoutManager(RecipeEditActivity.this));
 
-        CommentAdapter commentAdapter = new CommentAdapter(comments);
-        commentsRV.setAdapter(commentAdapter);
-        commentsRV.setLayoutManager(new LinearLayoutManager(RecipeEditActivity.this));
+//        CommentAdapter commentAdapter = new CommentAdapter(comments);
+//        commentsRV.setAdapter(commentAdapter);
+//        commentsRV.setLayoutManager(new LinearLayoutManager(RecipeEditActivity.this));
 
 
         uri = initTempUri();
@@ -126,19 +134,6 @@ public class RecipeEditActivity extends ActivityBase {
             cameraLauncher.launch(uri);
         });
 
-        addComment.setOnClickListener(view -> {
-            View comment_dialog = LayoutInflater.from(this).inflate(R.layout.dialog_recipe_comment, null, false);
-            AtomicReference<EditText> comment = new AtomicReference<>(comment_dialog.findViewById(R.id.comment_editText));
-            AlertDialog dialog = new MaterialAlertDialogBuilder(RecipeEditActivity.this)
-                    .setTitle("Comment")
-                    .setView(R.layout.dialog_recipe_comment)
-                    .setPositiveButton("Add", (d, which) -> {
-                        comment.set((EditText) ((AlertDialog) d).findViewById(R.id.comment_editText));
-                        comments.add(comment.get().getText().toString());
-                        commentAdapter.notifyItemInserted(comments.size());
-                    })
-                    .setNeutralButton("Cancel", null).show();
-        });
         addIngredient.setOnClickListener(view -> {
             AlertDialog dialog = new MaterialAlertDialogBuilder(RecipeEditActivity.this)
                     .setTitle("Comment")
@@ -152,7 +147,7 @@ public class RecipeEditActivity extends ActivityBase {
 
     public void fillIngredients() {
         // temp data
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        Ingredient recipeIngredient = new Ingredient();
         recipeIngredient.setDescription("Cinnamon Sugar");
         recipeIngredient.setAmount(1.0F);
         recipeIngredient.setCategory("Fruit");
