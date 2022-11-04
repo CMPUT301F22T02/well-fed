@@ -6,11 +6,14 @@ import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.N
 import android.media.Image;
 import android.util.Log;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Transaction;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,9 +58,11 @@ public class RecipeDB {
         CountDownLatch addLatch = new CountDownLatch(1);
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
+        String newRecipeId = recipesCollection.document().getId();
 
-        for(RecipeIngredient i: recipe.getIngredients()) {
+        for(Ingredient i: recipe.getIngredients()) {
             if (i.getId() == null) {
+                i.setId(newRecipeId);
                 DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
                 recipeIngredientDocuments.add(newDocumentReference);
             }
@@ -73,7 +78,7 @@ public class RecipeDB {
 
         Map<String, Object> recipeMap = new HashMap<>();
 
-        String newRecipeId = recipesCollection.document().getId();
+
 
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
@@ -142,6 +147,23 @@ public class RecipeDB {
     }
 
     /**
+     * Deletes a recipe document with the id  from the recipe collection (AND Ingredients)
+     * of recipes
+     * @param id The id of recipe document we want to delete
+     * @throws InterruptedException If the transaction in the method was not complete
+     */
+    public void delRecipeAndIngredient(String id) throws InterruptedException {
+        CountDownLatch deleteLatch = new CountDownLatch(1);
+
+        if(id.equals(NULL)){
+            Log.d("Delete Recipe", "The Recipe does not have an id");
+            return;
+        }
+
+        //TODO: delete recipe along with its associated ingredient here
+    }
+
+    /**
      * Updates the corresponding recipe document in the collection with the fields of the
      * recipe object.
      * @param recipe A Recipe object whose changes we want to push to the collection of Recipes
@@ -154,7 +176,7 @@ public class RecipeDB {
 
         ArrayList<DocumentReference> recipeIngredientDocuments = new ArrayList<>();
 
-        for(RecipeIngredient i: recipe.getIngredients()) {
+        for(Ingredient i: recipe.getIngredients()) {
             if (i.getId() == null) {
                 DocumentReference newDocumentReference = recipeIngredientDB.getDocumentReference(recipeIngredientDB.addRecipeIngredient(i));
                 recipeIngredientDocuments.add(newDocumentReference);
@@ -245,7 +267,7 @@ public class RecipeDB {
         List<DocumentReference> recipeIngredients = (List<DocumentReference>) Objects.requireNonNull(recipeSnapshot[0].get("ingredients"));
         for(DocumentReference ingredient: recipeIngredients){
             try {
-                recipeIngredientDB.getRecipeIngredient(ingredient.getId());
+                Ingredient res = recipeIngredientDB.getRecipeIngredient(ingredient.getId());
             }
             catch(Exception err){
                 Log.d(TAG, "addRecipe: Failed to get recipe");
@@ -293,5 +315,14 @@ public class RecipeDB {
         recipesLatch.await();
 
         return recipes;
+    }
+
+    /**
+     * Get the DocumentReference from Recipes collection for the given id
+     * @param id The String of the document in Recipes collection we want
+     * @return DocumentReference of the Recipe
+     */
+    public DocumentReference getDocumentReference(String id){
+        return recipesCollection.document(id);
     }
 }

@@ -5,9 +5,9 @@ import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
-import com.example.wellfed.recipe.RecipeIngredient;
 import com.example.wellfed.recipe.RecipeIngredientDB;
 
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class RecipeDBTest {
      */
     @Test
     public void testAddRecipe() throws InterruptedException {
-        RecipeIngredient testIngredient = new RecipeIngredient();
+        Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Protein");
@@ -78,7 +78,7 @@ public class RecipeDBTest {
      */
     @Test
     public void testDelRecipe() throws InterruptedException {
-        RecipeIngredient testIngredient = new RecipeIngredient();
+        Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Protein");
@@ -110,7 +110,7 @@ public class RecipeDBTest {
 
     @Test
     public void testUpdateOnRecipe() throws InterruptedException{
-        RecipeIngredient testIngredient = new RecipeIngredient();
+        Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
         testIngredient.setCategory("Protein");

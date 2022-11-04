@@ -64,6 +64,11 @@ public class MealPlan implements Serializable {
     private final ArrayList<Recipe> recipes;
 
     /**
+     * Holds the Database id of a Recipe
+     */
+    private String id;
+
+    /**
      * Creates a new MealPlan object which represents a meal to be eaten on a
      * certain date.
      * @param title The title of the MealPlan
@@ -206,5 +211,21 @@ public class MealPlan implements Serializable {
      */
     public void setServings(Integer servings) {
         this.servings = servings;
+    }
+
+    /**
+     * Sets the id of a MealPlan
+     * @param id A string representing the id of the document in the db
+     */
+    public void setId(String id){
+        this.id = id;
+    }
+
+    /**
+     * Gets the id of a MealPlan, the id of the document in the db the MealPlan is based off of
+     * @return A string representing the id of the document in the db
+     */
+    public String getId(){
+        return this.id;
     }
 }

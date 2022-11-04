@@ -11,13 +11,13 @@ import android.widget.TextView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeActivity extends ActivityBase implements
-                                                 ConfirmDialog.OnConfirmListener {
-    private List<RecipeIngredient> ingredientList;
+public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
+    private List<Ingredient> ingredientList;
     private Recipe recipe;
     private RecyclerView ingredientRv;
     private RecipeIngredientAdapter recipeIngredientAdapter;
@@ -33,7 +33,7 @@ public class RecipeActivity extends ActivityBase implements
         getParent();
         Intent intent = getIntent();
         this.recipe = (Recipe) intent.getSerializableExtra("Recipe");
-        for (RecipeIngredient ingredient: recipe.getIngredients()){
+        for (Ingredient ingredient: recipe.getIngredients()){
             ingredientList.add(ingredient);
         }
 
