@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
-import com.example.wellfed.recipe.RecipeController;
 
 import java.util.ArrayList;
 
@@ -69,7 +67,7 @@ public class ShoppingCartFragment extends Fragment {
         // Create an alert dialog to add an ingredient with the layout ingredient_add_dialog
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.activity_shopping_cart, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_shopping_cart_add, null);
         // Add buttons to the dialog
         builder.setView(dialogView)
                 .setPositiveButton("Add", (dialog, id) -> {
