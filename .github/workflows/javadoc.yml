@@ -2,7 +2,7 @@ name: Generate Javadoc
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "setup-javadoc" ]
 
 jobs:
   javadoc:
@@ -30,7 +30,7 @@ jobs:
         add: 'doc/javadoc/*'
 
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@4.4.1
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
         clean: true
         folder: docs/javadoc
