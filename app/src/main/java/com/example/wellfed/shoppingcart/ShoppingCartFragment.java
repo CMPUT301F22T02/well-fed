@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.recipe.RecipeController;
 
 import java.util.ArrayList;
 
@@ -20,12 +21,17 @@ import java.util.ArrayList;
 public class ShoppingCartFragment extends Fragment {
     ArrayList<ShoppingCartIngredient> shoppingCartIngredients;
 
+    private ShoppingCartController shoppingCartController;
+    ShoppingCartIngredientAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         shoppingCartIngredients = new ArrayList<>();
+        shoppingCartController = new ShoppingCartController();
+
         return inflater.inflate(R.layout.fragment_shopping_cart, container, false);
     }
 
@@ -47,7 +53,9 @@ public class ShoppingCartFragment extends Fragment {
         ingredient3.setUnit("500 g");
         shoppingCartIngredients.add(ingredient3);
 
-        ShoppingCartIngredientAdapter adapter = new ShoppingCartIngredientAdapter(shoppingCartIngredients);
+        adapter = new ShoppingCartIngredientAdapter(shoppingCartIngredients);
+        shoppingCartController.setShoppingCartIngredients(shoppingCartIngredients);
+        shoppingCartController.setShoppingCartIngredientAdapter(adapter);
         rvShoppingCart.setAdapter(adapter);
         rvShoppingCart.setLayoutManager(new LinearLayoutManager(getContext()));
     }
