@@ -10,6 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class IngredientEditContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
+    /**
+     * Creates an Intent for the IngredientEditActivity.
+     * @param context Context object for the activity.
+     * @param storageIngredient StorageIngredient object for the ingredient.
+     * @return
+     */
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, StorageIngredient storageIngredient) {
@@ -18,6 +24,12 @@ public class IngredientEditContract extends ActivityResultContract<StorageIngred
         return intent;
     }
 
+    /**
+     * Pair object for the result of the IngredientEditActivity.
+     * @param i index of the ingredient.
+     * @param intent Intent object for the IngredientEditActivity.
+     * @return Pair object for the result of the IngredientEditActivity.
+     */
     @Override
     public Pair<String, StorageIngredient> parseResult(int i, @Nullable Intent intent) {
         if (i != Activity.RESULT_OK || intent == null) {

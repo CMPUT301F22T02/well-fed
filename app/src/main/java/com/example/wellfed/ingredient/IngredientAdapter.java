@@ -20,22 +20,35 @@ import java.util.ArrayList;
 // The choices are: expiration date, quantity, and location
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
-
-    private FragmentActivity parent;
     private final ArrayList<StorageIngredient> ingredients;
+    /**
+     * IngredientLauncher object for the adapter.
+     */
     private final IngredientLauncher ingredientLauncher;
 
+    /**
+     * Constructor for the launcher.
+     */
     public interface IngredientLauncher {
         public void launch(int pos);
     }
 
+    /**
+     * Constructor for the IngredientAdapter.
+     * @param parent FragmentActivity for the adapter.
+     * @param ingredients ArrayList of StorageIngredient objects for the adapter.
+     * @param ingredientStorageFragment IngredientStorageFragment object for the adapter.
+     */
     public IngredientAdapter(FragmentActivity parent, ArrayList<StorageIngredient> ingredients,
                              IngredientStorageFragment ingredientStorageFragment) {
-        this.parent = parent;
         this.ingredients = ingredients;
-        this.ingredientLauncher = (IngredientLauncher) ingredientStorageFragment;
+        this.ingredientLauncher = ingredientStorageFragment;
     }
 
+    /**
+     * ViewHolder class for the IngredientAdapter.
+     * It contains the TextViews for the name and the attribute of the ingredient.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView ingredientNameTextView;
         public TextView ingredientAttributeTextView;
@@ -50,6 +63,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         }
     }
 
+    /**
+     * onCreateViewHolder method for the IngredientAdapter.
+     * @param parent ViewGroup for the adapter.
+     * @param viewType int for the adapter.
+     * @return ViewHolder object for the adapter.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,6 +81,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         return viewHolder;
     }
 
+    /**
+     * onBindViewHolder method for the IngredientAdapter.
+     * @param holder ViewHolder object for the adapter.
+     * @param position int for the adapter.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         StorageIngredient ingredient = ingredients.get(position);
@@ -75,6 +99,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         holder.itemView.setOnClickListener(v -> ingredientLauncher.launch(position));
     }
 
+    /**
+     * getItemCount method for the IngredientAdapter.
+     * @return int for the adapter.
+     */
     @Override
     public int getItemCount() {
         return ingredients.size();
