@@ -7,12 +7,13 @@ import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
-import com.example.wellfed.common.OnDeleteListener;
 
 import java.util.Objects;
 
-public class IngredientActivity extends ActivityBase implements OnDeleteListener {
+public class IngredientActivity extends ActivityBase implements
+                                                     ConfirmDialog.OnConfirmListener {
     private IngredientContract contract;
     private StorageIngredient ingredient;
     private IngredientController controller;
@@ -60,7 +61,7 @@ public class IngredientActivity extends ActivityBase implements OnDeleteListener
     }
 
     @Override
-    public void onDelete() {
+    public void onConfirm() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Ingredient", ingredient);
         returnIntent.putExtra("Reason", "Delete");

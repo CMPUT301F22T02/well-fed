@@ -1,5 +1,5 @@
 /*
- * ConfirmQuitDialog
+ * DeleteDialog
  *
  * Version: v1.0.0
  *
@@ -26,21 +26,28 @@ package com.example.wellfed.common;
 
 import android.content.Context;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.example.wellfed.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 /**
- * The ConfirmQuitDialog class provides a dialog for confirming whether the
- * user intends to quit the an activity where they have unsaved changes.
+ * The ConfirmDeleteDialog class provides a dialog for confirming whether the
+ * user intends to delete an item.
  */
-public class ConfirmQuitDialog extends ConfirmDialog {
+public class ConfirmDeleteDialog extends ConfirmDialog {
+
     /**
-     * Constructs a ConfirmQuitDialog
+     * Constructs a ConfirmDeleteDialog
      *
      * @param context           the context
      * @param onConfirmListener the OnConfirmListener
+     * @param title             the title of the dialog
      */
-    public ConfirmQuitDialog(Context context,
-                             OnConfirmListener onConfirmListener) {
-        super(context, "Quit editing?",
-                "Changes that you have made are not " + "saved?", "Quit",
-                onConfirmListener);
+    public ConfirmDeleteDialog(Context context,
+                               OnConfirmListener onConfirmListener,
+                               String title) {
+        super(context, title, "Are you sure you want to delete this item?",
+                "Delete", onConfirmListener);
     }
 }
