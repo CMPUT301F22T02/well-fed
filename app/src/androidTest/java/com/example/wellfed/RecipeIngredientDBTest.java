@@ -3,7 +3,7 @@ package com.example.wellfed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import com.example.wellfed.recipe.RecipeIngredient;
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.RecipeIngredientDB;
 
 import org.junit.Before;
@@ -25,15 +25,14 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testAddRecipeIngredients() throws InterruptedException {
-
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
-        testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
+        testIngredient.setAmount(2.0F);
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
-        RecipeIngredient testIngredientFromDb = null;
+        Ingredient testIngredientFromDb = null;
 
         testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
 
@@ -54,11 +53,11 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testDelRecipeIngredient() throws InterruptedException{
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
-        testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
+        testIngredient.setAmount(2.0F);
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
         recipeIngredientDB.delIngredient(testIngredient.getId());
@@ -73,14 +72,14 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testUpdateRecipeIngredient() throws InterruptedException{
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
 
-        RecipeIngredient testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
+        Ingredient testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
 
 
         assertEquals(testIngredient.getId(), testIngredientFromDb.getId());
@@ -89,10 +88,10 @@ public class RecipeIngredientDBTest {
         assertEquals(testIngredient.getDescription(), testIngredientFromDb.getDescription());
         assertEquals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
 
-        testIngredient.setDescription("Description2");
-        testIngredient.setAmount(5.0F);
-        testIngredient.setCategory("Test2");
-        testIngredient.setUnit("TestUnits2");
+        testIngredient.setDescription("Scrambled eggs");
+        testIngredient.setAmount(500.0F);
+        testIngredient.setCategory("Breakfast");
+        testIngredient.setUnit("grams");
         recipeIngredientDB.updateRecipeIngredient(testIngredient);
 
         testIngredientFromDb = recipeIngredientDB.getRecipeIngredient(testIngredient.getId());
@@ -134,7 +133,7 @@ public class RecipeIngredientDBTest {
      */
     @Test
     public void testUpdateOnNonExistentRecipeIngredient() throws InterruptedException{
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        Ingredient recipeIngredient = new Ingredient();
         recipeIngredient.setId("-1");
         recipeIngredientDB.updateRecipeIngredient(recipeIngredient);
 

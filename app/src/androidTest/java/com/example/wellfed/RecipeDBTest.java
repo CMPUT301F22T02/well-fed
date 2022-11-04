@@ -5,9 +5,9 @@ import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
-import com.example.wellfed.recipe.RecipeIngredient;
 import com.example.wellfed.recipe.RecipeIngredientDB;
 
 import org.junit.Before;
@@ -37,18 +37,18 @@ public class RecipeDBTest {
      */
     @Test
     public void testAddRecipe() throws InterruptedException {
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
 
-        Recipe testRecipe = new Recipe("Test");
-        testRecipe.setComments("Test");
+        Recipe testRecipe = new Recipe("Omelet");
+        testRecipe.setComments("This delicious breakfast is packed full of protein.");
         testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(1);
+        testRecipe.setPrepTimeMinutes(5);
         testRecipe.addIngredient(testIngredient);
-        testRecipe.setCategory("Test");
+        testRecipe.setCategory("Breakfast");
 
         String recipeId = recipeDB.addRecipe(testRecipe);
 
@@ -78,18 +78,18 @@ public class RecipeDBTest {
      */
     @Test
     public void testDelRecipe() throws InterruptedException {
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
 
-        Recipe testRecipe = new Recipe("Test");
-        testRecipe.setComments("Test");
+        Recipe testRecipe = new Recipe("Omelet");
+        testRecipe.setComments("This delicious breakfast is packed full of protein.");
         testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(1);
+        testRecipe.setPrepTimeMinutes(5);
         testRecipe.addIngredient(testIngredient);
-        testRecipe.setCategory("Test");
+        testRecipe.setCategory("Breakfast");
 
         String recipeId = recipeDB.addRecipe(testRecipe);
 
@@ -110,26 +110,26 @@ public class RecipeDBTest {
 
     @Test
     public void testUpdateOnRecipe() throws InterruptedException{
-        RecipeIngredient testIngredient = new RecipeIngredient();
-        testIngredient.setDescription("Description");
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(1.0F);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
 
-        Recipe testRecipe = new Recipe("Test");
-        testRecipe.setComments("Test");
+        Recipe testRecipe = new Recipe("Omelet");
+        testRecipe.setComments("This delicious breakfast is packed full of protein.");
         testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(1);
+        testRecipe.setPrepTimeMinutes(5);
         testRecipe.addIngredient(testIngredient);
-        testRecipe.setCategory("Test");
+        testRecipe.setCategory("Breakfast");
 
         String recipeId = recipeDB.addRecipe(testRecipe);
 
-        testRecipe.setTitle("Test2");
-        testRecipe.setComments("Test2");
+        testRecipe.setTitle("Lunch Omelette");
+        testRecipe.setComments("This is a bigger version of the breakfast meal to be served for two.");
         testRecipe.setServings(2);
-        testRecipe.setPrepTimeMinutes(2);
-        testRecipe.setCategory("Test2");
+        testRecipe.setPrepTimeMinutes(10);
+        testRecipe.setCategory("Lunch");
 
         recipeDB.editRecipe(testRecipe);
         Recipe fromDbTestRecipe = recipeDB.getRecipe(testRecipe.getId());
@@ -149,7 +149,7 @@ public class RecipeDBTest {
      */
     @Test
     public void testUpdateOnNonExistentRecipe() throws InterruptedException{
-        Recipe testRecipe = new Recipe("Test");
+        Recipe testRecipe = new Recipe("Fake Broccoli");
         testRecipe.setId("-1");
         recipeDB.editRecipe(testRecipe);
 

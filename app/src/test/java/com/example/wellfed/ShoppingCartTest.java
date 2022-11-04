@@ -28,7 +28,7 @@ public class ShoppingCartTest {
      * Creates a shopping cart ingredient for use in the unit tests.
      * @return the created mock ingredient
      */
-    private ShoppingCartIngredient mockShoppingCartIngredient(){return new ShoppingCartIngredient("test");}
+    private ShoppingCartIngredient mockShoppingCartIngredient(){return new ShoppingCartIngredient("Banana");}
 
     /**
      * Tests adding of an Ingredient to the ShoppingCart.
@@ -38,8 +38,8 @@ public class ShoppingCartTest {
         ShoppingCart shoppingCart = mockShoppingCart();
         ShoppingCartIngredient ingredient1 = mockShoppingCartIngredient();
         ShoppingCartIngredient ingredient2 = mockShoppingCartIngredient();
-        ingredient1.setDescription("hello");
-        ingredient2.setDescription("hello2");
+        ingredient1.setDescription("Egg");
+        ingredient2.setDescription("Bacon");
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             shoppingCart.getIngredient(0);
@@ -59,8 +59,8 @@ public class ShoppingCartTest {
         ShoppingCart shoppingCart = mockShoppingCart();
         ShoppingCartIngredient ingredient1 = mockShoppingCartIngredient();
         ShoppingCartIngredient ingredient2 = mockShoppingCartIngredient();
-        ingredient1.setDescription("hello");
-        ingredient2.setDescription("hello2");
+        ingredient1.setDescription("Egg");
+        ingredient2.setDescription("Bacon");
 
         shoppingCart.addIngredient(ingredient1);
         shoppingCart.addIngredient(ingredient2);

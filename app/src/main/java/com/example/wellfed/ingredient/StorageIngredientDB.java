@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class StoredIngredientDB {
+public class StorageIngredientDB {
     /**
      * Holds the instance of the Firebase Firestore DB.
      */
@@ -38,7 +38,7 @@ public class StoredIngredientDB {
     /**
      * Creates a reference to the Firebase DB.
      */
-    public StoredIngredientDB() {
+    public StorageIngredientDB() {
         this.db = FirebaseFirestore.getInstance();
         this.collection = db.collection("StoredIngredients");
         this.ingredients = db.collection("Ingredients");
@@ -83,23 +83,25 @@ public class StoredIngredientDB {
         });
 
         batchComplete.await();
+
+        storedIngredient.setId(ingredientId);
+
         return ingredientId;
     }
 
     /**
      * Updates a stored ingredient in the Firebase DB.
-     * @param id the ID of the StoredIngredient to update
      * @param storedIngredient the Ingredient containing the updated fields
      * @throws InterruptedException when the on success listeners cannot complete
      */
     public void updateStoredIngredient(String id, StorageIngredient storedIngredient) throws InterruptedException {
         WriteBatch batch = db.batch();
 
-        DocumentReference ingredientDocument = ingredients.document(id);
+        DocumentReference ingredientDocument = ingredients.document(storedIngredient.getId());
         batch.update(ingredientDocument, "category", storedIngredient.getCategory());
         batch.update(ingredientDocument, "description", storedIngredient.getDescription());
 
-        DocumentReference storedDocument = collection.document(id);
+        DocumentReference storedDocument = collection.document(storedIngredient.getId());
         // update object in stored ingredients now
         batch.update(storedDocument, "unit", storedIngredient.getUnit());
         batch.update(storedDocument, "amount", storedIngredient.getAmount());
@@ -110,13 +112,14 @@ public class StoredIngredientDB {
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "StoredIngredient updated with ID: " + id);
+                Log.d(TAG, "StoredIngredient updated with ID: " + storedIngredient.getId());
 
                 batchComplete.countDown();
             }
         });
 
         batchComplete.await();
+
     }
 
     /**
@@ -201,6 +204,7 @@ public class StoredIngredientDB {
 
                             obtainedIngredient.setLocation((String) document.get("location"));
                             obtainedIngredient.setUnit((String) document.get("unit"));
+                            obtainedIngredient.setId(id);
                             found.countDown();
                             complete.countDown();
                         } else {
@@ -240,5 +244,14 @@ public class StoredIngredientDB {
         }
 
         return obtainedIngredient;
+    }
+
+    /**
+     * Get the DocumentReference from Recipes collection for the given id
+     * @param id The String of the document in Recipes collection we want
+     * @return DocumentReference of the Recipe
+     */
+    public DocumentReference getDocumentReference(String id){
+        return collection.document(id);
     }
 }

@@ -1,0 +1,19 @@
+name: Publish Javadoc
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "doc/javadoc/**"
+
+jobs:
+  publish_javadoc:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
+      with:
+        clean: true
+        folder: doc/javadoc
+        target-folder: javadoc
