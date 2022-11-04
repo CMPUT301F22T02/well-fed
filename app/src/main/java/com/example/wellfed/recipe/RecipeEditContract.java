@@ -9,13 +9,11 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.wellfed.MainActivity;
-
-public class RecipeContract extends ActivityResultContract<Recipe, Pair<String, Recipe>> {
+public class RecipeEditContract extends ActivityResultContract<Recipe, Pair<String, Recipe>> {
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, Recipe recipe) {
-        Intent intent = new Intent(context, RecipeActivity.class);
+        Intent intent = new Intent(context, RecipeEditActivity.class);
         intent.putExtra("Recipe", recipe);
         return intent;
     }

@@ -5,4 +5,23 @@
         <item>Lunch</item>
         <item>Dinner</item>
     </string-array>
+
+    <string-array name="recipeCategories">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Dessert</item>
+        <item>Vegan</item>
+        <item>Appetizer</item>
+        <item>Salad</item>
+    </string-array>
+
+
+    <string-array name="ingredientCategories">
+        <item>Fruits</item>
+        <item>Vegetables</item>
+        <item>Dairy</item>
+        <item>Grains</item>
+        <item>Nuts</item>
+    </string-array>
 </resources>
