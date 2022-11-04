@@ -106,7 +106,24 @@ public class ShoppingCartEditActivity extends ActivityBase implements OnQuitList
     }
 
     private void onSave() {
-
+        if (!this.labelTextInput.isValid()) {
+            return;
+        }
+        if (!this.dateTextInput.isValid()) {
+            return;
+        }
+        if (!this.categoryTextInput.isValid()) {
+            return;
+        }
+        if (!this.amountTextInput.isValid()) {
+            return;
+        }
+        if (!this.unitTextInput.isValid()) {
+            return;
+        }
+        if (!this.locationTextInput.isValid()) {
+            return;
+        }
     }
 
     @Override
