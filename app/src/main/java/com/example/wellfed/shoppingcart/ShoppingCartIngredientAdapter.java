@@ -1,11 +1,13 @@
 package com.example.wellfed.shoppingcart;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -13,6 +15,12 @@ import com.example.wellfed.R;
 
 import java.util.ArrayList;
 
+/**
+ * The ShoppingCartIngredientAdapter class binds ArrayList<ShoppingCartIngredient> to RecyclerView.
+ * <p>
+ * @author Weiguo Jiang
+ * @version v1.0.0 2022-10-28
+ **/
 public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<ShoppingCartIngredientAdapter.ViewHolder> {
     ArrayList<ShoppingCartIngredient> ingredients;
 
@@ -34,7 +42,8 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     @NonNull
     @Override
     public ShoppingCartIngredientAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        Context context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
 
         View ingredientView = layoutInflater.inflate(R.layout.shopping_cart_ingredient, parent,
                 false);

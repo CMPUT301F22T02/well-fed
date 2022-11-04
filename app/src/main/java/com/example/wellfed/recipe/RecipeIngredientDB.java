@@ -53,7 +53,7 @@ public class RecipeIngredientDB {
      * @return The id of the RecipeIngredient that was added
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public String addRecipeIngredient(RecipeIngredient ingredient) throws InterruptedException {
+    public String addRecipeIngredient(Ingredient ingredient) throws InterruptedException {
         String newIngredientId = ingredientsCollection.document().getId();
         String newRecipeIngredientId = recipeIngredientsCollection.document().getId();
         CountDownLatch addIngredient = new CountDownLatch(1);
@@ -178,7 +178,7 @@ public class RecipeIngredientDB {
      * @param recipeIngredient The RecipeIngredient with the updated information
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public void updateRecipeIngredient(RecipeIngredient recipeIngredient) throws InterruptedException {
+    public void updateRecipeIngredient(Ingredient recipeIngredient) throws InterruptedException {
         String recipeIngredientId = recipeIngredient.getId();
 
         CountDownLatch readSnapshot = new CountDownLatch(1);
@@ -242,8 +242,8 @@ public class RecipeIngredientDB {
      * return null
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public RecipeIngredient getRecipeIngredient(String id) throws InterruptedException {
-        RecipeIngredient recipeIngredient = new RecipeIngredient();
+    public Ingredient getRecipeIngredient(String id) throws InterruptedException {
+        Ingredient recipeIngredient = new Ingredient();
 
         CountDownLatch readRecipeIngredient = new CountDownLatch(1);
         CountDownLatch readIngredient = new CountDownLatch(1);
@@ -315,10 +315,10 @@ public class RecipeIngredientDB {
 
     /**
      * Gets all the corresponding RecipeIngredients from the Recipe Ingredient collection
-     * @return ArrayList<RecipeIngredient> containing all RecipeIngredients/
+     * @return ArrayList containing all RecipeIngredients
      * @throws InterruptedException If any transaction in the method was not complete
      */
-    public ArrayList<RecipeIngredient> getRecipeIngredients() throws InterruptedException {
+    public ArrayList<Ingredient> getRecipeIngredients() throws InterruptedException {
         CountDownLatch recipesLatch = new CountDownLatch(1);
         final List<DocumentSnapshot>[] recipeIngredientSnapshots = new List[]{null};
         ArrayList<RecipeIngredient> recipeIngredients = new ArrayList<>();
@@ -328,8 +328,8 @@ public class RecipeIngredientDB {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     recipeIngredientSnapshots[0] = queryDocumentSnapshots.getDocuments();
-                    Log.d(TAG, "onSuccess: ");
                     recipesLatch.countDown();
+                    Log.d(TAG, "onSuccess: ");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

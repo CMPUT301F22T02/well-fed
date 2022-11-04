@@ -17,13 +17,13 @@ import java.util.ArrayList;
  * This class represents <i>food that is stored.</i>
  *
  * @version 1.0
- * @see StoredIngredient
+ * @see StorageIngredient
  */
 public class FoodStorage {
     /**
      * Holds the list of Ingredients in the food storage.
      */
-    private ArrayList<StoredIngredient> storedIngredients;
+    private final ArrayList<StorageIngredient> storedIngredients;
 
     /**
      * Creates a new FoodStorage object that represents an empty food storage.
@@ -36,7 +36,7 @@ public class FoodStorage {
      * Adds an Ingredient to the food storage.
      * @param ingredient An Ingredient object to add
      */
-    public void addIngredient(StoredIngredient ingredient) {
+    public void addIngredient(StorageIngredient ingredient) {
         this.storedIngredients.add(ingredient);
     }
 
@@ -44,7 +44,7 @@ public class FoodStorage {
      * Removes an Ingredient from the food storage.
      * @param ingredient An Ingredient object to remove
      */
-    public void removeIngredient(StoredIngredient ingredient) {
+    public void removeIngredient(StorageIngredient ingredient) {
         this.storedIngredients.remove(ingredient);
     }
 
@@ -53,7 +53,7 @@ public class FoodStorage {
      * @param i the index where the StoredIngredient is stored.
      * @return the StoredIngredient at index i
      */
-    public StoredIngredient getIngredient(int i) {
+    public StorageIngredient getIngredient(int i) {
         return this.storedIngredients.get(i);
     }
 
@@ -61,7 +61,23 @@ public class FoodStorage {
      * Gets the entire ArrayList where all StoredIngredients are kept.
      * @return the ArrayList of all stored ingredients
      */
-    public ArrayList<StoredIngredient> getStoredIngredients() {
+    public ArrayList<StorageIngredient> getIngredients() {
         return this.storedIngredients;
+    }
+
+    /**
+     * Delete the given ingredient from the food storage.
+     * @param result the ingredient to delete
+     */
+    public void deleteIngredient(StorageIngredient result) {
+        this.storedIngredients.remove(result);
+    }
+
+    /**
+     * Update the given ingredient in the food storage.
+     * @param result the ingredient to update
+     */
+    public void updateIngredient(StorageIngredient result) {
+        this.storedIngredients.set(this.storedIngredients.indexOf(result), result);
     }
 }
