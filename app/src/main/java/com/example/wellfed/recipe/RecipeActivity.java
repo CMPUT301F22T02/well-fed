@@ -67,8 +67,6 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                 findViewById(R.id.recipe_delete_btn),
                 "Delete Recipe",
                 this);
-
-
     }
 
 

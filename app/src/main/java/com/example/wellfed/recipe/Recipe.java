@@ -68,7 +68,7 @@ public class Recipe implements Serializable {
     /**
      * Holds a photograph of the result of a Recipe.
      */
-    private Image photograph;
+    private String photograph;
 
 
     /**
@@ -202,7 +202,7 @@ public class Recipe implements Serializable {
      * @return An Image object representing the photograph.
      */
     @Nullable
-    public Image getPhotograph() {
+    public String getPhotograph() {
         return photograph;
     }
 
@@ -210,7 +210,7 @@ public class Recipe implements Serializable {
      * Sets the photograph associated with a Recipe.
      * @param photograph An Image object representing the photograph to be set.
      */
-    public void setPhotograph(Image photograph) {
+    public void setPhotograph(String photograph) {
         this.photograph = photograph;
     }
 
