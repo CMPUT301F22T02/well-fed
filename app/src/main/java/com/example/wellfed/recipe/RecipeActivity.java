@@ -56,7 +56,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
         // ingredient recycle view
         ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
-        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList, R.layout.recipe_ingredient);
+        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList,
+                R.layout.recipe_ingredient);
         ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 

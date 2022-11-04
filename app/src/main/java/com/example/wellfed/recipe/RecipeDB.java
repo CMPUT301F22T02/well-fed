@@ -7,6 +7,7 @@ import android.media.Image;
 import android.util.Log;
 
 import com.example.wellfed.ingredient.Ingredient;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -77,8 +78,6 @@ public class RecipeDB {
         }
 
         Map<String, Object> recipeMap = new HashMap<>();
-
-        String newRecipeId = recipesCollection.document().getId();
 
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("comments", recipe.getComments());
