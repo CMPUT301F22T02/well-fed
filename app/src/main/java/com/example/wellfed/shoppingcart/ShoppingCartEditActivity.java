@@ -102,5 +102,17 @@ public class ShoppingCartEditActivity extends ActivityBase implements OnQuitList
         if (this.locationTextInput.hasChanges()) {
             return true;
         }
+        return false;
+    }
+
+    private void onSave() {
+
+    }
+
+    @Override
+    public void onQuit() {
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_CANCELED, intent);
+        finish();
     }
 }
