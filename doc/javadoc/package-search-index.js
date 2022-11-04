@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.example.wellfed"},{"l":"com.example.wellfed.common"},{"l":"com.example.wellfed.ingredient"},{"l":"com.example.wellfed.mealplan"},{"l":"com.example.wellfed.navigation"},{"l":"com.example.wellfed.recipe"},{"l":"com.example.wellfed.shoppingcart"}]

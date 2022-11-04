@@ -38,7 +38,7 @@ import com.google.android.material.color.MaterialColors;
 import java.util.ArrayList;
 
 /**
- * The MealPlanAdapter class binds ArrayList<MealPlan> to RecyclerView.
+ * The MealPlanAdapter class binds ArrayList to RecyclerView.
  * <p>
  * Citation:
  * Create dynamic lists with RecyclerView. Android Developers. (n.d.).

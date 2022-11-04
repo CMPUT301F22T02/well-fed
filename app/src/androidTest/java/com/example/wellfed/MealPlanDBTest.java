@@ -8,8 +8,8 @@ import static org.junit.Assert.assertTrue;
 import android.util.Log;
 
 import com.example.wellfed.ingredient.Ingredient;
-import com.example.wellfed.ingredient.StoredIngredient;
-import com.example.wellfed.ingredient.StoredIngredientDB;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.example.wellfed.ingredient.StorageIngredientDB;
 import com.example.wellfed.mealplan.MealPlan;
 import com.example.wellfed.mealplan.MealPlanDB;
 import com.example.wellfed.recipe.Recipe;
@@ -44,7 +44,7 @@ public class MealPlanDBTest {
     /**
      * The IngredientDB that allows testing whether ingredients are valid.
      */
-    StoredIngredientDB storedIngredientDB;
+    StorageIngredientDB storedIngredientDB;
 
     /**
      * Creates a new mock meal plan to be used in testing.
@@ -71,8 +71,8 @@ public class MealPlanDBTest {
      * Creates a new mock ingredient to be used in testing.
      * @return the created mock ingredient
      */
-    private StoredIngredient mockIngredient() {
-        StoredIngredient mockIngredient = new StoredIngredient("Banana");
+    private StorageIngredient mockIngredient() {
+        StorageIngredient mockIngredient = new StorageIngredient("Banana");
         mockIngredient.setAmount(1.0f);
         mockIngredient.setUnit("count");
         mockIngredient.setCategory("Fruit");
@@ -86,7 +86,7 @@ public class MealPlanDBTest {
     public void before() {
         mealPlanDB = new MealPlanDB();
         recipeDB = new RecipeDB();
-        storedIngredientDB = new StoredIngredientDB();
+        storedIngredientDB = new StorageIngredientDB();
     }
 
     /**
@@ -99,7 +99,7 @@ public class MealPlanDBTest {
     public void testAddAndGetMealPlan() throws Exception {
         // test adding a recipe with full fields
         MealPlan mockMealPlan = mockMealPlan();
-        StoredIngredient mockIngredient = mockIngredient();
+        StorageIngredient mockIngredient = mockIngredient();
         Ingredient mockIngredientRecipe = mockIngredient();
 
         // setting up Ingredient in DB
@@ -234,8 +234,8 @@ public class MealPlanDBTest {
      */
     @Test
     public void testAddIngredientsAndRecipes() throws Exception {
-        StoredIngredient ingredient1 = mockIngredient();
-        StoredIngredient ingredient2 = mockIngredient();
+        StorageIngredient ingredient1 = mockIngredient();
+        StorageIngredient ingredient2 = mockIngredient();
         Recipe recipe1 = mockRecipe();
         Recipe recipe2 = mockRecipe();
         MealPlan mealPlan = mockMealPlan();

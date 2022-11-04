@@ -1,27 +1,22 @@
 package com.example.wellfed.recipe;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
-import com.example.wellfed.common.OnDeleteListener;
+import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeActivity extends ActivityBase implements OnDeleteListener {
+public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
     private List<Ingredient> ingredientList;
     private Recipe recipe;
     private RecyclerView ingredientRv;
@@ -65,12 +60,10 @@ public class RecipeActivity extends ActivityBase implements OnDeleteListener {
     }
 
     @Override
-    public void onDelete() {
+    public void onConfirm() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra("Reason", "Delete");
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
-
-
 }

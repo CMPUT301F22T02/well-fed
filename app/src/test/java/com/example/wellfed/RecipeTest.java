@@ -25,7 +25,7 @@ public class RecipeTest {
      * @return the mock Recipe created
      */
     public Recipe mockRecipe() {
-        return new Recipe("test");
+        return new Recipe("Stuffing");
     }
 
     /**
@@ -55,8 +55,8 @@ public class RecipeTest {
         Recipe recipe = mockRecipe();
         Ingredient ingredient1 = mockRecipeIngredient();
         Ingredient ingredient2 = mockRecipeIngredient();
-        ingredient1.setDescription("hello");
-        ingredient2.setDescription("hello2");
+        ingredient1.setDescription("Bread");
+        ingredient2.setDescription("Cashews");
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             recipe.getIngredient(0);
@@ -76,8 +76,8 @@ public class RecipeTest {
         Recipe recipe = mockRecipe();
         Ingredient ingredient1 = mockRecipeIngredient();
         Ingredient ingredient2 = mockRecipeIngredient();
-        ingredient1.setDescription("hello");
-        ingredient2.setDescription("hello2");
+        ingredient1.setDescription("Bread");
+        ingredient2.setDescription("Cashews");
 
         recipe.addIngredient(ingredient1);
         recipe.addIngredient(ingredient2);
@@ -136,13 +136,13 @@ public class RecipeTest {
         Recipe recipe = mockRecipe();
 
         // test with string
-        String string = "test";
+        String string = "Vegetarian";
         recipe.setCategory(string);
         assertEquals(string, recipe.getCategory());
 
         // test with literal
-        recipe.setCategory("test");
-        assertEquals("test", recipe.getCategory());
+        recipe.setCategory("Vegetarian");
+        assertEquals("Vegetarian", recipe.getCategory());
     }
 
     /**
@@ -153,13 +153,13 @@ public class RecipeTest {
         Recipe recipe = mockRecipe();
 
         // test with string
-        String string = "test";
+        String string = "Christmas Stuffing";
         recipe.setTitle(string);
         assertEquals(string, recipe.getTitle());
 
         // test with literal
-        recipe.setTitle("test");
-        assertEquals("test", recipe.getTitle());
+        recipe.setTitle("Thanksgiving Stuffing");
+        assertEquals("Thanksgiving Stuffing", recipe.getTitle());
     }
 
     /**
@@ -170,13 +170,13 @@ public class RecipeTest {
         Recipe recipe = mockRecipe();
 
         // test with string
-        String string = "test";
+        String string = "This delicious meal is made on special events.";
         recipe.setComments(string);
-        assertEquals(string, recipe.getTitle());
+        assertEquals(string, recipe.getComments());
 
         // test with literal
-        recipe.setComments("test");
-        assertEquals("test", recipe.getComments());
+        recipe.setComments("This yummy meal is made for special events.");
+        assertEquals("This yummy meal is made for special events.", recipe.getComments());
     }
 
     /**
@@ -219,12 +219,12 @@ public class RecipeTest {
         Recipe recipe = mockRecipe();
 
         // test with string
-        String string = "test";
+        String string = "recipe_id_156345342";
         recipe.setId(string);
         assertEquals(string, recipe.getId());
 
         // test with literal
-        recipe.setId("test");
-        assertEquals("test", recipe.getId());
+        recipe.setId("recipe_id_156345343");
+        assertEquals("recipe_id_156345343", recipe.getId());
     }
 }

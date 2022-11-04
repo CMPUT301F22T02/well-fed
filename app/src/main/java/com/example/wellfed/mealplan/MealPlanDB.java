@@ -8,7 +8,8 @@ import android.media.Image;
 import android.util.Log;
 
 import com.example.wellfed.ingredient.Ingredient;
-import com.example.wellfed.ingredient.StoredIngredientDB;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.example.wellfed.ingredient.StorageIngredientDB;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
 import com.example.wellfed.recipe.RecipeIngredientDB;
@@ -40,7 +41,7 @@ public class MealPlanDB {
     /**
      * Holds a collection to Ingredients stored in the FireStore db database
      */
-    final StoredIngredientDB ingredientDB;
+    final StorageIngredientDB ingredientDB;
 
     /**
      * Holds a collection to Ingredients stored in the FireStore db database
@@ -55,7 +56,7 @@ public class MealPlanDB {
         db = FirebaseFirestore.getInstance();
         this.mealCollection = db.collection("MealPlans");
         this.recipeDB = new RecipeDB();
-        this.ingredientDB = new StoredIngredientDB();
+        this.ingredientDB = new StorageIngredientDB();
     }
 
     /**
