@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // todo create sample data for recipes
@@ -61,12 +62,12 @@ public class RecipeBookFragment extends Fragment implements Launcher {
 
     ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
             new RecipeEditContract(), result -> {
-                if (result == null){
+                if (result == null) {
                     return;
                 }
                 String type = result.first;
                 Recipe recipe = result.second;
-                switch (type){
+                switch (type) {
                     case "save":
                         recipeController.addRecipe(recipe);
                 }
@@ -102,25 +103,33 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         recipesCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for (QueryDocumentSnapshot doc: value){
-                    recipes.clear();
+                recipes.clear();
+                for (QueryDocumentSnapshot doc : value) {
                     String title = (String) doc.getData().get("title");
-                    List<String> comments =(List<String>) doc.getData().get("comments");
+                    List<String> comments = (List<String>) doc.getData().get("comments");
                     String category = (String) doc.getData().get("category");
-//                    Integer prepTime = (Integer) doc.getData().get("prep-time-minutes");
-//                    Integer servings = (Integer) doc.getData().get("servings");
+                    Integer prepTime = Integer.parseInt(Long.toString((Long) doc.getData().get("prep-time-minutes")));
+                    Integer servings = Integer.parseInt(Long.toString((Long) doc.getData().get("servings")));
                     String url = (String) doc.getData().get("photograph");
-//                    List<RecipeIngredient> recipeIngredients = (List<RecipeIngredient>) doc.getData().get("ingredients");
                     Recipe recipe = new Recipe(title);
+                    for (HashMap<String, Object> ri : (List<HashMap<String, Object>>) doc.getData().get("ingredients")) {
+                        RecipeIngredient recipeIngredient = new RecipeIngredient();
+                        recipeIngredient.setId((String) ri.get("id"));
+                        recipeIngredient.setDescription((String) ri.get("description"));
+                        recipeIngredient.setUnit((String) ri.get("unit"));
+                        recipeIngredient.setAmount(Float.parseFloat(Double.toString((Double) ri.get("amount"))));
+                        recipeIngredient.setCategory((String) ri.get("category"));
+                        recipe.addIngredient(recipeIngredient);
+                    }
+//                    List<RecipeIngredient> recipeIngredients = (List<RecipeIngredient>) doc.getData().get("ingredients");
                     recipe.setPhotoUrl(url);
-//                    recipe.setServings(servings);
+                    recipe.setServings(servings);
                     recipe.setCategory(category);
-//                    recipe.setPrepTimeMinutes(prepTime);
+                    recipe.setPrepTimeMinutes(prepTime);
                     recipe.addComments(comments);
-//                    recipe.addIngredients(recipeIngredients);
                     recipes.add(recipe);
-                    adapter.notifyDataSetChanged();
                 }
+                adapter.notifyDataSetChanged();
             }
         });
 
