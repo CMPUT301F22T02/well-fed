@@ -57,16 +57,16 @@ public class MainActivity extends FragmentActivity {
         bottomAppBar.setOnMenuItemClickListener(menuItem -> {
             int j;
             switch (menuItem.getItemId()) {
-                case R.id.ingredient_storage:
+                case R.id.ingredient_storage_item:
                     j = 0;
                     break;
-                case R.id.recipe_book:
+                case R.id.recipe_book_item:
                     j = 1;
                     break;
-                case R.id.meal_book:
+                case R.id.meal_book_item:
                     j = 2;
                     break;
-                case R.id.shopping_cart:
+                case R.id.shopping_cart_item:
                     j = 3;
                     break;
                 default:
