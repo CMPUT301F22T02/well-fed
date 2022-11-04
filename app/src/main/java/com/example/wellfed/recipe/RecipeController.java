@@ -25,10 +25,11 @@ public class RecipeController {
 
     }
 
-    public void deleteRecipe(int position) {
-        if (position >= 0 && position < recipes.size()) {
-            recipes.remove(position);
-            recipeAdapter.notifyItemRemoved(position);
+    public void deleteRecipe(String id) {
+        try {
+            recipeDB.delRecipe(id);
+        } catch (Exception e) {
+
         }
     }
 

@@ -45,8 +45,8 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                         String type = result.first;
                         Recipe recipe = result.second;
                         switch (type) {
-                            case "Delete":
-                                recipeController.deleteRecipe(this.selected);
+                            case "delete":
+                                new DeleteRecipeTask().execute(recipe);
                                 break;
                             default:
                                 new IllegalArgumentException();
@@ -54,6 +54,20 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                     }
             );
 
+
+    private class DeleteRecipeTask extends
+            AsyncTask<Recipe, Void, Void> {
+        protected Void doInBackground(Recipe... recipes) {
+            for (Recipe recipe : recipes) {
+                RecipeBookFragment.this.recipeController.deleteRecipe(recipe.getId());
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            new RecipeBookFragment.GetRecipesTask().execute();
+        }
+    }
 
 
     ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
@@ -84,7 +98,7 @@ public class RecipeBookFragment extends Fragment implements Launcher {
     }
 
     private class AddRecipeTask extends
-                                 AsyncTask<Recipe, Void, Void> {
+            AsyncTask<Recipe, Void, Void> {
         protected Void doInBackground(Recipe... recipes) {
             for (Recipe recipe : recipes) {
                 RecipeBookFragment.this.recipeController.addRecipe(recipe);
@@ -98,7 +112,7 @@ public class RecipeBookFragment extends Fragment implements Launcher {
     }
 
     protected class GetRecipesTask extends
-                                 AsyncTask<Void, Void, ArrayList<Recipe>> {
+            AsyncTask<Void, Void, ArrayList<Recipe>> {
         protected ArrayList<Recipe> doInBackground(Void... voids) {
             try {
                 return RecipeBookFragment.this.recipeController.getRecipes();

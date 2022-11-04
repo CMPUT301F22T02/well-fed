@@ -73,6 +73,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
     @Override
     public void onConfirm() {
         Intent intent = new Intent();
+        intent.putExtra("Recipe", recipe);
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
         finish();
