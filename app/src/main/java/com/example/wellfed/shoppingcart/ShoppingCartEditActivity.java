@@ -8,9 +8,8 @@ import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.ConfirmQuitDialog;
-import com.example.wellfed.common.OnQuitListener;
-import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
@@ -18,7 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
-public class ShoppingCartEditActivity extends ActivityBase implements OnQuitListener {
+public class ShoppingCartEditActivity extends ActivityBase implements
+                                                           ConfirmDialog.OnConfirmListener {
     private RequiredTextInputLayout labelTextInput;
     private RequiredTextInputLayout dateTextInput;
     private RequiredDropdownTextInputLayout categoryTextInput;
@@ -63,7 +63,7 @@ public class ShoppingCartEditActivity extends ActivityBase implements OnQuitList
         this.unitTextInput = findViewById(R.id.unitTextInput);
         this.locationTextInput = findViewById(R.id.locationTextInput);
 
-        this.amountTextInput.requireDouble();
+        this.amountTextInput.setRequireDouble();
         this.amountTextInput.setRequirePositiveNumber(true);
         this.fab = findViewById(R.id.fab);
         this.fab.setOnClickListener(view -> onSave());
@@ -127,7 +127,7 @@ public class ShoppingCartEditActivity extends ActivityBase implements OnQuitList
     }
 
     @Override
-    public void onQuit() {
+    public void onConfirm() {
         Intent intent = new Intent();
         setResult(Activity.RESULT_CANCELED, intent);
         finish();
