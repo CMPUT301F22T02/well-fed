@@ -92,4 +92,13 @@ public class ShoppingCartFragment extends Fragment
         this.controller.setAdapter(this.shoppingCartIngredientAdapter);
         this.shoppingCartRecyclerView.setAdapter(this.shoppingCartIngredientAdapter);
     }
+
+    @Override
+    public void launch(int selected) {
+        this.selected = selected;
+        launcher.launch(this.controller.getShoppingCartIngredients().get(selected));
+    }
+
+    @Override
+    public void launch() { editLauncher.launch(null); }
 }
