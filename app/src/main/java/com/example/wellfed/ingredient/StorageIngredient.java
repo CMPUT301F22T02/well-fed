@@ -76,14 +76,14 @@ public class StorageIngredient extends Ingredient {
     /**
      * Set categories of the ingredient.
      */
-    public void setCategories(String categories) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
     /**
      * Get categories of the ingredient.
      */
-    public String getCategories() {
+    public String getCategory() {
         return category;
     }
 
@@ -170,6 +170,9 @@ public class StorageIngredient extends Ingredient {
      * @return The best before date of the ingredient in the storage
      */
     public String getBestBefore() {
+        if (bestBefore == null) {
+            return null;
+        }
         String bestBeforeString = bestBefore.toString();
         String[] bestBeforeSplit = bestBeforeString.split(" ");
         return bestBeforeSplit[0] + ", " + bestBeforeSplit[1] + " " + bestBeforeSplit[2];
