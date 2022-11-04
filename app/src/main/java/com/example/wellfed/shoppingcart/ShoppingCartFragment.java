@@ -52,6 +52,9 @@ public class ShoppingCartFragment extends Fragment
                 }
             });
 
+    ActivityResultLauncher<ShoppingCartIngredient> editLauncher =
+            registerForActivityResult()
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
