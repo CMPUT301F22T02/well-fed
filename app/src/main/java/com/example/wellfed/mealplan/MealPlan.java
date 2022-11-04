@@ -51,7 +51,7 @@ public class MealPlan implements Serializable {
      * should be scaled up to fit
      * this number.
      */
-    private int servings;
+    private Integer servings;
 
     /**
      * Holds a list of all Ingredients in a MealPlan.
@@ -62,6 +62,11 @@ public class MealPlan implements Serializable {
      * Holds a list of all Recipes in a MealPlan.
      */
     private final ArrayList<Recipe> recipes;
+
+    /**
+     * Holds the Database id of a Recipe
+     */
+    private String id;
 
     /**
      * Creates a new MealPlan object which represents a meal to be eaten on a
@@ -196,7 +201,7 @@ public class MealPlan implements Serializable {
      * Gets the number of servings in a MealPlan
      * @return an int representing the number of servings in a MealPlan
      */
-    public int getServings() {
+    public Integer getServings() {
         return servings;
     }
 
@@ -204,7 +209,23 @@ public class MealPlan implements Serializable {
      * Sets the number of servings in a MealPlan
      * @param servings an int representing the number of servings in a MealPlan
      */
-    public void setServings(int servings) {
+    public void setServings(Integer servings) {
         this.servings = servings;
+    }
+
+    /**
+     * Sets the id of a MealPlan
+     * @param id A string representing the id of the document in the db
+     */
+    public void setId(String id){
+        this.id = id;
+    }
+
+    /**
+     * Gets the id of a MealPlan, the id of the document in the db the MealPlan is based off of
+     * @return A string representing the id of the document in the db
+     */
+    public String getId(){
+        return this.id;
     }
 }

@@ -48,7 +48,7 @@ public class Recipe implements Serializable {
     /**
      * Holds the Ingredients needed for a Recipe.
      */
-    private final List<RecipeIngredient> ingredients;
+    private final List<Ingredient> ingredients;
 
     /**
      * Holds the user comments on a Recipe.
@@ -58,12 +58,12 @@ public class Recipe implements Serializable {
     /**
      * Holds the number of servings that a Recipe makes.
      */
-    private int servings;
+    private Integer servings;
 
     /**
      * Holds the prep time in minutes for a Recipe.
      */
-    private int prepTimeMinutes;
+    private Integer prepTimeMinutes;
 
     /**
      * Holds a photograph of the result of a Recipe.
@@ -85,7 +85,7 @@ public class Recipe implements Serializable {
      * Adds an Ingredient as part of a Recipe
      * @param ingredient An Ingredient object to be added to the Recipe
      */
-    public void addIngredient(RecipeIngredient ingredient) {
+    public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
     }
 
@@ -110,7 +110,7 @@ public class Recipe implements Serializable {
      * Gets the entire ArrayList of Ingredients that make up a Recipe
      * @return The ArrayList of all Ingredients
      */
-    public List<RecipeIngredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return this.ingredients;
     }
 
@@ -169,7 +169,7 @@ public class Recipe implements Serializable {
      * Gets the number of servings that a Recipe makes
      * @return An integer representing the number of servings a Recipe makes
      */
-    public int getServings() {
+    public Integer getServings() {
         return servings;
     }
 
@@ -177,7 +177,7 @@ public class Recipe implements Serializable {
      * Sets the number of servings that a Recipe makes
      * @param servings An integer representing the number of servings a Recipe makes
      */
-    public void setServings(int servings) {
+    public void setServings(Integer servings) {
         this.servings = servings;
     }
 
@@ -185,7 +185,7 @@ public class Recipe implements Serializable {
      * Gets the time in minutes that it takes a Recipe to be prepared
      * @return An integer representing the preparation time in minutes
      */
-    public int getPrepTimeMinutes() {
+    public Integer getPrepTimeMinutes() {
         return prepTimeMinutes;
     }
 
@@ -193,7 +193,7 @@ public class Recipe implements Serializable {
      * Sets the prep time in minutes that it takes a Recipe to be prepared
      * @param prepTimeMinutes An integer representing the prep time in minutes.
      */
-    public void setPrepTimeMinutes(int prepTimeMinutes) {
+    public void setPrepTimeMinutes(Integer prepTimeMinutes) {
         this.prepTimeMinutes = prepTimeMinutes;
     }
 
