@@ -59,12 +59,6 @@ public class RecipeActivity extends ActivityBase implements
         finish();
     }
 
-    private void showDeleteDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        fm.findFragmentById(R.id.recipe_book);
-        new DeleteDialogFragment((DeleteDialogFragment.DeleteRecipe) RecipeActivity.this).show(fm, "Delete Recipe");
-    }
-
     @Override
     public void onConfirm() {
         Intent returnIntent = new Intent();
