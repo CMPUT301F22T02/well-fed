@@ -7,7 +7,7 @@ import static org.junit.Assert.assertNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.wellfed.ingredient.StorageIngredient;
-import com.example.wellfed.ingredient.StoredIngredientDB;
+import com.example.wellfed.ingredient.StorageIngredientDB;
 
 
 import org.junit.Before;
@@ -18,11 +18,11 @@ import java.util.Date;
 
 
 @RunWith(AndroidJUnit4.class)
-public class StoredIngredientDBTest {
-    StoredIngredientDB storedIngredientDB;
+public class StorageIngredientDBTest {
+    StorageIngredientDB storageIngredientDB;
     @Before
     public void before() {
-         storedIngredientDB = new StoredIngredientDB();
+         storageIngredientDB = new StorageIngredientDB();
     }
 
     /**
@@ -41,8 +41,8 @@ public class StoredIngredientDBTest {
         storedIngredient.setUnit("kg");
 
         // testing whether it was what was inserted into db
-        String id = storedIngredientDB.addStoredIngredient(storedIngredient);
-        StorageIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
+        String id = storageIngredientDB.addStoredIngredient(storedIngredient);
+        StorageIngredient resultIngredient = storageIngredientDB.getStoredIngredient(id);
         assertEquals("Broccoli", resultIngredient.getDescription());
         assertEquals("Vegetable", resultIngredient.getCategory());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
@@ -52,7 +52,7 @@ public class StoredIngredientDBTest {
 
 
         // removing it afterward
-        storedIngredientDB.removeFromIngredients(id);
+        storageIngredientDB.removeFromIngredients(id);
     }
 
     /**
@@ -64,8 +64,8 @@ public class StoredIngredientDBTest {
         StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
 
         // testing whether it was what was inserted into db
-        String id = storedIngredientDB.addStoredIngredient(storedIngredient);
-        StorageIngredient resultIngredient = storedIngredientDB.getStoredIngredient(id);
+        String id = storageIngredientDB.addStoredIngredient(storedIngredient);
+        StorageIngredient resultIngredient = storageIngredientDB.getStoredIngredient(id);
         assertEquals("Broccoli", resultIngredient.getDescription());
         assertNull(resultIngredient.getCategory());
         assertNull(resultIngredient.getBestBefore());
@@ -74,7 +74,7 @@ public class StoredIngredientDBTest {
         assertNull(resultIngredient.getUnit());
 
         // removing it afterward
-        storedIngredientDB.removeFromIngredients(id);
+        storageIngredientDB.removeFromIngredients(id);
     }
 
     /**
@@ -84,13 +84,13 @@ public class StoredIngredientDBTest {
     @Test
     public void testDeleteIngredient() throws InterruptedException {
         StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
-        String id = storedIngredientDB.addStoredIngredient(storedIngredient);
-        storedIngredientDB.removeFromIngredients(id);
+        String id = storageIngredientDB.addStoredIngredient(storedIngredient);
+        storageIngredientDB.removeFromIngredients(id);
 
         //TODO: Replace with assertThrows
         boolean present = true;
         try {
-            storedIngredientDB.getStoredIngredient(id);
+            storageIngredientDB.getStoredIngredient(id);
         } catch (IllegalArgumentException e) {
             present = false;
         }
@@ -105,7 +105,7 @@ public class StoredIngredientDBTest {
     public void deleteNonExistingIngredient() throws InterruptedException {
         // attempting to remove non-existing ingredient from db
         // this test will succeed if no error is thrown
-        storedIngredientDB.removeFromIngredients("-1");
+        storageIngredientDB.removeFromIngredients("-1");
     }
 
     /**
@@ -117,7 +117,7 @@ public class StoredIngredientDBTest {
         // TODO: change this to a assertThrows()
         boolean valid = true;
         try {
-            storedIngredientDB.getStoredIngredient("-1");
+            storageIngredientDB.getStoredIngredient("-1");
         } catch (IllegalArgumentException e) {
             valid = false;
         }
@@ -130,85 +130,84 @@ public class StoredIngredientDBTest {
      */
     @Test
     public void testUpdateIngredient() throws InterruptedException {
-        StorageIngredient oldIngredient = new StorageIngredient("Test");
+        StorageIngredient oldIngredient = new StorageIngredient("Broccoli");
         oldIngredient.setAmount(5.0f);
-        oldIngredient.setUnit("Test");
+        oldIngredient.setUnit("kg");
         Date bestBefore = new Date(2022, 10, 1);
         oldIngredient.setBestBefore(bestBefore);
-        oldIngredient.setCategory("Test");
-        oldIngredient.setLocation("Test");
+        oldIngredient.setCategory("Vegetable");
+        oldIngredient.setLocation("Fridge");
 
-        String id = storedIngredientDB.addStoredIngredient(oldIngredient);
+        String id = storageIngredientDB.addStoredIngredient(oldIngredient);
 
         // change description to Test2
         StorageIngredient updatedIngredient = oldIngredient;
-        updatedIngredient.setDescription("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
-        StorageIngredient resultIngredient =
-                storedIngredientDB.getStoredIngredient(id);
-        assertEquals("Test2", updatedIngredient.getDescription());
+        updatedIngredient.setDescription("Steamed Broccoli");
+        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        StorageIngredient resultIngredient = storageIngredientDB.getStoredIngredient(id);
+        assertEquals("Steamed Broccoli", updatedIngredient.getDescription());
         assertEquals(5.0f, resultIngredient.getAmount(), 0.01);
-        assertEquals("Test", resultIngredient.getUnit());
+        assertEquals("kg", resultIngredient.getUnit());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
-        assertEquals("Test", resultIngredient.getCategory());
-        assertEquals("Test", resultIngredient.getLocation());
+        assertEquals("Vegetable", resultIngredient.getCategory());
+        assertEquals("Fridge", resultIngredient.getLocation());
 
         // change amount to 4
         updatedIngredient.setAmount(4.0f);
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
-        resultIngredient = storedIngredientDB.getStoredIngredient(id);
-        assertEquals("Test2", updatedIngredient.getDescription());
+        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        resultIngredient = storageIngredientDB.getStoredIngredient(id);
+        assertEquals("Steamed Broccoli", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-        assertEquals("Test", resultIngredient.getUnit());
+        assertEquals("kg", resultIngredient.getUnit());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
-        assertEquals("Test", resultIngredient.getCategory());
-        assertEquals("Test", resultIngredient.getLocation());
+        assertEquals("Vegetable", resultIngredient.getCategory());
+        assertEquals("Fridge", resultIngredient.getLocation());
 
         // change unit to Test2
-        updatedIngredient.setUnit("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
-        resultIngredient = storedIngredientDB.getStoredIngredient(id);
-        assertEquals("Test2", updatedIngredient.getDescription());
+        updatedIngredient.setUnit("lb");
+        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        resultIngredient = storageIngredientDB.getStoredIngredient(id);
+        assertEquals("Steamed Broccoli", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-        assertEquals("Test2", resultIngredient.getUnit());
+        assertEquals("lb", resultIngredient.getUnit());
         assertEquals(bestBefore, resultIngredient.getBestBefore());
-        assertEquals("Test", resultIngredient.getCategory());
-        assertEquals("Test", resultIngredient.getLocation());
+        assertEquals("Vegetable", resultIngredient.getCategory());
+        assertEquals("Fridge", resultIngredient.getLocation());
 
         // change best-before to new date
         Date newBestBefore = new Date(2023, 11, 2);
         updatedIngredient.setBestBefore(newBestBefore);
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
-        resultIngredient = storedIngredientDB.getStoredIngredient(id);
-        assertEquals("Test2", updatedIngredient.getDescription());
+        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        resultIngredient = storageIngredientDB.getStoredIngredient(id);
+        assertEquals("Steamed Broccoli", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-        assertEquals("Test2", resultIngredient.getUnit());
+        assertEquals("lb", resultIngredient.getUnit());
         assertEquals(newBestBefore, resultIngredient.getBestBefore());
-        assertEquals("Test", resultIngredient.getCategory());
-        assertEquals("Test", resultIngredient.getLocation());
+        assertEquals("Vegetable", resultIngredient.getCategory());
+        assertEquals("Fridge", resultIngredient.getLocation());
 
         // change category
-        updatedIngredient.setCategory("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
-        resultIngredient = storedIngredientDB.getStoredIngredient(id);
-        assertEquals("Test2", updatedIngredient.getDescription());
+        updatedIngredient.setCategory("Cooked Vegetable");
+        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        resultIngredient = storageIngredientDB.getStoredIngredient(id);
+        assertEquals("Steamed Broccoli", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-        assertEquals("Test2", resultIngredient.getUnit());
+        assertEquals("lb", resultIngredient.getUnit());
         assertEquals(newBestBefore, resultIngredient.getBestBefore());
-        assertEquals("Test2", resultIngredient.getCategory());
-        assertEquals("Test", resultIngredient.getLocation());
+        assertEquals("Cooked Vegetable", resultIngredient.getCategory());
+        assertEquals("Fridge", resultIngredient.getLocation());
 
         // change location
-        updatedIngredient.setLocation("Test2");
-        storedIngredientDB.updateStoredIngredient(id, updatedIngredient);
-        resultIngredient = storedIngredientDB.getStoredIngredient(id);
-        assertEquals("Test2", updatedIngredient.getDescription());
+        updatedIngredient.setLocation("Freezer");
+        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
+        resultIngredient = storageIngredientDB.getStoredIngredient(id);
+        assertEquals("Steamed Broccoli", updatedIngredient.getDescription());
         assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-        assertEquals("Test2", resultIngredient.getUnit());
+        assertEquals("lb", resultIngredient.getUnit());
         assertEquals(newBestBefore, resultIngredient.getBestBefore());
-        assertEquals("Test2", resultIngredient.getCategory());
-        assertEquals("Test2", resultIngredient.getLocation());
+        assertEquals("Cooked Vegetable", resultIngredient.getCategory());
+        assertEquals("Freezer", resultIngredient.getLocation());
 
-        storedIngredientDB.removeFromIngredients(id);
+        storageIngredientDB.removeFromIngredients(id);
     }
 }

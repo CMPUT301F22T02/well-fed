@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class StoredIngredientDB {
+public class StorageIngredientDB {
     /**
      * Holds the instance of the Firebase Firestore DB.
      */
@@ -38,7 +38,7 @@ public class StoredIngredientDB {
     /**
      * Creates a reference to the Firebase DB.
      */
-    public StoredIngredientDB() {
+    public StorageIngredientDB() {
         this.db = FirebaseFirestore.getInstance();
         this.collection = db.collection("StoredIngredients");
         this.ingredients = db.collection("Ingredients");
