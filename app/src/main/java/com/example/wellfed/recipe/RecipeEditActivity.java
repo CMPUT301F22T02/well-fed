@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-// todo create an xml file for this class
 
 /**
  * Activity which allows user to edit an existing recipe
@@ -60,7 +59,7 @@ public class RecipeEditActivity extends ActivityBase {
     private FloatingActionButton fab;
     private Uri uri;
     private String downloadUrl;
-    ImageView recipeImg;
+    private ImageView recipeImg;
 
 
     // take picture
@@ -76,7 +75,7 @@ public class RecipeEditActivity extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_edit);
 
-        // intialize the variables
+        // initialize the variables
         Intent intent = getIntent();
         recipeIngredients = new ArrayList<>();
         comments = new ArrayList<>();
