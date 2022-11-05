@@ -1,5 +1,6 @@
 package com.example.wellfed.ingredient;
 
+import android.appwidget.AppWidgetHost;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
@@ -120,7 +123,8 @@ public class IngredientDB {
         batch.set(ingredientRef, item);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override public void onComplete(@NonNull Task<Void> task) {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
                 Log.d(TAG, "addIngredient:onComplete");
                 if (task.isSuccessful()) {
                     Log.d(TAG, ":isSuccessful:" + ingredientId);
@@ -145,7 +149,8 @@ public class IngredientDB {
         DocumentReference ingredientRef = collection.document(id);
         ingredientRef.get().addOnCompleteListener(
                 new OnCompleteListener<DocumentSnapshot>() {
-                    @Override public void onComplete(
+                    @Override
+                    public void onComplete(
                             @NonNull Task<DocumentSnapshot> task) {
                         Log.d(TAG, "getIngredient:onComplete");
                         if (task.isSuccessful()) {
@@ -167,6 +172,31 @@ public class IngredientDB {
                 });
     }
 
+    public void getIngredient(Ingredient ingredient, OnGetIngredientListener listener) {
+        collection
+                .whereEqualTo("category", ingredient.getCategory())
+                .whereEqualTo("description", ingredient.getDescription())
+                .get()
+                .addOnCompleteListener(
+                        new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        Ingredient ingredientInDb = hashMaptoIngredient(document.getData());
+                                        listener.onGetIngredient(ingredientInDb);
+                                        return;
+                                    }
+
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        }
+                );
+    }
+
     /**
      * Updates an ingredient in the Firebase DB.
      *
@@ -184,7 +214,8 @@ public class IngredientDB {
                 ingredient.getDescription());
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override public void onComplete(@NonNull Task<Void> task) {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
                 Log.d(TAG, "updateIngredient:onComplete");
                 if (task.isSuccessful()) {
                     Log.d(TAG, ":isSuccessful:" + ingredient.getId());
@@ -212,7 +243,8 @@ public class IngredientDB {
         batch.delete(ingredientDocument);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override public void onComplete(@NonNull Task<Void> task) {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
                 Log.d(TAG, "deleteIngredient:onComplete");
                 if (task.isSuccessful()) {
                     Log.d(TAG, ":isSuccessful:" + ingredient.getId());
@@ -224,4 +256,28 @@ public class IngredientDB {
             }
         });
     }
+
+
+    /**
+     * converts the ingredient class to a hashmap
+     *
+     * @param ingredient
+     * @return
+     */
+    public Map<String, Object> ingredientToHashMap(Ingredient ingredient) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("category", ingredient.getCategory());
+        hashMap.put("description", ingredient.getDescription());
+        return hashMap;
+    }
+
+    public Ingredient hashMaptoIngredient(Map<String, Object> hashMap) {
+        Ingredient ingredient = new Ingredient();
+        String description = (String) hashMap.get("description");
+        String category = (String) hashMap.get("category");
+        ingredient.setDescription(description);
+        ingredient.setCategory(category);
+        return ingredient;
+    }
+
 }
