@@ -29,9 +29,12 @@ import java.util.concurrent.TimeoutException;
     private static final String TAG = "IngredientDBTest";
     private static final long TIMEOUT = 5;
     IngredientDB ingredientDB;
+    Ingredient mockIngredient;
 
     @Before public void before() {
         ingredientDB = new IngredientDB();
+        mockIngredient = new Ingredient("Broccoli");
+        mockIngredient.setCategory("Vegetable");
     }
 
     /**
@@ -42,20 +45,18 @@ import java.util.concurrent.TimeoutException;
      */
     @Test public void testAddFull() throws InterruptedException {
         Log.d(TAG, "testAddFull");
-        Ingredient addIngredient = new Ingredient("Broccoli");
-        addIngredient.setCategory("Vegetable");
-
         CountDownLatch latch = new CountDownLatch(1);
-        ingredientDB.addIngredient(addIngredient, ingredient -> {
+        ingredientDB.addIngredient(mockIngredient, ingredient -> {
             Log.d(TAG, ":onAddIngredient");
             String id = ingredient.getId();
-            assertNotNull(id);
+            assertNotNull(ingredient);
 
             ingredientDB.getIngredient(id, getIngredient -> {
                 Log.d(TAG, ":onGetIngredient");
-                assertEquals(addIngredient.getCategory(),
+                assertNotNull(getIngredient);
+                assertEquals(mockIngredient.getCategory(),
                         getIngredient.getCategory());
-                assertEquals(addIngredient.getDescription(),
+                assertEquals(mockIngredient.getDescription(),
                         getIngredient.getDescription());
 
                 // remove the ingredient
@@ -71,53 +72,87 @@ import java.util.concurrent.TimeoutException;
         }
     }
 
-    //    /**
-    //     * Tests the add and get functionality, when fields are blank.
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void testAddMissingFields() throws InterruptedException {
-    //        StorageIngredient storedIngredient = new StorageIngredient
-    //        ("Broccoli");
-    //
-    //        // testing whether it was what was inserted into db
-    //        String id = storageIngredientDB.addStoredIngredient
-    //        (storedIngredient);
-    //        StorageIngredient resultIngredient = storageIngredientDB
-    //        .getStoredIngredient(id);
-    //        assertEquals("Broccoli", resultIngredient.getDescription());
-    //        assertNull(resultIngredient.getCategory());
-    //        assertNull(resultIngredient.getBestBefore());
-    //        assertNull(resultIngredient.getLocation());
-    //        assertNull(resultIngredient.getAmount());
-    //        assertNull(resultIngredient.getUnit());
-    //
-    //        // removing it afterward
-    //        storageIngredientDB.removeFromIngredients(id);
-    //    }
-    //
-    //    /**
-    //     * Tests deleting an ingredient from the database
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void testDeleteIngredient() throws InterruptedException {
-    //        StorageIngredient storedIngredient = new StorageIngredient
-    //        ("Broccoli");
-    //        String id = storageIngredientDB.addStoredIngredient
-    //        (storedIngredient);
-    //        storageIngredientDB.removeFromIngredients(id);
-    //
-    //        //TODO: Replace with assertThrows
-    //        boolean present = true;
-    //        try {
-    //            storageIngredientDB.getStoredIngredient(id);
-    //        } catch (IllegalArgumentException e) {
-    //            present = false;
-    //        }
-    //        assertFalse(present);
-    //
-    //    }
+        /**
+         * Tests the add and get functionality, when fields are blank.
+         * @throws InterruptedException if the test times out
+         */
+        @Test
+        public void testAddMissingFields() throws InterruptedException {
+            Log.d(TAG, "testAddMissingFields");
+            CountDownLatch latch = new CountDownLatch(1);
+
+            mockIngredient.setCategory(null);
+
+            // testing whether it was what was inserted into db
+            ingredientDB.addIngredient(mockIngredient, ingredient -> {
+                Log.d(TAG, ":onAddIngredient");
+                String id = ingredient.getId();
+                assertNotNull(ingredient);
+
+                ingredientDB.getIngredient(id, getIngredient -> {
+                    Log.d(TAG, ":onGetIngredient");
+                    assertNotNull(getIngredient);
+                    assertEquals("Broccoli", getIngredient.getDescription());
+                    assertNull(getIngredient.getCategory());
+
+                    // remove the ingredient
+                    ingredientDB.deleteIngredient(getIngredient,
+                            (deleteIngredient) -> {
+                                Log.d(TAG, ":onDeleteIngredient");
+                                latch.countDown();
+                            });
+                });
+            });
+
+            if (!latch.await(TIMEOUT, SECONDS)) {
+                throw new InterruptedException();
+            }
+        }
+
+        /**
+         * Tests deleting an ingredient from the database
+         * @throws InterruptedException if the test times out
+         */
+        @Test
+        public void testDeleteIngredient() throws InterruptedException {
+            Log.d(TAG, "testDeleteIngredient");
+            CountDownLatch latch = new CountDownLatch(1);
+
+            ingredientDB.addIngredient(mockIngredient,
+                    new IngredientDB.OnAddIngredientListener() {
+                        @Override
+                        public void onAddIngredient(Ingredient addIngredient) {
+                            Log.d(TAG, ":onAddIngredient");
+                            String id = addIngredient.getId();
+                            assertNotNull(addIngredient);
+                            ingredientDB.deleteIngredient(addIngredient,
+                                    new IngredientDB.OnDeleteIngredientListener() {
+                                        @Override
+                                        public void onDeleteIngredient(
+                                                Ingredient deleteIngredient) {
+                                            Log.d(TAG, ":onDeleteIngredient");
+                                            assertNotNull(deleteIngredient);
+                                            ingredientDB.getIngredient(id,
+                                                    new IngredientDB.OnGetIngredientListener() {
+                                                        @Override
+                                                        public void onGetIngredient(
+                                                                Ingredient getIngredient) {
+                                                            Log.d(TAG,
+                                                                    ":onGetIngredient");
+                                                            assertNull(
+                                                                    getIngredient);
+                                                            latch.countDown();
+                                                        }
+                                                    });
+                                        }
+                                    });
+                        }
+                    });
+
+            if (!latch.await(TIMEOUT, SECONDS)) {
+                throw new InterruptedException();
+            }
+        }
     //
     //    /**
     //     * Tests deleting a non-existing ingredient.
