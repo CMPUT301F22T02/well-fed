@@ -150,14 +150,20 @@ public class IngredientDB {
                         Log.d(TAG, "getIngredient:onComplete");
                         if (task.isSuccessful()) {
                             Log.d(TAG, ":isSuccessful:" + id);
-                            Ingredient ingredient = new Ingredient();
                             DocumentSnapshot document = task.getResult();
-                            ingredient.setCategory(
-                                    document.getString("category"));
-                            ingredient.setDescription(
-                                    document.getString("description"));
-                            ingredient.setId(id);
-                            listener.onGetIngredient(ingredient);
+                            if (document.exists()) {
+                                Log.d(TAG, ":exists:" + id);
+                                Ingredient ingredient = new Ingredient();
+                                ingredient.setCategory(
+                                        document.getString("category"));
+                                ingredient.setDescription(
+                                        document.getString("description"));
+                                ingredient.setId(id);
+                                listener.onGetIngredient(ingredient);
+                            } else {
+                                Log.d(TAG, ":notExists:" + id);
+                                listener.onGetIngredient(null);
+                            }
                         } else {
                             Log.d(TAG, ":isFailure:" + id);
                             listener.onGetIngredient(null);

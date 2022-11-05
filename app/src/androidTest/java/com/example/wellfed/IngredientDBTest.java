@@ -165,22 +165,30 @@ import java.util.concurrent.TimeoutException;
     //        storageIngredientDB.removeFromIngredients("-1");
     //    }
     //
-    //    /**
-    //     * Tests whether an exception is thrown upon getting an invalid
-    //     ingredient.
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void getNonExistingIngredient() throws InterruptedException {
-    //        // TODO: change this to a assertThrows()
-    //        boolean valid = true;
-    //        try {
-    //            storageIngredientDB.getStoredIngredient("-1");
-    //        } catch (IllegalArgumentException e) {
-    //            valid = false;
-    //        }
-    //        assertFalse(valid);
-    //    }
+        /**
+         * Tests whether null is returned upon getting an invalid
+         ingredient.
+         * @throws InterruptedException if the test times out
+         */
+        @Test
+        public void getNonExistingIngredient() throws InterruptedException {
+            Log.d(TAG, "getNonExistingIngredient");
+            CountDownLatch latch = new CountDownLatch(1);
+
+            ingredientDB.getIngredient("-1",
+                    new IngredientDB.OnGetIngredientListener() {
+                        @Override
+                        public void onGetIngredient(Ingredient getIngredient) {
+                            Log.d(TAG, ":onGetIngredient");
+                            assertNull(getIngredient);
+                            latch.countDown();
+                        }
+                    });
+
+            if (!latch.await(TIMEOUT, SECONDS)) {
+                throw new InterruptedException();
+            }
+        }
     //
     //    /**
     //     * Tests whether all of the updated fields are reflected in the
