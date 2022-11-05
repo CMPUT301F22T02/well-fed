@@ -1,6 +1,5 @@
 package com.example.wellfed.ingredient;
 
-import android.appwidget.AppWidgetHost;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -182,6 +181,7 @@ public class IngredientDB {
         collection
                 .whereEqualTo("category", ingredient.getCategory())
                 .whereEqualTo("description", ingredient.getDescription())
+                .limit(1)
                 .get()
                 .addOnCompleteListener(
                         new OnCompleteListener<QuerySnapshot>() {
@@ -190,10 +190,12 @@ public class IngredientDB {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
-                                        Ingredient ingredientInDb = hashMaptoIngredient(document.getData());
+                                        Ingredient ingredientInDb = hashMaptoIngredient(document);
+                                        ingredientInDb.setId(document.getId());
                                         listener.onGetIngredient(ingredientInDb);
                                         return;
                                     }
+                                    listener.onGetIngredient(null);
 
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -277,13 +279,16 @@ public class IngredientDB {
         return hashMap;
     }
 
-    public Ingredient hashMaptoIngredient(Map<String, Object> hashMap) {
+    public Ingredient hashMaptoIngredient(DocumentSnapshot document) {
         Ingredient ingredient = new Ingredient();
-        String description = (String) hashMap.get("description");
-        String category = (String) hashMap.get("category");
-        ingredient.setDescription(description);
-        ingredient.setCategory(category);
+
+        ingredient.setCategory(
+                document.getString("category"));
+        ingredient.setDescription(
+                document.getString("description"));
+        ingredient.setId(document.getId());
         return ingredient;
     }
+
 
 }
