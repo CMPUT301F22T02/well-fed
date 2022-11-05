@@ -23,11 +23,6 @@ import java.util.concurrent.CountDownLatch;
 /**
  * The IngredientDBTest class is used to test the IngredientDB class.
  */
-@RunWith(AndroidJUnit4.class) public class IngredientDBTest {
-    /**
-     * Holds the TAG for logging.
-     */
-
 @RunWith(AndroidJUnit4.class)
 public class IngredientDBTest {
     private static final String TAG = "IngredientDBTest";
@@ -51,7 +46,6 @@ public class IngredientDBTest {
     /**
      * Creates a new IngredientDB object and mock ingredients.
      */
-    @Before public void before() {
     @Before
     public void before() {
         ingredientDB = new IngredientDB();
@@ -68,7 +62,8 @@ public class IngredientDBTest {
      *
      * @throws InterruptedException if the test times out
      */
-    @Test public void testAddFull() throws InterruptedException {
+    @Test
+    public void testAddFull() throws InterruptedException {
         Log.d(TAG, "testAddFull");
         CountDownLatch latch = new CountDownLatch(1);
         ingredientDB.addIngredient(mockIngredient, ingredient -> {
@@ -97,15 +92,6 @@ public class IngredientDBTest {
         }
     }
 
-    /**
-     * Tests addIngredient and getIngredient on DB with a incomplete
-     * ingredient, checks that the ingredient is added to the DB.
-     *
-     * @throws InterruptedException if the test times out
-     */
-    @Test public void testAddMissingFields() throws InterruptedException {
-        Log.d(TAG, "testAddMissingFields");
-        CountDownLatch latch = new CountDownLatch(1);
     /**
      * Tests the add and get functionality, when fields are blank.
      *
@@ -149,14 +135,6 @@ public class IngredientDBTest {
      *
      * @throws InterruptedException if the test times out
      */
-    @Test public void testDeleteIngredient() throws InterruptedException {
-        Log.d(TAG, "testDeleteIngredient");
-        CountDownLatch latch = new CountDownLatch(1);
-    /**
-     * Tests deleting an ingredient from the database
-     *
-     * @throws InterruptedException if the test times out
-     */
     @Test
     public void testDeleteIngredient() throws InterruptedException {
         Log.d(TAG, "testDeleteIngredient");
@@ -188,7 +166,8 @@ public class IngredientDBTest {
      *
      * @throws InterruptedException if the test times out
      */
-    @Test public void deleteNonExistingIngredient()
+    @Test
+    public void deleteNonExistingIngredient()
             throws InterruptedException {
         Log.d(TAG, "deleteNonExistingIngredient");
         CountDownLatch latch = new CountDownLatch(1);
@@ -204,32 +183,6 @@ public class IngredientDBTest {
             throw new InterruptedException();
         }
     }
-
-    /**
-     * Tests getIngredient with a NonExistingIngredient, checks if the listener
-     * is called with null.
-     *
-     * @throws InterruptedException if the test times out
-     */
-    @Test public void getNonExistingIngredient() throws InterruptedException {
-        Log.d(TAG, "getNonExistingIngredient");
-        CountDownLatch latch = new CountDownLatch(1);
-        if (!latch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException();
-        }
-    }
-    //
-    //    /**
-    //     * Tests deleting a non-existing ingredient.
-    //     */
-    //    @Test
-    //    public void deleteNonExistingIngredient() throws
-    //    InterruptedException {
-    //        // attempting to remove non-existing ingredient from db
-    //        // this test will succeed if no error is thrown
-    //        storageIngredientDB.removeFromIngredients("-1");
-    //    }
-    //
 
     /**
      * Tests whether null is returned upon getting an invalid
@@ -281,18 +234,18 @@ public class IngredientDBTest {
         });
 
         if (!latch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException("Timed out");
-        if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
     }
+
 
     /**
      * Tests updateIngredient on DB. Checks if the ingredient was updated.
      *
      * @throws InterruptedException if the test times out
      */
-    @Test public void testUpdateIngredient() throws InterruptedException {
+    @Test
+    public void testUpdateIngredient() throws InterruptedException {
         Log.d(TAG, "testUpdateIngredient");
 
         String updatedCategory = "Fruit";
@@ -330,7 +283,6 @@ public class IngredientDBTest {
         }
     }
 
-    }
 
     @Test
     public void getIngredientByCategoryNotExists() throws InterruptedException {
@@ -348,107 +300,8 @@ public class IngredientDBTest {
         if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException("Timed out");
         }
-
     }
-
-
-    //
-    //    /**
-    //     * Tests whether all of the updated fields are reflected in the
-    //     database.
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void testUpdateIngredient() throws InterruptedException {
-    //        StorageIngredient oldIngredient = new StorageIngredient
-    //        ("Broccoli");
-    //        oldIngredient.setAmount(5.0f);
-    //        oldIngredient.setUnit("kg");
-    //        Date bestBefore = new Date(2022, 10, 1);
-    //        oldIngredient.setBestBefore(bestBefore);
-    //        oldIngredient.setCategory("Vegetable");
-    //        oldIngredient.setLocation("Fridge");
-    //
-    //        String id = storageIngredientDB.addStoredIngredient
-    //        (oldIngredient);
-    //
-    //        // change description to Test2
-    //        StorageIngredient updatedIngredient = oldIngredient;
-    //        updatedIngredient.setDescription("Steamed Broccoli");
-    //        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
-    //        StorageIngredient resultIngredient = storageIngredientDB
-    //        .getStoredIngredient(id);
-    //        assertEquals("Steamed Broccoli", updatedIngredient
-    //        .getDescription());
-    //        assertEquals(5.0f, resultIngredient.getAmount(), 0.01);
-    //        assertEquals("kg", resultIngredient.getUnit());
-    //        assertEquals(bestBefore, resultIngredient.getBestBefore());
-    //        assertEquals("Vegetable", resultIngredient.getCategory());
-    //        assertEquals("Fridge", resultIngredient.getLocation());
-    //
-    //        // change amount to 4
-    //        updatedIngredient.setAmount(4.0f);
-    //        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
-    //        resultIngredient = storageIngredientDB.getStoredIngredient(id);
-    //        assertEquals("Steamed Broccoli", updatedIngredient
-    //        .getDescription());
-    //        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-    //        assertEquals("kg", resultIngredient.getUnit());
-    //        assertEquals(bestBefore, resultIngredient.getBestBefore());
-    //        assertEquals("Vegetable", resultIngredient.getCategory());
-    //        assertEquals("Fridge", resultIngredient.getLocation());
-    //
-    //        // change unit to Test2
-    //        updatedIngredient.setUnit("lb");
-    //        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
-    //        resultIngredient = storageIngredientDB.getStoredIngredient(id);
-    //        assertEquals("Steamed Broccoli", updatedIngredient
-    //        .getDescription());
-    //        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-    //        assertEquals("lb", resultIngredient.getUnit());
-    //        assertEquals(bestBefore, resultIngredient.getBestBefore());
-    //        assertEquals("Vegetable", resultIngredient.getCategory());
-    //        assertEquals("Fridge", resultIngredient.getLocation());
-    //
-    //        // change best-before to new date
-    //        Date newBestBefore = new Date(2023, 11, 2);
-    //        updatedIngredient.setBestBefore(newBestBefore);
-    //        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
-    //        resultIngredient = storageIngredientDB.getStoredIngredient(id);
-    //        assertEquals("Steamed Broccoli", updatedIngredient
-    //        .getDescription());
-    //        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-    //        assertEquals("lb", resultIngredient.getUnit());
-    //        assertEquals(newBestBefore, resultIngredient.getBestBefore());
-    //        assertEquals("Vegetable", resultIngredient.getCategory());
-    //        assertEquals("Fridge", resultIngredient.getLocation());
-    //
-    //        // change category
-    //        updatedIngredient.setCategory("Cooked Vegetable");
-    //        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
-    //        resultIngredient = storageIngredientDB.getStoredIngredient(id);
-    //        assertEquals("Steamed Broccoli", updatedIngredient
-    //        .getDescription());
-    //        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-    //        assertEquals("lb", resultIngredient.getUnit());
-    //        assertEquals(newBestBefore, resultIngredient.getBestBefore());
-    //        assertEquals("Cooked Vegetable", resultIngredient.getCategory());
-    //        assertEquals("Fridge", resultIngredient.getLocation());
-    //
-    //        // change location
-    //        updatedIngredient.setLocation("Freezer");
-    //        storageIngredientDB.updateStoredIngredient(id, updatedIngredient);
-    //        resultIngredient = storageIngredientDB.getStoredIngredient(id);
-    //        assertEquals("Steamed Broccoli", updatedIngredient
-    //        .getDescription());
-    //        assertEquals(4.0f, resultIngredient.getAmount(), 0.01);
-    //        assertEquals("lb", resultIngredient.getUnit());
-    //        assertEquals(newBestBefore, resultIngredient.getBestBefore());
-    //        assertEquals("Cooked Vegetable", resultIngredient.getCategory());
-    //        assertEquals("Freezer", resultIngredient.getLocation());
-    //
-    //        storageIngredientDB.removeFromIngredients(id);
-    //    }
-
-
 }
+
+
+
