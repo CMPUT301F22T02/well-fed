@@ -48,9 +48,9 @@ public class IngredientDB {
     public interface OnAddIngredientListener {
         /**
          * Called when the addIngredient method is complete.
-
+         *
          * @param ingredient The ingredient that was added to the database or
-         *                  null if the ingredient was not added.
+         *                   null if the ingredient was not added.
          */
         void onAddIngredient(Ingredient ingredient);
     }
@@ -62,20 +62,22 @@ public class IngredientDB {
     public interface OnGetIngredientListener {
         /**
          * Called when the getIngredient method is complete.
-
+         *
          * @param ingredient The ingredient that was retrieved from the database
-         *                  or null if the ingredient was not retrieved.
+         *                   or null if the ingredient was not retrieved.
          */
         void onGetIngredient(Ingredient ingredient);
     }
 
     /**
-     * The OnUpdateIngredientListener interface is used to handle the result of the
+     * The OnUpdateIngredientListener interface is used to handle the result
+     * of the
      * updateIngredient method.
      */
     public interface OnUpdateIngredientListener {
         /**
          * Called when the updateIngredient method is complete.
+         *
          * @param ingredient The ingredient that was updated in the database or
          *                   null if the ingredient was not updated.
          */
@@ -83,13 +85,16 @@ public class IngredientDB {
     }
 
     /**
-     * The OnDeleteIngredientListener interface is used to handle the result of the
-     *  deleteIngredient method.
+     * The OnDeleteIngredientListener interface is used to handle the result
+     * of the
+     * deleteIngredient method.
      */
     public interface OnDeleteIngredientListener {
         /**
          * Called when the deleteIngredient method is complete.
-         * @param ingredient The ingredient that was deleted from the database or
+         *
+         * @param ingredient The ingredient that was deleted from the
+         *                   database or
          *                   null if the ingredient was not deleted.
          */
         void onDeleteIngredient(Ingredient ingredient);

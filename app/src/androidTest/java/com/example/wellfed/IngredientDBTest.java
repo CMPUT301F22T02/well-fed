@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeoutException;
 
 
 @RunWith(AndroidJUnit4.class) public class IngredientDBTest {
@@ -65,7 +66,9 @@ import java.util.concurrent.CountDownLatch;
                         });
             });
         });
-        latch.await(TIMEOUT, SECONDS);
+        if (!latch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
     }
 
     //    /**
