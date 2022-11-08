@@ -1,89 +1,120 @@
 /*
- * RequiredTextInputLayout
+ * RequiredDropdownTextInputLayout
  *
  * Version: v1.0.0
  *
- * Date: 2022-09-26
+ * Date: 2022-11-03
  *
  * Copyright notice:
- * This file is part of stang5-Foodbook.
+ * This file is part of well-fed.
  *
- * stang5-Foodbook is free software: you can redistribute it and/or modify it
- *  under the terms of the GNU General Public License as published by the
+ * well-fed is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or (at your
  * option) any later version.
  *
- * stang5-Foodbook is distributed in the hope that it will be useful, but
+ * well-fed is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *  or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
  * for more details.
  *
  * You should have received a copy of the GNU General Public License along
- * with stang5-Foodbook. If not, see <https://www.gnu.org/licenses/>.
+ * with well-fed. If not, see <https://www.gnu.org/licenses/>.
  */
 
 package com.example.wellfed.common;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
 /**
- * The RequiredTextInputLayout class extends the TextInputLayout
- * class to provide methods for performing data validation.
- * <p>
+ * The RequiredDropdownTextInputLayout class extends the RequiredTextInputLayout
+ * class to provide methods for compatibility with Dropdowns.
  * Citation:
- * TextInputLayout. Android Developers. (n.d.). Retrieved September 26, 2022,
- * from https://developer.android.com/reference/com/google/android/material/
- * textfield/TextInputLayout
+ * MaterialAutoCompleteTextView. Android Developers. (n.d.).
+ * Retrieved November 3, 2022, from https://developer.android.com/reference/com/
+ * google/android/material/textfield/MaterialAutoCompleteTextView
  *
  * @author Steven Tang
- * @version v1.0.0 2022-09-26
+ * @version v1.0.0 2022-11-03
  **/
 public class RequiredDropdownTextInputLayout extends RequiredTextInputLayout {
-    private AutoCompleteTextView autoCompleteTextView;
+    /**
+     * Holds the MaterialAutoCompleteTextView associated with the
+     * TextInputLayout
+     */
+    private MaterialAutoCompleteTextView autoCompleteTextView;
 
+    /**
+     * Constructs a RequiredDropdownTextInputLayout object
+     *
+     * @param context the context
+     */
     public RequiredDropdownTextInputLayout(@NonNull Context context) {
         this(context, null);
     }
 
+    /**
+     * Constructs a RequiredDropdownTextInputLayout object
+     *
+     * @param context the context
+     * @param attrs   the attributes
+     */
     public RequiredDropdownTextInputLayout(@NonNull Context context,
                                            @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
+    /**
+     * Constructs a RequiredDropdownTextInputLayout object
+     *
+     * @param context      the context
+     * @param attrs        the attributes
+     * @param defStyleAttr the default style attribute
+     */
     public RequiredDropdownTextInputLayout(@NonNull Context context,
                                            @Nullable AttributeSet attrs,
                                            int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    public void setPlaceholderText(String initialText) {
-        this.initialText = initialText;
-        this.autoCompleteTextView.setText(initialText, false);
+    /**
+     * Set the placeholder text of the MaterialAutoCompleteTextView
+     *
+     * @param placeholderText the placeholder text
+     */
+    @Override public void setPlaceholderText(String placeholderText) {
+        super.setPlaceholderText(placeholderText);
+        this.autoCompleteTextView.setText(placeholderText, false);
     }
 
-    /*
-     * The onEditTextAttached method sets an OnClickListener on the
-     * TextInputLayout.
+    /**
+     * Set the dropdown items of the MaterialAutoCompleteTextView
+     *
+     * @param items the items to populate the dropdown
      */
-    @Override
-    public void onEditTextAttached(
+    public void setSimpleItems(String[] items) {
+        this.autoCompleteTextView.setSimpleItems(items);
+    }
+
+    /**
+     * Sets autoCompleteTextView to the MaterialAutoCompleteTextView
+     *
+     * @param textInputLayout the TextInputLayout
+     */
+    @Override public void onEditTextAttached(
             @NonNull TextInputLayout textInputLayout) {
         super.onEditTextAttached(textInputLayout);
         this.autoCompleteTextView =
-                (AutoCompleteTextView) Objects.requireNonNull(
+                (MaterialAutoCompleteTextView) Objects.requireNonNull(
                         textInputLayout.getEditText());
     }
 }

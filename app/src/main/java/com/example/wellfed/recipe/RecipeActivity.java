@@ -1,76 +1,117 @@
 package com.example.wellfed.recipe;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
-import com.example.wellfed.common.OnDeleteListener;
+import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
+import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeActivity extends ActivityBase implements OnDeleteListener {
-    private List<RecipeIngredient> ingredientList;
+/**
+ * Activity that holds the view for Recipe showing all it's detail
+ * @version 1.0.0
+ */
+public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
+    /**
+     * stores the list of Ingredient{@link Ingredient}
+     */
+    private List<Ingredient> ingredientList;
+
+    /**
+     * stores the recipe {@link Recipe}
+     */
     private Recipe recipe;
+
+    /**
+     * RecyclerView for the ingredients in the recipe
+     */
     private RecyclerView ingredientRv;
+
+    /**
+     * Adapter that works with ingredentRv{@link RecipeActivity#ingredientRv}
+     */
     private RecipeIngredientAdapter recipeIngredientAdapter;
 
+    /**
+     * method that is called when the activity is created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
+        // Initialize the variables
         ingredientList = new ArrayList<>();
 
-
-        getParent();
+        /**
+         * Stores the intent the activity was created with
+         */
         Intent intent = getIntent();
-        this.recipe = (Recipe) intent.getSerializableExtra("Recipe");
-        for (RecipeIngredient ingredient: recipe.getIngredients()){
+
+
+        recipe = (Recipe) intent.getSerializableExtra("Recipe");
+
+        // add ingredients to the recipe
+        for (Ingredient ingredient : recipe.getIngredients()) {
             ingredientList.add(ingredient);
         }
 
-
+        // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
+        TextView prepTime = findViewById(R.id.recipe_prep_time_textView);
+        TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
+        TextView category = findViewById(R.id.recipe_category);
+        ImageView img = findViewById(R.id.recipe_img);
         title.setText(recipe.getTitle());
+        prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+        servings.setText("Servings: " + Integer.toString(recipe.getServings()));
+        category.setText("Category: " + recipe.getCategory());
+        Picasso.get()
+                .load(recipe.getPhotograph())
+                .rotate(90)
+                .into(img);
 
+        // ingredient recycle view
         ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
-        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList);
+        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList,
+                R.layout.recipe_ingredient);
         ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
-
-//        TODO: implement delete button
+        /**
+         * DeleteBtn to create a dialog asking for delete confirmation
+         */
+        DeleteButton deleteBtn = new DeleteButton(
+                this,
+                findViewById(R.id.recipe_delete_btn),
+                "Delete Recipe",
+                this);
     }
 
+    /**
+     * method that stops the activity with a result
+     * when delete confirmation is complete
+     */
     @Override
-    public void onBackPressed() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Recipe", recipe);
-        returnIntent.putExtra("Reason", "BackPressed");
-        setResult(Activity.RESULT_OK, returnIntent);
+    public void onConfirm() {
+        Intent intent = new Intent();
+        intent.putExtra("Recipe", recipe);
+        intent.putExtra("type", "delete");
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
-
-    @Override
-    public void onDelete() {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Reason", "Delete");
-        setResult(Activity.RESULT_OK, returnIntent);
-        finish();
-    }
-
-
 }

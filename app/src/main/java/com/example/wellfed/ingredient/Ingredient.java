@@ -39,6 +39,11 @@ public class Ingredient implements Serializable {
     private Float amount;
 
     /**
+     * Holds the database ID of an Ingredient
+     */
+    private String id;
+
+    /**
      * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
      * @param description The description/title of an Ingredient
      */
@@ -46,6 +51,9 @@ public class Ingredient implements Serializable {
         this.description = description;
     }
 
+    /**
+     * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
+     */
     public Ingredient() {
         this.description = null;
     }
@@ -106,7 +114,27 @@ public class Ingredient implements Serializable {
         this.amount = amount;
     }
 
+    /**
+     * Gets the amount of an ingredient
+     * @return the amount
+     */
     public Float getAmount() {
         return amount;
+    }
+
+    /**
+     * Get the database ID of an ingredient. This returns null if the ingredient is not in DB.
+     * @return the ID of the ingredient
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the database ID of an ingredient.
+     * @param id the ID of the ingredient
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 }
