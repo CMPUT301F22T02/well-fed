@@ -19,6 +19,9 @@ public class ShoppingCartFragment extends Fragment {
     ShoppingCartController controller;
     ShoppingCartIngredientAdapter adapter;
 
+    RecyclerView shoppingcartRecyclerView;
+    LinearLayoutManager linearLayoutManager;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
@@ -29,8 +32,13 @@ public class ShoppingCartFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        shoppingcartRecyclerView = view.findViewById(R.id.shopping_cart_list);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        shoppingcartRecyclerView.setLayoutManager(linearLayoutManager);
         controller = new ShoppingCartController();
         adapter = new ShoppingCartIngredientAdapter(controller.getIngredients());
 
+        controller.setAdapter(adapter);
+        shoppingcartRecyclerView.setAdapter(adapter);
     }
 }

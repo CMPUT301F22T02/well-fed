@@ -21,13 +21,18 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView ingredientNameTextView;
-        public TextView ingredientAttributeTextView;
+        public TextView ingredientDescription;
+        public TextView ingredientAmount;
+        public TextView ingredientUnit;
+        public TextView ingredientCategory;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ingredientNameTextView = itemView.findViewById(R.id.shopping_cart_ingredient_name);
-            ingredientAttributeTextView = itemView.findViewById(R.id.shopping_cart_ingredient_subtext);
+            ingredientDescription = itemView.findViewById(R.id.shopping_cart_ingredient_description);
+            ingredientAmount = itemView.findViewById(R.id.shopping_cart_ingredient_amount);
+            ingredientUnit = itemView.findViewById(R.id.shopping_cart_ingredient_unit);
+            ingredientCategory = itemView.findViewById(R.id.shopping_cart_ingredient_category);
         }
     }
 
@@ -45,13 +50,17 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ShoppingCartIngredient ingredient = ingredients.get(position);
+        holder.ingredientDescription.setText(ingredient.getDescription());
+        holder.ingredientAmount.setText(String.valueOf(ingredient.getAmount()));
+        holder.ingredientUnit.setText(ingredient.getUnit());
+        holder.ingredientCategory.setText(ingredient.getCategory());
 
-        TextView ingredientNameTextView = holder.ingredientNameTextView;
-        ingredientNameTextView.setText(ingredient.getDescription());
-
-        TextView ingredientAttributeTextView = holder.ingredientAttributeTextView;
-        String unit = ingredient.getUnit();
-        ingredientAttributeTextView.setText(unit);
+//        TextView ingredientNameTextView = holder.ingredientNameTextView;
+//        ingredientNameTextView.setText(ingredient.getDescription());
+//
+//        TextView ingredientAttributeTextView = holder.ingredientAttributeTextView;
+//        String unit = ingredient.getUnit();
+//        ingredientAttributeTextView.setText(unit);
     }
 
     @Override
