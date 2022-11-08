@@ -16,37 +16,21 @@ import com.example.wellfed.R;
 import java.util.ArrayList;
 
 public class ShoppingCartFragment extends Fragment {
-    ArrayList<ShoppingCartIngredient> shoppingCartIngredients;
+    ShoppingCartController controller;
+    ShoppingCartIngredientAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        shoppingCartIngredients = new ArrayList<>();
         return inflater.inflate(R.layout.fragment_shopping_cart, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Bundle args = getArguments();
+        controller = new ShoppingCartController();
+        adapter = new ShoppingCartIngredientAdapter(controller.getIngredients());
 
-        RecyclerView rvShoppingCart = view.findViewById(R.id.shopping_cart_list);
-
-        ShoppingCartIngredient ingredient1 = new ShoppingCartIngredient("Banana");
-        ingredient1.setUnit("chad");
-        shoppingCartIngredients.add(ingredient1);
-
-        ShoppingCartIngredient ingredient2 = new ShoppingCartIngredient("Anana");
-        ingredient2.setUnit("megachad");
-        shoppingCartIngredients.add(ingredient2);
-
-        ShoppingCartIngredient ingredient3 = new ShoppingCartIngredient("Nana");
-        ingredient3.setUnit("gigachad");
-        shoppingCartIngredients.add(ingredient3);
-
-        ShoppingCartIngredientAdapter adapter = new ShoppingCartIngredientAdapter(shoppingCartIngredients);
-        rvShoppingCart.setAdapter(adapter);
-        rvShoppingCart.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }
