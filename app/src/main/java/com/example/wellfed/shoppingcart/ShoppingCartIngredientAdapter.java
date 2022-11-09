@@ -39,46 +39,64 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
 
     /**
      * ViewHolder class for the ShoppingCartIngredientAdapter.
-     * It contains the TextViews for the name and the attribute of the ingredient.
+     * It contains the TextViews for the description, amount,
+     * unit and category of the ingredient.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView ingredientDescription;
-        public TextView ingredientAmount;
-        public TextView ingredientUnit;
-        public TextView ingredientCategory;
+        public TextView description;
+        public TextView amount;
+        public TextView unit;
+        public TextView category;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ingredientDescription = itemView.findViewById(R.id.shopping_cart_ingredient_description);
-            ingredientAmount = itemView.findViewById(R.id.shopping_cart_ingredient_amount);
-            ingredientUnit = itemView.findViewById(R.id.shopping_cart_ingredient_unit);
-            ingredientCategory = itemView.findViewById(R.id.shopping_cart_ingredient_category);
+            description = itemView.findViewById(R.id.shopping_cart_ingredient_description);
+            amount = itemView.findViewById(R.id.shopping_cart_ingredient_amount);
+            unit = itemView.findViewById(R.id.shopping_cart_ingredient_unit);
+            category = itemView.findViewById(R.id.shopping_cart_ingredient_category);
         }
     }
 
+    /**
+     * onCreateViewHolder method for the ShoppingCartIngredientAdapter.
+     * @param parent ViewGroup for the adapter.
+     * @param viewType int for the adapter.
+     * @return ViewHolder object for the adapter.
+     */
     @NonNull
     @Override
-    public ShoppingCartIngredientAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
 
-        View ingredientView = layoutInflater.inflate(R.layout.shopping_cart_ingredient, parent,
+        View shoppingCartIngredientView = inflater.inflate(R.layout.shopping_cart_ingredient, parent,
                 false);
 
-        return new ViewHolder(ingredientView);
+        return new ViewHolder(shoppingCartIngredientView);
     }
 
+    /**
+     * onBindViewHolder method for the ShoppingCartIngredientAdapter.
+     * @param holder ViewHolder object for the adapter.
+     * @param position int for the adapter.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ShoppingCartIngredient ingredient = ingredients.get(position);
+        ShoppingCartIngredient ingredient = shoppingCartIngredients.get(position);
 
-        holder.ingredientDescription.setText(ingredient.getDescription());
-        holder.ingredientAmount.setText(String.valueOf(ingredient.getAmount()));
-        holder.ingredientUnit.setText(ingredient.getUnit());
-        holder.ingredientCategory.setText(ingredient.getCategory());
+        holder.description.setText(ingredient.getDescription());
+        holder.amount.setText(String.valueOf(ingredient.getAmount()));
+        holder.unit.setText(ingredient.getUnit());
+        holder.category.setText(ingredient.getCategory());
+
+        holder.itemView.setOnClickListener(v -> shoppingCartIngredientLauncher.launch(position));
     }
 
+    /**
+     * getItemCount method for the ShoppingCartIngredientAdapter.
+     * @return int for the adapter.
+     */
     @Override
-    public int getItemCount() {return ingredients.size();}
+    public int getItemCount() {return shoppingCartIngredients.size();}
 }
