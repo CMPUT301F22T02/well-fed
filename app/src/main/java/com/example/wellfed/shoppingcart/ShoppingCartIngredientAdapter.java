@@ -17,12 +17,12 @@ import java.util.ArrayList;
 
 // This class is used to display the list of ingredients in the shopping cart
 public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<ShoppingCartIngredientAdapter.ViewHolder> {
-    ArrayList<ShoppingCartIngredient> shoppingCartIngredients;
+    private ArrayList<ShoppingCartIngredient> shoppingCartIngredients;
 
     /**
      * ShoppingCartIngredientLauncher object for the adapter.
      */
-    ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
+    private ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
 
     /**
      * Constructor for the launcher.
@@ -31,6 +31,11 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         public void launch(int pos);
     }
 
+    /**
+     * Constructor for the IngredientAdapter.
+     * @param shoppingCartIngredients ArrayList of ShoppingCartIngredient objects for the adapter.
+     * @param shoppingCartFragment ShoppingCartFragment object for the adapter.
+     */
     public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> shoppingCartIngredients,
                                          ShoppingCartFragment shoppingCartFragment) {
         this.shoppingCartIngredients = shoppingCartIngredients;

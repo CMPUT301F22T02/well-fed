@@ -21,7 +21,7 @@ public class ShoppingCartIngredientEditContract extends ActivityResultContract<S
      */
     @NonNull
     @Override
-    public Intent createIntent(@NonNull Context context, ShoppingCartIngredientContract shoppingCartIngredient) {
+    public Intent createIntent(@NonNull Context context, ShoppingCartIngredient shoppingCartIngredient) {
         Intent intent = new Intent(context, ShoppingCartIngredientEditActivity.class);
         intent.putExtra("ingredient", shoppingCartIngredient);
         return intent;
