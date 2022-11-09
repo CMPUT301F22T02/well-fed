@@ -9,8 +9,6 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Objects;
-
 public class IngredientContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
     /**
      * Creates an Intent for the IngredientEditActivity.

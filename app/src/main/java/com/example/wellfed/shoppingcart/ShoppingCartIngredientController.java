@@ -2,7 +2,7 @@ package com.example.wellfed.shoppingcart;
 
 import java.util.ArrayList;
 
-public class ShoppingCartController {
+public class ShoppingCartIngredientController {
     private ArrayList<ShoppingCartIngredient> ingredients;
 
     private ShoppingCartIngredientAdapter adapter;
@@ -15,7 +15,7 @@ public class ShoppingCartController {
         this.adapter = adapter;
     }
 
-    public ShoppingCartController() {
+    public ShoppingCartIngredientController() {
         ingredients = new ArrayList<>();
         // Demo data
         ShoppingCartIngredient ingredient1 = new ShoppingCartIngredient("Banana");
@@ -32,5 +32,9 @@ public class ShoppingCartController {
         ingredient3.setAmount((float)4.5);
         ingredient3.setUnit("L(s)");
         ingredient3.setCategory("drinks");
+
+        ingredients.add(ingredient1);
+        ingredients.add(ingredient2);
+        ingredients.add(ingredient3);
     }
 }

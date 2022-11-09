@@ -59,17 +59,11 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ShoppingCartIngredient ingredient = ingredients.get(position);
+
         holder.ingredientDescription.setText(ingredient.getDescription());
         holder.ingredientAmount.setText(String.valueOf(ingredient.getAmount()));
         holder.ingredientUnit.setText(ingredient.getUnit());
         holder.ingredientCategory.setText(ingredient.getCategory());
-
-//        TextView ingredientNameTextView = holder.ingredientNameTextView;
-//        ingredientNameTextView.setText(ingredient.getDescription());
-//
-//        TextView ingredientAttributeTextView = holder.ingredientAttributeTextView;
-//        String unit = ingredient.getUnit();
-//        ingredientAttributeTextView.setText(unit);
     }
 
     @Override

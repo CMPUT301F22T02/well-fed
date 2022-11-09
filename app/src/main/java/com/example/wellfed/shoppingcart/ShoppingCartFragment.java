@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,33 +13,50 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.Launcher;
 
 import java.util.ArrayList;
 
-public class ShoppingCartFragment extends Fragment {
-    ShoppingCartController controller;
-    ShoppingCartIngredientAdapter adapter;
+public class ShoppingCartFragment extends Fragment implements ShoppingCartIngredientAdapter.ShoppingCartIngredientLauncher, Launcher {
+    /**
+     * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
+     */
+    private ShoppingCart shoppingCart;
 
-    RecyclerView shoppingcartRecyclerView;
-    LinearLayoutManager linearLayoutManager;
+    /**
+     * Adapter for the recycler view.
+     */
+    private ShoppingCartIngredientAdapter shoppingCartIngredientAdapter;
+
+    /**
+     * Controller for the ingredients.
+     */
+    private ShoppingCartIngredientController shoppingCartIngredientController;
+
+    /**
+     * Recycler view for the ingredients.
+     */
+    RecyclerView recyclerView;
+
+    int position;
+
+    /**
+     * ActivityResultLauncher for the ShoppingCartIngredientEditActivity to edit an ingredient.
+     * The result is a ShoppingCartIngredient.
+     * The result is null if the user cancels the edit.
+     */
+    ActivityResultLauncher<ShoppingCartIngredient> shoppingCartIngredientLauncher = registerForActivityResult(new )
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_shopping_cart, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        shoppingcartRecyclerView = view.findViewById(R.id.shopping_cart_list);
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        shoppingcartRecyclerView.setLayoutManager(linearLayoutManager);
-        controller = new ShoppingCartController();
-        adapter = new ShoppingCartIngredientAdapter(controller.getIngredients());
 
-        controller.setAdapter(adapter);
-        shoppingcartRecyclerView.setAdapter(adapter);
     }
 }
