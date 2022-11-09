@@ -190,7 +190,7 @@ public class IngredientDB {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         Log.d(TAG, document.getId() + " => " + document.getData());
-                                        Ingredient ingredientInDb = hashMaptoIngredient(document);
+                                        Ingredient ingredientInDb = snapshotToIngredient(document);
                                         ingredientInDb.setId(document.getId());
                                         listener.onGetIngredient(ingredientInDb);
                                         return;
@@ -279,7 +279,7 @@ public class IngredientDB {
         return hashMap;
     }
 
-    public Ingredient hashMaptoIngredient(DocumentSnapshot document) {
+    public Ingredient snapshotToIngredient(DocumentSnapshot document) {
         Ingredient ingredient = new Ingredient();
 
         ingredient.setCategory(

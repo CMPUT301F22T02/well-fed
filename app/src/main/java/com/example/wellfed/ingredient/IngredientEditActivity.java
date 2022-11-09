@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
@@ -16,7 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Date;
 import java.util.Objects;
 
-public class IngredientEditActivity extends AppCompatActivity implements ConfirmDialog.OnConfirmListener {
+public class IngredientEditActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
     /**
      * EditText for the ingredient's name.
      */

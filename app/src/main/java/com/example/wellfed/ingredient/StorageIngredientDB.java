@@ -22,6 +22,9 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class StorageIngredientDB {
+
+    private final static String TAG = "StorageIngredientDB";
+
     /**
      * Holds the instance of the Firebase Firestore DB.
      */
@@ -36,6 +39,19 @@ public class StorageIngredientDB {
     private CollectionReference ingredients;
 
     /**
+     * This interface is used to handle the result of
+     * adding StorageIngredient to the db
+     */
+    public interface onAddStorageIngredient {
+        /**
+         * Called when addStorageIngredient returns a result
+         *
+         * @param storageIngredient the storageIngredient returned by the db
+         */
+        void onAddStoredIngredient(StorageIngredient storageIngredient);
+    }
+
+    /**
      * Creates a reference to the Firebase DB.
      */
     public StorageIngredientDB() {
@@ -46,51 +62,66 @@ public class StorageIngredientDB {
 
     /**
      * Adds an ingredient in storage to the Firebase DB.
+     *
      * @param storedIngredient the ingredient to be added
      * @return a map containing the ID of the Ingredient and StoredIngredient
      * @throws InterruptedException when the on success listeners cannot complete
      */
-    public String addStoredIngredient(@NonNull StorageIngredient storedIngredient) throws InterruptedException {
-        // creating batch and return value
-        WriteBatch batch = db.batch();
+    public void addStoredIngredient(@NonNull StorageIngredient storedIngredient, onAddStorageIngredient listener)
+            throws InterruptedException {
+        // if ingredient already exists
+        IngredientDB ingredientDB = new IngredientDB();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setCategory(storedIngredient.getCategory());
+        ingredient.setDescription(storedIngredient.getDescription());
+        HashMap<String, Object> toStore = new HashMap<>();
+        toStore.put("best-before", storedIngredient.getBestBefore());
+        toStore.put("location", storedIngredient.getLocation());
+        toStore.put("amount", storedIngredient.getAmount());
+        toStore.put("unit", storedIngredient.getUnit());
+        ingredientDB.getIngredient(ingredient, foundIngredient -> {
+            if (foundIngredient == null) {
+                // create a new ingredient
+                ingredientDB.addIngredient(ingredient, addedIngredient -> {
+                    DocumentReference ingredientDocument = this.ingredients.document(addedIngredient.getId());
+                    toStore.put("Ingredient", ingredientDocument);
+                    this.collection
+                            .add(toStore)
+                            .addOnSuccessListener(storedReference -> {
+                                Log.d(TAG, "Added storedIngredient with id: " + storedReference.getId());
+                                storedIngredient.setId(storedReference.getId());
+                                listener.onAddStoredIngredient(storedIngredient);
+                            })
+                            .addOnFailureListener(failure -> {
+                                Log.d(TAG, "Failed to add storage ingredient");
+                                listener.onAddStoredIngredient(null);
+                            });
+                });
 
-        // add ingredient info to batch
-        String ingredientId = this.ingredients.document().getId();
-        DocumentReference ingredientRef = ingredients.document(ingredientId);
-        Map<String, Object> ingredient = new HashMap<>();
-        ingredient.put("category", storedIngredient.getCategory());
-        ingredient.put("description", storedIngredient.getDescription());
-        batch.set(ingredientRef, ingredient);
+            } else {
+                DocumentReference documentReference = db
+                        .collection("Ingredients")
+                        .document(foundIngredient.getId());
 
-        // add stored ingredient info to batch
-        DocumentReference storedIngredientRef = collection.document(ingredientId);
-        Map<String, Object> stored = new HashMap<>();
-        stored.put("unit", storedIngredient.getUnit());
-        stored.put("amount", storedIngredient.getAmount());
-        stored.put("location", storedIngredient.getLocation());
-        stored.put("best-before", storedIngredient.getBestBefore());
-        DocumentReference documentReference = db.document("Ingredients/"+ingredientId);
-        stored.put("ingredient", documentReference);
-        batch.set(storedIngredientRef, stored);
-
-        CountDownLatch batchComplete = new CountDownLatch(1);
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "Ingredient written with ID: " + ingredientId);
-                batchComplete.countDown();
+                toStore.put("Ingredient", documentReference);
+                this.collection
+                        .add(toStore)
+                        .addOnSuccessListener(stored -> {
+                            Log.d(TAG, "Added storedIngredient with id: " + stored.getId());
+                            storedIngredient.setId(stored.getId());
+                            listener.onAddStoredIngredient(storedIngredient);
+                        })
+                        .addOnFailureListener(exception -> {
+                            Log.d(TAG, "Failed to add storage ingredient");
+                            listener.onAddStoredIngredient(null);
+                        });
             }
         });
-
-        batchComplete.await();
-
-        storedIngredient.setId(ingredientId);
-
-        return ingredientId;
     }
 
     /**
      * Updates a stored ingredient in the Firebase DB.
+     *
      * @param storedIngredient the Ingredient containing the updated fields
      * @throws InterruptedException when the on success listeners cannot complete
      */
@@ -124,6 +155,7 @@ public class StorageIngredientDB {
 
     /**
      * Removes an ingredient from storage, but keeps the Ingredient reference
+     *
      * @param id the ID of an ingredient to remove
      */
     public void removeFromStorage(String id) {
@@ -147,6 +179,7 @@ public class StorageIngredientDB {
 
     /**
      * Removes an ingredient from storage, and the ingredient collection
+     *
      * @param id the ID of the ingredient to remove
      */
     public void removeFromIngredients(String id) throws InterruptedException {
@@ -171,9 +204,10 @@ public class StorageIngredientDB {
 
     /**
      * Gets an ingredient from the Firebase DB
+     *
      * @param id the ID of the ingredient to get
      * @return The ingredient queried. If there is no result, it will return a StoredIngredient
-     *          with a null description.
+     * with a null description.
      * @throws InterruptedException when the onComplete listener is interrupted
      */
     public StorageIngredient getStoredIngredient(String id) throws InterruptedException {
@@ -248,10 +282,11 @@ public class StorageIngredientDB {
 
     /**
      * Get the DocumentReference from Recipes collection for the given id
+     *
      * @param id The String of the document in Recipes collection we want
      * @return DocumentReference of the Recipe
      */
-    public DocumentReference getDocumentReference(String id){
+    public DocumentReference getDocumentReference(String id) {
         return collection.document(id);
     }
 }
