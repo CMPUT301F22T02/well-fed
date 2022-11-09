@@ -113,26 +113,27 @@ public class StorageIngredientDBTest {
 //        storageIngredientDB.removeFromIngredients(id);
 //    }
 //
-//    /**
-//     * Tests deleting an ingredient from the database
-//     * @throws InterruptedException
-//     */
-//    @Test
-//    public void testDeleteIngredient() throws InterruptedException {
-//        StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
-//        String id = storageIngredientDB.addStoredIngredient(storedIngredient);
-//        storageIngredientDB.removeFromIngredients(id);
-//
-//        //TODO: Replace with assertThrows
-//        boolean present = true;
-//        try {
-//            storageIngredientDB.getStoredIngredient(id);
-//        } catch (IllegalArgumentException e) {
-//            present = false;
-//        }
-//        assertFalse(present);
-//
-//    }
+
+    /**
+     * Tests deleting an ingredient from the database
+     */
+    @Test
+    public void testDeleteIngredient() throws InterruptedException {
+        StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
+        CountDownLatch latch = new CountDownLatch(1);
+
+        storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient -> {
+            storageIngredientDB.deleteStorageIngredient(storedIngredient, deletedStorageIngredient -> {
+                assertNotNull(deletedStorageIngredient);
+                latch.countDown();
+            });
+        });
+
+        if (!latch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+    }
 //
 //    /**
 //     * Tests deleting a non-existing ingredient.

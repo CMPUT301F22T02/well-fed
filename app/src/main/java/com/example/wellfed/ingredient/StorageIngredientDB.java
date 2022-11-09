@@ -56,6 +56,19 @@ public class StorageIngredientDB {
 
     /**
      * This interface is used to handle the result of
+     * adding StorageIngredient to the db
+     */
+    public interface onDeleteStorageIngredient {
+        /**
+         * Called when addStorageIngredient returns a result
+         *
+         * @param storageIngredient the storageIngredient returned by the db
+         */
+        void onDeleteStoredIngredient(StorageIngredient storageIngredient);
+    }
+
+    /**
+     * This interface is used to handle the result of
      * finding StorageIngredient to the db
      */
     public interface onGetStorageIngredient {
@@ -173,25 +186,23 @@ public class StorageIngredientDB {
     /**
      * Removes an ingredient from storage, but keeps the Ingredient reference
      *
-     * @param id the ID of an ingredient to remove
+     * @param toDelete the storageIngredient to remove
      */
-    public void removeFromStorage(String id) {
+    public void deleteStorageIngredient(StorageIngredient toDelete, onDeleteStorageIngredient listener) {
         // removes ingredient from storage
         this.collection
-                .document(id)
+                .document(toDelete.getId())
                 .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+                .addOnSuccessListener(onDelete -> {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            listener.onDeleteStoredIngredient(toDelete);
+                        }
+                )
+                .addOnFailureListener(failure -> {
+                            Log.d(TAG, "Failed to delete the storageIngredient");
+                            listener.onDeleteStoredIngredient(null);
+                        }
+                );
     }
 
     /**
@@ -225,35 +236,35 @@ public class StorageIngredientDB {
      * @param id the ID of the ingredient to get
      * @return The ingredient queried. If there is no result, it will return a StoredIngredient
      * with a null description.
-     *  when the onComplete listener is interrupted
+     * when the onComplete listener is interrupted
      */
     public void getStoredIngredient(String id, onGetStorageIngredient listener) {
         this.collection
                 .document(id)
                 .get()
-                .addOnSuccessListener(storedSnapshot->{
+                .addOnSuccessListener(storedSnapshot -> {
                     Log.d(TAG, "StorageIngredient found");
                     StorageIngredient storageIngredient = new StorageIngredient(storedSnapshot.getString("Description"));
                     storageIngredient.setId(storedSnapshot.getId());
                     // todo add correct way to parse and add dates
                     storageIngredient.setBestBefore(new Date());
                     storageIngredient.setLocation(storedSnapshot.getString("location"));
-                    storageIngredient.setAmount(Float.parseFloat(((Double)storedSnapshot.get("amount")).toString()));
+                    storageIngredient.setAmount(Float.parseFloat(((Double) storedSnapshot.get("amount")).toString()));
                     storageIngredient.setUnit(storedSnapshot.getString("unit"));
 
                     DocumentReference ingredientReference = (DocumentReference) storedSnapshot.get("Ingredient");
                     ingredientReference.get()
-                            .addOnSuccessListener(ingredientSnapshot->{
+                            .addOnSuccessListener(ingredientSnapshot -> {
                                 storageIngredient.setDescription(ingredientSnapshot.getString("description"));
                                 storageIngredient.setCategory(ingredientSnapshot.getString("category"));
                                 listener.onFoundStoredIngredient(storageIngredient);
                             })
-                            .addOnFailureListener(failure->{
+                            .addOnFailureListener(failure -> {
                                 Log.d(TAG, "Failed to find the ingredient reference");
                                 listener.onFoundStoredIngredient(null);
                             });
                 })
-                .addOnFailureListener(failure->{
+                .addOnFailureListener(failure -> {
                     Log.d(TAG, "Failed to get Stored Ingredient");
                     listener.onFoundStoredIngredient(null);
                 });
