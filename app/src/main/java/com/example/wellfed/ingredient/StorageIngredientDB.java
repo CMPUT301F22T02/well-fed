@@ -23,6 +23,9 @@ import java.util.concurrent.CountDownLatch;
 
 public class StorageIngredientDB {
 
+    /**
+     * Holds the tag for logging purposes
+     */
     private final static String TAG = "StorageIngredientDB";
 
     /**
@@ -49,6 +52,19 @@ public class StorageIngredientDB {
          * @param storageIngredient the storageIngredient returned by the db
          */
         void onAddStoredIngredient(StorageIngredient storageIngredient);
+    }
+
+    /**
+     * This interface is used to handle the result of
+     * finding StorageIngredient to the db
+     */
+    public interface onGetStorageIngredient {
+        /**
+         * Called when addStorageIngredient returns a result
+         *
+         * @param storageIngredient the storageIngredient returned by the db
+         */
+        void onFoundStoredIngredient(StorageIngredient storageIngredient);
     }
 
     /**
@@ -99,6 +115,7 @@ public class StorageIngredientDB {
                 });
 
             } else {
+                // document already exists
                 DocumentReference documentReference = db
                         .collection("Ingredients")
                         .document(foundIngredient.getId());
@@ -208,76 +225,38 @@ public class StorageIngredientDB {
      * @param id the ID of the ingredient to get
      * @return The ingredient queried. If there is no result, it will return a StoredIngredient
      * with a null description.
-     * @throws InterruptedException when the onComplete listener is interrupted
+     *  when the onComplete listener is interrupted
      */
-    public StorageIngredient getStoredIngredient(String id) throws InterruptedException {
-        StorageIngredient obtainedIngredient = new StorageIngredient(null);
-        CountDownLatch complete = new CountDownLatch(2);
-        CountDownLatch found = new CountDownLatch(2);
+    public void getStoredIngredient(String id, onGetStorageIngredient listener) {
         this.collection
                 .document(id)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
+                .addOnSuccessListener(storedSnapshot->{
+                    Log.d(TAG, "StorageIngredient found");
+                    StorageIngredient storageIngredient = new StorageIngredient(storedSnapshot.getString("Description"));
+                    storageIngredient.setId(storedSnapshot.getId());
+                    // todo add correct way to parse and add dates
+                    storageIngredient.setBestBefore(new Date());
+                    storageIngredient.setLocation(storedSnapshot.getString("location"));
+                    storageIngredient.setAmount(Float.parseFloat(((Double)storedSnapshot.get("amount")).toString()));
+                    storageIngredient.setUnit(storedSnapshot.getString("unit"));
 
-                            // ensuring that methods don't get called on null values
-                            if (document.getTimestamp("best-before") != null) {
-                                obtainedIngredient.setBestBefore((Date) document.getTimestamp("best-before").toDate());
-                            } else {
-                                obtainedIngredient.setBestBefore(null);
-                            }
-
-                            if (document.get("amount") != null) {
-                                obtainedIngredient.setAmount(((Double) document.get("amount")).floatValue());
-                            } else {
-                                obtainedIngredient.setAmount(null);
-                            }
-
-                            obtainedIngredient.setLocation((String) document.get("location"));
-                            obtainedIngredient.setUnit((String) document.get("unit"));
-                            obtainedIngredient.setId(id);
-                            found.countDown();
-                            complete.countDown();
-                        } else {
-                            Log.d(TAG, "Error getting document. ");
-                            complete.countDown();
-                        }
-                    }
+                    DocumentReference ingredientReference = (DocumentReference) storedSnapshot.get("Ingredient");
+                    ingredientReference.get()
+                            .addOnSuccessListener(ingredientSnapshot->{
+                                storageIngredient.setDescription(ingredientSnapshot.getString("description"));
+                                storageIngredient.setCategory(ingredientSnapshot.getString("category"));
+                                listener.onFoundStoredIngredient(storageIngredient);
+                            })
+                            .addOnFailureListener(failure->{
+                                Log.d(TAG, "Failed to find the ingredient reference");
+                                listener.onFoundStoredIngredient(null);
+                            });
+                })
+                .addOnFailureListener(failure->{
+                    Log.d(TAG, "Failed to get Stored Ingredient");
+                    listener.onFoundStoredIngredient(null);
                 });
-
-        this.ingredients
-                .document(id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                Log.d(TAG, document.getId() + " => " + document.get("description"));
-                                obtainedIngredient.setDescription((String) document.get("description"));
-                                obtainedIngredient.setCategory((String) document.get("category"));
-                            } else {
-                                Log.d(TAG, "No such document");
-                            }
-                            found.countDown();
-                            complete.countDown();
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                            complete.countDown();
-                        }
-                    }
-                });
-        complete.await();
-
-        if (obtainedIngredient.getDescription() == null) {
-            throw new IllegalArgumentException("Item not found in database.");
-        }
-
-        return obtainedIngredient;
     }
 
     /**

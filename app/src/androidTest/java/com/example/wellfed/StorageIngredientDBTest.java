@@ -25,14 +25,16 @@ import java.util.concurrent.CountDownLatch;
 public class StorageIngredientDBTest {
     private static final long TIMEOUT = 5;
     StorageIngredientDB storageIngredientDB;
+
     @Before
     public void before() {
-         storageIngredientDB = new StorageIngredientDB();
+        storageIngredientDB = new StorageIngredientDB();
     }
 
     /**
      * Tests the add functionality and get functionality of db,
      * with a complete ingredient.
+     *
      * @throws InterruptedException
      */
     @Test
@@ -48,13 +50,40 @@ public class StorageIngredientDBTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         // testing whether it was what was inserted into db
-        storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient->{
+        storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient -> {
             assertNotNull(addedStorageIngredient);
             assertEquals(storedIngredient.getDescription(), addedStorageIngredient.getDescription());
             assertEquals(storedIngredient.getLocation(), addedStorageIngredient.getLocation());
             assertEquals(storedIngredient.getAmount(), addedStorageIngredient.getAmount());
             latch.countDown();
             // todo delete the added storedIngredient
+        });
+
+        if (!latch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+    }
+
+    // todo add a cleanup method
+    @Test
+    public void testGetStorageIngredient() throws InterruptedException {
+        StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
+        storedIngredient.setCategory("Vegetable");
+        Date bestBefore = new Date(2022, 10, 1);
+        storedIngredient.setBestBefore(bestBefore);
+        storedIngredient.setLocation("Fridge");
+        storedIngredient.setAmount(5.0f);
+        storedIngredient.setUnit("kg");
+        CountDownLatch latch = new CountDownLatch(1);
+
+
+        storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient -> {
+            storageIngredientDB.getStoredIngredient(addedStorageIngredient.getId(), foundStorageIngredient -> {
+                assertNotNull(foundStorageIngredient);
+                assertEquals(storedIngredient.getAmount(), foundStorageIngredient.getAmount());
+                assertEquals(storedIngredient.getDescription(), foundStorageIngredient.getDescription());
+                latch.countDown();
+            });
         });
 
         if (!latch.await(TIMEOUT, SECONDS)) {
