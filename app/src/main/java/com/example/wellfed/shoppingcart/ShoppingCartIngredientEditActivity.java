@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.RequiredTextInputLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Objects;
 
 public class ShoppingCartIngredientEditActivity extends AppCompatActivity implements ConfirmDialog.OnConfirmListener {
     /**
@@ -25,16 +29,6 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
     private EditText unit;
 
     /**
-     * EditText for the ingredient's location.
-     */
-    private EditText location;
-
-    /**
-     * EditText for the ingredient's expiration date.
-     */
-    private EditText bestBefore;
-
-    /**
      * EditText for category of the ingredient.
      */
     private EditText category;
@@ -42,7 +36,7 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
     /**
      * ShoppingCartIngredient object for the ingredient.
      */
-    private ShoppingCartIngredient ingredient;
+    private ShoppingCartIngredient shoppingCartIngredient;
 
     /**
      * OnCreate method for the activity.
@@ -56,5 +50,56 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
 
         description = findViewById(R.id.shopping_cart_ingredient_description);
         amount = findViewById(R.id.shopping_cart_ingredient_amount);
+        unit = findViewById(R.id.shopping_cart_ingredient_unit);
+        category = findViewById(R.id.shopping_cart_ingredient_category);
+
+        // Retrieve ingredient from intent
+        shoppingCartIngredient = (ShoppingCartIngredient) getIntent().getSerializableExtra("ingredient");
+
+        if (shoppingCartIngredient != null) {
+            description.setText(shoppingCartIngredient.getDescription());
+            amount.setText(String.valueOf(shoppingCartIngredient.getAmount()));
+            unit.setText(shoppingCartIngredient.getUnit());
+
+            if (shoppingCartIngredient.getCategory() != null) {
+                category.setText(shoppingCartIngredient.getCategory());
+            }
+        }
+
+        // Enable back button in action bar to go back to previous activity
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        // Set up save button
+        FloatingActionButton saveButton = findViewById(R.id.shopping_cart_ingredient_save_button);
+        saveButton.setOnClickListener(view -> {
+            onSave();
+        });
+    }
+
+    /**
+     * Method to save the ingredient.
+     */
+    private void onSave() {
+        if (description.getText().toString().isEmpty()) {
+            description.setError("Description is required");
+            return;
+        }
+
+        if (category.getText().toString().isEmpty()) {
+            category.setError("Category is required");
+            return;
+        }
+
+        if (amount.getText().toString().isEmpty()) {
+            amount.setError("Amount is required");
+            return;
+        }
+
+        if (unit.getText().toString().isEmpty()) {
+            unit.setError("Unit is required");
+            return;
+        }
+
+        if (shoppingCartIngredient)
     }
 }
