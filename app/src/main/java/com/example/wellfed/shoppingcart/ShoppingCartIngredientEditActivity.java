@@ -1,5 +1,7 @@
 package com.example.wellfed.shoppingcart;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -100,6 +102,55 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
             return;
         }
 
-        if (shoppingCartIngredient)
+        // Check if it's an add or edit op
+        boolean flag = (shoppingCartIngredient == null);
+        shoppingCartIngredient.setDescription(description.getText().toString());
+        shoppingCartIngredient.setCategory(category.getText().toString());
+        shoppingCartIngredient.setAmount(Float.parseFloat(amount.getText().toString()));
+        shoppingCartIngredient.setUnit(unit.getText().toString());
+
+        Intent intent = new Intent();
+        // flag = true if it's add, else edit
+        if (flag) {
+            intent.putExtra("type", "add");
+        } else {
+            intent.putExtra("type", "edit");
+        }
+        intent.putExtra("ingredient", shoppingCartIngredient);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * Method to handle the back button.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("type", "back");
+        intent.putExtra("ingredient", shoppingCartIngredient);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * onPointerCaptureChanged method for the activity.
+     * @param hasCapture boolean for the activity.
+     */
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
+
+    /**
+     * onConfirm method for the activity to handle the back button.
+     */
+    @Override
+    public void onConfirm() {
+        Intent intent = new Intent();
+        intent.putExtra("type", "quit");
+        intent.putExtra("ingredient", shoppingCartIngredient);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

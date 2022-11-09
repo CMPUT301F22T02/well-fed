@@ -39,7 +39,7 @@ public class ShoppingCartIngredientEditContract extends ActivityResultContract<S
             return null;
         }
         String type = intent.getStringExtra("type");
-        ShoppingCartIngredient ingredient = (ShoppingCartIngredient) intent.getSerializableExtra("ingredient");
-        return new Pair<>(type, ingredient);
+        ShoppingCartIngredient shoppingCartIngredient = (ShoppingCartIngredient) intent.getSerializableExtra("ingredient");
+        return new Pair<>(type, shoppingCartIngredient);
     }
 }

@@ -15,19 +15,32 @@ import com.example.wellfed.R;
 
 import java.util.ArrayList;
 
-/**
- * The ShoppingCartIngredientAdapter class binds ArrayList<ShoppingCartIngredient> to RecyclerView.
- * <p>
- * @author Weiguo Jiang
- * @version v1.0.0 2022-10-28
- **/
+// This class is used to display the list of ingredients in the shopping cart
 public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<ShoppingCartIngredientAdapter.ViewHolder> {
-    ArrayList<ShoppingCartIngredient> ingredients;
+    ArrayList<ShoppingCartIngredient> shoppingCartIngredients;
 
-    public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> ingredients) {
-        this.ingredients = ingredients;
+    /**
+     * ShoppingCartIngredientLauncher object for the adapter.
+     */
+    ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
+
+    /**
+     * Constructor for the launcher.
+     */
+    public interface ShoppingCartIngredientLauncher {
+        public void launch(int pos);
     }
 
+    public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> shoppingCartIngredients,
+                                         ShoppingCartFragment shoppingCartFragment) {
+        this.shoppingCartIngredients = shoppingCartIngredients;
+        this.shoppingCartIngredientLauncher = shoppingCartFragment;
+    }
+
+    /**
+     * ViewHolder class for the ShoppingCartIngredientAdapter.
+     * It contains the TextViews for the name and the attribute of the ingredient.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView ingredientDescription;
         public TextView ingredientAmount;
