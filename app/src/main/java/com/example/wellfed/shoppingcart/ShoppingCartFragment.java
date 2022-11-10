@@ -68,7 +68,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
 
     /**
      * ActivityResultLauncher for the ShoppingCartIngredientAddActivity
-     * to add an ingredient. The result is a StorageIngredient.
+     * to add an ingredient. The result is a ShoppingCartIngredient.
      * The result is null if the user cancels the add.
      */
     ActivityResultLauncher<ShoppingCartIngredient> addShoppingCartIngredientLauncher = registerForActivityResult(
@@ -76,7 +76,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
                 if (result == null) {
                     return;
                 }
-            String type = result.first;
+                String type = result.first;
                 ShoppingCartIngredient shoppingCartIngredient = result.second;
                 switch (type) {
                     case "add":
@@ -91,7 +91,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
     );
 
     /**
-     * onCreate method for the IngredientStorageFragment.
+     * onCreate method for the hoppingCartFragment.
      * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
      * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
      * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
@@ -109,7 +109,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
     }
 
     /**
-     * onViewCreated method for the IngredientStorageFragment.
+     * onViewCreated method for the ShoppingCartFragment.
      * @param view The View returned by onCreateView.
      * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
      */

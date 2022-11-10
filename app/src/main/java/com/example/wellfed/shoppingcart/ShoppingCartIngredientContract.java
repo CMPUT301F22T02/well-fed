@@ -11,10 +11,10 @@ import androidx.annotation.Nullable;
 
 public class ShoppingCartIngredientContract extends ActivityResultContract<ShoppingCartIngredient, Pair<String, ShoppingCartIngredient>> {
     /**
-     * Creates an Intent for the ShoppingCartIngredientEditActivity.
+     * Creates an Intent for the ShoppingCartIngredientActivity.
      * @param context Context object for the activity.
      * @param shoppingCartIngredient ShoppingCartIngredient object for the ingredient.
-     * @return Intent object for the IngredientEditActivity.
+     * @return Intent object for the ShoppingCartIngredientActivity.
      */
     @NonNull
     @Override
@@ -25,10 +25,10 @@ public class ShoppingCartIngredientContract extends ActivityResultContract<Shopp
     }
 
     /**
-     * Pair object for the result of the shoppingCartIngredientEditActivity.
+     * Pair object for the result of the shoppingCartIngredientActivity.
      * @param i index of the ingredient.
-     * @param intent Intent object for the ShoppingCartIngredientEditActivity.
-     * @return Pair object for the result of the ShoppingCartIngredientEditActivity.
+     * @param intent Intent object for the ShoppingCartIngredientActivity.
+     * @return Pair object for the result of the ShoppingCartIngredientActivity.
      */
     @Override
     public Pair<String, ShoppingCartIngredient> parseResult(int i, @Nullable Intent intent) {

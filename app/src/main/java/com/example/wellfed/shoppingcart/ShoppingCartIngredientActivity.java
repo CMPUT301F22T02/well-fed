@@ -80,6 +80,7 @@ public class ShoppingCartIngredientActivity extends ActivityBase implements
         unit.setText(shoppingCartIngredient.getUnit());
 
         TextView category = findViewById(R.id.shopping_cart_ingredient_category);
+        // Hide ingredient category if there is no category
         if (shoppingCartIngredient.getCategory() == null) {
             category.setVisibility(TextView.GONE);
         } else {
@@ -126,9 +127,9 @@ public class ShoppingCartIngredientActivity extends ActivityBase implements
     /**
      * onEdit method for the activity. This method is called when the user edits an ingredient.
      *
-     * @param ingredient
+     * @param shoppingCartIngredient
      */
-    public void onEdit(ShoppingCartIngredient ingredient) {
+    public void onEdit(ShoppingCartIngredient shoppingCartIngredient) {
         Intent intent = new Intent();
         intent.putExtra("ingredient", shoppingCartIngredient);
         intent.putExtra("type", "edit");
@@ -153,7 +154,7 @@ public class ShoppingCartIngredientActivity extends ActivityBase implements
     }
 
     /**
-     * onPointerCaputerChanged method for the activity. This method is called when the user confirms the delete action.
+     * onPointerCaptureChanged method for the activity. This method is called when the user confirms the delete action.
      */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
