@@ -66,7 +66,7 @@ public class IngredientStorageController {
      * @param storageIngredient the StorageIngredient object to add
      */
     public void addIngredient(StorageIngredient storageIngredient) {
-        db.addStoredIngredient(storageIngredient,
+        db.addStorageIngredient(storageIngredient,
                 (addIngredient, addSuccess) -> {
                     if (!addSuccess) {
                         this.activity.makeSnackbar("Failed to add " +

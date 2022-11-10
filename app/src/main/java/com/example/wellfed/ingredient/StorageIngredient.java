@@ -4,7 +4,6 @@ package com.example.wellfed.ingredient;
 import java.util.Date;
 
 public class StorageIngredient extends Ingredient implements Comparable<StorageIngredient> {
-    public String first;
     /**
      * The amount of the ingredient in the storage.
      */
@@ -27,6 +26,10 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * The category of the ingredient.
      */
     private String category;
+    /**
+     * The id of the storage ingredient.
+     */
+    private String storageId;
 
     /**
      * Creates a new StorageIngredient object without data.
@@ -224,5 +227,22 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
         }
         StorageIngredient other = (StorageIngredient) o;
         return this.getDescription().equalsIgnoreCase(other.getDescription());
+    }
+
+    /**
+     * Get the database ID of a storage ingredient. This returns null if the
+     * storage ingredient is not in DB.
+     * @return the ID of the storage ingredient
+     */
+    public String getStorageId() {
+        return storageId;
+    }
+
+    /**
+     * Sets the database ID of a storage ingredient.
+     * @param storageId the ID of the storage ingredient
+     */
+    public void setStorageId(String storageId) {
+        this.storageId = storageId;
     }
 }
