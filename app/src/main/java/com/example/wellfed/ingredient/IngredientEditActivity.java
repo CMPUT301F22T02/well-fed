@@ -13,7 +13,6 @@ import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class IngredientEditActivity extends EditActivityBase
@@ -148,11 +147,12 @@ public class IngredientEditActivity extends EditActivityBase
             ingredient = new StorageIngredient(descriptionInput.getText());
             type = "add";
         }
-        Date date = bestBeforeInput.getDate();
-        ingredient = new StorageIngredient(descriptionInput.getText(),
-                amountInput.getDouble(),
-                unitInput.getText(), locationInput.getText(),
-                date);
+        ingredient.setDescription(descriptionInput.getText());
+        ingredient.setAmount(amountInput.getDouble());
+        ingredient.setUnit(unitInput.getText());
+        ingredient.setLocation(locationInput.getText());
+        ingredient.setCategory(categoryInput.getText());
+        ingredient.setBestBefore(bestBeforeInput.getDate());
         Intent intent = new Intent();
         intent.putExtra("type", type);
         intent.putExtra("ingredient", ingredient);

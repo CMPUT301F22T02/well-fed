@@ -13,7 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 
-import java.util.Date;
 import java.util.HashMap;
 
 public class StorageIngredientDB {
@@ -129,8 +128,6 @@ public class StorageIngredientDB {
                         ingredientDB.addIngredient(storedIngredient,
                                 (addedIngredient, addSuccess) -> {
                                     Log.d(TAG, "addIngredient:");
-                                    storedIngredient.setId(
-                                            addedIngredient.getId());
                                     addStorageIngredient(storedIngredient,
                                             addedIngredient, listener);
                                 });
@@ -155,9 +152,10 @@ public class StorageIngredientDB {
                                       Ingredient ingredient,
                                       OnAddStorageIngredientListener listener) {
         Log.d(TAG, "addStorageIngredient:");
+        storageIngredient.setId(ingredient.getId());
         HashMap<String, Object> storageIngredientMap = new HashMap<>();
         storageIngredientMap.put("best-before",
-                storageIngredient.getBestBefore());
+                storageIngredient.getBestBeforeDate());
         storageIngredientMap.put("location", storageIngredient.getLocation());
         storageIngredientMap.put("amount", storageIngredient.getAmount());
         storageIngredientMap.put("unit", storageIngredient.getUnit());
@@ -183,18 +181,13 @@ public class StorageIngredientDB {
     //    TODO: need unit test
     public void updateStorageIngredient(StorageIngredient storageIngredient,
                                         OnUpdateStorageIngredientListener listener) {
-        //        TODO: refactor this into the IngredientDB class or something?
-        Ingredient ingredient = new Ingredient();
-        ingredient.setId(storageIngredient.getId());
-        ingredient.setCategory(storageIngredient.getCategory());
-        ingredient.setDescription(storageIngredient.getDescription());
-
-
-        ingredientDB.updateIngredient(ingredient,
+//        TODO: can't actually do this, because this can affect other
+        //         StorageIngredient
+        ingredientDB.updateIngredient(storageIngredient,
                 (updatedIngredient, success) -> {
                     WriteBatch batch = db.batch();
                     DocumentReference storedDocument =
-                            collection.document(updatedIngredient.getId());
+                            collection.document(storageIngredient.getStorageId());
                     batch.update(storedDocument, "unit",
                             storageIngredient.getUnit());
                     batch.update(storedDocument, "amount",
@@ -202,7 +195,7 @@ public class StorageIngredientDB {
                     batch.update(storedDocument, "location",
                             storageIngredient.getLocation());
                     batch.update(storedDocument, "best-before",
-                            storageIngredient.getBestBefore());
+                            storageIngredient.getBestBeforeDate());
 
 
                     batch.commit().addOnCompleteListener(
@@ -302,7 +295,7 @@ public class StorageIngredientDB {
                 new StorageIngredient(snapshot.getString("Description"));
         storageIngredient.setStorageId(snapshot.getId());
         // todo add correct way to parse and add dates
-        storageIngredient.setBestBefore(new Date());
+        storageIngredient.setBestBefore(snapshot.getDate("best-before"));
         storageIngredient.setLocation(snapshot.getString("location"));
         storageIngredient.setAmount(snapshot.getDouble("amount"));
         storageIngredient.setUnit(snapshot.getString("unit"));
@@ -323,6 +316,7 @@ public class StorageIngredientDB {
                     storageIngredient.setCategory(getIngredient.getCategory());
                     storageIngredient.setDescription(
                             getIngredient.getDescription());
+                    storageIngredient.setId(getIngredient.getId());
                     listener.onGetStoredIngredient(storageIngredient, true);
                 });
     }
