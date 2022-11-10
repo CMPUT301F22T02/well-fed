@@ -49,17 +49,13 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView description;
-        public TextView amount;
-        public TextView unit;
-        public TextView category;
+        public TextView subtext;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             description = itemView.findViewById(R.id.shopping_cart_ingredient_description);
-            amount = itemView.findViewById(R.id.shopping_cart_ingredient_amount);
-            unit = itemView.findViewById(R.id.shopping_cart_ingredient_unit);
-            category = itemView.findViewById(R.id.shopping_cart_ingredient_category);
+            subtext = itemView.findViewById(R.id.shopping_cart_ingredient_subtext);
         }
     }
 
@@ -91,9 +87,8 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         ShoppingCartIngredient ingredient = shoppingCartIngredients.get(position);
 
         holder.description.setText(ingredient.getDescription());
-        holder.amount.setText(String.valueOf(ingredient.getAmount()));
-        holder.unit.setText(ingredient.getUnit());
-        holder.category.setText(ingredient.getCategory());
+        holder.subtext.setText(String.valueOf(ingredient.getAmount()) + " " +
+                ingredient.getUnit() + " | " + ingredient.getCategory());
 
         holder.itemView.setOnClickListener(v -> shoppingCartIngredientLauncher.launch(position));
     }
