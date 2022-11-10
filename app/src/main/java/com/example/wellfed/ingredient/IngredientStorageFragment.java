@@ -56,7 +56,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher,
                 controller.deleteIngredient(ingredient);
                 break;
             case "edit":
-//                ingredientStorageController.updateIngredient(position, ingredient);
+                controller.updateIngredient(ingredient);
                 break;
             default:
                 break;

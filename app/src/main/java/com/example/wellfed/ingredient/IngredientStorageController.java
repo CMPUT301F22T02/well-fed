@@ -42,9 +42,9 @@ public class IngredientStorageController {
     }
 
     /**
-     * Deletes the ingredient at the given index from the food storage.
+     * Deletes StorageIngredient from adapter
      *
-     * @param storageIngredient the ingredient to delete
+     * @param storageIngredient the StorageIngredient object to delete
      */
     public void deleteIngredient(StorageIngredient storageIngredient) {
         this.db.deleteStorageIngredient(storageIngredient,
@@ -60,59 +60,40 @@ public class IngredientStorageController {
 
     }
 
-        /**
-         * Adds an Ingredient to the food storage.
-         * @param ingredient An Ingredient object to add
-         */
-        public void addIngredient(StorageIngredient ingredient) {
-            db.addStoredIngredient(ingredient,
-                    (addIngredient, addSuccess) -> {
-                        if (!addSuccess) {
-                            this.activity.makeSnackbar("Failed to add " +
-                                    addIngredient.getDescription());
-                        } else {
-                            this.activity.makeSnackbar("Added " +
-                                    addIngredient.getDescription());
-                        }
-                    });
-        }
+    /**
+     * Adds an StorageIngredient to adapter
+     *
+     * @param storageIngredient the StorageIngredient object to add
+     */
+    public void addIngredient(StorageIngredient storageIngredient) {
+        db.addStoredIngredient(storageIngredient,
+                (addIngredient, addSuccess) -> {
+                    if (!addSuccess) {
+                        this.activity.makeSnackbar("Failed to add " +
+                                addIngredient.getDescription());
+                    } else {
+                        this.activity.makeSnackbar(
+                                "Added " + addIngredient.getDescription());
+                    }
+                });
+    }
 
-    //    /**
-    //     * Set ingredients to the given list of ingredients.
-    //     * @param ingredients the list of ingredients to set
-    //     */
-    //    public void setIngredients(ArrayList<StorageIngredient> ingredients){
-    //        this.ingredients = ingredients;
-    //    }
-    //
-    //    /**
-    //     * Get ingredients.
-    //     * @return the list of ingredients
-    //     */
-    //    public ArrayList<StorageIngredient> getIngredients() {
-    //        return ingredients;
-    //    }
-    //
-    //    /**
-    //     * Update the ingredient at the given index.
-    //     * @param position the index of the ingredient to update
-    //     * @param ingredient the ingredient to update
-    //     */
-    //    public void updateIngredient(int position, StorageIngredient
-    //    ingredient){
-    //        ingredients.set(position, ingredient);
-    //        ingredientAdapter.notifyItemChanged(position);
-    //    }
-    //
-    //    /**
-    //     * Update the ingredient
-    //     * @param ingredient the ingredient to update
-    //     */
-    //    public void updateIngredient(StorageIngredient ingredient){
-    //        int position = ingredients.indexOf(ingredient);
-    //        if(position >= 0 && position < ingredients.size()){
-    //            ingredients.set(position, ingredient);
-    //            ingredientAdapter.notifyItemChanged(position);
-    //        }
-    //    }
+
+    /**
+     * Update StorageIngredient in adapter
+     *
+     * @param storageIngredient the StorageIngredient object to update
+     */
+    public void updateIngredient(StorageIngredient storageIngredient) {
+        db.updateStorageIngredient(storageIngredient,
+                (updateIngredient, updateSuccess) -> {
+                    if (!updateSuccess) {
+                        this.activity.makeSnackbar("Failed to update " +
+                                updateIngredient.getDescription());
+                    } else {
+                        this.activity.makeSnackbar(
+                                "Updated " + updateIngredient.getDescription());
+                    }
+                });
+    }
 }

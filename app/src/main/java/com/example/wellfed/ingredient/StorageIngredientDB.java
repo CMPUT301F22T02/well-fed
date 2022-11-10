@@ -87,6 +87,22 @@ public class StorageIngredientDB {
     }
 
     /**
+     * This interface is used to handle the result of
+     * finding StorageIngredient to the db
+     */
+    public interface OnUpdateStorageIngredientListener {
+        /**
+         * Called when addStorageIngredient returns a result
+         *
+         * @param storageIngredient the storageIngredient returned by the db
+         * @param success           true if the operation is successful, false
+         *                          otherwise
+         */
+        void onUpdateStorageIngredient(StorageIngredient storageIngredient,
+                                       Boolean success);
+    }
+
+    /**
      * Creates a reference to the Firebase DB.
      */
     public StorageIngredientDB() {
@@ -172,47 +188,54 @@ public class StorageIngredientDB {
     /**
      * Updates a stored ingredient in the Firebase DB.
      *
-     * @param storedIngredient the Ingredient containing the updated fields
-     * @throws InterruptedException when the on success listeners cannot
-     *                              complete
+     * @param storageIngredient the Ingredient containing the updated fields
+     * @param listener         the listener to handle the result
      */
-    public void updateStoredIngredient(String id,
-                                       StorageIngredient storedIngredient)
-            throws InterruptedException {
-        WriteBatch batch = db.batch();
-
+//    TODO: need unit test
+    public void updateStorageIngredient(StorageIngredient storageIngredient,
+                                        OnUpdateStorageIngredientListener listener) {
+        //        TODO: refactor this into the IngredientDB class or something?
         Ingredient ingredient = new Ingredient();
-        ingredient.setCategory(storedIngredient.getCategory());
-        ingredient.setDescription(storedIngredient.getDescription());
-        DocumentReference ingredientDocument =
-                ingredientDB.getDocumentReference(ingredient);
-        batch.update(ingredientDocument, "category",
-                storedIngredient.getCategory());
-        batch.update(ingredientDocument, "description",
-                storedIngredient.getDescription());
+//        TODO: is this assumption safe
+        ingredient.setId(storageIngredient.getId());
+        ingredient.setCategory(storageIngredient.getCategory());
+        ingredient.setDescription(storageIngredient.getDescription());
 
-        DocumentReference storedDocument =
-                collection.document(storedIngredient.getId());
-        // update object in stored ingredients now
-        batch.update(storedDocument, "unit", storedIngredient.getUnit());
-        batch.update(storedDocument, "amount", storedIngredient.getAmount());
-        batch.update(storedDocument, "location",
-                storedIngredient.getLocation());
-        batch.update(storedDocument, "best-before",
-                storedIngredient.getBestBefore());
 
-        CountDownLatch batchComplete = new CountDownLatch(1);
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "StoredIngredient updated with ID: " +
-                        storedIngredient.getId());
+        ingredientDB.updateIngredient(ingredient,
+                (updatedIngredient, success) -> {
+                    WriteBatch batch = db.batch();
+                    DocumentReference storedDocument =
+                            collection.document(storageIngredient.getId());
+                    batch.update(storedDocument, "unit",
+                            storageIngredient.getUnit());
+                    batch.update(storedDocument, "amount",
+                            storageIngredient.getAmount());
+                    batch.update(storedDocument, "location",
+                            storageIngredient.getLocation());
+                    batch.update(storedDocument, "best-before",
+                            storageIngredient.getBestBefore());
 
-                batchComplete.countDown();
-            }
-        });
 
-        batchComplete.await();
-
+                    batch.commit().addOnCompleteListener(
+                            new OnCompleteListener<Void>() {
+                                @Override public void onComplete(
+                                        @NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG,
+                                                "Updated storage ingredient");
+                                        listener.onUpdateStorageIngredient(
+                                                storageIngredient, true);
+                                    } else {
+                                        Log.d(TAG,
+                                                "Failed to update storage " +
+                                                        "ingredient");
+                                        listener.onUpdateStorageIngredient(
+                                                storageIngredient, false);
+                                    }
+                                }
+                            });
+                });
     }
 
     /**
