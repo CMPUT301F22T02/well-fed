@@ -100,7 +100,8 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
         }
 
         ingredientName.setText(recipeIngredient.getDescription());
-        ingredientQuantity.setText(Float.toString(recipeIngredient.getAmount()) + " " + recipeIngredient.getUnit());
+        ingredientQuantity.setText(
+                recipeIngredient.getAmount() + " " + recipeIngredient.getUnit());
     }
 
 

@@ -7,7 +7,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
     /**
      * The amount of the ingredient in the storage.
      */
-    private Float amount;
+    private Double amount;
     /**
      * The unit of the ingredient in the storage.
      */
@@ -47,7 +47,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * @param location    The location of the ingredient in the storage.
      * @param bestBefore  The best before date of the ingredient in the storage.
      */
-    public StorageIngredient(String description, Float amount,
+    public StorageIngredient(String description, Double amount,
                              String unit, String location, Date bestBefore) {
         super(description);
         this.amount = amount;
@@ -66,7 +66,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * @param bestBefore  The best before date of the ingredient in the storage.
      * @param category  The categories of the ingredient.
      */
-    public StorageIngredient(String description, Float amount,
+    public StorageIngredient(String description, Double amount,
                              String unit, String location, Date bestBefore, String category) {
         super(description);
         this.amount = amount;
@@ -95,7 +95,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      *
      * @return The amount of the ingredient in the storage
      */
-    public Float getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
@@ -104,7 +104,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      *
      * @param amount The amount of the ingredient in the storage
      */
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

@@ -304,8 +304,7 @@ public class StorageIngredientDB {
         // todo add correct way to parse and add dates
         storageIngredient.setBestBefore(new Date());
         storageIngredient.setLocation(snapshot.getString("location"));
-        storageIngredient.setAmount(
-                Float.parseFloat(((Double) snapshot.get("amount")).toString()));
+        storageIngredient.setAmount(snapshot.getDouble("amount"));
         storageIngredient.setUnit(snapshot.getString("unit"));
 
         DocumentReference ingredientReference =

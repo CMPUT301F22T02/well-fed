@@ -3,45 +3,45 @@ package com.example.wellfed.ingredient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.wellfed.ActivityBase;
+import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
+import com.example.wellfed.common.RequiredDropdownTextInputLayout;
+import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class IngredientEditActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
+public class IngredientEditActivity extends EditActivityBase
+        implements ConfirmDialog.OnConfirmListener {
     /**
-     * EditText for the ingredient's name.
+     * RequiredTextInputLayout for the StorageIngredient's description.
      */
-    private EditText name;
+    private RequiredTextInputLayout descriptionInput;
     /**
-     * EditText for the ingredient's amount.
+     * RequiredNumberTextInputLayout for the StorageIngredient's amount.
      */
-    private EditText amount;
+    private RequiredNumberTextInputLayout amountInput;
     /**
-     * EditText for the ingredient's unit.
+     * RequiredTextInputLayout for the StorageIngredient's unit.
      */
-    private EditText unit;
+    private RequiredDropdownTextInputLayout unitInput;
     /**
-     * EditText for the ingredient's location.
+     * RequiredDropdownTextInputLayout for the StorageIngredient's location.
      */
-    private EditText location;
+    private RequiredDropdownTextInputLayout locationInput;
     /**
-     * EditText for the ingredient's expiration date.
+     * RequiredDateTextInputLayout for the StorageIngredient's expiration date.
      */
-    private EditText bestBefore;
+    private RequiredDateTextInputLayout bestBeforeInput;
     /**
-     * EditText for category of the ingredient.
+     * RequiredDropdownTextInputLayout for the StorageIngredient's category.
      */
-    private EditText category;
+    private RequiredDropdownTextInputLayout categoryInput;
     /**
      * StorageIngredient object for the ingredient.
      */
@@ -56,26 +56,32 @@ public class IngredientEditActivity extends ActivityBase implements ConfirmDialo
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.edit_ingredient);
-        name = findViewById(R.id.ingredient_name);
-        amount = findViewById(R.id.ingredient_quantity);
-        unit = findViewById(R.id.ingredient_unit_value);
-        location = findViewById(R.id.ingredient_location);
-        bestBefore = findViewById(R.id.ingredient_expiration);
-        category = findViewById(R.id.ingredient_category_value);
+        descriptionInput = findViewById(R.id.descriptionInput);
+        amountInput = findViewById(R.id.amountInput);
+        unitInput = findViewById(R.id.unitInput);
+        locationInput = findViewById(R.id.locationInput);
+        bestBeforeInput = findViewById(R.id.bestBeforeInput);
+        categoryInput = findViewById(R.id.categoryInput);
 
-
-        RequiredDateTextInputLayout bestBeforeLayout = findViewById(R.id.textInputLayout2);
+        this.categoryInput.setSimpleItems(new String[]{"Fruit", "Dairy",
+                "Protein"});
+        this.locationInput.setSimpleItems(new String[]{"Fridge", "Freezer",
+                "Pantry"});
+        this.unitInput.setSimpleItems(new String[]{"oz", "lb", "g", "kg",
+                "tsp", "tbsp", "cup", "qt", "gal", "ml", "l", "pt", "fl oz",
+                "count"});
+        RequiredDateTextInputLayout bestBeforeLayout = findViewById(R.id.bestBeforeInput);
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
 
         if (ingredient != null) {
-            name.setText(ingredient.getDescription());
-            amount.setText(String.valueOf(ingredient.getAmount()));
-            unit.setText(ingredient.getUnit());
-            location.setText(ingredient.getLocation());
+            descriptionInput.setPlaceholderText(ingredient.getDescription());
+            amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
+            unitInput.setPlaceholderText(ingredient.getUnit());
+            locationInput.setPlaceholderText(ingredient.getLocation());
             if (ingredient.getCategory() != null) {
-                category.setText(ingredient.getCategory());
+                categoryInput.setPlaceholderText(ingredient.getCategory());
             }
             // Set date in yyyy-MM-dd format
             bestBeforeLayout.setPlaceholderDate(ingredient.getBestBeforeDate());
@@ -92,110 +98,65 @@ public class IngredientEditActivity extends ActivityBase implements ConfirmDialo
     }
 
     /**
+     * checks if there are unsaved changes
+     * @return true if there are unsaved changes, false otherwise
+     */
+    public Boolean hasUnsavedChanges() {
+        if (descriptionInput.hasChanges()) {
+            return true;
+        }
+        if (amountInput.hasChanges()) {
+            return true;
+        }
+        if (unitInput.hasChanges()) {
+            return true;
+        }
+        if (locationInput.hasChanges()) {
+            return true;
+        }
+        if (bestBeforeInput.hasChanges()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Method to save the ingredient.
      */
     private void onSave() {
         // Verify that all fields are filled
-        if (name.getText().toString().isEmpty()) {
-            name.setError("Description is required");
+        if (!descriptionInput.isValid()) {
             return;
         }
-
-        if (amount.getText().toString().isEmpty()) {
-            amount.setError("Amount is required");
+        if (!amountInput.isValid()) {
             return;
         }
-
-        if (unit.getText().toString().isEmpty()) {
-            unit.setError("Unit is required");
+        if (!unitInput.isValid()) {
             return;
         }
-
-        if (location.getText().toString().isEmpty()) {
-            location.setError("Location is required");
+        if (!categoryInput.isValid()) {
             return;
         }
-
-        if (bestBefore.getText().toString().isEmpty()) {
-            bestBefore.setError("Best before is required");
+        if (!locationInput.isValid()) {
             return;
         }
-
-
+        if (!bestBeforeInput.isValid()) {
+            return;
+        }
+        String type = "edit";
         if (ingredient == null) {
-            String[] date = bestBefore.getText().toString().split("-");
-            if (category.getText().toString().isEmpty()) {
-                ingredient = new StorageIngredient(name.getText().toString(),
-                        Float.parseFloat(amount.getText().toString()),
-                        unit.getText().toString(), location.getText().toString(),
-                        new Date(Integer.parseInt(date[0]) - 1900,
-                                Integer.parseInt(date[1]) - 1, Integer.parseInt(date[2])));
-            } else {
-                ingredient = new StorageIngredient(name.getText().toString(),
-                        Float.parseFloat(amount.getText().toString()),
-                        unit.getText().toString(), location.getText().toString(),
-                        new Date(Integer.parseInt(date[0]) - 1900,
-                                Integer.parseInt(date[1]) - 1, Integer.parseInt(date[2])),
-                        category.getText().toString());
-            }
-            Intent intent = new Intent();
-            intent.putExtra("type", "add");
-            intent.putExtra("ingredient", ingredient);
-            setResult(Activity.RESULT_OK, intent);
-            finish();
-        } else {
-            ingredient.setDescription(name.getText().toString());
-            ingredient.setAmount(Float.parseFloat(amount.getText().toString()));
-            ingredient.setUnit(unit.getText().toString());
-            ingredient.setLocation(location.getText().toString());
-            // Get date in yyyy-MM-dd format
-            String[] date = bestBefore.getText().toString().split("-");
-            ingredient.setBestBefore(new Date(Integer.parseInt(date[0]) - 1900,
-                    Integer.parseInt(date[1]) - 1,
-                    Integer.parseInt(date[2])));
-            if (!category.getText().toString().isEmpty()) {
-                ingredient.setCategory(category.getText().toString());
-            } else {
-                ingredient.setCategory(null);
-            }
-            Intent intent = new Intent();
-            intent.putExtra("type", "edit");
-            intent.putExtra("ingredient", ingredient);
-            setResult(Activity.RESULT_OK, intent);
-            finish();
+            ingredient = new StorageIngredient(descriptionInput.getText());
+            type = "add";
         }
-    }
-
-    /**
-     * Method to handle the back button.
-     */
-    @Override
-    public void onBackPressed() {
+        Date date = bestBeforeInput.getDate();
+        ingredient = new StorageIngredient(descriptionInput.getText(),
+                amountInput.getDouble(),
+                unitInput.getText(), locationInput.getText(),
+                date);
         Intent intent = new Intent();
-        intent.putExtra("type", "back");
+        intent.putExtra("type", type);
         intent.putExtra("ingredient", ingredient);
         setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
-
-    /**
-     * onPointerCaptureChanged method for the activity.
-     * @param hasCapture boolean for the activity.
-     */
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
-
-    /**
-     * onConfirm method for the activity to handle the back button.
-     */
-    @Override
-    public void onConfirm() {
-        Intent intent = new Intent();
-        intent.putExtra("type", "quit");
-        intent.putExtra("ingredient", ingredient);
-        setResult(RESULT_OK, intent);
         finish();
     }
 }

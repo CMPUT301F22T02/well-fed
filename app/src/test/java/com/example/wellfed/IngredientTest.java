@@ -8,8 +8,6 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 /**
  * Unit tests for the Ingredient model class.
  */
@@ -117,7 +115,7 @@ public class IngredientTest {
         assertNull(mock.getAmount());
 
         // does it work with Float objects?
-        Float testFloat = 5.0f;
+        Double testFloat = 5.0f;
         mock.setAmount(testFloat);
         assertEquals(testFloat, mock.getAmount());
     }
