@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
+import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.ConfirmQuitDialog;
@@ -18,9 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
-public class MealPlanEditActivity extends ActivityBase
-        implements ConfirmDialog.OnConfirmListener {
-    private ConfirmQuitDialog confirmQuitDialog;
+public class MealPlanEditActivity extends EditActivityBase {
     private RequiredTextInputLayout titleTextInput;
     private RequiredDateTextInputLayout dateTextInput;
     private RequiredDropdownTextInputLayout categoryTextInput;
@@ -28,23 +27,6 @@ public class MealPlanEditActivity extends ActivityBase
     private FloatingActionButton fab;
     private MealPlan mealPlan;
     private String type;
-
-    @Override public void onBackPressed() {
-        if (this.hasUnsavedChanges()) {
-            this.confirmQuitDialog.show();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (this.hasUnsavedChanges() && item.getItemId() == android.R.id.home) {
-            this.confirmQuitDialog.show();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +42,9 @@ public class MealPlanEditActivity extends ActivityBase
         this.numberOfServingsTextInput.setRequirePositiveNumber(true);
         this.fab = findViewById(R.id.save_fab);
         this.fab.setOnClickListener(view -> onSave());
-        this.confirmQuitDialog = new ConfirmQuitDialog(this, this);
-
         Intent intent = this.getIntent();
         this.mealPlan = (MealPlan) intent.getSerializableExtra("mealPlan");
+//        TODO: don't hard code
         this.categoryTextInput.setSimpleItems(
                 new String[]{"Breakfast", "Lunch", "Dinner"});
         if (this.mealPlan != null) {
@@ -81,7 +62,7 @@ public class MealPlanEditActivity extends ActivityBase
         }
     }
 
-    private Boolean hasUnsavedChanges() {
+    public Boolean hasUnsavedChanges() {
         if (this.titleTextInput.hasChanges()) {
             return true;
         }
@@ -123,13 +104,6 @@ public class MealPlanEditActivity extends ActivityBase
         intent.putExtra("type", this.type);
         intent.putExtra("mealPlan", this.mealPlan);
         setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
-
-    @Override
-    public void onConfirm() {
-        Intent intent = new Intent();
-        setResult(Activity.RESULT_CANCELED, intent);
         finish();
     }
 

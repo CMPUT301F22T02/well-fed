@@ -42,7 +42,7 @@
     <string name="amount">Amount:</string>
     <string name="dummy_quantity">5 lb</string>
     <string name="dummy_category">Meat</string>
-    <string name="location">Location:</string>
+    <string name="location">Location</string>
     <string name="freezer">Freezer</string>
     <string name="delete_ingredient">Delete ingredient?</string>
     <string name="description">Description</string>

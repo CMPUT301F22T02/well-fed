@@ -6,31 +6,29 @@
     android:layout_height="100dp">
 
     <TextView
-        android:id="@+id/ingredient_name"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:gravity="bottom"
-        android:text="@string/ingredientName"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/ingredient_subtext"
+        app:layout_constraintBottom_toTopOf="@+id/subTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/ingredient_subtext"
+        android:id="@+id/subTextView"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="10dp"
         android:gravity="top"
-        android:text="@string/ingredient_subtext"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredient_name"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,8 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Stack;
 
-public class MainActivity extends FragmentActivity {
-    final String TAG = "Sample";
+public class MainActivity extends ActivityBase {
+    final String TAG = "MainActivity";
     Stack<Integer> history;
     NavigationCollectionAdapter navigationCollectionAdapter;
     ViewPager2 viewPager;

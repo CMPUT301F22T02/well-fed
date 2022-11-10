@@ -4,11 +4,10 @@ package com.example.wellfed.ingredient;
 import java.util.Date;
 
 public class StorageIngredient extends Ingredient implements Comparable<StorageIngredient> {
-    public String first;
     /**
      * The amount of the ingredient in the storage.
      */
-    private Float amount;
+    private Double amount;
     /**
      * The unit of the ingredient in the storage.
      */
@@ -27,6 +26,10 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * The category of the ingredient.
      */
     private String category;
+    /**
+     * The id of the storage ingredient.
+     */
+    private String storageId;
 
     /**
      * Creates a new StorageIngredient object without data.
@@ -44,7 +47,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * @param location    The location of the ingredient in the storage.
      * @param bestBefore  The best before date of the ingredient in the storage.
      */
-    public StorageIngredient(String description, Float amount,
+    public StorageIngredient(String description, Double amount,
                              String unit, String location, Date bestBefore) {
         super(description);
         this.amount = amount;
@@ -63,7 +66,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * @param bestBefore  The best before date of the ingredient in the storage.
      * @param category  The categories of the ingredient.
      */
-    public StorageIngredient(String description, Float amount,
+    public StorageIngredient(String description, Double amount,
                              String unit, String location, Date bestBefore, String category) {
         super(description);
         this.amount = amount;
@@ -92,7 +95,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      *
      * @return The amount of the ingredient in the storage
      */
-    public Float getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
@@ -101,7 +104,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      *
      * @param amount The amount of the ingredient in the storage
      */
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -224,5 +227,22 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
         }
         StorageIngredient other = (StorageIngredient) o;
         return this.getDescription().equalsIgnoreCase(other.getDescription());
+    }
+
+    /**
+     * Get the database ID of a storage ingredient. This returns null if the
+     * storage ingredient is not in DB.
+     * @return the ID of the storage ingredient
+     */
+    public String getStorageId() {
+        return storageId;
+    }
+
+    /**
+     * Sets the database ID of a storage ingredient.
+     * @param storageId the ID of the storage ingredient
+     */
+    public void setStorageId(String storageId) {
+        this.storageId = storageId;
     }
 }

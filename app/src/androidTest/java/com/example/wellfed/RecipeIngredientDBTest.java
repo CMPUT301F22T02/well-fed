@@ -25,7 +25,7 @@ public class RecipeIngredientDBTest {
     public void testAddRecipeIngredients() throws InterruptedException {
         Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
-        testIngredient.setAmount(2.0F);
+        testIngredient.setAmount(2.0);
         testIngredient.setCategory("Protein");
         testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
@@ -53,7 +53,7 @@ public class RecipeIngredientDBTest {
     public void testDelRecipeIngredient() throws InterruptedException{
         Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
-        testIngredient.setAmount(2.0F);
+        testIngredient.setAmount(2.0);
         testIngredient.setCategory("Protein");
         testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
@@ -72,7 +72,7 @@ public class RecipeIngredientDBTest {
     public void testUpdateRecipeIngredient() throws InterruptedException{
         Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
-        testIngredient.setAmount(1.0F);
+        testIngredient.setAmount(1.0);
         testIngredient.setCategory("Protein");
         testIngredient.setUnit("count");
         recipeIngredientDB.addRecipeIngredient(testIngredient);
@@ -87,7 +87,7 @@ public class RecipeIngredientDBTest {
         assertEquals(testIngredient.getUnit(), testIngredientFromDb.getUnit());
 
         testIngredient.setDescription("Scrambled eggs");
-        testIngredient.setAmount(500.0F);
+        testIngredient.setAmount(500.0);
         testIngredient.setCategory("Breakfast");
         testIngredient.setUnit("grams");
         recipeIngredientDB.updateRecipeIngredient(testIngredient);

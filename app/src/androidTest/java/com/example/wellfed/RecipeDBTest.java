@@ -37,7 +37,7 @@ public class RecipeDBTest {
     public void testAddRecipe() throws InterruptedException {
         Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
-        testIngredient.setAmount(1.0F);
+        testIngredient.setAmount(1.0);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
         Recipe testRecipe = new Recipe("Test");
@@ -76,7 +76,7 @@ public class RecipeDBTest {
     public void testDelRecipe() throws InterruptedException {
         Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
-        testIngredient.setAmount(1.0F);
+        testIngredient.setAmount(1.0);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
 
@@ -108,7 +108,7 @@ public class RecipeDBTest {
     public void testUpdateOnRecipe() throws InterruptedException{
         Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription("Egg");
-        testIngredient.setAmount(1.0F);
+        testIngredient.setAmount(1.0);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
 
