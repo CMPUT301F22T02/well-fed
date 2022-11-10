@@ -10,7 +10,7 @@
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="10dp">
 
@@ -27,7 +27,7 @@
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
         tools:layout_editor_absoluteX="0dp">
 
@@ -39,16 +39,16 @@
             android:drawablePadding="16dp"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:longClickable="false"
             android:hint="@string/best_before_date"
-            android:inputType="date" />
+            android:inputType="date"
+            android:longClickable="false" />
     </com.example.wellfed.common.RequiredDateTextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
         tools:layout_editor_absoluteX="0dp">
 
@@ -64,9 +64,10 @@
 
     <com.example.wellfed.common.RequiredTextInputLayout
         android:id="@+id/textInputLayout4"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/textInputLayout5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,9 +84,9 @@
     <!-- Create a dropdown menu for the unit -->
     <com.example.wellfed.common.RequiredTextInputLayout
         android:id="@+id/textInputLayout5"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout4"
@@ -104,7 +105,7 @@
         android:id="@+id/textInputLayout6"
         android:layout_width="match_parent"
         android:layout_height="87dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
@@ -121,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="16dp"
         android:contentDescription="@string/save"
         android:src="@drawable/ic_baseline_save_24"
         app:layout_constraintBottom_toBottomOf="parent"

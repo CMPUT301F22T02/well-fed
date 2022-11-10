@@ -76,7 +76,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher,
         StorageIngredient ingredient = result.second;
         switch (type) {
             case "add":
-//                ingredientStorageController.addIngredient(ingredient);
+                controller.addIngredient(ingredient);
                 break;
             case "quit":
                 break;

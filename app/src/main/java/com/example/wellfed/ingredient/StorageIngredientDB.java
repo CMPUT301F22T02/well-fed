@@ -102,8 +102,7 @@ public class StorageIngredientDB {
      * @return a map containing the ID of the Ingredient and StoredIngredient
      */
     public void addStoredIngredient(@NonNull StorageIngredient storedIngredient,
-                                    OnAddStorageIngredientListener listener)
-            throws InterruptedException {
+                                    OnAddStorageIngredientListener listener) {
         // if ingredient already exists
         Ingredient ingredient = new Ingredient();
         ingredient.setCategory(storedIngredient.getCategory());

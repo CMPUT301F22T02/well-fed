@@ -59,25 +59,24 @@ public class IngredientStorageController {
                 }));
 
     }
-    //
-    //    /**
-    //     * Adds an Ingredient to the food storage.
-    //     * @param ingredient An Ingredient object to add
-    //     */
-    //    public void addIngredient(StorageIngredient ingredient){
-    //        if(ingredient != null){
-    //            if(!ingredients.contains(ingredient)){
-    //                ingredients.add(ingredient);
-    //                ingredientAdapter.notifyItemInserted(ingredients.size()
-    //                - 1);
-    //            } else {
-    //                int index = ingredients.indexOf(ingredient);
-    //                ingredients.set(index, ingredient);
-    //                ingredientAdapter.notifyItemChanged(index);
-    //            }
-    //        }
-    //    }
-    //
+
+        /**
+         * Adds an Ingredient to the food storage.
+         * @param ingredient An Ingredient object to add
+         */
+        public void addIngredient(StorageIngredient ingredient) {
+            db.addStoredIngredient(ingredient,
+                    (addIngredient, addSuccess) -> {
+                        if (!addSuccess) {
+                            this.activity.makeSnackbar("Failed to add " +
+                                    addIngredient.getDescription());
+                        } else {
+                            this.activity.makeSnackbar("Added " +
+                                    addIngredient.getDescription());
+                        }
+                    });
+        }
+
     //    /**
     //     * Set ingredients to the given list of ingredients.
     //     * @param ingredients the list of ingredients to set
