@@ -112,7 +112,7 @@ public class IngredientActivity extends ActivityBase
         Intent intent = new Intent();
         intent.putExtra("ingredient", ingredient);
         intent.putExtra("type", "back");
-        setResult(Activity.RESULT_OK, intent);
+        setResult(Activity.RESULT_CANCELED, intent);
         finish();
     }
 
