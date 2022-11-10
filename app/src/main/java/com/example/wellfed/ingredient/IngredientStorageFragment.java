@@ -169,9 +169,9 @@ public class IngredientStorageFragment extends Fragment
      *
      * @param pos The position of the ingredient in the list.
      */
-    @Override public void launch(StorageIngredient storageIngredient) {
+    @Override public void launch(int pos) {
         this.selected = pos;
-        launcher.launch(storageIngredient);
+        launcher.launch(foodStorage.getIngredients().get(pos));
     }
 
     /**
