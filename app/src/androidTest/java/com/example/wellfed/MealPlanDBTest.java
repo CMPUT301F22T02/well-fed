@@ -73,7 +73,7 @@
 //     */
 //    private StorageIngredient mockIngredient() {
 //        StorageIngredient mockIngredient = new StorageIngredient("Banana");
-//        mockIngredient.setAmount(1.0f);
+//        mockIngredient.setAmount(1.0);
 //        mockIngredient.setUnit("count");
 //        mockIngredient.setCategory("Fruit");
 //        return mockIngredient;

@@ -115,7 +115,7 @@ public class IngredientTest {
         assertNull(mock.getAmount());
 
         // does it work with Float objects?
-        Double testFloat = 5.0f;
+        Double testFloat = 5.0;
         mock.setAmount(testFloat);
         assertEquals(testFloat, mock.getAmount());
     }
