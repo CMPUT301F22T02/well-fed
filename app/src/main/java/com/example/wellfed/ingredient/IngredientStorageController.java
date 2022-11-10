@@ -48,9 +48,10 @@ public class IngredientStorageController {
      */
     public void deleteIngredient(StorageIngredient storageIngredient) {
         this.db.deleteStorageIngredient(storageIngredient,
-                (deleteStorageIngredient -> {
-                    if (deleteStorageIngredient == null) {
-                        this.activity.makeSnackbar("Failed to delete");
+                ((deleteStorageIngredient, deleteSuccess) -> {
+                    if (!deleteSuccess) {
+                        this.activity.makeSnackbar("Failed to delete" +
+                                deleteStorageIngredient.getDescription());
                     } else {
                         this.activity.makeSnackbar("Deleted " +
                                 deleteStorageIngredient.getDescription());

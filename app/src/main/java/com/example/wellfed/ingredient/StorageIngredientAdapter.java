@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
 
-public class StorageIngredientAdapter extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
+public class StorageIngredientAdapter
+        extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
     private static final String TAG = "SIAdapter";
     private final StorageIngredientDB db;
     private OnItemClickListener listener;
@@ -40,9 +41,14 @@ public class StorageIngredientAdapter extends DBAdapter<StorageIngredientAdapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder:");
-        db.getStorageIngredient(getSnapshot(position), (storageIngredient) -> {
-            holder.bind(storageIngredient, listener);
-        });
+        db.getStorageIngredient(getSnapshot(position),
+                (storageIngredient, success) -> {
+                    if (success) {
+                        holder.bind(storageIngredient, listener);
+                    } else {
+                        Log.e(TAG, "failed to get storage ingredient");
+                    }
+                });
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

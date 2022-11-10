@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -66,14 +67,16 @@ public class IngredientDBTest {
     public void testAddFull() throws InterruptedException {
         Log.d(TAG, "testAddFull");
         CountDownLatch latch = new CountDownLatch(1);
-        ingredientDB.addIngredient(mockIngredient, ingredient -> {
+        ingredientDB.addIngredient(mockIngredient, (addIngredient, addSuccess) -> {
             Log.d(TAG, ":onAddIngredient");
-            String id = ingredient.getId();
-            assertNotNull(ingredient);
+            String id = addIngredient.getId();
+            assertNotNull(addIngredient);
+            assertTrue(addSuccess);
 
-            ingredientDB.getIngredient(id, getIngredient -> {
+            ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
                 Log.d(TAG, ":onGetIngredient");
                 assertNotNull(getIngredient);
+                assertTrue(getSuccess);
                 assertEquals(mockIngredient.getCategory(),
                         getIngredient.getCategory());
                 assertEquals(mockIngredient.getDescription(),
@@ -81,8 +84,10 @@ public class IngredientDBTest {
 
                 // remove the ingredient
                 ingredientDB.deleteIngredient(getIngredient,
-                        (deleteIngredient) -> {
+                        (deleteIngredient, deleteSuccess) -> {
                             Log.d(TAG, ":onDeleteIngredient");
+                            assertNotNull(deleteIngredient);
+                            assertTrue(deleteSuccess);
                             latch.countDown();
                         });
             });
@@ -105,21 +110,25 @@ public class IngredientDBTest {
         mockIngredient.setCategory(null);
 
         // testing whether it was what was inserted into db
-        ingredientDB.addIngredient(mockIngredient, ingredient -> {
+        ingredientDB.addIngredient(mockIngredient, (addIngredient, addSuccess) -> {
             Log.d(TAG, ":onAddIngredient");
-            String id = ingredient.getId();
-            assertNotNull(ingredient);
+            String id = addIngredient.getId();
+            assertNotNull(addIngredient);
+            assertTrue(addSuccess);
 
-            ingredientDB.getIngredient(id, getIngredient -> {
+            ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
                 Log.d(TAG, ":onGetIngredient");
                 assertNotNull(getIngredient);
+                assertTrue(getSuccess);
                 assertEquals("Broccoli", getIngredient.getDescription());
                 assertNull(getIngredient.getCategory());
 
                 // remove the ingredient
                 ingredientDB.deleteIngredient(getIngredient,
-                        (deleteIngredient) -> {
+                        (deleteIngredient, deleteSuccess) -> {
                             Log.d(TAG, ":onDeleteIngredient");
+                            assertNotNull(deleteIngredient);
+                            assertTrue(deleteSuccess);
                             latch.countDown();
                         });
             });
@@ -140,16 +149,21 @@ public class IngredientDBTest {
         Log.d(TAG, "testDeleteIngredient");
         CountDownLatch latch = new CountDownLatch(1);
 
-        ingredientDB.addIngredient(mockIngredient, addIngredient -> {
+        ingredientDB.addIngredient(mockIngredient,
+                (addIngredient, addSuccess) -> {
             Log.d(TAG, ":onAddIngredient");
             String id = addIngredient.getId();
             assertNotNull(addIngredient);
-            ingredientDB.deleteIngredient(addIngredient, deleteIngredient -> {
+            assertTrue(addSuccess);
+            ingredientDB.deleteIngredient(addIngredient,
+                    (deleteIngredient, deleteSuccess) -> {
                 Log.d(TAG, ":onDeleteIngredient");
                 assertNotNull(deleteIngredient);
-                ingredientDB.getIngredient(id, getIngredient -> {
+                assertTrue(deleteSuccess);
+                ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
                     Log.d(TAG, ":onGetIngredient");
                     assertNull(getIngredient);
+                    assertFalse(getSuccess);
                     latch.countDown();
                 });
             });
@@ -173,9 +187,10 @@ public class IngredientDBTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         ingredientDB.deleteIngredient(nonExistingIngredient,
-                deleteIngredient -> {
+                (deleteIngredient, deleteSuccess) -> {
                     Log.d(TAG, ":onDeleteIngredient");
                     assertNotNull(deleteIngredient);
+                    assertTrue(deleteSuccess);
                     latch.countDown();
                 });
 
@@ -195,18 +210,10 @@ public class IngredientDBTest {
         Log.d(TAG, "getNonExistingIngredient");
         CountDownLatch latch = new CountDownLatch(1);
 
-        ingredientDB.getIngredient("-1",
-                new IngredientDB.OnGetIngredientListener() {
-                    @Override
-                    public void onGetIngredient(Ingredient getIngredient) {
-                        Log.d(TAG, ":onGetIngredient");
-                        assertNull(getIngredient);
-                        latch.countDown();
-                    }
-                });
-        ingredientDB.getIngredient("-1", getIngredient -> {
+        ingredientDB.getIngredient("-1", (getIngredient, getSuccess) -> {
             Log.d(TAG, ":onGetIngredient");
             assertNull(getIngredient);
+            assertFalse(getSuccess);
             latch.countDown();
         });
 
@@ -220,17 +227,23 @@ public class IngredientDBTest {
         Log.d(TAG, "get Ingredient based on category and description");
         CountDownLatch latch = new CountDownLatch(1);
 
-        ingredientDB.addIngredient(mockIngredient, addedIngredient -> {
-            if (addedIngredient != null) {
-                ingredientDB.getIngredient(mockIngredient, searchedIngredient -> {
-                    Log.d(TAG, ":onGetIngredient by category");
-                    assertNotNull(searchedIngredient);
-                    ingredientDB.deleteIngredient(searchedIngredient, deletedIngredient -> {
-                        Log.d(TAG, ":onDeleteIngredient");
-                        latch.countDown();
-                    });
+        ingredientDB.addIngredient(mockIngredient,
+                (addedIngredient, addSuccess) -> {
+            assertNotNull(addedIngredient);
+            assertTrue(addSuccess);
+            ingredientDB.getIngredient(mockIngredient,
+                    (searchedIngredient, searchSuccess) -> {
+                Log.d(TAG, ":onGetIngredient by category");
+                assertNotNull(searchedIngredient);
+                assertTrue(searchSuccess);
+                ingredientDB.deleteIngredient(searchedIngredient,
+                        (deletedIngredient, deleteSuccess) -> {
+                    Log.d(TAG, ":onDeleteIngredient");
+                    assertNotNull(deletedIngredient);
+                    assertTrue(deleteSuccess);
+                    latch.countDown();
                 });
-            }
+            });
         });
 
         if (!latch.await(TIMEOUT, SECONDS)) {
@@ -253,25 +266,33 @@ public class IngredientDBTest {
 
         CountDownLatch latch = new CountDownLatch(1);
 
-        ingredientDB.addIngredient(mockIngredient, addIngredient -> {
+        ingredientDB.addIngredient(mockIngredient,
+                (addIngredient, addSuccess) -> {
             Log.d(TAG, ":onAddIngredient");
             String id = addIngredient.getId();
             assertNotNull(addIngredient);
+            assertTrue(addSuccess);
 
             addIngredient.setCategory(updatedCategory);
             addIngredient.setDescription(updatedDescription);
 
-            ingredientDB.updateIngredient(addIngredient, updateIngredient -> {
+            ingredientDB.updateIngredient(addIngredient,
+                    (updateIngredient, updateSuccess) -> {
                 Log.d(TAG, ":onUpdateIngredient");
                 assertNotNull(updateIngredient);
-                ingredientDB.getIngredient(id, getIngredient -> {
+                assertTrue(updateSuccess);
+                ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
                     Log.d(TAG, ":onGetIngredient");
+                    assertNotNull(getIngredient);
+                    assertTrue(getSuccess);
                     assertEquals(updatedCategory, getIngredient.getCategory());
                     assertEquals(updatedDescription,
                             getIngredient.getDescription());
                     //  remove the ingredient
                     ingredientDB.deleteIngredient(getIngredient,
-                            (deleteIngredient) -> {
+                            (deleteIngredient, deleteSuccess) -> {
+                                assertNotNull(deleteIngredient);
+                                assertTrue(deleteSuccess);
                                 Log.d(TAG, ":onDeleteIngredient");
                                 latch.countDown();
                             });
@@ -292,8 +313,10 @@ public class IngredientDBTest {
         testIngredient.setCategory("fffffffffffff");
         testIngredient.setDescription("affffffffffff");
 
-        ingredientDB.getIngredient(testIngredient, searchIngredient -> {
+        ingredientDB.getIngredient(testIngredient,
+                (searchIngredient, getSuccess) -> {
             assertNull(searchIngredient);
+            assertFalse(getSuccess);
             latch.countDown();
         });
 

@@ -51,10 +51,11 @@ public class IngredientDB {
         /**
          * Called when the addIngredient method is complete.
          *
-         * @param ingredient The ingredient that was added to the database or
-         *                   null if the ingredient was not added.
+         * @param ingredient The ingredient that was added to the database
+         * @param success    True if the operation was successful, false
+         *                   otherwise
          */
-        void onAddIngredient(Ingredient ingredient);
+        void onAddIngredient(Ingredient ingredient, Boolean success);
     }
 
     /**
@@ -67,8 +68,10 @@ public class IngredientDB {
          *
          * @param ingredient The ingredient that was retrieved from the database
          *                   or null if the ingredient was not retrieved.
+         * @param success    True if the operation was successful, false
+         *                   otherwise
          */
-        void onGetIngredient(Ingredient ingredient);
+        void onGetIngredient(Ingredient ingredient, Boolean success);
     }
 
     /**
@@ -80,10 +83,11 @@ public class IngredientDB {
         /**
          * Called when the updateIngredient method is complete.
          *
-         * @param ingredient The ingredient that was updated in the database or
-         *                   null if the ingredient was not updated.
+         * @param ingredient The ingredient that was updated in the database.
+         * @param success    True if the operation was successful, false
+         *                   otherwise
          */
-        void onUpdateIngredient(Ingredient ingredient);
+        void onUpdateIngredient(Ingredient ingredient, Boolean success);
     }
 
     /**
@@ -96,10 +100,11 @@ public class IngredientDB {
          * Called when the deleteIngredient method is complete.
          *
          * @param ingredient The ingredient that was deleted from the
-         *                   database or
-         *                   null if the ingredient was not deleted.
+         *                   database.
+         * @param success    True if the operation was successful, false
+         *                   otherwise
          */
-        void onDeleteIngredient(Ingredient ingredient);
+        void onDeleteIngredient(Ingredient ingredient, Boolean success);
     }
 
     /**
@@ -122,16 +127,15 @@ public class IngredientDB {
         batch.set(ingredientRef, item);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            @Override public void onComplete(@NonNull Task<Void> task) {
                 Log.d(TAG, "addIngredient:onComplete");
                 if (task.isSuccessful()) {
                     Log.d(TAG, ":isSuccessful:" + ingredientId);
                     ingredient.setId(ingredientId);
-                    listener.onAddIngredient(ingredient);
+                    listener.onAddIngredient(ingredient, true);
                 } else {
                     Log.d(TAG, ":isFailure:" + ingredientId);
-                    listener.onAddIngredient(null);
+                    listener.onAddIngredient(ingredient, false);
                 }
             }
         });
@@ -146,11 +150,24 @@ public class IngredientDB {
      */
     public void getIngredient(String id, OnGetIngredientListener listener) {
         DocumentReference ingredientRef = collection.document(id);
+        getIngredient(ingredientRef, listener);
+    }
+
+    /**
+     * Gets an ingredient from Firebase DB
+     *
+     * @param ingredientRef the DocumentReference of the ingredient to be
+     *                      retrieved
+     * @param listener      the listener to be called when the ingredient is
+     *                      retrieved
+     */
+    public void getIngredient(DocumentReference ingredientRef,
+                              OnGetIngredientListener listener) {
         ingredientRef.get().addOnCompleteListener(
                 new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(
+                    @Override public void onComplete(
                             @NonNull Task<DocumentSnapshot> task) {
+                        String id = ingredientRef.getId();
                         Log.d(TAG, "getIngredient:onComplete");
                         if (task.isSuccessful()) {
                             Log.d(TAG, ":isSuccessful:" + id);
@@ -163,46 +180,48 @@ public class IngredientDB {
                                 ingredient.setDescription(
                                         document.getString("description"));
                                 ingredient.setId(id);
-                                listener.onGetIngredient(ingredient);
+                                listener.onGetIngredient(ingredient, true);
                             } else {
                                 Log.d(TAG, ":notExists:" + id);
-                                listener.onGetIngredient(null);
+                                listener.onGetIngredient(null, false);
                             }
                         } else {
                             Log.d(TAG, ":isFailure:" + id);
-                            listener.onGetIngredient(null);
+                            listener.onGetIngredient(null, false);
                         }
 
                     }
                 });
     }
 
-    public void getIngredient(Ingredient ingredient, OnGetIngredientListener listener) {
-        collection
-                .whereEqualTo("category", ingredient.getCategory())
+    public void getIngredient(Ingredient ingredient,
+                              OnGetIngredientListener listener) {
+        collection.whereEqualTo("category", ingredient.getCategory())
                 .whereEqualTo("description", ingredient.getDescription())
-                .limit(1)
-                .get()
-                .addOnCompleteListener(
-                        new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                        Ingredient ingredientInDb = snapshotToIngredient(document);
-                                        ingredientInDb.setId(document.getId());
-                                        listener.onGetIngredient(ingredientInDb);
-                                        return;
-                                    }
-                                    listener.onGetIngredient(null);
-
-                                } else {
-                                    Log.d(TAG, "Error getting documents: ", task.getException());
-                                }
+                .limit(1).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document :
+                                    task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " +
+                                        document.getData());
+                                Ingredient ingredientInDb =
+                                        snapshotToIngredient(document);
+                                ingredientInDb.setId(document.getId());
+                                listener.onGetIngredient(ingredientInDb, true);
+                                return;
                             }
+                            listener.onGetIngredient(null, false);
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ",
+                                    task.getException());
+                            listener.onGetIngredient(null, false);
                         }
-                );
+                    }
+                });
     }
 
     /**
@@ -222,15 +241,14 @@ public class IngredientDB {
                 ingredient.getDescription());
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            @Override public void onComplete(@NonNull Task<Void> task) {
                 Log.d(TAG, "updateIngredient:onComplete");
                 if (task.isSuccessful()) {
                     Log.d(TAG, ":isSuccessful:" + ingredient.getId());
-                    listener.onUpdateIngredient(ingredient);
+                    listener.onUpdateIngredient(ingredient, true);
                 } else {
                     Log.d(TAG, ":isFailure:" + ingredient.getId());
-                    listener.onUpdateIngredient(null);
+                    listener.onUpdateIngredient(ingredient, false);
                 }
             }
         });
@@ -251,15 +269,14 @@ public class IngredientDB {
         batch.delete(ingredientDocument);
 
         batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            @Override public void onComplete(@NonNull Task<Void> task) {
                 Log.d(TAG, "deleteIngredient:onComplete");
                 if (task.isSuccessful()) {
                     Log.d(TAG, ":isSuccessful:" + ingredient.getId());
-                    listener.onDeleteIngredient(ingredient);
+                    listener.onDeleteIngredient(ingredient, true);
                 } else {
                     Log.d(TAG, ":isFailure:" + ingredient.getId());
-                    listener.onDeleteIngredient(null);
+                    listener.onDeleteIngredient(ingredient, false);
                 }
             }
         });
@@ -267,28 +284,26 @@ public class IngredientDB {
 
 
     /**
-     * converts the ingredient class to a hashmap
+     * Converts a DocumentSnapshot of an ingredient to an ingredient object
      *
-     * @param ingredient
-     * @return
+     * @param document the DocumentSnapshot to convert
+     * @return the ingredient
      */
-    public Map<String, Object> ingredientToHashMap(Ingredient ingredient) {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("category", ingredient.getCategory());
-        hashMap.put("description", ingredient.getDescription());
-        return hashMap;
-    }
-
     public Ingredient snapshotToIngredient(DocumentSnapshot document) {
         Ingredient ingredient = new Ingredient();
 
-        ingredient.setCategory(
-                document.getString("category"));
-        ingredient.setDescription(
-                document.getString("description"));
+        ingredient.setCategory(document.getString("category"));
+        ingredient.setDescription(document.getString("description"));
         ingredient.setId(document.getId());
         return ingredient;
     }
 
-
+    /**
+     * Get document reference of an ingredient
+     * @param ingredient the ingredient to get the reference of
+     * @return the document reference
+     */
+    public DocumentReference getDocumentReference(Ingredient ingredient) {
+        return collection.document(ingredient.getId());
+    }
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -50,8 +51,10 @@ public class StorageIngredientDBTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         // testing whether it was what was inserted into db
-        storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient -> {
+        storageIngredientDB.addStoredIngredient(storedIngredient,
+                (addedStorageIngredient, addSuccess) -> {
             assertNotNull(addedStorageIngredient);
+            assertTrue(addSuccess);
             assertEquals(storedIngredient.getDescription(), addedStorageIngredient.getDescription());
             assertEquals(storedIngredient.getLocation(), addedStorageIngredient.getLocation());
             assertEquals(storedIngredient.getAmount(), addedStorageIngredient.getAmount());
@@ -77,9 +80,13 @@ public class StorageIngredientDBTest {
         CountDownLatch latch = new CountDownLatch(1);
 
 
-        storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient -> {
-            storageIngredientDB.getStorageIngredient(addedStorageIngredient.getId(), foundStorageIngredient -> {
+        storageIngredientDB.addStoredIngredient(storedIngredient,
+                (addedStorageIngredient, addSuccess) -> {
+            assertNotNull(addedStorageIngredient);
+            assertTrue(addSuccess);
+            storageIngredientDB.getStorageIngredient(addedStorageIngredient.getId(), (foundStorageIngredient, foundSuccess) -> {
                 assertNotNull(foundStorageIngredient);
+                assertTrue(foundSuccess);
                 assertEquals(storedIngredient.getAmount(), foundStorageIngredient.getAmount());
                 assertEquals(storedIngredient.getDescription(), foundStorageIngredient.getDescription());
                 latch.countDown();
@@ -122,9 +129,14 @@ public class StorageIngredientDBTest {
         StorageIngredient storedIngredient = new StorageIngredient("Broccoli");
         CountDownLatch latch = new CountDownLatch(1);
 
-        storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient -> {
-            storageIngredientDB.deleteStorageIngredient(storedIngredient, deletedStorageIngredient -> {
+        storageIngredientDB.addStoredIngredient(storedIngredient,
+                (addedStorageIngredient, addSuccess) -> {
+            assertNotNull(addedStorageIngredient);
+            assertTrue(addSuccess);
+            storageIngredientDB.deleteStorageIngredient(storedIngredient,
+                    (deletedStorageIngredient, deleteSuccess) -> {
                 assertNotNull(deletedStorageIngredient);
+                assertTrue(deleteSuccess);
                 latch.countDown();
             });
         });
