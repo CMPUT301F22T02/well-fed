@@ -21,7 +21,8 @@ import com.example.wellfed.common.Launcher;
 import com.google.android.material.textfield.TextInputEditText;
 
 
-public class IngredientStorageFragment extends Fragment implements Launcher {
+public class IngredientStorageFragment extends Fragment implements Launcher,
+                                                                   StorageIngredientAdapter.OnItemClickListener {
     /**
      * FoodStorage is a singleton class that stores all the ingredients.
      */
@@ -52,9 +53,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher {
         StorageIngredient ingredient = result.second;
         switch (type) {
             case "delete":
-//                ingredientStorageController.deleteIngredient(position);
-                controller.getAdapter().notifyItemRangeChanged(position,
-                        foodStorage.getIngredients().size());
+                controller.deleteIngredient(ingredient);
                 break;
             case "edit":
 //                ingredientStorageController.updateIngredient(position, ingredient);
@@ -97,7 +96,8 @@ public class IngredientStorageFragment extends Fragment implements Launcher {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         foodStorage = new FoodStorage();
-        controller = new IngredientStorageController();
+        controller = new IngredientStorageController(getActivity());
+        controller.getAdapter().setOnItemClickListener(this);
 
         return inflater.inflate(R.layout.fragment_ingredient_storage, container, false);
     }
@@ -164,5 +164,13 @@ public class IngredientStorageFragment extends Fragment implements Launcher {
     @Override
     public CreationExtras getDefaultViewModelCreationExtras() {
         return super.getDefaultViewModelCreationExtras();
+    }
+
+    /**
+     * Launches the IngredientActivity to view an StorageIngredient.
+     * @param storageIngredient The StorageIngredient to view.
+     */
+    @Override public void onItemClick(StorageIngredient storageIngredient) {
+        ingredientLauncher.launch(storageIngredient);
     }
 }

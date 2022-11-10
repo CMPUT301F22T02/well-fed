@@ -53,9 +53,11 @@ public class StorageIngredientAdapter extends DBAdapter<StorageIngredientAdapter
         private static final String TAG = "ViewHolder";
         private final TextView textView;
         private final TextView subTextView;
+        private final View view;
 
         public ViewHolder(View view) {
             super(view);
+            this.view = view;
             this.textView = view.findViewById(R.id.textView);
             this.subTextView = view.findViewById(R.id.subTextView);
         }
@@ -65,9 +67,11 @@ public class StorageIngredientAdapter extends DBAdapter<StorageIngredientAdapter
             Log.d(TAG, "bind:");
             this.textView.setText(storageIngredient.getDescription());
             this.subTextView.setText(storageIngredient.getCategory());
-            if (listener != null) {
-                listener.onItemClick(storageIngredient);
-            }
+            this.view.setOnClickListener(view -> {
+                if (listener != null) {
+                    listener.onItemClick(storageIngredient);
+                }
+            });
         }
     }
 }

@@ -93,7 +93,8 @@ public class IngredientActivity extends ActivityBase implements
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Set delete button
-        DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.ingredient_delete_button), "Delete " + "ingredient?", this);
+        new DeleteButton(this, findViewById(R.id.ingredient_delete_button),
+                "Delete " + "ingredient?", this);
 
         // Set edit button
         FloatingActionButton editButton = findViewById(R.id.ingredient_edit_button);
