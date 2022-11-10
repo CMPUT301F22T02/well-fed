@@ -1,24 +1,20 @@
 package com.example.wellfed.ingredient;
 
-import static android.content.ContentValues.TAG;
-
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class StorageIngredientDB {
@@ -35,11 +31,11 @@ public class StorageIngredientDB {
     /**
      * Holds a reference to the StoredIngredients collection in the Firebase DB.
      */
-    private CollectionReference collection;
+    private final CollectionReference collection;
     /**
      * Holds a reference to the Ingredients collection in the Firebase DB.
      */
-    private CollectionReference ingredients;
+    private final CollectionReference ingredients;
 
     /**
      * This interface is used to handle the result of
@@ -71,7 +67,7 @@ public class StorageIngredientDB {
      * This interface is used to handle the result of
      * finding StorageIngredient to the db
      */
-    public interface onGetStorageIngredient {
+    public interface OnGetStorageIngredientListener {
         /**
          * Called when addStorageIngredient returns a result
          *
@@ -86,6 +82,7 @@ public class StorageIngredientDB {
     public StorageIngredientDB() {
         this.db = FirebaseFirestore.getInstance();
         this.collection = db.collection("StoredIngredients");
+//        TODO: refactor to use IngredientDB class
         this.ingredients = db.collection("Ingredients");
     }
 
@@ -234,40 +231,56 @@ public class StorageIngredientDB {
      * Gets an ingredient from the Firebase DB
      *
      * @param id the ID of the ingredient to get
-     * @return The ingredient queried. If there is no result, it will return a StoredIngredient
+     * @return The ingredient queried. If there is no result, it will return
+     * a StorageIngredient
      * with a null description.
      * when the onComplete listener is interrupted
      */
-    public void getStoredIngredient(String id, onGetStorageIngredient listener) {
+    public void getStorageIngredient(String id, OnGetStorageIngredientListener listener) {
         this.collection
                 .document(id)
                 .get()
                 .addOnSuccessListener(storedSnapshot -> {
                     Log.d(TAG, "StorageIngredient found");
-                    StorageIngredient storageIngredient = new StorageIngredient(storedSnapshot.getString("Description"));
-                    storageIngredient.setId(storedSnapshot.getId());
-                    // todo add correct way to parse and add dates
-                    storageIngredient.setBestBefore(new Date());
-                    storageIngredient.setLocation(storedSnapshot.getString("location"));
-                    storageIngredient.setAmount(Float.parseFloat(((Double) storedSnapshot.get("amount")).toString()));
-                    storageIngredient.setUnit(storedSnapshot.getString("unit"));
-
-                    DocumentReference ingredientReference = (DocumentReference) storedSnapshot.get("Ingredient");
-                    ingredientReference.get()
-                            .addOnSuccessListener(ingredientSnapshot -> {
-                                storageIngredient.setDescription(ingredientSnapshot.getString("description"));
-                                storageIngredient.setCategory(ingredientSnapshot.getString("category"));
-                                listener.onFoundStoredIngredient(storageIngredient);
-                            })
-                            .addOnFailureListener(failure -> {
-                                Log.d(TAG, "Failed to find the ingredient reference");
-                                listener.onFoundStoredIngredient(null);
-                            });
+                    this.getStorageIngredient(storedSnapshot, listener);
                 })
                 .addOnFailureListener(failure -> {
                     Log.d(TAG, "Failed to get Stored Ingredient");
                     listener.onFoundStoredIngredient(null);
                 });
+    }
+
+    /**
+     * Gets an ingredient from the Firebase DB
+     *
+     * @param snapshot the snapshot of the StorageIngredient to get
+     * @param listener the listener to call when the ingredient is found
+     */
+    public void getStorageIngredient(DocumentSnapshot snapshot,
+                                     OnGetStorageIngredientListener listener) {
+        StorageIngredient storageIngredient = new StorageIngredient(snapshot.getString("Description"));
+        storageIngredient.setId(snapshot.getId());
+        // todo add correct way to parse and add dates
+        storageIngredient.setBestBefore(new Date());
+        storageIngredient.setLocation(snapshot.getString("location"));
+        storageIngredient.setAmount(Float.parseFloat(((Double) snapshot.get("amount")).toString()));
+        storageIngredient.setUnit(snapshot.getString("unit"));
+
+        DocumentReference ingredientReference = (DocumentReference) snapshot.get("Ingredient");
+        if (ingredientReference == null) {
+            listener.onFoundStoredIngredient(null);
+            return;
+        }
+        ingredientReference.get()
+        .addOnSuccessListener(ingredientSnapshot -> {
+            storageIngredient.setDescription(ingredientSnapshot.getString("description"));
+            storageIngredient.setCategory(ingredientSnapshot.getString("category"));
+            listener.onFoundStoredIngredient(storageIngredient);
+        })
+        .addOnFailureListener(failure -> {
+            Log.d(TAG, "Failed to find the ingredient reference");
+            listener.onFoundStoredIngredient(null);
+        });
     }
 
     /**
@@ -278,5 +291,14 @@ public class StorageIngredientDB {
      */
     public DocumentReference getDocumentReference(String id) {
         return collection.document(id);
+    }
+
+    /**
+     * Gets a query for StorageIngredients in Firestore
+     * @return the query
+     */
+    public Query getQuery() {
+        return collection;
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
     }
 }

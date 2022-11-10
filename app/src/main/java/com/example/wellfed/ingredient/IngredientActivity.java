@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
@@ -30,7 +29,7 @@ public class IngredientActivity extends ActivityBase implements
     /**
      * The ingredientController is the controller for the ingredient.
      */
-    private IngredientController controller;
+    private IngredientStorageController controller;
 
     /**
      * ActivityResultLauncher for the IngredientEditActivity to edit an ingredient.
@@ -151,7 +150,7 @@ public class IngredientActivity extends ActivityBase implements
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
             ingredient = (StorageIngredient) data.getSerializableExtra("Ingredient");
-            controller.updateIngredient(ingredient);
+//            controller.updateIngredient(ingredient);
         }
     }
 

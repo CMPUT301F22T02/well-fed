@@ -78,7 +78,7 @@ public class StorageIngredientDBTest {
 
 
         storageIngredientDB.addStoredIngredient(storedIngredient, addedStorageIngredient -> {
-            storageIngredientDB.getStoredIngredient(addedStorageIngredient.getId(), foundStorageIngredient -> {
+            storageIngredientDB.getStorageIngredient(addedStorageIngredient.getId(), foundStorageIngredient -> {
                 assertNotNull(foundStorageIngredient);
                 assertEquals(storedIngredient.getAmount(), foundStorageIngredient.getAmount());
                 assertEquals(storedIngredient.getDescription(), foundStorageIngredient.getDescription());

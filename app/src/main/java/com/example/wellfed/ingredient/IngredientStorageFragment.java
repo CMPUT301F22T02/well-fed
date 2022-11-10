@@ -20,22 +20,16 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Date;
 
-
-public class IngredientStorageFragment extends Fragment implements IngredientAdapter.IngredientLauncher, Launcher {
+public class IngredientStorageFragment extends Fragment implements Launcher {
     /**
      * FoodStorage is a singleton class that stores all the ingredients.
      */
     private FoodStorage foodStorage;
     /**
-     * The adapter for the recycler view.
-     */
-    private IngredientAdapter ingredientAdapter;
-    /**
      * The ingredientController is the controller for the ingredient.
      */
-    private IngredientController ingredientController;
+    private IngredientStorageController controller;
     /**
      * The recycler view for the ingredients.
      */
@@ -58,11 +52,12 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         StorageIngredient ingredient = result.second;
         switch (type) {
             case "delete":
-                ingredientController.deleteIngredient(position);
-                ingredientAdapter.notifyItemRangeChanged(position, foodStorage.getIngredients().size());
+//                ingredientStorageController.deleteIngredient(position);
+                controller.getAdapter().notifyItemRangeChanged(position,
+                        foodStorage.getIngredients().size());
                 break;
             case "edit":
-                ingredientController.updateIngredient(position, ingredient);
+//                ingredientStorageController.updateIngredient(position, ingredient);
                 break;
             default:
                 break;
@@ -82,7 +77,7 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         StorageIngredient ingredient = result.second;
         switch (type) {
             case "add":
-                ingredientController.addIngredient(ingredient);
+//                ingredientStorageController.addIngredient(ingredient);
                 break;
             case "quit":
                 break;
@@ -102,7 +97,7 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         foodStorage = new FoodStorage();
-        ingredientController = new IngredientController();
+        controller = new IngredientStorageController();
 
         return inflater.inflate(R.layout.fragment_ingredient_storage, container, false);
     }
@@ -117,20 +112,9 @@ public class IngredientStorageFragment extends Fragment implements IngredientAda
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.ingredient_storage_list);
 
-        // Add ingredients to food storage
-        foodStorage.addIngredient(new StorageIngredient("Milk", 1.0f, "l", "Freezer", new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Eggs", 12.0f, "count", "Fridge", new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Bread", 1.0f, "loaf", "Pantry", new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Butter", 1.0f, "stick", "Fridge", new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Cheese", 1.0f, "block", "Fridge", new Date(2021, 12, 12)));
-        foodStorage.addIngredient(new StorageIngredient("Chicken", 1.0f, "lb", "Freezer", new Date(2021, 12, 12)));
 
-
-        // Add ingredients to the list
-        ingredientAdapter = new IngredientAdapter(getActivity(), foodStorage.getIngredients(), this);
-        ingredientController.setIngredients(foodStorage.getIngredients());
-        ingredientController.setIngredientAdapter(ingredientAdapter);
-        recyclerView.setAdapter(ingredientAdapter);
+//        ingredientStorageController.setIngredients(foodStorage.getIngredients());
+        recyclerView.setAdapter(controller.getAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Search bar
