@@ -96,7 +96,8 @@ public class IngredientInstrumentedTest {
         // finding the ingredient in the RecyclerView
         onView(withId(R.id.ingredient_storage_list))
                 .perform(RecyclerViewActions.actionOnItem(
-                        withChild(withText("Ground Beef")), click()));
+                        hasDescendant(withText("Ground Beef")), click()
+                ));
 
         // checking the correctness of the ingredient by seeing if all text is visible
         onView(withText("Ground Beef")).check(ViewAssertions
