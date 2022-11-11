@@ -33,7 +33,7 @@ import java.util.ArrayList;
  *
  * @version 1.0.0
  */
-public class RecipeBookFragment extends Fragment implements Launcher {
+public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdapter.RecipeLauncher {
     /**
      * Recipes contains a list of Recipes {@link Recipe}
      */
@@ -52,6 +52,8 @@ public class RecipeBookFragment extends Fragment implements Launcher {
      * Adapter for list of recipes
      */
     RecipeAdapter adapter;
+
+    RecipeDB recipeDB;
 
     /**
      * Launcher that launches an RecipeActivity {@link RecipeActivity}
@@ -116,7 +118,7 @@ public class RecipeBookFragment extends Fragment implements Launcher {
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
         recipeController = new RecipeController();
-
+        recipeDB = new RecipeDB();
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
@@ -132,7 +134,8 @@ public class RecipeBookFragment extends Fragment implements Launcher {
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
 
-        adapter = new RecipeAdapter(getActivity(), recipes, this);
+        adapter = new RecipeAdapter(recipeDB);
+        adapter.setRecipeLauncher(this);
         recipeController.setRecipes(recipes);
         recipeController.setRecipeAdapter(adapter);
         rvRecipes.setAdapter(adapter);
@@ -148,15 +151,17 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         recipeEditLauncher.launch(null);
     }
 
+    @Override
+    public void launch(int pos) {
+
+    }
+
     /**
      * launches activity for a Recipe{@link Recipe} in
      * the recipes at pos.
-     *
-     * @param pos
      */
     @Override
-    public void launch(int pos) {
-        selected = pos;
-        recipeLauncher.launch(recipes.get(pos));
+    public void launch(Recipe recipe) {
+        recipeLauncher.launch(recipe);
     }
 }

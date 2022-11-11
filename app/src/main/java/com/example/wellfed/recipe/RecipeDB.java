@@ -12,6 +12,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
@@ -358,8 +359,6 @@ public class RecipeDB {
 
     public Recipe snapshotToRecipe(DocumentSnapshot doc) {
         Recipe recipe = new Recipe(doc.getString("title"));
-        recipe.setPrepTimeMinutes(Integer.parseInt(doc.getString("preparation-time")));
-        recipe.setServings(Integer.parseInt(doc.getString("servings")));
         recipe.setCategory(doc.getString("category"));
         recipe.setComments(doc.getString("comments"));
         recipe.setPhotograph(doc.getString("photograph"));
@@ -377,5 +376,11 @@ public class RecipeDB {
         }
         return recipe;
     }
+
+    public Query getQuery(){
+        return this.recipesCollection;
+    }
+
+
 }
 

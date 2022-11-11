@@ -74,7 +74,7 @@ public class MealPlanActivity extends ActivityBase implements
                 "Number of servings: " + mealPlan.getServings());
         ArrayList<Recipe> recipes = mealPlan.getRecipes();
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
-        RecipeAdapter recipeAdapter = new RecipeAdapter(this, recipes);
+        RecipeAdapter recipeAdapter = null;
         recipeRecyclerView.setAdapter(recipeAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recipeRecyclerView.setLayoutManager(linearLayoutManager);

@@ -65,6 +65,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
         recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
+
+
         // add ingredients to the recipe
         for (Ingredient ingredient : recipe.getIngredients()) {
             ingredientList.add(ingredient);
@@ -76,10 +78,11 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
         TextView category = findViewById(R.id.recipe_category);
         ImageView img = findViewById(R.id.recipe_img);
-        title.setText(recipe.getTitle());
-        prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
-        servings.setText("Servings: " + Integer.toString(recipe.getServings()));
-        category.setText("Category: " + recipe.getCategory());
+
+//        title.setText(recipe.getTitle());
+//        prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+//        servings.setText("Servings: " + Integer.toString(recipe.getServings()));
+//        category.setText("Category: " + recipe.getCategory());
         Picasso.get()
                 .load(recipe.getPhotograph())
                 .rotate(90)
