@@ -64,12 +64,12 @@ public class RecipeController {
      * @param recipe
      */
     public void addRecipe(Recipe recipe) {
-        try {
-            recipeDB.addRecipe(recipe);
-            recipes.add(recipe);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            recipeDB.addRecipe(recipe);
+//            recipes.add(recipe);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -79,8 +79,7 @@ public class RecipeController {
      */
     public ArrayList<Recipe> getRecipes() throws InterruptedException {
         Log.d("RecipeController", "getRecipes: ");
-        recipes = recipeDB.getRecipes();
-        return recipes;
+        return null;
     }
 
     /**
