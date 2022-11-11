@@ -53,7 +53,6 @@ public class MealPlanActivity extends ActivityBase implements
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
-        getParent();
         Intent intent = getIntent();
 
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);

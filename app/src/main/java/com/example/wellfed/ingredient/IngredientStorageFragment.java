@@ -39,6 +39,10 @@ public class IngredientStorageFragment extends Fragment
      * The text input for the search bar.
      */
     int position;
+    /**
+     * The selected item
+     */
+    private int selected;
 
     /**
      * ActivityResultLauncher for the IngredientEditActivity to edit an
@@ -59,6 +63,9 @@ public class IngredientStorageFragment extends Fragment
                         break;
                     case "edit":
                         controller.updateIngredient(ingredient);
+                        break;
+                    case "launch":
+                        this.launch(this.selected);
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -163,7 +170,7 @@ public class IngredientStorageFragment extends Fragment
      * @param pos The position of the ingredient in the list.
      */
     @Override public void launch(int pos) {
-        position = pos;
+        this.selected = pos;
         launcher.launch(foodStorage.getIngredients().get(pos));
     }
 
