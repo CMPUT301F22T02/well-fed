@@ -9,15 +9,16 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientStorageFragment;
 import com.example.wellfed.ingredient.StorageIngredient;
 
-public class RecipeIngredientSearchContract extends ActivityResultContract<String, Pair<String, StorageIngredient>> {
+public class RecipeIngredientSearchContract extends ActivityResultContract<Ingredient, Pair<String, StorageIngredient>> {
     @NonNull
     @Override
-    public Intent createIntent(@NonNull Context context, String s) {
+    public Intent createIntent(@NonNull Context context, Ingredient ingredient) {
         Intent intent = new Intent(context, RecipeIngredientSearch.class);
-        intent.putExtra("Recipe", s);
+        intent.putExtra("Ingredient", ingredient);
         return intent;
     }
 

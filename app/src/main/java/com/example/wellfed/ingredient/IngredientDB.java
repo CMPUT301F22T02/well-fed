@@ -10,6 +10,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
@@ -194,6 +195,7 @@ public class IngredientDB {
                 });
     }
 
+
     public void getIngredient(Ingredient ingredient,
                               OnGetIngredientListener listener) {
         collection.whereEqualTo("category", ingredient.getCategory())
@@ -305,5 +307,10 @@ public class IngredientDB {
      */
     public DocumentReference getDocumentReference(Ingredient ingredient) {
         return collection.document(ingredient.getId());
+    }
+
+
+    public Query getQuery(){
+        return collection;
     }
 }

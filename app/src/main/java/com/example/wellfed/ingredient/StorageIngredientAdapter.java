@@ -55,6 +55,7 @@ public class StorageIngredientAdapter
         this.listener = listener;
     }
 
+    // todo why is it static?
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "ViewHolder";
         private final TextView textView;

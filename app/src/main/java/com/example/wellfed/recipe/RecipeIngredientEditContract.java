@@ -16,7 +16,7 @@ public class RecipeIngredientEditContract extends ActivityResultContract<Storage
     @Override
     public Intent createIntent(@NonNull Context context, StorageIngredient storageIngredient) {
         Intent intent = new Intent(context, RecipeIngredientEditActivity.class);
-        intent.putExtra("Recipe", storageIngredient);
+        intent.putExtra("ingredient", storageIngredient);
         return intent;
     }
 

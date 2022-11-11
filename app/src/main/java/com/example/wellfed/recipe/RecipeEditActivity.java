@@ -84,9 +84,21 @@ public class RecipeEditActivity extends ActivityBase {
             }
     );
 
-    ActivityResultLauncher<String> ingredientSearchLauncher = registerForActivityResult(
+    ActivityResultLauncher<Ingredient> ingredientSearchLauncher = registerForActivityResult(
             new RecipeIngredientSearchContract(), result -> {
-
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                StorageIngredient ingredient = result.second;
+                switch (type) {
+                    case "edit":
+                        break;
+                    case "quit":
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
             }
     );
 
@@ -109,8 +121,8 @@ public class RecipeEditActivity extends ActivityBase {
         EditText prepTime = findViewById(R.id.recipe_prep_time_editText);
         EditText servings = findViewById(R.id.recipe_no_of_servings_editText);
         RequiredTextInputLayout commentsTextInput = findViewById(R.id.commentsTextInput);
-        Button addIngredient = findViewById(R.id.ingredient_add_btn);
-        Button searchIngredient = findViewById(R.id.ingredient_search_btn);
+        ImageView addIngredient = findViewById(R.id.ingredient_add_btn);
+        ImageView searchIngredient = findViewById(R.id.ingredient_search_btn);
         RequiredDropdownTextInputLayout recipeCategory = findViewById(R.id.recipe_category);
 
         recipeCategory.setSimpleItems(new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer", "Dessert"});
@@ -149,8 +161,8 @@ public class RecipeEditActivity extends ActivityBase {
             ingredientLauncher.launch(null);
         });
 
-        searchIngredient.setOnClickListener(view->{
-            ingredientSearchLauncher.launch("search");
+        searchIngredient.setOnClickListener(view -> {
+            ingredientSearchLauncher.launch(null);
         });
 
     }
