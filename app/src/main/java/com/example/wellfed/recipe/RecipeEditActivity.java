@@ -1,5 +1,6 @@
 package com.example.wellfed.recipe;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -46,7 +47,7 @@ import java.util.List;
  *
  * @version 1.0.0
  */
-public class RecipeEditActivity extends ActivityBase implements RecipeIngredientAdapter.OnIngredientClick{
+public class RecipeEditActivity extends ActivityBase implements RecipeIngredientAdapter.OnIngredientClick {
     private RecyclerView ingredientRV;
     private List<Ingredient> recipeIngredients;
     private RecipeIngredientAdapter recipeIngredientAdapter;
@@ -100,7 +101,8 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                 StorageIngredient ingredient = result.second;
                 switch (type) {
                     case "edit":
-                        break;
+                        recipeIngredients.add(ingredient);
+                        recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size());
                     case "quit":
                         break;
                     default:
@@ -257,7 +259,7 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
 
     @Override
     public void onEditClick(String reason, int pos) {
-        switch(reason){
+        switch (reason) {
             case "edit":
                 ingredientLauncher.launch(recipeIngredients.get(pos));
             case "delete":

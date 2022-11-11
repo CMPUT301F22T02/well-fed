@@ -172,6 +172,19 @@ public class RecipeDB {
                 });
     }
 
+    public void updateRecipe(Recipe recipe, OnRecipeDone listener) throws InterruptedException {
+        addRecipe(recipe, (addedRecipe, success)->{
+            if (addedRecipe == null){
+                listener.onAddRecipe(null, false);
+                return;
+            }
+
+            delRecipe(recipe.getId(), (deletedRecipe, success1)->{
+                listener.onAddRecipe(deletedRecipe, true);
+            });
+        });
+    }
+
 
 
     /**

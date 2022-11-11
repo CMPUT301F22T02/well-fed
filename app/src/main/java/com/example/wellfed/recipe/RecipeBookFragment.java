@@ -67,7 +67,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                         Recipe recipe = result.second;
                         switch (type) {
                             case "delete":
-                                recipeDB.delRecipe(recipe.getId(),(deletedRecipe, success)->{
+                                recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success) -> {
                                     deletedRecipe.setId("");
                                 });
                             default:
@@ -89,14 +89,16 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                     case "save":
                         RecipeDB recipeDB = new RecipeDB();
                         try {
-                            recipeDB.addRecipe(recipe,(a, b)->{
-
+                            recipeDB.addRecipe(recipe, (a, b) -> {
                             });
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-
+                        break;
+                    case "edit":
+                        break;
+                    default:
+                        break;
                 }
                 return;
             }
