@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
+import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.StorageIngredient;
@@ -54,6 +55,11 @@ public class RecipeEditActivity extends ActivityBase {
     private Uri uri;
     private String downloadUrl;
     private ImageView recipeImg;
+    private RequiredNumberTextInputLayout prepTime;
+    private RequiredNumberTextInputLayout servings;
+    private RequiredTextInputLayout title;
+    private RequiredTextInputLayout commentsTextInput;
+    private RequiredDropdownTextInputLayout recipeCategory;
 
 
     // take picture
@@ -117,13 +123,13 @@ public class RecipeEditActivity extends ActivityBase {
         // views
         ingredientRV = findViewById(R.id.recipe_ingredient_recycleViewer);
         recipeImg = findViewById(R.id.recipe_img);
-        EditText title = findViewById(R.id.recipe_title_editText);
-        EditText prepTime = findViewById(R.id.recipe_prep_time_editText);
-        EditText servings = findViewById(R.id.recipe_no_of_servings_editText);
-        RequiredTextInputLayout commentsTextInput = findViewById(R.id.commentsTextInput);
+        title = findViewById(R.id.recipe_title);
+        prepTime = findViewById(R.id.recipe_prep_time_textView);
+        servings = findViewById(R.id.recipe_no_of_servings_textView);
+        commentsTextInput = findViewById(R.id.commentsTextInput);
+        recipeCategory = findViewById(R.id.recipe_category);
         ImageView addIngredient = findViewById(R.id.ingredient_add_btn);
         ImageView searchIngredient = findViewById(R.id.ingredient_search_btn);
-        RequiredDropdownTextInputLayout recipeCategory = findViewById(R.id.recipe_category);
 
         recipeCategory.setSimpleItems(new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer", "Dessert"});
 
@@ -132,16 +138,18 @@ public class RecipeEditActivity extends ActivityBase {
         if (recipe == null) {
             fab.setImageDrawable(getDrawable(R.drawable.ic_baseline_save_24)); // fab is save button
             fab.setOnClickListener(view -> {
-                recipe = new Recipe(title.getText().toString());
-                recipe.setCategory(recipeCategory.getText());
-                recipe.setComments(commentsTextInput.getText());
-                recipe.setServings(Integer.parseInt(servings.getText().toString()));
-                recipe.setPrepTimeMinutes(Integer.parseInt(prepTime.getText().toString()));
-                for (Ingredient ingredient : recipeIngredients) {
-                    recipe.addIngredient(ingredient);
+                if (areValidFields()) {
+                    recipe = new Recipe(title.getText().toString());
+                    recipe.setCategory(recipeCategory.getText());
+                    recipe.setComments(commentsTextInput.getText());
+                    recipe.setServings(Integer.parseInt(servings.getText().toString()));
+                    recipe.setPrepTimeMinutes(Integer.parseInt(prepTime.getText().toString()));
+                    for (Ingredient ingredient : recipeIngredients) {
+                        recipe.addIngredient(ingredient);
+                    }
+                    recipe.setPhotograph(downloadUrl);
+                    onSave();
                 }
-                recipe.setPhotograph(downloadUrl);
-                onSave();
             });
         } else {
 
@@ -167,8 +175,19 @@ public class RecipeEditActivity extends ActivityBase {
 
     }
 
+    public Boolean areValidFields() {
+        if (!title.isValid()) return false;
+        if (!prepTime.isValid()) return false;
+        if (!servings.isValid()) return false;
+        if (!commentsTextInput.isValid()) return false;
+        if (!recipeCategory.isValid()) return false;
+        return true;
+    }
+
     public void onSave() {
         // return the new recipe via intent
+
+
         Intent intent = new Intent();
         intent.putExtra("type", "save");
         intent.putExtra("Recipe", recipe);
