@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -133,12 +134,14 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         recipeCategory = findViewById(R.id.recipe_category);
         ImageView addIngredient = findViewById(R.id.ingredient_add_btn);
         ImageView searchIngredient = findViewById(R.id.ingredient_search_btn);
+        Button recipeDeleteBtn = findViewById(R.id.recipe_delete_btn);
 
         recipeCategory.setSimpleItems(new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer", "Dessert"});
 
 
         // activity started to add data a recipe
         if (recipe == null) {
+            recipeDeleteBtn.setVisibility(View.INVISIBLE);
             fab.setImageDrawable(getDrawable(R.drawable.ic_baseline_save_24)); // fab is save button
             fab.setOnClickListener(view -> {
                 if (areValidFields()) {
