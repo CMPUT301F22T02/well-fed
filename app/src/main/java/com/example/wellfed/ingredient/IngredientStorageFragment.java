@@ -78,7 +78,7 @@ public class IngredientStorageFragment extends Fragment
      * The result is a StorageIngredient.
      * The result is null if the user cancels the add.
      */
-    ActivityResultLauncher<StorageIngredient> editLauncher =
+    ActivityResultLauncher<StorageIngredient> editIngredientLauncher =
             registerForActivityResult(new IngredientEditContract(), result -> {
                 if (result == null) {
                     return;
@@ -178,7 +178,7 @@ public class IngredientStorageFragment extends Fragment
      * Launches the IngredientAddActivity to add an ingredient.
      */
     @Override public void launch() {
-        editLauncher.launch(null);
+        editIngredientLauncher.launch(null);
     }
 
     /**

@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Adapter that manages the view and data for the ingredients
  * in the {@link Recipe}
+ *
  * @version 1.0.0
  */
 public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder> {
@@ -33,11 +34,23 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
      */
     int layoutId;
 
+    OnIngredientClick listener;
+
+    public interface OnIngredientClick {
+        void onEditClick(String reason, int pos);
+    }
+
+
     /**
-     *
      * @param recipeIngredientList helps initialize our list
-     * @param layoutId id of the layout
+     * @param layoutId             id of the layout
      */
+    RecipeIngredientAdapter(List<Ingredient> recipeIngredientList, int layoutId, OnIngredientClick listener) {
+        this.recipeIngredientList = recipeIngredientList;
+        this.layoutId = layoutId;
+        this.listener = listener;
+    }
+
     RecipeIngredientAdapter(List<Ingredient> recipeIngredientList, int layoutId) {
         this.recipeIngredientList = recipeIngredientList;
         this.layoutId = layoutId;
@@ -46,7 +59,8 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
     /**
      * inflates the view
-     * @param parent activity that handles the ingredients
+     *
+     * @param parent   activity that handles the ingredients
      * @param viewType
      * @return
      */
@@ -63,8 +77,9 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
     /**
      * Binds the data in our list to the views
-     * @param holder    holds the inflated view
-     * @param position  gives the position in the list
+     *
+     * @param holder   holds the inflated view
+     * @param position gives the position in the list
      */
     @Override
     public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {
@@ -88,15 +103,18 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
         if (this.layoutId == R.layout.recipe_ingredient_edit) {
             // ingredient edit btn
             ImageView editImgView = holder.editImgView;
-            editImgView.setOnClickListener(view -> {
+            if (listener != null) {
 
-            });
+                editImgView.setOnClickListener(view -> {
+                    listener.onEditClick("edit", holder.getAdapterPosition());
+                });
 
-            // ingredient delete btn
-            ImageView deleteImgView = holder.deleteImgView;
-            deleteImgView.setOnClickListener(view -> {
-
-            });
+                // ingredient delete btn
+                ImageView deleteImgView = holder.deleteImgView;
+                deleteImgView.setOnClickListener(view -> {
+                    listener.onEditClick("delete", holder.getAdapterPosition());
+                });
+            }
         }
 
         ingredientName.setText(recipeIngredient.getDescription());
@@ -106,7 +124,6 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
 
     /**
-     *
      * @return count of the number of ingredients in our list
      */
     @Override
