@@ -8,8 +8,6 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import org.junit.Test;
 
-import java.util.Optional;
-
 /**
  * Unit tests for the Ingredient model class.
  */
@@ -27,7 +25,7 @@ public class IngredientTest {
      * @return the mock ingredient created
      */
     public Ingredient mockIngredientTitled() {
-        return new Ingredient("string");
+        return new Ingredient("Apple");
     }
 
     /**
@@ -51,13 +49,13 @@ public class IngredientTest {
         assertNull(mock.getDescription());
 
         // does it work with String objects?
-        String testString = "test";
+        String testString = "Orange";
         mock.setDescription(testString);
         assertEquals(testString, mock.getDescription());
 
         // does it work with string literals?
-        mock.setDescription("test2");
-        assertEquals("test2", mock.getDescription());
+        mock.setDescription("Pear");
+        assertEquals("Pear", mock.getDescription());
 
         // does it work when mockIngredient has a string already in it?
         Ingredient mock2 = mockIngredientTitled();
@@ -68,8 +66,8 @@ public class IngredientTest {
         assertEquals(testString, mock.getDescription());
 
         // does it work with string literals?
-        mock.setDescription("test2");
-        assertEquals("test2", mock.getDescription());
+        mock.setDescription("Pear");
+        assertEquals("Pear", mock.getDescription());
     }
 
     /**
@@ -81,13 +79,13 @@ public class IngredientTest {
         assertNull(mock.getCategory());
 
         // does it work with String objects?
-        String testString = "test";
+        String testString = "Fruit";
         mock.setCategory(testString);
         assertEquals(testString, mock.getCategory());
 
         // does it work with string literals?
-        mock.setCategory("test2");
-        assertEquals("test2", mock.getCategory());
+        mock.setCategory("Vegetable");
+        assertEquals("Vegetable", mock.getCategory());
     }
 
     /**
@@ -99,13 +97,13 @@ public class IngredientTest {
         assertNull(mock.getUnit());
 
         // does it work with String objects?
-        String testString = "test";
+        String testString = "lb";
         mock.setUnit(testString);
         assertEquals(testString, mock.getUnit());
 
         // does it work with string literals?
-        mock.setUnit("test2");
-        assertEquals("test2", mock.getUnit());
+        mock.setUnit("kg");
+        assertEquals("kg", mock.getUnit());
     }
 
     /**
@@ -117,7 +115,7 @@ public class IngredientTest {
         assertNull(mock.getAmount());
 
         // does it work with Float objects?
-        Float testFloat = 5.0f;
+        Double testFloat = 5.0;
         mock.setAmount(testFloat);
         assertEquals(testFloat, mock.getAmount());
     }

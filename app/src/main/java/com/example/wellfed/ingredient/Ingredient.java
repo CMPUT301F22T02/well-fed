@@ -12,7 +12,6 @@
 package com.example.wellfed.ingredient;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * This class represents an Ingredient which can be used in many ways in a MealPlanning application.
@@ -36,7 +35,12 @@ public class Ingredient implements Serializable {
     /**
      * Holds the number of items in an Ingredient
      */
-    private Float amount;
+    private Double amount;
+
+    /**
+     * Holds the database ID of an Ingredient
+     */
+    private String id;
 
     /**
      * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
@@ -46,6 +50,9 @@ public class Ingredient implements Serializable {
         this.description = description;
     }
 
+    /**
+     * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
+     */
     public Ingredient() {
         this.description = null;
     }
@@ -102,11 +109,31 @@ public class Ingredient implements Serializable {
      * Sets the amount of an ingredient
      * @param amount the amount
      */
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public Float getAmount() {
+    /**
+     * Gets the amount of an ingredient
+     * @return the amount
+     */
+    public Double getAmount() {
         return amount;
+    }
+
+    /**
+     * Get the database ID of an ingredient. This returns null if the ingredient is not in DB.
+     * @return the ID of the ingredient
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the database ID of an ingredient.
+     * @param id the ID of the ingredient
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 }

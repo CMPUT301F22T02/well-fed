@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -13,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
-import com.example.wellfed.common.OnDeleteListener;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,7 +24,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MealPlanActivity extends ActivityBase implements OnDeleteListener {
+public class MealPlanActivity extends ActivityBase implements
+                                                   ConfirmDialog.OnConfirmListener {
     private static final String ARG_MEAL_PLAN = "mealPlan";
     private final ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanEditContract(), result -> {
@@ -83,11 +83,11 @@ public class MealPlanActivity extends ActivityBase implements OnDeleteListener {
         deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
                 "Delete Meal Plan", this);
 
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.save_fab);
         fab.setOnClickListener(view -> launcher.launch(mealPlan));
     }
 
-    public void onDelete() {
+    public void onConfirm() {
         Intent intent = new Intent();
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);

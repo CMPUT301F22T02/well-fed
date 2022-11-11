@@ -189,9 +189,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteIngredient(com.example.wellfed.ingredient.StorageIngredient)">deleteIngredient</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;result)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteIngredient(int)">deleteIngredient</a></span>&#8203;(int&nbsp;index)</code></th>
 <td class="colLast">
-<div class="block">Delete the given ingredient from the food storage.</div>
+<div class="block">Delete the ingredient at the given index from the food storage.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -210,16 +210,17 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeIngredient(com.example.wellfed.ingredient.StorageIngredient)">removeIngredient</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIngredients(java.util.ArrayList)">setIngredients</a></span>&#8203;(java.util.ArrayList&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&nbsp;ingredients)</code></th>
 <td class="colLast">
-<div class="block">Removes an Ingredient from the food storage.</div>
+<div class="block">Set ingredients to the given list of ingredients.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateIngredient(com.example.wellfed.ingredient.StorageIngredient)">updateIngredient</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;result)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateIngredient(int,com.example.wellfed.ingredient.StorageIngredient)">updateIngredient</a></span>&#8203;(int&nbsp;i,
+                <a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient2)</code></th>
 <td class="colLast">
-<div class="block">Update the given ingredient in the food storage.</div>
+<div class="block">Update the ingredient at the given index from the food storage.</div>
 </td>
 </tr>
 </table>
@@ -280,20 +281,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="removeIngredient(com.example.wellfed.ingredient.StorageIngredient)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>removeIngredient</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;removeIngredient&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient)</pre>
-<div class="block">Removes an Ingredient from the food storage.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ingredient</code> - An Ingredient object to remove</dd>
-</dl>
-</li>
-</ul>
 <a id="getIngredient(int)">
 <!--   -->
 </a>
@@ -324,31 +311,47 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="deleteIngredient(com.example.wellfed.ingredient.StorageIngredient)">
+<a id="deleteIngredient(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>deleteIngredient</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;deleteIngredient&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;result)</pre>
-<div class="block">Delete the given ingredient from the food storage.</div>
+<pre class="methodSignature">public&nbsp;void&nbsp;deleteIngredient&#8203;(int&nbsp;index)</pre>
+<div class="block">Delete the ingredient at the given index from the food storage.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>result</code> - the ingredient to delete</dd>
+<dd><code>index</code> - the index of the ingredient to delete</dd>
 </dl>
 </li>
 </ul>
-<a id="updateIngredient(com.example.wellfed.ingredient.StorageIngredient)">
+<a id="setIngredients(java.util.ArrayList)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setIngredients</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setIngredients&#8203;(java.util.ArrayList&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;&nbsp;ingredients)</pre>
+<div class="block">Set ingredients to the given list of ingredients.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredients</code> - the list of ingredients to set</dd>
+</dl>
+</li>
+</ul>
+<a id="updateIngredient(int,com.example.wellfed.ingredient.StorageIngredient)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>updateIngredient</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateIngredient&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;result)</pre>
-<div class="block">Update the given ingredient in the food storage.</div>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateIngredient&#8203;(int&nbsp;i,
+                             <a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient2)</pre>
+<div class="block">Update the ingredient at the given index from the food storage.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>result</code> - the ingredient to update</dd>
+<dd><code>i</code> - the index of the ingredient to update</dd>
+<dd><code>ingredient2</code> - the ingredient to update with</dd>
 </dl>
 </li>
 </ul>

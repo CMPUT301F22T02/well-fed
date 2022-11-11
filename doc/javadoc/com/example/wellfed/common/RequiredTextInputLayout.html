@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -162,12 +162,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 extends com.google.android.material.textfield.TextInputLayout
 implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttachedListener, android.text.TextWatcher</pre>
 <div class="block">The RequiredTextInputLayout class extends the TextInputLayout
- class to provide methods for performing data validation.
- <p>
+ class with methods for performing data validation.
  Citation:
  TextInputLayout. Android Developers. (n.d.). Retrieved September 26, 2022,
  from https://developer.android.com/reference/com/google/android/material/
- textfield/TextInputLayout</div>
+ textfield/TextInputLayout
+ TextWatcher. Android Developers. (n.d.). Retrieved October 29, 2022,
+ from https://developer.android.com/reference/android/text/TextWatcher/</div>
 </li>
 </ul>
 </div>
@@ -226,24 +227,6 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected android.widget.EditText</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editText">editText</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initialText">initialText</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.google.android.material.textfield.TextInputLayout">
 <!--   -->
@@ -290,18 +273,24 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context)">RequiredTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredTextInputLayout object</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet)">RequiredTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                        android.util.AttributeSet&nbsp;attrs)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredTextInputLayout object</div>
+</td>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,android.util.AttributeSet,int)">RequiredTextInputLayout</a></span>&#8203;(android.content.Context&nbsp;context,
                        android.util.AttributeSet&nbsp;attrs,
                        int&nbsp;defStyleAttr)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Constructs a RequiredTextInputLayout object</div>
+</td>
 </tr>
 </table>
 </li>
@@ -323,49 +312,77 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#afterTextChanged(android.text.Editable)">afterTextChanged</a></span>&#8203;(android.text.Editable&nbsp;editable)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#afterTextChanged(android.text.Editable)">afterTextChanged</a></span>&#8203;(android.text.Editable&nbsp;s)</code></th>
+<td class="colLast">
+<div class="block">The afterTextChanged handler is called when somewhere within s, the text
+ has changed, it is checks if the EditText text is valid after
+ changes.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a></span>&#8203;(java.lang.CharSequence&nbsp;charSequence,
-                 int&nbsp;i,
-                 int&nbsp;i1,
-                 int&nbsp;i2)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beforeTextChanged(java.lang.CharSequence,int,int,int)">beforeTextChanged</a></span>&#8203;(java.lang.CharSequence&nbsp;s,
+                 int&nbsp;start,
+                 int&nbsp;count,
+                 int&nbsp;after)</code></th>
+<td class="colLast">
+<div class="block">The beforeTextChanged handler is called when within s, the count
+ characters beginning at start are about to be replaced by new text
+ with length after</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getText()">getText</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Returns the value of the EditTExt</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasChanges()">hasChanges</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Check for whether the EditText has changes, i.e.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid()">isValid</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Validates that the EditText is valid.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEditTextAttached(com.google.android.material.textfield.TextInputLayout)">onEditTextAttached</a></span>&#8203;(com.google.android.material.textfield.TextInputLayout&nbsp;textInputLayout)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Binds the EditText and sets its TextChangedListener to this.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a></span>&#8203;(java.lang.CharSequence&nbsp;charSequence,
-             int&nbsp;i,
-             int&nbsp;i1,
-             int&nbsp;i2)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onTextChanged(java.lang.CharSequence,int,int,int)">onTextChanged</a></span>&#8203;(java.lang.CharSequence&nbsp;s,
+             int&nbsp;start,
+             int&nbsp;before,
+             int&nbsp;count)</code></th>
+<td class="colLast">
+<div class="block">The onTextChanged handler is called when within s, count characters
+ beginning at start have just replaced old text that had length before.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlaceholderText(java.lang.String)">setPlaceholderText</a></span>&#8203;(java.lang.String&nbsp;initialText)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPlaceholderText(java.lang.String)">setPlaceholderText</a></span>&#8203;(java.lang.String&nbsp;placeholderText)</code></th>
+<td class="colLast">
+<div class="block">Set the placeholder text of the EditText</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setText(java.lang.String)">setText</a></span>&#8203;(java.lang.String&nbsp;text)</code></th>
+<td class="colLast">
+<div class="block">Sets the text of the EditText</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -419,34 +436,6 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="editText">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>editText</h4>
-<pre>protected&nbsp;android.widget.EditText editText</pre>
-</li>
-</ul>
-<a id="initialText">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>initialText</h4>
-<pre>protected&nbsp;java.lang.String initialText</pre>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -462,6 +451,11 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <h4>RequiredTextInputLayout</h4>
 <pre>public&nbsp;RequiredTextInputLayout&#8203;(@NonNull
                                android.content.Context&nbsp;context)</pre>
+<div class="block">Constructs a RequiredTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet)">
@@ -474,6 +468,12 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
                                android.content.Context&nbsp;context,
                                @Nullable
                                android.util.AttributeSet&nbsp;attrs)</pre>
+<div class="block">Constructs a RequiredTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+</dl>
 </li>
 </ul>
 <a id="&lt;init&gt;(android.content.Context,android.util.AttributeSet,int)">
@@ -487,6 +487,13 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
                                @Nullable
                                android.util.AttributeSet&nbsp;attrs,
                                int&nbsp;defStyleAttr)</pre>
+<div class="block">Constructs a RequiredTextInputLayout object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>attrs</code> - the attributes</dd>
+<dd><code>defStyleAttr</code> - the default style attribute</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -507,19 +514,13 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <h4>onEditTextAttached</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onEditTextAttached&#8203;(@NonNull
                                com.google.android.material.textfield.TextInputLayout&nbsp;textInputLayout)</pre>
+<div class="block">Binds the EditText and sets its TextChangedListener to this.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onEditTextAttached</code>&nbsp;in interface&nbsp;<code>com.google.android.material.textfield.TextInputLayout.OnEditTextAttachedListener</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>textInputLayout</code> - the TextInputLayout</dd>
 </dl>
-</li>
-</ul>
-<a id="setPlaceholderText(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPlaceholderText</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPlaceholderText&#8203;(java.lang.String&nbsp;initialText)</pre>
 </li>
 </ul>
 <a id="getText()">
@@ -529,6 +530,39 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <li class="blockList">
 <h4>getText</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getText()</pre>
+<div class="block">Returns the value of the EditTExt</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the value of the EditText</dd>
+</dl>
+</li>
+</ul>
+<a id="setText(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setText</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setText&#8203;(java.lang.String&nbsp;text)</pre>
+<div class="block">Sets the text of the EditText</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>text</code> - the text</dd>
+</dl>
+</li>
+</ul>
+<a id="setPlaceholderText(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPlaceholderText</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPlaceholderText&#8203;(java.lang.String&nbsp;placeholderText)</pre>
+<div class="block">Set the placeholder text of the EditText</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>placeholderText</code> - the placeholder text</dd>
+</dl>
 </li>
 </ul>
 <a id="hasChanges()">
@@ -538,6 +572,12 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <li class="blockList">
 <h4>hasChanges</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;hasChanges()</pre>
+<div class="block">Check for whether the EditText has changes, i.e. the EditText's
+ current text differs from the placeholder text</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the EditText has changes</dd>
+</dl>
 </li>
 </ul>
 <a id="isValid()">
@@ -547,6 +587,12 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <li class="blockList">
 <h4>isValid</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;isValid()</pre>
+<div class="block">Validates that the EditText is valid. Valid refers to the EditText
+ is non-empty. If it is invalid, it displays an error message.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the EditText is valid.</dd>
+</dl>
 </li>
 </ul>
 <a id="beforeTextChanged(java.lang.CharSequence,int,int,int)">
@@ -555,13 +601,21 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <ul class="blockList">
 <li class="blockList">
 <h4>beforeTextChanged</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;beforeTextChanged&#8203;(java.lang.CharSequence&nbsp;charSequence,
-                              int&nbsp;i,
-                              int&nbsp;i1,
-                              int&nbsp;i2)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;beforeTextChanged&#8203;(java.lang.CharSequence&nbsp;s,
+                              int&nbsp;start,
+                              int&nbsp;count,
+                              int&nbsp;after)</pre>
+<div class="block">The beforeTextChanged handler is called when within s, the count
+ characters beginning at start are about to be replaced by new text
+ with length after</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>beforeTextChanged</code>&nbsp;in interface&nbsp;<code>android.text.TextWatcher</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>s</code> - the CharSequence text</dd>
+<dd><code>start</code> - start index</dd>
+<dd><code>count</code> - count of characters about to be replaced</dd>
+<dd><code>after</code> - length of new text</dd>
 </dl>
 </li>
 </ul>
@@ -571,13 +625,20 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <ul class="blockList">
 <li class="blockList">
 <h4>onTextChanged</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onTextChanged&#8203;(java.lang.CharSequence&nbsp;charSequence,
-                          int&nbsp;i,
-                          int&nbsp;i1,
-                          int&nbsp;i2)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;onTextChanged&#8203;(java.lang.CharSequence&nbsp;s,
+                          int&nbsp;start,
+                          int&nbsp;before,
+                          int&nbsp;count)</pre>
+<div class="block">The onTextChanged handler is called when within s, count characters
+ beginning at start have just replaced old text that had length before.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onTextChanged</code>&nbsp;in interface&nbsp;<code>android.text.TextWatcher</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>s</code> - the CharSequence text</dd>
+<dd><code>start</code> - start index</dd>
+<dd><code>before</code> - length of old text</dd>
+<dd><code>count</code> - count of characters about to be replaced</dd>
 </dl>
 </li>
 </ul>
@@ -587,10 +648,15 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 <ul class="blockListLast">
 <li class="blockList">
 <h4>afterTextChanged</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;afterTextChanged&#8203;(android.text.Editable&nbsp;editable)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;afterTextChanged&#8203;(android.text.Editable&nbsp;s)</pre>
+<div class="block">The afterTextChanged handler is called when somewhere within s, the text
+ has changed, it is checks if the EditText text is valid after
+ changes.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>afterTextChanged</code>&nbsp;in interface&nbsp;<code>android.text.TextWatcher</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>s</code> - the Editable text</dd>
 </dl>
 </li>
 </ul>
@@ -652,7 +718,7 @@ implements com.google.android.material.textfield.TextInputLayout.OnEditTextAttac
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

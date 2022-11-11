@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -225,18 +225,33 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipeAndIngredient(java.lang.String)">delRecipeAndIngredient</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Deletes a recipe document with the id  from the recipe collection (AND Ingredients)
+ of recipes</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editRecipe(com.example.wellfed.recipe.Recipe)">editRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
 <td class="colLast">
 <div class="block">Updates the corresponding recipe document in the collection with the fields of the
  recipe object.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>com.google.firebase.firestore.DocumentReference</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocumentReference(java.lang.String)">getDocumentReference</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Get the DocumentReference from Recipes collection for the given id</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipe(java.lang.String)">getRecipe</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipes()">getRecipes</a></span>()</code></th>
 <td class="colLast">
@@ -357,6 +372,24 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="delRecipeAndIngredient(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>delRecipeAndIngredient</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;delRecipeAndIngredient&#8203;(java.lang.String&nbsp;id)
+                            throws java.lang.InterruptedException</pre>
+<div class="block">Deletes a recipe document with the id  from the recipe collection (AND Ingredients)
+ of recipes</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The id of recipe document we want to delete</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.InterruptedException</code> - If the transaction in the method was not complete</dd>
+</dl>
+</li>
+</ul>
 <a id="editRecipe(com.example.wellfed.recipe.Recipe)">
 <!--   -->
 </a>
@@ -397,7 +430,7 @@ extends java.lang.Object</pre>
 <a id="getRecipes()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getRecipes</h4>
 <pre class="methodSignature">public&nbsp;java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;getRecipes()
@@ -409,6 +442,22 @@ extends java.lang.Object</pre>
  database</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.InterruptedException</code> - If the transaction in the method was not complete</dd>
+</dl>
+</li>
+</ul>
+<a id="getDocumentReference(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getDocumentReference</h4>
+<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.DocumentReference&nbsp;getDocumentReference&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Get the DocumentReference from Recipes collection for the given id</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The String of the document in Recipes collection we want</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>DocumentReference of the Recipe</dd>
 </dl>
 </li>
 </ul>

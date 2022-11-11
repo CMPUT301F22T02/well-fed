@@ -7,9 +7,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.wellfed.ActivityBase;
+import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.ConfirmQuitDialog;
-import com.example.wellfed.common.OnQuitListener;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
@@ -18,8 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
-public class MealPlanEditActivity extends ActivityBase
-        implements OnQuitListener {
+public class MealPlanEditActivity extends EditActivityBase {
     private RequiredTextInputLayout titleTextInput;
     private RequiredDateTextInputLayout dateTextInput;
     private RequiredDropdownTextInputLayout categoryTextInput;
@@ -27,25 +27,6 @@ public class MealPlanEditActivity extends ActivityBase
     private FloatingActionButton fab;
     private MealPlan mealPlan;
     private String type;
-
-    @Override public void onBackPressed() {
-        if (this.hasUnsavedChanges()) {
-            new ConfirmQuitDialog(this, this).show();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (this.hasUnsavedChanges()) {
-            if (item.getItemId() == android.R.id.home) {
-                new ConfirmQuitDialog(this, this).show();
-            }
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
-    }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +38,15 @@ public class MealPlanEditActivity extends ActivityBase
         this.categoryTextInput = findViewById(R.id.categoryTextInput);
         this.numberOfServingsTextInput =
                 findViewById(R.id.numberOfServingsTextInput);
-        this.numberOfServingsTextInput.requireInteger();
+        this.numberOfServingsTextInput.setRequireInteger();
         this.numberOfServingsTextInput.setRequirePositiveNumber(true);
-        this.fab = findViewById(R.id.fab);
+        this.fab = findViewById(R.id.save_fab);
         this.fab.setOnClickListener(view -> onSave());
-
         Intent intent = this.getIntent();
         this.mealPlan = (MealPlan) intent.getSerializableExtra("mealPlan");
+//        TODO: don't hard code
+        this.categoryTextInput.setSimpleItems(
+                new String[]{"Breakfast", "Lunch", "Dinner"});
         if (this.mealPlan != null) {
             this.type = "edit";
             titleTextView.setText(R.string.edit_meal_plan);
@@ -79,7 +62,7 @@ public class MealPlanEditActivity extends ActivityBase
         }
     }
 
-    private Boolean hasUnsavedChanges() {
+    public Boolean hasUnsavedChanges() {
         if (this.titleTextInput.hasChanges()) {
             return true;
         }
@@ -121,13 +104,6 @@ public class MealPlanEditActivity extends ActivityBase
         intent.putExtra("type", this.type);
         intent.putExtra("mealPlan", this.mealPlan);
         setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
-
-    @Override
-    public void onQuit() {
-        Intent intent = new Intent();
-        setResult(Activity.RESULT_CANCELED, intent);
         finish();
     }
 

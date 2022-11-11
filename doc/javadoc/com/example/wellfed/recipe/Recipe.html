@@ -188,7 +188,7 @@ implements java.io.Serializable</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIngredient(com.example.wellfed.recipe.RecipeIngredient)">addIngredient</a></span>&#8203;(<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&nbsp;ingredient)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIngredient(com.example.wellfed.ingredient.Ingredient)">addIngredient</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</code></th>
 <td class="colLast">
 <div class="block">Adds an Ingredient as part of a Recipe</div>
 </td>
@@ -222,14 +222,14 @@ implements java.io.Serializable</pre>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredients()">getIngredients</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the entire ArrayList of Ingredients that make up a Recipe</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>android.media.Image</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPhotograph()">getPhotograph</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the photograph associated with a Recipe.</div>
@@ -286,7 +286,7 @@ implements java.io.Serializable</pre>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPhotograph(android.media.Image)">setPhotograph</a></span>&#8203;(android.media.Image&nbsp;photograph)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPhotograph(java.lang.String)">setPhotograph</a></span>&#8203;(java.lang.String&nbsp;photograph)</code></th>
 <td class="colLast">
 <div class="block">Sets the photograph associated with a Recipe.</div>
 </td>
@@ -360,13 +360,13 @@ implements java.io.Serializable</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addIngredient(com.example.wellfed.recipe.RecipeIngredient)">
+<a id="addIngredient(com.example.wellfed.ingredient.Ingredient)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addIngredient</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addIngredient&#8203;(<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&nbsp;ingredient)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addIngredient&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</pre>
 <div class="block">Adds an Ingredient as part of a Recipe</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -410,7 +410,7 @@ implements java.io.Serializable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIngredients</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="RecipeIngredient.html" title="class in com.example.wellfed.recipe">RecipeIngredient</a>&gt;&nbsp;getIngredients()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;getIngredients()</pre>
 <div class="block">Gets the entire ArrayList of Ingredients that make up a Recipe</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -568,7 +568,7 @@ public&nbsp;java.lang.String&nbsp;getComments()</pre>
 <li class="blockList">
 <h4>getPhotograph</h4>
 <pre class="methodSignature">@Nullable
-public&nbsp;android.media.Image&nbsp;getPhotograph()</pre>
+public&nbsp;java.lang.String&nbsp;getPhotograph()</pre>
 <div class="block">Gets the photograph associated with a Recipe.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -576,13 +576,13 @@ public&nbsp;android.media.Image&nbsp;getPhotograph()</pre>
 </dl>
 </li>
 </ul>
-<a id="setPhotograph(android.media.Image)">
+<a id="setPhotograph(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPhotograph</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPhotograph&#8203;(android.media.Image&nbsp;photograph)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPhotograph&#8203;(java.lang.String&nbsp;photograph)</pre>
 <div class="block">Sets the photograph associated with a Recipe.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

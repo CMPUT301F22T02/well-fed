@@ -26,12 +26,6 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
 var pathtoroot = "../../../../";
 var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
@@ -87,7 +81,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -96,7 +90,7 @@ loadScripts(document, 'script');</script>
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li>Method</li>
 </ul>
 </div>
 <a id="skip.navbar.top">
@@ -122,7 +116,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
+<li><a href="ConfirmDialog.html" title="class in com.example.wellfed.common">com.example.wellfed.common.ConfirmDialog</a></li>
+<li>
+<ul class="inheritance">
 <li>com.example.wellfed.common.ConfirmQuitDialog</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -131,13 +130,32 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">ConfirmQuitDialog</span>
-extends java.lang.Object</pre>
+extends <a href="ConfirmDialog.html" title="class in com.example.wellfed.common">ConfirmDialog</a></pre>
+<div class="block">The ConfirmQuitDialog class provides a dialog for confirming whether the
+ user intends to quit the an activity where they have unsaved changes.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.com.example.wellfed.common.ConfirmDialog">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.example.wellfed.common.<a href="ConfirmDialog.html" title="class in com.example.wellfed.common">ConfirmDialog</a></h3>
+<code><a href="ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -152,9 +170,11 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,com.example.wellfed.common.OnQuitListener)">ConfirmQuitDialog</a></span>&#8203;(android.content.Context&nbsp;context,
-                 <a href="OnQuitListener.html" title="interface in com.example.wellfed.common">OnQuitListener</a>&nbsp;onQuitListener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context,com.example.wellfed.common.ConfirmDialog.OnConfirmListener)">ConfirmQuitDialog</a></span>&#8203;(android.content.Context&nbsp;context,
+                 <a href="ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>&nbsp;onConfirmListener)</code></th>
+<td class="colLast">
+<div class="block">Constructs a ConfirmQuitDialog</div>
+</td>
 </tr>
 </table>
 </li>
@@ -167,19 +187,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#show()">show</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.common.ConfirmDialog">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.example.wellfed.common.<a href="ConfirmDialog.html" title="class in com.example.wellfed.common">ConfirmDialog</a></h3>
+<code><a href="ConfirmDialog.html#show()">show</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -203,33 +217,20 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(android.content.Context,com.example.wellfed.common.OnQuitListener)">
+<a id="&lt;init&gt;(android.content.Context,com.example.wellfed.common.ConfirmDialog.OnConfirmListener)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ConfirmQuitDialog</h4>
 <pre>public&nbsp;ConfirmQuitDialog&#8203;(android.content.Context&nbsp;context,
-                         <a href="OnQuitListener.html" title="interface in com.example.wellfed.common">OnQuitListener</a>&nbsp;onQuitListener)</pre>
-</li>
-</ul>
-</li>
-</ul>
-</section>
-<!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="show()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>show</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;show()</pre>
+                         <a href="ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>&nbsp;onConfirmListener)</pre>
+<div class="block">Constructs a ConfirmQuitDialog</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context</dd>
+<dd><code>onConfirmListener</code> - the OnConfirmListener</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -283,7 +284,7 @@ extends java.lang.Object</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -292,7 +293,7 @@ extends java.lang.Object</pre>
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li>Method</li>
 </ul>
 </div>
 <a id="skip.navbar.bottom">

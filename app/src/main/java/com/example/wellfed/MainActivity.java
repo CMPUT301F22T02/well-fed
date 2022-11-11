@@ -17,8 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Stack;
 
-public class MainActivity extends FragmentActivity {
-    final String TAG = "Sample";
+public class MainActivity extends ActivityBase {
+    final String TAG = "MainActivity";
     Stack<Integer> history;
     NavigationCollectionAdapter navigationCollectionAdapter;
     ViewPager2 viewPager;
@@ -57,16 +57,16 @@ public class MainActivity extends FragmentActivity {
         bottomAppBar.setOnMenuItemClickListener(menuItem -> {
             int j;
             switch (menuItem.getItemId()) {
-                case R.id.ingredient_storage:
+                case R.id.ingredient_storage_item:
                     j = 0;
                     break;
-                case R.id.recipe_book:
+                case R.id.recipe_book_item:
                     j = 1;
                     break;
-                case R.id.meal_book:
+                case R.id.meal_book_item:
                     j = 2;
                     break;
-                case R.id.shopping_cart:
+                case R.id.shopping_cart_item:
                     j = 3;
                     break;
                 default:
