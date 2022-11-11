@@ -3,29 +3,22 @@ package com.example.wellfed.recipe;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
-import android.media.Image;
 import android.util.Log;
 
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
-
-import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RecipeDB {
     /**
@@ -45,6 +38,10 @@ public class RecipeDB {
         public void onAddRecipe(Recipe recipe, Boolean success);
     }
 
+    public interface OnRecipeIngredientAdded {
+        public void onRecipeIngredientAdd(Ingredient ingredient, int totalAdded);
+    }
+
     /**
      * Create a RecipeDB object
      */
@@ -53,6 +50,7 @@ public class RecipeDB {
         this.recipesCollection = db.collection("Recipes");
         ingredientDB = new IngredientDB();
     }
+
 
     /**
      * Adds a recipe to the Recipe collection in db and any ingredients
@@ -66,16 +64,14 @@ public class RecipeDB {
      */
     //todo it works but hacky
     public void addRecipe(Recipe recipe, OnAddRecipe listener) throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
 
         ArrayList<HashMap<String, Object>> recipeIngredients = new ArrayList<>();
         HashMap<String, Object> recipeMap = new HashMap<>();
 
-        List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
         // add all the ingredients and store in recipeIngredients
+        AtomicInteger added = new AtomicInteger();
         for (int i = 0; i < recipe.getIngredients().size(); i++) {
             Ingredient ingredient = recipe.getIngredients().get(i);
-            int finalI = i;
             ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
                 if (foundIngredient != null) {
                     DocumentReference doc = ingredientDB.getDocumentReference(foundIngredient);
@@ -85,26 +81,12 @@ public class RecipeDB {
                     ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(ingredient));
                     ingredientMap.put("amount", ingredient.getAmount());
                     ingredientMap.put("unit", ingredient.getUnit());
+                    added.addAndGet(1);
                     recipeIngredients.add(ingredientMap);
-                    if (finalI == recipe.getIngredients().size() - 1) {
-                        recipeMap.put("ingredients", recipeIngredients);
-                        recipeMap.put("title", recipe.getTitle());
-                        recipeMap.put("servings", recipe.getServings());
-                        recipeMap.put("category", recipe.getCategory());
-                        recipeMap.put("comments", recipe.getComments());
-                        recipeMap.put("photograph", recipe.getPhotograph());
-                        recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
-
-                        recipesCollection
-                                .add(recipeMap)
-                                .addOnSuccessListener(addedSnapshot -> {
-                                    recipe.setId(addedSnapshot.getId());
-                                    listener.onAddRecipe(recipe, true);
-                                })
-                                .addOnFailureListener(failure -> {
-                                    listener.onAddRecipe(null, false);
-                                });
+                    if (added.get() == recipe.getIngredients().size()) {
+                        addRecipeHelper(recipeMap, recipeIngredients, recipe, listener);
                     }
+
                 } else {
                     ingredientDB.addIngredient(ingredient, (addedIngredient, success1) -> {
                         if (addedIngredient == null) {
@@ -116,25 +98,10 @@ public class RecipeDB {
                         ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(addedIngredient));
                         ingredientMap.put("amount", ingredient.getAmount());
                         ingredientMap.put("unit", ingredient.getUnit());
+                        added.addAndGet(1);
                         recipeIngredients.add(ingredientMap);
-                        if (finalI == recipe.getIngredients().size() - 1) {
-                            recipeMap.put("ingredients", recipeIngredients);
-                            recipeMap.put("title", recipe.getTitle());
-                            recipeMap.put("servings", recipe.getServings());
-                            recipeMap.put("category", recipe.getCategory());
-                            recipeMap.put("comments", recipe.getComments());
-                            recipeMap.put("photograph", recipe.getPhotograph());
-                            recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
-
-                            recipesCollection
-                                    .add(recipeMap)
-                                    .addOnSuccessListener(addedSnapshot -> {
-                                        recipe.setId(addedSnapshot.getId());
-                                        listener.onAddRecipe(recipe, true);
-                                    })
-                                    .addOnFailureListener(failure -> {
-                                        listener.onAddRecipe(null, false);
-                                    });
+                        if (added.get() == recipe.getIngredients().size()) {
+                            addRecipeHelper(recipeMap, recipeIngredients, recipe, listener);
                         }
                     });
                 }
@@ -142,6 +109,28 @@ public class RecipeDB {
         }
 
     }
+
+    public void addRecipeHelper(HashMap<String, Object> recipeMap, ArrayList<HashMap<String, Object>> ingredients,
+                                Recipe recipe, OnAddRecipe listener) {
+        recipeMap.put("ingredients", ingredients);
+        recipeMap.put("title", recipe.getTitle());
+        recipeMap.put("servings", recipe.getServings());
+        recipeMap.put("category", recipe.getCategory());
+        recipeMap.put("comments", recipe.getComments());
+        recipeMap.put("photograph", recipe.getPhotograph());
+        recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
+
+        recipesCollection
+                .add(recipeMap)
+                .addOnSuccessListener(addedSnapshot -> {
+                    recipe.setId(addedSnapshot.getId());
+                    listener.onAddRecipe(recipe, true);
+                })
+                .addOnFailureListener(failure -> {
+                    listener.onAddRecipe(null, false);
+                });
+    }
+
 
     /**
      * Deletes a recipe document with the id  from the collection

@@ -40,27 +40,24 @@ public class RecipeDBTest {
      */
     @Test
     public void testAddRecipe() throws InterruptedException {
+
         Ingredient testIngredient = new Ingredient();
-        testIngredient.setDescription("Egg");
-        testIngredient.setAmount(1.0);
+        testIngredient.setDescription("Egg3");
+        testIngredient.setAmount(2.0);
         testIngredient.setCategory("Test");
         testIngredient.setUnit("TestUnits");
 
         Ingredient testIngredient2 = new Ingredient();
-        testIngredient.setDescription("Egg2");
-        testIngredient.setAmount(1.0);
-        testIngredient.setCategory("Test2");
-        testIngredient.setUnit("TestUnits2");
+        testIngredient2.setDescription("Egg23");
+        testIngredient2.setAmount(1.0);
+        testIngredient2.setCategory("Test2");
+        testIngredient2.setUnit("TestUnits2");
 
         Recipe testRecipe = new Recipe("Test");
         testRecipe.setComments("Test");
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(1);
         testRecipe.addIngredient(testIngredient);
-        testRecipe.addIngredient(testIngredient2);
-        testRecipe.addIngredient(testIngredient2);
-        testRecipe.addIngredient(testIngredient2);
-        testRecipe.addIngredient(testIngredient2);
         testRecipe.addIngredient(testIngredient2);
         testRecipe.setCategory("Test");
 
