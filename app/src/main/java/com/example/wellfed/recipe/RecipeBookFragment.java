@@ -83,6 +83,14 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
+                        RecipeDB recipeDB = new RecipeDB();
+                        try {
+                            recipeDB.addRecipe(recipe,(a, b)->{
+
+                            });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
 
                 }

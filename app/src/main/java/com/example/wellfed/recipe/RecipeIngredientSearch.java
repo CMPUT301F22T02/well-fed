@@ -23,19 +23,19 @@ public class RecipeIngredientSearch extends ActivityBase
     private RecyclerView ingredientRecycleView;
 
     // launch the edit recipeIngredientActivity
-    ActivityResultLauncher<StorageIngredient> editIngredientLauncher = registerForActivityResult(new RecipeIngredientEditContract(),
+    ActivityResultLauncher<Ingredient> editIngredientLauncher = registerForActivityResult(new RecipeIngredientEditContract(),
             result -> {
 
                 if (result == null){
                     return;
                 }
                 String type = result.first;
-                StorageIngredient storageIngredient = result.second;
+                Ingredient ingredient = result.second;
 
                 if (type.equals("edit")) {
                     Intent intent = new Intent();
                     intent.putExtra("type", type);
-                    intent.putExtra("ingredient", storageIngredient);
+                    intent.putExtra("ingredient", ingredient);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }

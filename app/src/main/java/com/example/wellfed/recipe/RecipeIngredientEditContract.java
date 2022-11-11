@@ -9,25 +9,26 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.StorageIngredient;
 
-public class RecipeIngredientEditContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
+public class RecipeIngredientEditContract extends ActivityResultContract<Ingredient, Pair<String, Ingredient>> {
     @NonNull
     @Override
-    public Intent createIntent(@NonNull Context context, StorageIngredient storageIngredient) {
+    public Intent createIntent(@NonNull Context context, Ingredient ingredient) {
         Intent intent = new Intent(context, RecipeIngredientEditActivity.class);
-        intent.putExtra("ingredient", storageIngredient);
+        intent.putExtra("ingredient", ingredient);
         return intent;
     }
 
     @Override
-    public Pair<String, StorageIngredient> parseResult(int i, @Nullable Intent intent) {
+    public Pair<String, Ingredient> parseResult(int i, @Nullable Intent intent) {
         if (i != Activity.RESULT_OK || intent == null) {
             return null;
         } else {
             String type = intent.getStringExtra("type");
-            StorageIngredient storageIngredient = (StorageIngredient) intent.getSerializableExtra("ingredient");
-            return new Pair<>(type, storageIngredient);
+            Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
+            return new Pair<>(type, ingredient);
         }
     }
 }

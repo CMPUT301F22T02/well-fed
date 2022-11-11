@@ -46,7 +46,7 @@ import java.util.List;
  *
  * @version 1.0.0
  */
-public class RecipeEditActivity extends ActivityBase {
+public class RecipeEditActivity extends ActivityBase implements RecipeIngredientAdapter.OnIngredientClick{
     private RecyclerView ingredientRV;
     private List<Ingredient> recipeIngredients;
     private RecipeIngredientAdapter recipeIngredientAdapter;
@@ -72,16 +72,17 @@ public class RecipeEditActivity extends ActivityBase {
             });
 
     // add ingredient
-    ActivityResultLauncher<StorageIngredient> ingredientLauncher = registerForActivityResult(
+    ActivityResultLauncher<Ingredient> ingredientLauncher = registerForActivityResult(
             new RecipeIngredientEditContract(), result -> {
                 if (result == null) {
                     return;
                 }
                 String type = result.first;
-                StorageIngredient ingredient = result.second;
+                Ingredient ingredient = result.second;
                 switch (type) {
                     case "add":
-                        break;
+                        recipeIngredients.add(ingredient);
+                        recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size());
                     case "quit":
                         break;
                     default:
@@ -156,7 +157,7 @@ public class RecipeEditActivity extends ActivityBase {
         }
 
         // ingredient recycle viewer and it's adapter
-        recipeIngredientAdapter = new RecipeIngredientAdapter(recipeIngredients, R.layout.recipe_ingredient_edit);
+        recipeIngredientAdapter = new RecipeIngredientAdapter(recipeIngredients, R.layout.recipe_ingredient_edit, this);
         ingredientRV.setAdapter(recipeIngredientAdapter);
         ingredientRV.setLayoutManager(new LinearLayoutManager(RecipeEditActivity.this));
 
@@ -254,4 +255,17 @@ public class RecipeEditActivity extends ActivityBase {
         });
     }
 
+    @Override
+    public void onEditClick(String reason, int pos) {
+        switch(reason){
+            case "edit":
+                ingredientLauncher.launch(recipeIngredients.get(pos));
+            case "delete":
+                recipeIngredients.remove(pos);
+                recipeIngredientAdapter.notifyItemRemoved(pos);
+                break;
+            default:
+                break;
+        }
+    }
 }
