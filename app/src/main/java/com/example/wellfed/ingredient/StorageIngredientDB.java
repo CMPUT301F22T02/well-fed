@@ -184,90 +184,37 @@ public class StorageIngredientDB {
      */
     public void updateStorageIngredient(StorageIngredient storageIngredient,
                                         OnUpdateStorageIngredientListener listener) {
-//        TODO: find a way to do this without callback hell
         getStorageIngredient(storageIngredient.getStorageId(),
                 (oldStorageIngredient, getSuccess1) -> {
-                    if (getSuccess1) {
-                        ingredientDB.getIngredient(storageIngredient,
-                                (getIngredient, getSuccess) -> {
-                                    if (!getSuccess) {
-                                        ingredientDB.addIngredient(
-                                                storageIngredient,
-                                                (addedIngredient, addSuccess) -> {
-                                                    Log.d(TAG,
-                                                            "addIngredient:");
-                                                    updateStorageIngredient(
-                                                            storageIngredient,
-                                                            addedIngredient,
-                                                            (updatedIngredient, updateSuccess) -> {
-                                                                Log.d(TAG,
-                                                                        "updateStorageIngredient:");
-                                                                if (updateSuccess) {
-                                                                    ingredientDB.updateReferenceCount(
-                                                                            updatedIngredient,
-                                                                            1,
-                                                                            (updatedIngredient2, success) -> {
-                                                                                Log.d(TAG,
-                                                                                        "updateReferenceCount:");
-                                                                                ingredientDB.updateReferenceCount(
-                                                                                        oldStorageIngredient,
-                                                                                        -1,
-                                                                                        (updatedIngredient3, success2) -> {
-                                                                                            Log.d(TAG,
-                                                                                                    "updateReferenceCount:");
-                                                                                            listener.onUpdateStorageIngredient(
-                                                                                                    updatedIngredient,
-                                                                                                    success2);
-                                                                                        });
-                                                                            });
-                                                                } else {
-                                                                    listener.onUpdateStorageIngredient(
-                                                                            storageIngredient,
-                                                                            false);
-                                                                }
-                                                            });
-                                                });
-                                    } else {
-                                        updateStorageIngredient(
-                                                storageIngredient,
-                                                getIngredient,
-                                                (updatedStorageIngredient,
-                                                 updateSuccess) -> {
-                                                    Log.d(TAG,
-                                                            "updateStorageIngredient:");
-                                                    if (updateSuccess) {
-                                                        listener.onUpdateStorageIngredient(
-                                                                updatedStorageIngredient,
-                                                                updateSuccess);
-                                                        ingredientDB.updateReferenceCount(
-                                                                updatedStorageIngredient,
-                                                                1,
-                                                                (updatedIngredient2, success) -> {
-                                                                    Log.d(TAG,
-                                                                            "updateReferenceCount:");
-                                                                    ingredientDB.updateReferenceCount(
-                                                                            oldStorageIngredient,
-                                                                            -1,
-                                                                            (updatedIngredient3, success2) -> {
-                                                                                Log.d(TAG,
-                                                                                        "updateReferenceCount:");
-                                                                                listener.onUpdateStorageIngredient(
-                                                                                        updatedStorageIngredient,
-                                                                                        success2);
-                                                                            });
-                                                                });
-                                                    } else {
-                                                        listener.onUpdateStorageIngredient(
-                                                                storageIngredient,
-                                                                false);
-                                                    }
-                                                });
-                                    }
-                                });
-                    } else {
+                    if (!getSuccess1) {
                         listener.onUpdateStorageIngredient(storageIngredient,
                                 false);
+                        return;
                     }
+                    ingredientDB.getIngredient(storageIngredient,
+                            (getIngredient, getSuccess) -> {
+                                if (getSuccess) {
+                                    updateStorageIngredient(storageIngredient,
+                                            oldStorageIngredient, getIngredient,
+                                            listener);
+                                    return;
+                                }
+                                ingredientDB.addIngredient(storageIngredient,
+                                        (addedIngredient, addSuccess) -> {
+                                            Log.d(TAG, "addIngredient:");
+                                            if (!addSuccess) {
+                                                listener.onUpdateStorageIngredient(
+                                                        storageIngredient,
+                                                        false);
+                                                return;
+                                            }
+                                            updateStorageIngredient(
+                                                    storageIngredient,
+                                                    oldStorageIngredient,
+                                                    addedIngredient, listener);
+                                        });
+                            });
+
                 });
     }
 
@@ -278,6 +225,7 @@ public class StorageIngredientDB {
      * @param listener          the listener to handle the result
      */
     public void updateStorageIngredient(StorageIngredient storageIngredient,
+                                        StorageIngredient oldStorageIngredient,
                                         Ingredient ingredient,
                                         OnUpdateStorageIngredientListener listener) {
         WriteBatch batch = db.batch();
@@ -296,7 +244,20 @@ public class StorageIngredientDB {
         batch.commit().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "Updated storage ingredient");
-                listener.onUpdateStorageIngredient(storageIngredient, true);
+                ingredientDB.updateReferenceCount(storageIngredient, 1,
+                        (updatedIngredient2, success) -> {
+                            if (!success) {
+                                listener.onUpdateStorageIngredient(
+                                        storageIngredient, false);
+                                return;
+                            }
+                            ingredientDB.updateReferenceCount(
+                                    oldStorageIngredient, -1,
+                                    (updatedIngredient3, success2) -> {
+                                        listener.onUpdateStorageIngredient(
+                                                storageIngredient, success2);
+                                    });
+                        });
             } else {
                 Log.d(TAG, "Failed to update storage ingredient");
                 listener.onUpdateStorageIngredient(storageIngredient, false);
