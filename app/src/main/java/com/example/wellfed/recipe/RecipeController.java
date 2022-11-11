@@ -52,11 +52,11 @@ public class RecipeController {
      * @param id of the recipe to delete
      */
     public void deleteRecipe(String id) {
-        try {
-            recipeDB.delRecipe(id);
-        } catch (Exception e) {
-
-        }
+//        try {
+//            recipeDB.delRecipe(id);
+//        } catch (Exception e) {
+//
+//        }
     }
 
     /**

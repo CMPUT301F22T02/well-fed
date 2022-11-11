@@ -35,7 +35,7 @@ public class RecipeDB {
      */
     private final IngredientDB ingredientDB;
 
-    public interface OnAddRecipe {
+    public interface OnRecipeDone {
         public void onAddRecipe(Recipe recipe, Boolean success);
     }
 
@@ -64,7 +64,7 @@ public class RecipeDB {
      * @throws InterruptedException If any transaction in the method was not complete
      */
     //todo it works but hacky
-    public void addRecipe(Recipe recipe, OnAddRecipe listener) throws InterruptedException {
+    public void addRecipe(Recipe recipe, OnRecipeDone listener) throws InterruptedException {
 
         ArrayList<HashMap<String, Object>> recipeIngredients = new ArrayList<>();
         HashMap<String, Object> recipeMap = new HashMap<>();
@@ -112,7 +112,7 @@ public class RecipeDB {
     }
 
     public void addRecipeHelper(HashMap<String, Object> recipeMap, ArrayList<HashMap<String, Object>> ingredients,
-                                Recipe recipe, OnAddRecipe listener) {
+                                Recipe recipe, OnRecipeDone listener) {
         recipeMap.put("ingredients", ingredients);
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("servings", recipe.getServings());
@@ -132,12 +132,16 @@ public class RecipeDB {
                 });
     }
 
-    public void getRecipe(String id, OnAddRecipe listener) {
+
+    // todo call the listener when results fail
+    // todo add db-tests for it
+    public void getRecipe(String id, OnRecipeDone listener) {
         DocumentReference recipeRef = this.recipesCollection.document(id);
         recipeRef.get()
                 .addOnSuccessListener(doc -> {
                     List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
                     Recipe recipe = new Recipe(doc.getString("title"));
+                    recipe.setId(doc.getId());
                     recipe.setCategory(doc.getString("category"));
                     recipe.setComments(doc.getString("comments"));
                     recipe.setPhotograph(doc.getString("photograph"));
@@ -177,32 +181,19 @@ public class RecipeDB {
      * @param id The id of recipe document we want to delete
      * @throws InterruptedException If the transaction in the method was not complete
      */
-    public void delRecipe(String id) throws InterruptedException {
-        CountDownLatch deleteLatch = new CountDownLatch(1);
-
-        if (id.equals(NULL)) {
-            Log.d("Delete Recipe", "The Recipe does not have an id");
-            return;
+    public void delRecipe(String id, OnRecipeDone listener){
+        if (id == null){
+            listener.onAddRecipe(null, false);
         }
 
-        DocumentReference recipeToDelete = recipesCollection.document(id);
-
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
-
-                    transaction.delete(recipeToDelete);
-
-                    return null;
+        DocumentReference recipeRef = this.recipesCollection.document(id);
+        recipeRef.delete()
+                .addOnSuccessListener(r->{
+                    listener.onAddRecipe(new Recipe(id), true);
                 })
-                .addOnSuccessListener(unused -> {
-                    Log.d(TAG, "onSuccess: ");
-                    deleteLatch.countDown();
-                })
-                .addOnFailureListener(e -> {
-                    Log.d(TAG, "onFailure: ");
-                    deleteLatch.countDown();
+                .addOnFailureListener(f->{
+                    listener.onAddRecipe(null, false);
                 });
-
-        deleteLatch.await();
     }
 
     /**
