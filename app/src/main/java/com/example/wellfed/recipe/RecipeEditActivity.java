@@ -13,7 +13,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,9 +22,9 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.ingredient.StorageIngredient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 // todo create an xml file for this class
-import java.util.concurrent.atomic.AtomicReference;
+
 
 /**
  * Activity which allows user to edit an existing recipe
@@ -48,9 +47,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class RecipeEditActivity extends ActivityBase {
     private RecyclerView ingredientRV;
-    private RecyclerView commentsRV;
     private List<Ingredient> recipeIngredients;
-    private List<String> comments;
     private RecipeIngredientAdapter recipeIngredientAdapter;
     private Recipe recipe;
     private FloatingActionButton fab;
@@ -60,12 +57,38 @@ public class RecipeEditActivity extends ActivityBase {
 
 
     // take picture
-    ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(),
+    ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
+            new ActivityResultContracts.TakePicture(),
             result -> {
                 if (result) {
                     uploadImg();
                 }
             });
+
+    // add ingredient
+    ActivityResultLauncher<StorageIngredient> ingredientLauncher = registerForActivityResult(
+            new RecipeIngredientEditContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                StorageIngredient ingredient = result.second;
+                switch (type) {
+                    case "add":
+                        break;
+                    case "quit":
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            }
+    );
+
+    ActivityResultLauncher<String> ingredientSearchLauncher = registerForActivityResult(
+            new RecipeIngredientSearchContract(), result -> {
+
+            }
+    );
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,23 +98,22 @@ public class RecipeEditActivity extends ActivityBase {
         // intialize the variables
         Intent intent = getIntent();
         recipeIngredients = new ArrayList<>();
-        comments = new ArrayList<>();
         recipe = (Recipe) intent.getSerializableExtra("Recipe");
         fab = findViewById(R.id.save_fab);
 
 
         // views
+        ingredientRV = findViewById(R.id.recipe_ingredient_recycleViewer);
+        recipeImg = findViewById(R.id.recipe_img);
         EditText title = findViewById(R.id.recipe_title_editText);
         EditText prepTime = findViewById(R.id.recipe_prep_time_editText);
         EditText servings = findViewById(R.id.recipe_no_of_servings_editText);
-        ingredientRV = findViewById(R.id.recipe_ingredient_recycleViewer);
-//        commentsRV = findViewById(R.id.recipe_comments_recycleViewer);
-        RequiredTextInputLayout commentsTextInput =
-                findViewById(R.id.commentsTextInput);
+        RequiredTextInputLayout commentsTextInput = findViewById(R.id.commentsTextInput);
         Button addIngredient = findViewById(R.id.ingredient_add_btn);
+        Button searchIngredient = findViewById(R.id.ingredient_search_btn);
         RequiredDropdownTextInputLayout recipeCategory = findViewById(R.id.recipe_category);
 
-        recipeImg = findViewById(R.id.recipe_img);
+        recipeCategory.setSimpleItems(new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer", "Dessert"});
 
 
         // activity started to add data a recipe
@@ -118,23 +140,17 @@ public class RecipeEditActivity extends ActivityBase {
         ingredientRV.setAdapter(recipeIngredientAdapter);
         ingredientRV.setLayoutManager(new LinearLayoutManager(RecipeEditActivity.this));
 
-//        CommentAdapter commentAdapter = new CommentAdapter(comments);
-//        commentsRV.setAdapter(commentAdapter);
-//        commentsRV.setLayoutManager(new LinearLayoutManager(RecipeEditActivity.this));
-
-
         uri = initTempUri();
         recipeImg.setOnClickListener(view -> {
             cameraLauncher.launch(uri);
         });
 
         addIngredient.setOnClickListener(view -> {
-            AlertDialog dialog = new MaterialAlertDialogBuilder(RecipeEditActivity.this)
-                    .setTitle("Comment")
-                    .setView(R.layout.dialog_recipe_ingredient)
-                    .setPositiveButton("Add", (d, which) -> {
-                    })
-                    .setNeutralButton("Cancel", null).show();
+            ingredientLauncher.launch(null);
+        });
+
+        searchIngredient.setOnClickListener(view->{
+            ingredientSearchLauncher.launch("search");
         });
 
     }

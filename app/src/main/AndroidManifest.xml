@@ -72,6 +72,24 @@
         </activity>
 
         <activity
+            android:name=".recipe.RecipeIngredientEditActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".recipe.RecipeIngredientSearch"
+            android:exported="false"
+            android:parentActivityName=".recipe.RecipeIngredientEditActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".mealplan.MealPlanActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
