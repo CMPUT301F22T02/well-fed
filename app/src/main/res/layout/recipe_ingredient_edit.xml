@@ -27,7 +27,7 @@
         android:layout_width="16sp"
         android:layout_height="16sp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/info_fill0_wght400_grad0_opsz48"
+        android:src="@drawable/ic_baseline_delete_24"
         app:layout_constraintBottom_toBottomOf="@id/ingredient_name_textView"
         app:layout_constraintEnd_toStartOf="@+id/ingredient_edit_imgView"
         app:layout_constraintTop_toTopOf="@id/ingredient_name_textView" />
@@ -37,7 +37,7 @@
         android:layout_width="16sp"
         android:layout_height="16sp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/info_fill0_wght400_grad0_opsz48"
+        android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintBottom_toBottomOf="@id/ingredient_name_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ingredient_name_textView" />

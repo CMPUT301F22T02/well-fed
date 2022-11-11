@@ -251,60 +251,6 @@ public class IngredientDBTest {
         }
     }
 
-
-    /**
-     * Tests updateIngredient on DB. Checks if the ingredient was updated.
-     *
-     * @throws InterruptedException if the test times out
-     */
-    @Test
-    public void testUpdateIngredient() throws InterruptedException {
-        Log.d(TAG, "testUpdateIngredient");
-
-        String updatedCategory = "Fruit";
-        String updatedDescription = "Apple";
-
-        CountDownLatch latch = new CountDownLatch(1);
-
-        ingredientDB.addIngredient(mockIngredient,
-                (addIngredient, addSuccess) -> {
-            Log.d(TAG, ":onAddIngredient");
-            String id = addIngredient.getId();
-            assertNotNull(addIngredient);
-            assertTrue(addSuccess);
-
-            addIngredient.setCategory(updatedCategory);
-            addIngredient.setDescription(updatedDescription);
-
-            ingredientDB.updateIngredient(addIngredient,
-                    (updateIngredient, updateSuccess) -> {
-                Log.d(TAG, ":onUpdateIngredient");
-                assertNotNull(updateIngredient);
-                assertTrue(updateSuccess);
-                ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
-                    Log.d(TAG, ":onGetIngredient");
-                    assertNotNull(getIngredient);
-                    assertTrue(getSuccess);
-                    assertEquals(updatedCategory, getIngredient.getCategory());
-                    assertEquals(updatedDescription,
-                            getIngredient.getDescription());
-                    //  remove the ingredient
-                    ingredientDB.deleteIngredient(getIngredient,
-                            (deleteIngredient, deleteSuccess) -> {
-                                assertNotNull(deleteIngredient);
-                                assertTrue(deleteSuccess);
-                                Log.d(TAG, ":onDeleteIngredient");
-                                latch.countDown();
-                            });
-                });
-            });
-        });
-        if (!latch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException();
-        }
-    }
-
-
     @Test
     public void getIngredientByCategoryNotExists() throws InterruptedException {
         Log.d(TAG, "get Ingredient based on category and description");

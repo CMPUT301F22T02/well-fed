@@ -172,20 +172,6 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      *
      * @return The best before date of the ingredient in the storage
      */
-    public String getBestBefore() {
-        if (bestBefore == null) {
-            return null;
-        }
-        String bestBeforeString = bestBefore.toString();
-        String[] bestBeforeSplit = bestBeforeString.split(" ");
-        return bestBeforeSplit[0] + ", " + bestBeforeSplit[1] + " " + bestBeforeSplit[2];
-    }
-
-    /**
-     * Gets the best before date of the ingredient in the storage.
-     *
-     * @return The best before date of the ingredient in the storage
-     */
     public Date getBestBeforeDate() {
         return bestBefore;
     }
