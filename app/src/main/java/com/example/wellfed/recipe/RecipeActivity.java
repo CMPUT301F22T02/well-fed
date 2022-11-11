@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Activity that holds the view for Recipe showing all it's detail
+ *
  * @version 1.0.0
  */
 public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
@@ -47,6 +48,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
     /**
      * method that is called when the activity is created
+     *
      * @param savedInstanceState
      */
     @Override
@@ -66,12 +68,6 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
 
-
-        // add ingredients to the recipe
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            ingredientList.add(ingredient);
-        }
-
         // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
         TextView prepTime = findViewById(R.id.recipe_prep_time_textView);
@@ -79,14 +75,25 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         TextView category = findViewById(R.id.recipe_category);
         ImageView img = findViewById(R.id.recipe_img);
 
-//        title.setText(recipe.getTitle());
-//        prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
-//        servings.setText("Servings: " + Integer.toString(recipe.getServings()));
-//        category.setText("Category: " + recipe.getCategory());
-        Picasso.get()
-                .load(recipe.getPhotograph())
-                .rotate(90)
-                .into(img);
+        RecipeDB recipeDB = new RecipeDB();
+        recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
+            recipe = foundRecipe;
+            title.setText(recipe.getTitle());
+            prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+            servings.setText("Servings: " + Integer.toString(recipe.getServings()));
+            category.setText("Category: " + recipe.getCategory());
+
+            Picasso.get()
+                    .load(recipe.getPhotograph())
+                    .rotate(90)
+                    .into(img);
+            // add ingredients to the recipe
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                ingredientList.add(ingredient);
+                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
+            }
+        });
+
 
         // ingredient recycle view
         ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);

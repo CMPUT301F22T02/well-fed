@@ -132,6 +132,43 @@ public class RecipeDB {
                 });
     }
 
+    public void getRecipe(String id, OnAddRecipe listener) {
+        DocumentReference recipeRef = this.recipesCollection.document(id);
+        recipeRef.get()
+                .addOnSuccessListener(doc -> {
+                    List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+                    Recipe recipe = new Recipe(doc.getString("title"));
+                    recipe.setCategory(doc.getString("category"));
+                    recipe.setComments(doc.getString("comments"));
+                    recipe.setPhotograph(doc.getString("photograph"));
+                    Long prepTime = (Long) doc.getData().get("preparation-time");
+                    recipe.setPrepTimeMinutes(Integer.parseInt(Long.toString(prepTime)));
+                    Long servings = (Long) doc.getData().get("servings");
+                    recipe.setServings(Integer.parseInt(Long.toString(servings)));
+                    ArrayList<HashMap<String,Object>> ingredients = (ArrayList<HashMap<String, Object>>)
+                            doc.getData().get("ingredients");
+                    int toFetch = ingredients.size();
+                    AtomicInteger fetched = new AtomicInteger();
+                    for (int i = 0; i<toFetch; i++){
+                        DocumentReference ingredientRef = (DocumentReference) ingredients.get(i).get("ingredientRef");
+                        int finalI = i;
+                        ingredientDB.getIngredient(ingredientRef.getId(), (foundIngredient, success)->{
+                            foundIngredient.setAmount((Double) ingredients.get(finalI).get("amount"));
+                            foundIngredient.setUnit((String) ingredients.get(finalI).get("unit"));
+                            recipe.addIngredient(foundIngredient);
+                            fetched.addAndGet(1);
+                            if(fetched.get() == toFetch){
+                                listener.onAddRecipe(recipe, true);
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(failure -> {
+
+                });
+    }
+
+
 
     /**
      * Deletes a recipe document with the id  from the collection
@@ -377,7 +414,7 @@ public class RecipeDB {
         return recipe;
     }
 
-    public Query getQuery(){
+    public Query getQuery() {
         return this.recipesCollection;
     }
 
