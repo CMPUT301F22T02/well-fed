@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.wellfed.common.DBConnection;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,13 +25,13 @@ public class StorageIngredientDB {
      */
     private FirebaseFirestore db;
     /**
-     * Holds a reference to the StoredIngredients collection in the Firebase DB.
-     */
-    private final CollectionReference collection;
-    /**
      * Holds a reference to the IngredientDB
      */
     private final IngredientDB ingredientDB;
+    /**
+     * Holds a connection to the users ingredient collection in the DB.
+     */
+    private DBConnection ingredientsConnection;
 
     /**
      * This interface is used to handle the result of
@@ -102,7 +103,7 @@ public class StorageIngredientDB {
      */
     public StorageIngredientDB() {
         this.db = FirebaseFirestore.getInstance();
-        this.collection = db.collection("StoredIngredients");
+        this.ingredientsConnection = new DBConnection("StoredIngredients");
         this.ingredientDB = new IngredientDB();
     }
 
@@ -160,7 +161,7 @@ public class StorageIngredientDB {
         storageIngredientMap.put("unit", storageIngredient.getUnit());
         storageIngredientMap.put("Ingredient",
                 ingredientDB.getDocumentReference(ingredient));
-        this.collection.add(storageIngredientMap)
+        this.ingredientsConnection.getCollection().add(storageIngredientMap)
                 .addOnSuccessListener(stored -> {
                     Log.d(TAG, "success:");
                     storageIngredient.setStorageId(stored.getId());
@@ -230,7 +231,7 @@ public class StorageIngredientDB {
                                         OnUpdateStorageIngredientListener listener) {
         WriteBatch batch = db.batch();
         DocumentReference storageIngredientRef =
-                collection.document(storageIngredient.getStorageId());
+                this.ingredientsConnection.getCollection().document(storageIngredient.getStorageId());
         batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
         batch.update(storageIngredientRef, "amount",
                 storageIngredient.getAmount());
@@ -273,7 +274,7 @@ public class StorageIngredientDB {
     public void deleteStorageIngredient(StorageIngredient storageIngredient,
                                         OnDeleteStorageIngredientListener listener) {
         // TODO: based on number of references to ingredient, delete ingredient
-        this.collection.document(storageIngredient.getStorageId()).delete()
+        this.ingredientsConnection.getCollection().document(storageIngredient.getStorageId()).delete()
                 .addOnSuccessListener(onDelete -> {
                     Log.d(TAG, "DocumentSnapshot successfully deleted!");
                     ingredientDB.updateReferenceCount(storageIngredient, -1,
@@ -325,7 +326,7 @@ public class StorageIngredientDB {
      */
     public void getStorageIngredient(String id,
                                      OnGetStorageIngredientListener listener) {
-        this.collection.document(id).get()
+        this.ingredientsConnection.getCollection().document(id).get()
                 .addOnSuccessListener(storedSnapshot -> {
                     Log.d(TAG, "StorageIngredient found");
                     this.getStorageIngredient(storedSnapshot, listener);
@@ -380,7 +381,7 @@ public class StorageIngredientDB {
      * @return DocumentReference of the Recipe
      */
     public DocumentReference getDocumentReference(String id) {
-        return collection.document(id);
+        return this.ingredientsConnection.getCollection().document(id);
     }
 
     /**
@@ -389,7 +390,7 @@ public class StorageIngredientDB {
      * @return the query
      */
     public Query getQuery() {
-        return collection;
+        return this.ingredientsConnection.getCollection();
         //                .orderBy("timestamp", Query.Direction.DESCENDING)
     }
 }
