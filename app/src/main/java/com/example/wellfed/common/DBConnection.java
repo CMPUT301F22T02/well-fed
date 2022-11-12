@@ -23,11 +23,6 @@ import java.util.UUID;
  */
 public class DBConnection {
     /**
-     * Holds the TAG for logging.
-     */
-    private static final String TAG = "DBConnection";
-
-    /**
      * Holds the instance of the Firebase Firestore DB.
      */
     private FirebaseFirestore db;
@@ -66,7 +61,8 @@ public class DBConnection {
     private String getUUID(Context context, boolean isTest) {
         // Since a test user does not have a valid context, we must create a TEST string
         if (isTest) {
-            String testID = "TEST";
+            uuid = UUID.randomUUID().toString();
+            String testID = "test" + uuid;
             return testID;
         }
 
