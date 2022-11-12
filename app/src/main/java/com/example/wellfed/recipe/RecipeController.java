@@ -36,7 +36,7 @@ public class RecipeController {
      * Constructor that initializes the db
      */
     public RecipeController(Context context) {
-        recipeDB = new RecipeDB(context);
+        recipeDB = new RecipeDB(context, false);
     }
 
     /**

@@ -48,10 +48,10 @@ public class RecipeDB {
     /**
      * Create a RecipeDB object
      */
-    public RecipeDB(Context context) {
-        this.recipesConnection = new DBConnection(context, "Recipes");
+    public RecipeDB(Context context, boolean isTest) {
+        this.recipesConnection = new DBConnection(context, "Recipes", isTest);
         db = this.recipesConnection.getDB();
-        ingredientDB = new IngredientDB(context);
+        ingredientDB = new IngredientDB(context, isTest);
     }
 
 

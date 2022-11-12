@@ -41,8 +41,8 @@ public class IngredientDB {
     /**
      * Constructs an IngredientDB object
      */
-    public IngredientDB(Context context) {
-        this.ingredientsConnection = new DBConnection(context, "Ingredients");
+    public IngredientDB(Context context, boolean isTest) {
+        this.ingredientsConnection = new DBConnection(context, "Ingredients", isTest);
         db = this.ingredientsConnection.getDB();
     }
 

@@ -45,10 +45,10 @@ public class DBConnection {
      *
      * @param subcollection The subcollection within the user to connect to
      */
-    public DBConnection(Context context, String subcollection) {
+    public DBConnection(Context context, String subcollection, boolean isTest) {
         this.db = FirebaseFirestore.getInstance();
         // gets the unique ID of the installation
-        String uuid = getUUID(context);
+        String uuid = getUUID(context, isTest);
         this.collection = db.collection("users")
                 .document("user" + uuid).collection(subcollection);
     }
@@ -57,7 +57,13 @@ public class DBConnection {
      * Gets the UUID of the device, to identify the user.
      * Creates a new UUID for the user if they do not already have one.
      */
-    private String getUUID(Context context) {
+    private String getUUID(Context context, boolean isTest) {
+        // Since a test user does not have a valid context, we must create a TEST string
+        if (isTest) {
+            String testID = "TEST";
+            return testID;
+        }
+
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getApplicationContext()
                 .getSharedPreferences("pref", Context.MODE_PRIVATE);

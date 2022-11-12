@@ -28,7 +28,7 @@ public class RecipeDBTest {
 
     @Before
     public void before() {
-        recipeDB = new RecipeDB(InstrumentationRegistry.getInstrumentation().getContext());
+        recipeDB = new RecipeDB(null, true);
     }
 
     /**

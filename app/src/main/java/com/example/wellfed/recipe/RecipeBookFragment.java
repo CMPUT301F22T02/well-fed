@@ -88,7 +88,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        RecipeDB recipeDB = new RecipeDB(requireContext().getApplicationContext());
+                        RecipeDB recipeDB = new RecipeDB(requireContext().getApplicationContext(), false);
                         try {
                             recipeDB.addRecipe(recipe, (a, b) -> {
                             });
@@ -123,7 +123,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
         recipeController = new RecipeController(getContext().getApplicationContext());
-        recipeDB = new RecipeDB(getContext().getApplicationContext());
+        recipeDB = new RecipeDB(getContext().getApplicationContext(), false);
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 

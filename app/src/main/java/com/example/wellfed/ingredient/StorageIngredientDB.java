@@ -104,8 +104,8 @@ public class StorageIngredientDB {
      */
     public StorageIngredientDB(Context context) {
         this.db = FirebaseFirestore.getInstance();
-        this.ingredientsConnection = new DBConnection(context,"StoredIngredients");
-        this.ingredientDB = new IngredientDB(context);
+        this.ingredientsConnection = new DBConnection(context,"StoredIngredients", false);
+        this.ingredientDB = new IngredientDB(context, false);
     }
 
     /**
