@@ -53,11 +53,11 @@ public class RecipeDB {
     /**
      * Create a RecipeDB object
      */
-    public RecipeDB(Context context, boolean isTest) {
-        this.recipesConnection = new DBConnection(context, isTest);
+    public RecipeDB(DBConnection connection) {
+        this.recipesConnection = connection;
         db = this.recipesConnection.getDB();
         collection = this.recipesConnection.getCollection("Recipes");
-        ingredientDB = new IngredientDB(context, isTest);
+        ingredientDB = new IngredientDB(connection);
     }
 
 

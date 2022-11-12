@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -88,7 +89,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        RecipeDB recipeDB = new RecipeDB(requireContext().getApplicationContext(), false);
+                        DBConnection connection = new DBConnection(requireContext().getApplicationContext());
+                        RecipeDB recipeDB = new RecipeDB(connection);
                         try {
                             recipeDB.addRecipe(recipe, (a, b) -> {
                             });
@@ -123,7 +125,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
         recipeController = new RecipeController(getContext().getApplicationContext());
-        recipeDB = new RecipeDB(getContext().getApplicationContext(), false);
+        DBConnection connection = new DBConnection(getContext().getApplicationContext());
+        recipeDB = new RecipeDB(connection);
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 

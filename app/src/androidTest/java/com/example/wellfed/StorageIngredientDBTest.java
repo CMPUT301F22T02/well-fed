@@ -30,7 +30,8 @@ import java.util.concurrent.CountDownLatch;
     StorageIngredient mockStorageIngredient;
 
     @Before public void before() {
-        storageIngredientDB = new StorageIngredientDB(null, true);
+        MockDBConnection connection = new MockDBConnection();
+        storageIngredientDB = new StorageIngredientDB(connection);
         mockStorageIngredient =
                 new StorageIngredient("Broccoli", 5.0, "kg", "Fridge",
                         new Date(), "Vegetable");

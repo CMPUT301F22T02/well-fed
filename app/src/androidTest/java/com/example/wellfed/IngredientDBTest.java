@@ -50,7 +50,8 @@ public class IngredientDBTest {
      */
     @Before
     public void before() {
-        ingredientDB = new IngredientDB(null, true);
+        MockDBConnection connection = new MockDBConnection();
+        ingredientDB = new IngredientDB(connection);
         mockIngredient = new Ingredient("Broccoli");
         mockIngredient.setCategory("Vegetable");
         nonExistingIngredient = new Ingredient(null);

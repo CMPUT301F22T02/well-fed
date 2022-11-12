@@ -43,12 +43,11 @@ public class DBConnection {
      * The user is given by the FID, which is a Firebase ID given to each unique installation.
      *
      * @param context: the context of the application
-     * @param isTest:  indicates whether the DBConnection is being run as test or not
      */
-    public DBConnection(Context context, boolean isTest) {
+    public DBConnection(Context context) {
         this.db = FirebaseFirestore.getInstance();
         // gets the unique ID of the installation
-        this.uuid = getUUID(context, isTest);
+        this.uuid = getUUID(context);
     }
 
     /**
@@ -56,16 +55,8 @@ public class DBConnection {
      * Creates a new UUID for the user if they do not already have one.
      *
      * @param context: the context of the application
-     * @param isTest:  indicates whether the DBConnection is being run as test or not
      */
-    private String getUUID(Context context, boolean isTest) {
-        // Since a test user does not have a valid context, we must create a TEST string
-        if (isTest) {
-            uuid = UUID.randomUUID().toString();
-            String testID = "test" + uuid;
-            return testID;
-        }
-
+    protected String getUUID(Context context) {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getApplicationContext()
                 .getSharedPreferences("pref", Context.MODE_PRIVATE);

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
 import com.squareup.picasso.Picasso;
@@ -75,7 +76,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         TextView description = findViewById(R.id.recipe_description_textView);
         ImageView img = findViewById(R.id.recipe_img);
 
-        RecipeDB recipeDB = new RecipeDB(getApplicationContext(), false);
+        DBConnection connection = new DBConnection(getApplicationContext());
+        RecipeDB recipeDB = new RecipeDB(connection);
         recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
             recipe = foundRecipe;
             title.setText(recipe.getTitle());

@@ -28,7 +28,8 @@ public class RecipeDBTest {
 
     @Before
     public void before() {
-        recipeDB = new RecipeDB(null, true);
+        MockDBConnection connection = new MockDBConnection();
+        recipeDB = new RecipeDB(connection);
     }
 
     /**
