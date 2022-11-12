@@ -5,6 +5,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -95,7 +96,7 @@ public class IngredientInstrumentedTest {
 
         // finding the ingredient in the RecyclerView
         onView(withId(R.id.ingredient_storage_list))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+                .perform(RecyclerViewActions.actionOnItem(hasDescendant(withText("Ground Beef")), click()));
 
         // checking the correctness of the ingredient by seeing if all text is visible
         onView(withText("Ground Beef")).check(ViewAssertions
@@ -110,5 +111,21 @@ public class IngredientInstrumentedTest {
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
+    }
+
+    /**
+     * Tests adding an incomplete Ingredient.
+     */
+    @Test
+    public void testAddIncompleteIngredient() {
+
+    }
+
+    /**
+     * Tests deleting an ingredient
+     */
+    @Test
+    public void testDeleteIngredient() {
+
     }
 }
