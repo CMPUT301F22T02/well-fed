@@ -5,6 +5,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -49,37 +50,48 @@ public class IngredientInstrumentedTest {
     }
 
     /**
-     * Performs all of the actions needed to add an ingredient.
+     * Performs all of the actions needed to type an ingredient.
      */
-    private void addMockIngredient() throws InterruptedException {
-        // testing description input
+    private void typeMockIngredient() {
+        // typing description input
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(typeText("Ground Beef"));
+        closeSoftKeyboard();
 
-        // testing best before input - this should get current day as best before
+        // typing best before input - this should get current day as best before
         onView(withId(R.id.bestBeforeInputEditText)).perform(clearText());
         onView(withId(R.id.bestBeforeInputEditText)).perform(click());
         onView(withText("OK")).perform(click());
 
-        // testing category input
+        // typing category input
         onView(withId(R.id.categoryInputEditText)).perform(clearText());
         onView(withId(R.id.categoryInputEditText)).perform(typeText("Meat"));
+        closeSoftKeyboard();
 
-        // testing amount input
+        // typing amount input
         onView(withId(R.id.amountInputEditText)).perform(clearText());
         onView(withId(R.id.amountInputEditText)).perform(typeText("5"));
+        closeSoftKeyboard();
 
-        // testing unit input
+        // typing unit input
         onView(withId(R.id.unitInputEditText)).perform(clearText());
         onView(withId(R.id.unitInputEditText)).perform(typeText("lb"));
+        closeSoftKeyboard();
 
-        // testing location input
+        // typing location input
         onView(withId(R.id.locationInputEditText)).perform(clearText());
         onView(withId(R.id.locationInputEditText)).perform(typeText("Freezer"));
+        closeSoftKeyboard();
+    }
+
+    /**
+     * Performs all of the actions needed to add an ingredient.
+     */
+    private void addMockIngredient() throws InterruptedException {
+        typeMockIngredient();
 
         // saving input
-        closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
         // todo: replace this with something else?
         // todo: this is here to ensure data actually is populated before testing
@@ -95,8 +107,7 @@ public class IngredientInstrumentedTest {
         addMockIngredient();
 
         // finding the ingredient in the RecyclerView
-        onView(withId(R.id.ingredient_storage_list))
-                .perform(RecyclerViewActions.actionOnItem(hasDescendant(withText("Ground Beef")), click()));
+        onView(withText("Ground Beef")).perform(click());
 
         // checking the correctness of the ingredient by seeing if all text is visible
         onView(withText("Ground Beef")).check(ViewAssertions
@@ -117,7 +128,29 @@ public class IngredientInstrumentedTest {
      * Tests adding an incomplete Ingredient.
      */
     @Test
-    public void testAddIncompleteIngredient() {
+    public void testIncompleteMessages() {
+        typeMockIngredient();
+
+        // testing the description error message
+        onView(withId(R.id.descriptionInputEditText)).perform(clearText());
+        onView(withText("Description is required")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.bestBeforeInputEditText)).perform(clearText());
+        onView(withText("Best Before Date is required")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.categoryInputEditText)).perform(clearText());
+        onView(withText("Category is required")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.unitInputEditText)).perform(clearText());
+        onView(withText("Unit is required")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.locationInputEditText)).perform(clearText());
+        onView(withText("Location is required")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
     }
 
@@ -125,7 +158,16 @@ public class IngredientInstrumentedTest {
      * Tests deleting an ingredient
      */
     @Test
-    public void testDeleteIngredient() {
+    public void testDeleteIngredient() throws InterruptedException {
+        addMockIngredient();
 
+        // finding the ingredient in the RecyclerView
+        onView(withText("Ground Beef")).perform(click());
+
+        // deleting the ingredient
+        onView(withId(R.id.ingredient_delete_button)).perform(click());
+        onView(withText("Delete")).perform(click());
+
+        onView(withText("Ground Beef")).check(doesNotExist());
     }
 }
