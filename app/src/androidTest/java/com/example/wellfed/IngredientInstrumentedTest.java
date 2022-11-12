@@ -50,7 +50,7 @@ public class IngredientInstrumentedTest {
     }
 
     /**
-     * Performs all of the actions needed to type an ingredient.
+     * Performs all of the actions needed to type a complete ingredient.
      */
     private void typeMockIngredient() {
         // typing description input
@@ -170,4 +170,6 @@ public class IngredientInstrumentedTest {
 
         onView(withText("Ground Beef")).check(doesNotExist());
     }
+
+
 }
