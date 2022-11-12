@@ -29,44 +29,81 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build --parallel
 
+  # https://gist.github.com/mrk-han/a0a11ed9bed966bb8b775ff55f2a87e9
   intent_test:
-    runs-on: macos-10.15
+    runs-on: macos-12
+    strategy:
+      matrix:
+        api-level: [28]
+    timeout-minutes: 30
+    env:
+      JAVA_TOOL_OPTIONS: -Xmx4g
+      GITHUB_WORKSPACE: ${{ github.workspace }}
+      GITHUB_RUN_NUMBER: ${{ github.run_number }}
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
+     - name: Checkout
+       uses: actions/checkout@v3
 
-      - name: set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
-          cache: gradle
+     - name: Gradle cache
+       uses: gradle/gradle-build-action@v2
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+     - name: Install Haxm
+       run: brew install --cask intel-haxm
 
-      - name: AVD cache
-        uses: actions/cache@v3
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd
+     - name: Setup AVD cache
+       uses: actions/cache@v3
+       id: avd-cache
+       with:
+        path: |
+          ~/.android/avd/*
+          ~/.android/adb*
+        key: avd
 
-      - name: Cache AVD
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          force-avd-creation: false
-          disable-animations: true
-          script: echo "Cached AVD"
+     - name: Cache AVD
+       if: steps.avd-cache.outputs.cache-hit != 'true'
+       uses: reactivecircus/android-emulator-runner@v2
+       with:
+         api-level: ${{ matrix.api-level }}
+         force-avd-creation: false
+         emulator-options: -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -partition-size 2048 -qemu -m 2048
+         disable-animations: false
+         avd-name: API_28_AOSP_ATD
+         script: |
+            echo 'create emulator and alter config.ini settings for caching'
+            # Create emulator
+            $ANDROID_HOME/emulator/emulator -list-avds
+            $ANDROID_HOME/emulator/emulator -accel-check 2>&1 | tee "$GITHUB_WORKSPACE"/haxm-check-"$GITHUB_RUN_NUMBER".txt
+            if false; then
+            emulator_config=~/.android/avd/API_28_AOSP_ATD.avd/config.ini
+            # The following madness is to support empty OR populated config.ini files,
+            # the state of which is dependant on the version of the emulator used (which we don't control),
+            # so let's be defensive to be safe.
+            # Replace existing config (NOTE we're on MacOS so sed works differently!)
+            sed -i .bak 's/hw.lcd.density=.*/hw.lcd.density=420/' "$emulator_config"
+            sed -i .bak 's/hw.lcd.height=.*/hw.lcd.height=1920/' "$emulator_config"
+            sed -i .bak 's/hw.lcd.width=.*/hw.lcd.width=1080/' "$emulator_config"
+            # Or, add new config
+            if ! grep -q "hw.lcd.density" "$emulator_config"; then
+              echo "hw.lcd.density=420" >> "$emulator_config"
+            fi
+            if ! grep -q "hw.lcd.height" "$emulator_config"; then
+              echo "hw.lcd.height=1920" >> "$emulator_config"
+            fi
+            if ! grep -q "hw.lcd.width" "$emulator_config"; then
+              echo "hw.lcd.width=1080" >> "$emulator_config"
+            fi
+            echo "Emulator settings ($emulator_config)"
+            cat "$emulator_config"
+            fi
+            # Optionally enable skia rendering https://developer.android.com/studio/run/emulator-acceleration#skia-emulator
+            $ANDROID_HOME/platform-tools/adb shell 'su;setprop debug.hwui.renderer skiagl;stop;start'
 
-      - name: Test with Gradle
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          force-avd-creation: false
-          disable-animations: true
-          script: ./gradlew connectedCheck --stacktrace
+     - name: Run Tests
+       uses: reactivecircus/android-emulator-runner@v2
+       with:
+         api-level: ${{ matrix.api-level }}
+         force-avd-creation: false
+         emulator-options: -no-snapshot-save -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -partition-size 2048 -qemu -m 2048
+         disable-animations: true
+         script: ./gradlew connectedCheck
