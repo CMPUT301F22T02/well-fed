@@ -47,7 +47,7 @@ public class RecipeIngredientSearch extends ActivityBase
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_ingredient_storage);
 
-        RecipeIngredientSearchAdapter adapter = new RecipeIngredientSearchAdapter(new IngredientDB());
+        RecipeIngredientSearchAdapter adapter = new RecipeIngredientSearchAdapter(new IngredientDB(getApplicationContext()));
         adapter.setListener(this);
         ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
         ingredientRecycleView.setAdapter(adapter);

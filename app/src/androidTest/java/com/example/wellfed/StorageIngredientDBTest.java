@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
@@ -29,7 +30,7 @@ import java.util.concurrent.CountDownLatch;
     StorageIngredient mockStorageIngredient;
 
     @Before public void before() {
-        storageIngredientDB = new StorageIngredientDB();
+        storageIngredientDB = new StorageIngredientDB(InstrumentationRegistry.getInstrumentation().getContext());
         mockStorageIngredient =
                 new StorageIngredient("Broccoli", 5.0, "kg", "Fridge",
                         new Date(), "Vegetable");

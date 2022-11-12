@@ -1,5 +1,6 @@
 package com.example.wellfed.ingredient;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -40,8 +41,9 @@ public class IngredientDB {
     /**
      * Constructs an IngredientDB object
      */
-    public IngredientDB() {
-        this.ingredientsConnection = new DBConnection("Ingredients");
+    public IngredientDB(Context context) {
+        this.ingredientsConnection = new DBConnection(context, "Ingredients");
+        db = this.ingredientsConnection.getDB();
     }
 
     /**

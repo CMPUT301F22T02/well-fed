@@ -87,7 +87,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        RecipeDB recipeDB = new RecipeDB();
+                        RecipeDB recipeDB = new RecipeDB(getContext().getApplicationContext());
                         try {
                             recipeDB.addRecipe(recipe, (a, b) -> {
                             });
@@ -121,8 +121,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
-        recipeController = new RecipeController();
-        recipeDB = new RecipeDB();
+        recipeController = new RecipeController(getContext().getApplicationContext());
+        recipeDB = new RecipeDB(getContext().getApplicationContext());
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 

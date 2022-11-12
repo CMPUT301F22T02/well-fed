@@ -75,7 +75,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         TextView description = findViewById(R.id.recipe_description_textView);
         ImageView img = findViewById(R.id.recipe_img);
 
-        RecipeDB recipeDB = new RecipeDB();
+        RecipeDB recipeDB = new RecipeDB(getApplicationContext());
         recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
             recipe = foundRecipe;
             title.setText(recipe.getTitle());

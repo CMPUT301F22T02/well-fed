@@ -26,7 +26,7 @@ public class IngredientStorageController {
      */
     public IngredientStorageController(FragmentActivity activity) {
         this.activity = (ActivityBase) activity;
-        db = new StorageIngredientDB();
+        db = new StorageIngredientDB(activity.getApplicationContext());
         adapter = new StorageIngredientAdapter(db);
     }
 

@@ -3,6 +3,7 @@ package com.example.wellfed.recipe;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.wellfed.ingredient.Ingredient;
@@ -46,10 +47,10 @@ public class RecipeDB {
     /**
      * Create a RecipeDB object
      */
-    public RecipeDB() {
+    public RecipeDB(Context context) {
         db = FirebaseFirestore.getInstance();
         this.recipesCollection = db.collection("Recipes");
-        ingredientDB = new IngredientDB();
+        ingredientDB = new IngredientDB(context);
     }
 
 

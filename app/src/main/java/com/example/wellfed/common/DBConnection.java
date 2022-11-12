@@ -1,7 +1,10 @@
 package com.example.wellfed.common;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.installations.FirebaseInstallations;
+
+import java.util.UUID;
 
 /**
  * Connects to the DB, getting the users unique FirestoreID to identify them.
@@ -27,26 +32,12 @@ public class DBConnection {
      */
     private FirebaseFirestore db;
 
+
     /**
      * Holds a reference to the User's collection (with specific subcollection) in the Firebase DB.
      */
     private CollectionReference collection;
 
-    /**
-     * The OnGetFIDListener interface is used to handle the result
-     * of the getFID method.
-     */
-    public interface OnGetFIDListener {
-        /**
-         * Called when the deleteIngredient method is complete.
-         *
-         * @param FID        The FID that was obtained from the
-         *                   database.
-         * @param success    True if the operation was successful, false
-         *                   otherwise
-         */
-        void onGetFID(String FID, Boolean success);
-    }
 
     /**
      * Connects to the Firebase Firestore database, at the given subcollection.
@@ -54,40 +45,34 @@ public class DBConnection {
      *
      * @param subcollection The subcollection within the user to connect to
      */
-    public DBConnection(String subcollection) {
+    public DBConnection(Context context, String subcollection) {
         this.db = FirebaseFirestore.getInstance();
         // gets the unique ID of the installation
-        getFID(
-                (FID, success) -> {
-                    if (!success) {
-                        this.collection = null;
-                    } else {
-                        this.collection =
-                                db.collection("users").document("user"+FID)
-                                        .collection(subcollection);
-                    }
-                }
-        );
+        String uuid = getUUID(context);
+        this.collection = db.collection("users")
+                .document("user" + uuid).collection(subcollection);
     }
 
     /**
-     * Gets the FID of the device, to identify the user.
+     * Gets the UUID of the device, to identify the user.
+     * Creates a new UUID for the user if they do not already have one.
      */
-    private void getFID(OnGetFIDListener listener) {
-        FirebaseInstallations.getInstance().getId()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        Log.d(TAG, "getFID:onComplete");
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, ":isSuccessful:" + task.getResult());
-                            listener.onGetFID(task.getResult(), true);
-                        } else {
-                            Log.d(TAG, ":isFailure: Unable to get Installation ID");
-                            listener.onGetFID(null, false);
-                        }
-                    }
-                });
+    private String getUUID(Context context) {
+        SharedPreferences sharedPreferences;
+        sharedPreferences = context.getApplicationContext()
+                .getSharedPreferences("pref", Context.MODE_PRIVATE);
+
+        String uuid = sharedPreferences.getString("UUID", null);
+
+        // if uuid does not exist, create the uuid and save it locally
+        if (uuid == null) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            uuid = UUID.randomUUID().toString();
+            editor.putString("UUID", uuid);
+            editor.commit();
+        }
+
+        return uuid;
     }
 
     /**
@@ -97,5 +82,9 @@ public class DBConnection {
      */
     public CollectionReference getCollection() {
         return this.collection;
+    }
+
+    public FirebaseFirestore getDB() {
+        return this.db;
     }
 }

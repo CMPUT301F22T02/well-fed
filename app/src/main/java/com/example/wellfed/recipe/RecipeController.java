@@ -1,5 +1,6 @@
 package com.example.wellfed.recipe;
 
+import android.content.Context;
 import android.media.Image;
 import android.util.Log;
 
@@ -34,8 +35,8 @@ public class RecipeController {
     /**
      * Constructor that initializes the db
      */
-    public RecipeController() {
-        recipeDB = new RecipeDB();
+    public RecipeController(Context context) {
+        recipeDB = new RecipeDB(context);
     }
 
     /**

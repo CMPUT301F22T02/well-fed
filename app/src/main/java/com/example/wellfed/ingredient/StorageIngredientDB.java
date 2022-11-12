@@ -1,5 +1,6 @@
 package com.example.wellfed.ingredient;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -101,10 +102,10 @@ public class StorageIngredientDB {
     /**
      * Creates a reference to the Firebase DB.
      */
-    public StorageIngredientDB() {
+    public StorageIngredientDB(Context context) {
         this.db = FirebaseFirestore.getInstance();
-        this.ingredientsConnection = new DBConnection("StoredIngredients");
-        this.ingredientDB = new IngredientDB();
+        this.ingredientsConnection = new DBConnection(context,"StoredIngredients");
+        this.ingredientDB = new IngredientDB(context);
     }
 
     /**
