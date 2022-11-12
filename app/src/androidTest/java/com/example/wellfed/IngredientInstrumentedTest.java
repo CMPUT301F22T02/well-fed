@@ -23,6 +23,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,7 +90,7 @@ public class IngredientInstrumentedTest {
     /**
      * Checks whether the mock ingredient is present in the recyclerview.
      */
-    private void checkIngredientPresent() throws InterruptedException {
+    private void checkIngredientPresent() {
         // finding the ingredient in the RecyclerView
         onView(withText("Ground Beef")).perform(click());
 
@@ -102,6 +103,10 @@ public class IngredientInstrumentedTest {
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Freezer")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        // deleting the ingredient
+        onView(withId(R.id.ingredient_delete_button)).perform(click());
+        onView(withText("Delete")).perform(click());
     }
 
     /**
@@ -128,10 +133,6 @@ public class IngredientInstrumentedTest {
 
         // making sure it is visible
         checkIngredientPresent();
-
-        // deleting the ingredient
-        onView(withId(R.id.ingredient_delete_button)).perform(click());
-        onView(withText("Delete")).perform(click());
     }
 
     /**
@@ -179,6 +180,26 @@ public class IngredientInstrumentedTest {
         onView(withText("Delete")).perform(click());
 
         onView(withText("Ground Beef")).check(doesNotExist());
+    }
+
+    /**
+     * Tests that the delete confirmation message shows up
+     */
+    @Test
+    public void testDeleteConfirmationMessage() throws InterruptedException {
+        addMockIngredient();
+
+        onView(withText("Ground Beef")).perform(click());
+
+        // deleting the ingredient
+        onView(withId(R.id.ingredient_delete_button)).perform(click());
+
+        onView(withText("Delete")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cancel")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withText("Delete")).perform(click());
     }
 
     /**
@@ -239,13 +260,12 @@ public class IngredientInstrumentedTest {
     }
 
     /**
-     * Tests exiting the edit process + ensuring a confirmation message appears
+     * Tests that the cancel confirmation message shows up when adding
      */
     @Test
-    public void testExitAddAndEdit() throws InterruptedException {
-        // testing editing and then exiting
+    public void testCancelConfirmationMessageAdd() {
+        // testing adding and then exiting
         typeMockIngredient();
-        closeSoftKeyboard();
         pressBack();
         pressBack();
 
@@ -254,11 +274,28 @@ public class IngredientInstrumentedTest {
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Cancel")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    /**
+     * Tests exiting the add process + ensuring a confirmation message appears
+     */
+    @Test
+    public void testExitAdd() throws InterruptedException {
+        // testing adding and then exiting
+        typeMockIngredient();
+        pressBack();
+        pressBack();
 
         // quitting
         onView(withText("Quit")).perform(click());
         onView(withText("Ground Beef")).check(doesNotExist());
+    }
 
+    /**
+     * Tests cancelling the exit of the add process
+     */
+    @Test
+    public void testCancelExitAdd() throws InterruptedException {
         // cancelling and saving what we have
         typeMockIngredient();
         pressBack();
@@ -268,6 +305,106 @@ public class IngredientInstrumentedTest {
 
         Thread.sleep(2000);
         checkIngredientPresent();
+    }
+
+    /**
+     * Tests that the cancel confirmation message shows up when editing
+     * This test currently fails due to our app crashing when back button is pressed.
+     */
+    @Test
+    @Ignore
+    public void testCancelConfirmationMessageEdit() throws InterruptedException {
+        // testing adding and then exiting
+        addMockIngredient();
+        onView(withText("Ground Beef")).perform(click());
+        onView(withId(R.id.ingredient_edit_button)).perform(click());
+        onView(withId(R.id.descriptionInputEditText)).perform(clearText());
+        onView(withId(R.id.descriptionInputEditText))
+                .perform(typeText("Ground Chicken"));
+        closeSoftKeyboard();
+
+        pressBack();
+        pressBack();
+
+        // ensure the dialog shows up
+        onView(withText("Quit")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cancel")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withText("Cancel")).perform(click());
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        Thread.sleep(2000);
+
+        // deleting the ingredient
+        onView(withText("Ground Chicken")).perform(click());
+        onView(withId(R.id.ingredient_delete_button)).perform(click());
+        onView(withText("Delete")).perform(click());
+    }
+
+    /**
+     * Tests exiting the edit process + ensuring a confirmation message appears
+     * This test currently fails due to our app crashing when back button is pressed.
+     */
+    @Test
+    @Ignore
+    public void testExitEdit() throws InterruptedException {
+        // ensuring quit works, by editing our item and exiting
+        addMockIngredient();
+        onView(withText("Ground Beef")).perform(click());
+
+        onView(withId(R.id.ingredient_edit_button)).perform(click());
+        onView(withId(R.id.descriptionInputEditText)).perform(clearText());
+        onView(withId(R.id.descriptionInputEditText))
+                .perform(typeText("Ground Chicken"));
+        closeSoftKeyboard();
+
+        pressBack();
+        pressBack();
+
+        // quitting and ensuring ground beef is the same
+        onView(withText("Quit")).perform(click());
+        onView(withText("Ground Beef")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        checkIngredientPresent();
+
+    }
+
+    /**
+     * Tests cancelling an exit of an edit.
+     * This test currently fails due to our app crashing when back button is pressed.
+     */
+    @Test
+    @Ignore
+    public void testCancelExitEdit() throws InterruptedException {
+        addMockIngredient();
+        onView(withText("Ground Beef")).perform(click());
+
+        onView(withId(R.id.ingredient_edit_button)).perform(click());
+        onView(withId(R.id.descriptionInputEditText)).perform(clearText());
+        onView(withId(R.id.descriptionInputEditText))
+                .perform(typeText("Ground Chicken"));
+        closeSoftKeyboard();
+
+        pressBack();
+        pressBack();
+
+        // quitting and ensuring ground beef is the same
+        onView(withText("Cancel")).perform(click());
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        Thread.sleep(2000);
+
+        // checking the correctness of the ingredient by seeing if all text is visible
+        onView(withText("Ground Chicken")).perform(click());
+        onView(withText("Ground Chicken")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Meat")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("5.0 lb")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Freezer")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
