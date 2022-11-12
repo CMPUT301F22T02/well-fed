@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -146,7 +146,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>androidx.appcompat.app.AppCompatActivity</li>
 <li>
 <ul class="inheritance">
+<li><a href="../ActivityBase.html" title="class in com.example.wellfed">com.example.wellfed.ActivityBase</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="../EditActivityBase.html" title="class in com.example.wellfed">com.example.wellfed.EditActivityBase</a></li>
+<li>
+<ul class="inheritance">
 <li>com.example.wellfed.ingredient.IngredientEditActivity</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -175,7 +185,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">IngredientEditActivity</span>
-extends androidx.appcompat.app.AppCompatActivity
+extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a>
 implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></pre>
 </li>
 </ul>
@@ -267,34 +277,34 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBackPressed()">onBackPressed</a></span>()</code></th>
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasUnsavedChanges()">hasUnsavedChanges</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Method to handle the back button.</div>
+<div class="block">checks if there are unsaved changes</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onConfirm()">onConfirm</a></span>()</code></th>
-<td class="colLast">
-<div class="block">onConfirm method for the activity to handle the back button.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
 <td class="colLast">
 <div class="block">OnCreate method for the activity.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onPointerCaptureChanged(boolean)">onPointerCaptureChanged</a></span>&#8203;(boolean&nbsp;hasCapture)</code></th>
-<td class="colLast">
-<div class="block">onPointerCaptureChanged method for the activity.</div>
-</td>
-</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.EditActivityBase">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.example.wellfed.<a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></h3>
+<code><a href="../EditActivityBase.html#onBackPressed()">onBackPressed</a>, <a href="../EditActivityBase.html#onConfirm()">onConfirm</a>, <a href="../EditActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.ActivityBase">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.example.wellfed.<a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a></h3>
+<code><a href="../ActivityBase.html#makeSnackbar(java.lang.String)">makeSnackbar</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.androidx.appcompat.app.AppCompatActivity">
 <!--   -->
@@ -328,7 +338,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;android.app.Activity</h3>
-<code>closeContextMenu, createPendingResult, dismissDialog, dismissKeyboardShortcutsHelper, dispatchGenericMotionEvent, dispatchPopulateAccessibilityEvent, dispatchTouchEvent, dispatchTrackballEvent, enterPictureInPictureMode, enterPictureInPictureMode, finish, finishActivity, finishActivityFromChild, finishAffinity, finishAfterTransition, finishAndRemoveTask, finishFromChild, getActionBar, getApplication, getCallingActivity, getCallingPackage, getChangingConfigurations, getComponentName, getContentScene, getContentTransitionManager, getCurrentFocus, getFragmentManager, getIntent, getLastNonConfigurationInstance, getLayoutInflater, getLoaderManager, getLocalClassName, getMaxNumPictureInPictureActions, getMediaController, getOnBackInvokedDispatcher, getParent, getParentActivityIntent, getPreferences, getReferrer, getRequestedOrientation, getSearchEvent, getSplashScreen, getSystemService, getTaskId, getTitle, getTitleColor, getVoiceInteractor, getVolumeControlStream, getWindow, getWindowManager, hasWindowFocus, isActivityTransitionRunning, isChangingConfigurations, isChild, isDestroyed, isFinishing, isImmersive, isInMultiWindowMode, isInPictureInPictureMode, isLaunchedFromBubble, isLocalVoiceInteractionSupported, isTaskRoot, isVoiceInteraction, isVoiceInteractionRoot, managedQuery, moveTaskToBack, navigateUpTo, navigateUpToFromChild, onActionModeFinished, onActionModeStarted, onActivityReenter, onApplyThemeResource, onAttachedToWindow, onAttachFragment, onChildTitleChanged, onContextItemSelected, onContextMenuClosed, onCreate, onCreateContextMenu, onCreateDescription, onCreateDialog, onCreateDialog, onCreateNavigateUpTaskStack, onCreateOptionsMenu, onCreatePanelView, onCreateThumbnail, onDetachedFromWindow, onEnterAnimationComplete, onGenericMotionEvent, onGetDirectActions, onKeyLongPress, onKeyMultiple, onKeyShortcut, onKeyUp, onLocalVoiceInteractionStarted, onLocalVoiceInteractionStopped, onNavigateUp, onNavigateUpFromChild, onOptionsItemSelected, onOptionsMenuClosed, onPerformDirectAction, onPictureInPictureRequested, onPictureInPictureUiStateChanged, onPostCreate, onPrepareDialog, onPrepareDialog, onPrepareNavigateUpTaskStack, onPrepareOptionsMenu, onProvideAssistContent, onProvideAssistData, onProvideKeyboardShortcuts, onProvideReferrer, onRestart, onRestoreInstanceState, onRestoreInstanceState, onSaveInstanceState, onSearchRequested, onSearchRequested, onTopResumedActivityChanged, onTouchEvent, onTrackballEvent, onUserInteraction, onUserLeaveHint, onVisibleBehindCanceled, onWindowAttributesChanged, onWindowFocusChanged, onWindowStartingActionMode, onWindowStartingActionMode, openContextMenu, overridePendingTransition, overridePendingTransition, postponeEnterTransition, recreate, registerActivityLifecycleCallbacks, registerComponentCallbacks, registerForContextMenu, releaseInstance, removeDialog, requestDragAndDropPermissions, requestPermissions, requestShowKeyboardShortcuts, requestVisibleBehind, requestWindowFeature, requireViewById, runOnUiThread, setActionBar, setContentTransitionManager, setDefaultKeyMode, setEnterSharedElementCallback, setExitSharedElementCallback, setFeatureDrawable, setFeatureDrawableAlpha, setFeatureDrawableResource, setFeatureDrawableUri, setFinishOnTouchOutside, setImmersive, setInheritShowWhenLocked, setIntent, setLocusContext, setMediaController, setPictureInPictureParams, setProgress, setProgressBarIndeterminate, setProgressBarIndeterminateVisibility, setProgressBarVisibility, setRecentsScreenshotEnabled, setRequestedOrientation, setResult, setResult, setSecondaryProgress, setShouldDockBigOverlays, setShowWhenLocked, setTaskDescription, setTitle, setTitle, setTitleColor, setTranslucent, setTurnScreenOn, setVisible, setVolumeControlStream, setVrModeEnabled, shouldDockBigOverlays, shouldShowRequestPermissionRationale, shouldUpRecreateTask, showAssist, showDialog, showDialog, showLockTaskEscapeMessage, startActionMode, startActionMode, startActivities, startActivities, startActivity, startActivity, startActivityFromChild, startActivityFromChild, startActivityFromFragment, startActivityFromFragment, startActivityIfNeeded, startActivityIfNeeded, startIntentSender, startIntentSender, startIntentSenderFromChild, startIntentSenderFromChild, startLocalVoiceInteraction, startLockTask, startManagingCursor, startNextMatchingActivity, startNextMatchingActivity, startPostponedEnterTransition, startSearch, stopLocalVoiceInteraction, stopLockTask, stopManagingCursor, takeKeyEvents, triggerSearch, unregisterActivityLifecycleCallbacks, unregisterComponentCallbacks, unregisterForContextMenu</code></li>
+<code>closeContextMenu, createPendingResult, dismissDialog, dismissKeyboardShortcutsHelper, dispatchGenericMotionEvent, dispatchPopulateAccessibilityEvent, dispatchTouchEvent, dispatchTrackballEvent, enterPictureInPictureMode, enterPictureInPictureMode, finish, finishActivity, finishActivityFromChild, finishAffinity, finishAfterTransition, finishAndRemoveTask, finishFromChild, getActionBar, getApplication, getCallingActivity, getCallingPackage, getChangingConfigurations, getComponentName, getContentScene, getContentTransitionManager, getCurrentFocus, getFragmentManager, getIntent, getLastNonConfigurationInstance, getLayoutInflater, getLoaderManager, getLocalClassName, getMaxNumPictureInPictureActions, getMediaController, getOnBackInvokedDispatcher, getParent, getParentActivityIntent, getPreferences, getReferrer, getRequestedOrientation, getSearchEvent, getSplashScreen, getSystemService, getTaskId, getTitle, getTitleColor, getVoiceInteractor, getVolumeControlStream, getWindow, getWindowManager, hasWindowFocus, isActivityTransitionRunning, isChangingConfigurations, isChild, isDestroyed, isFinishing, isImmersive, isInMultiWindowMode, isInPictureInPictureMode, isLaunchedFromBubble, isLocalVoiceInteractionSupported, isTaskRoot, isVoiceInteraction, isVoiceInteractionRoot, managedQuery, moveTaskToBack, navigateUpTo, navigateUpToFromChild, onActionModeFinished, onActionModeStarted, onActivityReenter, onApplyThemeResource, onAttachedToWindow, onAttachFragment, onChildTitleChanged, onContextItemSelected, onContextMenuClosed, onCreate, onCreateContextMenu, onCreateDescription, onCreateDialog, onCreateDialog, onCreateNavigateUpTaskStack, onCreateOptionsMenu, onCreatePanelView, onCreateThumbnail, onDetachedFromWindow, onEnterAnimationComplete, onGenericMotionEvent, onGetDirectActions, onKeyLongPress, onKeyMultiple, onKeyShortcut, onKeyUp, onLocalVoiceInteractionStarted, onLocalVoiceInteractionStopped, onNavigateUp, onNavigateUpFromChild, onOptionsMenuClosed, onPerformDirectAction, onPictureInPictureRequested, onPictureInPictureUiStateChanged, onPostCreate, onPrepareDialog, onPrepareDialog, onPrepareNavigateUpTaskStack, onPrepareOptionsMenu, onProvideAssistContent, onProvideAssistData, onProvideKeyboardShortcuts, onProvideReferrer, onRestart, onRestoreInstanceState, onRestoreInstanceState, onSaveInstanceState, onSearchRequested, onSearchRequested, onTopResumedActivityChanged, onTouchEvent, onTrackballEvent, onUserInteraction, onUserLeaveHint, onVisibleBehindCanceled, onWindowAttributesChanged, onWindowFocusChanged, onWindowStartingActionMode, onWindowStartingActionMode, openContextMenu, overridePendingTransition, overridePendingTransition, postponeEnterTransition, recreate, registerActivityLifecycleCallbacks, registerComponentCallbacks, registerForContextMenu, releaseInstance, removeDialog, requestDragAndDropPermissions, requestPermissions, requestShowKeyboardShortcuts, requestVisibleBehind, requestWindowFeature, requireViewById, runOnUiThread, setActionBar, setContentTransitionManager, setDefaultKeyMode, setEnterSharedElementCallback, setExitSharedElementCallback, setFeatureDrawable, setFeatureDrawableAlpha, setFeatureDrawableResource, setFeatureDrawableUri, setFinishOnTouchOutside, setImmersive, setInheritShowWhenLocked, setIntent, setLocusContext, setMediaController, setPictureInPictureParams, setProgress, setProgressBarIndeterminate, setProgressBarIndeterminateVisibility, setProgressBarVisibility, setRecentsScreenshotEnabled, setRequestedOrientation, setResult, setResult, setSecondaryProgress, setShouldDockBigOverlays, setShowWhenLocked, setTaskDescription, setTitle, setTitle, setTitleColor, setTranslucent, setTurnScreenOn, setVisible, setVolumeControlStream, setVrModeEnabled, shouldDockBigOverlays, shouldShowRequestPermissionRationale, shouldUpRecreateTask, showAssist, showDialog, showDialog, showLockTaskEscapeMessage, startActionMode, startActionMode, startActivities, startActivities, startActivity, startActivity, startActivityFromChild, startActivityFromChild, startActivityFromFragment, startActivityFromFragment, startActivityIfNeeded, startActivityIfNeeded, startIntentSender, startIntentSender, startIntentSenderFromChild, startIntentSenderFromChild, startLocalVoiceInteraction, startLockTask, startManagingCursor, startNextMatchingActivity, startNextMatchingActivity, startPostponedEnterTransition, startSearch, stopLocalVoiceInteraction, stopLockTask, stopManagingCursor, takeKeyEvents, triggerSearch, unregisterActivityLifecycleCallbacks, unregisterComponentCallbacks, unregisterForContextMenu</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.android.view.ContextThemeWrapper">
@@ -357,6 +367,20 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.common.ConfirmDialog.OnConfirmListener">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.example.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></h3>
+<code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.android.view.Window.Callback">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;android.view.Window.Callback</h3>
+<code>onPointerCaptureChanged</code></li>
 </ul>
 </li>
 </ul>
@@ -403,53 +427,25 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <div class="block">OnCreate method for the activity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
+<dd><code><a href="../EditActivityBase.html#onCreate(android.os.Bundle)">onCreate</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>savedInstanceState</code> - Bundle object for the activity.</dd>
 </dl>
 </li>
 </ul>
-<a id="onBackPressed()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>onBackPressed</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onBackPressed()</pre>
-<div class="block">Method to handle the back button.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onBackPressed</code>&nbsp;in class&nbsp;<code>androidx.activity.ComponentActivity</code></dd>
-</dl>
-</li>
-</ul>
-<a id="onPointerCaptureChanged(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>onPointerCaptureChanged</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onPointerCaptureChanged&#8203;(boolean&nbsp;hasCapture)</pre>
-<div class="block">onPointerCaptureChanged method for the activity.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>onPointerCaptureChanged</code>&nbsp;in interface&nbsp;<code>android.view.Window.Callback</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>hasCapture</code> - boolean for the activity.</dd>
-</dl>
-</li>
-</ul>
-<a id="onConfirm()">
+<a id="hasUnsavedChanges()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>onConfirm</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onConfirm()</pre>
-<div class="block">onConfirm method for the activity to handle the back button.</div>
+<h4>hasUnsavedChanges</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;hasUnsavedChanges()</pre>
+<div class="block">checks if there are unsaved changes</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code>&nbsp;in interface&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
+<dd><code><a href="../EditActivityBase.html#hasUnsavedChanges()">hasUnsavedChanges</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if there are unsaved changes, false otherwise</dd>
 </dl>
 </li>
 </ul>
