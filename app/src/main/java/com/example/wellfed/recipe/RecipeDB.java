@@ -33,9 +33,14 @@ public class RecipeDB {
      */
     private final IngredientDB ingredientDB;
     /**
-     * Holds a connection to the users recipe collection in the DB.
+     * Holds a connection to the DB.
      */
     private DBConnection recipesConnection;
+
+    /**
+     * Holds the CollectionReference for the users Recipe collection.
+     */
+    private CollectionReference collection;
 
     public interface OnRecipeDone {
         public void onAddRecipe(Recipe recipe, Boolean success);
@@ -49,8 +54,9 @@ public class RecipeDB {
      * Create a RecipeDB object
      */
     public RecipeDB(Context context, boolean isTest) {
-        this.recipesConnection = new DBConnection(context, "Recipes", isTest);
+        this.recipesConnection = new DBConnection(context, isTest);
         db = this.recipesConnection.getDB();
+        collection = this.recipesConnection.getCollection("Recipes");
         ingredientDB = new IngredientDB(context, isTest);
     }
 
@@ -123,7 +129,7 @@ public class RecipeDB {
         recipeMap.put("photograph", recipe.getPhotograph());
         recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
 
-        this.recipesConnection.getCollection()
+        this.collection
                 .add(recipeMap)
                 .addOnSuccessListener(addedSnapshot -> {
                     recipe.setId(addedSnapshot.getId());
@@ -138,7 +144,7 @@ public class RecipeDB {
     // todo call the listener when results fail
     // todo add db-tests for it
     public void getRecipe(String id, OnRecipeDone listener) {
-        DocumentReference recipeRef = this.recipesConnection.getCollection().document(id);
+        DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get()
                 .addOnSuccessListener(doc -> {
                     List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
@@ -201,7 +207,7 @@ public class RecipeDB {
             listener.onAddRecipe(null, false);
         }
 
-        DocumentReference recipeRef = this.recipesConnection.getCollection().document(id);
+        DocumentReference recipeRef = this.collection.document(id);
         recipeRef.delete()
                 .addOnSuccessListener(r->{
                     listener.onAddRecipe(new Recipe(id), true);
@@ -396,7 +402,7 @@ public class RecipeDB {
      * @return DocumentReference of the Recipe
      */
     public DocumentReference getDocumentReference(String id) {
-        return this.recipesConnection.getCollection().document(id);
+        return this.collection.document(id);
     }
 
 
@@ -421,7 +427,7 @@ public class RecipeDB {
     }
 
     public Query getQuery() {
-        return this.recipesConnection.getCollection();
+        return this.collection;
     }
 
 

@@ -38,24 +38,30 @@ public class DBConnection {
      */
     private CollectionReference collection;
 
+    /**
+     * Holds the UUID for a user.
+     */
+    private String uuid;
 
     /**
      * Connects to the Firebase Firestore database, at the given subcollection.
      * The user is given by the FID, which is a Firebase ID given to each unique installation.
      *
-     * @param subcollection The subcollection within the user to connect to
+     * @param context: the context of the application
+     * @param isTest:  indicates whether the DBConnection is being run as test or not
      */
-    public DBConnection(Context context, String subcollection, boolean isTest) {
+    public DBConnection(Context context, boolean isTest) {
         this.db = FirebaseFirestore.getInstance();
         // gets the unique ID of the installation
-        String uuid = getUUID(context, isTest);
-        this.collection = db.collection("users")
-                .document("user" + uuid).collection(subcollection);
+        this.uuid = getUUID(context, isTest);
     }
 
     /**
      * Gets the UUID of the device, to identify the user.
      * Creates a new UUID for the user if they do not already have one.
+     *
+     * @param context: the context of the application
+     * @param isTest:  indicates whether the DBConnection is being run as test or not
      */
     private String getUUID(Context context, boolean isTest) {
         // Since a test user does not have a valid context, we must create a TEST string
@@ -84,12 +90,18 @@ public class DBConnection {
     /**
      * Gets the collection reference of the user's subcollection.
      *
-     * @return the CollectionReference specific to a user and subcollection
+     * @param subcollection the subcollection for a user to get
+     * @return the collection that was retrieved
      */
-    public CollectionReference getCollection() {
-        return this.collection;
+    public CollectionReference getCollection(String subcollection) {
+        return this.db.collection("users")
+                .document("user" + uuid).collection(subcollection);
     }
 
+    /**
+     * Gets the DB
+     * @return the DB
+     */
     public FirebaseFirestore getDB() {
         return this.db;
     }

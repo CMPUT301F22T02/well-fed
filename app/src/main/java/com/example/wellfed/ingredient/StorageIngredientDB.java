@@ -33,6 +33,10 @@ public class StorageIngredientDB {
      * Holds a connection to the users ingredient collection in the DB.
      */
     private DBConnection ingredientsConnection;
+    /**
+     * Holds the collection for the users StoredIngredient collection in DB
+     */
+    private CollectionReference collection;
 
     /**
      * This interface is used to handle the result of
@@ -103,9 +107,10 @@ public class StorageIngredientDB {
      * Creates a reference to the Firebase DB.
      */
     public StorageIngredientDB(Context context, boolean isTest) {
-        this.db = FirebaseFirestore.getInstance();
-        this.ingredientsConnection = new DBConnection(context,"StoredIngredients", isTest);
+        this.ingredientsConnection = new DBConnection(context, isTest);
         this.ingredientDB = new IngredientDB(context, isTest);
+        this.db = ingredientsConnection.getDB();
+        this.collection = ingredientsConnection.getCollection("StoredIngredients");
     }
 
     /**
@@ -162,7 +167,7 @@ public class StorageIngredientDB {
         storageIngredientMap.put("unit", storageIngredient.getUnit());
         storageIngredientMap.put("Ingredient",
                 ingredientDB.getDocumentReference(ingredient));
-        this.ingredientsConnection.getCollection().add(storageIngredientMap)
+        this.collection.add(storageIngredientMap)
                 .addOnSuccessListener(stored -> {
                     Log.d(TAG, "success:");
                     storageIngredient.setStorageId(stored.getId());
@@ -232,7 +237,7 @@ public class StorageIngredientDB {
                                         OnUpdateStorageIngredientListener listener) {
         WriteBatch batch = db.batch();
         DocumentReference storageIngredientRef =
-                this.ingredientsConnection.getCollection().document(storageIngredient.getStorageId());
+                this.collection.document(storageIngredient.getStorageId());
         batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
         batch.update(storageIngredientRef, "amount",
                 storageIngredient.getAmount());
@@ -275,7 +280,7 @@ public class StorageIngredientDB {
     public void deleteStorageIngredient(StorageIngredient storageIngredient,
                                         OnDeleteStorageIngredientListener listener) {
         // TODO: based on number of references to ingredient, delete ingredient
-        this.ingredientsConnection.getCollection().document(storageIngredient.getStorageId()).delete()
+        this.collection.document(storageIngredient.getStorageId()).delete()
                 .addOnSuccessListener(onDelete -> {
                     Log.d(TAG, "DocumentSnapshot successfully deleted!");
                     ingredientDB.updateReferenceCount(storageIngredient, -1,
@@ -327,7 +332,7 @@ public class StorageIngredientDB {
      */
     public void getStorageIngredient(String id,
                                      OnGetStorageIngredientListener listener) {
-        this.ingredientsConnection.getCollection().document(id).get()
+        this.collection.document(id).get()
                 .addOnSuccessListener(storedSnapshot -> {
                     Log.d(TAG, "StorageIngredient found");
                     this.getStorageIngredient(storedSnapshot, listener);
@@ -382,7 +387,7 @@ public class StorageIngredientDB {
      * @return DocumentReference of the Recipe
      */
     public DocumentReference getDocumentReference(String id) {
-        return this.ingredientsConnection.getCollection().document(id);
+        return this.collection.document(id);
     }
 
     /**
@@ -391,7 +396,7 @@ public class StorageIngredientDB {
      * @return the query
      */
     public Query getQuery() {
-        return this.ingredientsConnection.getCollection();
+        return this.collection;
         //                .orderBy("timestamp", Query.Direction.DESCENDING)
     }
 }

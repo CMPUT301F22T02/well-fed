@@ -33,17 +33,21 @@ public class IngredientDB {
      */
     private FirebaseFirestore db;
     /**
-     * Holds a connection to the users ingredient collection in the DB.
+     * Holds a connection to the DB.
      */
     private DBConnection ingredientsConnection;
-
+    /**
+     * Holds the collection for the users Ingredient collection in DB
+     */
+    private CollectionReference collection;
 
     /**
      * Constructs an IngredientDB object
      */
     public IngredientDB(Context context, boolean isTest) {
-        this.ingredientsConnection = new DBConnection(context, "Ingredients", isTest);
+        this.ingredientsConnection = new DBConnection(context, isTest);
         db = this.ingredientsConnection.getDB();
+        collection = this.ingredientsConnection.getCollection("Ingredients");
     }
 
     /**
@@ -123,8 +127,8 @@ public class IngredientDB {
         WriteBatch batch = db.batch();
 
         // add ingredient info to batch
-        String ingredientId = ingredientsConnection.getCollection().document().getId();
-        DocumentReference ingredientRef = ingredientsConnection.getCollection().document(ingredientId);
+        String ingredientId = collection.document().getId();
+        DocumentReference ingredientRef = collection.document(ingredientId);
         Map<String, Object> item = new HashMap<>();
         item.put("category", ingredient.getCategory());
         item.put("description", ingredient.getDescription());
@@ -151,7 +155,7 @@ public class IngredientDB {
      *                 retrieved
      */
     public void getIngredient(String id, OnGetIngredientListener listener) {
-        DocumentReference ingredientRef = ingredientsConnection.getCollection().document(id);
+        DocumentReference ingredientRef = collection.document(id);
         getIngredient(ingredientRef, listener);
     }
 
@@ -194,7 +198,7 @@ public class IngredientDB {
 
     public void getIngredient(Ingredient ingredient,
                               OnGetIngredientListener listener) {
-        ingredientsConnection.getCollection().whereEqualTo("category", ingredient.getCategory())
+        collection.whereEqualTo("category", ingredient.getCategory())
                 .whereEqualTo("description", ingredient.getDescription())
                 .limit(1).get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -229,7 +233,7 @@ public class IngredientDB {
         WriteBatch batch = db.batch();
 
         DocumentReference ingredientDocument =
-                ingredientsConnection.getCollection().document(ingredient.getId());
+                collection.document(ingredient.getId());
         batch.delete(ingredientDocument);
 
         batch.commit().addOnCompleteListener(task -> {
@@ -253,7 +257,7 @@ public class IngredientDB {
     public void updateReferenceCount(Ingredient ingredient, int delta,
                                      OnUpdateIngredientReferenceCountListener listener) {
         String id = getDocumentReference(ingredient).getId();
-        ingredientsConnection.getCollection().document(id).get()
+        collection.document(id).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
@@ -264,7 +268,7 @@ public class IngredientDB {
                             }
                             count += delta;
                             if (count > 0) {
-                                ingredientsConnection.getCollection().document(id)
+                                collection.document(id)
                                         .update("count", count)
                                         .addOnCompleteListener(task1 -> {
                                             listener.onUpdateReferenceCount(
@@ -310,11 +314,11 @@ public class IngredientDB {
      * @return the document reference
      */
     public DocumentReference getDocumentReference(Ingredient ingredient) {
-        return ingredientsConnection.getCollection().document(ingredient.getId());
+        return collection.document(ingredient.getId());
     }
 
 
     public Query getQuery(){
-        return ingredientsConnection.getCollection();
+        return collection;
     }
 }
