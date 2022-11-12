@@ -32,9 +32,6 @@ jobs:
   # https://gist.github.com/mrk-han/a0a11ed9bed966bb8b775ff55f2a87e9
   intent_test:
     runs-on: macos-12
-    strategy:
-      matrix:
-        api-level: [28]
     timeout-minutes: 30
     env:
       JAVA_TOOL_OPTIONS: -Xmx4g
@@ -64,7 +61,7 @@ jobs:
        if: steps.avd-cache.outputs.cache-hit != 'true'
        uses: reactivecircus/android-emulator-runner@v2
        with:
-         api-level: ${{ matrix.api-level }}
+         api-level: 28
          force-avd-creation: false
          emulator-options: -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -partition-size 2048 -qemu -m 2048
          disable-animations: false
@@ -102,7 +99,7 @@ jobs:
      - name: Run Tests
        uses: reactivecircus/android-emulator-runner@v2
        with:
-         api-level: ${{ matrix.api-level }}
+         api-level: 28
          force-avd-creation: false
          emulator-options: -no-snapshot-save -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -partition-size 2048 -qemu -m 2048
          disable-animations: true
