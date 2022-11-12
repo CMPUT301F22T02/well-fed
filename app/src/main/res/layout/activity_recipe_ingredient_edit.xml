@@ -15,6 +15,7 @@
         tools:layout_editor_absoluteX="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_descriptionInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/description"
@@ -33,7 +34,7 @@
         tools:layout_editor_absoluteX="0dp">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/categoryInput"
+            android:labelFor="@+id/edit_categoryInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/category"
@@ -54,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryInput">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_amountInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/amount_hint"
@@ -73,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryInput">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/unitInput"
+            android:labelFor="@+id/edit_unitInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/unit"
