@@ -260,13 +260,19 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.commentsEditText)).perform(typeText("TestComment"));
         closeSoftKeyboard();
 
+        onView(withId(R.id.ingredient_add_btn)).perform(click());
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("TestIngredient"));
+        closeSoftKeyboard();
 
-        onView(withId(R.id.ingredient_search_btn)).perform(click());
-        //pick an ingredient check if recycler view is non empty
-        onView(withId(R.id.ingredient_storage_list)).perform(click());
-        intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
+        onView(withId(R.id.categoryInput)).perform(click());
+        onView(withText("Fruit"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
+
         onView(withId(R.id.unitInput)).perform(click());
         onView(withText("lb"))
                 .inRoot(RootMatchers.isPlatformPopup())
@@ -286,7 +292,8 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
         onView(withId(R.id.recipe_description_textView)).check(matches(withText("TestComment")));
-        //onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(withText("Test")));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 lb"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("TestIngredient"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
