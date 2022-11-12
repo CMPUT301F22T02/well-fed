@@ -102,10 +102,10 @@ public class StorageIngredientDB {
     /**
      * Creates a reference to the Firebase DB.
      */
-    public StorageIngredientDB(Context context) {
+    public StorageIngredientDB(Context context, boolean isTest) {
         this.db = FirebaseFirestore.getInstance();
-        this.ingredientsConnection = new DBConnection(context,"StoredIngredients", false);
-        this.ingredientDB = new IngredientDB(context, false);
+        this.ingredientsConnection = new DBConnection(context,"StoredIngredients", isTest);
+        this.ingredientDB = new IngredientDB(context, isTest);
     }
 
     /**
