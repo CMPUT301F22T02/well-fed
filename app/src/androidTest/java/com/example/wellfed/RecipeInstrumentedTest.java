@@ -17,6 +17,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +45,7 @@ import org.junit.runner.RunWith;
     /**
      * test add and delete recipe
      */
+    @Ignore
     @Test public void testAddDeleteRecipe() {
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.recipe_title_editText)).perform(clearText());
