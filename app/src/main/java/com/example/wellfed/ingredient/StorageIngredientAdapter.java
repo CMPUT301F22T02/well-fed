@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
+import com.google.firebase.firestore.Query;
 
 public class StorageIngredientAdapter
         extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
@@ -20,6 +21,12 @@ public class StorageIngredientAdapter
 
     public StorageIngredientAdapter(StorageIngredientDB db) {
         super(db.getQuery());
+        Log.d(TAG, "StorageIngredientAdapter:");
+        this.db = db;
+    }
+
+    public StorageIngredientAdapter(String query, StorageIngredientDB db) {
+        super(db.getQuery(query));
         Log.d(TAG, "StorageIngredientAdapter:");
         this.db = db;
     }
