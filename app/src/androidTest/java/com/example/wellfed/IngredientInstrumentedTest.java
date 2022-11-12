@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.idling.CountingIdlingResource;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -38,19 +39,18 @@ public class IngredientInstrumentedTest {
             new ActivityScenarioRule<>(MainActivity.class);
 
     /**
-     * Setup Recipe test by navigating to RecipeBookFragment
+     * Setup Ingredient test by navigating to IngredientFragment
      */
     @Before
     public void before() {
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_storage_item)).perform(click());
-
     }
 
     /**
      * Performs all of the actions needed to add an ingredient.
      */
-    private void addMockIngredient() {
+    private void addMockIngredient() throws InterruptedException {
         // testing description input
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
@@ -80,36 +80,35 @@ public class IngredientInstrumentedTest {
         // saving input
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
+        // todo: replace this with something else?
+        // todo: this is here to ensure data actually is populated before testing
+        Thread.sleep(2000);
     }
 
     /**
      * Tests adding a complete Ingredient.
      */
     @Test
-    public void testAddIngredient() {
+    public void testAddIngredient() throws InterruptedException {
         // adding the mock ingredient
         addMockIngredient();
 
         // finding the ingredient in the RecyclerView
         onView(withId(R.id.ingredient_storage_list))
-                .perform(RecyclerViewActions.actionOnItem(
-                        withText("Ground Beef"), click()
-                ));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         // checking the correctness of the ingredient by seeing if all text is visible
         onView(withText("Ground Beef")).check(ViewAssertions
                         .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Meat")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("5.0")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("lb")).check(ViewAssertions
+        onView(withText("5.0 lb")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Freezer")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
-        onView(withText("OK")).perform(click());
+        onView(withText("Delete")).perform(click());
     }
 }
