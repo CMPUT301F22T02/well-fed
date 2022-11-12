@@ -3,8 +3,10 @@ package com.example.wellfed.recipe;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
 import com.google.android.gms.tasks.Task;
@@ -27,13 +29,18 @@ public class RecipeDB {
      */
     private final FirebaseFirestore db;
     /**
-     * Holds a collection to the Recipes stored in the FireStore db database
-     */
-    final CollectionReference recipesCollection;
-    /**
      * Holds a collection to the Recipe Ingredients stored in the FireStore db database
      */
     private final IngredientDB ingredientDB;
+    /**
+     * Holds a connection to the DB.
+     */
+    private DBConnection recipesConnection;
+
+    /**
+     * Holds the CollectionReference for the users Recipe collection.
+     */
+    private CollectionReference collection;
 
     public interface OnRecipeDone {
         public void onAddRecipe(Recipe recipe, Boolean success);
@@ -46,10 +53,11 @@ public class RecipeDB {
     /**
      * Create a RecipeDB object
      */
-    public RecipeDB() {
-        db = FirebaseFirestore.getInstance();
-        this.recipesCollection = db.collection("Recipes");
-        ingredientDB = new IngredientDB();
+    public RecipeDB(DBConnection connection) {
+        this.recipesConnection = connection;
+        db = this.recipesConnection.getDB();
+        collection = this.recipesConnection.getCollection("Recipes");
+        ingredientDB = new IngredientDB(connection);
     }
 
 
@@ -121,7 +129,7 @@ public class RecipeDB {
         recipeMap.put("photograph", recipe.getPhotograph());
         recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
 
-        recipesCollection
+        this.collection
                 .add(recipeMap)
                 .addOnSuccessListener(addedSnapshot -> {
                     recipe.setId(addedSnapshot.getId());
@@ -136,7 +144,7 @@ public class RecipeDB {
     // todo call the listener when results fail
     // todo add db-tests for it
     public void getRecipe(String id, OnRecipeDone listener) {
-        DocumentReference recipeRef = this.recipesCollection.document(id);
+        DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get()
                 .addOnSuccessListener(doc -> {
                     List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
@@ -199,7 +207,7 @@ public class RecipeDB {
             listener.onAddRecipe(null, false);
         }
 
-        DocumentReference recipeRef = this.recipesCollection.document(id);
+        DocumentReference recipeRef = this.collection.document(id);
         recipeRef.delete()
                 .addOnSuccessListener(r->{
                     listener.onAddRecipe(new Recipe(id), true);
@@ -394,7 +402,7 @@ public class RecipeDB {
      * @return DocumentReference of the Recipe
      */
     public DocumentReference getDocumentReference(String id) {
-        return recipesCollection.document(id);
+        return this.collection.document(id);
     }
 
 
@@ -419,7 +427,7 @@ public class RecipeDB {
     }
 
     public Query getQuery() {
-        return this.recipesCollection;
+        return this.collection;
     }
 
 

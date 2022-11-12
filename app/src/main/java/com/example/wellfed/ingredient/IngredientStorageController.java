@@ -4,6 +4,7 @@ package com.example.wellfed.ingredient;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wellfed.ActivityBase;
+import com.example.wellfed.common.DBConnection;
 
 public class IngredientStorageController {
     /**
@@ -26,7 +27,8 @@ public class IngredientStorageController {
      */
     public IngredientStorageController(FragmentActivity activity) {
         this.activity = (ActivityBase) activity;
-        db = new StorageIngredientDB();
+        DBConnection connection = new DBConnection(activity.getApplicationContext());
+        db = new StorageIngredientDB(connection);
         adapter = new StorageIngredientAdapter(db);
     }
 
