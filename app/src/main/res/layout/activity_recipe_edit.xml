@@ -13,65 +13,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/recipe_title_textView"
-        android:layout_width="wrap_content"
+    <com.example.wellfed.common.RequiredTextInputLayout
+        android:id="@+id/recipe_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Recipe Title: "
-        android:textSize="12sp"
-        android:textStyle="bold"
+        android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recipe_img" />
+        android:hint="@string/title"
+        app:layout_constraintTop_toBottomOf="@id/recipe_img">
 
-    <EditText
-        android:id="@+id/recipe_title_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_title_textView"
-        app:layout_constraintStart_toEndOf="@+id/recipe_title_textView" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.example.wellfed.common.RequiredTextInputLayout>
 
-    <TextView
+    <com.example.wellfed.common.RequiredNumberTextInputLayout
         android:id="@+id/recipe_prep_time_textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:paddingBottom="8dp"
-        android:text="Preparation time:"
-        android:textSize="12sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/prepartion_time_in_mins"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recipe_title_editText" />
+        app:layout_constraintTop_toBottomOf="@id/recipe_title">
 
-    <EditText
-        android:id="@+id/recipe_prep_time_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_prep_time_textView"
-        app:layout_constraintStart_toEndOf="@+id/recipe_prep_time_textView" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.example.wellfed.common.RequiredNumberTextInputLayout>
 
-    <TextView
+
+    <com.example.wellfed.common.RequiredNumberTextInputLayout
         android:id="@+id/recipe_no_of_servings_textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/number_of_servings"
         android:paddingBottom="8dp"
-        android:text="Number of Servings"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_prep_time_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/recipe_prep_time_textView">
 
-    <EditText
-        android:id="@+id/recipe_no_of_servings_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/recipe_no_of_servings_textView"
-        app:layout_constraintStart_toEndOf="@+id/recipe_no_of_servings_textView" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.example.wellfed.common.RequiredNumberTextInputLayout>
+
 
     <com.example.wellfed.common.RequiredDropdownTextInputLayout
         android:id="@+id/recipe_category"
@@ -79,9 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recipe_no_of_servings_textView">
@@ -90,47 +80,46 @@
             android:id="@+id/recipe_category_textEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            app:simpleItems="@array/recipeCategories" />
+            android:hint="@string/category" />
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>
-
 
     <TextView
         android:id="@+id/recipe_ingredient_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/ingredients"
         android:textStyle="bold"
+        android:textSize="19sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commentsTextInput" />
 
-    <com.google.android.material.button.MaterialButton
+    <ImageView
         android:id="@+id/ingredient_search_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:padding="0dp"
-        android:text="s"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_ingredient_textView"
+        android:src="@drawable/ic_baseline_search_24"
+        app:layout_constraintBottom_toBottomOf="@id/recipe_ingredient_textView"
         app:layout_constraintEnd_toStartOf="@+id/ingredient_add_btn" />
 
 
-    <com.google.android.material.button.MaterialButton
+    <ImageView
         android:id="@+id/ingredient_add_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:padding="0dp"
-        android:text="+"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_ingredient_textView"
+        android:src="@drawable/ic_baseline_add_24"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_ingredient_textView"
         app:layout_constraintEnd_toEndOf="parent" />
 
 
@@ -175,7 +164,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="@string/comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_category">
@@ -183,7 +171,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/commentsEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/comments"
+            android:inputType="text" />
 
     </com.example.wellfed.common.RequiredTextInputLayout>
 

@@ -42,7 +42,7 @@
     <string name="amount">Amount:</string>
     <string name="dummy_quantity">5 lb</string>
     <string name="dummy_category">Meat</string>
-    <string name="location">Location:</string>
+    <string name="location">Location</string>
     <string name="freezer">Freezer</string>
     <string name="delete_ingredient">Delete ingredient?</string>
     <string name="description">Description</string>
@@ -51,4 +51,5 @@
     <string name="unit">Unit</string>
     <string name="amount_hint">Amount</string>
     <string name="location_tag">Location</string>
+    <string name="prepartion_time_in_mins">Prepartion time in mins</string>
 </resources>

@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -149,7 +149,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="../ActivityBase.html" title="class in com.example.wellfed">com.example.wellfed.ActivityBase</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="../EditActivityBase.html" title="class in com.example.wellfed">com.example.wellfed.EditActivityBase</a></li>
+<li>
+<ul class="inheritance">
 <li>com.example.wellfed.mealplan.MealPlanEditActivity</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -180,8 +185,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">MealPlanEditActivity</span>
-extends <a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a>
-implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></pre>
+extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></pre>
 </li>
 </ul>
 </div>
@@ -272,33 +276,35 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBackPressed()">onBackPressed</a></span>()</code></th>
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasUnsavedChanges()">hasUnsavedChanges</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onConfirm()">onConfirm</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Handler for when the user confirms.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></span>&#8203;(android.view.MenuItem&nbsp;item)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onPointerCaptureChanged(boolean)">onPointerCaptureChanged</a></span>&#8203;(boolean&nbsp;hasCapture)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.EditActivityBase">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.example.wellfed.<a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></h3>
+<code><a href="../EditActivityBase.html#onBackPressed()">onBackPressed</a>, <a href="../EditActivityBase.html#onConfirm()">onConfirm</a>, <a href="../EditActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.ActivityBase">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.example.wellfed.<a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a></h3>
+<code><a href="../ActivityBase.html#makeSnackbar(java.lang.String)">makeSnackbar</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.androidx.appcompat.app.AppCompatActivity">
 <!--   -->
@@ -397,32 +403,6 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="onBackPressed()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>onBackPressed</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onBackPressed()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onBackPressed</code>&nbsp;in class&nbsp;<code>androidx.activity.ComponentActivity</code></dd>
-</dl>
-</li>
-</ul>
-<a id="onOptionsItemSelected(android.view.MenuItem)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>onOptionsItemSelected</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;onOptionsItemSelected&#8203;(android.view.MenuItem&nbsp;item)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../ActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></code>&nbsp;in class&nbsp;<code><a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a></code></dd>
-</dl>
-</li>
-</ul>
 <a id="onCreate(android.os.Bundle)">
 <!--   -->
 </a>
@@ -432,22 +412,20 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <pre class="methodSignature">protected&nbsp;void&nbsp;onCreate&#8203;(android.os.Bundle&nbsp;savedInstanceState)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
+<dd><code><a href="../EditActivityBase.html#onCreate(android.os.Bundle)">onCreate</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
 </dl>
 </li>
 </ul>
-<a id="onConfirm()">
+<a id="hasUnsavedChanges()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>onConfirm</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onConfirm()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">ConfirmDialog.OnConfirmListener</a></code></span></div>
-<div class="block">Handler for when the user confirms.</div>
+<h4>hasUnsavedChanges</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;hasUnsavedChanges()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code>&nbsp;in interface&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
+<dd><code><a href="../EditActivityBase.html#hasUnsavedChanges()">hasUnsavedChanges</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -458,10 +436,6 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <li class="blockList">
 <h4>onPointerCaptureChanged</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onPointerCaptureChanged&#8203;(boolean&nbsp;hasCapture)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>onPointerCaptureChanged</code>&nbsp;in interface&nbsp;<code>android.view.Window.Callback</code></dd>
-</dl>
 </li>
 </ul>
 </li>

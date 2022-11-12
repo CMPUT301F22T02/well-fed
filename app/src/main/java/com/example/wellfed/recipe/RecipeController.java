@@ -1,8 +1,10 @@
 package com.example.wellfed.recipe;
 
+import android.content.Context;
 import android.media.Image;
 import android.util.Log;
 
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 
 import java.io.Serializable;
@@ -34,8 +36,9 @@ public class RecipeController {
     /**
      * Constructor that initializes the db
      */
-    public RecipeController() {
-        recipeDB = new RecipeDB();
+    public RecipeController(Context context) {
+        DBConnection connection = new DBConnection(context);
+        recipeDB = new RecipeDB(connection);
     }
 
     /**
@@ -52,11 +55,11 @@ public class RecipeController {
      * @param id of the recipe to delete
      */
     public void deleteRecipe(String id) {
-        try {
-            recipeDB.delRecipe(id);
-        } catch (Exception e) {
-
-        }
+//        try {
+//            recipeDB.delRecipe(id);
+//        } catch (Exception e) {
+//
+//        }
     }
 
     /**
@@ -64,12 +67,12 @@ public class RecipeController {
      * @param recipe
      */
     public void addRecipe(Recipe recipe) {
-        try {
-            recipeDB.addRecipe(recipe);
-            recipes.add(recipe);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            recipeDB.addRecipe(recipe);
+//            recipes.add(recipe);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -79,8 +82,7 @@ public class RecipeController {
      */
     public ArrayList<Recipe> getRecipes() throws InterruptedException {
         Log.d("RecipeController", "getRecipes: ");
-        recipes = recipeDB.getRecipes();
-        return recipes;
+        return null;
     }
 
     /**
