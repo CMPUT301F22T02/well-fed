@@ -19,6 +19,7 @@ import com.example.wellfed.common.Launcher;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // todo create sample data for recipes
 // todo setup recipe edit button
@@ -87,7 +88,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        RecipeDB recipeDB = new RecipeDB(getContext().getApplicationContext());
+                        RecipeDB recipeDB = new RecipeDB(requireContext().getApplicationContext());
                         try {
                             recipeDB.addRecipe(recipe, (a, b) -> {
                             });
