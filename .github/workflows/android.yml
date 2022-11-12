@@ -30,7 +30,7 @@ jobs:
       run: ./gradlew build --parallel
 
   intent_test:
-    runs-on: macos-latest
+    runs-on: macos-10.15
     steps:
       - name: checkout
         uses: actions/checkout@v3
