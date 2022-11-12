@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // todo create sample data for recipes
 // todo setup recipe edit button
@@ -87,7 +89,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        RecipeDB recipeDB = new RecipeDB();
+                        DBConnection connection = new DBConnection(requireContext().getApplicationContext());
+                        RecipeDB recipeDB = new RecipeDB(connection);
                         try {
                             recipeDB.addRecipe(recipe, (a, b) -> {
                             });
@@ -121,8 +124,9 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
-        recipeController = new RecipeController();
-        recipeDB = new RecipeDB();
+        recipeController = new RecipeController(getContext().getApplicationContext());
+        DBConnection connection = new DBConnection(getContext().getApplicationContext());
+        recipeDB = new RecipeDB(connection);
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 

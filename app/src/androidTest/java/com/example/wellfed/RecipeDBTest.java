@@ -3,6 +3,7 @@ package com.example.wellfed;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
@@ -27,7 +28,8 @@ public class RecipeDBTest {
 
     @Before
     public void before() {
-        recipeDB = new RecipeDB();
+        MockDBConnection connection = new MockDBConnection();
+        recipeDB = new RecipeDB(connection);
     }
 
     /**

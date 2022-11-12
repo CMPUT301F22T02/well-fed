@@ -1,8 +1,10 @@
 package com.example.wellfed.recipe;
 
+import android.content.Context;
 import android.media.Image;
 import android.util.Log;
 
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 
 import java.io.Serializable;
@@ -34,8 +36,9 @@ public class RecipeController {
     /**
      * Constructor that initializes the db
      */
-    public RecipeController() {
-        recipeDB = new RecipeDB();
+    public RecipeController(Context context) {
+        DBConnection connection = new DBConnection(context);
+        recipeDB = new RecipeDB(connection);
     }
 
     /**
