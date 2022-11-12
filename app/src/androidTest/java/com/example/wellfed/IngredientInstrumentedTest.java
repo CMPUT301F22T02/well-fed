@@ -171,5 +171,60 @@ public class IngredientInstrumentedTest {
         onView(withText("Ground Beef")).check(doesNotExist());
     }
 
+    /**
+     * Tests editing an ingredient
+     */
+    @Test
+    public void testEditIngredient() throws InterruptedException {
+        addMockIngredient();
 
+        onView(withText("Ground Beef")).perform(click());
+
+        onView(withId(R.id.ingredient_edit_button)).perform(click());
+
+        onView(withId(R.id.descriptionInputEditText)).perform(clearText());
+        onView(withId(R.id.descriptionInputEditText)).perform(typeText("Ground Chicken"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.categoryInputEditText)).perform(clearText());
+        onView(withId(R.id.categoryInputEditText)).perform(typeText("Poultry"));
+        closeSoftKeyboard();
+
+        // typing amount input
+        onView(withId(R.id.amountInputEditText)).perform(clearText());
+        onView(withId(R.id.amountInputEditText)).perform(typeText("6"));
+        closeSoftKeyboard();
+
+        // typing unit input
+        onView(withId(R.id.unitInputEditText)).perform(clearText());
+        onView(withId(R.id.unitInputEditText)).perform(typeText("kg"));
+        closeSoftKeyboard();
+
+        // typing location input
+        onView(withId(R.id.locationInputEditText)).perform(clearText());
+        onView(withId(R.id.locationInputEditText)).perform(typeText("Fridge"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        // todo: replace this with something else?
+        Thread.sleep(2000);
+
+        // finding the ingredient in the RecyclerView
+        onView(withText("Ground Chicken")).perform(click());
+
+        // checking the correctness of the ingredient by seeing if all text is visible
+        onView(withText("Ground Chicken")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Poultry")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("6.0 kg")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Fridge")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        // deleting the ingredient
+        onView(withId(R.id.ingredient_delete_button)).perform(click());
+        onView(withText("Delete")).perform(click());
+
+    }
 }
