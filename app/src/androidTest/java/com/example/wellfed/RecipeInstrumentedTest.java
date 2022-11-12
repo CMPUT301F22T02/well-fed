@@ -31,6 +31,7 @@ import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.wellfed.recipe.RecipeActivity;
 import com.example.wellfed.recipe.RecipeEditActivity;
 import com.example.wellfed.recipe.RecipeIngredientEditActivity;
 
@@ -237,8 +238,58 @@ import org.junit.runner.RunWith;
     @Test public void TestViewingRecipe(){
         Intents.init();
 
+        onView(withId(R.id.fab)).perform(click());
+        //onView(withId(R.id.recipe_img)).perform(click());
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Test"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category)).perform(click());
+        closeSoftKeyboard();
+
+        onView(withText("Breakfast"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("TestComment"));
+        closeSoftKeyboard();
 
 
+        onView(withId(R.id.ingredient_search_btn)).perform(click());
+        //pick an ingredient check if recycler view is non empty
+        onView(withId(R.id.ingredient_storage_list)).perform(click());
+        intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("lb"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Test"), click()));
+
+        intended(hasComponent(RecipeActivity.class.getName()));
+
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Test")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Prepartion time: 1")));
+        onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
+        onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("TestComment")));
+        //onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(withText("Test")));
+
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
 
     }
     /**
