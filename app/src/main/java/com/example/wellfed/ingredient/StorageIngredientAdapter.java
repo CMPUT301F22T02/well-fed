@@ -12,22 +12,38 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
 
+/**
+ * Acts as an adapter for the list of stored ingredients.
+ */
 public class StorageIngredientAdapter
         extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
     private static final String TAG = "SIAdapter";
     private final StorageIngredientDB db;
     private OnItemClickListener listener;
 
+    /**
+     * Creates a StorageIngredientAdapter
+     * @param db the StorageIngredientDB object that acts as a database for stored ingredients
+     */
     public StorageIngredientAdapter(StorageIngredientDB db) {
         super(db.getQuery());
         Log.d(TAG, "StorageIngredientAdapter:");
         this.db = db;
     }
 
+    /**
+     * The listener for an item click in the stored ingredient list.
+     */
     public interface OnItemClickListener {
         void onItemClick(StorageIngredient storageIngredient);
     }
 
+    /**
+     * Creates the
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                          int viewType) {
@@ -51,6 +67,10 @@ public class StorageIngredientAdapter
                 });
     }
 
+    /**
+     * Sets the listener for an item click.
+     * @param listener the listener to set
+     */
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }

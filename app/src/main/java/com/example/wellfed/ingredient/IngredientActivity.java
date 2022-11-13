@@ -17,6 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
+/**
+ * Represents an Ingredient's information page.
+ */
 public class IngredientActivity extends ActivityBase
         implements ConfirmDialog.OnConfirmListener {
     /**

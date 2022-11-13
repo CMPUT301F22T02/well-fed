@@ -21,6 +21,9 @@ import com.example.wellfed.common.Launcher;
 import com.google.android.material.textfield.TextInputEditText;
 
 
+/**
+ * The fragment that displays all ingredients in storage.
+ */
 public class IngredientStorageFragment extends Fragment
         implements Launcher, StorageIngredientAdapter.OnItemClickListener {
     /**
