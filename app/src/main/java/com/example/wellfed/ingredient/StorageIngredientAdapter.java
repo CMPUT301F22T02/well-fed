@@ -31,6 +31,12 @@ public class StorageIngredientAdapter
         this.db = db;
     }
 
+    public StorageIngredientAdapter(String field, boolean ascending, StorageIngredientDB db) {
+        super(db.getQuery(field, ascending));
+        Log.d(TAG, "StorageIngredientAdapter:");
+        this.db = db;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(StorageIngredient storageIngredient);
     }

@@ -1,16 +1,19 @@
 package com.example.wellfed.ingredient;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Objects;
 
@@ -40,6 +44,10 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 	 * The selected item
 	 */
 	private int selected;
+	/**
+	 * ImageFilterButton is the button that filters the ingredients by image.
+	 */
+	private ImageFilterButton imageFilterButton;
 
 	/**
 	 * ActivityResultLauncher for the IngredientEditActivity to edit an
@@ -150,6 +158,10 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 			public void afterTextChanged(Editable s) {
 			}
 		});
+
+		// Link filter button to filter functionality
+		imageFilterButton = view.findViewById(R.id.image_filter_button);
+		imageFilterButton.setOnClickListener(this::filter);
 	}
 
 	/**
@@ -191,5 +203,56 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 	@Override
 	public void onItemClick(StorageIngredient storageIngredient) {
 		launcher.launch(storageIngredient);
+	}
+
+	/**
+	 * Launches a dropdown menu to filter the ingredients. That contain the
+	 * options to filter the ingredient by description, category, and
+	 * best-before date.
+	 *
+	 * @param view The view that was clicked.
+	 *             The view is the filter button.
+	 */
+	public void filter(View view) {
+		// Inflate the AlertDialog with the custom layout
+		AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+		builder.setTitle("Filter");
+		View customLayout =
+			getLayoutInflater().inflate(R.layout.ingredients_dropdown, null);
+		builder.setView(customLayout);
+
+		MaterialTextView descriptionButton =
+			customLayout.findViewById(R.id.sort_by_name);
+		descriptionButton.setOnClickListener(v -> {
+			controller.getSortedResults("description", true);
+			StorageIngredientAdapter adapter = controller.getAdapter();
+			adapter.setOnItemClickListener(IngredientStorageFragment.this);
+			recyclerView.setAdapter(adapter);
+		});
+		MaterialTextView categoryButton =
+			customLayout.findViewById(R.id.sort_by_category);
+		categoryButton.setOnClickListener(v -> {
+			controller.getSortedResults("category", true);
+			StorageIngredientAdapter adapter = controller.getAdapter();
+			adapter.setOnItemClickListener(IngredientStorageFragment.this);
+			recyclerView.setAdapter(adapter);
+		});
+		MaterialTextView bestBeforeButton =
+			customLayout.findViewById(R.id.sort_by_expiration_date);
+		bestBeforeButton.setOnClickListener(v -> {
+			controller.getSortedResults("best-before", true);
+			StorageIngredientAdapter adapter = controller.getAdapter();
+			adapter.setOnItemClickListener(IngredientStorageFragment.this);
+			recyclerView.setAdapter(adapter);
+		});
+
+		// Create cancel button
+		builder.setNegativeButton("Cancel", (dialog, which) -> {
+			// Do nothing
+		});
+
+		// Create and show the AlertDialog
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 }

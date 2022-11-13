@@ -103,4 +103,17 @@ public class IngredientStorageController {
 			adapter = new StorageIngredientAdapter(query, db);
 		}
 	}
+
+	/**
+	 * Gets the DB of ingredients sorted by field
+	 *
+	 * @param field     the field to sort by
+	 *                  description | category | expiration
+	 * @param ascending whether to sort ascending or descending
+	 *                  true = ascending)
+	 * @return the DB of ingredients
+	 */
+	public void getSortedResults(String field, boolean ascending) {
+		adapter = new StorageIngredientAdapter(field, ascending, db);
+	}
 }
