@@ -108,7 +108,7 @@ public class StorageIngredientDB {
     }
 
     /**
-     * Creates a reference to the Firebase DB.
+     * Creates a reference to the Firebase DB for the StorageIngredient collection.
      */
     public StorageIngredientDB(DBConnection connection) {
         this.ingredientsConnection = connection;
