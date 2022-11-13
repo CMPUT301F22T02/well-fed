@@ -118,7 +118,7 @@ public class ShoppingCartIngredientEditActivity extends ActivityBase
         }
         shoppingCartIngredient.setDescription(description.getText().toString());
         shoppingCartIngredient.setCategory(category.getText().toString());
-        shoppingCartIngredient.setAmount(Float.parseFloat(amount.getText().toString()));
+        shoppingCartIngredient.setAmount(Double.parseDouble(amount.getText().toString()));
         shoppingCartIngredient.setUnit(unit.getText().toString());
 
         Intent intent = new Intent();

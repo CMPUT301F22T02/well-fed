@@ -128,19 +128,19 @@ public class ShoppingCartFragment extends Fragment implements Launcher {
         ingredient = new ShoppingCartIngredient("Banana");
         ingredient.setCategory("Fruit");
         ingredient.setUnit("lb(s)");
-        ingredient.setAmount(1.3f);
+        ingredient.setAmount(1.3d);
         shoppingCart.addIngredient(ingredient);
 
         ingredient = new ShoppingCartIngredient("Salt");
         ingredient.setCategory("seasoning");
         ingredient.setUnit("gram(s)");
-        ingredient.setAmount(500.0f);
+        ingredient.setAmount(500.0d);
         shoppingCart.addIngredient(ingredient);
 
         ingredient = new ShoppingCartIngredient("Juice");
         ingredient.setCategory("Beverage");
         ingredient.setUnit("L(s)");
-        ingredient.setAmount(1.5f);
+        ingredient.setAmount(1.5d);
         shoppingCart.addIngredient(ingredient);
 
         // Display data in recycler view
