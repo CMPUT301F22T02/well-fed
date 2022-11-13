@@ -103,6 +103,7 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
         if (this.layoutId == R.layout.recipe_ingredient_edit) {
             // ingredient edit btn
             ImageView editImgView = holder.editImgView;
+            ImageView deleteImgView = holder.deleteImgView;
             if (listener != null) {
 
                 editImgView.setOnClickListener(view -> {
@@ -110,7 +111,7 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
                 });
 
                 // ingredient delete btn
-                ImageView deleteImgView = holder.deleteImgView;
+
                 deleteImgView.setOnClickListener(view -> {
                     listener.onEditClick("delete", holder.getAdapterPosition());
                 });

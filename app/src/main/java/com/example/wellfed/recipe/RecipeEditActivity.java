@@ -62,7 +62,7 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
     private RequiredTextInputLayout title;
     private RequiredTextInputLayout commentsTextInput;
     private RequiredDropdownTextInputLayout recipeCategory;
-
+    private int selectedIngredient;
 
     // take picture
     ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
@@ -85,7 +85,10 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                     case "add":
                         recipeIngredients.add(ingredient);
                         recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size());
-                    case "quit":
+                        break;
+                    case "edit":
+                        recipeIngredients.set(selectedIngredient, ingredient);
+                        recipeIngredientAdapter.notifyItemChanged(selectedIngredient);
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -158,7 +161,25 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                 }
             });
         } else {
-
+            recipeIngredients = recipe.getIngredients();
+            title.setText(recipe.getTitle());
+            prepTime.setText(recipe.getPrepTimeMinutes().toString());
+            servings.setText(recipe.getServings().toString());
+            commentsTextInput.setText(recipe.getComments());
+            recipeCategory.setText(recipe.getCategory());
+            Picasso.get()
+                    .load(recipe.getPhotograph())
+                    .rotate(90)
+                    .into(recipeImg);
+            fab.setOnClickListener(view -> {
+                if (areValidFields()) {
+                    Intent intent1 = new Intent();
+                    intent.putExtra("type", "edit");
+                    intent.putExtra("Recipe", recipe);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
         }
 
         // ingredient recycle viewer and it's adapter
@@ -192,8 +213,6 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
 
     public void onSave() {
         // return the new recipe via intent
-
-
         Intent intent = new Intent();
         intent.putExtra("type", "save");
         intent.putExtra("Recipe", recipe);
@@ -262,9 +281,11 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
 
     @Override
     public void onEditClick(String reason, int pos) {
+        this.selectedIngredient = pos;
         switch (reason) {
             case "edit":
                 ingredientLauncher.launch(recipeIngredients.get(pos));
+                break;
             case "delete":
                 recipeIngredients.remove(pos);
                 recipeIngredientAdapter.notifyItemRemoved(pos);
