@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
 import com.example.wellfed.ingredient.StorageIngredient;
@@ -47,7 +48,9 @@ public class RecipeIngredientSearch extends ActivityBase
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_ingredient_storage);
 
-        RecipeIngredientSearchAdapter adapter = new RecipeIngredientSearchAdapter(new IngredientDB());
+        DBConnection connection = new DBConnection(getApplicationContext());
+        IngredientDB db = new IngredientDB(connection);
+        RecipeIngredientSearchAdapter adapter = new RecipeIngredientSearchAdapter(db);
         adapter.setListener(this);
         ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
         ingredientRecycleView.setAdapter(adapter);

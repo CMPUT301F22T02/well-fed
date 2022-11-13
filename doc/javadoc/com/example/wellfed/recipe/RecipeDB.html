@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -87,14 +87,14 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -138,33 +138,29 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- =========== FIELD SUMMARY =========== -->
+<!-- ======== NESTED CLASS SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
-<li class="blockList"><a id="field.summary">
+<li class="blockList"><a id="nested.class.summary">
 <!--   -->
 </a>
-<h3>Field Summary</h3>
+<h3>Nested Class Summary</h3>
 <table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
+<th class="colSecond" scope="col">Class</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>(package private) <a href="RecipeIngredientDB.html" title="class in com.example.wellfed.recipe">RecipeIngredientDB</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipeIngredientDB">recipeIngredientDB</a></span></code></th>
-<td class="colLast">
-<div class="block">Holds a collection to the Recipe Ingredients stored in the FireStore db database</div>
-</td>
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>(package private) com.google.firebase.firestore.CollectionReference</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipesCollection">recipesCollection</a></span></code></th>
-<td class="colLast">
-<div class="block">Holds a collection to the Recipes stored in the FireStore db database</div>
-</td>
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeDB.OnRecipeIngredientAdded.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeIngredientAdded</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -184,7 +180,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">RecipeDB</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.example.wellfed.common.DBConnection)">RecipeDB</a></span>&#8203;(<a href="../common/DBConnection.html" title="class in com.example.wellfed.common">DBConnection</a>&nbsp;connection)</code></th>
 <td class="colLast">
 <div class="block">Create a RecipeDB object</div>
 </td>
@@ -208,8 +204,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipe(com.example.wellfed.recipe.Recipe)">addRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipe(com.example.wellfed.recipe.Recipe,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">addRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe,
+         <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Adds a recipe to the Recipe collection in db and any ingredients
  not already in Recipe Ingredients.</div>
@@ -217,26 +214,27 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipe(java.lang.String)">delRecipe</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipeHelper(java.util.HashMap,java.util.ArrayList,com.example.wellfed.recipe.Recipe,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">addRecipeHelper</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
+               java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
+               <a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe,
+               <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipe(java.lang.String,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">delRecipe</a></span>&#8203;(java.lang.String&nbsp;id,
+         <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Deletes a recipe document with the id  from the collection
  of recipes</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipeAndIngredient(java.lang.String)">delRecipeAndIngredient</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Deletes a recipe document with the id  from the recipe collection (AND Ingredients)
  of recipes</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editRecipe(com.example.wellfed.recipe.Recipe)">editRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
-<td class="colLast">
-<div class="block">Updates the corresponding recipe document in the collection with the fields of the
- recipe object.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -247,16 +245,26 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipe(java.lang.String)">getRecipe</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuery()">getQuery</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipes()">getRecipes</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Makes an ArrayList of Recipes out of all the documents in the collection of Recipes</div>
-</td>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipe(java.lang.String,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">getRecipe</a></span>&#8203;(java.lang.String&nbsp;id,
+         <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#snapshotToRecipe(com.google.firebase.firestore.DocumentSnapshot)">snapshotToRecipe</a></span>&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;doc)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipe(com.example.wellfed.recipe.Recipe,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">updateRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe,
+            <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -275,36 +283,6 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="recipesCollection">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>recipesCollection</h4>
-<pre>final&nbsp;com.google.firebase.firestore.CollectionReference recipesCollection</pre>
-<div class="block">Holds a collection to the Recipes stored in the FireStore db database</div>
-</li>
-</ul>
-<a id="recipeIngredientDB">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>recipeIngredientDB</h4>
-<pre>final&nbsp;<a href="RecipeIngredientDB.html" title="class in com.example.wellfed.recipe">RecipeIngredientDB</a> recipeIngredientDB</pre>
-<div class="block">Holds a collection to the Recipe Ingredients stored in the FireStore db database</div>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -312,13 +290,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
+<a id="&lt;init&gt;(com.example.wellfed.common.DBConnection)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RecipeDB</h4>
-<pre>public&nbsp;RecipeDB()</pre>
+<pre>public&nbsp;RecipeDB&#8203;(<a href="../common/DBConnection.html" title="class in com.example.wellfed.common">DBConnection</a>&nbsp;connection)</pre>
 <div class="block">Create a RecipeDB object</div>
 </li>
 </ul>
@@ -332,14 +310,15 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addRecipe(com.example.wellfed.recipe.Recipe)">
+<a id="addRecipe(com.example.wellfed.recipe.Recipe,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addRecipe</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;addRecipe&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)
-                           throws java.lang.InterruptedException</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;addRecipe&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                      <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)
+               throws java.lang.InterruptedException</pre>
 <div class="block">Adds a recipe to the Recipe collection in db and any ingredients
  not already in Recipe Ingredients. This method will set the Recipe id
  to the corresponding document id in the collection</div>
@@ -347,21 +326,56 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>recipe</code> - A Recipe object we want to add to the collection of Recipes
                and whose id we want to set</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns the id of the Recipe document</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.InterruptedException</code> - If any transaction in the method was not complete</dd>
 </dl>
 </li>
 </ul>
-<a id="delRecipe(java.lang.String)">
+<a id="addRecipeHelper(java.util.HashMap,java.util.ArrayList,com.example.wellfed.recipe.Recipe,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addRecipeHelper</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addRecipeHelper&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
+                            java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
+                            <a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                            <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+</li>
+</ul>
+<a id="getRecipe(java.lang.String,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRecipe</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;getRecipe&#8203;(java.lang.String&nbsp;id,
+                      <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+</li>
+</ul>
+<a id="updateRecipe(com.example.wellfed.recipe.Recipe,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateRecipe</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateRecipe&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                         <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)
+                  throws java.lang.InterruptedException</pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.InterruptedException</code></dd>
+</dl>
+</li>
+</ul>
+<a id="delRecipe(java.lang.String,com.example.wellfed.recipe.RecipeDB.OnRecipeDone)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>delRecipe</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;delRecipe&#8203;(java.lang.String&nbsp;id)
-               throws java.lang.InterruptedException</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;delRecipe&#8203;(java.lang.String&nbsp;id,
+                      <a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
 <div class="block">Deletes a recipe document with the id  from the collection
  of recipes</div>
 <dl>
@@ -390,65 +404,10 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="editRecipe(com.example.wellfed.recipe.Recipe)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>editRecipe</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;editRecipe&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)
-                throws java.lang.InterruptedException</pre>
-<div class="block">Updates the corresponding recipe document in the collection with the fields of the
- recipe object.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recipe</code> - A Recipe object whose changes we want to push to the collection of Recipes</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code> - If the transaction in the method was not complete</dd>
-</dl>
-</li>
-</ul>
-<a id="getRecipe(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRecipe</h4>
-<pre class="methodSignature">public&nbsp;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;getRecipe&#8203;(java.lang.String&nbsp;id)
-                 throws java.lang.InterruptedException</pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - A String with the id of the document who recipe we want</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The Recipe object that corresponds to the document in the collection
- If it does not exist then return null</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code> - If the transaction in the method was not complete</dd>
-</dl>
-</li>
-</ul>
-<a id="getRecipes()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRecipes</h4>
-<pre class="methodSignature">public&nbsp;java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;getRecipes()
-                                       throws java.lang.InterruptedException</pre>
-<div class="block">Makes an ArrayList of Recipes out of all the documents in the collection of Recipes</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>ArrayList The List of all Recipes contained in the
- database</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code> - If the transaction in the method was not complete</dd>
-</dl>
-</li>
-</ul>
 <a id="getDocumentReference(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getDocumentReference</h4>
 <pre class="methodSignature">public&nbsp;com.google.firebase.firestore.DocumentReference&nbsp;getDocumentReference&#8203;(java.lang.String&nbsp;id)</pre>
@@ -459,6 +418,24 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>DocumentReference of the Recipe</dd>
 </dl>
+</li>
+</ul>
+<a id="snapshotToRecipe(com.google.firebase.firestore.DocumentSnapshot)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>snapshotToRecipe</h4>
+<pre class="methodSignature">public&nbsp;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;snapshotToRecipe&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;doc)</pre>
+</li>
+</ul>
+<a id="getQuery()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getQuery</h4>
+<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getQuery()</pre>
 </li>
 </ul>
 </li>
@@ -512,14 +489,14 @@ extends java.lang.Object</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

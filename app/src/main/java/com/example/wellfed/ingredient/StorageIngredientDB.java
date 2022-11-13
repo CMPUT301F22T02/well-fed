@@ -1,9 +1,11 @@
 package com.example.wellfed.ingredient;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.wellfed.common.DBConnection;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,13 +26,17 @@ public class StorageIngredientDB {
      */
     private FirebaseFirestore db;
     /**
-     * Holds a reference to the StoredIngredients collection in the Firebase DB.
-     */
-    private final CollectionReference collection;
-    /**
      * Holds a reference to the IngredientDB
      */
     private final IngredientDB ingredientDB;
+    /**
+     * Holds a connection to the users ingredient collection in the DB.
+     */
+    private DBConnection ingredientsConnection;
+    /**
+     * Holds the collection for the users StoredIngredient collection in DB
+     */
+    private CollectionReference collection;
 
     /**
      * This interface is used to handle the result of
@@ -100,10 +106,11 @@ public class StorageIngredientDB {
     /**
      * Creates a reference to the Firebase DB.
      */
-    public StorageIngredientDB() {
-        this.db = FirebaseFirestore.getInstance();
-        this.collection = db.collection("StoredIngredients");
-        this.ingredientDB = new IngredientDB();
+    public StorageIngredientDB(DBConnection connection) {
+        this.ingredientsConnection = connection;
+        this.ingredientDB = new IngredientDB(connection);
+        this.db = ingredientsConnection.getDB();
+        this.collection = ingredientsConnection.getCollection("StoredIngredients");
     }
 
     /**
@@ -230,7 +237,7 @@ public class StorageIngredientDB {
                                         OnUpdateStorageIngredientListener listener) {
         WriteBatch batch = db.batch();
         DocumentReference storageIngredientRef =
-                collection.document(storageIngredient.getStorageId());
+                this.collection.document(storageIngredient.getStorageId());
         batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
         batch.update(storageIngredientRef, "amount",
                 storageIngredient.getAmount());
@@ -380,7 +387,7 @@ public class StorageIngredientDB {
      * @return DocumentReference of the Recipe
      */
     public DocumentReference getDocumentReference(String id) {
-        return collection.document(id);
+        return this.collection.document(id);
     }
 
     /**
@@ -389,7 +396,7 @@ public class StorageIngredientDB {
      * @return the query
      */
     public Query getQuery() {
-        return collection;
+        return this.collection;
         //                .orderBy("timestamp", Query.Direction.DESCENDING)
     }
 }

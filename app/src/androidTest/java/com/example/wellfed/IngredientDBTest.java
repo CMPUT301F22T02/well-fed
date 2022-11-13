@@ -11,6 +11,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import android.util.Log;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
@@ -49,7 +50,8 @@ public class IngredientDBTest {
      */
     @Before
     public void before() {
-        ingredientDB = new IngredientDB();
+        MockDBConnection connection = new MockDBConnection();
+        ingredientDB = new IngredientDB(connection);
         mockIngredient = new Ingredient("Broccoli");
         mockIngredient.setCategory("Vegetable");
         nonExistingIngredient = new Ingredient(null);
@@ -256,8 +258,8 @@ public class IngredientDBTest {
         Log.d(TAG, "get Ingredient based on category and description");
         CountDownLatch latch = new CountDownLatch(1);
         Ingredient testIngredient = new Ingredient();
-        testIngredient.setCategory("fffffffffffff");
-        testIngredient.setDescription("affffffffffff");
+        testIngredient.setCategory("Protein");
+        testIngredient.setDescription("Steak");
 
         ingredientDB.getIngredient(testIngredient,
                 (searchIngredient, getSuccess) -> {

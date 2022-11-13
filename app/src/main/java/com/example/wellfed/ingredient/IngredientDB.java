@@ -1,9 +1,11 @@
 package com.example.wellfed.ingredient;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.wellfed.common.DBConnection;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,16 +33,21 @@ public class IngredientDB {
      */
     private FirebaseFirestore db;
     /**
-     * Holds a reference to the Ingredients collection in the Firebase DB.
+     * Holds a connection to the DB.
+     */
+    private DBConnection ingredientsConnection;
+    /**
+     * Holds the collection for the users Ingredient collection in DB
      */
     private CollectionReference collection;
 
     /**
      * Constructs an IngredientDB object
      */
-    public IngredientDB() {
-        this.db = FirebaseFirestore.getInstance();
-        this.collection = db.collection("Ingredients");
+    public IngredientDB(DBConnection connection) {
+        this.ingredientsConnection = connection;
+        db = this.ingredientsConnection.getDB();
+        collection = this.ingredientsConnection.getCollection("Ingredients");
     }
 
     /**
@@ -120,7 +127,7 @@ public class IngredientDB {
         WriteBatch batch = db.batch();
 
         // add ingredient info to batch
-        String ingredientId = this.collection.document().getId();
+        String ingredientId = collection.document().getId();
         DocumentReference ingredientRef = collection.document(ingredientId);
         Map<String, Object> item = new HashMap<>();
         item.put("category", ingredient.getCategory());

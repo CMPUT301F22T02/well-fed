@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -145,6 +145,29 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
@@ -167,6 +190,11 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>(package private) <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listener">listener</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>(package private) java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipeIngredientList">recipeIngredientList</a></span></code></th>
 <td class="colLast">
@@ -193,6 +221,12 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List,int)">RecipeIngredientAdapter</a></span>&#8203;(java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;recipeIngredientList,
                        int&nbsp;layoutId)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List,int,com.example.wellfed.recipe.RecipeIngredientAdapter.OnIngredientClick)">RecipeIngredientAdapter</a></span>&#8203;(java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;recipeIngredientList,
+                       int&nbsp;layoutId,
+                       <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a>&nbsp;listener)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -278,11 +312,20 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <a id="layoutId">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>layoutId</h4>
 <pre>int layoutId</pre>
 <div class="block">layout id that specifies which layout to use</div>
+</li>
+</ul>
+<a id="listener">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>listener</h4>
+<pre><a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a> listener</pre>
 </li>
 </ul>
 </li>
@@ -295,6 +338,22 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a id="&lt;init&gt;(java.util.List,int,com.example.wellfed.recipe.RecipeIngredientAdapter.OnIngredientClick)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>RecipeIngredientAdapter</h4>
+<pre>RecipeIngredientAdapter&#8203;(java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;recipeIngredientList,
+                        int&nbsp;layoutId,
+                        <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a>&nbsp;listener)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipeIngredientList</code> - helps initialize our list</dd>
+<dd><code>layoutId</code> - id of the layout</dd>
+</dl>
+</li>
+</ul>
 <a id="&lt;init&gt;(java.util.List,int)">
 <!--   -->
 </a>
@@ -303,11 +362,6 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngr
 <h4>RecipeIngredientAdapter</h4>
 <pre>RecipeIngredientAdapter&#8203;(java.util.List&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;recipeIngredientList,
                         int&nbsp;layoutId)</pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recipeIngredientList</code> - helps initialize our list</dd>
-<dd><code>layoutId</code> - id of the layout</dd>
-</dl>
 </li>
 </ul>
 </li>
@@ -426,7 +480,7 @@ public&nbsp;<a href="RecipeIngredientViewHolder.html" title="class in com.exampl
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
