@@ -216,9 +216,10 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 	public void filter(View view) {
 		// Inflate the AlertDialog with the custom layout
 		AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-		builder.setTitle("Filter");
 		View customLayout =
 			getLayoutInflater().inflate(R.layout.ingredients_dropdown, null);
+		builder.setTitle("Filter");
+
 		builder.setView(customLayout);
 
 		MaterialTextView descriptionButton =
