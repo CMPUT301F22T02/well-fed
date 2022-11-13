@@ -92,6 +92,8 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ShoppingCartIngredient ingredient = shoppingCartIngredients.get(position);
+
+        // Allow user to change pickup status when checking or unchecking checkbox
         CheckBox checkBox = holder.checkBox;
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
