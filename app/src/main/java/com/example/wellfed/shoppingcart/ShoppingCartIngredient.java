@@ -14,6 +14,8 @@ package com.example.wellfed.shoppingcart;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.shoppingcart.ShoppingCart;
 
+import java.util.Comparator;
+
 /**
  * This class represents a ShoppingCartIngredient, which are Ingredients that can be added to a
  * ShoppingCart.
@@ -21,7 +23,7 @@ import com.example.wellfed.shoppingcart.ShoppingCart;
  * @version 1.0
  * @see ShoppingCart
  */
-public class ShoppingCartIngredient extends Ingredient {
+public class ShoppingCartIngredient extends Ingredient implements Comparable<ShoppingCartIngredient> {
     /**
      * Holds whether the ShoppingCartIngredient has been picked up.
      */
@@ -73,5 +75,10 @@ public class ShoppingCartIngredient extends Ingredient {
      */
     public void setComplete(boolean complete) {
         isComplete = complete;
+    }
+
+    @Override
+    public int compareTo(ShoppingCartIngredient i) {
+        return (this.getDescription()).compareTo(i.getDescription());
     }
 }

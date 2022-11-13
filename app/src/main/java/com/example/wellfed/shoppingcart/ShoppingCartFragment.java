@@ -2,12 +2,16 @@ package com.example.wellfed.shoppingcart;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,8 +21,10 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class ShoppingCartFragment extends Fragment implements Launcher {
+public class ShoppingCartFragment extends Fragment implements Launcher,
+        PopupMenu.OnMenuItemClickListener {
     /**
      * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
      */
@@ -126,7 +132,7 @@ public class ShoppingCartFragment extends Fragment implements Launcher {
         ShoppingCartIngredient ingredient;
 
         ingredient = new ShoppingCartIngredient("Banana");
-        ingredient.setCategory("Fruit");
+        ingredient.setCategory("fruit");
         ingredient.setUnit("lb(s)");
         ingredient.setAmount(1.3d);
         shoppingCart.addIngredient(ingredient);
@@ -138,7 +144,7 @@ public class ShoppingCartFragment extends Fragment implements Launcher {
         shoppingCart.addIngredient(ingredient);
 
         ingredient = new ShoppingCartIngredient("Juice");
-        ingredient.setCategory("Beverage");
+        ingredient.setCategory("beverage");
         ingredient.setUnit("L(s)");
         ingredient.setAmount(1.5d);
         shoppingCart.addIngredient(ingredient);
@@ -150,6 +156,15 @@ public class ShoppingCartFragment extends Fragment implements Launcher {
         shoppingCartIngredientController.setAdapter(shoppingCartIngredientAdapter);
         recyclerView.setAdapter(shoppingCartIngredientAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
+
+        // create listener for dropdown button
+        ImageFilterButton btn = view.findViewById(R.id.shopping_cart_filter_button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDropDown(view);
+            }
+        });
     }
 
     /**
@@ -179,4 +194,38 @@ public class ShoppingCartFragment extends Fragment implements Launcher {
 //    public CreationExtras getDefaultViewModelCreationExtras() {
 //        return super.getDefaultViewModelCreationExtras();
 //    }
+
+    // show dropdown menu when button is clicked
+    public void showDropDown(View v) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.shopping_cart_dropdown);
+        popupMenu.show();
+    }
+
+    // Define behavior for each option in dropdown menu
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.description:
+                // sort the ingredients
+                Collections.sort(shoppingCart.getIngredients());
+
+                // set adapter
+                shoppingCartIngredientAdapter = new ShoppingCartIngredientAdapter(
+                        shoppingCart.getIngredients(), this);
+                shoppingCartIngredientController.setIngredients(shoppingCart.getIngredients());
+                shoppingCartIngredientController.setAdapter(shoppingCartIngredientAdapter);
+                recyclerView.setAdapter(shoppingCartIngredientAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
+
+                Toast.makeText(getContext(), "Sort By Description", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.category:
+                Toast.makeText(getContext(), "Category", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return false;
+        }
+    }
 }
