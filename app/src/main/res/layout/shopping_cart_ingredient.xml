@@ -9,7 +9,7 @@
         android:id="@+id/shopping_cart_ingredient_description"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="74dp"
         android:layout_marginTop="8dp"
         android:gravity="bottom"
         android:text="Description"
@@ -23,7 +23,7 @@
         android:id="@+id/shopping_cart_ingredient_subtext"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="74dp"
         android:layout_marginBottom="10dp"
         android:gravity="top"
         android:text="@string/ingredient_subtext"
@@ -32,5 +32,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shopping_cart_ingredient_description"
         app:layout_constraintVertical_bias="0.0" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="29dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
