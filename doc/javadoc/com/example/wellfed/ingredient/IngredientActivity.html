@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -308,20 +308,13 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <div class="block">onEdit method for the activity.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onPointerCaptureChanged(boolean)">onPointerCaptureChanged</a></span>&#8203;(boolean&nbsp;hasCapture)</code></th>
-<td class="colLast">
-<div class="block">onPointerCaputerChanged method for the activity.</div>
-</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.ActivityBase">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.<a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a></h3>
-<code><a href="../ActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></code></li>
+<code><a href="../ActivityBase.html#makeSnackbar(java.lang.String)">makeSnackbar</a>, <a href="../ActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.androidx.appcompat.app.AppCompatActivity">
@@ -386,6 +379,13 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.android.view.Window.Callback">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;android.view.Window.Callback</h3>
+<code>onPointerCaptureChanged</code></li>
+</ul>
 </li>
 </ul>
 </section>
@@ -444,7 +444,8 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <li class="blockList">
 <h4>onBackPressed</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onBackPressed()</pre>
-<div class="block">onBackButtonPressed method for the activity. This method is called when the back button is pressed.</div>
+<div class="block">onBackButtonPressed method for the activity. This method is called
+ when the back button is pressed.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onBackPressed</code>&nbsp;in class&nbsp;<code>androidx.activity.ComponentActivity</code></dd>
@@ -458,7 +459,8 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <li class="blockList">
 <h4>onEdit</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onEdit&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;ingredient)</pre>
-<div class="block">onEdit method for the activity. This method is called when the user edits an ingredient.</div>
+<div class="block">onEdit method for the activity. This method is called when the user
+ edits an ingredient.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>ingredient</code> - </dd>
@@ -474,7 +476,8 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <pre class="methodSignature">protected&nbsp;void&nbsp;onActivityResult&#8203;(int&nbsp;requestCode,
                                 int&nbsp;resultCode,
                                 android.content.Intent&nbsp;data)</pre>
-<div class="block">onActivityResults method for the activity. This method is called when the user confirms the delete action.</div>
+<div class="block">onActivityResults method for the activity. This method is called when
+ the user confirms the delete action.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onActivityResult</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
@@ -485,20 +488,6 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 </dl>
 </li>
 </ul>
-<a id="onPointerCaptureChanged(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>onPointerCaptureChanged</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onPointerCaptureChanged&#8203;(boolean&nbsp;hasCapture)</pre>
-<div class="block">onPointerCaputerChanged method for the activity. This method is called when the user confirms the delete action.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>onPointerCaptureChanged</code>&nbsp;in interface&nbsp;<code>android.view.Window.Callback</code></dd>
-</dl>
-</li>
-</ul>
 <a id="onConfirm()">
 <!--   -->
 </a>
@@ -506,7 +495,8 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <li class="blockList">
 <h4>onConfirm</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onConfirm()</pre>
-<div class="block">onConfirm method for the activity. This method is called when the user confirms the delete action.</div>
+<div class="block">onConfirm method for the activity. This method is called when the user
+ confirms the delete action.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code>&nbsp;in interface&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>

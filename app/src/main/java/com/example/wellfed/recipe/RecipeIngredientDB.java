@@ -288,7 +288,7 @@ public class RecipeIngredientDB {
         readIngredient.await();
 
         recipeIngredient.setId(id);
-        recipeIngredient.setAmount(Objects.requireNonNull(recipeIngredientSnapshot[0].getDouble("amount")).floatValue());
+        recipeIngredient.setAmount(Objects.requireNonNull(recipeIngredientSnapshot[0].getDouble("amount")).doubleValue());
         recipeIngredient.setDescription(Objects.requireNonNull(ingredientSnapshot[0].getString("description")));
         recipeIngredient.setUnit(Objects.requireNonNull(recipeIngredientSnapshot[0].getString("unit")));
         recipeIngredient.setCategory((String) Objects.requireNonNull(ingredientSnapshot[0].getString("category")));

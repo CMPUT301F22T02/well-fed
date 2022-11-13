@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // todo create sample data for recipes
 // todo setup recipe edit button
@@ -33,7 +35,7 @@ import java.util.ArrayList;
  *
  * @version 1.0.0
  */
-public class RecipeBookFragment extends Fragment implements Launcher {
+public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdapter.RecipeLauncher {
     /**
      * Recipes contains a list of Recipes {@link Recipe}
      */
@@ -42,11 +44,6 @@ public class RecipeBookFragment extends Fragment implements Launcher {
      * Stores the value of selected recipe in recipes
      */
     private int selected;
-    /**
-     * Instance of FirebaseFirestore {@link FirebaseFirestore}
-     */
-    private FirebaseFirestore db;
-
 
     /**
      * Controller class that handles the business logic for recipes
@@ -57,6 +54,8 @@ public class RecipeBookFragment extends Fragment implements Launcher {
      * Adapter for list of recipes
      */
     RecipeAdapter adapter;
+
+    RecipeDB recipeDB;
 
     /**
      * Launcher that launches an RecipeActivity {@link RecipeActivity}
@@ -70,33 +69,14 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                         Recipe recipe = result.second;
                         switch (type) {
                             case "delete":
-                                new DeleteRecipeTask().execute(recipe);
-                                break;
+                                recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success) -> {
+                                    deletedRecipe.setId("");
+                                });
                             default:
                                 new IllegalArgumentException();
                         }
                     }
             );
-
-    /**
-     * Asynchronous task to delete a recipe in the bg
-     */
-    private class DeleteRecipeTask extends
-            AsyncTask<Recipe, Void, Recipe> {
-        protected Recipe doInBackground(Recipe... recipes) {
-            for (Recipe recipe : recipes) {
-                RecipeBookFragment.this.recipeController.deleteRecipe(recipe.getId());
-                return recipe;
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Recipe recipe) {
-            RecipeBookFragment.this.recipes.remove(recipe);
-            RecipeBookFragment.this.adapter.notifyDataSetChanged();
-        }
-    }
-
     /**
      * Launcher that launches RecipeEditActivity {@link RecipeEditActivity}
      */
@@ -109,7 +89,19 @@ public class RecipeBookFragment extends Fragment implements Launcher {
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        new AddRecipeTask().execute(recipe);
+                        DBConnection connection = new DBConnection(requireContext().getApplicationContext());
+                        RecipeDB recipeDB = new RecipeDB(connection);
+                        try {
+                            recipeDB.addRecipe(recipe, (a, b) -> {
+                            });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "edit":
+                        break;
+                    default:
+                        break;
                 }
                 return;
             }
@@ -121,7 +113,7 @@ public class RecipeBookFragment extends Fragment implements Launcher {
      * initializes the variables such as
      * recipes {@link RecipeBookFragment#recipes}
      * recipeController {@link RecipeBookFragment#recipeController}
-     * db {@link RecipeBookFragment#db}
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -132,54 +124,15 @@ public class RecipeBookFragment extends Fragment implements Launcher {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
-        recipeController = new RecipeController();
-        db = FirebaseFirestore.getInstance();
-
+        recipeController = new RecipeController(getContext().getApplicationContext());
+        DBConnection connection = new DBConnection(getContext().getApplicationContext());
+        recipeDB = new RecipeDB(connection);
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
     /**
-     * Asynchronous task to add recipe to db in the bg
-     */
-    private class AddRecipeTask extends
-            AsyncTask<Recipe, Void, Recipe> {
-        protected Recipe doInBackground(Recipe... recipes) {
-            for (Recipe recipe : recipes) {
-                RecipeBookFragment.this.recipeController.addRecipe(recipe);
-                return recipe;
-            }
-            return null;
-        }
-
-        protected void onPostExecute(Recipe recipe) {
-            RecipeBookFragment.this.recipes.add(recipe);
-            RecipeBookFragment.this.adapter.notifyDataSetChanged();
-        }
-    }
-
-    /**
-     * Asynchronous task that gets list of recipes in the bg
-     */
-    protected class GetRecipesTask extends
-            AsyncTask<Void, Void, ArrayList<Recipe>> {
-        protected ArrayList<Recipe> doInBackground(Void... voids) {
-            try {
-                return RecipeBookFragment.this.recipeController.getRecipes();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        protected void onPostExecute(ArrayList<Recipe> recipes) {
-            RecipeBookFragment.this.recipes.clear();
-            RecipeBookFragment.this.recipes.addAll(recipes);
-            RecipeBookFragment.this.adapter.notifyDataSetChanged();
-        }
-    }
-
-    /**
      * method that is called when the view is created
+     *
      * @param view
      * @param savedInstanceState
      */
@@ -189,13 +142,13 @@ public class RecipeBookFragment extends Fragment implements Launcher {
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
 
-        adapter = new RecipeAdapter(getActivity(), recipes, this);
+        adapter = new RecipeAdapter(recipeDB);
+        adapter.setRecipeLauncher(this);
         recipeController.setRecipes(recipes);
         recipeController.setRecipeAdapter(adapter);
         rvRecipes.setAdapter(adapter);
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        new GetRecipesTask().execute();
     }
 
     /**
@@ -206,14 +159,17 @@ public class RecipeBookFragment extends Fragment implements Launcher {
         recipeEditLauncher.launch(null);
     }
 
+    @Override
+    public void launch(int pos) {
+
+    }
+
     /**
      * launches activity for a Recipe{@link Recipe} in
      * the recipes at pos.
-     * @param pos
      */
     @Override
-    public void launch(int pos) {
-        selected = pos;
-        recipeLauncher.launch(recipes.get(pos));
+    public void launch(Recipe recipe) {
+        recipeLauncher.launch(recipe);
     }
 }

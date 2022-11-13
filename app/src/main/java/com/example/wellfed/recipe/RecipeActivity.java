@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
 import com.squareup.picasso.Picasso;
@@ -22,6 +23,7 @@ import java.util.List;
 
 /**
  * Activity that holds the view for Recipe showing all it's detail
+ *
  * @version 1.0.0
  */
 public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConfirmListener {
@@ -47,6 +49,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
     /**
      * method that is called when the activity is created
+     *
      * @param savedInstanceState
      */
     @Override
@@ -65,25 +68,35 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
         recipe = (Recipe) intent.getSerializableExtra("Recipe");
 
-        // add ingredients to the recipe
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            ingredientList.add(ingredient);
-        }
-
         // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
         TextView prepTime = findViewById(R.id.recipe_prep_time_textView);
         TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
         TextView category = findViewById(R.id.recipe_category);
+        TextView description = findViewById(R.id.recipe_description_textView);
         ImageView img = findViewById(R.id.recipe_img);
-        title.setText(recipe.getTitle());
-        prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
-        servings.setText("Servings: " + Integer.toString(recipe.getServings()));
-        category.setText("Category: " + recipe.getCategory());
-        Picasso.get()
-                .load(recipe.getPhotograph())
-                .rotate(90)
-                .into(img);
+
+        DBConnection connection = new DBConnection(getApplicationContext());
+        RecipeDB recipeDB = new RecipeDB(connection);
+        recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
+            recipe = foundRecipe;
+            title.setText(recipe.getTitle());
+            prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+            servings.setText("Servings: " + Integer.toString(recipe.getServings()));
+            category.setText("Category: " + recipe.getCategory());
+            description.setText(recipe.getComments());
+
+            Picasso.get()
+                    .load(recipe.getPhotograph())
+                    .rotate(90)
+                    .into(img);
+            // add ingredients to the recipe
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                ingredientList.add(ingredient);
+                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
+            }
+        });
+
 
         // ingredient recycle view
         ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
