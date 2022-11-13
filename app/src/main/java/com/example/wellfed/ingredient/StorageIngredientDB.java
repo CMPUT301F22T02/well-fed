@@ -152,11 +152,11 @@ public class StorageIngredientDB {
     }
 
     /**
-     * todo
+     * Adds a StorageIngredient to the StorageIngredientDB
      *
-     * @param storageIngredient
-     * @param ingredient
-     * @param listener
+     * @param storageIngredient The StorageIngredient to add to the DB
+     * @param ingredient        The Ingredient associated with the StorageIngredient to add to the DB
+     * @param listener          The Listener for when a StorageIngredient is added
      */
     private void addStorageIngredient(StorageIngredient storageIngredient,
                                       Ingredient ingredient,
