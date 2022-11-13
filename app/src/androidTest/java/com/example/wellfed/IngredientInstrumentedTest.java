@@ -54,11 +54,11 @@ public class IngredientInstrumentedTest {
     /**
      * Performs all of the actions needed to type a complete ingredient.
      */
-    private void typeMockIngredient() {
+    private void typeMockIngredient(String description) {
         // typing description input
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withId(R.id.descriptionInputEditText)).perform(typeText("Ground Beef"));
+        onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
         closeSoftKeyboard();
 
         // typing best before input - this should get current day as best before
@@ -90,12 +90,12 @@ public class IngredientInstrumentedTest {
     /**
      * Checks whether the mock ingredient is present in the recyclerview.
      */
-    private void checkIngredientPresent() {
+    private void checkIngredientPresent(String description) {
         // finding the ingredient in the RecyclerView
-        onView(withText("Ground Beef")).perform(click());
+        onView(withText(description)).perform(click());
 
         // checking the correctness of the ingredient by seeing if all text is visible
-        onView(withText("Ground Beef")).check(ViewAssertions
+        onView(withText(description)).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Meat")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -113,7 +113,7 @@ public class IngredientInstrumentedTest {
      * Performs all of the actions needed to add an ingredient.
      */
     private void addMockIngredient() throws InterruptedException {
-        typeMockIngredient();
+        typeMockIngredient("Ground Beef");
 
         // saving input
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -132,7 +132,40 @@ public class IngredientInstrumentedTest {
         addMockIngredient();
 
         // making sure it is visible
-        checkIngredientPresent();
+        checkIngredientPresent("Ground Beef");
+    }
+
+    /**
+     * Tests adding and viewing a list of multiple Ingredients
+     */
+    @Test
+    public void testViewMultipleIngredients() throws InterruptedException {
+        // adding the mock ingredient
+        String ingredient1 = "Ground Beef";
+        String ingredient2 = "Ground Chicken";
+        String ingredient3 = "Whole Turkey";
+
+        typeMockIngredient(ingredient1);
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        typeMockIngredient(ingredient2);
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        typeMockIngredient(ingredient3);
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        // making sure it is visible
+        Thread.sleep(2000);
+        onView(withText(ingredient1)).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText(ingredient2)).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText(ingredient3)).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        checkIngredientPresent(ingredient1);
+        checkIngredientPresent(ingredient2);
+        checkIngredientPresent(ingredient3);
     }
 
     /**
@@ -140,7 +173,7 @@ public class IngredientInstrumentedTest {
      */
     @Test
     public void testIncompleteMessages() {
-        typeMockIngredient();
+        typeMockIngredient("Ground Beef");
 
         // testing the description error message
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
@@ -265,7 +298,7 @@ public class IngredientInstrumentedTest {
     @Test
     public void testCancelConfirmationMessageAdd() {
         // testing adding and then exiting
-        typeMockIngredient();
+        typeMockIngredient("Ground Beef");
         pressBack();
         pressBack();
 
@@ -282,7 +315,7 @@ public class IngredientInstrumentedTest {
     @Test
     public void testExitAdd() throws InterruptedException {
         // testing adding and then exiting
-        typeMockIngredient();
+        typeMockIngredient("Ground Beef");
         pressBack();
         pressBack();
 
@@ -297,14 +330,14 @@ public class IngredientInstrumentedTest {
     @Test
     public void testCancelExitAdd() throws InterruptedException {
         // cancelling and saving what we have
-        typeMockIngredient();
+        typeMockIngredient("Ground Beef");
         pressBack();
         pressBack();
         onView(withText("Cancel")).perform(click());
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         Thread.sleep(2000);
-        checkIngredientPresent();
+        checkIngredientPresent("Ground Beef");
     }
 
     /**
@@ -367,7 +400,7 @@ public class IngredientInstrumentedTest {
         onView(withText("Quit")).perform(click());
         onView(withText("Ground Beef")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        checkIngredientPresent();
+        checkIngredientPresent("Ground Beef");
 
     }
 
