@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -53,12 +55,14 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView description;
         public TextView subtext;
+        public CheckBox checkBox;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             description = itemView.findViewById(R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(R.id.shopping_cart_ingredient_subtext);
+            checkBox = itemView.findViewById(R.id.checkBox);
         }
     }
 
@@ -88,13 +92,27 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ShoppingCartIngredient ingredient = shoppingCartIngredients.get(position);
+        CheckBox checkBox = holder.checkBox;
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkBox.isChecked()) {
+                    ingredient.setPickedUp(true);
+                    Toast.makeText(context.getContext(), "Picked up status set to " + String.valueOf(ingredient.isPickedUp), Toast.LENGTH_LONG).show();
+                } else {
+                    ingredient.setPickedUp(false);
+                    Toast.makeText(context.getContext(), "Picked up status set to " + String.valueOf(ingredient.isPickedUp), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         holder.description.setText(ingredient.getDescription());
         holder.subtext.setText(String.valueOf(ingredient.getAmount()) + " " +
                 ingredient.getUnit() + " | " + ingredient.getCategory());
 
 //        holder.itemView.setOnClickListener(v -> shoppingCartIngredientLauncher.launch(position));
-        holder.itemView.setOnClickListener(view -> context.launch(holder.getAdapterPosition()));
+//        holder.itemView.setOnClickListener(view -> context.launch(holder.getAdapterPosition()));
+        holder.itemView.setOnClickListener(view -> context.launch(position));
     }
 
     /**
