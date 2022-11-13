@@ -92,7 +92,7 @@ public class ShoppingCartIngredientActivity extends ActivityBase implements
 
         // Set delete button
         DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.shopping_cart_ingredient_delete_button),
-                "Delete" + "ingredient?", this);
+                "Delete " + "ingredient?", this);
 
         // Set edit button
         FloatingActionButton editButton = findViewById(R.id.shopping_cart_ingredient_edit_button);
@@ -104,22 +104,23 @@ public class ShoppingCartIngredientActivity extends ActivityBase implements
     /**
      * onBackButtonPressed method for the activity. This method is called when the back button is pressed.
      */
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("ingredient", shoppingCartIngredient);
-        intent.putExtra("type", "back");
-        setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent();
+//        intent.putExtra("ingredient", shoppingCartIngredient);
+//        intent.putExtra("type", "back");
+//        setResult(Activity.RESULT_OK, intent);
+//        finish();
+//    }
 
     /**
      * onConfirm method for the activity. This method is called when the user confirms the delete action.
      */
-    private void onQuitEdit() {
+    @Override
+    public void onConfirm() {
         Intent intent = new Intent();
-        intent.putExtra("ingredient", shoppingCartIngredient);
-        intent.putExtra("type", "quit");
+//        intent.putExtra("ingredient", shoppingCartIngredient);
+        intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
@@ -133,6 +134,17 @@ public class ShoppingCartIngredientActivity extends ActivityBase implements
         Intent intent = new Intent();
         intent.putExtra("ingredient", shoppingCartIngredient);
         intent.putExtra("type", "edit");
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * onConfirm method for the activity. This method is called when the user quits edit activity.
+     */
+    private void onQuitEdit() {
+        Intent intent = new Intent();
+//        intent.putExtra("ingredient", shoppingCartIngredient);
+        intent.putExtra("type", "launch");
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
@@ -156,20 +168,8 @@ public class ShoppingCartIngredientActivity extends ActivityBase implements
     /**
      * onPointerCaptureChanged method for the activity. This method is called when the user confirms the delete action.
      */
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
-
-    /**
-     * onConfirm method for the activity. This method is called when the user confirms the delete action.
-     */
-    @Override
-    public void onConfirm() {
-        Intent intent = new Intent();
-        intent.putExtra("ingredient", shoppingCartIngredient);
-        intent.putExtra("type", "delete");
-        setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
+//    @Override
+//    public void onPointerCaptureChanged(boolean hasCapture) {
+//        super.onPointerCaptureChanged(hasCapture);
+//    }
 }

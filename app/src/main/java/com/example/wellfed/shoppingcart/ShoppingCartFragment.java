@@ -18,7 +18,7 @@ import com.example.wellfed.common.Launcher;
 
 import java.util.ArrayList;
 
-public class ShoppingCartFragment extends Fragment implements ShoppingCartIngredientAdapter.ShoppingCartIngredientLauncher, Launcher {
+public class ShoppingCartFragment extends Fragment implements Launcher {
     /**
      * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
      */
@@ -42,11 +42,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
     int position;
 
     /**
-     * ActivityResultLauncher for the ShoppingCartIngredientEditActivity to edit an ingredient.
+     * ActivityResultLauncher is a launcher for the ShoppingCartIngredientActivity.
      * The result is a ShoppingCartIngredient.
      * The result is null if the user cancels the edit.
      */
-    ActivityResultLauncher<ShoppingCartIngredient> shoppingCartIngredientLauncher = registerForActivityResult(new ShoppingCartIngredientContract(), result -> {
+    ActivityResultLauncher<ShoppingCartIngredient> shoppingCartIngredientLauncher =
+            registerForActivityResult(new ShoppingCartIngredientContract(), result -> {
         if (result == null) {
             return;
         }
@@ -55,24 +56,27 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
         switch (type) {
             case "delete":
                 shoppingCartIngredientController.deleteIngredient(position);
-                shoppingCartIngredientAdapter.notifyItemRangeChanged(position,
-                        shoppingCart.getIngredients().size());
+//                shoppingCartIngredientAdapter.notifyItemRangeChanged(position,
+//                        shoppingCart.getIngredients().size());
                 break;
             case "edit":
                 shoppingCartIngredientController.updateIngredient(position, shoppingCartIngredient);
                 break;
-            default:
+            case "launch":
+                launch(position);
                 break;
+            default:
+                throw new IllegalArgumentException();
         }
     });
 
     /**
-     * ActivityResultLauncher for the ShoppingCartIngredientAddActivity
-     * to add an ingredient. The result is a ShoppingCartIngredient.
+     * ActivityResultLauncher for the ShoppingCartIngredientEditActivity
+     * to edit an ingredient. The result is a ShoppingCartIngredient.
      * The result is null if the user cancels the add.
      */
-    ActivityResultLauncher<ShoppingCartIngredient> addShoppingCartIngredientLauncher = registerForActivityResult(
-            new ShoppingCartIngredientEditContract(), result -> {
+    ActivityResultLauncher<ShoppingCartIngredient> editShoppingCartIngredientLauncher =
+            registerForActivityResult(new ShoppingCartIngredientEditContract(), result -> {
                 if (result == null) {
                     return;
                 }
@@ -149,7 +153,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
     }
 
     /**
-     * Launches the ShoppingCartIngredientEditActivity to edit an ingredient.
+     * Launches the ShoppingCartIngredientActivity.
      * @param pos The position of the ingredient in the list.
      */
     @Override
@@ -159,20 +163,20 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartIngred
     }
 
     /**
-     * Launches the ShoppingCartIngredientAddActivity to add an ingredient.
+     * Launches the ShoppingCartIngredientEditActivity to edit an ingredient.
      */
     @Override
     public void launch() {
-        addShoppingCartIngredientLauncher.launch(null);
+        editShoppingCartIngredientLauncher.launch(null);
     }
 
     /**
      * getDefaultViewModelProviderFactory method for the ShoppingCartFragment.
      * @return A default ViewModelProviderFactory.
      */
-    @NonNull
-    @Override
-    public CreationExtras getDefaultViewModelCreationExtras() {
-        return super.getDefaultViewModelCreationExtras();
-    }
+//    @NonNull
+//    @Override
+//    public CreationExtras getDefaultViewModelCreationExtras() {
+//        return super.getDefaultViewModelCreationExtras();
+//    }
 }

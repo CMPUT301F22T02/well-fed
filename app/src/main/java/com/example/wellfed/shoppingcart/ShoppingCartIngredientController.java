@@ -48,16 +48,18 @@ public class ShoppingCartIngredientController {
      * @param ingredient An ShoppingCartIngredient object to add
      */
     public void addIngredient(ShoppingCartIngredient ingredient) {
-        if (ingredient != null) {
-            if (!ingredients.contains(ingredient)) {
-                ingredients.add(ingredient);
-                adapter.notifyItemInserted(ingredients.size() - 1);
-            } else {
-                int index = ingredients.indexOf(ingredient);
-                ingredients.set(index, ingredient);
-                adapter.notifyItemChanged(index);
-            }
-        }
+//        if (ingredient != null) {
+//            if (!ingredients.contains(ingredient)) {
+//                ingredients.add(ingredient);
+//                adapter.notifyItemInserted(ingredients.size() - 1);
+//            } else {
+//                int index = ingredients.indexOf(ingredient);
+//                ingredients.set(index, ingredient);
+//                adapter.notifyItemChanged(index);
+//            }
+//        }
+        ingredients.add(ingredient);
+        adapter.notifyItemInserted(ingredients.size()-1);
     }
 
     /**
@@ -79,7 +81,7 @@ public class ShoppingCartIngredientController {
     }
 
     /**
-     * Mehtod overloading. Update the ingredient.
+     * Method overloading. Update the ingredient.
      * @param ingredient the ingredient to update
      */
     public void updateIngredient(ShoppingCartIngredient ingredient){
@@ -88,6 +90,11 @@ public class ShoppingCartIngredientController {
             ingredients.set(position, ingredient);
             adapter.notifyItemChanged(position);
         }
+    }
+
+    public void editIngredient(int position, ShoppingCartIngredient modifiedIngredient) {
+        ingredients.set(position, modifiedIngredient);
+        adapter.notifyItemChanged(position);
     }
 
     /**

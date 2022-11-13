@@ -22,14 +22,16 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     /**
      * ShoppingCartIngredientLauncher object for the adapter.
      */
-    private ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
+//    private ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
+
+    private ShoppingCartFragment context;
 
     /**
      * Constructor for the launcher.
      */
-    public interface ShoppingCartIngredientLauncher {
-        public void launch(int pos);
-    }
+//    public interface ShoppingCartIngredientLauncher {
+//        public void launch(int pos);
+//    }
 
     /**
      * Constructor for the IngredientAdapter.
@@ -39,7 +41,8 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> shoppingCartIngredients,
                                          ShoppingCartFragment shoppingCartFragment) {
         this.shoppingCartIngredients = shoppingCartIngredients;
-        this.shoppingCartIngredientLauncher = shoppingCartFragment;
+//        this.shoppingCartIngredientLauncher = shoppingCartFragment;
+        this.context = shoppingCartFragment;
     }
 
     /**
@@ -90,7 +93,8 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         holder.subtext.setText(String.valueOf(ingredient.getAmount()) + " " +
                 ingredient.getUnit() + " | " + ingredient.getCategory());
 
-        holder.itemView.setOnClickListener(v -> shoppingCartIngredientLauncher.launch(position));
+//        holder.itemView.setOnClickListener(v -> shoppingCartIngredientLauncher.launch(position));
+        holder.itemView.setOnClickListener(view -> context.launch(holder.getAdapterPosition()));
     }
 
     /**

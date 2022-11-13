@@ -3,18 +3,22 @@ package com.example.wellfed.shoppingcart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.ConfirmQuitDialog;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
-public class ShoppingCartIngredientEditActivity extends AppCompatActivity implements ConfirmDialog.OnConfirmListener {
+public class ShoppingCartIngredientEditActivity extends ActivityBase
+        implements ConfirmDialog.OnConfirmListener {
     /**
      * EditText for the ingredient's description.
      */
@@ -40,6 +44,8 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
      */
     private ShoppingCartIngredient shoppingCartIngredient;
 
+    private ConfirmQuitDialog confirmQuitDialog;
+
     /**
      * OnCreate method for the activity.
      * @param savedInstanceState Bundle object for the activity.
@@ -49,6 +55,8 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.edit_shopping_cart_ingredient);
+
+        confirmQuitDialog = new ConfirmQuitDialog(this, this);
 
         description = findViewById(R.id.shopping_cart_ingredient_description);
         amount = findViewById(R.id.shopping_cart_ingredient_amount);
@@ -104,6 +112,10 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
 
         // Check if it's an add or edit op
         boolean flag = (shoppingCartIngredient == null);
+        // Initialize object if it's an add op
+        if (flag) {
+            shoppingCartIngredient = new ShoppingCartIngredient("");
+        }
         shoppingCartIngredient.setDescription(description.getText().toString());
         shoppingCartIngredient.setCategory(category.getText().toString());
         shoppingCartIngredient.setAmount(Float.parseFloat(amount.getText().toString()));
@@ -126,11 +138,22 @@ public class ShoppingCartIngredientEditActivity extends AppCompatActivity implem
      */
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("type", "back");
-        intent.putExtra("ingredient", shoppingCartIngredient);
-        setResult(Activity.RESULT_OK, intent);
-        finish();
+//        Intent intent = new Intent();
+//        intent.putExtra("type", "back");
+//        intent.putExtra("ingredient", shoppingCartIngredient);
+//        setResult(Activity.RESULT_OK, intent);
+//        finish();
+        confirmQuitDialog.show();
+        super.onBackPressed();
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            confirmQuitDialog.show();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
