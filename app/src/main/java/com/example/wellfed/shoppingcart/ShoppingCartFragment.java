@@ -27,7 +27,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class ShoppingCartFragment extends Fragment implements
+        PopupMenu.OnMenuItemClickListener, ShoppingCartDialog.OnFragmentInteractionListener {
     /**
      * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
      */
@@ -182,5 +183,14 @@ public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuIt
         ingredient.setAmount(1.3d);
         ingredient.setPickedUp(false);
         shoppingCart.addIngredient(ingredient);
+    }
+
+    @Override
+    public void onCompletePressed(ShoppingCartIngredient shoppingCartIngredient) {
+        // TODO: add ingredient to ingredient storage
+    }
+
+    public void launch(ShoppingCartIngredient ingredient) {
+        ShoppingCartDialog.newInstance(ingredient).show(getActivity().getSupportFragmentManager(), "COMPLETE_DETAILS");
     }
 }
