@@ -258,8 +258,8 @@ public class IngredientDBTest {
         Log.d(TAG, "get Ingredient based on category and description");
         CountDownLatch latch = new CountDownLatch(1);
         Ingredient testIngredient = new Ingredient();
-        testIngredient.setCategory("fffffffffffff");
-        testIngredient.setDescription("affffffffffff");
+        testIngredient.setCategory("Protein");
+        testIngredient.setDescription("Steak");
 
         ingredientDB.getIngredient(testIngredient,
                 (searchIngredient, getSuccess) -> {

@@ -16,6 +16,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
+/**
+ * The activity that represents editing an Ingredient.
+ */
 public class IngredientEditActivity extends EditActivityBase
         implements ConfirmDialog.OnConfirmListener {
     /**
@@ -48,7 +51,8 @@ public class IngredientEditActivity extends EditActivityBase
     private StorageIngredient ingredient;
 
     /**
-     * OnCreate method for the activity.
+     * OnCreate method for the IngredientEdit activity. Is called when the activity is created.
+     *
      * @param savedInstanceState Bundle object for the activity.
      */
     @Override
@@ -100,7 +104,8 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * checks if there are unsaved changes
+     * Checks if there are any unsaved changes
+     *
      * @return true if there are unsaved changes, false otherwise
      */
     public Boolean hasUnsavedChanges() {
@@ -123,7 +128,7 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * Method to save the ingredient.
+     * Saves the ingredient.
      */
     private void onSave() {
         // Verify that all fields are filled

@@ -9,6 +9,9 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * A contract for creating intents to view an Ingredient, and results of intents.
+ */
 public class IngredientContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
     /**
      * Creates an Intent for the IngredientEditActivity.
