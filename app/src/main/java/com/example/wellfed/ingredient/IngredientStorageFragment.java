@@ -148,10 +148,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				controller.getQueriedResults(s.toString());
-				StorageIngredientAdapter adapter = controller.getAdapter();
-				adapter.setOnItemClickListener(IngredientStorageFragment.this);
-				recyclerView.setAdapter(adapter);
+				controller.getSearchResults(s.toString());
 			}
 
 			@Override

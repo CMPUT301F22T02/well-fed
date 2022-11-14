@@ -19,6 +19,11 @@ public class IngredientStorageController {
 	 * the DB of ingredients
 	 */
 	private final StorageIngredientDB db;
+	/**
+	 * The Field that is currently being sorted by
+	 */
+	private String currentField = "description";
+
 
 	/**
 	 * Creates ingredients list that represents an empty food storage.
@@ -30,6 +35,7 @@ public class IngredientStorageController {
 		DBConnection connection = new DBConnection(activity.getApplicationContext());
 		db = new StorageIngredientDB(connection);
 		adapter = new StorageIngredientAdapter(db);
+		getSortedResults(currentField, true);
 	}
 
 	/**
@@ -56,6 +62,7 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Deleted " + deleteStorageIngredient.getDescription());
 			}
 		}));
+		getSortedResults(currentField, true);
 
 	}
 
@@ -70,6 +77,7 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Failed to add " + addIngredient.getDescription());
 			} else {
 				this.activity.makeSnackbar("Added " + addIngredient.getDescription());
+				getSortedResults(currentField, true);
 			}
 		});
 	}
@@ -86,22 +94,9 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Failed to update " + updateIngredient.getDescription());
 			} else {
 				this.activity.makeSnackbar("Updated " + updateIngredient.getDescription());
+				getSortedResults(currentField, true);
 			}
 		});
-	}
-
-	/**
-	 * Gets queried results from DB and updates adapter
-	 *
-	 * @param query the query to search for
-	 * @return the queried results
-	 */
-	public void getQueriedResults(String query) {
-		if (query == null || query.isEmpty()) {
-			adapter = new StorageIngredientAdapter(db);
-		} else {
-			adapter = new StorageIngredientAdapter(query, db);
-		}
 	}
 
 	/**
@@ -114,6 +109,21 @@ public class IngredientStorageController {
 	 * @return the DB of ingredients
 	 */
 	public void getSortedResults(String field, boolean ascending) {
+		this.currentField = field;
 		adapter.sortString(field, ascending);
+	}
+
+	/**
+	 * Get the search results from the DB
+	 *
+	 * @param query the query to search for
+	 *
+	 * @return The search results
+	 */
+	public void getSearchResults(String query) {
+		adapter.search(query);
+		if (query.isEmpty()) {
+			getSortedResults(currentField, true);
+		}
 	}
 }

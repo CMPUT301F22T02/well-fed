@@ -1,5 +1,6 @@
 package com.example.wellfed.common;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -80,11 +81,19 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         return snapshots.get(index);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     protected void setSnapshots(List<DocumentSnapshot> snapshots){
         this.snapshots.clear();
         this.snapshots.addAll(snapshots);
         notifyDataSetChanged();
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    protected void clearSnapshots(){
+        this.snapshots.clear();
+        notifyDataSetChanged();
+    }
+
 
     protected ArrayList<DocumentSnapshot> getSnapshots(){
         return snapshots;
