@@ -1,6 +1,7 @@
 package com.example.wellfed.ingredient;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,21 @@ import com.example.wellfed.common.DBConnection;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.SnapshotMetadata;
 import com.google.firebase.firestore.WriteBatch;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class StorageIngredientDB {
 	/**
@@ -53,8 +62,7 @@ public class StorageIngredientDB {
 		 * @param success           true if the operation is successful,
 		 *                          false otherwise
 		 */
-		void onAddStoredIngredient(StorageIngredient storageIngredient,
-															 Boolean success);
+		void onAddStoredIngredient(StorageIngredient storageIngredient, Boolean success);
 	}
 
 	/**
@@ -69,8 +77,7 @@ public class StorageIngredientDB {
 		 * @param success           true if the operation is successful, false
 		 *                          otherwise
 		 */
-		void onDeleteStorageIngredient(StorageIngredient storageIngredient,
-																	 Boolean success);
+		void onDeleteStorageIngredient(StorageIngredient storageIngredient, Boolean success);
 	}
 
 	/**
@@ -85,8 +92,7 @@ public class StorageIngredientDB {
 		 * @param success           true if the operation is successful, false
 		 *                          otherwise
 		 */
-		void onGetStoredIngredient(StorageIngredient storageIngredient,
-															 Boolean success);
+		void onGetStoredIngredient(StorageIngredient storageIngredient, Boolean success);
 	}
 
 	/**
@@ -101,8 +107,7 @@ public class StorageIngredientDB {
 		 * @param success           true if the operation is successful, false
 		 *                          otherwise
 		 */
-		void onUpdateStorageIngredient(StorageIngredient storageIngredient,
-																	 Boolean success);
+		void onUpdateStorageIngredient(StorageIngredient storageIngredient, Boolean success);
 	}
 
 	/**
@@ -123,30 +128,24 @@ public class StorageIngredientDB {
 	 *                         complete
 	 */
 	//    TODO: refactor storedIngredient -> storageIngredient
-	public void addStorageIngredient(
-			@NonNull StorageIngredient storedIngredient,
-			OnAddStorageIngredientListener listener) {
+	public void addStorageIngredient(@NonNull StorageIngredient storedIngredient, OnAddStorageIngredientListener listener) {
 		Log.d(TAG, "addStorageIngredient:");
-		ingredientDB.getIngredient(storedIngredient,
-				(foundIngredient, foundSuccess) -> {
-					Log.d(TAG, "getIngredient:");
-					if (!foundSuccess) {
-						Log.d(TAG, "foundSuccess:false");
-						// create a new ingredient
-						ingredientDB.addIngredient(storedIngredient,
-								(addedIngredient, addSuccess) -> {
-									Log.d(TAG, "addIngredient:");
-									addStorageIngredient(storedIngredient,
-											addedIngredient, listener);
-								});
-
-					} else {
-						// ingredient already exists
-						Log.d(TAG, "foundSuccess:true");
-						addStorageIngredient(storedIngredient, foundIngredient,
-								listener);
-					}
+		ingredientDB.getIngredient(storedIngredient, (foundIngredient, foundSuccess) -> {
+			Log.d(TAG, "getIngredient:");
+			if (!foundSuccess) {
+				Log.d(TAG, "foundSuccess:false");
+				// create a new ingredient
+				ingredientDB.addIngredient(storedIngredient, (addedIngredient, addSuccess) -> {
+					Log.d(TAG, "addIngredient:");
+					addStorageIngredient(storedIngredient, addedIngredient, listener);
 				});
+
+			} else {
+				// ingredient already exists
+				Log.d(TAG, "foundSuccess:true");
+				addStorageIngredient(storedIngredient, foundIngredient, listener);
+			}
+		});
 	}
 
 	/**
@@ -156,33 +155,26 @@ public class StorageIngredientDB {
 	 * @param ingredient
 	 * @param listener
 	 */
-	private void addStorageIngredient(StorageIngredient storageIngredient,
-																		Ingredient ingredient,
-																		OnAddStorageIngredientListener listener) {
+	private void addStorageIngredient(StorageIngredient storageIngredient, Ingredient ingredient, OnAddStorageIngredientListener listener) {
 		Log.d(TAG, "addStorageIngredient:");
 		storageIngredient.setId(ingredient.getId());
 		HashMap<String, Object> storageIngredientMap = new HashMap<>();
-		storageIngredientMap.put("best-before",
-				storageIngredient.getBestBeforeDate());
+		storageIngredientMap.put("best-before", storageIngredient.getBestBeforeDate());
 		storageIngredientMap.put("location", storageIngredient.getLocation());
 		storageIngredientMap.put("amount", storageIngredient.getAmount());
 		storageIngredientMap.put("unit", storageIngredient.getUnit());
-		storageIngredientMap.put("Ingredient",
-				ingredientDB.getDocumentReference(ingredient));
-		this.collection.add(storageIngredientMap)
-				.addOnSuccessListener(stored -> {
-					Log.d(TAG, "success:");
-					storageIngredient.setStorageId(stored.getId());
-					ingredientDB.updateReferenceCount(ingredient, 1,
-							(updatedIngredient, success) -> {
-								Log.d(TAG, "updateReferenceCount:");
-								listener.onAddStoredIngredient(
-										storageIngredient, success);
-							});
-				}).addOnFailureListener(exception -> {
-					Log.d(TAG, "failure:");
-					listener.onAddStoredIngredient(storageIngredient, false);
-				});
+		storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient));
+		this.collection.add(storageIngredientMap).addOnSuccessListener(stored -> {
+			Log.d(TAG, "success:");
+			storageIngredient.setStorageId(stored.getId());
+			ingredientDB.updateReferenceCount(ingredient, 1, (updatedIngredient, success) -> {
+				Log.d(TAG, "updateReferenceCount:");
+				listener.onAddStoredIngredient(storageIngredient, success);
+			});
+		}).addOnFailureListener(exception -> {
+			Log.d(TAG, "failure:");
+			listener.onAddStoredIngredient(storageIngredient, false);
+		});
 	}
 
 	/**
@@ -191,40 +183,28 @@ public class StorageIngredientDB {
 	 * @param storageIngredient the Ingredient containing the updated fields
 	 * @param listener          the listener to handle the result
 	 */
-	public void updateStorageIngredient(StorageIngredient storageIngredient,
-																			OnUpdateStorageIngredientListener listener) {
-		getStorageIngredient(storageIngredient.getStorageId(),
-				(oldStorageIngredient, getSuccess1) -> {
-					if (!getSuccess1) {
-						listener.onUpdateStorageIngredient(storageIngredient,
-								false);
+	public void updateStorageIngredient(StorageIngredient storageIngredient, OnUpdateStorageIngredientListener listener) {
+		getStorageIngredient(storageIngredient.getStorageId(), (oldStorageIngredient, getSuccess1) -> {
+			if (!getSuccess1) {
+				listener.onUpdateStorageIngredient(storageIngredient, false);
+				return;
+			}
+			ingredientDB.getIngredient(storageIngredient, (getIngredient, getSuccess) -> {
+				if (getSuccess) {
+					updateStorageIngredient(storageIngredient, oldStorageIngredient, getIngredient, listener);
+					return;
+				}
+				ingredientDB.addIngredient(storageIngredient, (addedIngredient, addSuccess) -> {
+					Log.d(TAG, "addIngredient:");
+					if (!addSuccess) {
+						listener.onUpdateStorageIngredient(storageIngredient, false);
 						return;
 					}
-					ingredientDB.getIngredient(storageIngredient,
-							(getIngredient, getSuccess) -> {
-								if (getSuccess) {
-									updateStorageIngredient(storageIngredient,
-											oldStorageIngredient, getIngredient,
-											listener);
-									return;
-								}
-								ingredientDB.addIngredient(storageIngredient,
-										(addedIngredient, addSuccess) -> {
-											Log.d(TAG, "addIngredient:");
-											if (!addSuccess) {
-												listener.onUpdateStorageIngredient(
-														storageIngredient,
-														false);
-												return;
-											}
-											updateStorageIngredient(
-													storageIngredient,
-													oldStorageIngredient,
-													addedIngredient, listener);
-										});
-							});
-
+					updateStorageIngredient(storageIngredient, oldStorageIngredient, addedIngredient, listener);
 				});
+			});
+
+		});
 	}
 
 	/**
@@ -233,40 +213,27 @@ public class StorageIngredientDB {
 	 * @param storageIngredient the Ingredient containing the updated fields
 	 * @param listener          the listener to handle the result
 	 */
-	public void updateStorageIngredient(StorageIngredient storageIngredient,
-																			StorageIngredient oldStorageIngredient,
-																			Ingredient ingredient,
-																			OnUpdateStorageIngredientListener listener) {
+	public void updateStorageIngredient(StorageIngredient storageIngredient, StorageIngredient oldStorageIngredient, Ingredient ingredient, OnUpdateStorageIngredientListener listener) {
 		WriteBatch batch = db.batch();
-		DocumentReference storageIngredientRef =
-				this.collection.document(storageIngredient.getStorageId());
+		DocumentReference storageIngredientRef = this.collection.document(storageIngredient.getStorageId());
 		batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
-		batch.update(storageIngredientRef, "amount",
-				storageIngredient.getAmount());
-		batch.update(storageIngredientRef, "location",
-				storageIngredient.getLocation());
-		batch.update(storageIngredientRef, "best-before",
-				storageIngredient.getBestBeforeDate());
-		batch.update(storageIngredientRef, "Ingredient",
-				ingredientDB.getDocumentReference(ingredient));
+		batch.update(storageIngredientRef, "amount", storageIngredient.getAmount());
+		batch.update(storageIngredientRef, "location", storageIngredient.getLocation());
+		batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBeforeDate());
+		batch.update(storageIngredientRef, "Ingredient", ingredientDB.getDocumentReference(ingredient));
 
 		batch.commit().addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
 				Log.d(TAG, "Updated storage ingredient");
-				ingredientDB.updateReferenceCount(storageIngredient, 1,
-						(updatedIngredient2, success) -> {
-							if (!success) {
-								listener.onUpdateStorageIngredient(
-										storageIngredient, false);
-								return;
-							}
-							ingredientDB.updateReferenceCount(
-									oldStorageIngredient, -1,
-									(updatedIngredient3, success2) -> {
-										listener.onUpdateStorageIngredient(
-												storageIngredient, success2);
-									});
-						});
+				ingredientDB.updateReferenceCount(storageIngredient, 1, (updatedIngredient2, success) -> {
+					if (!success) {
+						listener.onUpdateStorageIngredient(storageIngredient, false);
+						return;
+					}
+					ingredientDB.updateReferenceCount(oldStorageIngredient, -1, (updatedIngredient3, success2) -> {
+						listener.onUpdateStorageIngredient(storageIngredient, success2);
+					});
+				});
 			} else {
 				Log.d(TAG, "Failed to update storage ingredient");
 				listener.onUpdateStorageIngredient(storageIngredient, false);
@@ -279,22 +246,18 @@ public class StorageIngredientDB {
 	 *
 	 * @param storageIngredient the storageIngredient to remove
 	 */
-	public void deleteStorageIngredient(StorageIngredient storageIngredient,
-																			OnDeleteStorageIngredientListener listener) {
+	public void deleteStorageIngredient(StorageIngredient storageIngredient, OnDeleteStorageIngredientListener listener) {
 		// TODO: based on number of references to ingredient, delete ingredient
-		this.collection.document(storageIngredient.getStorageId()).delete()
-				.addOnSuccessListener(onDelete -> {
-					Log.d(TAG, "DocumentSnapshot successfully deleted!");
-					ingredientDB.updateReferenceCount(storageIngredient, -1,
-							(updatedIngredient, success) -> {
-								Log.d(TAG, "updateReferenceCount:");
-								listener.onDeleteStorageIngredient(
-										storageIngredient, success);
-							});
-				}).addOnFailureListener(failure -> {
-					Log.d(TAG, "Failed to delete the storageIngredient");
-					listener.onDeleteStorageIngredient(null, false);
-				});
+		this.collection.document(storageIngredient.getStorageId()).delete().addOnSuccessListener(onDelete -> {
+			Log.d(TAG, "DocumentSnapshot successfully deleted!");
+			ingredientDB.updateReferenceCount(storageIngredient, -1, (updatedIngredient, success) -> {
+				Log.d(TAG, "updateReferenceCount:");
+				listener.onDeleteStorageIngredient(storageIngredient, success);
+			});
+		}).addOnFailureListener(failure -> {
+			Log.d(TAG, "Failed to delete the storageIngredient");
+			listener.onDeleteStorageIngredient(null, false);
+		});
 	}
 
 	//    /**
@@ -332,16 +295,14 @@ public class StorageIngredientDB {
 	 * with a null description.
 	 * when the onComplete listener is interrupted
 	 */
-	public void getStorageIngredient(String id,
-																	 OnGetStorageIngredientListener listener) {
-		this.collection.document(id).get()
-				.addOnSuccessListener(storedSnapshot -> {
-					Log.d(TAG, "StorageIngredient found");
-					this.getStorageIngredient(storedSnapshot, listener);
-				}).addOnFailureListener(failure -> {
-					Log.d(TAG, "Failed to get Stored Ingredient");
-					listener.onGetStoredIngredient(null, false);
-				});
+	public void getStorageIngredient(String id, OnGetStorageIngredientListener listener) {
+		this.collection.document(id).get().addOnSuccessListener(storedSnapshot -> {
+			Log.d(TAG, "StorageIngredient found");
+			this.getStorageIngredient(storedSnapshot, listener);
+		}).addOnFailureListener(failure -> {
+			Log.d(TAG, "Failed to get Stored Ingredient");
+			listener.onGetStoredIngredient(null, false);
+		});
 	}
 
 	/**
@@ -350,10 +311,8 @@ public class StorageIngredientDB {
 	 * @param snapshot the snapshot of the StorageIngredient to get
 	 * @param listener the listener to call when the ingredient is found
 	 */
-	public void getStorageIngredient(DocumentSnapshot snapshot,
-																	 OnGetStorageIngredientListener listener) {
-		StorageIngredient storageIngredient =
-				new StorageIngredient(snapshot.getString("Description"));
+	public void getStorageIngredient(DocumentSnapshot snapshot, OnGetStorageIngredientListener listener) {
+		StorageIngredient storageIngredient = new StorageIngredient(snapshot.getString("Description"));
 		storageIngredient.setStorageId(snapshot.getId());
 		// todo add correct way to parse and add dates
 		storageIngredient.setBestBefore(snapshot.getDate("best-before"));
@@ -361,25 +320,22 @@ public class StorageIngredientDB {
 		storageIngredient.setAmount(snapshot.getDouble("amount"));
 		storageIngredient.setUnit(snapshot.getString("unit"));
 
-		DocumentReference ingredientReference =
-				(DocumentReference) snapshot.get("Ingredient");
+		DocumentReference ingredientReference = (DocumentReference) snapshot.get("Ingredient");
 		if (ingredientReference == null) {
 			listener.onGetStoredIngredient(null, false);
 			return;
 		}
 
-		ingredientDB.getIngredient(ingredientReference,
-				(getIngredient, getSuccess) -> {
-					if (getIngredient == null || getSuccess == null) {
-						listener.onGetStoredIngredient(null, false);
-						return;
-					}
-					storageIngredient.setCategory(getIngredient.getCategory());
-					storageIngredient.setDescription(
-							getIngredient.getDescription());
-					storageIngredient.setId(getIngredient.getId());
-					listener.onGetStoredIngredient(storageIngredient, true);
-				});
+		ingredientDB.getIngredient(ingredientReference, (getIngredient, getSuccess) -> {
+			if (getIngredient == null || getSuccess == null) {
+				listener.onGetStoredIngredient(null, false);
+				return;
+			}
+			storageIngredient.setCategory(getIngredient.getCategory());
+			storageIngredient.setDescription(getIngredient.getDescription());
+			storageIngredient.setId(getIngredient.getId());
+			listener.onGetStoredIngredient(storageIngredient, true);
+		});
 	}
 
 	/**
@@ -418,10 +374,13 @@ public class StorageIngredientDB {
 		String[] queryWords = query.split(" ");
 		Query result = this.collection;
 		for (String word : queryWords) {
-			result = result.whereArrayContainsAny("search",
-					List.of(word.toLowerCase()));
+			result = result.whereArrayContainsAny("search", List.of(word.toLowerCase()));
 		}
 		return result;
+	}
+
+	interface OnSortResult {
+		void onSortResult(Query query, boolean success);
 	}
 
 	/**
@@ -430,14 +389,31 @@ public class StorageIngredientDB {
 	 * @param field the field to sort by
 	 *              The field can be "description", "category", "location", and
 	 *              best-before date.
-	 *
 	 * @return The query result
 	 */
-	public Query getQuery(String field, boolean ascending) {
-		if (ascending) {
-			return this.collection.orderBy(field, Query.Direction.ASCENDING);
+	public void getQuery(String field, boolean ascending, OnSortResult listener) {
+		// If collection is empty, return empty query
+		if (this.collection == null) {
+			listener.onSortResult(null, false);
+			return;
+		}
+
+		if (Objects.equals(field, "best-before")) {
+			listener.onSortResult(this.collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING), true);
 		} else {
-			return this.collection.orderBy(field, Query.Direction.DESCENDING);
+			List<String> ingredientIds = new ArrayList<>();
+			// Get all ingredients
+			this.ingredientDB.getQuery(field, ascending).get().addOnSuccessListener(ingredientSnapshot -> {
+				for (DocumentSnapshot ingredient : ingredientSnapshot) {
+					ingredientIds.add(ingredient.getId());
+				}
+				// Filter ingredients by the given field
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+					listener.onSortResult(this.collection.whereIn("Ingredient",
+						// Convert to DocumentReference
+						ingredientIds.stream().map(this.ingredientDB::getDocumentReference).collect(Collectors.toList())), true);
+				}
+			});
 		}
 	}
 }

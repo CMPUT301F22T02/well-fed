@@ -248,7 +248,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 		});
 
 		// Create cancel button
-		builder.setNegativeButton("Cancel", (dialog, which) -> {
+		builder.setNegativeButton("Close", (dialog, which) -> {
 			// Do nothing
 		});
 

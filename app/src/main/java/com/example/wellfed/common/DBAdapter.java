@@ -1,17 +1,10 @@
 package com.example.wellfed.common;
 
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wellfed.R;
-import com.example.wellfed.ingredient.StorageIngredientAdapter;
-import com.example.wellfed.mealplan.MealPlanAdapter;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -38,6 +31,10 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
     private final ArrayList<DocumentSnapshot> snapshots = new ArrayList<>();
 
     public DBAdapter(Query query) {
+        query.addSnapshotListener(this);
+    }
+
+    public void changeQuery(Query query) {
         query.addSnapshotListener(this);
     }
 

@@ -32,7 +32,15 @@ public class StorageIngredientAdapter
     }
 
     public StorageIngredientAdapter(String field, boolean ascending, StorageIngredientDB db) {
-        super(db.getQuery(field, ascending));
+        super(db.getQuery());
+        db.getQuery(field, ascending, ((query, success) -> {
+            if (success) {
+                changeQuery(query);
+            } else {
+                System.out.println("failure");
+            }
+            }));
+
         Log.d(TAG, "StorageIngredientAdapter:");
         this.db = db;
     }
