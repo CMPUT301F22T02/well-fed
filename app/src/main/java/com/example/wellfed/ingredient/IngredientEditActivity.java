@@ -14,6 +14,7 @@ import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -81,15 +82,31 @@ public class IngredientEditActivity extends EditActivityBase
 
 
         if (ingredient != null) {
-            descriptionInput.setPlaceholderText(ingredient.getDescription());
-            amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
-            unitInput.setPlaceholderText(ingredient.getUnit());
-            locationInput.setPlaceholderText(ingredient.getLocation());
-            if (ingredient.getCategory() != null) {
-                categoryInput.setPlaceholderText(ingredient.getCategory());
+            String description = ingredient.getDescription();
+            if (description != null) {
+                descriptionInput.setPlaceholderText(description);
             }
-            // Set date in yyyy-MM-dd format
-            bestBeforeLayout.setPlaceholderDate(ingredient.getBestBeforeDate());
+            Double amount = ingredient.getAmount();
+            if (amount != null) {
+                amountInput.setPlaceholderText(String.valueOf(amount));
+            }
+            String unit = ingredient.getUnit();
+            if (unit != null){
+                unitInput.setPlaceholderText(unit);
+            };
+            String location = ingredient.getLocation();
+            if (location != null) {
+                locationInput.setPlaceholderText(location);
+            }
+            String category = ingredient.getCategory();
+            if (category != null) {
+                categoryInput.setPlaceholderText(category);
+            }
+            Date bestBefore = ingredient.getBestBeforeDate();
+            if (bestBefore != null) {
+                bestBeforeLayout.setPlaceholderDate(bestBefore);
+            }
+
         }
 
 
