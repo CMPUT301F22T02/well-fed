@@ -43,7 +43,6 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
     public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> shoppingCartIngredients,
                                          ShoppingCartFragment shoppingCartFragment) {
         this.shoppingCartIngredients = shoppingCartIngredients;
-//        this.shoppingCartIngredientLauncher = shoppingCartFragment;
         this.context = shoppingCartFragment;
     }
 
@@ -95,6 +94,10 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
 
         // Allow user to change pickup status when checking or unchecking checkbox
         CheckBox checkBox = holder.checkBox;
+
+        // set checkbox to checked if ingredient already picked up
+        checkBox.setChecked(ingredient.isPickedUp);
+
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -79,33 +79,10 @@ public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuIt
         recyclerView = view.findViewById(R.id.shopping_cart_list);
 
         // Create mockup data
-        ShoppingCartIngredient ingredient;
-
-        ingredient = new ShoppingCartIngredient("Salt");
-        ingredient.setCategory("seasoning");
-        ingredient.setUnit("gram(s)");
-        ingredient.setAmount(500.0d);
-        shoppingCart.addIngredient(ingredient);
-
-        ingredient = new ShoppingCartIngredient("Juice");
-        ingredient.setCategory("beverage");
-        ingredient.setUnit("L(s)");
-        ingredient.setAmount(1.5d);
-        shoppingCart.addIngredient(ingredient);
-
-        ingredient = new ShoppingCartIngredient("Banana");
-        ingredient.setCategory("fruit");
-        ingredient.setUnit("lb(s)");
-        ingredient.setAmount(1.3d);
-        shoppingCart.addIngredient(ingredient);
+        mockData();
 
         // Display data in recycler view
-        shoppingCartIngredientAdapter = new ShoppingCartIngredientAdapter(
-                shoppingCart.getIngredients(), this);
-        shoppingCartIngredientController.setIngredients(shoppingCart.getIngredients());
-        shoppingCartIngredientController.setAdapter(shoppingCartIngredientAdapter);
-        recyclerView.setAdapter(shoppingCartIngredientAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
+        setRecyclerView();
 
         // create listener for dropdown menu
         ImageFilterButton btn = view.findViewById(R.id.shopping_cart_filter_button);
@@ -115,6 +92,15 @@ public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuIt
                 showDropDown(view);
             }
         });
+    }
+
+    public void setRecyclerView() {
+        shoppingCartIngredientAdapter = new ShoppingCartIngredientAdapter(
+                shoppingCart.getIngredients(), this);
+        shoppingCartIngredientController.setIngredients(shoppingCart.getIngredients());
+        shoppingCartIngredientController.setAdapter(shoppingCartIngredientAdapter);
+        recyclerView.setAdapter(shoppingCartIngredientAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
     }
 
     // show dropdown menu when button is clicked
@@ -131,45 +117,70 @@ public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuIt
         switch (item.getItemId()) {
             case R.id.description:
                 // sort the ingredients
-                Collections.sort(shoppingCart.getIngredients());
+                sortIngredients("description", shoppingCart.getIngredients());
 
                 // set adapter
-                shoppingCartIngredientAdapter = new ShoppingCartIngredientAdapter(
-                        shoppingCart.getIngredients(), this);
-                shoppingCartIngredientController.setIngredients(shoppingCart.getIngredients());
-                shoppingCartIngredientController.setAdapter(shoppingCartIngredientAdapter);
-                recyclerView.setAdapter(shoppingCartIngredientAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
-
+                setRecyclerView();
                 Toast.makeText(getContext(), "Sort By Description", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.category:
-                Toast.makeText(getContext(), "Category", Toast.LENGTH_LONG).show();
+                sortIngredients("category", shoppingCart.getIngredients());
+                setRecyclerView();
+
+                Toast.makeText(getContext(), "Sort By Category", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return false;
         }
     }
 
-//    Collections.sort(storageIngredients, new Comparator<StorageIngredient>() {
-//        @Override
-//        public int compare(StorageIngredient o1, StorageIngredient o2) {
-//            switch (field) {
-//                case "description":
-//                    return compareByDescription(o1, o2);
-//                case "category":
-//                    return compareByCategory(o1, o2);
-//                default:
-//                    return 0;
-//            }
-//        }
-//    });
-//
-//public int compareByDescription(StorageIngredient o1, StorageIngredient o2) {
-//        return o1.getDescription().compareTo(o2.getDescription());
-//        }
-//
-//public int compareByCategory(StorageIngredient o1, StorageIngredient o2) {
-//        return o1.getCategory().compareTo(o2.getDescription());
-//        }
+    public void sortIngredients(String option, ArrayList<ShoppingCartIngredient> ingredients) {
+        Collections.sort(ingredients, new Comparator<ShoppingCartIngredient>() {
+            @Override
+            public int compare(ShoppingCartIngredient o1, ShoppingCartIngredient o2) {
+                switch (option) {
+                    case "description":
+                        return compareByDescription(o1, o2);
+                    case "category":
+                        return compareByCategory(o1, o2);
+                    default:
+                        return 0;
+                }
+            }
+        });
+    }
+
+    public int compareByDescription(ShoppingCartIngredient o1, ShoppingCartIngredient o2) {
+        return o1.getDescription().compareTo(o2.getDescription());
+    }
+
+    public int compareByCategory(ShoppingCartIngredient o1, ShoppingCartIngredient o2) {
+        return o1.getCategory().compareTo(o2.getCategory());
+    }
+
+    public void mockData() {
+        // Create mockup data
+        ShoppingCartIngredient ingredient;
+
+        ingredient = new ShoppingCartIngredient("Salt");
+        ingredient.setCategory("seasoning");
+        ingredient.setUnit("gram(s)");
+        ingredient.setAmount(500.0d);
+        ingredient.setPickedUp(false);
+        shoppingCart.addIngredient(ingredient);
+
+        ingredient = new ShoppingCartIngredient("Juice");
+        ingredient.setCategory("beverage");
+        ingredient.setUnit("L(s)");
+        ingredient.setAmount(1.5d);
+        ingredient.setPickedUp(true);
+        shoppingCart.addIngredient(ingredient);
+
+        ingredient = new ShoppingCartIngredient("Banana");
+        ingredient.setCategory("fruit");
+        ingredient.setUnit("lb(s)");
+        ingredient.setAmount(1.3d);
+        ingredient.setPickedUp(false);
+        shoppingCart.addIngredient(ingredient);
+    }
 }

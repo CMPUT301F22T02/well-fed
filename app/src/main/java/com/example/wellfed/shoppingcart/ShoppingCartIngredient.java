@@ -23,7 +23,7 @@ import java.util.Comparator;
  * @version 1.0
  * @see ShoppingCart
  */
-public class ShoppingCartIngredient extends Ingredient implements Comparable<ShoppingCartIngredient> {
+public class ShoppingCartIngredient extends Ingredient {
     /**
      * Holds whether the ShoppingCartIngredient has been picked up.
      */
@@ -75,15 +75,5 @@ public class ShoppingCartIngredient extends Ingredient implements Comparable<Sho
      */
     public void setComplete(boolean complete) {
         isComplete = complete;
-    }
-
-    /**
-     * Sort ShoppingCartIngredients based on description
-     * @param i A ShoppingCartIngredient object.
-     * @return An integer representing the result of comparison.
-     */
-    @Override
-    public int compareTo(ShoppingCartIngredient i) {
-        return (this.getDescription()).compareTo(i.getDescription());
     }
 }
