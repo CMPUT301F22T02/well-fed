@@ -114,6 +114,6 @@ public class IngredientStorageController {
 	 * @return the DB of ingredients
 	 */
 	public void getSortedResults(String field, boolean ascending) {
-		adapter.sortString(field,ascending);
+		adapter.sortString(field, ascending);
 	}
 }

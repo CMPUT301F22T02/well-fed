@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.wellfed.common.DBConnection;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -419,7 +421,7 @@ public class StorageIngredientDB {
     }
 
     public interface OnAllIngredients {
-        public void onAllIngredients(ArrayList<StorageIngredient> ingredients, boolean success);
+        void onAllIngredients(ArrayList<StorageIngredient> ingredients, boolean success);
     }
 
     public void getAllStorageIngredients(OnAllIngredients listener) {
@@ -443,6 +445,12 @@ public class StorageIngredientDB {
                                     storageIngredient.setCategory(ingredientSnap.getString("category"));
                                     storageIngredient.setAmount((Double) snapshot.getData().get("amount"));
                                     storageIngredient.setUnit((String) snapshot.getData().get("unit"));
+
+                                    // Get Firebase Timestamp and convert to Date
+                                    Timestamp bestBefore = (Timestamp) snapshot.getData().get("best-before");
+                                    assert bestBefore != null;
+                                    storageIngredient.setBestBefore(bestBefore.toDate());
+
                                     storageIngredients.add(storageIngredient);
                                     found.getAndAdd(1);
                                     if (found.get() == i.get()) {

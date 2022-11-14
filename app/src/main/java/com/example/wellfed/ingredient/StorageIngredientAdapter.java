@@ -84,19 +84,23 @@ public class StorageIngredientAdapter
         // load all the data
         db.getAllStorageIngredients((storageIngredients, success) -> {
             if (!success) return;
-            Collections.sort(storageIngredients, new Comparator<StorageIngredient>() {
-                @Override
-                public int compare(StorageIngredient o1, StorageIngredient o2) {
-                    switch (field) {
-                        case "description":
-                            return compareByDescription(o1, o2);
-                        case "category":
-                            return compareByCategory(o1, o2);
-                        default:
-                            return 0;
-                    }
+            Collections.sort(storageIngredients, (o1, o2) -> {
+                switch (field) {
+                    case "description":
+                        return compareByDescription(o1, o2);
+                    case "category":
+                        return compareByCategory(o1, o2);
+                    case "best-before":
+                        return compareByBestBefore(o1, o2);
+                    default:
+                        return 0;
                 }
             });
+
+            if (!ascending) {
+                Collections.reverse(storageIngredients);
+            }
+
             HashMap<String, Integer> pos = new HashMap<>();
             ArrayList<DocumentSnapshot> snaps = new ArrayList<>();
             for (int i = 0; i < getSnapshots().size(); i++) {
@@ -117,6 +121,10 @@ public class StorageIngredientAdapter
 
     public int compareByCategory(StorageIngredient o1, StorageIngredient o2) {
         return o1.getCategory().compareTo(o2.getDescription());
+    }
+
+    public int compareByBestBefore(StorageIngredient o1, StorageIngredient o2) {
+        return o1.getBestBeforeDate().compareTo(o2.getBestBeforeDate());
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
