@@ -23,8 +23,7 @@ import com.example.wellfed.common.Launcher;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ShoppingCartFragment extends Fragment implements Launcher,
-        PopupMenu.OnMenuItemClickListener {
+public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     /**
      * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
      */
@@ -46,59 +45,6 @@ public class ShoppingCartFragment extends Fragment implements Launcher,
     RecyclerView recyclerView;
 
     int position;
-
-    /**
-     * ActivityResultLauncher is a launcher for the ShoppingCartIngredientActivity.
-     * The result is a ShoppingCartIngredient.
-     * The result is null if the user cancels the edit.
-     */
-    ActivityResultLauncher<ShoppingCartIngredient> shoppingCartIngredientLauncher =
-            registerForActivityResult(new ShoppingCartIngredientContract(), result -> {
-        if (result == null) {
-            return;
-        }
-        String type = result.first;
-        ShoppingCartIngredient shoppingCartIngredient = result.second;
-        switch (type) {
-            case "delete":
-                shoppingCartIngredientController.deleteIngredient(position);
-//                shoppingCartIngredientAdapter.notifyItemRangeChanged(position,
-//                        shoppingCart.getIngredients().size());
-                break;
-            case "edit":
-                shoppingCartIngredientController.updateIngredient(position, shoppingCartIngredient);
-                break;
-            case "launch":
-                launch(position);
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-    });
-
-    /**
-     * ActivityResultLauncher for the ShoppingCartIngredientEditActivity
-     * to edit an ingredient. The result is a ShoppingCartIngredient.
-     * The result is null if the user cancels the add.
-     */
-    ActivityResultLauncher<ShoppingCartIngredient> editShoppingCartIngredientLauncher =
-            registerForActivityResult(new ShoppingCartIngredientEditContract(), result -> {
-                if (result == null) {
-                    return;
-                }
-                String type = result.first;
-                ShoppingCartIngredient shoppingCartIngredient = result.second;
-                switch (type) {
-                    case "add":
-                        shoppingCartIngredientController.addIngredient(shoppingCartIngredient);
-                        break;
-                    case "quit":
-                        break;
-                    default:
-                        throw new IllegalArgumentException();
-                }
-            }
-    );
 
     /**
      * onCreate method for the hoppingCartFragment.
@@ -166,34 +112,6 @@ public class ShoppingCartFragment extends Fragment implements Launcher,
             }
         });
     }
-
-    /**
-     * Launches the ShoppingCartIngredientActivity.
-     * @param pos The position of the ingredient in the list.
-     */
-    @Override
-    public void launch(int pos) {
-        position = pos;
-        shoppingCartIngredientLauncher.launch(shoppingCart.getIngredients().get(pos));
-    }
-
-    /**
-     * Launches the ShoppingCartIngredientEditActivity to edit an ingredient.
-     */
-    @Override
-    public void launch() {
-        editShoppingCartIngredientLauncher.launch(null);
-    }
-
-    /**
-     * getDefaultViewModelProviderFactory method for the ShoppingCartFragment.
-     * @return A default ViewModelProviderFactory.
-     */
-//    @NonNull
-//    @Override
-//    public CreationExtras getDefaultViewModelCreationExtras() {
-//        return super.getDefaultViewModelCreationExtras();
-//    }
 
     // show dropdown menu when button is clicked
     public void showDropDown(View v) {

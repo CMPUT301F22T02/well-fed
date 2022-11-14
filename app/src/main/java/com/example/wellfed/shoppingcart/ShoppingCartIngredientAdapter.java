@@ -111,10 +111,6 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         holder.description.setText(ingredient.getDescription());
         holder.subtext.setText(String.valueOf(ingredient.getAmount()) + " " +
                 ingredient.getUnit() + " | " + ingredient.getCategory());
-
-//        holder.itemView.setOnClickListener(v -> shoppingCartIngredientLauncher.launch(position));
-//        holder.itemView.setOnClickListener(view -> context.launch(holder.getAdapterPosition()));
-        holder.itemView.setOnClickListener(view -> context.launch(position));
     }
 
     /**
