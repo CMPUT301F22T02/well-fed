@@ -62,8 +62,6 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Deleted " + deleteStorageIngredient.getDescription());
 			}
 		}));
-		getSortedResults(currentField, true);
-
 	}
 
 	/**
@@ -77,7 +75,6 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Failed to add " + addIngredient.getDescription());
 			} else {
 				this.activity.makeSnackbar("Added " + addIngredient.getDescription());
-				getSortedResults(currentField, true);
 			}
 		});
 	}
@@ -94,7 +91,6 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Failed to update " + updateIngredient.getDescription());
 			} else {
 				this.activity.makeSnackbar("Updated " + updateIngredient.getDescription());
-				getSortedResults(currentField, true);
 			}
 		});
 	}
@@ -122,8 +118,5 @@ public class IngredientStorageController {
 	 */
 	public void getSearchResults(String query) {
 		adapter.search(query);
-		if (query.isEmpty()) {
-			getSortedResults(currentField, true);
-		}
 	}
 }

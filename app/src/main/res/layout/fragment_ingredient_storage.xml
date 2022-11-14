@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_baseline_search_24"
+            android:drawableEnd="@drawable/ic_baseline_close_24"
             android:drawablePadding="8dp"
             android:hint="@string/search_for_ingredients"
             android:inputType="text" />

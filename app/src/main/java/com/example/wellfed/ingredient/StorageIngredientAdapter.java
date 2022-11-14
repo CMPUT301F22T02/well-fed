@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class StorageIngredientAdapter
 	extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
@@ -27,26 +28,6 @@ public class StorageIngredientAdapter
 
 	public StorageIngredientAdapter(StorageIngredientDB db) {
 		super(db.getQuery());
-		Log.d(TAG, "StorageIngredientAdapter:");
-		this.db = db;
-	}
-
-	public StorageIngredientAdapter(String query, StorageIngredientDB db) {
-		super(db.getQuery(query));
-		Log.d(TAG, "StorageIngredientAdapter:");
-		this.db = db;
-	}
-
-	public StorageIngredientAdapter(String field, boolean ascending, StorageIngredientDB db) {
-		super(db.getQuery());
-		db.getQuery(field, ascending, ((query, success) -> {
-			if (success) {
-				changeQuery(query);
-			} else {
-				System.out.println("failure");
-			}
-		}));
-
 		Log.d(TAG, "StorageIngredientAdapter:");
 		this.db = db;
 	}
@@ -120,17 +101,21 @@ public class StorageIngredientAdapter
 			clearSnapshots();
 			changeQuery(db.getQuery());
 		}
+
+		// Get sorted search results
 		db.getAllStorageIngredients((storageIngredients, success) -> {
 			if (!success) return;
+			Collections.sort(storageIngredients, this::compareByDescription);
+
 			ArrayList<DocumentSnapshot> snaps = new ArrayList<>();
-			for (int i = 0; i < getSnapshots().size(); i++) {
-				String id = getSnapshots().get(i).getId();
-				for (StorageIngredient storageIngredient : storageIngredients) {
-					if (storageIngredient.getStorageId().equals(id)) {
-						if (storageIngredient.getDescription().toLowerCase().contains(query.toLowerCase())) {
-							snaps.add(getSnapshots().get(i));
-						} else if (storageIngredient.getCategory().toLowerCase().contains(query.toLowerCase())) {
-							snaps.add(getSnapshots().get(i));
+			for (int i = 0; i < storageIngredients.size(); i++) {
+				StorageIngredient si = storageIngredients.get(i);
+				if (si.getDescription().toLowerCase().contains(query.toLowerCase())) {
+					String id = si.getStorageId();
+					for (int j = 0; j < getSnapshots().size(); j++) {
+						if (getSnapshots().get(j).getId().equals(id)) {
+							snaps.add(getSnapshots().get(j));
+							break;
 						}
 					}
 				}
@@ -140,11 +125,11 @@ public class StorageIngredientAdapter
 	}
 
 	public int compareByDescription(StorageIngredient o1, StorageIngredient o2) {
-		return o1.getDescription().compareTo(o2.getDescription());
+		return o1.getDescription().toLowerCase().compareTo(o2.getDescription().toLowerCase());
 	}
 
 	public int compareByCategory(StorageIngredient o1, StorageIngredient o2) {
-		return o1.getCategory().compareTo(o2.getDescription());
+		return o1.getCategory().toLowerCase().compareTo(o2.getCategory().toLowerCase());
 	}
 
 	public int compareByBestBefore(StorageIngredient o1, StorageIngredient o2) {

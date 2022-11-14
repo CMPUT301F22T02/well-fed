@@ -148,11 +148,11 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				controller.getSearchResults(s.toString());
 			}
 
 			@Override
 			public void afterTextChanged(Editable s) {
+				controller.getSearchResults(s.toString());
 			}
 		});
 
