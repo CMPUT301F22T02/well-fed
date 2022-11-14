@@ -1,5 +1,6 @@
 package com.example.wellfed.shoppingcart;
 
+import com.example.wellfed.ingredient.IngredientStorageController;
 import com.example.wellfed.ingredient.StorageIngredient;
 
 import org.checkerframework.checker.units.qual.A;
@@ -17,10 +18,13 @@ public class ShoppingCartIngredientController {
      */
     private ShoppingCartIngredientAdapter adapter;
 
+    private IngredientStorageController controller;
+
     /**
      * Initialize ingredient list.
      */
-    public ShoppingCartIngredientController() {
+    public ShoppingCartIngredientController(IngredientStorageController isController) {
+        controller = isController;
         ingredients = new ArrayList<>();
     }
 
@@ -47,7 +51,7 @@ public class ShoppingCartIngredientController {
      * Adds an Ingredient to the shopping cart.
      * @param ingredient An ShoppingCartIngredient object to add
      */
-    public void addIngredient(ShoppingCartIngredient ingredient) {
+    public void addIngredient(StorageIngredient ingredient) {
 //        if (ingredient != null) {
 //            if (!ingredients.contains(ingredient)) {
 //                ingredients.add(ingredient);
@@ -58,8 +62,9 @@ public class ShoppingCartIngredientController {
 //                adapter.notifyItemChanged(index);
 //            }
 //        }
-        ingredients.add(ingredient);
-        adapter.notifyItemInserted(ingredients.size()-1);
+        controller.addIngredient(ingredient);
+//        ingredients.add(ingredient);
+//        adapter.notifyItemInserted(ingredients.size()-1);
     }
 
     /**

@@ -25,7 +25,7 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
      * ShoppingCartIngredientLauncher object for the adapter.
      */
 //    private ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
-
+//    TODO: convert to listener
     private ShoppingCartFragment context;
 
     /**
@@ -115,7 +115,7 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         holder.subtext.setText(String.valueOf(ingredient.getAmount()) + " " +
                 ingredient.getUnit() + " | " + ingredient.getCategory());
 
-        holder.itemView.setOnClickListener(view -> context.launch(ingredient));
+        holder.itemView.setOnClickListener(view -> context.onClick(ingredient));
     }
 
     /**

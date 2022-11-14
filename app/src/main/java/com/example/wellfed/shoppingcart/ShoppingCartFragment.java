@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
+import com.example.wellfed.ingredient.IngredientEditContract;
+import com.example.wellfed.ingredient.IngredientStorageController;
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -28,7 +30,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class ShoppingCartFragment extends Fragment implements
-        PopupMenu.OnMenuItemClickListener, ShoppingCartDialog.OnConfirmListener {
+        PopupMenu.OnMenuItemClickListener {
     /**
      * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
      */
@@ -57,6 +59,35 @@ public class ShoppingCartFragment extends Fragment implements
     int position;
 
     /**
+     * ActivityResultLauncher for the IngredientAddActivity to add an
+     * ingredient.
+     * The result is a StorageIngredient.
+     * The result is null if the user cancels the add.
+     */
+    ActivityResultLauncher<StorageIngredient> editIngredientLauncher =
+            registerForActivityResult(new IngredientEditContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                StorageIngredient ingredient = result.second;
+                switch (type) {
+                    case "add":
+//                        shoppingcartcontroller.addIngredient()
+//                        inside your shoppingcartcontroller:
+//                        todo
+                        shoppingCartIngredientController.addIngredient(ingredient);
+//                        IngredientStorageController controller = new IngredientStorageController(getActivity());
+//                        controller.addIngredient(ingredient);
+                        break;
+                    case "quit":
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            });
+
+    /**
      * onCreate method for the hoppingCartFragment.
      * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
      * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
@@ -69,8 +100,8 @@ public class ShoppingCartFragment extends Fragment implements
             ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         shoppingCart = new ShoppingCart();
-        shoppingCartIngredientController = new ShoppingCartIngredientController();
-        dialog = new ShoppingCartDialog(getActivity(), "title", "message", "confirm", this);
+        shoppingCartIngredientController = new ShoppingCartIngredientController(new IngredientStorageController(getActivity()));
+        // dialog = new ShoppingCartDialog(getActivity(), "title", "message", "confirm", this);
 
         return inflater.inflate(R.layout.fragment_shopping_cart, container, false);
     }
@@ -195,9 +226,17 @@ public class ShoppingCartFragment extends Fragment implements
 //    public void onCompletePressed(ShoppingCartIngredient shoppingCartIngredient) {
 //        // TODO: add ingredient to ingredient storage
 //    }
-    @Override
-    public void onConfirm() {
-        ;
+//    @Override
+//    public void onConfirm() {
+//        editIngredientLauncher.launch()
+//    }
+
+    public void onClick(ShoppingCartIngredient ingredient) {
+        StorageIngredient si = new StorageIngredient(ingredient.getDescription());
+        si.setAmount(ingredient.getAmount());
+        si.setCategory(ingredient.getCategory());
+        si.setUnit(ingredient.getUnit());
+        editIngredientLauncher.launch(si);
     }
 
     public void launch(ShoppingCartIngredient ingredient) {
