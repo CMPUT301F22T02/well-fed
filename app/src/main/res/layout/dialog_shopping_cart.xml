@@ -73,16 +73,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/amountInputLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_marginTop="190dp"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="220dp"
+        android:layout_marginTop="16dp"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintEnd_toStartOf="@+id/unitInputLayout"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/dateTextInput">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/actualAmount"
@@ -95,16 +94,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/unitInputLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_marginTop="190dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
 
+        android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/amountInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/dateTextInput">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/unit"

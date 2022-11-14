@@ -28,7 +28,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class ShoppingCartFragment extends Fragment implements
-        PopupMenu.OnMenuItemClickListener, ShoppingCartDialog.OnFragmentInteractionListener {
+        PopupMenu.OnMenuItemClickListener, ShoppingCartDialog.OnConfirmListener {
     /**
      * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
      */
@@ -49,6 +49,11 @@ public class ShoppingCartFragment extends Fragment implements
      */
     RecyclerView recyclerView;
 
+    /**
+     * todo
+     */
+    private ShoppingCartDialog dialog;
+
     int position;
 
     /**
@@ -65,6 +70,7 @@ public class ShoppingCartFragment extends Fragment implements
                              @Nullable Bundle savedInstanceState) {
         shoppingCart = new ShoppingCart();
         shoppingCartIngredientController = new ShoppingCartIngredientController();
+        dialog = new ShoppingCartDialog(getActivity(), "title", "message", "confirm", this);
 
         return inflater.inflate(R.layout.fragment_shopping_cart, container, false);
     }
@@ -185,12 +191,16 @@ public class ShoppingCartFragment extends Fragment implements
         shoppingCart.addIngredient(ingredient);
     }
 
+//    @Override
+//    public void onCompletePressed(ShoppingCartIngredient shoppingCartIngredient) {
+//        // TODO: add ingredient to ingredient storage
+//    }
     @Override
-    public void onCompletePressed(ShoppingCartIngredient shoppingCartIngredient) {
-        // TODO: add ingredient to ingredient storage
+    public void onConfirm() {
+        ;
     }
 
     public void launch(ShoppingCartIngredient ingredient) {
-        ShoppingCartDialog.newInstance(ingredient).show(getActivity().getSupportFragmentManager(), "COMPLETE_DETAILS");
+        dialog.show();
     }
 }
