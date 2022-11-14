@@ -19,9 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     /**
@@ -103,7 +107,7 @@ public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuIt
         recyclerView.setAdapter(shoppingCartIngredientAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
 
-        // create listener for dropdown button
+        // create listener for dropdown menu
         ImageFilterButton btn = view.findViewById(R.id.shopping_cart_filter_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,4 +150,26 @@ public class ShoppingCartFragment extends Fragment implements PopupMenu.OnMenuIt
                 return false;
         }
     }
+
+//    Collections.sort(storageIngredients, new Comparator<StorageIngredient>() {
+//        @Override
+//        public int compare(StorageIngredient o1, StorageIngredient o2) {
+//            switch (field) {
+//                case "description":
+//                    return compareByDescription(o1, o2);
+//                case "category":
+//                    return compareByCategory(o1, o2);
+//                default:
+//                    return 0;
+//            }
+//        }
+//    });
+//
+//public int compareByDescription(StorageIngredient o1, StorageIngredient o2) {
+//        return o1.getDescription().compareTo(o2.getDescription());
+//        }
+//
+//public int compareByCategory(StorageIngredient o1, StorageIngredient o2) {
+//        return o1.getCategory().compareTo(o2.getDescription());
+//        }
 }
