@@ -11,7 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class StorageIngredientAdapter
         extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
@@ -39,7 +45,7 @@ public class StorageIngredientAdapter
             } else {
                 System.out.println("failure");
             }
-            }));
+        }));
 
         Log.d(TAG, "StorageIngredientAdapter:");
         this.db = db;
@@ -49,7 +55,8 @@ public class StorageIngredientAdapter
         void onItemClick(StorageIngredient storageIngredient);
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                          int viewType) {
         Log.d(TAG, "onCreateViewHolder:");
@@ -70,6 +77,46 @@ public class StorageIngredientAdapter
                         Log.e(TAG, "failed to get storage ingredient");
                     }
                 });
+    }
+
+
+    protected void sortString(String field, boolean ascending) {
+        // load all the data
+        db.getAllStorageIngredients((storageIngredients, success) -> {
+            if (!success) return;
+            Collections.sort(storageIngredients, new Comparator<StorageIngredient>() {
+                @Override
+                public int compare(StorageIngredient o1, StorageIngredient o2) {
+                    switch (field) {
+                        case "description":
+                            return compareByDescription(o1, o2);
+                        case "category":
+                            return compareByCategory(o1, o2);
+                        default:
+                            return 0;
+                    }
+                }
+            });
+            HashMap<String, Integer> pos = new HashMap<>();
+            ArrayList<DocumentSnapshot> snaps = new ArrayList<>();
+            for (int i = 0; i < getSnapshots().size(); i++) {
+                pos.put(getSnapshots().get(i).getId(), i);
+            }
+            for (int i = 0; i < storageIngredients.size(); i++) {
+                String id = storageIngredients.get(i).getStorageId();
+                int storedAt = pos.get(id);
+                snaps.add(getSnapshots().get(storedAt));
+            }
+            setSnapshots(snaps);
+        });
+    }
+
+    public int compareByDescription(StorageIngredient o1, StorageIngredient o2) {
+        return o1.getDescription().compareTo(o2.getDescription());
+    }
+
+    public int compareByCategory(StorageIngredient o1, StorageIngredient o2) {
+        return o1.getCategory().compareTo(o2.getDescription());
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -102,4 +149,5 @@ public class StorageIngredientAdapter
             });
         }
     }
+
 }

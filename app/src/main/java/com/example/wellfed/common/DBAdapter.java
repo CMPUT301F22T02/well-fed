@@ -13,6 +13,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 // TODO: Cite: firestore/quickstart
 
@@ -75,6 +78,16 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
 
     protected DocumentSnapshot getSnapshot(int index) {
         return snapshots.get(index);
+    }
+
+    protected void setSnapshots(List<DocumentSnapshot> snapshots){
+        this.snapshots.clear();
+        this.snapshots.addAll(snapshots);
+        notifyDataSetChanged();
+    }
+
+    protected ArrayList<DocumentSnapshot> getSnapshots(){
+        return snapshots;
     }
 
     @Override public int getItemCount() {
