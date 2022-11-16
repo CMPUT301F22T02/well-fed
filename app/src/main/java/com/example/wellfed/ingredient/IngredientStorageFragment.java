@@ -1,6 +1,7 @@
 package com.example.wellfed.ingredient;
 
 import android.app.AlertDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -48,6 +50,10 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 	 * ImageFilterButton is the button that filters the ingredients by image.
 	 */
 	private ImageFilterButton imageFilterButton;
+	/**
+	 * The cross icon that clears the search bar.
+	 */
+	private ImageView crossIcon;
 
 	/**
 	 * ActivityResultLauncher for the IngredientEditActivity to edit an
@@ -138,16 +144,25 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 
 		// Search bar
 		TextInputEditText searchBar = view.findViewById(R.id.ingredient_storage_search);
+		// Clear search bar
+		crossIcon = view.findViewById(R.id.clear_search);
+		crossIcon.setOnClickListener(v -> searchBar.setText(""));
 
 		// On search bar text change show "Functionality not implemented yet"
 		// message
 		searchBar.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 			}
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (s.length() > 0) {
+					crossIcon.setVisibility(View.VISIBLE);
+				} else {
+					crossIcon.setVisibility(View.INVISIBLE);
+				}
 			}
 
 			@Override
