@@ -1,30 +1,52 @@
-//package com.example.wellfed.mealplan;
-//
-//import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-//
-//import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-//
-//import android.media.Image;
-//import android.util.Log;
-//
-//import com.example.wellfed.ingredient.Ingredient;
-//import com.example.wellfed.ingredient.StorageIngredient;
-//import com.example.wellfed.ingredient.StorageIngredientDB;
-//import com.example.wellfed.recipe.Recipe;
-//import com.example.wellfed.recipe.RecipeDB;
-//import com.example.wellfed.recipe.RecipeIngredientDB;
-//import com.google.firebase.firestore.CollectionReference;
-//import com.google.firebase.firestore.DocumentReference;
-//import com.google.firebase.firestore.DocumentSnapshot;
-//import com.google.firebase.firestore.FirebaseFirestore;
-//import com.google.firebase.firestore.Transaction;
-//
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Objects;
-//import java.util.concurrent.CountDownLatch;
+package com.example.wellfed.mealplan;
+
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
+import android.media.Image;
+import android.util.Log;
+
+import com.example.wellfed.common.DBConnection;
+import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.example.wellfed.ingredient.StorageIngredientDB;
+import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.recipe.RecipeDB;
+import com.example.wellfed.recipe.RecipeIngredientDB;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Transaction;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
+
+/**
+ * This class is used to access the meal plan database.
+ * It contains methods to add, remove, and update meal plans.
+ * It also contains methods to add, remove, and update recipes in meal plans.
+ */
+public class MealPlanDB {
+    /**
+     * Declares tag for logging purposes.
+     */
+    private final static String TAG = "MealPlanDB";
+
+    /**
+     * Holds the instance of the Firebase Firestore DB.
+     */
+    private FirebaseFirestore db;
+    /**
+     * Holds the collection for the users MealPlan collection in DB.
+     */
+    private CollectionReference collection;
+}
 //
 //public class MealPlanDB {
 //
