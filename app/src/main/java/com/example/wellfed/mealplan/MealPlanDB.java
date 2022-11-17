@@ -20,6 +20,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Transaction;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,13 +41,24 @@ public class MealPlanDB {
     private final static String TAG = "MealPlanDB";
 
     /**
-     * Holds the instance of the Firebase Firestore DB.
+     * Holds the instance of the Firebase FireStore DB.
      */
     private FirebaseFirestore db;
+
     /**
-     * Holds the collection for the users MealPlan collection in DB.
+     * Holds the instance of the RecipeDB.
      */
-    private CollectionReference collection;
+    private RecipeDB recipeDB;
+
+    /**
+     * Holds the instance of the StorageIngredientDB.
+     */
+    private StorageIngredientDB storageIngredientDB;
+
+    /**
+     * Holds the CollectionReference for the users MealPlan collection.
+     */
+    private CollectionReference mealPlanCollection;
 
     /**
      * This interface is used to handle the result of
@@ -110,7 +123,27 @@ public class MealPlanDB {
          */
         void onUpdateMealPlanResult(MealPlan mealPlan, boolean success);
     }
+
+    /**
+     * Constructor for class MealPlanDB, initializes declared fields.
+     * @param connection the DBConnection object used to access the db.
+     */
+    public MealPlanDB(DBConnection connection) {
+        // Creates new instances of RecipeDB and storageIngredientDB
+        // based on current user connection.
+        recipeDB = new RecipeDB(connection);
+        storageIngredientDB = new StorageIngredientDB(connection);
+
+        // Gets the instance of the Firebase FireStore DB based
+        // on current user connection.
+        this.db = connection.getDB();
+
+        // Gets the current user's MealPlan collection from db,
+        // create one if the collection DNE.
+        this.mealPlanCollection = connection.getCollection("MealPlan");
+        }
 }
+
 
 //
 //public class MealPlanDB {
