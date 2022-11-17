@@ -13,21 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
-import com.example.wellfed.common.Launcher;
 import com.example.wellfed.ingredient.IngredientEditContract;
 import com.example.wellfed.ingredient.IngredientStorageController;
 import com.example.wellfed.ingredient.StorageIngredient;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 
 public class ShoppingCartFragment extends Fragment implements
         PopupMenu.OnMenuItemClickListener {
@@ -141,14 +137,6 @@ public class ShoppingCartFragment extends Fragment implements
         recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
     }
 
-    // show dropdown menu when button is clicked
-    public void showDropDown(View v) {
-        PopupMenu popupMenu = new PopupMenu(getContext(), v);
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.shopping_cart_dropdown);
-        popupMenu.show();
-    }
-
     // Define behavior for each option in dropdown menu
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -241,5 +229,13 @@ public class ShoppingCartFragment extends Fragment implements
 
     public void launch(ShoppingCartIngredient ingredient) {
         dialog.show();
+    }
+
+    // show dropdown menu when button is clicked
+    public void showDropDown(View v) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.shopping_cart_dropdown);
+        popupMenu.show();
     }
 }
