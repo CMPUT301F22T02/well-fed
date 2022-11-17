@@ -46,7 +46,72 @@ public class MealPlanDB {
      * Holds the collection for the users MealPlan collection in DB.
      */
     private CollectionReference collection;
+
+    /**
+     * This interface is used to handle the result of
+     * adding MealPlan to the db.
+     */
+    public interface OnAddMealPlanListener {
+        /**
+         * Called when addMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object added to the db,
+         *                 null if the add operation failed.
+         * @param success  true if the add operation was successful,
+         *                 false otherwise.
+         */
+        void onAddMealPlanResult(MealPlan mealPlan, boolean success);
+    }
+
+    /**
+     * This interface is used to handle the result of
+     * deleting the chosen MealPlan object from the db.
+     */
+    public interface OnDeleteMealPlanListener {
+        /**
+         * Called when deleteMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object deleted from the db,
+         *                 null if the delete operation failed.
+         * @param success  true if the delete operation was successful,
+         *                 false otherwise.
+         */
+        void onDeleteMealPlanResult(MealPlan mealPlan, boolean success);
+    }
+
+    /**
+     * This interface is used to handle the result of
+     * finding the MealPlan object in the db.
+     */
+    public interface OnGetMealPlanListener {
+        /**
+         * Called when getMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object found in the db,
+         *                 null if the get operation failed.
+         * @param success  true if the get operation was successful,
+         *                 false otherwise.
+         */
+        void onGetMealPlanResult(MealPlan mealPlan, boolean success);
+    }
+
+    /**
+     * This interface is used to handle the result of
+     * updating the chosen MealPlan object in the db.
+     */
+    public interface OnUpdateMealPlanListener {
+        /**
+         * Called when updateMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object updated in the db,
+         *                 null if the update operation failed.
+         * @param success  true if the update operation was successful,
+         *                 false otherwise.
+         */
+        void onUpdateMealPlanResult(MealPlan mealPlan, boolean success);
+    }
 }
+
 //
 //public class MealPlanDB {
 //
