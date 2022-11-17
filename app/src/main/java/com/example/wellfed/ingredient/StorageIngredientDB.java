@@ -61,7 +61,7 @@ public class StorageIngredientDB {
 
     /**
      * This interface is used to handle the result of
-     * adding StorageIngredient to the db
+     * deleting the chosen StorageIngredient object from the db
      */
     public interface OnDeleteStorageIngredientListener {
         /**
