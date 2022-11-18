@@ -1,35 +1,17 @@
 package com.example.wellfed.mealplan;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-
-import android.media.Image;
-import android.util.Log;
-
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
-import com.example.wellfed.ingredient.StorageIngredient;
-import com.example.wellfed.ingredient.StorageIngredientDB;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
-import com.example.wellfed.recipe.RecipeIngredientDB;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.Transaction;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * This class is used to access the meal plan database.
@@ -190,9 +172,9 @@ public class MealPlanDB {
         // Adds the MealPlan mapping to the db.
         this.mealPlanCollection
                 .add(mealPlanMap)
-                .addOnSuccessListener(addedSnapshot -> {
+                .addOnSuccessListener(addedMealPlanDoc -> {
                     // Set the document id for the MealPlan object.
-                    mealPlan.setId(addedSnapshot.getId());
+                    mealPlan.setId(addedMealPlanDoc.getId());
                     listener.onAddMealPlanResult(mealPlan, true);
                 })
                 .addOnFailureListener(failure -> {
@@ -297,6 +279,16 @@ public class MealPlanDB {
                 .addOnFailureListener(failure -> {
                     listener.onDeleteMealPlanResult(null, false);
                 });
+    }
+
+    /**
+     * Fet the DocumentReference object for the MealPlan document with the given id.
+     *
+     * @param id the id of the MealPlan document.
+     * @return the DocumentReference object for the MealPlan document.
+     */
+    public DocumentReference getMealPlanDocumentReference(String id) {
+        return this.mealPlanCollection.document(id);
     }
 
     /** Gets a query for MealPlans in the db.
