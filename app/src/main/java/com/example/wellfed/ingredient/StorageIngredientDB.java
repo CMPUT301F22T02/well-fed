@@ -395,7 +395,7 @@ public class StorageIngredientDB {
     }
 
     /**
-     * Gets a query for StorageIngredients in Firestore
+     * Gets a query for StorageIngredients in FireStore
      *
      * @return the query
      */
