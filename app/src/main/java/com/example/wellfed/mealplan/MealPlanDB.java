@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.ingredient.IngredientDB;
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
 import com.example.wellfed.recipe.Recipe;
@@ -53,7 +54,7 @@ public class MealPlanDB {
     /**
      * Holds the instance of the StorageIngredientDB.
      */
-    private StorageIngredientDB storageIngredientDB;
+    private IngredientDB ingredientDB;
 
     /**
      * Holds the CollectionReference for the users MealPlan collection.
@@ -132,7 +133,7 @@ public class MealPlanDB {
         // Creates new instances of RecipeDB and storageIngredientDB
         // based on current user connection.
         recipeDB = new RecipeDB(connection);
-        storageIngredientDB = new StorageIngredientDB(connection);
+        ingredientDB = new IngredientDB(connection);
 
         // Gets the instance of the Firebase FireStore DB based
         // on current user connection.
@@ -141,43 +142,62 @@ public class MealPlanDB {
         // Gets the current user's MealPlan collection from db,
         // create one if the collection DNE.
         this.mealPlanCollection = connection.getCollection("MealPlan");
+    }
+
+    /**
+     * This method is used to add a MealPlan object to the db.
+     * @param mealPlan the MealPlan object to be added to the db.
+     * @param listener the OnAddMealPlanListener object to handle the result.
+     */
+    public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) throws Exception {
+        // Declares variables for storing references to ingredients and recipes
+        // in the MealPlan object.
+        ArrayList<DocumentReference> mealPlanIngredientDocuments = new ArrayList<>();
+        ArrayList<DocumentReference> mealPlanRecipeDocuments = new ArrayList<>();
+
+        // TODO: The US seems to suggest that it should be StorageIngredient that's stored in the MealPlan object, not Ingredient.
+        for (Ingredient i: mealPlan.getIngredients()) {
+            if (i.getId() != null) {
+                // If the ingredient has an id, gets the ingredient's reference from db.
+                DocumentReference ingredientRef = ingredientDB.getDocumentReference(i);
+                mealPlanIngredientDocuments.add(ingredientRef);
+            } else {
+                throw new Exception("Ingredient object with a null id detected");
+            }
         }
+
+        for (Recipe r: mealPlan.getRecipes()) {
+            if (r.getId() != null) {
+                // If the recipe has an id, gets the recipe's reference from db.
+                DocumentReference recipeRef = recipeDB.getDocumentReference(r.getId());
+                mealPlanRecipeDocuments.add(recipeRef);
+            } else {
+                throw new Exception("Recipe object with a null id detected");
+            }
+        }
+
+        // Initialize MealPlan object mapping.
+        HashMap<String, Object> mealPlanMap = new HashMap<>();
+        mealPlanMap.put("Title", mealPlan.getTitle());
+        mealPlanMap.put("Category", mealPlan.getCategory());
+        mealPlanMap.put("eat date", mealPlan.getEatDate());
+        mealPlanMap.put("servings", mealPlan.getServings());
+        mealPlanMap.put("ingredients", mealPlanIngredientDocuments);
+        mealPlanMap.put("recipes", mealPlanRecipeDocuments);
+
+        this.mealPlanCollection
+                .add(mealPlanMap)
+                .addOnSuccessListener(addedSnapshot -> {
+                    // Set the document id for the MealPlan object.
+                    mealPlan.setId(addedSnapshot.getId());
+                    listener.onAddMealPlanResult(mealPlan, true);
+                })
+                .addOnFailureListener(failure -> {
+                    listener.onAddMealPlanResult(null, false);
+                });
+    }
+
 }
-
-
-//
-//public class MealPlanDB {
-//
-//    /**
-//     * Holds an instance of the Firebase Firestore database
-//     */
-//    private final FirebaseFirestore db;
-//
-//    /**
-//     * Holds a collection to the Recipes stored in the FireStore db database
-//     */
-//    final CollectionReference mealCollection;
-//
-//    /**
-//     * Holds a collection to Ingredients stored in the FireStore db database
-//     */
-//    final StorageIngredientDB ingredientDB;
-//
-//    /**
-//     * Holds a collection to Ingredients stored in the FireStore db database
-//     */
-//    final RecipeDB recipeDB;
-//
-//
-//    /**
-//     * Create a MealPlanDB object
-//     */
-//    public MealPlanDB(){
-//        db = FirebaseFirestore.getInstance();
-//        this.mealCollection = db.collection("MealPlans");
-//        this.recipeDB = new RecipeDB();
-//        this.ingredientDB = new StorageIngredientDB();
-//    }
 //
 //    /**
 //     * Adds new MealPlan to the database.
