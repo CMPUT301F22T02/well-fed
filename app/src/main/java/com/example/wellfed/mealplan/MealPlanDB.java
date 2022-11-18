@@ -19,6 +19,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.Transaction;
 
 import org.checkerframework.checker.units.qual.C;
@@ -296,6 +297,13 @@ public class MealPlanDB {
                 .addOnFailureListener(failure -> {
                     listener.onDeleteMealPlanResult(null, false);
                 });
+    }
+
+    /** Gets a query for MealPlans in the db.
+     * @return the query for MealPlans in the db.
+     */
+    public Query getQuery() {
+        return this.mealPlanCollection;
     }
 }
 
