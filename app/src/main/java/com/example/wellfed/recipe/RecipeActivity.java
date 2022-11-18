@@ -81,7 +81,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
             recipe = foundRecipe;
             title.setText(recipe.getTitle());
-            prepTime.setText("Prepartion time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+            prepTime.setText("Preparation time: " + Integer.toString(recipe.getPrepTimeMinutes()));
             servings.setText("Servings: " + Integer.toString(recipe.getServings()));
             category.setText("Category: " + recipe.getCategory());
             description.setText(recipe.getComments());

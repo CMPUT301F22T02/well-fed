@@ -205,6 +205,10 @@ public class MealPlanDB {
      * @param listener the OnGetMealPlanListener object to handle the result.
      */
     public void getMealPlan(String id, OnGetMealPlanListener listener) {
+        if (id == null) {
+            listener.onGetMealPlanResult(null, false);
+            return;
+        }
         // Get reference to the MealPlan document with the given id.
         DocumentReference mealPlanRef = this.mealPlanCollection.document(id);
         mealPlanRef.get()
@@ -269,6 +273,28 @@ public class MealPlanDB {
                 // If the MealPlan document is not found, return null.
                 .addOnFailureListener(failure -> {
                     listener.onGetMealPlanResult(null, false);
+                });
+    }
+
+    /**
+     * Deletes the MealPlan object with the given id from the db.
+     *
+     * @param id the id of the MealPlan object to be deleted.
+     * @param listener the OnDeleteMealPlanListener object to handle the result.
+     */
+    public void deleteMealPlan(String id, OnDeleteMealPlanListener listener) {
+        if (id == null) {
+            listener.onDeleteMealPlanResult(null, false);
+        }
+
+        // Get reference to the MealPlan document with the given id.
+        DocumentReference mealPlanRef = this.mealPlanCollection.document(id);
+        mealPlanRef.delete()
+                .addOnSuccessListener(success -> {
+                    listener.onDeleteMealPlanResult(new MealPlan(id), true);
+                })
+                .addOnFailureListener(failure -> {
+                    listener.onDeleteMealPlanResult(null, false);
                 });
     }
 }
