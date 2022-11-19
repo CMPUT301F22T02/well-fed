@@ -282,7 +282,7 @@ public class MealPlanDB {
      * @param id the id of the MealPlan object to be deleted.
      * @param listener the OnDeleteMealPlanListener object to handle the result.
      */
-    public void deleteMealPlan(String id, OnDeleteMealPlanListener listener) {
+    public void delMealPlan(String id, OnDeleteMealPlanListener listener) {
         if (id == null) {
             listener.onDeleteMealPlanResult(null, false);
         }
@@ -309,47 +309,25 @@ public class MealPlanDB {
             listener.onUpdateMealPlanResult(null, false);
         }
 
-        // Similar to that in addMealPlan(). We fetch references to ingredients
-        // and recipes stored in the MealPlan object.
-        ArrayList<DocumentReference> mealPlanIngredientDocuments = new ArrayList<>();
-        ArrayList<DocumentReference> mealPlanRecipeDocuments = new ArrayList<>();
-
-        for (Ingredient i: mealPlan.getIngredients()) {
-            if (i.getId() != null) {
-                // If the ingredient has an id, gets the ingredient's reference from db.
-                DocumentReference ingredientRef = ingredientDB.getDocumentReference(i);
-                mealPlanIngredientDocuments.add(ingredientRef);
+        // Adds the new MealPlan object to the db.
+        addMealPlan(mealPlan, (addedMealPlan, success1) -> {
+            // Check if the MealPlan object was added successfully.
+            if (addedMealPlan == null) {
+                listener.onUpdateMealPlanResult(null, false);
             } else {
-                throw new Exception("Ingredient object with a null id detected");
+                listener.onUpdateMealPlanResult(addedMealPlan, true);
             }
-        }
 
-        for (Recipe r: mealPlan.getRecipes()) {
-            if (r.getId() != null) {
-                // If the recipe has an id, gets the recipe's reference from db.
-                DocumentReference recipeRef = recipeDB.getDocumentReference(r.getId());
-                mealPlanRecipeDocuments.add(recipeRef);
-            } else {
-                throw new Exception("Recipe object with a null id detected");
-            }
-        }
-
-        // Get reference to the MealPlan document with the given id.
-        DocumentReference mealPlanRef = this.mealPlanCollection.document(mealPlan.getId());
-
-        // Update the MealPlan document based on the object.
-        mealPlanRef.update("title", mealPlan.getTitle(),
-                        "category", mealPlan.getCategory(),
-                        "eat date", mealPlan.getEatDate(),
-                        "servings", mealPlan.getServings(),
-                        "ingredients", mealPlanIngredientDocuments,
-                        "recipes", mealPlanRecipeDocuments)
-                .addOnSuccessListener(success -> {
-                    listener.onUpdateMealPlanResult(mealPlan, true);
-                })
-                .addOnFailureListener(failure -> {
+            // Deletes the old MealPlan object.
+            delMealPlan(mealPlan.getId(), (deletedMealPlan, success2) -> {
+                // Check if the MealPlan object was deleted successfully.
+                if (deletedMealPlan == null) {
                     listener.onUpdateMealPlanResult(null, false);
-                });
+                } else {
+                    listener.onUpdateMealPlanResult(addedMealPlan, true);
+                }
+            });
+        });
     }
 
 
