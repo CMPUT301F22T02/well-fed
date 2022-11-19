@@ -1,6 +1,8 @@
 package com.example.wellfed.ingredient;
 
 
+import com.example.wellfed.common.UTCDate;
+
 import java.util.Date;
 
 public class StorageIngredient extends Ingredient implements Comparable<StorageIngredient> {
@@ -182,8 +184,8 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * @return The best before date of the ingredient in the storage in yyyy-MM-dd format
      */
     public String getBestBefore() {
-        String[] date = bestBefore.toString().split(" ");
-        return date[1] + " " + date[2];
+        UTCDate bestBefore = UTCDate.from(this.bestBefore);
+        return bestBefore.format("yyyy-MM-dd");
     }
 
     /**

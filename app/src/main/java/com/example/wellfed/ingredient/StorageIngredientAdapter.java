@@ -178,7 +178,8 @@ public class StorageIngredientAdapter
 			String subText = category + " | " + location;
 			this.subTextView.setText(subText);
 			this.bestBeforeTextView.setText(storageIngredient.getBestBefore());
-			if (storageIngredient.getBestBeforeDate().before(new Date())) {
+			if (storageIngredient.getBestBeforeDate().before(
+				new Date(new Date().getTime() - (new Date().getTime() % 86400000)))) {
 				this.bestBeforeTextView.setTextColor(Color.RED);
 				this.subTextView.setTextColor(Color.RED);
 				this.textView.setTextColor(Color.RED);
