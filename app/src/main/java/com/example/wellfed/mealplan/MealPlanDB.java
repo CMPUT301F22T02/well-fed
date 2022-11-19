@@ -132,7 +132,7 @@ public class MealPlanDB {
      * @param mealPlan the MealPlan object to be added to the db.
      * @param listener the OnAddMealPlanListener object to handle the result.
      */
-    public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) throws Exception {
+    public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) throws InterruptedException {
         // Stores each ingredient as a HashMap with fields:
         // ingredientRef, amount & unit.
         ArrayList<HashMap<String, Object>> mealPlanIngredients = new ArrayList<>();
@@ -177,7 +177,16 @@ public class MealPlanDB {
                 DocumentReference recipeRef = recipeDB.getDocumentReference(r.getId());
                 mealPlanRecipes.add(recipeRef);
             } else {
-                throw new Exception("Recipe object with a null id detected");
+                // If the recipe does not exist, we add it to the db.
+                recipeDB.addRecipe(r, (addedRecipe, success) -> {
+                    if (addedRecipe == null) {
+                        listener.onAddMealPlanResult(null, false);
+                        return;
+                    }
+                    r.setId(addedRecipe.getId());
+
+                    mealPlanRecipes.add(recipeDB.getDocumentReference(addedRecipe.getId()));
+                });
             }
         }
 
