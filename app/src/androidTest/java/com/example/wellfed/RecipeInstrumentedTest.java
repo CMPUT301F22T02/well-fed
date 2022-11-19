@@ -10,6 +10,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.times;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -22,6 +23,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.util.concurrent.TimeUnit;
 
 
 import android.app.Activity;
@@ -51,6 +55,8 @@ import org.junit.runner.RunWith;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class) public class RecipeInstrumentedTest {
+
+    private final Object lock = new Object();
 
     /**
      * Holds the ActivityScenarioRule
@@ -109,7 +115,9 @@ import org.junit.runner.RunWith;
     @Test public void testAddAndDeleteRecipe() throws InterruptedException {
 
         onView(withId(R.id.fab)).perform(click());
-        //onView(withId(R.id.recipe_img)).perform(click());
+
+        Thread.sleep(2000);
+
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Wrap"));
         closeSoftKeyboard();
 
@@ -129,6 +137,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.commentsEditText)).perform(typeText("This breakfast is great for on the go."));
         closeSoftKeyboard();
+
 
         onView(withId(R.id.ingredient_search_btn)).perform(click());
         //pick an ingredient check if recycler view is non empty
@@ -162,13 +171,17 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
+
         onView(withId(R.id.save_fab)).perform(click());
 
+
         Thread.sleep(2000);
+
         onView(withText("Egg Wrap")).perform(click());
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
+
         Thread.sleep(2000);
         
         onView(withText("Egg Wrap")).check(doesNotExist());
@@ -205,9 +218,10 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.ingredient_search_btn)).perform(click());
         //pick an ingredient check if recycler view is non empty
-        onView(withId(R.id.ingredient_storage_list)).perform(click());
+        onView(withId(R.id.ingredient_storage_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
         intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+
         closeSoftKeyboard();
         onView(withId(R.id.unitInput)).perform(click());
         onView(withText("lb"))
@@ -272,11 +286,12 @@ import org.junit.runner.RunWith;
     /**
      * Test viewing a single recipe
      */
-    @Test public void TestViewingRecipe(){
-        Intents.init();
+    @Test public void TestViewingRecipe() throws InterruptedException {
 
         onView(withId(R.id.fab)).perform(click());
-        //onView(withId(R.id.recipe_img)).perform(click());
+
+        Thread.sleep(2000);
+
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Test"));
         closeSoftKeyboard();
 
@@ -319,6 +334,8 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.save_fab)).perform(click());
 
+        Thread.sleep(2000);
+
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Test"), click()));
 
@@ -353,31 +370,5 @@ import org.junit.runner.RunWith;
      */
     @Test public void testEditingIngredientOfARecipe(){
 
-    }
-    /**
-     * test add and delete recipe
-     */
-    @Test public void testAddDeleteRecipe() {
-        onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.recipe_title_editText)).perform(clearText());
-        onView(withId(R.id.recipe_title_editText)).perform(typeText("Tacos"));
-        onView(withId(R.id.recipe_prep_time_editText)).perform(clearText());
-        onView(withId(R.id.recipe_prep_time_editText)).perform(typeText("10"));
-        onView(withId(R.id.recipe_no_of_servings_editText)).perform(
-                clearText());
-        onView(withId(R.id.recipe_no_of_servings_editText)).perform(
-                typeText("2"));
-        onView(withId(R.id.recipe_category_textEdit)).perform(click());
-        onView(withText("Lunch")).inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        onView(withId(R.id.commentsEditText)).perform(typeText(
-                "Ground beef and homemade taco seasoning" +
-                        "make the best taco meat in this classic easy" +
-                        "recipe that's better than take out."));
-        closeSoftKeyboard();
-        onView(withId(R.id.save_fab)).perform(click());
-        onView(withText("Tacos")).perform(click());
-        onView(withId(R.id.recipe_delete_btn)).perform(click());
-        onView(withText("Delete")).perform(click());
     }
 }
