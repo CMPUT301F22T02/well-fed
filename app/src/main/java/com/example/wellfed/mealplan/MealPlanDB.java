@@ -133,47 +133,68 @@ public class MealPlanDB {
      * @param listener the OnAddMealPlanListener object to handle the result.
      */
     public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) throws Exception {
-        // Declares variables for storing references to ingredients and recipes
-        // in the MealPlan object.
-        ArrayList<DocumentReference> mealPlanIngredientDocuments = new ArrayList<>();
-        ArrayList<DocumentReference> mealPlanRecipeDocuments = new ArrayList<>();
-
-        // TODO: The US seems to suggest that it should be StorageIngredient that's stored in the MealPlan object, not Ingredient.
+        // Store each ingredient as a HashMap with fields:
+        // ingredientRef, amount & unit.
+        ArrayList<HashMap<String, Object>> mealPlanIngredients = new ArrayList<>();
         for (Ingredient i: mealPlan.getIngredients()) {
-            if (i.getId() != null) {
-                // If the ingredient has an id, gets the ingredient's reference from db.
-                DocumentReference ingredientRef = ingredientDB.getDocumentReference(i);
-                mealPlanIngredientDocuments.add(ingredientRef);
-            } else {
-                throw new Exception("Ingredient object with a null id detected");
-            }
+            // Gets ingredient from db.
+            ingredientDB.getIngredient(i, (foundIngredient, success1) -> {
+                // Initialize a mapping for the ingredient.
+                HashMap<String, Object> ingredientMap = new HashMap<>();
+
+                // If the ingredient already exists in our Ingredient collection.
+                if (foundIngredient != null) {
+                    DocumentReference ingredientRef = ingredientDB.getDocumentReference(foundIngredient);
+                    i.setId(foundIngredient.getId());
+
+                    ingredientMap.put("ingredientRef", ingredientRef);
+                    ingredientMap.put("amount", i.getAmount());
+                    ingredientMap.put("unit", i.getUnit());
+                } else {
+                    // If the ingredient does not exist in our Ingredient collection,
+                    // we will create a new ingredient for it.
+                    ingredientDB.addIngredient(i, (addedIngredient, success2) -> {
+//                        if (addedIngredient == null) {
+//                            listener.onAddMealPlanResult(null, false);
+//                            return;
+//                        }
+                        i.setId(addedIngredient.getId());
+
+                        ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(addedIngredient));
+                        ingredientMap.put("amount", i.getAmount());
+                        ingredientMap.put("unit", i.getUnit());
+                    });
+                }
+            });
         }
 
+        // Stores references to recipes in the MealPlan object.
+        ArrayList<DocumentReference> mealPlanRecipes = new ArrayList<>();
         for (Recipe r: mealPlan.getRecipes()) {
             if (r.getId() != null) {
                 // If the recipe has an id, gets the recipe's reference from db.
                 DocumentReference recipeRef = recipeDB.getDocumentReference(r.getId());
-                mealPlanRecipeDocuments.add(recipeRef);
+                mealPlanRecipes.add(recipeRef);
             } else {
                 throw new Exception("Recipe object with a null id detected");
             }
         }
 
-        // Initialize MealPlan object mapping.
+        // Initialize MealPlan document mapping.
         HashMap<String, Object> mealPlanMap = new HashMap<>();
         // Fill the map.
         mealPlanMap.put("title", mealPlan.getTitle());
         mealPlanMap.put("category", mealPlan.getCategory());
         mealPlanMap.put("eat date", mealPlan.getEatDate());
         mealPlanMap.put("servings", mealPlan.getServings());
-        mealPlanMap.put("ingredients", mealPlanIngredientDocuments);
-        mealPlanMap.put("recipes", mealPlanRecipeDocuments);
+        mealPlanMap.put("ingredients", mealPlanIngredients);
+        mealPlanMap.put("recipes", mealPlanRecipes);
 
         // Adds the MealPlan mapping to the db.
         this.mealPlanCollection
                 .add(mealPlanMap)
                 .addOnSuccessListener(addedMealPlanDoc -> {
-                    // Set the document id for the MealPlan object.
+                    // Sets the document id for the MealPlan object.
                     mealPlan.setId(addedMealPlanDoc.getId());
                     listener.onAddMealPlanResult(mealPlan, true);
                 })
