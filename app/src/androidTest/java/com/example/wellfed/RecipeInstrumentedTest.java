@@ -2,6 +2,7 @@ package com.example.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressKey;
@@ -59,13 +60,23 @@ import org.junit.runner.RunWith;
      * Setup Recipe test by navigating to RecipeBookFragment
      */
     @Before public void before() throws InterruptedException {
+        onView(withId(R.id.recipe_book_item)).perform(click());
+
+        Intents.init();
+    }
+
+    /**
+     * Adds an ingredient to the ingredient storage.
+     * This is used to test adding existing ingredients to recipe.
+     */
+    public void addPreexistingIngredient (String description) {
         // pre-add storage ingredient
         onView(withId(R.id.ingredient_storage_item)).perform(click());
 
         // typing description input
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withId(R.id.descriptionInputEditText)).perform(typeText("Tortilla"));
+        onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
         closeSoftKeyboard();
 
         // typing best before input - this should get current day as best before
@@ -96,20 +107,16 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         onView(withId(R.id.recipe_book_item)).perform(click());
-
-        Intents.init();
     }
 
     /**
      * Types out a mock recipe.
      * @throws InterruptedException
      */
-    public void typeMockRecipe() throws InterruptedException {
+    public void typeMockRecipe(String description) throws InterruptedException {
         onView(withId(R.id.fab)).perform(click());
 
-        Thread.sleep(2000);
-
-        onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Wrap"));
+        onView(withId(R.id.edit_recipe_title)).perform(typeText(description));
         closeSoftKeyboard();
 
         onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("5"));
@@ -159,8 +166,8 @@ import org.junit.runner.RunWith;
      * Test adding a full recipe with 2 ingredients (one searched, one added) and deleting a recipe
      */
     @Test public void testAddAndDeleteRecipe() throws InterruptedException {
-
-        typeMockRecipe();
+        addPreexistingIngredient("Tortilla");
+        typeMockRecipe("Egg Wrap");
 
         onView(withId(R.id.ingredient_search_btn)).perform(click());
         //pick an ingredient check if recycler view is non empty
@@ -195,8 +202,9 @@ import org.junit.runner.RunWith;
 
 
     @Test public void testAddOnInvalidRecipe() throws InterruptedException {
+        addPreexistingIngredient("Tortilla");
 
-        typeMockRecipe();
+        typeMockRecipe("Egg Wrap");
 
         //Try to add without ingredients
         onView(withId(R.id.save_fab)).perform(click());
@@ -255,7 +263,7 @@ import org.junit.runner.RunWith;
      */
     @Test public void TestViewingRecipe() throws InterruptedException {
 
-        typeMockRecipe();
+        typeMockRecipe("Egg Wrap");
 
         addMockIngredient("Egg");
 
@@ -284,7 +292,7 @@ import org.junit.runner.RunWith;
      * Test deleting an added Ingredient from recipe
      */
     @Test public void testDelIngredientFromRecipe() throws InterruptedException {
-        typeMockRecipe();
+        typeMockRecipe("Egg Wrap");
 
         addMockIngredient("Egg");
 
@@ -327,13 +335,13 @@ import org.junit.runner.RunWith;
      * TODO: deal with thread.sleep?
      */
     @Test public void testEditingARecipe() throws InterruptedException {
-        typeMockRecipe();
+        typeMockRecipe("Egg Wrap");
 
         addMockIngredient("Egg");
 
         onView(withId(R.id.save_fab)).perform(click());
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Wrap"), click()));
 
@@ -347,12 +355,12 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.save_fab)).perform(click());
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         // check edit
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
         onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 5")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
@@ -371,12 +379,12 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.save_fab)).perform(click());
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         // check edit
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
         onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
@@ -396,11 +404,11 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.save_fab)).perform(click());
 
         // check edit
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
         onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
@@ -420,11 +428,11 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.save_fab)).perform(click());
 
         // check edit
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
         onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
@@ -444,11 +452,11 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.save_fab)).perform(click());
 
         // check edit
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
         onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
@@ -460,12 +468,61 @@ import org.junit.runner.RunWith;
     }
     /**
      * Test editing the details of an ingredient in a Recipe
+     * TODO: write this test after functionality is added
      */
     @Test public void testEditingIngredientOfARecipe(){
-        
+
     }
 
-    @Test public void viewListOfRecipes() {
+    /**
+     * Test adding a handful of recipes, and viewing the list of all of them
+     */
+    @Test public void viewListOfRecipes() throws InterruptedException {
+        typeMockRecipe("Egg Wrap");
+        addMockIngredient("Egg");
+        onView(withId(R.id.save_fab)).perform(click());
+        typeMockRecipe("Egg Salad");
+        addMockIngredient("Egg");
+        onView(withId(R.id.save_fab)).perform(click());
+        typeMockRecipe("Tacos");
+        addMockIngredient("Ground beef");
+        onView(withId(R.id.save_fab)).perform(click());
+        typeMockRecipe("Chicken pot pie");
+        addMockIngredient("Chicken");
+        onView(withId(R.id.save_fab)).perform(click());
+        typeMockRecipe("Greek Salad");
+        addMockIngredient("Tomato");
+        onView(withId(R.id.save_fab)).perform(click());
 
+
+        // check whether all of these recipes are present (and in order!)
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Wrap"), click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Wrap")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Salad"), click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Salad")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Tacos"), click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Tacos")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Chicken pot pie"), click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Chicken pot pie")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Greek Salad"), click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Greek Salad")));
     }
 }
