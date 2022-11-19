@@ -213,10 +213,12 @@ public class MealPlanDB {
             listener.onGetMealPlanResult(null, false);
             return;
         }
+
         // Get reference to the MealPlan document with the given id.
         DocumentReference mealPlanRef = this.mealPlanCollection.document(id);
         mealPlanRef.get()
                 .addOnSuccessListener(mealPlanDoc -> {
+
                     // Initialize a new MealPlan object and set its fields.
                     MealPlan mealPlan = new MealPlan(mealPlanDoc.getString("title"));
                     mealPlan.setId(mealPlanDoc.getId());
@@ -224,49 +226,43 @@ public class MealPlanDB {
                     mealPlan.setEatDate(mealPlanDoc.getDate("eat date"));
                     mealPlan.setServings(mealPlanDoc.getLong("servings").intValue());
 
-                    // Convert the list of ingredient references to a list of Ingredient objects.
+                    // Initializes an empty ArrayList to store Ingredient objects.
                     ArrayList<Ingredient> ingredients = new ArrayList<>();
-                    for (DocumentReference ingredientRef: (ArrayList<DocumentReference>) mealPlanDoc.get("ingredients")) {
-                        ingredientRef.get()
-                                .addOnSuccessListener(ingredientDoc -> {
-                                    // Create a new Ingredient object and set its fields.
-                                    Ingredient ingredient = new Ingredient(ingredientDoc.getString("description"));
-                                    ingredient.setId(ingredientDoc.getId());
-                                    ingredient.setCategory(ingredientDoc.getString("category"));
-                                    ingredients.add(ingredient);
-                                })
-                                .addOnFailureListener(failure -> {
-                                    listener.onGetMealPlanResult(null, false);
-                                });
+
+                    // Get the list of ingredients from the MealPlan document.
+                    ArrayList<HashMap<String, Object>> mealPlanIngredients = (ArrayList<HashMap<String, Object>>)
+                            mealPlanDoc.get("ingredients");
+
+                    // Iterate over the ArrayList of HashMaps and produce Ingredient objects.
+                    for (HashMap<String, Object> ingredientMap: mealPlanIngredients) {
+                        DocumentReference ingredientRef = (DocumentReference) ingredientMap.get("ingredientRef");
+                        ingredientDB.getIngredient(ingredientRef, (foundIngredient, success) -> {
+                            // Sets amount and unit for the ingredient found in the db based on ingredientRef.
+                            foundIngredient.setAmount((Double) ingredientMap.get("amount"));
+                            foundIngredient.setUnit((String) ingredientMap.get("unit"));
+
+                            // Adds the ingredient to the ArrayList.
+                            ingredients.add(foundIngredient);
+                        });
                     }
 
-                    // Convert the list of recipe references to a list of Recipe objects.
-                    ArrayList<Recipe> recipes = new ArrayList<>();
-                    for (DocumentReference recipeRef: (ArrayList<DocumentReference>) mealPlanDoc.get("recipes")) {
-                        recipeRef.get()
-                                .addOnSuccessListener(recipeDoc -> {
-                                    // Create a new Recipe object and set its fields.
-                                    Recipe recipe = new Recipe(recipeDoc.getString("title"));
-                                    recipe.setId(recipeDoc.getId());
-                                    recipe.setCategory(recipeDoc.getString("category"));
-                                    recipe.setServings(recipeDoc.getLong("servings").intValue());
-                                    recipe.setComments(recipeDoc.getString("comments"));
-                                    recipe.setPhotograph(recipeDoc.getString("photograph"));
-                                    recipe.setPrepTimeMinutes(recipeDoc.getLong("preparation-time").intValue());
-
-                                    // Add the recipe to the list of recipes.
-                                    recipes.add(recipe);
-                                })
-                                .addOnFailureListener(failure -> {
-                                    listener.onGetMealPlanResult(null, false);
-                                });
-                    }
-
-                    // Adds ingredients and recipes to the MealPlan object.
+                    // Adds ingredients to the MealPlan object.
                     for (Ingredient i: ingredients) {
                         mealPlan.addIngredient(i);
                     }
 
+                    // Initializes an empty ArrayList to store Recipe objects.
+                    ArrayList<Recipe> recipes = new ArrayList<>();
+
+                    // Iterate over the ArrayList of DocumentReferences and produce Recipe objects
+                    // using the method implemented in RecipeDB.
+                    for (DocumentReference recipeRef: (ArrayList<DocumentReference>) mealPlanDoc.get("recipes")) {
+                        recipeDB.getRecipe(recipeRef.getId(), (foundRecipe, success) -> {
+                            recipes.add(foundRecipe);
+                        });
+                    }
+
+                    // Adds recipes to the MealPlan object.
                     for (Recipe r: recipes) {
                         mealPlan.addRecipe(r);
                     }
