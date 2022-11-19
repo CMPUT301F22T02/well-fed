@@ -72,6 +72,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                                 recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success) -> {
                                     deletedRecipe.setId("");
                                 });
+                            case "edit":
+                                break;
                             default:
                                 new IllegalArgumentException();
                         }
