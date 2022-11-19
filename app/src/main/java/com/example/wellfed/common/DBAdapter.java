@@ -16,6 +16,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 // TODO: Cite: firestore/quickstart
@@ -50,8 +51,13 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
             return;
         }
 
+        HashMap<String, Integer> oldIndexMap = new HashMap<>();
+        for (int i = 0; i< snapshots.size(); i++){
+            oldIndexMap.put(snapshots.get(i).getId(), i);
+        }
+
         for (DocumentChange change : documentSnapshots.getDocumentChanges()) {
-            int oldIndex = change.getOldIndex();
+            int oldIndex;
             int newIndex = change.getNewIndex();
             switch (change.getType()) {
                 case ADDED:
@@ -59,6 +65,7 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
                     notifyItemInserted(newIndex);
                     break;
                 case MODIFIED:
+                    oldIndex = oldIndexMap.get(change.getDocument().getId());
                     if (oldIndex == newIndex) {
                         snapshots.set(oldIndex, change.getDocument());
                         notifyItemChanged(oldIndex);
@@ -69,8 +76,9 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
                     }
                     break;
                 case REMOVED:
+                    oldIndex = oldIndexMap.get(change.getDocument().getId());
                     snapshots.remove(oldIndex);
-                    notifyItemRemoved(change.getOldIndex());
+                    notifyItemRemoved(oldIndex);
                     break;
             }
         }
