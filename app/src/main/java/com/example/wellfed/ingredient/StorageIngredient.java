@@ -3,6 +3,9 @@ package com.example.wellfed.ingredient;
 
 import java.util.Date;
 
+/**
+ * An Ingredient represented in a user's storage, with added amount, unit, location, and best before.
+ */
 public class StorageIngredient extends Ingredient implements Comparable<StorageIngredient> {
     /**
      * The amount of the ingredient in the storage.

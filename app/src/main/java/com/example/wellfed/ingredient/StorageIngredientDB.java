@@ -15,6 +15,10 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
 
+/**
+ * The StorageIngredientDB class is used to store and retrieve ingredient data represented as
+ * in user's storage, from the database.
+ */
 public class StorageIngredientDB {
     /**
      * Holds the tag for logging purposes
@@ -104,7 +108,7 @@ public class StorageIngredientDB {
     }
 
     /**
-     * Creates a reference to the Firebase DB.
+     * Creates a reference to the Firebase DB for the StorageIngredient collection.
      */
     public StorageIngredientDB(DBConnection connection) {
         this.ingredientsConnection = connection;
@@ -148,11 +152,11 @@ public class StorageIngredientDB {
     }
 
     /**
-     * todo
+     * Adds a StorageIngredient to the StorageIngredientDB
      *
-     * @param storageIngredient
-     * @param ingredient
-     * @param listener
+     * @param storageIngredient The StorageIngredient to add to the DB
+     * @param ingredient        The Ingredient associated with the StorageIngredient to add to the DB
+     * @param listener          The Listener for when a StorageIngredient is added
      */
     private void addStorageIngredient(StorageIngredient storageIngredient,
                                       Ingredient ingredient,
