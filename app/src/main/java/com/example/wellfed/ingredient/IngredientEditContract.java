@@ -9,6 +9,11 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.wellfed.mealplan.MealPlan;
+
+/**
+ * A contract for creating intents to edit an Ingredient, and results of these intents.
+ */
 public class IngredientEditContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
     /**
      * Creates an Intent for the IngredientEditActivity.
@@ -31,13 +36,22 @@ public class IngredientEditContract extends ActivityResultContract<StorageIngred
      * @return Pair object for the result of the IngredientEditActivity.
      */
     @Override
-    public Pair<String, StorageIngredient> parseResult(int i, @Nullable Intent intent) {
-        if (i != Activity.RESULT_OK || intent == null) {
-            return null;
+    public Pair<String, StorageIngredient> parseResult(int i, Intent intent) {
+        switch (i) {
+            case Activity.RESULT_OK:
+                if (intent == null) {
+                    return null;
+                }
+                StorageIngredient storageIngredient =
+                        (StorageIngredient) intent.getSerializableExtra(
+                        "ingredient");
+                String type = intent.getStringExtra("type");
+                return new Pair<>(type, storageIngredient);
+            case Activity.RESULT_CANCELED:
+                return new Pair<>("quit", null);
+            default:
+                return null;
         }
-        String type = intent.getStringExtra("type");
-        StorageIngredient ingredient = (StorageIngredient) intent.getSerializableExtra("ingredient");
-        return new Pair<>(type, ingredient);
     }
 }
 

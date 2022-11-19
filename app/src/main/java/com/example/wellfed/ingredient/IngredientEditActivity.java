@@ -3,6 +3,7 @@ package com.example.wellfed.ingredient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
@@ -16,6 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * The activity that represents editing an Ingredient.
+ */
 public class IngredientEditActivity extends EditActivityBase
         implements ConfirmDialog.OnConfirmListener {
     /**
@@ -48,7 +52,8 @@ public class IngredientEditActivity extends EditActivityBase
     private StorageIngredient ingredient;
 
     /**
-     * OnCreate method for the activity.
+     * OnCreate method for the IngredientEdit activity. Is called when the activity is created.
+     *
      * @param savedInstanceState Bundle object for the activity.
      */
     @Override
@@ -75,17 +80,35 @@ public class IngredientEditActivity extends EditActivityBase
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
 
+
         if (ingredient != null) {
-            descriptionInput.setPlaceholderText(ingredient.getDescription());
-            amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
-            unitInput.setPlaceholderText(ingredient.getUnit());
-            locationInput.setPlaceholderText(ingredient.getLocation());
-            if (ingredient.getCategory() != null) {
-                categoryInput.setPlaceholderText(ingredient.getCategory());
+            String description = ingredient.getDescription();
+            if (description != null) {
+                descriptionInput.setPlaceholderText(description);
             }
-            // Set date in yyyy-MM-dd format
-            bestBeforeLayout.setPlaceholderDate(ingredient.getBestBeforeDate());
+            Double amount = ingredient.getAmount();
+            if (amount != null) {
+                amountInput.setPlaceholderText(String.valueOf(amount));
+            }
+            String unit = ingredient.getUnit();
+            if (unit != null){
+                unitInput.setPlaceholderText(unit);
+            };
+            String location = ingredient.getLocation();
+            if (location != null) {
+                locationInput.setPlaceholderText(location);
+            }
+            String category = ingredient.getCategory();
+            if (category != null) {
+                categoryInput.setPlaceholderText(category);
+            }
+            Date bestBefore = ingredient.getBestBeforeDate();
+            if (bestBefore != null) {
+                bestBeforeLayout.setPlaceholderDate(bestBefore);
+            }
+
         }
+
 
         // Enable back button in action bar to go back to previous activity
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -98,7 +121,8 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * checks if there are unsaved changes
+     * Checks if there are any unsaved changes
+     *
      * @return true if there are unsaved changes, false otherwise
      */
     public Boolean hasUnsavedChanges() {
@@ -121,7 +145,7 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * Method to save the ingredient.
+     * Saves the ingredient.
      */
     private void onSave() {
         // Verify that all fields are filled
@@ -148,11 +172,12 @@ public class IngredientEditActivity extends EditActivityBase
             ingredient = new StorageIngredient(descriptionInput.getText());
             type = "add";
         }
-        Date date = bestBeforeInput.getDate();
-        ingredient = new StorageIngredient(descriptionInput.getText(),
-                amountInput.getDouble(),
-                unitInput.getText(), locationInput.getText(),
-                date);
+        ingredient.setDescription(descriptionInput.getText());
+        ingredient.setAmount(amountInput.getDouble());
+        ingredient.setUnit(unitInput.getText());
+        ingredient.setLocation(locationInput.getText());
+        ingredient.setCategory(categoryInput.getText());
+        ingredient.setBestBefore(bestBeforeInput.getDate());
         Intent intent = new Intent();
         intent.putExtra("type", type);
         intent.putExtra("ingredient", ingredient);

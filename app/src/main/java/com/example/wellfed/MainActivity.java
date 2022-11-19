@@ -6,16 +6,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 
 
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.example.wellfed.navigation.NavigationCollectionAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Stack;
+import java.util.UUID;
 
 public class MainActivity extends ActivityBase {
     final String TAG = "MainActivity";

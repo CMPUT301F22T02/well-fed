@@ -3,6 +3,9 @@ package com.example.wellfed.ingredient;
 
 import java.util.Date;
 
+/**
+ * An Ingredient represented in a user's storage, with added amount, unit, location, and best before.
+ */
 public class StorageIngredient extends Ingredient implements Comparable<StorageIngredient> {
     /**
      * The amount of the ingredient in the storage.
@@ -165,20 +168,6 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      */
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
-    }
-
-    /**
-     * Gets the best before date of the ingredient in the storage.
-     *
-     * @return The best before date of the ingredient in the storage
-     */
-    public String getBestBefore() {
-        if (bestBefore == null) {
-            return null;
-        }
-        String bestBeforeString = bestBefore.toString();
-        String[] bestBeforeSplit = bestBeforeString.split(" ");
-        return bestBeforeSplit[0] + ", " + bestBeforeSplit[1] + " " + bestBeforeSplit[2];
     }
 
     /**

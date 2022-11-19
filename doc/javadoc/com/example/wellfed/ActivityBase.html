@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -175,7 +175,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="ingredient/IngredientActivity.html" title="class in com.example.wellfed.ingredient">IngredientActivity</a></code>, <code><a href="mealplan/MealPlanActivity.html" title="class in com.example.wellfed.mealplan">MealPlanActivity</a></code>, <code><a href="mealplan/MealPlanEditActivity.html" title="class in com.example.wellfed.mealplan">MealPlanEditActivity</a></code>, <code><a href="recipe/RecipeActivity.html" title="class in com.example.wellfed.recipe">RecipeActivity</a></code>, <code><a href="recipe/RecipeEditActivity.html" title="class in com.example.wellfed.recipe">RecipeEditActivity</a></code></dd>
+<dd><code><a href="EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code>, <code><a href="ingredient/IngredientActivity.html" title="class in com.example.wellfed.ingredient">IngredientActivity</a></code>, <code><a href="MainActivity.html" title="class in com.example.wellfed">MainActivity</a></code>, <code><a href="mealplan/MealPlanActivity.html" title="class in com.example.wellfed.mealplan">MealPlanActivity</a></code>, <code><a href="recipe/RecipeActivity.html" title="class in com.example.wellfed.recipe">RecipeActivity</a></code>, <code><a href="recipe/RecipeEditActivity.html" title="class in com.example.wellfed.recipe">RecipeEditActivity</a></code>, <code><a href="recipe/RecipeIngredientSearch.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearch</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">ActivityBase</span>
@@ -270,6 +270,11 @@ extends androidx.appcompat.app.AppCompatActivity</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#makeSnackbar(java.lang.String)">makeSnackbar</a></span>&#8203;(java.lang.String&nbsp;text)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></span>&#8203;(android.view.MenuItem&nbsp;item)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -383,7 +388,7 @@ extends androidx.appcompat.app.AppCompatActivity</pre>
 <a id="onOptionsItemSelected(android.view.MenuItem)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onOptionsItemSelected</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;onOptionsItemSelected&#8203;(android.view.MenuItem&nbsp;item)</pre>
@@ -391,6 +396,15 @@ extends androidx.appcompat.app.AppCompatActivity</pre>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onOptionsItemSelected</code>&nbsp;in class&nbsp;<code>android.app.Activity</code></dd>
 </dl>
+</li>
+</ul>
+<a id="makeSnackbar(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>makeSnackbar</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;makeSnackbar&#8203;(java.lang.String&nbsp;text)</pre>
 </li>
 </ul>
 </li>

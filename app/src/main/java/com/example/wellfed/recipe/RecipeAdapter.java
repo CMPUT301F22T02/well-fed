@@ -15,7 +15,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBAdapter;
 import com.example.wellfed.common.Launcher;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,65 +25,57 @@ import java.util.List;
 /**
  * Adapter for the recipes in the {@link RecipeBookFragment}
  * binds the view to the data
+ *
  * @version 1.0.0
  */
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
+public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
 
     /**
      * stores the reference to list of {@link Recipe}
      */
     private List<Recipe> recipes;
+    private final RecipeDB recipeDB;
 
-    /**
-     * parent class that initialized the adapter
-     */
-    private FragmentActivity parent;
-
-    /**
-     * launcher to launch to a new activity
-     */
-    private Launcher recipeLauncher;
-
-    /**
-     * constructor the adapter
-     * @param parent
-     * @param recipes
-     * @param recipeLauncher
-     */
-    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes,
-                         Launcher recipeLauncher) {
-        this.parent = parent;
-        this.recipes = recipes;
+    public void setRecipeLauncher(RecipeLauncher recipeLauncher) {
         this.recipeLauncher = recipeLauncher;
     }
 
     /**
-     * generic constructor for recipeAdapter
-     * @param parent
-     * @param recipes
+     * launcher to launch to a new activity
      */
-    public RecipeAdapter(FragmentActivity parent, List<Recipe> recipes) {
-        this.parent = parent;
-        this.recipes = recipes;
+    private RecipeLauncher recipeLauncher;
+
+    public interface RecipeLauncher{
+        void launch(Recipe recipe);
+    }
+
+    /**
+     * constructor the adapter
+     *
+     */
+    public RecipeAdapter(RecipeDB db) {
+        super(db.getQuery());
+        this.recipeDB = db;
     }
 
 
     /**
      * Stores the view for the recipes
+     *
      * @version 1.0.0
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView recipeTitleTextView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             recipeTitleTextView = (TextView) itemView.findViewById(R.id.recipe_title_textView);
-
         }
     }
 
     /**
      * Inflate the layout with the parent context
+     *
      * @param parent
      * @param viewType
      * @return
@@ -100,12 +94,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     /**
      * Bind the data with the views
+     *
      * @param holder
      * @param position
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Recipe recipe = recipes.get(position);
+        DocumentSnapshot recipeSnapshot = getSnapshot(position);
+        Recipe recipe = new Recipe(recipeSnapshot.getString("title"));
+        recipe.setId(recipeSnapshot.getId());
 
         TextView recipeTitle = holder.recipeTitleTextView;
         recipeTitle.setText(recipe.getTitle());
@@ -113,20 +110,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             recipeTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    recipeLauncher.launch(holder.getAdapterPosition());
+                    recipeLauncher.launch(recipe);
                 }
             });
         }
     }
-
-    /**
-     *
-     * @return the count of items in the recycle view
-     */
-    @Override
-    public int getItemCount() {
-        return recipes.size();
-    }
-
 
 }
