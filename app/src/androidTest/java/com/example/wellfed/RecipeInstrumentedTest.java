@@ -188,9 +188,11 @@ import org.junit.runner.RunWith;
     }
 
 
-    @Test public void testAddOnInvalidRecipe(){
+    @Test public void testAddOnInvalidRecipe() throws InterruptedException {
 
         onView(withId(R.id.fab)).perform(click());
+
+        Thread.sleep(2000);
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Wrap"));
         closeSoftKeyboard();
