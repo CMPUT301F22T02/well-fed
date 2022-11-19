@@ -2,33 +2,23 @@ package com.example.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.allOf;
-import static org.junit.Assert.assertEquals;
-
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.RootMatchers;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -328,7 +318,6 @@ import org.junit.runner.RunWith;
         Thread.sleep(2000);
         onView(withText("Egg")).check(ViewAssertions.doesNotExist());
         onView(withText("1.0 count")).check(ViewAssertions.doesNotExist());
-
     }
     /**
      * Test editing the details of a Recipe
@@ -465,12 +454,43 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
     }
     /**
      * Test editing the details of an ingredient in a Recipe
-     * TODO: write this test after functionality is added
+     * TODO: add more to this test after view recipe ingredient functionality is added
      */
-    @Test public void testEditingIngredientOfARecipe(){
+    @Test public void testEditingIngredientOfARecipe() throws InterruptedException {
+        typeMockRecipe("Egg Wrap");
+        addMockIngredient("Egg");
+
+        // editing the ingredient
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewClickViewAction.clickChildViewWithId(R.id.ingredient_edit_imgView)));
+
+        // change all of the fields
+        onView(withId(R.id.edit_descriptionInput)).perform(clearText());
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Duck Egg"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(clearText());
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Vegetarian"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(clearText());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("3"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(clearText());
+        onView(withId(R.id.edit_unitInput)).perform(typeText("eggs"));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        // check the ingredient is changed
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("3.0 eggs"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Duck Egg"))));
 
     }
 
@@ -500,29 +520,35 @@ import org.junit.runner.RunWith;
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Wrap"), click()));
         Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Wrap")));
-        pressBack();
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Egg Salad"), click()));
         Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Salad")));
-        pressBack();
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Tacos"), click()));
         Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Tacos")));
-        pressBack();
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Chicken pot pie"), click()));
         Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Chicken pot pie")));
-        pressBack();
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Greek Salad"), click()));
         Thread.sleep(1000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Greek Salad")));
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
     }
 }

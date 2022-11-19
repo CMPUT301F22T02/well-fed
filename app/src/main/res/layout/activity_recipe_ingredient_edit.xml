@@ -34,11 +34,11 @@
         tools:layout_editor_absoluteX="0dp">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/edit_categoryInput"
+            android:id="@+id/edit_categoryInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/category"
-            />
+            android:labelFor="@+id/edit_categoryInput" />
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>
 
     <!-- Amount and Unit on the same line below categories half the width each -->
