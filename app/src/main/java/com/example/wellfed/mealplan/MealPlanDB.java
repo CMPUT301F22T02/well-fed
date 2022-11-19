@@ -133,13 +133,14 @@ public class MealPlanDB {
      * @param listener the OnAddMealPlanListener object to handle the result.
      */
     public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) throws Exception {
-        // Store each ingredient as a HashMap with fields:
+        // Stores each ingredient as a HashMap with fields:
         // ingredientRef, amount & unit.
         ArrayList<HashMap<String, Object>> mealPlanIngredients = new ArrayList<>();
+
         for (Ingredient i: mealPlan.getIngredients()) {
             // Gets ingredient from db.
             ingredientDB.getIngredient(i, (foundIngredient, success1) -> {
-                // Initialize a mapping for the ingredient.
+                // Initializes a mapping for the ingredient.
                 HashMap<String, Object> ingredientMap = new HashMap<>();
 
                 // If the ingredient already exists in our Ingredient collection.
@@ -219,7 +220,7 @@ public class MealPlanDB {
         mealPlanRef.get()
                 .addOnSuccessListener(mealPlanDoc -> {
 
-                    // Initialize a new MealPlan object and set its fields.
+                    // Initializes a new MealPlan object and sets its fields.
                     MealPlan mealPlan = new MealPlan(mealPlanDoc.getString("title"));
                     mealPlan.setId(mealPlanDoc.getId());
                     mealPlan.setCategory(mealPlanDoc.getString("category"));
@@ -237,7 +238,7 @@ public class MealPlanDB {
                     for (HashMap<String, Object> ingredientMap: mealPlanIngredients) {
                         DocumentReference ingredientRef = (DocumentReference) ingredientMap.get("ingredientRef");
                         ingredientDB.getIngredient(ingredientRef, (foundIngredient, success) -> {
-                            // Sets amount and unit for the ingredient found in the db based on ingredientRef.
+                            // Sets amount and unit for the ingredient found in the db via ingredientRef.
                             foundIngredient.setAmount((Double) ingredientMap.get("amount"));
                             foundIngredient.setUnit((String) ingredientMap.get("unit"));
 
