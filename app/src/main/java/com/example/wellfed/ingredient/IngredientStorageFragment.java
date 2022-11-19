@@ -26,14 +26,15 @@ import com.example.wellfed.common.Launcher;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 
 public class IngredientStorageFragment extends Fragment implements Launcher, StorageIngredientAdapter.OnItemClickListener {
 	/**
-	 * FoodStorage is a singleton class that stores all the ingredients.
+	 * FoodStorage is a singleton array of StorageIngredient objects
 	 */
-	private FoodStorage foodStorage;
+	private ArrayList<StorageIngredient> foodStorage;
 	/**
 	 * The ingredientController is the controller for the ingredient.
 	 */
@@ -120,7 +121,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		foodStorage = new FoodStorage();
+		foodStorage = new ArrayList<>();
 		controller = new IngredientStorageController(requireActivity());
 		controller.getAdapter().setOnItemClickListener(this);
 
@@ -184,7 +185,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 	@Override
 	public void launch(int pos) {
 		this.selected = pos;
-		launcher.launch(foodStorage.getIngredients().get(pos));
+		launcher.launch(foodStorage.get(pos));
 	}
 
 	/**
