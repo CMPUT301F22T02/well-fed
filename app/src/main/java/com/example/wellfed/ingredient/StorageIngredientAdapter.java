@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
+import com.example.wellfed.common.UTCDate;
+import com.example.wellfed.common.UTCDateFormat;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
@@ -177,7 +179,9 @@ public class StorageIngredientAdapter
 				storageIngredient.getLocation();
 			String subText = category + " | " + location;
 			this.subTextView.setText(subText);
-			this.bestBeforeTextView.setText(storageIngredient.getBestBefore());
+			UTCDate bestBefore =
+				UTCDate.from(storageIngredient.getBestBeforeDate());
+			this.bestBeforeTextView.setText(bestBefore.format("yyyy-MM-dd"));
 			if (storageIngredient.getBestBeforeDate().before(
 				new Date(new Date().getTime() - (new Date().getTime() % 86400000)))) {
 				this.bestBeforeTextView.setTextColor(Color.RED);
