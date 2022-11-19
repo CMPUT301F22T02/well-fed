@@ -137,14 +137,12 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         recipeCategory = findViewById(R.id.recipe_category);
         ImageView addIngredient = findViewById(R.id.ingredient_add_btn);
         ImageView searchIngredient = findViewById(R.id.ingredient_search_btn);
-        Button recipeDeleteBtn = findViewById(R.id.recipe_delete_btn);
 
         recipeCategory.setSimpleItems(new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer", "Dessert"});
 
 
         // activity started to add data a recipe
         if (recipe == null) {
-            recipeDeleteBtn.setVisibility(View.INVISIBLE);
             fab.setImageDrawable(getDrawable(R.drawable.ic_baseline_save_24)); // fab is save button
             fab.setOnClickListener(view -> {
                 if (areValidFields()) {
@@ -174,6 +172,16 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
             fab.setOnClickListener(view -> {
                 if (areValidFields()) {
                     Intent intent1 = new Intent();
+                    String id = recipe.getId();
+                    String photoUrl = recipe.getPhotograph();
+                    recipe = new Recipe(title.getText());
+                    recipe.setId(id);
+                    recipe.setPhotograph(photoUrl);
+                    recipe.setComments(commentsTextInput.getText());
+                    recipe.setServings(servings.getInteger());
+                    recipe.setCategory(recipeCategory.getText());
+                    recipe.addIngredients(recipeIngredients);
+                    recipe.setPrepTimeMinutes(prepTime.getInteger());
                     intent.putExtra("type", "edit");
                     intent.putExtra("Recipe", recipe);
                     setResult(RESULT_OK, intent);
@@ -270,6 +278,7 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                 int temp = 0;
                 recipesRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     downloadUrl = uri.toString();
+                    recipe.setPhotograph(downloadUrl);
                     Picasso.get()
                             .load(downloadUrl)
                             .rotate(90)
