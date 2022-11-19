@@ -1,5 +1,6 @@
 package com.example.wellfed.ingredient;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -176,6 +178,11 @@ public class StorageIngredientAdapter
 			String subText = category + " | " + location;
 			this.subTextView.setText(subText);
 			this.bestBeforeTextView.setText(storageIngredient.getBestBefore());
+			if (storageIngredient.getBestBeforeDate().before(new Date())) {
+				this.bestBeforeTextView.setTextColor(Color.RED);
+				this.subTextView.setTextColor(Color.RED);
+				this.textView.setTextColor(Color.RED);
+			}
 			this.view.setOnClickListener(view -> {
 				if (listener != null) {
 					listener.onItemClick(storageIngredient);
