@@ -9,6 +9,7 @@ import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.times;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -20,6 +21,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.util.concurrent.TimeUnit;
 
 
 import android.app.Activity;
@@ -49,6 +53,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AndroidJUnit4.class) public class RecipeInstrumentedTest {
 
+    private final Object lock = new Object();
+
     /**
      * Holds the ActivityScenarioRule
      */
@@ -65,11 +71,10 @@ import org.junit.runner.RunWith;
     /**
      * Test add a recipe and delete a recipe
      */
-    @Test public void testAddAndDeleteValidRecipe(){
+    @Test public void testAddAndDeleteValidRecipe() throws InterruptedException {
         Intents.init();
 
         onView(withId(R.id.fab)).perform(click());
-        //onView(withId(R.id.recipe_img)).perform(click());
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Test"));
         closeSoftKeyboard();
 
@@ -91,18 +96,7 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
 
 
-        onView(withId(R.id.ingredient_search_btn)).perform(click());
-        //pick an ingredient check if recycler view is non empty
-        onView(withId(R.id.ingredient_storage_list)).perform(click());
-        intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
-        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
-        closeSoftKeyboard();
-        onView(withId(R.id.unitInput)).perform(click());
-        onView(withText("lb"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-        onView(withId(R.id.ingredient_save_button)).perform(click());
+
 
         //add an ingredient
         onView(withId(R.id.ingredient_add_btn)).perform(click());
@@ -125,10 +119,28 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
+
+        onView(withId(R.id.ingredient_search_btn)).perform(click());
+        //pick an ingredient check if recycler view is non empty
+        onView(withId(R.id.ingredient_storage_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        intended(hasComponent(RecipeIngredientEditActivity.class.getName()), times(2));
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("lb"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
         onView(withId(R.id.save_fab)).perform(click());
+
+        SECONDS.sleep(1);
 
         onView(withId(R.id.recipe_rv))
                 .perform(RecyclerViewActions.actionOnItem(withText("Test"), click()));
+
+
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
@@ -317,9 +329,7 @@ import org.junit.runner.RunWith;
     @Test public void testEditingIngredientOfARecipe(){
 
     }
-    /**
-     * test add and delete recipe
-     */
+    /*
     @Test public void testAddDeleteRecipe() {
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.recipe_title_editText)).perform(clearText());
@@ -343,4 +353,5 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
     }
+    */
 }
