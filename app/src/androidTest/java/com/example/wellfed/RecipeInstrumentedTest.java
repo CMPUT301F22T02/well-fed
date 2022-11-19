@@ -1,7 +1,6 @@
 package com.example.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -10,39 +9,31 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.Intents.times;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
-import static com.google.common.base.Predicates.instanceOf;
+
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertEquals;
-import static java.util.concurrent.TimeUnit.SECONDS;
-
-import java.util.concurrent.TimeUnit;
 
 
-import android.app.Activity;
-import android.view.KeyEvent;
-
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.RootMatchers;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.wellfed.recipe.RecipeActivity;
 import com.example.wellfed.recipe.RecipeEditActivity;
 import com.example.wellfed.recipe.RecipeIngredientEditActivity;
-
-import junit.framework.AssertionFailedError;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -142,10 +133,10 @@ import org.junit.runner.RunWith;
     /**
      * Adds a mock ingredient to a recipe.
      */
-    public void addMockIngredient() {
+    public void addMockIngredient(String description) {
         //add an ingredient
         onView(withId(R.id.ingredient_add_btn)).perform(click());
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Egg"));
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText(description));
         closeSoftKeyboard();
 
         onView(withId(R.id.categoryInput)).perform(click());
@@ -183,7 +174,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
-        addMockIngredient();
+        addMockIngredient("Egg");
 
 
         onView(withId(R.id.save_fab)).perform(click());
@@ -224,7 +215,7 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
-        addMockIngredient();
+        addMockIngredient("Egg");
 
         //Try to add when title is removed
         onView(withId(R.id.edit_recipe_title)).perform(clearText());
@@ -265,7 +256,7 @@ import org.junit.runner.RunWith;
 
         typeMockRecipe();
 
-        addMockIngredient();
+        addMockIngredient("Egg");
 
         onView(withId(R.id.save_fab)).perform(click());
 
@@ -277,7 +268,7 @@ import org.junit.runner.RunWith;
         intended(hasComponent(RecipeActivity.class.getName()));
 
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Wrap")));
-        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Prepartion time: 5")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 5")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
         onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
@@ -289,21 +280,61 @@ import org.junit.runner.RunWith;
 
     }
     /**
-     * Test deleting a Ingredient from recipe
+     * Test deleting an added Ingredient from recipe
      */
-    @Test public void testDelIngredientFromRecipe(){
+    @Test public void testDelIngredientFromRecipe() throws InterruptedException {
+        typeMockRecipe();
+
+        addMockIngredient("Egg");
+
+        //add separate ingredient
+        onView(withId(R.id.ingredient_add_btn)).perform(click());
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Chicken Breast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.categoryInput)).perform(click());
+        onView(withText("Protein"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(typeText("cups"));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        // deleting egg
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewClickViewAction.clickChildViewWithId(R.id.ingredient_delete_imgView)));
+
+        // asserting that chicken breast is still there with correct details
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Chicken Breast"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("2.0 cups"))));
+
+        // asserting that egg is NOT there
+        Thread.sleep(2000);
+        onView(withText("Egg")).check(ViewAssertions.doesNotExist());
+        onView(withText("1.0 count")).check(ViewAssertions.doesNotExist());
 
     }
     /**
-     * Test editing a Recipe
+     * Test editing the details of a Recipe
      */
     @Test public void testEditingARecipe(){
 
     }
     /**
-     * Test editing an ingredient in a Recipe
+     * Test editing the details of an ingredient in a Recipe
      */
     @Test public void testEditingIngredientOfARecipe(){
+
+    }
+
+    @Test public void viewListOfRecipes() {
 
     }
 }
