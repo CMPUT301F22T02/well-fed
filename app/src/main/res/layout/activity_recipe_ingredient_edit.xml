@@ -75,11 +75,10 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryInput">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/edit_unitInput"
+            android:id="@+id/edit_unitInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/unit"
-            />
+            android:hint="@string/unit" />
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

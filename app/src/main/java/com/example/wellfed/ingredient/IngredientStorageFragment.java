@@ -21,12 +21,11 @@ import com.example.wellfed.common.Launcher;
 import com.google.android.material.textfield.TextInputEditText;
 
 
+/**
+ * The fragment that displays all ingredients in storage.
+ */
 public class IngredientStorageFragment extends Fragment
         implements Launcher, StorageIngredientAdapter.OnItemClickListener {
-    /**
-     * FoodStorage is a singleton class that stores all the ingredients.
-     */
-    private FoodStorage foodStorage;
     /**
      * The ingredientController is the controller for the ingredient.
      */
@@ -111,7 +110,6 @@ public class IngredientStorageFragment extends Fragment
     @Nullable @Override public View onCreateView(
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        foodStorage = new FoodStorage();
         controller = new IngredientStorageController(getActivity());
         controller.getAdapter().setOnItemClickListener(this);
 
@@ -171,7 +169,8 @@ public class IngredientStorageFragment extends Fragment
      */
     @Override public void launch(int pos) {
         this.selected = pos;
-        launcher.launch(foodStorage.getIngredients().get(pos));
+        //TODO: fix this - causes crash in issue #139
+        //launcher.launch(foodStorage.getIngredients().get(pos));
     }
 
     /**

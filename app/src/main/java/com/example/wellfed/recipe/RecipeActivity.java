@@ -1,5 +1,6 @@
 package com.example.wellfed.recipe;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +13,10 @@ import android.widget.TextView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.ingredient.Ingredient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 
@@ -46,6 +49,30 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
      */
     private RecipeIngredientAdapter recipeIngredientAdapter;
 
+
+    /**
+     * Launcher that launches RecipeEditActivity {@link RecipeEditActivity}
+     */
+    ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
+            new RecipeEditContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                Recipe recipe = result.second;
+
+                if (type.equals("edit")) {
+                    Intent intent = new Intent();
+                    intent.putExtra("Recipe", recipe);
+                    intent.putExtra("type", "edit");
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
+
+                return;
+            }
+    );
+
     /**
      * method that is called when the activity is created
      *
@@ -74,8 +101,10 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         TextView category = findViewById(R.id.recipe_category);
         TextView description = findViewById(R.id.recipe_description_textView);
         ImageView img = findViewById(R.id.recipe_img);
+        FloatingActionButton fab = findViewById(R.id.save_fab);
 
-        RecipeDB recipeDB = new RecipeDB();
+        DBConnection connection = new DBConnection(getApplicationContext());
+        RecipeDB recipeDB = new RecipeDB(connection);
         recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
             recipe = foundRecipe;
             title.setText(recipe.getTitle());
@@ -111,6 +140,10 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                 findViewById(R.id.recipe_delete_btn),
                 "Delete Recipe",
                 this);
+
+        fab.setOnClickListener(view->{
+            recipeEditLauncher.launch(recipe);
+        });
     }
 
     /**

@@ -4,18 +4,22 @@ package com.example.wellfed.ingredient;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wellfed.ActivityBase;
+import com.example.wellfed.common.DBConnection;
 
+/**
+ * A controller that manages adding, deleting, and updating Ingredients in the ingredient storage.
+ */
 public class IngredientStorageController {
     /**
-     * the activity
+     * The activity
      */
     private final ActivityBase activity;
     /**
-     * the adapter that is used to display the ingredients in the list view
+     * The adapter that is used to display the ingredients in the list view
      */
     private final StorageIngredientAdapter adapter;
     /**
-     * the DB of ingredients
+     * The DB of stored ingredients
      */
     private final StorageIngredientDB db;
 
@@ -26,7 +30,8 @@ public class IngredientStorageController {
      */
     public IngredientStorageController(FragmentActivity activity) {
         this.activity = (ActivityBase) activity;
-        db = new StorageIngredientDB();
+        DBConnection connection = new DBConnection(activity.getApplicationContext());
+        db = new StorageIngredientDB(connection);
         adapter = new StorageIngredientAdapter(db);
     }
 

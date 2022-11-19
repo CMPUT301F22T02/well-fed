@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // todo create sample data for recipes
 // todo setup recipe edit button
@@ -67,9 +69,9 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                         Recipe recipe = result.second;
                         switch (type) {
                             case "delete":
-                                recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success) -> {
-                                    deletedRecipe.setId("");
-                                });
+                                recipeController.deleteRecipe(recipe.getId());
+                            case "edit":
+                                recipeController.editRecipe(recipe);
                             default:
                                 new IllegalArgumentException();
                         }
@@ -87,15 +89,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        RecipeDB recipeDB = new RecipeDB();
-                        try {
-                            recipeDB.addRecipe(recipe, (a, b) -> {
-                            });
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "edit":
+                        recipeController.addRecipe(recipe);
                         break;
                     default:
                         break;
@@ -121,8 +115,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
-        recipeController = new RecipeController();
-        recipeDB = new RecipeDB();
+        recipeController = new RecipeController(getActivity());
+        recipeController.getRecipeAdapter().setRecipeLauncher(this);
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
@@ -137,12 +131,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
         Bundle args = getArguments();
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
-
-        adapter = new RecipeAdapter(recipeDB);
-        adapter.setRecipeLauncher(this);
-        recipeController.setRecipes(recipes);
-        recipeController.setRecipeAdapter(adapter);
-        rvRecipes.setAdapter(adapter);
+        rvRecipes.setAdapter(recipeController.getRecipeAdapter());
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }

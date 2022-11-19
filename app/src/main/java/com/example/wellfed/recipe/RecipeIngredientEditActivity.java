@@ -11,6 +11,7 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,7 +38,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
     /**
      * StorageIngredient object for the ingredient.
      */
-    private StorageIngredient ingredient;
+    private Ingredient ingredient;
 
     /**
      * OnCreate method for the activity.
@@ -61,13 +62,16 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
                 "count"});
 
         // Get ingredient from intent
-        ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
+        ingredient = (Ingredient) getIntent().getSerializableExtra("ingredient");
 
         if (ingredient != null) {
             descriptionInput.setPlaceholderText(ingredient.getDescription());
             if (ingredient.getCategory() != null) {
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
+            if (ingredient.getAmount() != null)
+                amountInput.setPlaceholderText(ingredient.getAmount().toString());
+            if (ingredient.getUnit() != null) unitInput.setPlaceholderText(ingredient.getUnit());
         } else {
 
         }
@@ -119,7 +123,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         }
         String type = "edit";
         if (ingredient == null) {
-            ingredient = new StorageIngredient(descriptionInput.getText());
+            ingredient = new Ingredient(descriptionInput.getText());
             type = "add";
         }
         ingredient.setDescription(descriptionInput.getText());
