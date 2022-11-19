@@ -71,7 +71,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                             case "delete":
                                 recipeController.deleteRecipe(recipe.getId());
                             case "edit":
-                                break;
+                                recipeController.editRecipe(recipe);
                             default:
                                 new IllegalArgumentException();
                         }
@@ -90,8 +90,6 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 switch (type) {
                     case "save":
                         recipeController.addRecipe(recipe);
-                        break;
-                    case "edit":
                         break;
                     default:
                         break;

@@ -46,6 +46,15 @@ public class RecipeController {
         this.recipeAdapter = new RecipeAdapter(recipeDB);
     }
 
+    public void editRecipe(Recipe recipe) {
+        recipeDB.updateRecipe(recipe, (updated, success)->{
+            boolean a = success;
+            if (!success) {
+                this.activity.makeSnackbar("Failed to edit recipe");
+            }
+        });
+    }
+
     /**
      * handles the logic for deleting the recipe
      *

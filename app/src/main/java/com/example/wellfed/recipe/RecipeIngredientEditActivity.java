@@ -123,7 +123,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         }
         String type = "edit";
         if (ingredient == null) {
-            ingredient = new StorageIngredient(descriptionInput.getText());
+            ingredient = new Ingredient(descriptionInput.getText());
             type = "add";
         }
         ingredient.setDescription(descriptionInput.getText());
