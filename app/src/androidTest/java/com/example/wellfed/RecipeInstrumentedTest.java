@@ -110,10 +110,10 @@ import org.junit.runner.RunWith;
     }
 
     /**
-     * Test adding a full recipe with 2 ingredients (one searched, one added) and deleting a recipe
+     * Types out a mock recipe.
+     * @throws InterruptedException
      */
-    @Test public void testAddAndDeleteRecipe() throws InterruptedException {
-
+    public void typeMockRecipe() throws InterruptedException {
         onView(withId(R.id.fab)).perform(click());
 
         Thread.sleep(2000);
@@ -137,20 +137,12 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.commentsEditText)).perform(typeText("This breakfast is great for on the go."));
         closeSoftKeyboard();
+    }
 
-
-        onView(withId(R.id.ingredient_search_btn)).perform(click());
-        //pick an ingredient check if recycler view is non empty
-        onView(withText("Tortilla")).perform(click());
-
-        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
-        closeSoftKeyboard();
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.ingredient_save_button)).perform(click());
-
+    /**
+     * Adds a mock ingredient to a recipe.
+     */
+    public void addMockIngredient() {
         //add an ingredient
         onView(withId(R.id.ingredient_add_btn)).perform(click());
         onView(withId(R.id.edit_descriptionInput)).perform(typeText("Egg"));
@@ -170,6 +162,28 @@ import org.junit.runner.RunWith;
 
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
+    }
+
+    /**
+     * Test adding a full recipe with 2 ingredients (one searched, one added) and deleting a recipe
+     */
+    @Test public void testAddAndDeleteRecipe() throws InterruptedException {
+
+        typeMockRecipe();
+
+        onView(withId(R.id.ingredient_search_btn)).perform(click());
+        //pick an ingredient check if recycler view is non empty
+        onView(withText("Tortilla")).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        addMockIngredient();
 
 
         onView(withId(R.id.save_fab)).perform(click());
@@ -190,29 +204,7 @@ import org.junit.runner.RunWith;
 
     @Test public void testAddOnInvalidRecipe() throws InterruptedException {
 
-        onView(withId(R.id.fab)).perform(click());
-
-        Thread.sleep(2000);
-
-        onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Wrap"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("5"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_category)).perform(click());
-        closeSoftKeyboard();
-
-        onView(withText("Breakfast"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        onView(withId(R.id.commentsEditText)).perform(typeText("This is perfect for on the go."));
-        closeSoftKeyboard();
+        typeMockRecipe();
 
         //Try to add without ingredients
         onView(withId(R.id.save_fab)).perform(click());
@@ -232,24 +224,7 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
-        //add an ingredient
-        onView(withId(R.id.ingredient_add_btn)).perform(click());
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Egg"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.categoryInput)).perform(click());
-        onView(withText("Protein"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
-        closeSoftKeyboard();
-        onView(withId(R.id.ingredient_save_button)).perform(click());
+        addMockIngredient();
 
         //Try to add when title is removed
         onView(withId(R.id.edit_recipe_title)).perform(clearText());
@@ -288,47 +263,9 @@ import org.junit.runner.RunWith;
      */
     @Test public void TestViewingRecipe() throws InterruptedException {
 
-        onView(withId(R.id.fab)).perform(click());
+        typeMockRecipe();
 
-        Thread.sleep(2000);
-
-        onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Wrap"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("5"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_category)).perform(click());
-        closeSoftKeyboard();
-
-        onView(withText("Breakfast"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        onView(withId(R.id.commentsEditText)).perform(typeText("This is perfect for on the go"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.ingredient_add_btn)).perform(click());
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Egg"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.categoryInput)).perform(click());
-        onView(withText("Protein"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
-        closeSoftKeyboard();
-        onView(withId(R.id.ingredient_save_button)).perform(click());
+        addMockIngredient();
 
         onView(withId(R.id.save_fab)).perform(click());
 
@@ -343,7 +280,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Prepartion time: 5")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
-        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This is perfect for on the go")));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
