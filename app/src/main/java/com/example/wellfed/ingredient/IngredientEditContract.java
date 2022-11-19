@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 
 import com.example.wellfed.mealplan.MealPlan;
 
+/**
+ * A contract for creating intents to edit an Ingredient, and results of these intents.
+ */
 public class IngredientEditContract extends ActivityResultContract<StorageIngredient, Pair<String, StorageIngredient>> {
     /**
      * Creates an Intent for the IngredientEditActivity.

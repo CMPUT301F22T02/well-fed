@@ -199,7 +199,14 @@ public class IngredientDB {
         });
     }
 
-
+    /**
+     * Gets an ingredient from Firebase DB
+     *
+     * @param ingredient    the ingredient to be
+     *                      retrieved
+     * @param listener      the listener to be called when the ingredient is
+     *                      retrieved
+     */
     public void getIngredient(Ingredient ingredient,
                               OnGetIngredientListener listener) {
         collection.whereEqualTo("category", ingredient.getCategory())
@@ -253,10 +260,13 @@ public class IngredientDB {
     }
 
     /**
-     * TODO
-     * @param ingredient
-     * @param delta
-     * @param listener
+     * Updates the reference count of an ingredient in the Firebase DB. The reference count keeps
+     * track of how many references exist to an object - if the object has 0 references, it is
+     * safely deleted.
+     *
+     * @param ingredient    the ingredient to update the reference count of
+     * @param delta         how much to shift the reference count by
+     * @param listener      the listener to be called when the reference count is updated
      */
     public void updateReferenceCount(Ingredient ingredient, int delta,
                                      OnUpdateIngredientReferenceCountListener listener) {
@@ -297,7 +307,7 @@ public class IngredientDB {
     }
 
     /**
-     * Converts a DocumentSnapshot of an ingredient to an ingredient object
+     * Converts a DocumentSnapshot of an ingredient to an Ingredient object
      *
      * @param document the DocumentSnapshot to convert
      * @return the ingredient
@@ -321,7 +331,10 @@ public class IngredientDB {
         return collection.document(ingredient.getId());
     }
 
-
+    /**
+     * Gets the CollectionReference that Ingredients are stored in
+     * @return the CollectionReference
+     */
     public Query getQuery(){
         return collection;
     }

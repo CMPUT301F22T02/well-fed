@@ -3,7 +3,6 @@ package com.example.wellfed.ingredient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
@@ -16,6 +15,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
+/**
+ * The activity that represents editing an Ingredient.
+ */
 public class IngredientEditActivity extends EditActivityBase
         implements ConfirmDialog.OnConfirmListener {
     /**
@@ -48,7 +50,8 @@ public class IngredientEditActivity extends EditActivityBase
     private StorageIngredient ingredient;
 
     /**
-     * OnCreate method for the activity.
+     * OnCreate method for the IngredientEdit activity. Is called when the activity is created.
+     *
      * @param savedInstanceState Bundle object for the activity.
      */
     @Override
@@ -70,6 +73,7 @@ public class IngredientEditActivity extends EditActivityBase
         this.unitInput.setSimpleItems(new String[]{"oz", "lb", "g", "kg",
                 "tsp", "tbsp", "cup", "qt", "gal", "ml", "l", "pt", "fl oz",
                 "count"});
+        RequiredDateTextInputLayout bestBeforeLayout = findViewById(R.id.bestBeforeInput);
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
@@ -99,7 +103,8 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * checks if there are unsaved changes
+     * Checks if there are any unsaved changes
+     *
      * @return true if there are unsaved changes, false otherwise
      */
     public Boolean hasUnsavedChanges() {
