@@ -234,22 +234,20 @@ import org.junit.runner.RunWith;
 
         //add an ingredient
         onView(withId(R.id.ingredient_add_btn)).perform(click());
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("TestIngredient"));
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Egg"));
         closeSoftKeyboard();
 
         onView(withId(R.id.categoryInput)).perform(click());
-        onView(withText("Fruit"))
+        onView(withText("Protein"))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(click());
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.unitInput)).perform(click());
-        onView(withText("lb"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
@@ -261,7 +259,7 @@ import org.junit.runner.RunWith;
         //Test for no prep time
         onView(withId(R.id.recipe_prep_time_textEdit)).perform(clearText());
         closeSoftKeyboard();
-        onView(withId(R.id.edit_recipe_title)).perform(typeText("Test"));
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Wrap"));
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
@@ -270,7 +268,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(clearText());
         closeSoftKeyboard();
-        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("20"));
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("5"));
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
@@ -283,7 +281,7 @@ import org.junit.runner.RunWith;
 
         intended(hasComponent(RecipeEditActivity.class.getName()));
 
-        onView(withId(R.id.commentsEditText)).perform(typeText("TestComment"));
+        onView(withId(R.id.commentsEditText)).perform(typeText("This is perfect for on the go."));
     }
     /**
      * Test viewing a single recipe
@@ -294,10 +292,10 @@ import org.junit.runner.RunWith;
 
         Thread.sleep(2000);
 
-        onView(withId(R.id.edit_recipe_title)).perform(typeText("Test"));
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Wrap"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("1"));
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("5"));
         closeSoftKeyboard();
 
         onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
@@ -311,15 +309,15 @@ import org.junit.runner.RunWith;
                 .perform(click());
         closeSoftKeyboard();
 
-        onView(withId(R.id.commentsEditText)).perform(typeText("TestComment"));
+        onView(withId(R.id.commentsEditText)).perform(typeText("This is perfect for on the go"));
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_add_btn)).perform(click());
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("TestIngredient"));
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Egg"));
         closeSoftKeyboard();
 
         onView(withId(R.id.categoryInput)).perform(click());
-        onView(withText("Fruit"))
+        onView(withText("Protein"))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(click());
         closeSoftKeyboard();
@@ -327,10 +325,8 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.unitInput)).perform(click());
-        onView(withText("lb"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
@@ -339,17 +335,17 @@ import org.junit.runner.RunWith;
         Thread.sleep(2000);
 
         onView(withId(R.id.recipe_rv))
-                .perform(RecyclerViewActions.actionOnItem(withText("Test"), click()));
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Wrap"), click()));
 
         intended(hasComponent(RecipeActivity.class.getName()));
 
-        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Test")));
-        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Prepartion time: 1")));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Wrap")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Prepartion time: 5")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
-        onView(withId(R.id.recipe_description_textView)).check(matches(withText("TestComment")));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 lb"))));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("TestIngredient"))));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This is perfect for on the go")));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
