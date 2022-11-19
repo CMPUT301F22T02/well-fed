@@ -188,7 +188,8 @@ import org.junit.runner.RunWith;
         onView(withText("Delete")).perform(click());
 
         Thread.sleep(2000);
-        
+
+        // checking deleted recipe does not exist
         onView(withText("Egg Wrap")).check(doesNotExist());
     }
 
@@ -323,15 +324,145 @@ import org.junit.runner.RunWith;
     }
     /**
      * Test editing the details of a Recipe
+     * TODO: deal with thread.sleep?
      */
-    @Test public void testEditingARecipe(){
+    @Test public void testEditingARecipe() throws InterruptedException {
+        typeMockRecipe();
+
+        addMockIngredient("Egg");
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Wrap"), click()));
+
+        // press edit button
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // test editing each field individually
+        onView(withId(R.id.edit_recipe_title)).perform(clearText());
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Egg Sandwich"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        Thread.sleep(2000);
+        // check edit
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
+
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 5")));
+        onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
+        onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
+
+        // press edit button
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // test editing each field individually
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(clearText());
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("7"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        Thread.sleep(2000);
+        // check edit
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
+
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
+        onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
+        onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
+
+        // press edit button
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // test editing each field individually
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(clearText());
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("2"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // check edit
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
+
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
+        onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
+        onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
+
+        // press edit button
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // test editing each field individually
+        onView(withId(R.id.recipe_category_textEdit)).perform(clearText());
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Lunch"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // check edit
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
+
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
+        onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
+        onView(withId(R.id.recipe_category)).check(matches(withText("Category: Lunch")));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
+
+        // press edit button
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // test editing each field individually
+        onView(withId(R.id.commentsEditText)).perform(clearText());
+        onView(withId(R.id.commentsEditText)).perform(typeText("This lunch is filling and delicious."));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // check edit
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_rv))
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Sandwich"), click()));
+
+        Thread.sleep(2000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Sandwich")));
+        onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 7")));
+        onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
+        onView(withId(R.id.recipe_category)).check(matches(withText("Category: Lunch")));
+        onView(withId(R.id.recipe_description_textView)).check(matches(withText("This lunch is filling and delicious.")));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
     }
     /**
      * Test editing the details of an ingredient in a Recipe
      */
     @Test public void testEditingIngredientOfARecipe(){
-
+        
     }
 
     @Test public void viewListOfRecipes() {
