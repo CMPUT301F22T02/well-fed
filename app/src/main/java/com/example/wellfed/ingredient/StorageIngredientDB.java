@@ -350,7 +350,7 @@ public class StorageIngredientDB {
 							storageIngredient.setCategory(ingredientSnap.getString("category"));
 							storageIngredient.setAmount((Double) snapshot.getData().get("amount"));
 							storageIngredient.setUnit((String) snapshot.getData().get("unit"));
-
+							storageIngredient.setLocation((String) snapshot.getData().get("location"));
 							// Get Firebase Timestamp and convert to Date
 							Timestamp bestBefore = (Timestamp) snapshot.getData().get("best-before");
 							assert bestBefore != null;

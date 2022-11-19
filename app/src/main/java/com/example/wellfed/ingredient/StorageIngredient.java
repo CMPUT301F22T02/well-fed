@@ -177,6 +177,16 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
     }
 
     /**
+     * Get best before date of the ingredient in the storage in yyyy-MM-dd format.
+     *
+     * @return The best before date of the ingredient in the storage in yyyy-MM-dd format
+     */
+    public String getBestBefore() {
+        String[] date = bestBefore.toString().split(" ");
+        return date[1] + " " + date[2];
+    }
+
+    /**
      * Combines the amount and unit of the ingredient in the storage.
      *
      * @return The amount and unit of the ingredient in the storage

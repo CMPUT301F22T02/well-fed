@@ -60,7 +60,6 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Failed to delete" + deleteStorageIngredient.getDescription());
 			} else {
 				this.activity.makeSnackbar("Deleted " + deleteStorageIngredient.getDescription());
-				getSortedResults(currentField, true);
 			}
 		}));
 	}

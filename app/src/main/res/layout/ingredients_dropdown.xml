@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
-    android:layout_height="200dp">
+    android:layout_height="250dp">
 
     <!-- This XML will is a dropdown menu for the ingredients. -->
     <!-- It will be used in the ingredients page. -->
@@ -18,8 +19,9 @@
         android:layout_marginTop="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="bottom"
+        android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp"        android:text="@string/sort_description"
+        android:text="@string/sort_description"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/sort_by_category"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +35,8 @@
         android:layout_marginTop="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="bottom"
-        android:paddingVertical="10dp"
         android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
         android:text="@string/sort_category"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/sort_by_expiration_date"
@@ -46,15 +48,32 @@
         android:id="@+id/sort_by_expiration_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="bottom"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:text="@string/sort_best_before"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/sort_by_location"
+        app:layout_constraintTop_toBottomOf="@+id/sort_by_category"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/sort_by_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="bottom"
+        android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp"        android:text="@string/sort_best_before"
+        android:text="@string/location"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sort_by_category"
+        app:layout_constraintTop_toBottomOf="@+id/sort_by_expiration_date"
         app:layout_constraintVertical_bias="0.5" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

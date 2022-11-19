@@ -73,6 +73,8 @@ public class StorageIngredientAdapter
 						return compareByCategory(o1, o2);
 					case "best-before":
 						return compareByBestBefore(o1, o2);
+					case "location":
+						return compareByLocation(o1, o2);
 					default:
 						return 0;
 				}
@@ -136,6 +138,10 @@ public class StorageIngredientAdapter
 		return o1.getBestBeforeDate().compareTo(o2.getBestBeforeDate());
 	}
 
+	public int compareByLocation(StorageIngredient o1, StorageIngredient o2) {
+		return o1.getLocation().toLowerCase().compareTo(o2.getLocation().toLowerCase());
+	}
+
 	public void setOnItemClickListener(OnItemClickListener listener) {
 		this.listener = listener;
 	}
@@ -145,6 +151,7 @@ public class StorageIngredientAdapter
 		private static final String TAG = "ViewHolder";
 		private final TextView textView;
 		private final TextView subTextView;
+		private final TextView bestBeforeTextView;
 		private final View view;
 
 		public ViewHolder(View view) {
@@ -152,13 +159,23 @@ public class StorageIngredientAdapter
 			this.view = view;
 			this.textView = view.findViewById(R.id.textView);
 			this.subTextView = view.findViewById(R.id.subTextView);
+			this.bestBeforeTextView = view.findViewById(R.id.dateTextView);
 		}
 
 		public void bind(StorageIngredient storageIngredient,
 						 OnItemClickListener listener) {
 			Log.d(TAG, "bind:");
 			this.textView.setText(storageIngredient.getDescription());
-			this.subTextView.setText(storageIngredient.getCategory());
+			// Limit subtext to 15 characters for both category and location
+			String category = storageIngredient.getCategory().length() > 15 ?
+				storageIngredient.getCategory().substring(0, 15) + "..." :
+				storageIngredient.getCategory();
+			String location = storageIngredient.getLocation().length() > 15 ?
+				storageIngredient.getLocation().substring(0, 15) + "..." :
+				storageIngredient.getLocation();
+			String subText = category + " | " + location;
+			this.subTextView.setText(subText);
+			this.bestBeforeTextView.setText(storageIngredient.getBestBefore());
 			this.view.setOnClickListener(view -> {
 				if (listener != null) {
 					listener.onItemClick(storageIngredient);

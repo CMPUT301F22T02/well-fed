@@ -259,6 +259,15 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 			recyclerView.setAdapter(adapter);
 		});
 
+		MaterialTextView locationButton =
+			customLayout.findViewById(R.id.sort_by_location);
+		locationButton.setOnClickListener(v -> {
+			controller.getSortedResults("location", true);
+			StorageIngredientAdapter adapter = controller.getAdapter();
+			adapter.setOnItemClickListener(IngredientStorageFragment.this);
+			recyclerView.setAdapter(adapter);
+		});
+
 		// Create cancel button
 		builder.setNegativeButton("Close", (dialog, which) -> {
 			// Do nothing
