@@ -69,8 +69,9 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
             if (ingredient.getCategory() != null) {
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
-            amountInput.setPlaceholderText(ingredient.getAmount().toString());
-            unitInput.setPlaceholderText(ingredient.getUnit());
+            if (ingredient.getAmount() != null)
+                amountInput.setPlaceholderText(ingredient.getAmount().toString());
+            if (ingredient.getUnit() != null) unitInput.setPlaceholderText(ingredient.getUnit());
         } else {
 
         }

@@ -69,10 +69,9 @@ public class RecipeDB {
      * @param recipe A Recipe object we want to add to the collection of Recipes
      *               and whose id we want to set
      * @return Returns the id of the Recipe document
-     * @throws InterruptedException If any transaction in the method was not complete
      */
     //todo it works but hacky
-    public void addRecipe(Recipe recipe, OnRecipeDone listener) throws InterruptedException {
+    public void addRecipe(Recipe recipe, OnRecipeDone listener){
 
         ArrayList<HashMap<String, Object>> recipeIngredients = new ArrayList<>();
         HashMap<String, Object> recipeMap = new HashMap<>();
