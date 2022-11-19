@@ -104,7 +104,7 @@ import org.junit.runner.RunWith;
     }
 
     /**
-     * Test add a recipe and delete a recipe
+     * Test adding a full recipe with 2 ingredients (one searched, one added) and deleting a recipe
      */
     @Test public void testAddAndDeleteRecipe() throws InterruptedException {
 
@@ -136,10 +136,11 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
-        onView(withId(R.id.unitInput)).perform(click());
-        onView(withText("count"))
-                .inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
 
         //add an ingredient
         onView(withId(R.id.ingredient_add_btn)).perform(click());
@@ -168,7 +169,8 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
-
+        Thread.sleep(2000);
+        
         onView(withText("Egg Wrap")).check(doesNotExist());
     }
 
