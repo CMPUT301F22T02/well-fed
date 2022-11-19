@@ -1,9 +1,11 @@
 package com.example.wellfed.ingredient;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.wellfed.common.DBConnection;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -13,6 +15,10 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
 
+/**
+ * The StorageIngredientDB class is used to store and retrieve ingredient data represented as
+ * in user's storage, from the database.
+ */
 public class StorageIngredientDB {
     /**
      * Holds the tag for logging purposes
@@ -24,13 +30,17 @@ public class StorageIngredientDB {
      */
     private FirebaseFirestore db;
     /**
-     * Holds a reference to the StoredIngredients collection in the Firebase DB.
-     */
-    private final CollectionReference collection;
-    /**
      * Holds a reference to the IngredientDB
      */
     private final IngredientDB ingredientDB;
+    /**
+     * Holds a connection to the users ingredient collection in the DB.
+     */
+    private DBConnection ingredientsConnection;
+    /**
+     * Holds the collection for the users StoredIngredient collection in DB
+     */
+    private CollectionReference collection;
 
     /**
      * This interface is used to handle the result of
@@ -98,12 +108,13 @@ public class StorageIngredientDB {
     }
 
     /**
-     * Creates a reference to the Firebase DB.
+     * Creates a reference to the Firebase DB for the StorageIngredient collection.
      */
-    public StorageIngredientDB() {
-        this.db = FirebaseFirestore.getInstance();
-        this.collection = db.collection("StoredIngredients");
-        this.ingredientDB = new IngredientDB();
+    public StorageIngredientDB(DBConnection connection) {
+        this.ingredientsConnection = connection;
+        this.ingredientDB = new IngredientDB(connection);
+        this.db = ingredientsConnection.getDB();
+        this.collection = ingredientsConnection.getCollection("StoredIngredients");
     }
 
     /**
@@ -141,11 +152,11 @@ public class StorageIngredientDB {
     }
 
     /**
-     * todo
+     * Adds a StorageIngredient to the StorageIngredientDB
      *
-     * @param storageIngredient
-     * @param ingredient
-     * @param listener
+     * @param storageIngredient The StorageIngredient to add to the DB
+     * @param ingredient        The Ingredient associated with the StorageIngredient to add to the DB
+     * @param listener          The Listener for when a StorageIngredient is added
      */
     private void addStorageIngredient(StorageIngredient storageIngredient,
                                       Ingredient ingredient,
@@ -230,7 +241,7 @@ public class StorageIngredientDB {
                                         OnUpdateStorageIngredientListener listener) {
         WriteBatch batch = db.batch();
         DocumentReference storageIngredientRef =
-                collection.document(storageIngredient.getStorageId());
+                this.collection.document(storageIngredient.getStorageId());
         batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
         batch.update(storageIngredientRef, "amount",
                 storageIngredient.getAmount());
@@ -380,7 +391,7 @@ public class StorageIngredientDB {
      * @return DocumentReference of the Recipe
      */
     public DocumentReference getDocumentReference(String id) {
-        return collection.document(id);
+        return this.collection.document(id);
     }
 
     /**
@@ -389,7 +400,7 @@ public class StorageIngredientDB {
      * @return the query
      */
     public Query getQuery() {
-        return collection;
+        return this.collection;
         //                .orderBy("timestamp", Query.Direction.DESCENDING)
     }
 }

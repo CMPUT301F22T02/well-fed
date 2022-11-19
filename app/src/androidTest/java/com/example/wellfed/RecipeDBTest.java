@@ -3,8 +3,10 @@ package com.example.wellfed;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.ingredient.IngredientDB;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
 
@@ -23,11 +25,14 @@ import junit.framework.TestCase;
 @RunWith(AndroidJUnit4.class)
 public class RecipeDBTest {
     RecipeDB recipeDB;
+    IngredientDB ingredientDB;
     private static final long TIMEOUT = 5;
 
     @Before
     public void before() {
-        recipeDB = new RecipeDB();
+        MockDBConnection connection = new MockDBConnection();
+        recipeDB = new RecipeDB(connection);
+        ingredientDB = new IngredientDB(connection);
     }
 
     /**
@@ -42,24 +47,24 @@ public class RecipeDBTest {
     public void testAddRecipe() throws InterruptedException {
 
         Ingredient testIngredient = new Ingredient();
-        testIngredient.setDescription("Egg3");
+        testIngredient.setDescription("Egg");
         testIngredient.setAmount(2.0);
-        testIngredient.setCategory("Test");
-        testIngredient.setUnit("TestUnits");
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
 
         Ingredient testIngredient2 = new Ingredient();
-        testIngredient2.setDescription("Egg23");
+        testIngredient2.setDescription("Duck Egg");
         testIngredient2.setAmount(1.0);
-        testIngredient2.setCategory("Test2");
-        testIngredient2.setUnit("TestUnits2");
+        testIngredient2.setCategory("Protein");
+        testIngredient2.setUnit("count");
 
-        Recipe testRecipe = new Recipe("Test");
-        testRecipe.setComments("Test");
+        Recipe testRecipe = new Recipe("Omelet");
+        testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
         testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(1);
+        testRecipe.setPrepTimeMinutes(5);
         testRecipe.addIngredient(testIngredient);
         testRecipe.addIngredient(testIngredient2);
-        testRecipe.setCategory("Test");
+        testRecipe.setCategory("Breakfast");
 
         CountDownLatch latch = new CountDownLatch(1);
         recipeDB.addRecipe(testRecipe, (addedRecipe, success) -> {
@@ -71,6 +76,30 @@ public class RecipeDBTest {
             throw new InterruptedException();
         }
 
+        CountDownLatch deleteLatch = new CountDownLatch(1);
+        recipeDB.delRecipe(testRecipe.getId(), (deletedRecipe, success) -> {
+            assertNotNull(deletedRecipe);
+            deleteLatch.countDown();
+        });
+
+        if (!deleteLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        CountDownLatch deleteIngredients = new CountDownLatch(2);
+        ingredientDB.deleteIngredient(testIngredient, (deletedIngredient, success) -> {
+            assertNotNull(deletedIngredient);
+            deleteIngredients.countDown();
+        });
+
+        ingredientDB.deleteIngredient(testIngredient2, (deletedIngredient, success) -> {
+            assertNotNull(deletedIngredient);
+            deleteIngredients.countDown();
+        });
+
+        if (!deleteIngredients.await(2*TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
     }
 
 //    /**

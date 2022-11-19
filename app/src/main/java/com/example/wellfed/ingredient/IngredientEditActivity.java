@@ -14,8 +14,12 @@ import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Date;
 import java.util.Objects;
 
+/**
+ * The activity that represents editing an Ingredient.
+ */
 public class IngredientEditActivity extends EditActivityBase
         implements ConfirmDialog.OnConfirmListener {
     /**
@@ -48,7 +52,8 @@ public class IngredientEditActivity extends EditActivityBase
     private StorageIngredient ingredient;
 
     /**
-     * OnCreate method for the activity.
+     * OnCreate method for the IngredientEdit activity. Is called when the activity is created.
+     *
      * @param savedInstanceState Bundle object for the activity.
      */
     @Override
@@ -77,15 +82,31 @@ public class IngredientEditActivity extends EditActivityBase
 
 
         if (ingredient != null) {
-            descriptionInput.setPlaceholderText(ingredient.getDescription());
-            amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
-            unitInput.setPlaceholderText(ingredient.getUnit());
-            locationInput.setPlaceholderText(ingredient.getLocation());
-            if (ingredient.getCategory() != null) {
-                categoryInput.setPlaceholderText(ingredient.getCategory());
+            String description = ingredient.getDescription();
+            if (description != null) {
+                descriptionInput.setPlaceholderText(description);
             }
-            // Set date in yyyy-MM-dd format
-            bestBeforeLayout.setPlaceholderDate(ingredient.getBestBeforeDate());
+            Double amount = ingredient.getAmount();
+            if (amount != null) {
+                amountInput.setPlaceholderText(String.valueOf(amount));
+            }
+            String unit = ingredient.getUnit();
+            if (unit != null){
+                unitInput.setPlaceholderText(unit);
+            };
+            String location = ingredient.getLocation();
+            if (location != null) {
+                locationInput.setPlaceholderText(location);
+            }
+            String category = ingredient.getCategory();
+            if (category != null) {
+                categoryInput.setPlaceholderText(category);
+            }
+            Date bestBefore = ingredient.getBestBeforeDate();
+            if (bestBefore != null) {
+                bestBeforeLayout.setPlaceholderDate(bestBefore);
+            }
+
         }
 
 
@@ -100,7 +121,8 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * checks if there are unsaved changes
+     * Checks if there are any unsaved changes
+     *
      * @return true if there are unsaved changes, false otherwise
      */
     public Boolean hasUnsavedChanges() {
@@ -123,7 +145,7 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * Method to save the ingredient.
+     * Saves the ingredient.
      */
     private void onSave() {
         // Verify that all fields are filled

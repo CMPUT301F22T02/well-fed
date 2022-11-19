@@ -128,10 +128,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">com.example.wellfed.<a href="../ActivityBase.html" title="class in com.example.wellfed"><span class="typeNameLink">ActivityBase</span></a>
 <ul>
+<li class="circle">com.example.wellfed.<a href="../EditActivityBase.html" title="class in com.example.wellfed"><span class="typeNameLink">EditActivityBase</span></a> (implements com.example.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>)
+<ul>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientEditActivity.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientEditActivity</span></a> (implements com.example.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>)</li>
+</ul>
+</li>
 <li class="circle">com.example.wellfed.ingredient.<a href="IngredientActivity.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientActivity</span></a> (implements com.example.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>)</li>
 </ul>
 </li>
-<li class="circle">com.example.wellfed.ingredient.<a href="IngredientEditActivity.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientEditActivity</span></a> (implements com.example.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>)</li>
 </ul>
 </li>
 </ul>
@@ -151,12 +155,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.example.wellfed.ingredient.<a href="FoodStorage.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">FoodStorage</span></a></li>
 <li class="circle">androidx.fragment.app.Fragment (implements androidx.activity.result.ActivityResultCaller, android.content.ComponentCallbacks, androidx.lifecycle.HasDefaultViewModelProviderFactory, androidx.lifecycle.LifecycleOwner, androidx.savedstate.SavedStateRegistryOwner, android.view.View.OnCreateContextMenuListener, androidx.lifecycle.ViewModelStoreOwner)
 <ul>
-<li class="circle">androidx.fragment.app.DialogFragment (implements android.content.DialogInterface.OnCancelListener, android.content.DialogInterface.OnDismissListener)
-<ul>
-<li class="circle">com.example.wellfed.ingredient.<a href="DeleteDialogFragment.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">DeleteDialogFragment</span></a></li>
-</ul>
-</li>
-<li class="circle">com.example.wellfed.ingredient.<a href="IngredientStorageFragment.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientStorageFragment</span></a> (implements com.example.wellfed.ingredient.<a href="IngredientAdapter.IngredientLauncher.html" title="interface in com.example.wellfed.ingredient">IngredientAdapter.IngredientLauncher</a>, com.example.wellfed.common.<a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>)</li>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientStorageFragment.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientStorageFragment</span></a> (implements com.example.wellfed.common.<a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>, com.example.wellfed.ingredient.<a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient">StorageIngredientAdapter.OnItemClickListener</a>)</li>
 </ul>
 </li>
 <li class="circle">com.example.wellfed.ingredient.<a href="Ingredient.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">Ingredient</span></a> (implements java.io.Serializable)
@@ -164,15 +163,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredient</span></a> (implements java.lang.Comparable&lt;T&gt;)</li>
 </ul>
 </li>
-<li class="circle">com.example.wellfed.ingredient.<a href="IngredientController.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientController</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientDB.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientDB</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientStorageController.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientStorageController</span></a></li>
 <li class="circle">androidx.recyclerview.widget.RecyclerView.Adapter&lt;VH&gt;
 <ul>
-<li class="circle">com.example.wellfed.ingredient.<a href="IngredientAdapter.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientAdapter</span></a></li>
+<li class="circle">com.example.wellfed.common.<a href="../common/DBAdapter.html" title="class in com.example.wellfed.common"><span class="typeNameLink">DBAdapter</span></a>&lt;VH&gt; (implements com.google.firebase.firestore.EventListener&lt;T&gt;)
+<ul>
+<li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientAdapter.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientAdapter</span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="circle">androidx.recyclerview.widget.RecyclerView.ViewHolder
 <ul>
-<li class="circle">com.example.wellfed.ingredient.<a href="IngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientAdapter.ViewHolder</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientAdapter.ViewHolder</span></a></li>
 </ul>
 </li>
 <li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientDB.html" title="class in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientDB</span></a></li>
@@ -183,8 +187,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <section role="region">
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
-<li class="circle">com.example.wellfed.ingredient.<a href="DeleteDialogFragment.DeleteIngredient.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">DeleteDialogFragment.DeleteIngredient</span></a></li>
-<li class="circle">com.example.wellfed.ingredient.<a href="IngredientAdapter.IngredientLauncher.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientAdapter.IngredientLauncher</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientDB.OnAddIngredientListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientDB.OnAddIngredientListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientDB.OnDeleteIngredientListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientDB.OnDeleteIngredientListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientDB.OnGetIngredientListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">IngredientDB.OnUpdateIngredientReferenceCountListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientAdapter.OnItemClickListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientDB.OnAddStorageIngredientListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientDB.OnAddStorageIngredientListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientDB.OnDeleteStorageIngredientListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientDB.OnDeleteStorageIngredientListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientDB.OnGetStorageIngredientListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientDB.OnGetStorageIngredientListener</span></a></li>
+<li class="circle">com.example.wellfed.ingredient.<a href="StorageIngredientDB.OnUpdateStorageIngredientListener.html" title="interface in com.example.wellfed.ingredient"><span class="typeNameLink">StorageIngredientDB.OnUpdateStorageIngredientListener</span></a></li>
 </ul>
 </section>
 </div>
