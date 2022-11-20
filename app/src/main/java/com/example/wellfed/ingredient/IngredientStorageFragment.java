@@ -100,7 +100,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
             case "quit":
                 break;
             default:
-                throw new IllegalArgumentException();
+                break;
         }
     });
 
