@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.ActivityBase;
+import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
@@ -48,9 +49,8 @@ import java.util.List;
  *
  * @version 1.0.0
  */
-public class RecipeEditActivity extends ActivityBase implements RecipeIngredientAdapter.OnIngredientClick {
+public class RecipeEditActivity extends EditActivityBase {
     private List<Ingredient> recipeIngredients;
-    private RecipeIngredientAdapter recipeIngredientAdapter;
     private Recipe recipe;
     private FloatingActionButton fab;
     private Uri uri;
@@ -142,9 +142,6 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
             });
         }
 
-        // ingredient recycle viewer and it's adapter
-        recipeIngredientAdapter = new RecipeIngredientAdapter(recipeIngredients, R.layout.recipe_ingredient_edit, this);
-
         uri = initTempUri();
         recipeImg.setOnClickListener(view -> {
             cameraLauncher.launch(uri);
@@ -158,6 +155,16 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         if (!commentsTextInput.isValid()) return false;
         if (!recipeCategory.isValid()) return false;
         return true;
+    }
+
+    @Override public Boolean hasUnsavedChanges() {
+        if (title.hasChanges()) return true;
+        if (prepTime.hasChanges()) return true;
+        if (servings.hasChanges()) return true;
+        if (commentsTextInput.hasChanges()) return true;
+        if (recipeCategory.hasChanges()) return true;
+//      if (editRecyclerViewAdapter.hasChanges()) return true;
+        return false;
     }
 
     public void onSave() {
@@ -229,19 +236,19 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         });
     }
 
-    @Override
-    public void onEditClick(String reason, int pos) {
-        this.selectedIngredient = pos;
-        switch (reason) {
-            case "edit":
-                ingredientLauncher.launch(recipeIngredients.get(pos));
-                break;
-            case "delete":
-                recipeIngredients.remove(pos);
-                recipeIngredientAdapter.notifyItemRemoved(pos);
-                break;
-            default:
-                break;
-        }
-    }
+//    @Override
+//    public void onEditClick(String reason, int pos) {
+//        this.selectedIngredient = pos;
+//        switch (reason) {
+//            case "edit":
+//                ingredientLauncher.launch(recipeIngredients.get(pos));
+//                break;
+//            case "delete":
+//                recipeIngredients.remove(pos);
+//                recipeIngredientAdapter.notifyItemRemoved(pos);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 }

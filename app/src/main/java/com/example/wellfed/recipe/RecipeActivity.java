@@ -40,17 +40,6 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
     private Recipe recipe;
 
     /**
-     * RecyclerView for the ingredients in the recipe
-     */
-    private RecyclerView ingredientRv;
-
-    /**
-     * Adapter that works with ingredentRv{@link RecipeActivity#ingredientRv}
-     */
-    private RecipeIngredientAdapter recipeIngredientAdapter;
-
-
-    /**
      * Launcher that launches RecipeEditActivity {@link RecipeEditActivity}
      */
     ActivityResultLauncher<Recipe> recipeEditLauncher = registerForActivityResult(
@@ -120,17 +109,17 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
             // add ingredients to the recipe
             for (Ingredient ingredient : recipe.getIngredients()) {
                 ingredientList.add(ingredient);
-                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
+//                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
             }
         });
 
 
-        // ingredient recycle view
-        ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
-        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList,
-                R.layout.recipe_ingredient);
-        ingredientRv.setAdapter(recipeIngredientAdapter);
-        ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
+//        // ingredient recycle view
+//        ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
+//        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList,
+//                R.layout.recipe_ingredient);
+//        ingredientRv.setAdapter(recipeIngredientAdapter);
+//        ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
         /**
          * DeleteBtn to create a dialog asking for delete confirmation

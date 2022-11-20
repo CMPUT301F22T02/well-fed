@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeIngredientViewHolder;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ import java.util.List;
  *
  * @version 1.0.0
  */
-public class ItemAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
 
     /**
      * list of {@link Ingredient}
@@ -67,11 +66,11 @@ public class ItemAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder
      */
     @NonNull
     @Override
-    public RecipeIngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View recipeView = layoutInflater.inflate(layoutId, parent, false);
-        RecipeIngredientViewHolder viewHolder = new RecipeIngredientViewHolder(recipeView, layoutId);
+        ItemViewHolder viewHolder = new ItemViewHolder(recipeView, layoutId);
         return viewHolder;
     }
 
@@ -83,7 +82,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder
      * @param position gives the position in the list
      */
     @Override
-    public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
 
         /**
          * Ingredient at the position
@@ -134,4 +133,45 @@ public class ItemAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder
     }
 
 
+    /**
+     * Viewholder for the items
+     * @version 1.0.0
+     */
+    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * view that holds quantity of the ingredient
+         */
+        public TextView ingredientQuantity;
+
+        /**
+         * view that holds the name of the ingredient
+         */
+        public TextView ingredientName;
+
+        /**
+         * image that allows to edit the ingredient
+         */
+        ImageView editImgView;
+
+        /**
+         * image that allows to delete ingredient
+         */
+        ImageView deleteImgView;
+
+        /**
+         * constructor for creating the view
+         * @param itemView
+         * @param layoutId
+         */
+        public ItemViewHolder(@NonNull View itemView, int layoutId) {
+            super(itemView);
+            if (layoutId == R.layout.recipe_ingredient_edit){
+                editImgView = (ImageView) itemView.findViewById(R.id.ingredient_edit_imgView);
+                deleteImgView = (ImageView) itemView.findViewById(R.id.ingredient_delete_imgView);
+            }
+            ingredientQuantity = (TextView) itemView.findViewById(R.id.ingredient_quantity_textView);
+            ingredientName = (TextView) itemView.findViewById(R.id.ingredient_name_textView);
+        }
+
+    }
 }
