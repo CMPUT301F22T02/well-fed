@@ -200,29 +200,40 @@ public class IngredientDBTest {
         assertIngredientsEqual(deletedIngredientAtomic.get(), mockIngredient);
     }
 
-    /**
-     * Tests deleteIngredient with a NonExistingIngredient, checks if the
-     * listener is called with not null.
-     *
-     * @throws InterruptedException if the test times out
-     */
     @Test
-    public void deleteNonExistingIngredient()
-            throws InterruptedException {
-        Log.d(TAG, "deleteNonExistingIngredient");
-        CountDownLatch latch = new CountDownLatch(1);
+    public void testGetIngredient() throws InterruptedException {
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch getLatch = new CountDownLatch(1);
 
-        ingredientDB.deleteIngredient(nonExistingIngredient,
-                (deleteIngredient, deleteSuccess) -> {
-                    Log.d(TAG, ":onDeleteIngredient");
-                    assertNotNull(deleteIngredient);
-                    assertTrue(deleteSuccess);
-                    latch.countDown();
-                });
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        ingredientDB.addIngredient(mockIngredient,
+                (addedIngredient, success) ->{
+            successAtomic.set(success);
+            addLatch.countDown();
+        });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+        if(!addLatch.await(TIMEOUT, SECONDS)){
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
+
+        AtomicReference<Ingredient> foundIngredientAtomic = new AtomicReference<>();
+        ingredientDB.getIngredient(mockIngredient.getId(),
+                (foundIngredient, success) ->{
+            successAtomic.set(success);
+            foundIngredientAtomic.set(foundIngredient);
+            getLatch.countDown();
+        });
+
+        if(!getLatch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+        assertIngredientsEqual(foundIngredientAtomic.get(), mockIngredient);
+
+        removeIngredient(mockIngredient);
     }
 
     /**
