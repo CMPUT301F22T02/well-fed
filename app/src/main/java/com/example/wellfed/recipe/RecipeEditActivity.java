@@ -123,6 +123,8 @@ public class RecipeEditActivity extends EditActivityBase {
             });
         } else {
             recipeIngredients = recipe.getIngredients();
+            adapter.setItems(recipeIngredients);
+            adapter.notifyDataSetChanged();
             title.setPlaceholderText(recipe.getTitle());
             prepTime.setPlaceholderText(recipe.getPrepTimeMinutes().toString());
             servings.setPlaceholderText(recipe.getServings().toString());
