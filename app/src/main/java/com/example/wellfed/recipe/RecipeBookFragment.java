@@ -76,7 +76,7 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
                                 recipeController.editRecipe(recipe);
                                 break;
                             default:
-                                new IllegalArgumentException();
+                                break;
                         }
                     }
             );
