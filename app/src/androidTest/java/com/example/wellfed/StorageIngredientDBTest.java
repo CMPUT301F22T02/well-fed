@@ -3,7 +3,6 @@ package com.example.wellfed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -14,7 +13,6 @@ import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
 
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,8 +22,6 @@ import java.util.concurrent.CountDownLatch;
 
 // TODO: javadoc
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
-
-    private static final String TAG = "StorageIngredientDBTest";
 
     private static final long TIMEOUT = 5;
 
@@ -171,32 +167,6 @@ import java.util.concurrent.CountDownLatch;
         }
     }
 
-    //    /**
-    //     * Tests the add and get functionality, when fields are blank.
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void testAddMissingFields() throws InterruptedException {
-    //        StorageIngredient storedIngredient = new StorageIngredient
-    //        ("Broccoli");
-    //
-    //        // testing whether it was what was inserted into db
-    //        String id = storageIngredientDB.addStoredIngredient
-    //        (storedIngredient);
-    //        StorageIngredient resultIngredient = storageIngredientDB
-    //        .getStoredIngredient(id);
-    //        assertEquals("Broccoli", resultIngredient.getDescription());
-    //        assertNull(resultIngredient.getCategory());
-    //        assertNull(resultIngredient.getBestBefore());
-    //        assertNull(resultIngredient.getLocation());
-    //        assertNull(resultIngredient.getAmount());
-    //        assertNull(resultIngredient.getUnit());
-    //
-    //        // removing it afterward
-    //        storageIngredientDB.removeFromIngredients(id);
-    //    }
-    //
-
     /**
      * Tests deleting an ingredient from the database
      */
@@ -246,40 +216,11 @@ import java.util.concurrent.CountDownLatch;
             throw new InterruptedException();
         }
     }
-    //
-    //    /**
-    //     * Tests deleting a non-existing ingredient.
-    //     */
-    //    @Test
-    //    public void deleteNonExistingIngredient() throws
-    //    InterruptedException {
-    //        // attempting to remove non-existing ingredient from db
-    //        // this test will succeed if no error is thrown
-    //        storageIngredientDB.removeFromIngredients("-1");
-    //    }
-    //
-    //    /**
-    //     * Tests whether an exception is thrown upon getting an invalid
-    //     ingredient.
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void getNonExistingIngredient() throws InterruptedException {
-    //        // TODO: change this to a assertThrows()
-    //        boolean valid = true;
-    //        try {
-    //            storageIngredientDB.getStoredIngredient("-1");
-    //        } catch (IllegalArgumentException e) {
-    //            valid = false;
-    //        }
-    //        assertFalse(valid);
-    //    }
-    //
 
     /**
      * Tests whether all of the updated fields are reflected in the database.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException thrown when add or update database functions fail
      */
     @Test public void testUpdateStorageIngredient() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
