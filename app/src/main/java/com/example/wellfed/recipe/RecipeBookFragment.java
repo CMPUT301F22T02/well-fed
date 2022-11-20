@@ -146,6 +146,11 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
         recipeEditLauncher.launch(null);
     }
 
+    @Override
+    public void launch(int pos) {
+
+    }
+
     /**
      * launches activity for a Recipe{@link Recipe} in
      * the recipes at pos.

@@ -31,7 +31,10 @@ import java.util.Objects;
 
 
 public class IngredientStorageFragment extends Fragment implements Launcher, StorageIngredientAdapter.OnItemClickListener {
-
+	/**
+	 * FoodStorage is a singleton array of StorageIngredient objects
+	 */
+	private ArrayList<StorageIngredient> foodStorage;
 	/**
 	 * The ingredientController is the controller for the ingredient.
 	 */
@@ -71,6 +74,9 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 				break;
 			case "edit":
 				controller.updateIngredient(ingredient);
+				break;
+			case "launch":
+				this.launch(this.selected);
 				break;
 			default:
 				break;
@@ -115,8 +121,10 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		foodStorage = new ArrayList<>();
 		controller = new IngredientStorageController(requireActivity());
 		controller.getAdapter().setOnItemClickListener(this);
+
 		return inflater.inflate(R.layout.fragment_ingredient_storage, container, false);
 	}
 
@@ -169,6 +177,16 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 		imageFilterButton.setOnClickListener(this::filter);
 	}
 
+	/**
+	 * Launches the IngredientEditActivity to edit an ingredient.
+	 *
+	 * @param pos The position of the ingredient in the list.
+	 */
+	@Override
+	public void launch(int pos) {
+		this.selected = pos;
+		launcher.launch(foodStorage.get(pos));
+	}
 
 	/**
 	 * Launches the IngredientAddActivity to add an ingredient.

@@ -83,7 +83,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
         holder.getMaterialCardView().setOnClickListener(
-                view -> {});
+                view -> context.launch(holder.getAdapterPosition()));
 
         UTCDate today = new UTCDate();
         UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());

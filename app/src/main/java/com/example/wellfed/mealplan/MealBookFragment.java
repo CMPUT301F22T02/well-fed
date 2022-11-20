@@ -68,6 +68,9 @@ public class MealBookFragment extends Fragment
                     case "edit":
                         controller.editMealPlan(selected, mealPlan);
                         break;
+                    case "launch":
+                        this.launch(this.selected);
+                        break;
                     default:
                         throw new IllegalArgumentException();
                 }
@@ -124,6 +127,11 @@ public class MealBookFragment extends Fragment
 
         this.userFirstNameTextView.setText(
                 getString(R.string.greeting, "Akshat"));
+    }
+
+    @Override public void launch(int selected) {
+        this.selected = selected;
+        launcher.launch(this.controller.getMealPlans().get(selected));
     }
 
     @Override
