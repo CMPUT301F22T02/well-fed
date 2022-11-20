@@ -20,6 +20,7 @@
         android:layout_marginLeft="16dp" />
 
     <ImageView
+        android:id="@+id/more_info_ImageView"
         android:layout_width="16sp"
         android:layout_height="16sp"
         android:src="@drawable/info_fill0_wght400_grad0_opsz48"

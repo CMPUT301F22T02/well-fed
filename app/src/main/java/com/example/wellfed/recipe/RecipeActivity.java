@@ -15,6 +15,7 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.DeleteButton;
+import com.example.wellfed.common.ItemDetailAdapter;
 import com.example.wellfed.ingredient.Ingredient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -33,6 +34,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
      * stores the list of Ingredient{@link Ingredient}
      */
     private List<Ingredient> ingredientList;
+
+    private ItemDetailAdapter adapter;
 
     /**
      * stores the recipe {@link Recipe}
@@ -74,7 +77,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
         // Initialize the variables
         ingredientList = new ArrayList<>();
-
+        adapter = new ItemDetailAdapter();
+        adapter.setItems(ingredientList);
         /**
          * Stores the intent the activity was created with
          */
@@ -111,15 +115,19 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                 ingredientList.add(ingredient);
 //                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
             }
+            adapter.notifyDataSetChanged();
         });
 
 
+
+
+
 //        // ingredient recycle view
-//        ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
-//        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList,
+        RecyclerView ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
+        ingredientRv.setAdapter(adapter);
 //                R.layout.recipe_ingredient);
 //        ingredientRv.setAdapter(recipeIngredientAdapter);
-//        ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
+        ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
         /**
          * DeleteBtn to create a dialog asking for delete confirmation

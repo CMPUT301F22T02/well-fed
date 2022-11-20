@@ -19,7 +19,7 @@ public abstract class ItemAdapter<Item> extends RecyclerView.Adapter<RecyclerVie
      */
     protected List<Item> items;
 
-    private List<Item> getItems(){
+    protected List<Item> getItems(){
         return items;
     }
 
