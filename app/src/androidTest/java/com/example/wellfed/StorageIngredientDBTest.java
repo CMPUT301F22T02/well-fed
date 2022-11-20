@@ -191,6 +191,8 @@ import java.util.concurrent.atomic.AtomicReference;
                 (addedStorageIngredient, success)->{
                     assertTrue(success);
                     assertNotNull(addedStorageIngredient);
+                    assertEquals(addedStorageIngredient.getStorageId(),
+                            mockStorageIngredient.getStorageId());
                     addLatch.countDown();
                 });
 
@@ -262,48 +264,59 @@ import java.util.concurrent.atomic.AtomicReference;
      *
      * @throws InterruptedException
      */
-    @Test public void testUpdateIngredient() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
+    @Test public void testUpdateStorageIngredient() throws InterruptedException {
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch updateLatch = new CountDownLatch(1);
 
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
                 (addedStorageIngredient, addSuccess) -> {
                     assertNotNull(addedStorageIngredient);
                     assertTrue(addSuccess);
-                    StorageIngredient updatedStorageIngredient =
-                            addedStorageIngredient;
-                    updatedStorageIngredient.setDescription("Steamed Broccoli");
-                    updatedStorageIngredient.setAmount(4.0);
-                    updatedStorageIngredient.setUnit("lb");
-                    Date newBestBefore = new Date();
-                    updatedStorageIngredient.setBestBefore(newBestBefore);
-                    updatedStorageIngredient.setLocation("Freezer");
-                    storageIngredientDB.updateStorageIngredient(
-                            updatedStorageIngredient,
-                            (updatedIngredient, updateSuccess) -> {
-                                assertNotNull(updatedIngredient);
-                                assertTrue(updateSuccess);
-                                assertEquals("Steamed Broccoli",
-                                        updatedIngredient.getDescription());
-                                assertEquals((Double) 4.0,
-                                        updatedIngredient.getAmount());
-                                assertEquals("lb", updatedIngredient.getUnit());
-                                assertEquals(newBestBefore,
-                                        updatedIngredient.getBestBeforeDate());
-                                assertEquals("Freezer",
-                                        updatedIngredient.getLocation());
-                                storageIngredientDB.deleteStorageIngredient(
-                                        updatedIngredient,
-                                        (deletedStorageIngredient, deleteSuccess) -> {
-                                            assertNotNull(
-                                                    deletedStorageIngredient);
-                                            assertTrue(deleteSuccess);
-                                            latch.countDown();
-                                        });
-                            });
+                    addLatch.countDown();
                 });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+        if (!addLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        mockStorageIngredient.setCategory("Protein");
+        mockStorageIngredient.setDescription("Chicken");
+        mockStorageIngredient.setUnit("lb");
+        mockStorageIngredient.setAmount(11.0);
+        mockStorageIngredient.setLocation("Freezer");
+        mockStorageIngredient.setBestBefore(new Date());
+
+        storageIngredientDB.updateStorageIngredient(mockStorageIngredient,
+                (updatedStorageIngredient, success) ->{
+                    assertTrue(success);
+                    assertNotNull(updatedStorageIngredient);
+
+                    assertEquals(mockStorageIngredient.getId(),
+                            updatedStorageIngredient.getId());
+                    assertEquals(mockStorageIngredient.getStorageId(),
+                            updatedStorageIngredient.getStorageId());
+                    assertEquals(mockStorageIngredient.getDescription(),
+                            updatedStorageIngredient.getDescription());
+                    assertEquals(mockStorageIngredient.getLocation(),
+                            updatedStorageIngredient.getLocation());
+                    assertEquals(mockStorageIngredient.getAmount(),
+                            updatedStorageIngredient.getAmount());
+                    assertEquals(mockStorageIngredient.getCategory(),
+                            updatedStorageIngredient.getCategory());
+                    assertEquals(mockStorageIngredient.getBestBeforeDate(),
+                            updatedStorageIngredient.getBestBeforeDate());
+                    assertEquals(mockStorageIngredient.getUnit(),
+                            updatedStorageIngredient.getUnit());
+                    assertEquals(mockStorageIngredient.getAmountAndUnit(),
+                            updatedStorageIngredient.getAmountAndUnit());
+
+                    updateLatch.countDown();
+                });
+
+        if(!updateLatch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+
+        removeStorageIngredient(mockStorageIngredient);
     }
 }
