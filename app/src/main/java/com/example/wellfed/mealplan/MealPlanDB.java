@@ -355,6 +355,7 @@ public class MealPlanDB {
      * @return the query for MealPlans in the db.
      */
     public Query getQuery() {
-        return this.mealPlanCollection;
+        return this.mealPlanCollection
+                .orderBy("eat date", Query.Direction.ASCENDING);
     }
 }

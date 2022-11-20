@@ -119,15 +119,6 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                 UTCDate today = new UTCDate();
                 UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
 
-//                int colorPrimary = MaterialColors.getColor(context.getView(),
-//                        com.google.android.material.R.attr.colorPrimary);
-//                int colorOnPrimary = MaterialColors.getColor(context.getView(),
-//                        com.google.android.material.R.attr.colorOnPrimary);
-//                int colorSurface = MaterialColors.getColor(context.getView(),
-//                        com.google.android.material.R.attr.colorSurface);
-//                int colorOnSurface = MaterialColors.getColor(context.getView(),
-//                        com.google.android.material.R.attr.colorOnSurface);
-
                 UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
                 if (position > 0) {
 //                    // TODO: this is a hack, fix it later
@@ -153,11 +144,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                 weekLabel += eatDateLastDayOfWeek.format("d");
                 holder.getWeekTextView().setText(weekLabel);
                 holder.getWeekTextView().setVisibility(View.VISIBLE);
-//                if (today.equals(eatDate)) {
-//                    holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
-//                } else {
-//                    holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
-//                }
+                holder.setDateCircle(eatDate, today.equals(eatDate));
             }
         });
     }
