@@ -349,8 +349,64 @@ public class RecipeDBTest {
      * Checks whether all of the fields are correct after getting it.
      */
     @Test
-    public void testGetUpdatedRecipe() {
+    public void testGetUpdatedRecipe() throws InterruptedException {
+        // add the recipe
+        Ingredient testIngredient = mockIngredient("Egg");
+        Ingredient testIngredient2 = mockIngredient("Duck Egg");
 
+        Recipe testRecipe = mockRecipe(testIngredient, testIngredient2);
+
+        CountDownLatch addLatch = new CountDownLatch(1);
+        AtomicReference<Recipe> addedRecipeRef = new AtomicReference<Recipe>();
+        recipeDB.addRecipe(testRecipe, (addedRecipe, success) -> {
+            addedRecipeRef.set(addedRecipe);
+            addLatch.countDown();
+        });
+
+        if (!addLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+        assertEqualRecipe(testRecipe, addedRecipeRef.get());
+
+        // changing each field of the recipe
+        Ingredient newTestIngredient = mockIngredient("Mayonnaise");
+        newTestIngredient.setCategory("Condiment");
+
+        testRecipe.setTitle("Egg Salad");
+        testRecipe.setComments("This egg salad is great for picnics.");
+        testRecipe.setServings(3);
+        testRecipe.setPrepTimeMinutes(20);
+        testRecipe.removeIngredient(testIngredient);
+        testRecipe.addIngredient(newTestIngredient);
+        testRecipe.setCategory("Lunch");
+
+        CountDownLatch updateLatch = new CountDownLatch(1);
+        AtomicReference<Recipe> updatedRecipeRef = new AtomicReference<Recipe>();
+        recipeDB.updateRecipe(testRecipe, (updatedRecipe, success) -> {
+            updatedRecipeRef.set(updatedRecipe);
+            updateLatch.countDown();
+        });
+
+        if (!updateLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+        assertEqualRecipe(testRecipe, updatedRecipeRef.get());
+
+        // now, get the recipe
+        CountDownLatch getLatch = new CountDownLatch(1);
+        AtomicReference<Recipe> resultRecipeRef = new AtomicReference<Recipe>();
+        recipeDB.getRecipe(addedRecipeRef.get().getId(), (resultRecipe, success) -> {
+            resultRecipeRef.set(resultRecipe);
+            getLatch.countDown();
+        });
+
+        if (!getLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertEqualRecipe(testRecipe, resultRecipeRef.get());
+
+        cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }
 
     /**
