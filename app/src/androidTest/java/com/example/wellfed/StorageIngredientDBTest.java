@@ -21,7 +21,6 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: javadoc
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
@@ -56,7 +55,9 @@ import java.util.concurrent.atomic.AtomicReference;
         mockStorageIngredient =
                 new StorageIngredient("Broccoli", 5.0, "kg", "Fridge",
                         new Date(), "Vegetable");
-        mockNonExistentStorageIngredient = new StorageIngredient(null);
+        mockNonExistentStorageIngredient =
+                new StorageIngredient("Broccoli", 5.0, "kg", "Fridge",
+                        new Date(), "Vegetable");
         mockNonExistentStorageIngredient.setStorageId("-1");
     }
 
@@ -64,7 +65,7 @@ import java.util.concurrent.atomic.AtomicReference;
      * Tests the add functionality and get functionality of db,
      * with a complete ingredient.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException on InterruptedException Error when adding, or deleting
      */
     @Test public void testAddStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
@@ -153,6 +154,21 @@ import java.util.concurrent.atomic.AtomicReference;
         }
 
         removeStorageIngredient(mockStorageIngredient);
+    }
+
+    @Test
+    public void testGetNonExistenceStorageIngredient() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        storageIngredientDB.getStorageIngredient(mockNonExistentStorageIngredient.getStorageId(),
+                (foundStorageIngredient, success) ->{
+                    assertFalse(success);
+                    latch.countDown();
+                });
+
+        if(!latch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
     }
 
     //    /**
