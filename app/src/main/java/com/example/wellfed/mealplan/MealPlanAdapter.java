@@ -77,6 +77,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
 
     /**
      * Sets the listener for an item click in the Recyclerview
+     *
      * @param listener the listener to set
      */
     // TODO: move this to superclass
@@ -109,43 +110,66 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
             if (success) {
                 holder.getTitleTextView().setText(mealPlan.getTitle());
                 holder.getCategoryTextView().setText(mealPlan.getCategory());
-                holder.getMaterialCardView().setOnClickListener(
-                        view -> {
-                            if (listener != null) {
-                                listener.onItemClick(mealPlan);
-                            }
-                        });
+                holder.getMaterialCardView().setOnClickListener(view -> {
+                    if (listener != null) {
+                        listener.onItemClick(mealPlan);
+                    }
+                });
 
-                UTCDate today = new UTCDate();
                 UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
 
                 UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
                 if (position > 0) {
-//                    // TODO: this is a hack, fix it later
-//                    MealPlan priorMealPlan = this.mealPlans.get(position - 1);
-//                    UTCDate priorEatDate = UTCDate.from(priorMealPlan.getEatDate());
-//                    if (priorEatDate.equals(eatDate)) {
-//                        return;
-//                    }
-//                    UTCDate priorEatDateFirstDayOfWeek =
-//                            priorEatDate.getFirstDayOfWeek();
-//                    if (eatDateFirstDayOfWeek.equals(priorEatDateFirstDayOfWeek)) {
-//                        return;
-//                    }
+                    db.getMealPlan(getSnapshot(position - 1),
+                            (priorMealPlan, success2) -> {
+                                if (success2) {
+                                    UTCDate priorEatDate = UTCDate.from(
+                                            priorMealPlan.getEatDate());
+                                    if (priorEatDate.equals(eatDate)) {
+                                        return;
+                                    }
+                                    renderDates(eatDate, eatDateFirstDayOfWeek,
+                                            holder);
+                                    UTCDate priorEatDateFirstDayOfWeek =
+                                            priorEatDate.getFirstDayOfWeek();
+                                    if (eatDateFirstDayOfWeek.equals(
+                                            priorEatDateFirstDayOfWeek)) {
+                                        return;
+                                    }
+                                    renderWeeks(eatDate, eatDateFirstDayOfWeek,
+                                            holder);
+
+                                }
+                            });
+                } else {
+                    renderDates(eatDate, eatDateFirstDayOfWeek, holder);
+                    renderWeeks(eatDate, eatDateFirstDayOfWeek, holder);
                 }
-                UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
-                String eatDateFirstDayOfWeekMonth = eatDateFirstDayOfWeek.format("MMMM ");
-                String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
-                String weekLabel = eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
-                String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
-                if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
-                    weekLabel += eatDateLastDayOfWeekMonth;
-                }
-                weekLabel += eatDateLastDayOfWeek.format("d");
-                holder.getWeekTextView().setText(weekLabel);
-                holder.getWeekTextView().setVisibility(View.VISIBLE);
-                holder.setDateCircle(eatDate, today.equals(eatDate));
             }
         });
+    }
+
+    private void renderDates(UTCDate eatDate, UTCDate eatDateFirstDayOfWeek,
+                             @NonNull MealPlanViewHolder holder) {
+        UTCDate today = new UTCDate();
+        holder.setDateCircle(eatDate, today.equals(eatDate));
+
+    }
+
+    private void renderWeeks(UTCDate eatDate, UTCDate eatDateFirstDayOfWeek,
+                             @NonNull MealPlanViewHolder holder) {
+        UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
+        String eatDateFirstDayOfWeekMonth =
+                eatDateFirstDayOfWeek.format("MMMM ");
+        String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
+        String weekLabel =
+                eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
+        String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
+        if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
+            weekLabel += eatDateLastDayOfWeekMonth;
+        }
+        weekLabel += eatDateLastDayOfWeek.format("d");
+        holder.getWeekTextView().setText(weekLabel);
+        holder.getWeekTextView().setVisibility(View.VISIBLE);
     }
 }
