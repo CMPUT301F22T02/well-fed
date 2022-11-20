@@ -579,4 +579,41 @@ public class MealPlanDBTest {
 			}
 		});
 	}
+
+	/**
+	 * Test adding a meal plan with 5 ingredients to the database
+	 */
+	@Test
+	public void testAddMealPlanWith5Ingredients() {
+		// Create a meal plan
+		MealPlan mealPlan = mockMealPlan();
+		// Add 5 ingredients
+		mealPlan.addIngredient(mockIngredient());
+		mealPlan.addIngredient(mockIngredient());
+		mealPlan.addIngredient(mockIngredient());
+		mealPlan.addIngredient(mockIngredient());
+		mealPlan.addIngredient(mockIngredient());
+		// Add the meal plan to the database
+		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
+			if (success) {
+				// Retrieve the meal plan
+				mealPlanDB.getMealPlan(addedMealPlan.getId(), (retrievedMealPlan, success2) -> {
+					if (success2) {
+						// Compare using the getters
+						assertEquals(addedMealPlan.getId(), retrievedMealPlan.getId());
+						assertEquals(addedMealPlan.getTitle(), retrievedMealPlan.getTitle());
+						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
+						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
+						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
+						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
+						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+					} else {
+						Log.e(TAG, "Failed to retrieve meal plan");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add meal plan");
+			}
+		});
+	}
 }
