@@ -716,7 +716,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -796,7 +796,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -862,7 +862,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -933,7 +933,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -999,7 +999,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(100, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT0, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -1065,7 +1065,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
