@@ -27,8 +27,6 @@ package com.example.wellfed.common;
 /**
  * The Launcher class provides a method for launching an activity.
  */
-public interface Launcher {
-    void launch();
-
-    void launch(int pos);
+public interface Launcher<Item> {
+    void launch(Item item);
 }
