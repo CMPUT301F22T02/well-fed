@@ -39,13 +39,13 @@ public class MealPlanController {
         });
     }
 
-    public void updateMealPlan(MealPlan mealPlan, Launcher launcher) {
+    public void updateMealPlan(MealPlan mealPlan, Launcher<MealPlan> launcher) {
         db.updateMealPlan(mealPlan, (updateMealPlan, updateSuccess) -> {
             if (!updateSuccess) {
                 this.activity.makeSnackbar("Failed to update " + updateMealPlan.getTitle());
-                launcher.launch(updateMealPlan);
             } else {
                 this.activity.makeSnackbar("Updated " + updateMealPlan.getTitle());
+                launcher.launch(updateMealPlan);
             }
         });
     }

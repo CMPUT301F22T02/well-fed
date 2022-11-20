@@ -235,6 +235,7 @@ public class MealPlanDB {
                     mealPlan.setId(mealPlanDoc.getId());
                     mealPlan.setCategory(mealPlanDoc.getString("category"));
                     mealPlan.setEatDate(mealPlanDoc.getDate("eat date"));
+//                    TODO: refactor mealPlan to use Long instead of Integer
                     mealPlan.setServings(Objects.requireNonNull(mealPlanDoc.getLong("servings")).intValue());
 
                     // Initializes an empty ArrayList to store Ingredient objects.
@@ -294,7 +295,6 @@ public class MealPlanDB {
      * @param listener the OnDeleteMealPlanListener object to handle the result.
      */
     public void delMealPlan(MealPlan mealPlan, OnDeleteMealPlanListener listener) {
-        // Get reference to the MealPlan document with the given id.
         DocumentReference mealPlanRef =
                 this.mealPlanCollection.document(mealPlan.getId());
         mealPlanRef.delete()
@@ -313,28 +313,30 @@ public class MealPlanDB {
      * @param listener the OnUpdateMealPlanListener object to handle the result.
      */
     public void updateMealPlan(MealPlan mealPlan, OnUpdateMealPlanListener listener) {
+//        TODO: use update function instead of delete and add
         if (mealPlan == null) {
             listener.onUpdateMealPlanResult(null, false);
         }
-
+        String oldId = mealPlan.getId();
         // Adds the new MealPlan object to the db.
         addMealPlan(mealPlan, (addedMealPlan, success1) -> {
             // Check if the MealPlan object was added successfully.
-            if (addedMealPlan == null) {
-                listener.onUpdateMealPlanResult(null, false);
+            if (!success1) {
+                listener.onUpdateMealPlanResult(mealPlan, false);
             } else {
-                listener.onUpdateMealPlanResult(addedMealPlan, true);
+                String newId = addedMealPlan.getId();
+                mealPlan.setId(oldId);
+                // Deletes the old MealPlan object.
+                delMealPlan(mealPlan, (deletedMealPlan, success2) -> {
+                    // Check if the MealPlan object was deleted successfully.
+                    mealPlan.setId(newId);
+                    if (!success2) {
+                        listener.onUpdateMealPlanResult(mealPlan, false);
+                    } else {
+                        listener.onUpdateMealPlanResult(mealPlan, true);
+                    }
+                });
             }
-
-            // Deletes the old MealPlan object.
-            delMealPlan(mealPlan, (deletedMealPlan, success2) -> {
-                // Check if the MealPlan object was deleted successfully.
-                if (deletedMealPlan == null) {
-                    listener.onUpdateMealPlanResult(null, false);
-                } else {
-                    listener.onUpdateMealPlanResult(addedMealPlan, true);
-                }
-            });
         });
     }
 
