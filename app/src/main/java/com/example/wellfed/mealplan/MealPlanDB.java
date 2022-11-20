@@ -141,70 +141,10 @@ public class MealPlanDB {
         // Stores each ingredient as a HashMap with fields:
         // ingredientRef, amount & unit.
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
-                new ArrayList<>();
-
-        for (Ingredient i : mealPlan.getIngredients()) {
-            // Gets ingredient from db.
-            ingredientDB.getIngredient(i, (foundIngredient, success1) -> {
-                // Initializes a mapping for the ingredient.
-                HashMap<String, Object> ingredientMap = new HashMap<>();
-
-                // If the ingredient already exists in our Ingredient
-                // collection.
-                if (foundIngredient != null) {
-                    DocumentReference ingredientRef =
-                            ingredientDB.getDocumentReference(foundIngredient);
-                    i.setId(foundIngredient.getId());
-
-                    ingredientMap.put("ingredientRef", ingredientRef);
-                    ingredientMap.put("amount", i.getAmount());
-                    ingredientMap.put("unit", i.getUnit());
-                } else {
-                    // If the ingredient does not exist in our Ingredient
-                    // collection,
-                    // we will create a new ingredient for it.
-                    ingredientDB.addIngredient(i,
-                            (addedIngredient, success2) -> {
-                                //                        if (addedIngredient
-                                //                        == null) {
-                                //                            listener
-                                //                            .onAddMealPlanResult(null, false);
-                                //                            return;
-                                //                        }
-                                i.setId(addedIngredient.getId());
-
-                                ingredientMap.put("ingredientRef",
-                                        ingredientDB.getDocumentReference(
-                                                addedIngredient));
-                                ingredientMap.put("amount", i.getAmount());
-                                ingredientMap.put("unit", i.getUnit());
-                            });
-                }
-            });
-        }
+                getMealPlanIngredients(mealPlan);
 
         // Stores references to recipes in the MealPlan object.
-        ArrayList<DocumentReference> mealPlanRecipes = new ArrayList<>();
-        for (Recipe r : mealPlan.getRecipes()) {
-            if (r.getId() != null) {
-                // If the recipe has an id, gets the recipe's reference from db.
-                DocumentReference recipeRef =
-                        recipeDB.getDocumentReference(r.getId());
-                mealPlanRecipes.add(recipeRef);
-            } else {
-                // If the recipe does not exist, we add it to the db.
-                recipeDB.addRecipe(r, (addedRecipe, success) -> {
-                    if (addedRecipe == null) {
-                        listener.onAddMealPlanResult(null, false);
-                        return;
-                    }
-                    r.setId(addedRecipe.getId());
-
-                    mealPlanRecipes.add(
-                            recipeDB.getDocumentReference(addedRecipe.getId()));
-                });
-            }
-        }
+        ArrayList<DocumentReference> mealPlanRecipes = getMealPlanRecipes(mealPlan);
 
         // Initialize MealPlan document mapping.
         HashMap<String, Object> mealPlanMap = new HashMap<>();
@@ -353,7 +293,6 @@ public class MealPlanDB {
      */
     public void updateMealPlan(MealPlan mealPlan,
                                OnUpdateMealPlanListener listener) {
-        //        TODO: use update function instead of delete and add
         // Get reference to the MealPlan document with the given id
         // so that we can perform update() on it.
         DocumentReference mealPlanRef =
@@ -367,6 +306,7 @@ public class MealPlanDB {
         ArrayList<DocumentReference> mealPlanRecipes =
                 getMealPlanRecipes(mealPlan);
 
+        // Update the MealPlan document in the db.
         mealPlanRef.update(
                 "title", mealPlan.getTitle(),
                 "category", mealPlan.getCategory(),
@@ -461,6 +401,8 @@ public class MealPlanDB {
                 DocumentReference recipeRef =
                         recipeDB.getDocumentReference(recipe.getId());
 
+                // Atomically adds the given value to the current value,
+                // with memory effects as specified by VarHandle.getAndAdd.
                 counter.addAndGet(1);
                 mealPlanRecipes.add(recipeRef);
             } else {
