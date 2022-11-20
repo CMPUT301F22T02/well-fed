@@ -102,36 +102,52 @@ import java.util.concurrent.CountDownLatch;
     }
 
     @Test public void testGetStorageIngredient() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch getLatch = new CountDownLatch(1);
+
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
                 (addedStorageIngredient, addSuccess) -> {
                     assertNotNull(addedStorageIngredient);
                     assertTrue(addSuccess);
-                    storageIngredientDB.getStorageIngredient(
-                            addedStorageIngredient.getStorageId(),
-                            (foundStorageIngredient, foundSuccess) -> {
-                                assertNotNull(foundStorageIngredient);
-                                assertTrue(foundSuccess);
-                                assertEquals(mockStorageIngredient.getAmount(),
-                                        foundStorageIngredient.getAmount());
-                                assertEquals(
-                                        mockStorageIngredient.getDescription(),
-                                        foundStorageIngredient.getDescription());
-                                storageIngredientDB.deleteStorageIngredient(
-                                        foundStorageIngredient,
-                                        (deletedStorageIngredient,
-                                         deleteSuccess) -> {
-                                            assertNotNull(
-                                                    deletedStorageIngredient);
-                                            assertTrue(deleteSuccess);
-                                            latch.countDown();
-                                        });
-                            });
+                    addLatch.countDown();
                 });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+        if(!addLatch.await(TIMEOUT, SECONDS)){
             throw new InterruptedException();
         }
+
+        storageIngredientDB.getStorageIngredient(mockStorageIngredient.getStorageId(),
+                (foundStorageIngredient, success) -> {
+                    assertTrue(success);
+                    assertNotNull(foundStorageIngredient);
+                    assertEquals(foundStorageIngredient.getId(),
+                            mockStorageIngredient.getId());
+                    assertEquals(foundStorageIngredient.getStorageId(),
+                            mockStorageIngredient.getStorageId());
+                    assertEquals(foundStorageIngredient.getDescription(),
+                            mockStorageIngredient.getDescription());
+                    assertEquals(foundStorageIngredient.getLocation(),
+                            mockStorageIngredient.getLocation());
+                    assertEquals(foundStorageIngredient.getAmount(),
+                            mockStorageIngredient.getAmount());
+                    assertEquals(foundStorageIngredient.getAmount(),
+                            mockStorageIngredient.getAmount());
+                    assertEquals(foundStorageIngredient.getCategory(),
+                            mockStorageIngredient.getCategory());
+                    assertEquals(foundStorageIngredient.getBestBeforeDate(),
+                            mockStorageIngredient.getBestBeforeDate());
+                    assertEquals(foundStorageIngredient.getUnit(),
+                            mockStorageIngredient.getUnit());
+                    assertEquals(foundStorageIngredient.getAmountAndUnit(),
+                            mockStorageIngredient.getAmountAndUnit());
+                });
+
+
+        if (!getLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        removeStorageIngredient(mockStorageIngredient);
     }
 
     //    /**
