@@ -22,15 +22,30 @@ import java.util.concurrent.CountDownLatch;
 
 // TODO: javadoc
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
-
+    /**
+     * Dictates how long until a database function timeout and throws an error
+     */
     private static final long TIMEOUT = 5;
-
+    /**
+     * Holds an instance of the StorageIngredientDB.
+     */
     StorageIngredientDB storageIngredientDB;
-
+    /**
+     * An instance of StorageIngredient we use for testing the StorageIngredientDB
+     */
     StorageIngredient mockStorageIngredient;
-
+    /**
+     * An instance of StorageIngredient that we use for testing the StorageIngredientDB on
+     * ingredients we do not add to the StorageIngredientDB.
+     */
     StorageIngredient mockNonExistentStorageIngredient;
 
+    /**
+     * For removing a StorageIngredient we have added to the database during testing.
+     *
+     * @param mockStorageIngredient The StorageIngredient that is to be removed
+     * @throws InterruptedException Thrown when deleting from StorageIngredientDB fails.
+     */
     private void removeStorageIngredient(StorageIngredient mockStorageIngredient) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -58,10 +73,12 @@ import java.util.concurrent.CountDownLatch;
     }
 
     /**
-     * Tests the add functionality and get functionality of db,
-     * with a complete ingredient.
+     * Tests the add functionality of the StorageIngredientDB. The mockStorageIngredient
+     * object is used to test addStorageIngredient method in StorageIngredientDB. The call to
+     * addStorageIngredient is expected to succeed for this test to pass.
      *
-     * @throws InterruptedException on InterruptedException Error when adding, or deleting
+     * @throws InterruptedException Thrown when adding to StorageIngredientDB
+     * or deleting from StorageIngredientDB fails.
      */
     @Test public void testAddStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
@@ -93,15 +110,21 @@ import java.util.concurrent.CountDownLatch;
                     latch.countDown();
                 });
 
-
-
-        if (!latch.await(2*TIMEOUT, SECONDS)) {
+        if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 
         removeStorageIngredient(mockStorageIngredient);
     }
 
+    /**
+     * Tests the get functionality of the StorageIngredientDB. The mockStorageIngredient object is
+     * used to test getStorageIngredient method in StorageIngredientDB. The call to
+     * getStorageIngredient is expected to succeed for this test to pass.
+     *
+     * @throws InterruptedException Thrown when adding to, getting from
+     * or deleting from StorageIngredientDB fail. Deleting is done via removeStorageIngredient method
+     */
     @Test public void testGetStorageIngredient() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
         CountDownLatch getLatch = new CountDownLatch(1);
@@ -152,6 +175,13 @@ import java.util.concurrent.CountDownLatch;
         removeStorageIngredient(mockStorageIngredient);
     }
 
+    /**
+     * Tests the get functionality of the StorageIngredientDB. The mockNonExistentStorageIngredient
+     * object is used to test getStorageIngredient method in StorageIngredientDB. The call to
+     * getStorageIngredient is expected to fail for this test to succeed.
+     *
+     * @throws InterruptedException Thrown when getting from StorageIngredientDB fails.
+     */
     @Test
     public void testGetNonExistenceStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
@@ -168,7 +198,12 @@ import java.util.concurrent.CountDownLatch;
     }
 
     /**
-     * Tests deleting an ingredient from the database
+     * Tests the delete functionality of the StorageIngredientDB. The mockStorageIngredient object
+     * is used to test the deleteStorageIngredient method in StorageIngredientDB. The call to
+     * deleteStorageIngredient is expected to succeed for this test to pass.
+     *
+     * @throws InterruptedException Thrown when adding to, or deleting from StorageIngredientDB
+     * fails
      */
     @Test public void testDeleteStorageIngredient() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -218,9 +253,12 @@ import java.util.concurrent.CountDownLatch;
     }
 
     /**
-     * Tests whether all of the updated fields are reflected in the database.
+     * Tests the update functionality of the StorageIngredientDB. The mockStorageIngredient object
+     * is used to test the updateStorageIngredient method in StorageIngredientDB. The call to
+     * updateStorageIngredient is expected to succeed for this test to pass.
      *
-     * @throws InterruptedException thrown when add or update database functions fail
+     * @throws InterruptedException Thrown when adding to, updating in, or deleting from
+     * StorageIngredientDB fails
      */
     @Test public void testUpdateStorageIngredient() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -278,6 +316,14 @@ import java.util.concurrent.CountDownLatch;
         removeStorageIngredient(mockStorageIngredient);
     }
 
+    /**
+     * Tests the update functionality of the StorageIngredientDB. The
+     * mockNonExistentStorageIngredient object is used to test the updateStorageIngredient method in
+     * StorageIngredientDB. The call to updateStorageIngredient is expect to fail for this test to
+     * succeed.
+     *
+     * @throws InterruptedException Thrown when updating in StorageIngredientDB fails
+     */
     @Test
     public void testUpdateNonExistentStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
