@@ -345,7 +345,6 @@ public class IngredientInstrumentedTest {
      * This test currently fails due to our app crashing when back button is pressed.
      */
     @Test
-    @Ignore
     public void testCancelConfirmationMessageEdit() throws InterruptedException {
         // testing adding and then exiting
         addMockIngredient();
@@ -356,7 +355,6 @@ public class IngredientInstrumentedTest {
                 .perform(typeText("Ground Chicken"));
         closeSoftKeyboard();
 
-        pressBack();
         pressBack();
 
         // ensure the dialog shows up
@@ -381,7 +379,6 @@ public class IngredientInstrumentedTest {
      * This test currently fails due to our app crashing when back button is pressed.
      */
     @Test
-    @Ignore
     public void testExitEdit() throws InterruptedException {
         // ensuring quit works, by editing our item and exiting
         addMockIngredient();
@@ -393,7 +390,6 @@ public class IngredientInstrumentedTest {
                 .perform(typeText("Ground Chicken"));
         closeSoftKeyboard();
 
-        pressBack();
         pressBack();
 
         // quitting and ensuring ground beef is the same
@@ -409,7 +405,6 @@ public class IngredientInstrumentedTest {
      * This test currently fails due to our app crashing when back button is pressed.
      */
     @Test
-    @Ignore
     public void testCancelExitEdit() throws InterruptedException {
         addMockIngredient();
         onView(withText("Ground Beef")).perform(click());
@@ -420,7 +415,6 @@ public class IngredientInstrumentedTest {
                 .perform(typeText("Ground Chicken"));
         closeSoftKeyboard();
 
-        pressBack();
         pressBack();
 
         // quitting and ensuring ground beef is the same
