@@ -23,6 +23,10 @@ import java.util.UUID;
  */
 public class DBConnection {
     /**
+     * Log tag.
+     */
+    private static final String TAG = "DBConnection";
+    /**
      * Holds the instance of the Firebase Firestore DB.
      */
     private FirebaseFirestore db;
@@ -48,6 +52,7 @@ public class DBConnection {
         this.db = FirebaseFirestore.getInstance();
         // gets the unique ID of the installation
         this.uuid = getUUID(context);
+        Log.d(TAG, "UUID: " + uuid);
     }
 
     /**
