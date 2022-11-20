@@ -96,7 +96,7 @@
 
 
     <TextView
-        android:id="@+id/recipe_ingredient_textView"
+        android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -116,7 +116,7 @@
         android:minHeight="0dp"
         android:padding="0dp"
         android:text="s"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_ingredient_textView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/titleTextView"
         app:layout_constraintEnd_toStartOf="@+id/ingredient_add_btn" />
 
 
@@ -130,7 +130,7 @@
         android:minHeight="0dp"
         android:padding="0dp"
         android:text="+"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_ingredient_textView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/titleTextView"
         app:layout_constraintEnd_toEndOf="parent" />
 
 
@@ -142,7 +142,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recipe_ingredient_textView" />
+        app:layout_constraintTop_toTopOf="@+id/titleTextView" />
 
     <Button
         android:id="@+id/recipe_delete_btn"
