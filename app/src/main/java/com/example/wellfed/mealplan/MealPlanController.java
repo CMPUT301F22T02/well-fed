@@ -21,16 +21,12 @@ import java.util.TimeZone;
 import java.util.function.Predicate;
 
 public class MealPlanController {
-    private ArrayList<MealPlan> mealPlans;
-
-    private MealPlanAdapter adapter;
-
     private final ActivityBase activity;
-
-    public ArrayList<MealPlan> getMealPlans() {
-        return mealPlans;
-    }
-
+    private MealPlanAdapter adapter;
+    /**
+     * The Field that is currently being sorted by
+     */
+    private String currentField = "description";
     /**
      * The DB of stored ingredients
      */
@@ -41,7 +37,6 @@ public class MealPlanController {
     }
 
     public MealPlanController(Activity activity) {
-        mealPlans = new ArrayList<>();
         this.activity = (ActivityBase) activity;
         DBConnection connection = new DBConnection(activity.getApplicationContext());
         db = new MealPlanDB(connection);
@@ -53,39 +48,44 @@ public class MealPlanController {
     }
 
     public void addMealPlan(MealPlan mealPlan) {
-        this.mealPlans.add(mealPlan);
-        this.adapter.notifyItemInserted(this.mealPlans.size() - 1);
+        db.addMealPlan(mealPlan, (addMealPlan, addSuccess) -> {
+            if (!addSuccess) {
+                this.activity.makeSnackbar("Failed to add " + addMealPlan.getTitle());
+            } else {
+                this.activity.makeSnackbar("Added " + addMealPlan.getTitle());
+            }
+        });
     }
 
     public void editMealPlan(int index, MealPlan modifiedMealPlan) {
-        this.mealPlans.set(index, modifiedMealPlan);
-        this.adapter.notifyItemChanged(index);
+//        this.mealPlans.set(index, modifiedMealPlan);
+//        this.adapter.notifyItemChanged(index);
     }
 
     public void deleteMealPlan(int index) {
-        if (0 <= index && index < this.mealPlans.size()) {
-            this.mealPlans.remove(index);
-            this.adapter.notifyItemRemoved(index);
-        }
+//        if (0 <= index && index < this.mealPlans.size()) {
+//            this.mealPlans.remove(index);
+//            this.adapter.notifyItemRemoved(index);
+//        }
     }
 
     public MealPlan getNextMealPlan() {
-        Date today = new Date();
-        //        TODO: refactor move all date logic to its own class?
-        SimpleDateFormat hashDateFormat =
-                new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        hashDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        try {
-            today = hashDateFormat.parse(hashDateFormat.format(today));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        for (MealPlan mealPlan : mealPlans) {
-            if (mealPlan.getEatDate().after(today) ||
-                    mealPlan.getEatDate().equals(today)) {
-                return mealPlan;
-            }
-        }
+//        Date today = new Date();
+//        //        TODO: refactor move all date logic to its own class?
+//        SimpleDateFormat hashDateFormat =
+//                new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//        hashDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        try {
+//            today = hashDateFormat.parse(hashDateFormat.format(today));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        for (MealPlan mealPlan : mealPlans) {
+//            if (mealPlan.getEatDate().after(today) ||
+//                    mealPlan.getEatDate().equals(today)) {
+//                return mealPlan;
+//            }
+//        }
         return null;
     }
 }

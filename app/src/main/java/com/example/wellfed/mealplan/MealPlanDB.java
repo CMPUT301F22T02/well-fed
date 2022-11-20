@@ -133,7 +133,7 @@ public class MealPlanDB {
      * @param mealPlan the MealPlan object to be added to the db.
      * @param listener the OnAddMealPlanListener object to handle the result.
      */
-    public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) throws InterruptedException {
+    public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) {
         // Stores each ingredient as a HashMap with fields:
         // ingredientRef, amount & unit.
         ArrayList<HashMap<String, Object>> mealPlanIngredients = new ArrayList<>();

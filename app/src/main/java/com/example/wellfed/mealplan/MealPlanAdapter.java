@@ -37,8 +37,11 @@ import com.example.wellfed.common.UTCDate;
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientAdapter;
 import com.google.android.material.color.MaterialColors;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * The MealPlanAdapter class binds ArrayList to RecyclerView.

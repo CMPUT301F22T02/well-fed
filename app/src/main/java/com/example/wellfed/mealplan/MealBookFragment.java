@@ -41,9 +41,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.AdapterDataObserver;
+import com.example.wellfed.common.Launcher;
 
 public class MealBookFragment extends Fragment
-        implements AdapterDataObserver.OnAdapterDataChangedListener,
+        implements Launcher, AdapterDataObserver.OnAdapterDataChangedListener,
                    MealPlanAdapter.OnItemClickListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
@@ -116,22 +117,27 @@ public class MealBookFragment extends Fragment
                 new AdapterDataObserver(this));
         this.mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
-        this.controller.getAdapter().notifyItemRangeChanged(0,
-                this.controller.getMealPlans().size());
-
         this.userFirstNameTextView.setText(
                 getString(R.string.greeting, "Akshat"));
+    }
+
+    @Deprecated
+    public void launch(int pos) {
     }
 
     public void launch(MealPlan mealPlan) {
         launcher.launch(mealPlan);
     }
 
+    public void launch() {
+        editLauncher.launch(null);
+    }
+
     private void updateCallToAction() {
         MealPlan nextMealPlan = this.controller.getNextMealPlan();
         if (nextMealPlan != null) {
-            this.linearLayoutManager.scrollToPosition(
-                    this.controller.getMealPlans().indexOf(nextMealPlan));
+//            this.linearLayoutManager.scrollToPosition(
+//                    this.controller.getMealPlans().indexOf(nextMealPlan));
             SpannableStringBuilder callToAction =
                     new SpannableStringBuilder().append(
                                     getString(R.string.call_to_action_make_meal_plan))
