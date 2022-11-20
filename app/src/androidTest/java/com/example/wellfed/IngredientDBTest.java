@@ -169,32 +169,36 @@ public class IngredientDBTest {
      */
     @Test
     public void testDeleteIngredient() throws InterruptedException {
-        Log.d(TAG, "testDeleteIngredient");
-        CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch deleteLatch = new CountDownLatch(1);
 
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
         ingredientDB.addIngredient(mockIngredient,
-                (addIngredient, addSuccess) -> {
-            Log.d(TAG, ":onAddIngredient");
-            String id = addIngredient.getId();
-            assertNotNull(addIngredient);
-            assertTrue(addSuccess);
-            ingredientDB.deleteIngredient(addIngredient,
-                    (deleteIngredient, deleteSuccess) -> {
-                Log.d(TAG, ":onDeleteIngredient");
-                assertNotNull(deleteIngredient);
-                assertTrue(deleteSuccess);
-                ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
-                    Log.d(TAG, ":onGetIngredient");
-                    assertNull(getIngredient);
-                    assertFalse(getSuccess);
-                    latch.countDown();
-                });
-            });
+                (addIngredient, success) -> {
+            successAtomic.set(success);
+            addLatch.countDown();
         });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+        if (!addLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
+
+        AtomicReference<Ingredient> deletedIngredientAtomic = new AtomicReference<>();
+        ingredientDB.deleteIngredient(mockIngredient,
+                (deletedIngredient, success) -> {
+            successAtomic.set(success);
+            deletedIngredientAtomic.set(deletedIngredient);
+            deleteLatch.countDown();
+        });
+
+        if (!deleteLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+        assertIngredientsEqual(deletedIngredientAtomic.get(), mockIngredient);
     }
 
     /**
