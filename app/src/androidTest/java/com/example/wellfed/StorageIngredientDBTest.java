@@ -9,7 +9,6 @@ import static org.junit.Assert.assertTrue;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
@@ -22,6 +21,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: javadoc
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
@@ -75,6 +75,10 @@ import java.util.concurrent.CountDownLatch;
 
                     assertNotNull(addedStorageIngredient);
                     assertTrue(addSuccess);
+                    assertEquals(mockStorageIngredient.getId(),
+                            addedStorageIngredient.getId());
+                    assertEquals(mockStorageIngredient.getStorageId(),
+                            addedStorageIngredient.getStorageId());
                     assertEquals(mockStorageIngredient.getDescription(),
                             addedStorageIngredient.getDescription());
                     assertEquals(mockStorageIngredient.getLocation(),
@@ -180,25 +184,48 @@ import java.util.concurrent.CountDownLatch;
      * Tests deleting an ingredient from the database
      */
     @Test public void testDeleteIngredient() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch delLatch = new CountDownLatch(1);
 
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
+                (addedStorageIngredient, success)->{
+                    assertTrue(success);
                     assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
-                    storageIngredientDB.deleteStorageIngredient(
-                            addedStorageIngredient,
-                            (deletedStorageIngredient, deleteSuccess) -> {
-                                assertNotNull(deletedStorageIngredient);
-                                assertTrue(deleteSuccess);
-                                latch.countDown();
-                            });
+                    addLatch.countDown();
                 });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+        if (!addLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 
+        storageIngredientDB.deleteStorageIngredient(mockStorageIngredient,
+                (deletedStorageIngredient, success)-> {
+                    assertTrue(success);
+                    assertNotNull(deletedStorageIngredient);
+                    assertEquals(mockStorageIngredient.getId(),
+                            deletedStorageIngredient.getId());
+                    assertEquals(mockStorageIngredient.getStorageId(),
+                            deletedStorageIngredient.getStorageId());
+                    assertEquals(mockStorageIngredient.getDescription(),
+                            deletedStorageIngredient.getDescription());
+                    assertEquals(mockStorageIngredient.getLocation(),
+                            deletedStorageIngredient.getLocation());
+                    assertEquals(mockStorageIngredient.getAmount(),
+                            deletedStorageIngredient.getAmount());
+                    assertEquals(mockStorageIngredient.getCategory(),
+                            deletedStorageIngredient.getCategory());
+                    assertEquals(mockStorageIngredient.getBestBeforeDate(),
+                            deletedStorageIngredient.getBestBeforeDate());
+                    assertEquals(mockStorageIngredient.getUnit(),
+                            deletedStorageIngredient.getUnit());
+                    assertEquals(mockStorageIngredient.getAmountAndUnit(),
+                            deletedStorageIngredient.getAmountAndUnit());
+                    delLatch.countDown();
+                });
+
+        if (!delLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
     }
     //
     //    /**
