@@ -105,7 +105,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
     @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
                                            int position) {
 
-        db.getMealPlan(getSnapshot(position).getId(), (mealPlan, success) -> {
+        db.getMealPlan(getSnapshot(position), (mealPlan, success) -> {
             if (success) {
                 holder.getTitleTextView().setText(mealPlan.getTitle());
                 holder.getCategoryTextView().setText(mealPlan.getCategory());
