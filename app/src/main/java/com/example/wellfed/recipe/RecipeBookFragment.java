@@ -35,7 +35,8 @@ import java.util.Objects;
  *
  * @version 1.0.0
  */
-public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdapter.RecipeLauncher {
+public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
+        RecipeAdapter.RecipeLauncher {
     /**
      * Recipes contains a list of Recipes {@link Recipe}
      */
@@ -75,7 +76,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                                 recipeController.editRecipe(recipe);
                                 break;
                             default:
-                                new IllegalArgumentException();
+                                break;
                         }
                     }
             );
@@ -139,24 +140,18 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
     }
 
     /**
-     * launches activity to create new recipe
-     */
-    @Override
-    public void launch() {
-        recipeEditLauncher.launch(null);
-    }
-
-    @Override
-    public void launch(int pos) {
-
-    }
-
-    /**
      * launches activity for a Recipe{@link Recipe} in
      * the recipes at pos.
      */
     @Override
     public void launch(Recipe recipe) {
-        recipeLauncher.launch(recipe);
+        if (recipe == null) {
+            recipeEditLauncher.launch(null);
+        } else {
+            recipeLauncher.launch(recipe);
+        }
     }
+
+    //        TODO: fix view recipes using onItemClick listener instead of
+    //         this one @manpreet
 }

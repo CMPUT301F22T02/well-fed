@@ -3,14 +3,10 @@ package com.example.wellfed.mealplan;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.wellfed.ActivityBase;
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
-import com.example.wellfed.common.ConfirmDialog;
-import com.example.wellfed.common.ConfirmQuitDialog;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
