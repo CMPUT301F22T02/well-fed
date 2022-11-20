@@ -14,6 +14,7 @@ import com.example.wellfed.R;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**

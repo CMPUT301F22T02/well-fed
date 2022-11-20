@@ -96,6 +96,7 @@ public class RecipeEditActivity extends EditActivityBase {
 
         ingredientEditFragment = new EditRecipeIngredientsFragment();
         RecipeIngredientAdapter adapter = new RecipeIngredientAdapter();
+        adapter.setItems(recipeIngredients);
         ingredientEditFragment.setAdapter(adapter);
         ingredientEditFragment.setTitle("Ingredients");
         getSupportFragmentManager().beginTransaction()
@@ -116,8 +117,6 @@ public class RecipeEditActivity extends EditActivityBase {
                         recipe.addIngredient(ingredient);
                     }
                     recipe.setPhotograph(downloadUrl);
-                    recipeIngredients = adapter.getItems();
-                    recipe.addIngredients(recipeIngredients);
                     onSave();
                 }
             });
