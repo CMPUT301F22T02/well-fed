@@ -116,7 +116,7 @@ public class RecipeEditActivity extends EditActivityBase {
                         recipe.addIngredient(ingredient);
                     }
                     recipe.setPhotograph(downloadUrl);
-                    recipeIngredients = ingredientEditFragment.getItems();
+                    recipeIngredients = adapter.getItems();
                     recipe.addIngredients(recipeIngredients);
                     onSave();
                 }

@@ -28,14 +28,9 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         extends Fragment implements EditItemAdapter.OnEditListener<Item>,
         EditItemAdapter.OnDeleteListener<Item> {
     private RecyclerView recyclerView;
-    private ArrayList<Item> items;
     private EditItemAdapter<Item> adapter;
     private Item selectedItem;
     private String title;
-
-    public ArrayList<Item> getItems() {
-        return items;
-    }
 
     private final ActivityResultLauncher<Intent> editLauncher =
             registerForActivityResult(new EditItemContract<>(),
@@ -47,7 +42,6 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
 
     public void setAdapter(EditItemAdapter<Item> adapter) {
         this.adapter = adapter;
-        this.adapter.setItems(this.items);
         this.adapter.setEditListener(this);
         this.adapter.setDeleteListener(this);
     }
@@ -56,9 +50,6 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         this.title = title;
     }
 
-    public EditRecyclerViewFragment() {
-        this.items = new ArrayList<>();
-    }
 
     @Nullable
     @Override
@@ -107,8 +98,8 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
 
     @Override
     public void onDelete(Item item) {
-        int index = items.indexOf(item);
-        items.remove(item);
+        int index = adapter.getItems().indexOf(item);
+        adapter.getItems().remove(index);
         adapter.notifyItemRemoved(index);
     }
 
@@ -121,12 +112,12 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         Item ingredient = result.second;
         switch (type) {
             case "add":
-                items.add(ingredient);
-                adapter.notifyItemInserted(items.size());
+                adapter.getItems().add(ingredient);
+                adapter.notifyItemInserted(adapter.getItemCount());
                 break;
             case "edit":
-                int index = items.indexOf(selectedItem);
-                items.set(index, ingredient);
+                int index = adapter.getItems().indexOf(selectedItem);
+                adapter.getItems().set(index, ingredient);
                 adapter.notifyItemChanged(index);
                 break;
             default:
