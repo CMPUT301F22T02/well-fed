@@ -26,18 +26,22 @@ import java.util.ArrayList;
 
 public abstract class EditRecyclerViewFragment<Item extends Serializable>
         extends Fragment implements EditItemAdapter.OnEditListener<Item>,
-                                    EditItemAdapter.OnDeleteListener<Item> {
+        EditItemAdapter.OnDeleteListener<Item> {
     private RecyclerView recyclerView;
     private ArrayList<Item> items;
     private EditItemAdapter<Item> adapter;
     private Item selectedItem;
     private String title;
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
     private final ActivityResultLauncher<Intent> editLauncher =
             registerForActivityResult(new EditItemContract<>(),
                     this::onEditActivityResult);
 
-    private final ActivityResultLauncher<Item> searchLauncher =
+    private final ActivityResultLauncher<Intent> searchLauncher =
             registerForActivityResult(new SearchItemContract<>(),
                     this::onSearchActivityResult);
 
@@ -56,7 +60,8 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         this.items = new ArrayList<>();
     }
 
-    @Nullable @Override
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -78,7 +83,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         });
 
         searchButton.setOnClickListener(v -> {
-            searchLauncher.launch(null);
+            onSearch(null);
         });
 
         return view;
@@ -86,35 +91,28 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
 
     public abstract Intent createOnEditIntent(Item item);
 
-    @Override public void onEdit(Item item) {
+    public abstract Intent createOnSearchIntent(Item item);
+
+    @Override
+    public void onEdit(Item item) {
         this.selectedItem = item;
         Intent intent = createOnEditIntent(item);
         editLauncher.launch(intent);
     }
 
-    @Override public void onDelete(Item item) {
+    public void onSearch(Item item) {
+        Intent intent = createOnSearchIntent(item);
+        searchLauncher.launch(intent);
+    }
+
+    @Override
+    public void onDelete(Item item) {
         int index = items.indexOf(item);
         items.remove(item);
         adapter.notifyItemRemoved(index);
     }
 
-    private void onSearchActivityResult(Pair<String, Item> result) {
-        if (result == null) {
-            return;
-        }
-        String type = result.first;
-        Item item = result.second;
-        switch (type) {
-            case "add":
-                items.add(item);
-                adapter.notifyItemInserted(items.size());
-            case "quit":
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-    }
-
+    abstract public void onSearchActivityResult(Pair<String, Item> result);
     private void onEditActivityResult(Pair<String, Item> result) {
         if (result == null) {
             return;

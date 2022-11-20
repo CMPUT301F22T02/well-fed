@@ -13,14 +13,11 @@ import com.example.wellfed.recipe.RecipeIngredientSearch;
 
 import java.io.Serializable;
 
-public class SearchItemContract<Item extends Serializable> extends ActivityResultContract<Item,
+public class SearchItemContract<Item extends Serializable> extends ActivityResultContract<Intent,
         Pair<String
         , Item>> {
-    @NonNull
-    @Override
-    public Intent createIntent(@NonNull Context context, Item item) {
-        Intent intent = new Intent(context, RecipeIngredientSearch.class);
-        intent.putExtra("item", item);
+
+    public Intent createIntent(@NonNull Context context, Intent intent) {
         return intent;
     }
 
@@ -35,5 +32,6 @@ public class SearchItemContract<Item extends Serializable> extends ActivityResul
             return new Pair<>(type, item);
         }
     }
+
 }
 

@@ -40,6 +40,8 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
      */
     private Ingredient ingredient;
 
+    private boolean isEdit;
+
     /**
      * OnCreate method for the activity.
      *
@@ -62,15 +64,19 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
                 "count"});
 
         // Get ingredient from intent
-        ingredient = (Ingredient) getIntent().getSerializableExtra("ingredient");
+        ingredient = (Ingredient) getIntent().getSerializableExtra("item");
 
         if (ingredient != null) {
             descriptionInput.setPlaceholderText(ingredient.getDescription());
             if (ingredient.getCategory() != null) {
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
-            if (ingredient.getAmount() != null)
+            if (ingredient.getAmount() != null) {
+
                 amountInput.setPlaceholderText(ingredient.getAmount().toString());
+            } else {
+                isEdit = true;
+            }
             if (ingredient.getUnit() != null) unitInput.setPlaceholderText(ingredient.getUnit());
         } else {
 
@@ -122,7 +128,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
             return;
         }
         String type = "edit";
-        if (ingredient == null) {
+        if (ingredient == null || isEdit) {
             ingredient = new Ingredient(descriptionInput.getText());
             type = "add";
         }

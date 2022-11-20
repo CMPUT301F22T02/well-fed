@@ -116,6 +116,8 @@ public class RecipeEditActivity extends EditActivityBase {
                         recipe.addIngredient(ingredient);
                     }
                     recipe.setPhotograph(downloadUrl);
+                    recipeIngredients = ingredientEditFragment.getItems();
+                    recipe.addIngredients(recipeIngredients);
                     onSave();
                 }
             });
@@ -234,7 +236,9 @@ public class RecipeEditActivity extends EditActivityBase {
                 int temp = 0;
                 recipesRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     downloadUrl = uri.toString();
-                    recipe.setPhotograph(downloadUrl);
+                    if (recipe != null){
+                        recipe.setPhotograph(downloadUrl);
+                    }
                     Picasso.get()
                             .load(downloadUrl)
                             .rotate(90)

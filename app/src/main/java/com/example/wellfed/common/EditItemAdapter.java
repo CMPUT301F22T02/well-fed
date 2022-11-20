@@ -21,12 +21,8 @@ import java.util.List;
  *
  * @version 1.0.0
  */
-public abstract class EditItemAdapter<Item>
-        extends RecyclerView.Adapter<EditItemAdapter.ItemViewHolder> {
-    /**
-     * list of {@link Item}
-     */
-    protected List<Item> items;
+public class EditItemAdapter<Item>
+        extends ItemAdapter<Item> {
 
     private OnEditListener<Item> editListener;
     private OnDeleteListener<Item> deleteListener;
@@ -48,20 +44,15 @@ public abstract class EditItemAdapter<Item>
     }
 
     /**
-     * @param items the list of items
-     */
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    /**
      * inflates the view
      *
      * @param parent   activity that handles the ingredients
      * @param viewType
      * @return
      */
-    @NonNull @Override public ItemViewHolder onCreateViewHolder(
+    @NonNull
+    @Override
+    public ItemViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -71,14 +62,9 @@ public abstract class EditItemAdapter<Item>
         return new ItemViewHolder(itemView);
     }
 
-    /**
-     * Binds the data in our list to the views
-     *
-     * @param holder   holds the inflated view
-     * @param position gives the position in the list
-     */
-    @Override public void onBindViewHolder(@NonNull ItemViewHolder holder,
-                                           int position) {
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1, int position) {
+        ItemViewHolder holder = (ItemViewHolder) holder1;
         holder.getEditButton().setOnClickListener(v -> {
             if (editListener != null) {
                 editListener.onEdit(items.get(position));
@@ -90,14 +76,6 @@ public abstract class EditItemAdapter<Item>
             }
         });
     }
-
-    /**
-     * @return count of the number of ingredients in our list
-     */
-    @Override public int getItemCount() {
-        return this.items.size();
-    }
-
 
     /**
      * Viewholder for the items

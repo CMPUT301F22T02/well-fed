@@ -60,6 +60,11 @@ public class RecipeIngredientSearch extends ActivityBase
     public void onItemClick(Ingredient recipeIngredient) {
         StorageIngredient storageIngredient = new StorageIngredient(recipeIngredient.getDescription());
         storageIngredient.setCategory(recipeIngredient.getCategory());
+        Intent intent = new Intent();
+        intent.putExtra("type","add");
+        intent.putExtra("item",recipeIngredient);
+                setResult(Activity.RESULT_OK, intent);
+        finish();
 //        editIngredientLauncher.launch(new Pair<Ingredient, Class>(storageIngredient,
 //                RecipeIngredientEditActivity.class));
     }
