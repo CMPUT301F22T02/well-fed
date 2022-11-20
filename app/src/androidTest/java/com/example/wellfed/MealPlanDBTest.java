@@ -554,26 +554,26 @@ public class MealPlanDBTest {
 				// Update the meal plan in the database
 				mealPlanDB.updateMealPlan(updatedMealPlan,
 					(test, success2) -> {
-					if (success2) {
-						// Retrieve the meal plan
-						mealPlanDB.getMealPlan(addedMealPlan.getId(), (retrievedMealPlan, success3) -> {
-							if (success3) {
-								// Compare using the getters
-								assertEquals(updatedMealPlan.getId(), retrievedMealPlan.getId());
-								assertEquals(updatedMealPlan.getTitle(), retrievedMealPlan.getTitle());
-								assertEquals(updatedMealPlan.getCategory(), retrievedMealPlan.getCategory());
-								assertEquals(updatedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
-								assertEquals(updatedMealPlan.getServings(), retrievedMealPlan.getServings());
-								assertEquals(updatedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
-								assertEquals(updatedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
-							} else {
-								Log.e(TAG, "Failed to retrieve meal plan");
-							}
-						});
-					} else {
-						Log.e(TAG, "Failed to update meal plan");
-					}
-				});
+						if (success2) {
+							// Retrieve the meal plan
+							mealPlanDB.getMealPlan(addedMealPlan.getId(), (retrievedMealPlan, success3) -> {
+								if (success3) {
+									// Compare using the getters
+									assertEquals(updatedMealPlan.getId(), retrievedMealPlan.getId());
+									assertEquals(updatedMealPlan.getTitle(), retrievedMealPlan.getTitle());
+									assertEquals(updatedMealPlan.getCategory(), retrievedMealPlan.getCategory());
+									assertEquals(updatedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
+									assertEquals(updatedMealPlan.getServings(), retrievedMealPlan.getServings());
+									assertEquals(updatedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
+									assertEquals(updatedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+								} else {
+									Log.e(TAG, "Failed to retrieve meal plan");
+								}
+							});
+						} else {
+							Log.e(TAG, "Failed to update meal plan");
+						}
+					});
 			} else {
 				Log.e(TAG, "Failed to add meal plan");
 			}
@@ -593,6 +593,122 @@ public class MealPlanDBTest {
 		mealPlan.addIngredient(mockIngredient());
 		mealPlan.addIngredient(mockIngredient());
 		mealPlan.addIngredient(mockIngredient());
+		// Add the meal plan to the database
+		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
+			if (success) {
+				// Retrieve the meal plan
+				mealPlanDB.getMealPlan(addedMealPlan.getId(), (retrievedMealPlan, success2) -> {
+					if (success2) {
+						// Compare using the getters
+						assertEquals(addedMealPlan.getId(), retrievedMealPlan.getId());
+						assertEquals(addedMealPlan.getTitle(), retrievedMealPlan.getTitle());
+						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
+						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
+						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
+						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
+						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+					} else {
+						Log.e(TAG, "Failed to retrieve meal plan");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add meal plan");
+			}
+		});
+	}
+
+	/**
+	 * Test adding a meal plan with 5 different ingredients to the database
+	 */
+	@Test
+	public void testAddMealPlanWith5DifferentIngredients() {
+		// Create a meal plan
+		MealPlan mealPlan = mockMealPlan();
+		// Add 5 different ingredients
+		mealPlan.addIngredient(new StorageIngredient("Banana", 2.0, "Banana",
+			"Pantry", new Date()));
+		mealPlan.addIngredient(new StorageIngredient("Apple", 2.0, "Apple",
+			"Pantry", new Date()));
+		mealPlan.addIngredient(new StorageIngredient("Orange", 2.0, "Orange",
+			"Pantry", new Date()));
+		mealPlan.addIngredient(new StorageIngredient("Pear", 2.0, "Pear",
+			"Pantry", new Date()));
+		mealPlan.addIngredient(new StorageIngredient("Grape", 2.0, "Grape",
+			"Pantry", new Date()));
+		// Add the meal plan to the database
+		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
+			if (success) {
+				// Retrieve the meal plan
+				mealPlanDB.getMealPlan(addedMealPlan.getId(), (retrievedMealPlan, success2) -> {
+					if (success2) {
+						// Compare using the getters
+						assertEquals(addedMealPlan.getId(), retrievedMealPlan.getId());
+						assertEquals(addedMealPlan.getTitle(), retrievedMealPlan.getTitle());
+						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
+						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
+						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
+						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
+						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+					} else {
+						Log.e(TAG, "Failed to retrieve meal plan");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add meal plan");
+			}
+		});
+	}
+
+	/**
+	 * Test adding a meal plan with 5 recipes to the database
+	 */
+	@Test
+	public void testAddMealPlanWith5Recipes() {
+		// Create a meal plan
+		MealPlan mealPlan = mockMealPlan();
+		// Add 5 recipes
+		mealPlan.addRecipe(mockRecipe());
+		mealPlan.addRecipe(mockRecipe());
+		mealPlan.addRecipe(mockRecipe());
+		mealPlan.addRecipe(mockRecipe());
+		mealPlan.addRecipe(mockRecipe());
+		// Add the meal plan to the database
+		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
+			if (success) {
+				// Retrieve the meal plan
+				mealPlanDB.getMealPlan(addedMealPlan.getId(), (retrievedMealPlan, success2) -> {
+					if (success2) {
+						// Compare using the getters
+						assertEquals(addedMealPlan.getId(), retrievedMealPlan.getId());
+						assertEquals(addedMealPlan.getTitle(), retrievedMealPlan.getTitle());
+						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
+						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
+						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
+						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
+						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+					} else {
+						Log.e(TAG, "Failed to retrieve meal plan");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add meal plan");
+			}
+		});
+	}
+
+	/**
+	 * Test adding a meal plan with 5 different recipes to the database
+	 */
+	@Test
+	public void testAddMealPlanWith5DifferentRecipes() {
+		// Create a meal plan
+		MealPlan mealPlan = mockMealPlan();
+		// Add 5 different recipes
+		mealPlan.addRecipe(new Recipe("Chicken"));
+		mealPlan.addRecipe(new Recipe("Beef"));
+		mealPlan.addRecipe(new Recipe("Pork"));
+		mealPlan.addRecipe(new Recipe("Fish"));
+		mealPlan.addRecipe(new Recipe("Lamb"));
 		// Add the meal plan to the database
 		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
 			if (success) {
