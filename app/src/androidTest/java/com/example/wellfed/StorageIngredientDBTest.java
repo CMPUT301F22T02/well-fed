@@ -200,7 +200,7 @@ import java.util.concurrent.CountDownLatch;
     /**
      * Tests deleting an ingredient from the database
      */
-    @Test public void testDeleteIngredient() throws InterruptedException {
+    @Test public void testDeleteStorageIngredient() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
         CountDownLatch delLatch = new CountDownLatch(1);
 
@@ -335,5 +335,20 @@ import java.util.concurrent.CountDownLatch;
         }
 
         removeStorageIngredient(mockStorageIngredient);
+    }
+
+    @Test
+    public void testUpdateNonExistentStorageIngredient() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        storageIngredientDB.updateStorageIngredient(mockNonExistentStorageIngredient,
+                (updatedStorageIngredient, success) ->{
+                    assertFalse(success);
+                    latch.countDown();
+                });
+
+        if(!latch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
     }
 }
