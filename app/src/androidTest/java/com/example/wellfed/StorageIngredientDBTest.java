@@ -15,6 +15,7 @@ import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
 
 
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +25,30 @@ import java.util.concurrent.CountDownLatch;
 
 // TODO: javadoc
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
+
     private static final String TAG = "StorageIngredientDBTest";
+
     private static final long TIMEOUT = 5;
+
     StorageIngredientDB storageIngredientDB;
+
     StorageIngredient mockStorageIngredient;
+
+    StorageIngredient mockNonExistentStorageIngredient;
+
+    private void removeStorageIngredient(StorageIngredient mockStorageIngredient) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        storageIngredientDB.deleteStorageIngredient(mockStorageIngredient,(deletedStorageIngredient, success) -> {
+            assertTrue(success);
+            assertNotNull(deletedStorageIngredient);
+            latch.countDown();
+        });
+
+        if(!latch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+    }
 
     @Before public void before() {
         MockDBConnection connection = new MockDBConnection();
@@ -35,6 +56,8 @@ import java.util.concurrent.CountDownLatch;
         mockStorageIngredient =
                 new StorageIngredient("Broccoli", 5.0, "kg", "Fridge",
                         new Date(), "Vegetable");
+        mockNonExistentStorageIngredient = new StorageIngredient(null);
+        mockNonExistentStorageIngredient.setStorageId("-1");
     }
 
     /**
@@ -58,18 +81,24 @@ import java.util.concurrent.CountDownLatch;
                             addedStorageIngredient.getLocation());
                     assertEquals(mockStorageIngredient.getAmount(),
                             addedStorageIngredient.getAmount());
-                    storageIngredientDB.deleteStorageIngredient(
-                            addedStorageIngredient,
-                            (deletedStorageIngredient, deleteSuccess) -> {
-                                assertNotNull(deletedStorageIngredient);
-                                assertTrue(deleteSuccess);
-                                latch.countDown();
-                            });
+                    assertEquals(mockStorageIngredient.getCategory(),
+                            addedStorageIngredient.getCategory());
+                    assertEquals(mockStorageIngredient.getBestBeforeDate(),
+                            addedStorageIngredient.getBestBeforeDate());
+                    assertEquals(mockStorageIngredient.getUnit(),
+                            addedStorageIngredient.getUnit());
+                    assertEquals(mockStorageIngredient.getAmountAndUnit(),
+                            addedStorageIngredient.getAmountAndUnit());
+                    latch.countDown();
                 });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+
+
+        if (!latch.await(2*TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        removeStorageIngredient(mockStorageIngredient);
     }
 
     @Test public void testGetStorageIngredient() throws InterruptedException {
