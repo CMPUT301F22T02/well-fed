@@ -56,7 +56,7 @@ public class MealPlanDBTest {
 	/**
 	 * Timeout for the CountDownLatch.
 	 */
-	private static final long TIMEOUT = 10;
+	private static final long TIMEOUT = 30;
 
 	/**
 	 * Creates a new mock meal plan to test with.
@@ -132,6 +132,7 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
 						assertEquals(addedMealPlan.getIngredients(),
 							retrievedMealPlan.getIngredients());
+						latch.countDown();
 					} else {
 						Log.e(TAG, "Failed to retrieve meal plan");
 					}
@@ -139,7 +140,6 @@ public class MealPlanDBTest {
 			} else {
 				Log.e(TAG, "Failed to add meal plan");
 			}
-			latch.countDown();
 		});
 		if (!latch.await(TIMEOUT, SECONDS)) {
 			throw new InterruptedException();
@@ -182,6 +182,7 @@ public class MealPlanDBTest {
 									retrievedMealPlan.getRecipes());
 								assertEquals(addedMealPlan.getIngredients(),
 									retrievedMealPlan.getIngredients());
+								recipeLatch.countDown();
 							} else {
 								Log.e(TAG, "Failed to retrieve meal plan");
 							}
@@ -193,7 +194,6 @@ public class MealPlanDBTest {
 			} else {
 				Log.e(TAG, "Failed to add recipe");
 			}
-			recipeLatch.countDown();
 		});
 		if (!recipeLatch.await(TIMEOUT, SECONDS)) {
 			throw new InterruptedException();
@@ -237,6 +237,7 @@ public class MealPlanDBTest {
 											retrievedMealPlan.getRecipes());
 										assertEquals(updatedMealPlan.getIngredients(),
 											retrievedMealPlan.getIngredients());
+										mealPlanLatch.countDown();
 									} else {
 										Log.e(TAG, "Failed to retrieve meal plan");
 									}
@@ -252,7 +253,6 @@ public class MealPlanDBTest {
 			} else {
 				Log.e(TAG, "Failed to add meal plan");
 			}
-			mealPlanLatch.countDown();
 		});
 		if (!mealPlanLatch.await(TIMEOUT, SECONDS)) {
 			throw new InterruptedException();
@@ -263,7 +263,7 @@ public class MealPlanDBTest {
 	 * Test adding a MealPlan with an ingredient
 	 */
 	@Test
-	public void testAddMealPlanWithIngredient() {
+	public void testAddMealPlanWithIngredient() throws InterruptedException {
 		// Create a mock ingredient
 		StorageIngredient ingredient = mockIngredient();
 		// CountDownLatch to wait for the ingredient to be added
@@ -295,6 +295,7 @@ public class MealPlanDBTest {
 									retrievedMealPlan.getRecipes());
 								assertEquals(addedMealPlan.getIngredients(),
 									retrievedMealPlan.getIngredients());
+								ingredientLatch.countDown();
 							} else {
 								Log.e(TAG, "Failed to retrieve meal plan");
 							}
@@ -306,8 +307,10 @@ public class MealPlanDBTest {
 			} else {
 				Log.e(TAG, "Failed to add ingredient");
 			}
-			ingredientLatch.countDown();
 		});
+		if (!ingredientLatch.await(TIMEOUT, SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
@@ -350,6 +353,7 @@ public class MealPlanDBTest {
 												retrievedMealPlan.getRecipes());
 											assertEquals(updatedMealPlan.getIngredients(),
 												retrievedMealPlan.getIngredients());
+											mealPlanLatch.countDown();
 										} else {
 											Log.e(TAG, "Failed to retrieve meal plan");
 										}
@@ -405,6 +409,7 @@ public class MealPlanDBTest {
 									retrievedMealPlan.getRecipes());
 								assertEquals(addedMealPlan2.getIngredients(),
 									retrievedMealPlan.getIngredients());
+								mealPlanLatch.countDown();
 							} else {
 								Log.e(TAG, "Failed to retrieve meal plan");
 							}
@@ -488,6 +493,8 @@ public class MealPlanDBTest {
 																					retrievedMealPlan.getRecipes());
 																				assertEquals(updatedMealPlan.getIngredients(),
 																					retrievedMealPlan.getIngredients());
+																				// Count down the latch
+																				mealPlanLatch.countDown();
 																			} else {
 																				Log.e(TAG, "Failed to retrieve meal plan");
 																			}
@@ -551,6 +558,8 @@ public class MealPlanDBTest {
 										if (success4) {
 											// Compare using the getters
 											assertNull(retrievedMealPlan);
+											// Count down the latch
+											mealPlanLatch.countDown();
 										} else {
 											Log.e(TAG, "Failed to retrieve meal plan");
 										}
@@ -612,6 +621,8 @@ public class MealPlanDBTest {
 									assertEquals(updatedMealPlan.getServings(), retrievedMealPlan.getServings());
 									assertEquals(updatedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
 									assertEquals(updatedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+									// Count down the latch
+									mealPlanLatch.countDown();
 								} else {
 									Log.e(TAG, "Failed to retrieve meal plan");
 								}
@@ -658,6 +669,8 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
 						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
 						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Count down the latch
+						mealPlanLatch.countDown();
 					} else {
 						Log.e(TAG, "Failed to retrieve meal plan");
 					}
@@ -705,6 +718,8 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
 						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
 						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Count down the latch
+						mealPlanLatch.countDown();
 					} else {
 						Log.e(TAG, "Failed to retrieve meal plan");
 					}
@@ -747,6 +762,8 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
 						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
 						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Count down the latch
+						mealPlanLatch.countDown();
 					} else {
 						Log.e(TAG, "Failed to retrieve meal plan");
 					}
@@ -789,6 +806,8 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
 						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
 						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Count down the latch
+						mealPlanLatch.countDown();
 					} else {
 						Log.e(TAG, "Failed to retrieve meal plan");
 					}
