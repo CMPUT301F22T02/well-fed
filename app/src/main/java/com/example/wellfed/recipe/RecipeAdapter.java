@@ -30,10 +30,7 @@ import java.util.List;
  */
 public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
 
-    /**
-     * stores the reference to list of {@link Recipe}
-     */
-    private List<Recipe> recipes;
+
     private final RecipeDB recipeDB;
 
     public void setRecipeLauncher(RecipeLauncher recipeLauncher) {
@@ -88,8 +85,7 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
 
         View recipeView = layoutInflater.inflate(R.layout.activity_recipe_list, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(recipeView);
-        return viewHolder;
+        return new ViewHolder(recipeView);
     }
 
     /**
@@ -106,6 +102,7 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
 
         TextView recipeTitle = holder.recipeTitleTextView;
         recipeTitle.setText(recipe.getTitle());
+
         if (recipeLauncher != null) {
             recipeTitle.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -3,7 +3,6 @@ package com.example.wellfed.ingredient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
@@ -14,7 +13,6 @@ import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -82,31 +80,15 @@ public class IngredientEditActivity extends EditActivityBase
 
 
         if (ingredient != null) {
-            String description = ingredient.getDescription();
-            if (description != null) {
-                descriptionInput.setPlaceholderText(description);
+            descriptionInput.setPlaceholderText(ingredient.getDescription());
+            amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
+            unitInput.setPlaceholderText(ingredient.getUnit());
+            locationInput.setPlaceholderText(ingredient.getLocation());
+            if (ingredient.getCategory() != null) {
+                categoryInput.setPlaceholderText(ingredient.getCategory());
             }
-            Double amount = ingredient.getAmount();
-            if (amount != null) {
-                amountInput.setPlaceholderText(String.valueOf(amount));
-            }
-            String unit = ingredient.getUnit();
-            if (unit != null){
-                unitInput.setPlaceholderText(unit);
-            };
-            String location = ingredient.getLocation();
-            if (location != null) {
-                locationInput.setPlaceholderText(location);
-            }
-            String category = ingredient.getCategory();
-            if (category != null) {
-                categoryInput.setPlaceholderText(category);
-            }
-            Date bestBefore = ingredient.getBestBeforeDate();
-            if (bestBefore != null) {
-                bestBeforeLayout.setPlaceholderDate(bestBefore);
-            }
-
+            // Set date in yyyy-MM-dd format
+            bestBeforeInput.setPlaceholderDate(ingredient.getBestBeforeDate());
         }
 
 
@@ -145,7 +127,7 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * Saves the ingredient.
+     * Method to save the ingredient.
      */
     private void onSave() {
         // Verify that all fields are filled

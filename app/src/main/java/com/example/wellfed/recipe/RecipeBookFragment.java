@@ -69,10 +69,10 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                         Recipe recipe = result.second;
                         switch (type) {
                             case "delete":
-                                recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success) -> {
-                                    deletedRecipe.setId("");
-                                });
+                                recipeController.deleteRecipe(recipe.getId());
+                                break;
                             case "edit":
+                                recipeController.editRecipe(recipe);
                                 break;
                             default:
                                 new IllegalArgumentException();
@@ -91,16 +91,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 Recipe recipe = result.second;
                 switch (type) {
                     case "save":
-                        DBConnection connection = new DBConnection(requireContext().getApplicationContext());
-                        RecipeDB recipeDB = new RecipeDB(connection);
-                        try {
-                            recipeDB.addRecipe(recipe, (a, b) -> {
-                            });
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "edit":
+                        recipeController.addRecipe(recipe);
                         break;
                     default:
                         break;
@@ -126,9 +117,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
-        recipeController = new RecipeController(getContext().getApplicationContext());
-        DBConnection connection = new DBConnection(getContext().getApplicationContext());
-        recipeDB = new RecipeDB(connection);
+        recipeController = new RecipeController(getActivity());
+        recipeController.getRecipeAdapter().setRecipeLauncher(this);
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
@@ -143,12 +133,7 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
         Bundle args = getArguments();
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
-
-        adapter = new RecipeAdapter(recipeDB);
-        adapter.setRecipeLauncher(this);
-        recipeController.setRecipes(recipes);
-        recipeController.setRecipeAdapter(adapter);
-        rvRecipes.setAdapter(adapter);
+        rvRecipes.setAdapter(recipeController.getRecipeAdapter());
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
