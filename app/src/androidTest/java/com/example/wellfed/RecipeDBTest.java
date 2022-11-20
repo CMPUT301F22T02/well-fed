@@ -12,6 +12,7 @@ import com.example.wellfed.recipe.RecipeDB;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
@@ -23,6 +24,7 @@ import java.util.concurrent.CountDownLatch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import junit.framework.TestCase;
 
@@ -30,7 +32,7 @@ import junit.framework.TestCase;
 public class RecipeDBTest {
     RecipeDB recipeDB;
     IngredientDB ingredientDB;
-    private static final long TIMEOUT = 5;
+    private static final long TIMEOUT = 10;
 
     @Before
     public void before() {
@@ -46,6 +48,28 @@ public class RecipeDBTest {
         testIngredient.setCategory("Protein");
         testIngredient.setUnit("count");
         return testIngredient;
+    }
+
+    private Recipe mockRecipe(Ingredient mockIngredient1, Ingredient mockIngredient2) {
+        Recipe testRecipe = new Recipe("Omelet");
+        testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
+        testRecipe.setServings(1);
+        testRecipe.setPrepTimeMinutes(5);
+        testRecipe.addIngredient(mockIngredient1);
+        testRecipe.addIngredient(mockIngredient2);
+        testRecipe.setCategory("Breakfast");
+        return testRecipe;
+    }
+
+    private void assertEqualRecipe(Recipe actual, Recipe expected) {
+        assertEquals(actual.getId(), expected.getId());
+        assertEquals(actual.getTitle(), expected.getTitle());
+        assertEquals(actual.getCategory(), expected.getCategory());
+        assertEquals(actual.getComments(), expected.getComments());
+        assertEquals(actual.getPhotograph(), expected.getPhotograph());
+        assertEquals(actual.getPrepTimeMinutes(), expected.getPrepTimeMinutes());
+        assertEquals(actual.getServings(), expected.getServings());
+        assertEquals(actual.getIngredients(), expected.getIngredients());
     }
 
     /**
@@ -96,23 +120,11 @@ public class RecipeDBTest {
         Ingredient testIngredient = mockIngredient("Egg");
         Ingredient testIngredient2 = mockIngredient("Duck Egg");
 
-        Recipe testRecipe = new Recipe("Omelet");
-        testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
-        testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(5);
-        testRecipe.addIngredient(testIngredient);
-        testRecipe.addIngredient(testIngredient2);
-        testRecipe.setCategory("Breakfast");
+        Recipe testRecipe = mockRecipe(testIngredient, testIngredient2);
 
         CountDownLatch latch = new CountDownLatch(1);
         recipeDB.addRecipe(testRecipe, (addedRecipe, success) -> {
-            assertEquals(addedRecipe.getId(), testRecipe.getId());
-            assertEquals(addedRecipe.getTitle(), testRecipe.getTitle());
-            assertEquals(addedRecipe.getCategory(), testRecipe.getCategory());
-            assertEquals(addedRecipe.getComments(), testRecipe.getComments());
-            assertEquals(addedRecipe.getPhotograph(), testRecipe.getPhotograph());
-            assertEquals(addedRecipe.getPrepTimeMinutes(), testRecipe.getPrepTimeMinutes());
-            assertEquals(addedRecipe.getServings(), testRecipe.getServings());
+
             latch.countDown();
         });
 
@@ -122,14 +134,8 @@ public class RecipeDBTest {
 
         CountDownLatch deleteLatch = new CountDownLatch(1);
         recipeDB.delRecipe(testRecipe.getId(), (deletedRecipe, success) -> {
-            assertEquals(deletedRecipe.getId(), testRecipe.getId());
-            assertEquals(deletedRecipe.getTitle(), testRecipe.getTitle());
-            assertEquals(deletedRecipe.getCategory(), testRecipe.getCategory());
-            assertEquals(deletedRecipe.getComments(), testRecipe.getComments());
-            assertEquals(deletedRecipe.getPhotograph(), testRecipe.getPhotograph());
-            assertEquals(deletedRecipe.getPrepTimeMinutes(), testRecipe.getPrepTimeMinutes());
-            assertEquals(deletedRecipe.getServings(), testRecipe.getServings());
             deleteLatch.countDown();
+            assertEqualRecipe(deletedRecipe, testRecipe);
         });
 
         if (!deleteLatch.await(TIMEOUT, SECONDS)) {
@@ -138,13 +144,13 @@ public class RecipeDBTest {
 
         CountDownLatch deleteIngredients = new CountDownLatch(2);
         ingredientDB.deleteIngredient(testIngredient, (deletedIngredient, success) -> {
-            assertNotNull(deletedIngredient);
             deleteIngredients.countDown();
+            assertNotNull(deletedIngredient);
         });
 
         ingredientDB.deleteIngredient(testIngredient2, (deletedIngredient, success) -> {
-            assertNotNull(deletedIngredient);
             deleteIngredients.countDown();
+            assertNotNull(deletedIngredient);
         });
 
         if (!deleteIngredients.await(2*TIMEOUT, SECONDS)) {
@@ -161,13 +167,9 @@ public class RecipeDBTest {
     public void testDeleteOnNonExistentRecipe() throws InterruptedException{
         recipeDB.delRecipe("-1", (deletedRecipe, success) -> {
             // assert the ID of the deleted recipe is -1 and everything is null
-            assertEquals(deletedRecipe.getId(), "-1");
-            assertNull(deletedRecipe.getTitle());
-            assertNull(deletedRecipe.getCategory());
-            assertNull(deletedRecipe.getComments());
-            assertNull(deletedRecipe.getPhotograph());
-            assertNull(deletedRecipe.getPrepTimeMinutes());
-            assertNull(deletedRecipe.getServings());
+            Recipe emptyRecipe = new Recipe(null);
+            emptyRecipe.setId("-1");
+            assertEqualRecipe(deletedRecipe, emptyRecipe);
         });
     }
 
@@ -176,13 +178,7 @@ public class RecipeDBTest {
         Ingredient testIngredient = mockIngredient("Egg");
         Ingredient testIngredient2 = mockIngredient("Duck Egg");
 
-        Recipe testRecipe = new Recipe("Omelet");
-        testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
-        testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(5);
-        testRecipe.addIngredient(testIngredient);
-        testRecipe.addIngredient(testIngredient2);
-        testRecipe.setCategory("Breakfast");
+        Recipe testRecipe = mockRecipe(testIngredient, testIngredient2);
 
         CountDownLatch latch = new CountDownLatch(1);
         recipeDB.addRecipe(testRecipe, (addedRecipe, success) -> {
@@ -206,50 +202,40 @@ public class RecipeDBTest {
         testRecipe.addIngredient(newTestIngredient);
         testRecipe.setCategory("Lunch");
 
+        CountDownLatch updateLatch = new CountDownLatch(1);
         recipeDB.updateRecipe(testRecipe, (updatedRecipe, success) -> {
-            assertEquals(updatedRecipe.getId(), testRecipe.getId());
-            assertEquals(updatedRecipe.getTitle(), testRecipe.getTitle());
-            assertEquals(updatedRecipe.getCategory(), testRecipe.getCategory());
-            assertEquals(updatedRecipe.getComments(), testRecipe.getComments());
-            assertEquals(updatedRecipe.getPhotograph(), testRecipe.getPhotograph());
-            assertEquals(updatedRecipe.getPrepTimeMinutes(), testRecipe.getPrepTimeMinutes());
-            assertEquals(updatedRecipe.getServings(), testRecipe.getServings());
+            updateLatch.countDown();
+            assertTrue(success);
+            assertEqualRecipe(updatedRecipe, testRecipe);
         });
+
+        if (!updateLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
 
         cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }
-//
-//    /**
-//     * Test editRecipe functionality by editing a nonexistent document which won't add to the collection
-//     * @throws InterruptedException If editRecipe or getRecipe transactions cannot complete successfully
-//     */
-//    @Test
-//    public void testUpdateOnNonExistentRecipe() throws InterruptedException{
-//        Recipe testRecipe = new Recipe("Test");
-//        testRecipe.setId("-1");
-//        recipeDB.editRecipe(testRecipe);
-//
-//        assert recipeDB.getRecipe(testRecipe.getId()) == null;
-//    }
-//
-//    /**
-//     * Test getRecipes functionality by requesting a list of all recipes.
-//     * @throws InterruptedException If getRecipes transactions cannot
-//     * complete successfully
-//     */
-//    @Test
-//    public void testGetRecipes() throws InterruptedException {
-//        ArrayList<Recipe> recipes = recipeDB.getRecipes();
-//        int count = recipes.size();
-//        Recipe testRecipe = new Recipe("Cake");
-//        testRecipe.setPrepTimeMinutes(90);
-//        testRecipe.setServings(12);
-//
-//        recipeDB.addRecipe(testRecipe);
-//        recipes = recipeDB.getRecipes();
-//        assert recipes.size() == count + 1;
-//        recipeDB.delRecipe(testRecipe.getId());
-//        recipes = recipeDB.getRecipes();
-//        assert recipes.size() == count;
-//    }
+
+    /**
+     * Test updateRecipe functionality by updating a nonexistent document which won't add to the collection
+     * @throws InterruptedException If updateRecipe transactions cannot complete successfully
+     */
+    @Test
+    @Ignore
+    public void testUpdateOnNonExistentRecipe() throws InterruptedException{
+        Recipe testRecipe = new Recipe(null);
+        testRecipe.setId("-1");
+
+        CountDownLatch updateLatch = new CountDownLatch(1);
+        recipeDB.updateRecipe(testRecipe, (updatedRecipe, success) -> {
+            updateLatch.countDown();
+            assertTrue(success);
+            assertEqualRecipe(updatedRecipe, testRecipe);
+        });
+
+        if (!updateLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+    }
+    
 }
