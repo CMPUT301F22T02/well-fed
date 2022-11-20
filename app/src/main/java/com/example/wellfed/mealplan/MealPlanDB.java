@@ -181,7 +181,6 @@ public class MealPlanDB {
 
         // Get reference to the MealPlan document with the given id.
         DocumentReference mealPlanRef = this.mealPlanCollection.document(id);
-
         mealPlanRef.get().addOnSuccessListener(mealPlanDoc -> {
                     getMealPlan(mealPlanDoc, listener);
                 })
@@ -210,21 +209,23 @@ public class MealPlanDB {
                 Objects.requireNonNull(snapshot.getLong("servings"))
                         .intValue());
 
-//        TODO: you have to fix this, this won't work, it is running in parallel
-//        TODO: and you are trying to add to the mealPlan object before finish
         // Initializes an empty ArrayList to store Ingredient objects.
         ArrayList<Ingredient> ingredients = new ArrayList<>();
 
-        // Get the list of ingredients from the MealPlan document.
+        // Get the list of MealPlan ingredients from the MealPlan document.
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
                 (ArrayList<HashMap<String, Object>>) snapshot.get(
                         "ingredients");
 
+        // Serves as a lock to ensure that the processes won't
+        // run in parallel.
+        AtomicInteger counter = new AtomicInteger(0);
         // Iterate over the ArrayList of HashMaps and produce Ingredient
         // objects.
         for (HashMap<String, Object> ingredientMap : mealPlanIngredients) {
             DocumentReference ingredientRef =
                     (DocumentReference) ingredientMap.get("ingredientRef");
+
             ingredientDB.getIngredient(ingredientRef,
                     (foundIngredient, success) -> {
                         // Sets amount and unit for the ingredient found in
@@ -233,6 +234,10 @@ public class MealPlanDB {
                                 (Double) ingredientMap.get("amount"));
                         foundIngredient.setUnit(
                                 (String) ingredientMap.get("unit"));
+
+                        // Increment counter inside query on ingredientDB so that
+                        // the processes won't run in parallel.
+                        counter.addAndGet(1);
 
                         // Adds the ingredient to the ArrayList.
                         ingredients.add(foundIngredient);
@@ -247,13 +252,16 @@ public class MealPlanDB {
         // Initializes an empty ArrayList to store Recipe objects.
         ArrayList<Recipe> recipes = new ArrayList<>();
 
+        AtomicInteger counter1 = new AtomicInteger(0);
+
         // Iterate over the ArrayList of DocumentReferences and produce
         // Recipe objects
         // using the method implemented in RecipeDB.
         for (DocumentReference recipeRef :
                 (ArrayList<DocumentReference>) snapshot.get(
-                "recipes")) {
+                        "recipes")) {
             recipeDB.getRecipe(recipeRef.getId(), (foundRecipe, success) -> {
+                counter1.addAndGet(1);
                 recipes.add(foundRecipe);
             });
         }
@@ -263,7 +271,7 @@ public class MealPlanDB {
             mealPlan.addRecipe(r);
         }
 
-        // Return the MealPlan object.
+        // Returns the MealPlan object.
         listener.onGetMealPlanResult(mealPlan, true);
 
     }
@@ -337,7 +345,7 @@ public class MealPlanDB {
         // ArrayList of HashMaps is returned only after all the
         // ingredients have been converted.
         AtomicInteger counter = new AtomicInteger(0);
-        for (Ingredient ingredient: mealPlan.getIngredients()) {
+        for (Ingredient ingredient : mealPlan.getIngredients()) {
             ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
                 // If the ingredient already exists in Ingredient collection.
                 if (foundIngredient != null) {
