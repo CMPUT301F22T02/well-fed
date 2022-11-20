@@ -110,7 +110,11 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                 holder.getTitleTextView().setText(mealPlan.getTitle());
                 holder.getCategoryTextView().setText(mealPlan.getCategory());
                 holder.getMaterialCardView().setOnClickListener(
-                        view -> listener.onItemClick(mealPlan));
+                        view -> {
+                            if (listener != null) {
+                                listener.onItemClick(mealPlan);
+                            }
+                        });
 
                 UTCDate today = new UTCDate();
                 UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());

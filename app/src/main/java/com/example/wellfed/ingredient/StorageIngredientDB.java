@@ -259,7 +259,7 @@ public class StorageIngredientDB {
 			});
 		}).addOnFailureListener(failure -> {
 			Log.d(TAG, "Failed to delete the storageIngredient");
-			listener.onDeleteStorageIngredient(null, false);
+			listener.onDeleteStorageIngredient(storageIngredient, false);
 		});
 	}
 

@@ -290,22 +290,19 @@ public class MealPlanDB {
     /**
      * Deletes the MealPlan object with the given id from the db.
      *
-     * @param id the id of the MealPlan object to be deleted.
+     * @param mealPlan
      * @param listener the OnDeleteMealPlanListener object to handle the result.
      */
-    public void delMealPlan(String id, OnDeleteMealPlanListener listener) {
-        if (id == null) {
-            listener.onDeleteMealPlanResult(null, false);
-        }
-
+    public void delMealPlan(MealPlan mealPlan, OnDeleteMealPlanListener listener) {
         // Get reference to the MealPlan document with the given id.
-        DocumentReference mealPlanRef = this.mealPlanCollection.document(id);
+        DocumentReference mealPlanRef =
+                this.mealPlanCollection.document(mealPlan.getId());
         mealPlanRef.delete()
                 .addOnSuccessListener(success -> {
-                    listener.onDeleteMealPlanResult(new MealPlan(id), true);
+                    listener.onDeleteMealPlanResult(mealPlan, true);
                 })
                 .addOnFailureListener(failure -> {
-                    listener.onDeleteMealPlanResult(null, false);
+                    listener.onDeleteMealPlanResult(mealPlan, false);
                 });
     }
 
@@ -330,7 +327,7 @@ public class MealPlanDB {
             }
 
             // Deletes the old MealPlan object.
-            delMealPlan(mealPlan.getId(), (deletedMealPlan, success2) -> {
+            delMealPlan(mealPlan, (deletedMealPlan, success2) -> {
                 // Check if the MealPlan object was deleted successfully.
                 if (deletedMealPlan == null) {
                     listener.onUpdateMealPlanResult(null, false);

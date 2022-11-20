@@ -51,6 +51,7 @@ public class MealBookFragment extends Fragment
     private RecyclerView mealPlanRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MealPlanController controller;
+    private MealPlan selectedMealPlan;
 
     ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanContract(), result -> {
@@ -61,7 +62,7 @@ public class MealBookFragment extends Fragment
                 MealPlan mealPlan = result.second;
                 switch (type) {
                     case "delete":
-//                        controller.deleteMealPlan(this.selected);
+                        controller.deleteMealPlan(mealPlan);
                         break;
                     case "edit":
 //                        controller.editMealPlan(selected, mealPlan);
@@ -115,6 +116,7 @@ public class MealBookFragment extends Fragment
 
         this.controller.getAdapter().registerAdapterDataObserver(
                 new AdapterDataObserver(this));
+        this.controller.getAdapter().setOnItemClickListener(this);
         this.mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
         this.userFirstNameTextView.setText(
@@ -157,6 +159,7 @@ public class MealBookFragment extends Fragment
 
     @Override
     public void onItemClick(MealPlan mealPlan) {
+        this.selectedMealPlan = mealPlan;
         this.launch(mealPlan);
     }
 }

@@ -62,11 +62,15 @@ public class MealPlanController {
 //        this.adapter.notifyItemChanged(index);
     }
 
-    public void deleteMealPlan(int index) {
-//        if (0 <= index && index < this.mealPlans.size()) {
-//            this.mealPlans.remove(index);
-//            this.adapter.notifyItemRemoved(index);
-//        }
+    public void deleteMealPlan(MealPlan mealPlan) {
+        this.db.delMealPlan(mealPlan, ((deleteMealPlan,
+                                       deleteSuccess) -> {
+            if (!deleteSuccess) {
+                this.activity.makeSnackbar("Failed to delete" + deleteMealPlan.getTitle());
+            } else {
+                this.activity.makeSnackbar("Deleted " + deleteMealPlan.getTitle());
+            }
+        }));
     }
 
     public MealPlan getNextMealPlan() {
