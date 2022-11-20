@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.color.MaterialColors;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,6 +61,10 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
     private final TextView dayTextView;
     private final TextView titleTextView;
     private final TextView categoryTextView;
+    private final int colorPrimary;
+    private final int colorOnPrimary;
+    private final int colorSurface;
+    private final int colorOnSurface;
 
     public MaterialCardView getMaterialCardView() {
         return materialCardView;
@@ -77,12 +82,18 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
         return categoryTextView;
     }
 
-    public void setDateCircle(Date date, int backgroundTint, int textColor) {
+    public void setDateCircle(Date date, Boolean isPrimary) {
         dayTextView.setText(circleDateFormat.format(date));
         weekDayTextView.setText(weekDayDateFormat.format(date));
-        dayTextView.setBackgroundTintList(ColorStateList.valueOf(
-                backgroundTint));
-        dayTextView.setTextColor(textColor);
+        if (isPrimary) {
+            dayTextView.setBackgroundTintList(ColorStateList.valueOf(
+                    colorPrimary));
+            dayTextView.setTextColor(colorOnPrimary);
+        } else {
+            dayTextView.setBackgroundTintList(ColorStateList.valueOf(
+                    colorSurface));
+            dayTextView.setTextColor(colorOnSurface);
+        }
     }
 
     public MealPlanViewHolder(@NonNull View itemView) {
@@ -98,5 +109,13 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
         this.dayTextView = itemView.findViewById(R.id.dayTextView);
         this.titleTextView = itemView.findViewById(R.id.titleTextView);
         this.categoryTextView = itemView.findViewById(R.id.categoryTextView);
+        this.colorPrimary = MaterialColors.getColor(itemView,
+                com.google.android.material.R.attr.colorPrimary);
+        this.colorOnPrimary = MaterialColors.getColor(itemView,
+                com.google.android.material.R.attr.colorOnPrimary);
+        this.colorSurface = MaterialColors.getColor(itemView,
+                com.google.android.material.R.attr.colorSurface);
+        this.colorOnSurface = MaterialColors.getColor(itemView,
+                com.google.android.material.R.attr.colorOnSurface);
     }
 }

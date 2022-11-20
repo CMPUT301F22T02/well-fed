@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RecipeDB {
     /**
-     * Holds an instance of the Firebase Firestore database
+     * Holds an instance of the Firebase FireStore database
      */
     private final FirebaseFirestore db;
     /**
