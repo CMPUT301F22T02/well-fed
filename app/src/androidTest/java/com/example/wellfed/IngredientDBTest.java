@@ -94,37 +94,25 @@ public class IngredientDBTest {
      * @throws InterruptedException if the test times out
      */
     @Test
-    public void testAddFull() throws InterruptedException {
-        Log.d(TAG, "testAddFull");
+    public void testAddIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        ingredientDB.addIngredient(mockIngredient, (addIngredient, addSuccess) -> {
-            Log.d(TAG, ":onAddIngredient");
-            String id = addIngredient.getId();
-            assertNotNull(addIngredient);
-            assertTrue(addSuccess);
 
-            ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
-                Log.d(TAG, ":onGetIngredient");
-                assertNotNull(getIngredient);
-                assertTrue(getSuccess);
-                assertEquals(mockIngredient.getCategory(),
-                        getIngredient.getCategory());
-                assertEquals(mockIngredient.getDescription(),
-                        getIngredient.getDescription());
-
-                // remove the ingredient
-                ingredientDB.deleteIngredient(getIngredient,
-                        (deleteIngredient, deleteSuccess) -> {
-                            Log.d(TAG, ":onDeleteIngredient");
-                            assertNotNull(deleteIngredient);
-                            assertTrue(deleteSuccess);
-                            latch.countDown();
-                        });
-            });
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        AtomicReference<Ingredient> addedIngredientAtomic = new AtomicReference<>();
+        ingredientDB.addIngredient(mockIngredient, (addedIngredient, success) -> {
+            successAtomic.set(success);
+            addedIngredientAtomic.set(addedIngredient);
+            latch.countDown();
         });
+
         if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
+        assertIngredientsEqual(addedIngredientAtomic.get(), mockIngredient);
+
+        removeIngredient(mockIngredient);
     }
 
     /**
