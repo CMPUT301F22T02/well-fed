@@ -25,25 +25,35 @@ import java.util.List;
 public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredientViewHolder> {
 
     /**
-     * list of {@link Ingredient}
+     * List of {@link Ingredient}
      */
     List<Ingredient> recipeIngredientList;
 
     /**
-     * layout id that specifies which layout to use
+     * Layout id that specifies which layout to use
      */
     int layoutId;
 
+    /**
+     * Listener for when an ingredient is clicked.
+     */
     OnIngredientClick listener;
 
+    /**
+     * Interface for listeners that listen for clicks on an ingredient
+     */
     public interface OnIngredientClick {
         void onEditClick(String reason, int pos);
     }
 
-
     /**
-     * @param recipeIngredientList helps initialize our list
-     * @param layoutId             id of the layout
+     * Creates a new RecipeIngredientAdapter
+     *
+     * @param recipeIngredientList the list of Recipes to adapt into a displayable form
+     *                             for the RecyclerView
+     * @param layoutId             id identifying the layout of a single ingredient in the list
+     * @param listener             the listener to be notified when an ingredient
+     *                             is clicked
      */
     RecipeIngredientAdapter(List<Ingredient> recipeIngredientList, int layoutId, OnIngredientClick listener) {
         this.recipeIngredientList = recipeIngredientList;
@@ -51,6 +61,13 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
         this.listener = listener;
     }
 
+    /**
+     * Creates a new RecipeIngredientAdapter
+     *
+     * @param recipeIngredientList the list of Recipes to adapt into a displayable form
+     *                             for the RecyclerView
+     * @param layoutId             id identifying the layout of a single ingredient in the list
+     */
     RecipeIngredientAdapter(List<Ingredient> recipeIngredientList, int layoutId) {
         this.recipeIngredientList = recipeIngredientList;
         this.layoutId = layoutId;
@@ -58,11 +75,11 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
 
     /**
-     * inflates the view
+     * Inflates the view, by creating a ViewHolder for views inside of the RecyclerView
      *
      * @param parent   activity that handles the ingredients
-     * @param viewType
-     * @return
+     * @param viewType the view type for the new View.
+     * @return         the created ViewHolder
      */
     @NonNull
     @Override
@@ -76,27 +93,16 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
 
     /**
-     * Binds the data in our list to the views
+     * Binds the data in our list to the views associated with it.
      *
-     * @param holder   holds the inflated view
+     * @param holder   holds the inflated view to bind to
      * @param position gives the position in the list
      */
     @Override
     public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {
 
-        /**
-         * Ingredient at the position
-         */
         Ingredient recipeIngredient = recipeIngredientList.get(position);
-
-        /**
-         * view that holds the quantity of the ingredients
-         */
         TextView ingredientQuantity = holder.ingredientQuantity;
-
-        /**
-         * view that holds the ingredient name
-         */
         TextView ingredientName = holder.ingredientName;
 
         // set buttons based on layout
@@ -125,6 +131,8 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
 
     /**
+     * Gets the number of items in our recipe's ingredient list.
+     *
      * @return count of the number of ingredients in our list
      */
     @Override

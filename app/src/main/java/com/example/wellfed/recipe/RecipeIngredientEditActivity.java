@@ -17,6 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
+/**
+ * Activity which allows user to edit/add an existing recipe's ingredient
+ */
 public class RecipeIngredientEditActivity extends EditActivityBase {
 
     /**
@@ -87,7 +90,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
     }
 
     /**
-     * checks if there are unsaved changes
+     * Checks if there are unsaved changes while editing the ingredient.
      *
      * @return true if there are unsaved changes, false otherwise
      */
@@ -105,7 +108,8 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
     }
 
     /**
-     * Method to save the ingredient.
+     * Saves the ingredient created in the activity, and sets the activity
+     * result to the new Ingredient
      */
     private void onSave() {
         // Verify that all fields are filled

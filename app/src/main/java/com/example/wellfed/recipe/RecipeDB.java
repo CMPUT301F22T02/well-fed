@@ -23,6 +23,10 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The RecipeDB class is used to store and retrieve recipe data from
+ * the Firebase Firestore database.
+ */
 public class RecipeDB {
     /**
      * Holds an instance of the Firebase Firestore database
@@ -42,16 +46,24 @@ public class RecipeDB {
      */
     private CollectionReference collection;
 
+    /**
+     * Interface for listeners with methods that are called upon adding a recipe is completed
+     */
     public interface OnRecipeDone {
         public void onAddRecipe(Recipe recipe, Boolean success);
     }
 
+    /**
+     * Interface for listeners with methods that are called upon adding an ingredient to a recipe
+     */
     public interface OnRecipeIngredientAdded {
         public void onRecipeIngredientAdd(Ingredient ingredient, int totalAdded);
     }
 
     /**
      * Create a RecipeDB object
+     *
+     * @param connection the database connection for the RecipeDB
      */
     public RecipeDB(DBConnection connection) {
         this.recipesConnection = connection;
@@ -68,7 +80,6 @@ public class RecipeDB {
      *
      * @param recipe A Recipe object we want to add to the collection of Recipes
      *               and whose id we want to set
-     * @return Returns the id of the Recipe document
      */
     //todo it works but hacky
     public void addRecipe(Recipe recipe, OnRecipeDone listener){
@@ -118,6 +129,14 @@ public class RecipeDB {
 
     }
 
+    /**
+     * Helper function for adding a recipe to the database.
+     * @param recipeMap     A hash map representing all of the data elements associated with a recipe
+     * @param ingredients   A list of hash maps representing all of data elements associated with
+     *                      ingredients inside of a recipe
+     * @param recipe        The recipe to be added to the database
+     * @param listener      A listener that will be notified when the database add is completed
+     */
     public void addRecipeHelper(HashMap<String, Object> recipeMap, ArrayList<HashMap<String, Object>> ingredients,
                                 Recipe recipe, OnRecipeDone listener) {
         recipeMap.put("ingredients", ingredients);
@@ -142,6 +161,13 @@ public class RecipeDB {
 
     // todo call the listener when results fail
     // todo add db-tests for it
+
+    /**
+     * Retrieves a recipe from the Firebase Firestore database.
+     *
+     * @param id        The ID of the recipe to retrieve
+     * @param listener  The listener that will be notified upon completion of the retrieval
+     */
     public void getRecipe(String id, OnRecipeDone listener) {
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get()
@@ -179,6 +205,12 @@ public class RecipeDB {
                 });
     }
 
+    /**
+     * Updates a recipe in the Firebase Firestore database.
+     *
+     * @param recipe    The recipe, which contains updated information from it's previous state
+     * @param listener  The listener to be notified after the database update is completed
+     */
     public void updateRecipe(Recipe recipe, OnRecipeDone listener) {
         String id = recipe.getId();
         addRecipe(recipe, (addedRecipe, success)->{
@@ -199,7 +231,8 @@ public class RecipeDB {
      * Deletes a recipe document with the id  from the collection
      * of recipes
      *
-     * @param id The id of recipe document we want to delete
+     * @param id        The id of recipe document we want to delete
+     * @param listener  The listener to be notified after the database deletion is completed
      */
     public void delRecipe(String id, OnRecipeDone listener){
         if (id == null){
@@ -228,6 +261,12 @@ public class RecipeDB {
     }
 
 
+    /**
+     * Converts a database snapshot of a recipe into a Recipe object
+     *
+     * @param doc   the DocumentSnapshot of a recipe document to be converted
+     * @return the Recipe object created by the conversion
+     */
     public Recipe snapshotToRecipe(DocumentSnapshot doc) {
         Recipe recipe = new Recipe(doc.getString("title"));
         recipe.setCategory(doc.getString("category"));
@@ -248,6 +287,11 @@ public class RecipeDB {
         return recipe;
     }
 
+    /**
+     * Gets the collection that the RecipeDB is associated with.
+     *
+     * @return the collection as a Query
+     */
     public Query getQuery() {
         return this.collection;
     }

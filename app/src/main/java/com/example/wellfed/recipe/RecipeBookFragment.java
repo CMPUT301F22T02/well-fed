@@ -31,7 +31,7 @@ import java.util.Objects;
 // update our controller here -> to reflect these changes
 
 /**
- * MealBookFragment contains a list Recipes {@link Recipe}
+ * RecipeBookFragment displays a list of Recipes {@link Recipe}
  *
  * @version 1.0.0
  */

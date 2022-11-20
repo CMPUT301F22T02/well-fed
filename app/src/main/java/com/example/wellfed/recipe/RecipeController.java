@@ -37,7 +37,7 @@ public class RecipeController {
     private RecipeDB recipeDB;
 
     /**
-     * Constructor that initializes the db
+     * Constructor that initializes the db connection and the adapter for the recipes
      */
     public RecipeController(FragmentActivity activity) {
         this.activity = (ActivityBase) activity;
@@ -46,6 +46,11 @@ public class RecipeController {
         this.recipeAdapter = new RecipeAdapter(recipeDB);
     }
 
+    /**
+     * Requests the database to edit a Recipe and handles the result
+     *
+     * @param recipe the recipe to edit in the database
+     */
     public void editRecipe(Recipe recipe) {
         recipeDB.updateRecipe(recipe, (updated, success)->{
             boolean a = success;
@@ -56,7 +61,7 @@ public class RecipeController {
     }
 
     /**
-     * handles the logic for deleting the recipe
+     * Requests the database to delete a Recipe and handles the result
      *
      * @param id of the recipe to delete
      */
@@ -69,7 +74,7 @@ public class RecipeController {
     }
 
     /**
-     * adds the recipe to db and notifies the adapter
+     * Adds the recipe to db and notifies the adapter
      *
      * @param recipe
      */
@@ -81,6 +86,11 @@ public class RecipeController {
         });
     }
 
+    /**
+     * Gets the RecipeAdapter that connects the list of Recipes to the DB
+     *
+     * @return the RecipeAdapter
+     */
     public RecipeAdapter getRecipeAdapter() {
         return recipeAdapter;
     }

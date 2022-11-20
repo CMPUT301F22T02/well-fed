@@ -37,8 +37,8 @@ public class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * constructor for creating the view
-     * @param itemView
-     * @param layoutId
+     * @param itemView  the view for one item
+     * @param layoutId  the ID for the layout
      */
     public RecipeIngredientViewHolder(@NonNull View itemView, int layoutId) {
         super(itemView);

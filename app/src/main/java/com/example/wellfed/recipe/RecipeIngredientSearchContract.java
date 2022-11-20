@@ -13,7 +13,18 @@ import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientStorageFragment;
 import com.example.wellfed.ingredient.StorageIngredient;
 
+/**
+ * Contract for launching the activity for searching for an ingredient to add to a recipe
+ */
 public class RecipeIngredientSearchContract extends ActivityResultContract<Ingredient, Pair<String, StorageIngredient>> {
+    /**
+     * Creates an intent for the recipe ingredient search activity to be launched
+     *
+     * @param context   context that launches the activity
+     * @param ingredient ingredient to include in the intent
+     *
+     * @return the Intent created for the ingredient
+     */
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context, Ingredient ingredient) {
@@ -22,6 +33,14 @@ public class RecipeIngredientSearchContract extends ActivityResultContract<Ingre
         return intent;
     }
 
+    /**
+     * Parse the result from the recipe ingredient search activity
+     *
+     * @param i         result code of the activity
+     * @param intent    intent returned in the result
+     * @return          a pair identifying that it is an ingredient related activity
+     *                  and the ingredient found by the search activity
+     */
     @Override
     public Pair<String, StorageIngredient> parseResult(int i, @Nullable Intent intent) {
 

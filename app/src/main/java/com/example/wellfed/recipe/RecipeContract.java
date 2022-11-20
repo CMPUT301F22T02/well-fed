@@ -19,9 +19,11 @@ public class RecipeContract extends ActivityResultContract<Recipe, Pair<String, 
 
     /**
      * Creates an intent that contains recipe{@link Recipe}
-     * @param context
-     * @param recipe
-     * @return
+     *
+     * @param context context that launches the activity
+     * @param recipe recipe to include in the intent
+     *
+     * @return the Intent created which contains the recipe.
      */
     @NonNull
     @Override
@@ -33,8 +35,10 @@ public class RecipeContract extends ActivityResultContract<Recipe, Pair<String, 
 
     /**
      * Parse the response from the activity as required
-     * @param i
-     * @param intent
+     *
+     * @param i         a status code representing whether the activity succeeded or not
+     * @param intent    the intent returned by the activity upon completion
+     *
      * @return null if activity was interrupted or failed to return anything
      */
     @Override

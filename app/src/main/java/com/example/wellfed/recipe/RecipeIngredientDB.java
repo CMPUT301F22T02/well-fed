@@ -18,6 +18,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * The RecipeIngredientDB class is used to store and retrieve recipe ingredient data from
+ * the Firebase Firestore database.
+ */
 public class RecipeIngredientDB {
     /**
      * Holds an instance of the Firebase Firestore database

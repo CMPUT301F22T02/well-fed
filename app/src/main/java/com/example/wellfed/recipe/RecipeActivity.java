@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activity that holds the view for Recipe showing all it's detail
+ * Activity that displays the view for Recipe, showing all of a Recipe's information
  *
  * @version 1.0.0
  */

@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class represents a Recipe, which contains ingredients and instructions on how to prepare
+ * Represents a Recipe, which contains ingredients and instructions on how to prepare
  * a recipe.
  *
  * @version 1.0

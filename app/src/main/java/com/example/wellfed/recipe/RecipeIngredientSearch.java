@@ -17,13 +17,23 @@ import com.example.wellfed.ingredient.IngredientDB;
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientAdapter;
 
+/**
+ * Activity which allows user to search for an existing ingredient
+ * in the user's ingredient storage, or previously added recipe ingredients
+ * to add to a recipe
+ */
 public class RecipeIngredientSearch extends ActivityBase
         implements RecipeIngredientSearchAdapter.OnItemClickListener {
 
     StorageIngredientAdapter storageIngredientAdapter;
+    /**
+     * The RecyclerView of ingredients to be displayed
+     */
     private RecyclerView ingredientRecycleView;
 
-    // launch the edit recipeIngredientActivity
+    /**
+     * Launcher for the edit ingredient activity
+     */
     ActivityResultLauncher<Ingredient> editIngredientLauncher = registerForActivityResult(new RecipeIngredientEditContract(),
             result -> {
 
@@ -43,6 +53,11 @@ public class RecipeIngredientSearch extends ActivityBase
                 return;
             });
 
+    /**
+     * OnCreate method for the activity.
+     *
+     * @param savedInstanceState The information needed to restore to a previous state, if necessary
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +73,11 @@ public class RecipeIngredientSearch extends ActivityBase
 
     }
 
+    /**
+     * Listener for when an item is clicked within the RecyclerView of ingredients
+     *
+     * @param recipeIngredient  The item that was clicked on
+     */
     @Override
     public void onItemClick(Ingredient recipeIngredient) {
         StorageIngredient storageIngredient = new StorageIngredient(recipeIngredient.getDescription());

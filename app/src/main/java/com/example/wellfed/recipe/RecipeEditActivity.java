@@ -49,22 +49,77 @@ import java.util.List;
  * @version 1.0.0
  */
 public class RecipeEditActivity extends ActivityBase implements RecipeIngredientAdapter.OnIngredientClick {
+    /**
+     * The RecyclerView that displays all of the ingredients associated with a recipe.
+     */
     private RecyclerView ingredientRV;
+
+    /**
+     * The list of Ingredient objects associated with a recipe.
+     */
     private List<Ingredient> recipeIngredients;
+
+
     private RecipeIngredientAdapter recipeIngredientAdapter;
+
+    /**
+     * The recipe that is currently being edited
+     */
     private Recipe recipe;
+
+    /**
+     * The floating button that indicates saving editing progress
+     */
     private FloatingActionButton fab;
+
+    /**
+     * The unique resource identifier for the image that is associated with a recipe
+     */
     private Uri uri;
+
+    /**
+     * The download URL for the image associated with a recipe
+     */
     private String downloadUrl;
+
+    /**
+     * The image of the recipe to be displayed
+     */
     private ImageView recipeImg;
+
+    /**
+     * The input field for the preparation time of a recipe
+     */
     private RequiredNumberTextInputLayout prepTime;
+
+    /**
+     * The input field for the servings of a recipe
+     */
     private RequiredNumberTextInputLayout servings;
+
+    /**
+     * The input field for the title of a recipe
+     */
     private RequiredTextInputLayout title;
+
+    /**
+     * The input field for the comments of a recipe
+     */
     private RequiredTextInputLayout commentsTextInput;
+
+    /**
+     * The dropdown/autofill input field for the category of a recipe
+     */
     private RequiredDropdownTextInputLayout recipeCategory;
+
+    /**
+     * The index of the ingredient that is selected in a recipe
+     */
     private int selectedIngredient;
 
-    // take picture
+    /**
+     * Launcher for the camera activity, to take a picture of the recipe
+     */
     ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicture(),
             result -> {
@@ -73,7 +128,7 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                 }
             });
 
-    // add ingredient
+
     ActivityResultLauncher<Ingredient> ingredientLauncher = registerForActivityResult(
             new RecipeIngredientEditContract(), result -> {
                 if (result == null) {
@@ -96,6 +151,7 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
             }
     );
 
+
     ActivityResultLauncher<Ingredient> ingredientSearchLauncher = registerForActivityResult(
             new RecipeIngredientSearchContract(), result -> {
                 if (result == null) {
@@ -115,6 +171,11 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
             }
     );
 
+    /**
+     * Method called when the RecipeEditActivity is  created.
+     *
+     * @param savedInstanceState The information needed to restore to a previous state, if necessary
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,6 +271,12 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
 
     }
 
+    /**
+     * Checks whether the fields of the recipe currently being edited are valid or not.
+     * A valid recipe must have information in all text boxes, and at least one ingredient.
+     *
+     * @return a boolean indicating the validity of the recipe being edited
+     */
     public Boolean areValidFields() {
         if (!title.isValid()) return false;
         if (!prepTime.isValid()) return false;
@@ -220,6 +287,9 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         return true;
     }
 
+    /**
+     * Handles saving a recipe, and returns it via an intent to the previous activity
+     */
     public void onSave() {
         // return the new recipe via intent
         Intent intent = new Intent();
@@ -229,6 +299,12 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         finish();
     }
 
+    /**
+     * Initializes a temporary URI for the image associated with a recipe.
+     * This is the default image associated with a recipe if one doesn't exist.
+     *
+     * @return the default temporary URI
+     */
     public Uri initTempUri() {
         File tempImgDir = new File(RecipeEditActivity.this.getFilesDir(),
                 getString(R.string.temp_images_dir));
@@ -242,6 +318,11 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         return imageUri;
     }
 
+    /**
+     * Uploads the image taken for a recipe to an external image hoster.
+     * Also stores a reference to this image in the Firebase Firestore document
+     * that is associated with the recipe being edited.
+     */
     public void uploadImg() {
         Uri file = uri;
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -289,6 +370,15 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         });
     }
 
+    /**
+     * Listener for when parts of an ingredient is clicked.
+     * Will be called for different reasons (edit or delete) depending
+     * on whether the user clicks the edit button or delete button
+     * next to a recipe.
+     *
+     * @param reason    The reason why the ingredient was clicked.
+     * @param pos       The position of the ingredient in the list/RecyclerView
+     */
     @Override
     public void onEditClick(String reason, int pos) {
         this.selectedIngredient = pos;
