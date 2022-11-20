@@ -73,7 +73,7 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
 				controller.updateIngredient(ingredient);
 				break;
 			default:
-				throw new IllegalArgumentException();
+				break;
 		}
 	});
 
