@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.ListPopupWindow;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.viewmodel.CreationExtras;
@@ -29,6 +32,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -140,6 +144,24 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
         recyclerView = view.findViewById(R.id.ingredient_storage_list);
         recyclerView.setAdapter(controller.getAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        imageFilterButton = view.findViewById(R.id.image_filter_button);
+
+        ListPopupWindow popupWindow = new ListPopupWindow(requireContext(), null, androidx.appcompat.R.attr.listPopupWindowStyle);
+        popupWindow.setAnchorView(imageFilterButton);
+        String[] items = new String[]{"description", "category","best-before"};
+        ArrayAdapter sortAdapter = new ArrayAdapter(requireContext(),R.layout.list_popup_window_item, Arrays.asList(items));
+        popupWindow.setWidth(400);
+        popupWindow.setAdapter(sortAdapter);
+
+        popupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                controller.getSortedResults(items[(int) id], true);
+                popupWindow.dismiss();
+            }
+        });
+
+        imageFilterButton.setOnClickListener(v->{popupWindow.show();});
 
         // Search bar
         TextInputEditText searchBar = view.findViewById(R.id.ingredient_storage_search);
@@ -171,8 +193,8 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
         });
 
         // Link filter button to filter functionality
-        imageFilterButton = view.findViewById(R.id.image_filter_button);
-        imageFilterButton.setOnClickListener(this::filter);
+
+//        imageFilterButton.setOnClickListener(this::filter);
     }
 
     /**
@@ -210,64 +232,4 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
         launcher.launch(storageIngredient);
     }
 
-    /**
-     * Launches a dropdown menu to filter the ingredients. That contain the
-     * options to filter the ingredient by description, category, and
-     * best-before date.
-     *
-     * @param view The view that was clicked.
-     *             The view is the filter button.
-     */
-    public void filter(View view) {
-        // Inflate the AlertDialog with the custom layout
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        View customLayout =
-                getLayoutInflater().inflate(R.layout.ingredients_dropdown, null);
-        builder.setTitle("Filter");
-
-        builder.setView(customLayout);
-
-        MaterialTextView descriptionButton =
-                customLayout.findViewById(R.id.sort_by_name);
-        descriptionButton.setOnClickListener(v -> {
-            controller.getSortedResults("description", true);
-            StorageIngredientAdapter adapter = controller.getAdapter();
-            adapter.setOnItemClickListener(IngredientStorageFragment.this);
-            recyclerView.setAdapter(adapter);
-        });
-        MaterialTextView categoryButton =
-                customLayout.findViewById(R.id.sort_by_category);
-        categoryButton.setOnClickListener(v -> {
-            controller.getSortedResults("category", true);
-            StorageIngredientAdapter adapter = controller.getAdapter();
-            adapter.setOnItemClickListener(IngredientStorageFragment.this);
-            recyclerView.setAdapter(adapter);
-        });
-        MaterialTextView bestBeforeButton =
-                customLayout.findViewById(R.id.sort_by_expiration_date);
-        bestBeforeButton.setOnClickListener(v -> {
-            controller.getSortedResults("best-before", true);
-            StorageIngredientAdapter adapter = controller.getAdapter();
-            adapter.setOnItemClickListener(IngredientStorageFragment.this);
-            recyclerView.setAdapter(adapter);
-        });
-
-        MaterialTextView locationButton =
-                customLayout.findViewById(R.id.sort_by_location);
-        locationButton.setOnClickListener(v -> {
-            controller.getSortedResults("location", true);
-            StorageIngredientAdapter adapter = controller.getAdapter();
-            adapter.setOnItemClickListener(IngredientStorageFragment.this);
-            recyclerView.setAdapter(adapter);
-        });
-
-        // Create cancel button
-        builder.setNegativeButton("Close", (dialog, which) -> {
-            // Do nothing
-        });
-
-        // Create and show the AlertDialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }
