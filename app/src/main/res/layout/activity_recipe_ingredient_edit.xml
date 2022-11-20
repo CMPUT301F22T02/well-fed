@@ -15,6 +15,7 @@
         tools:layout_editor_absoluteX="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_descriptionInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/description"
@@ -33,11 +34,11 @@
         tools:layout_editor_absoluteX="0dp">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/categoryInput"
+            android:id="@+id/edit_categoryInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/category"
-            />
+            android:labelFor="@+id/edit_categoryInput" />
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>
 
     <!-- Amount and Unit on the same line below categories half the width each -->
@@ -54,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryInput">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_amountInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/amount_hint"
@@ -73,11 +75,10 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryInput">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/unitInput"
+            android:id="@+id/edit_unitInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/unit"
-            />
+            android:hint="@string/unit" />
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

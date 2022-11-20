@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.1.0'
     implementation 'com.google.firebase:firebase-installations:17.1.0'
     implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'androidx.test.espresso:espresso-intents:3.4.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation "androidx.test:runner:1.4.0"
     androidTestImplementation "androidx.test:rules:1.4.0"

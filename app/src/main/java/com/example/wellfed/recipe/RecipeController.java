@@ -3,7 +3,11 @@ package com.example.wellfed.recipe;
 import android.content.Context;
 import android.media.Image;
 import android.util.Log;
+import android.view.animation.AccelerateInterpolator;
 
+import androidx.fragment.app.FragmentActivity;
+
+import com.example.wellfed.ActivityBase;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 
@@ -15,13 +19,12 @@ import javax.annotation.Nullable;
 
 /**
  * Handles the business logic for the Recipes
+ *
  * @version 1.0.0
  */
 public class RecipeController {
-    /**
-     * Stores the reference to the list of {@link Recipe}
-     */
-    private ArrayList<Recipe> recipes;
+
+    private ActivityBase activity;
 
     /**
      * Adapter for the list of recipes
@@ -36,61 +39,50 @@ public class RecipeController {
     /**
      * Constructor that initializes the db
      */
-    public RecipeController(Context context) {
-        DBConnection connection = new DBConnection(context);
+    public RecipeController(FragmentActivity activity) {
+        this.activity = (ActivityBase) activity;
+        DBConnection connection = new DBConnection(activity.getApplicationContext());
         recipeDB = new RecipeDB(connection);
+        this.recipeAdapter = new RecipeAdapter(recipeDB);
     }
 
-    /**
-     * sets the recipeAdapter
-     * @param recipeAdapter
-     */
-    public void setRecipeAdapter(RecipeAdapter recipeAdapter) {
-        this.recipeAdapter = recipeAdapter;
-
+    public void editRecipe(Recipe recipe) {
+        recipeDB.updateRecipe(recipe, (updated, success)->{
+            boolean a = success;
+            if (!success) {
+                this.activity.makeSnackbar("Failed to edit recipe");
+            }
+        });
     }
 
     /**
      * handles the logic for deleting the recipe
+     *
      * @param id of the recipe to delete
      */
     public void deleteRecipe(String id) {
-//        try {
-//            recipeDB.delRecipe(id);
-//        } catch (Exception e) {
-//
-//        }
+        recipeDB.delRecipe(id, (deleted, success) -> {
+            if (!success) {
+                this.activity.makeSnackbar("Failed to delete recipe");
+            }
+        });
     }
 
     /**
      * adds the recipe to db and notifies the adapter
+     *
      * @param recipe
      */
     public void addRecipe(Recipe recipe) {
-//        try {
-//            recipeDB.addRecipe(recipe);
-//            recipes.add(recipe);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        recipeDB.addRecipe(recipe, (added, success) -> {
+            if (!success) {
+                this.activity.makeSnackbar("Failed to add " + recipe.getTitle());
+            }
+        });
     }
 
-    /**
-     * gets the list of recipes from the db
-     * @return list of recipes
-     * @throws InterruptedException when db fails to execute
-     */
-    public ArrayList<Recipe> getRecipes() throws InterruptedException {
-        Log.d("RecipeController", "getRecipes: ");
-        return null;
-    }
-
-    /**
-     * set the recipes
-     * @param recipes
-     */
-    public void setRecipes(ArrayList<Recipe> recipes) {
-        this.recipes = recipes;
+    public RecipeAdapter getRecipeAdapter() {
+        return recipeAdapter;
     }
 
 }

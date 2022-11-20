@@ -21,6 +21,7 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -87,6 +88,10 @@ public class Recipe implements Serializable {
      */
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);
+    }
+
+    public void addIngredients(List<Ingredient> ingredients){
+        this.ingredients.addAll(ingredients);
     }
 
     /**
