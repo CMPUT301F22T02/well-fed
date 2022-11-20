@@ -13,12 +13,16 @@ import com.example.wellfed.recipe.RecipeDB;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import junit.framework.TestCase;
 
@@ -35,6 +39,15 @@ public class RecipeDBTest {
         ingredientDB = new IngredientDB(connection);
     }
 
+    private Ingredient mockIngredient(String description) {
+        Ingredient testIngredient = new Ingredient();
+        testIngredient.setDescription(description);
+        testIngredient.setAmount(1.0);
+        testIngredient.setCategory("Protein");
+        testIngredient.setUnit("count");
+        return testIngredient;
+    }
+
     /**
      * This method tests the AddRecipe functionality and the GetRecipeFunctionality.
      * Works by adding an recipe to the database and then getting that recipe checking
@@ -44,19 +57,9 @@ public class RecipeDBTest {
      * @throws InterruptedException
      */
     @Test
-    public void testAddRecipe() throws InterruptedException {
-
-        Ingredient testIngredient = new Ingredient();
-        testIngredient.setDescription("Egg");
-        testIngredient.setAmount(2.0);
-        testIngredient.setCategory("Protein");
-        testIngredient.setUnit("count");
-
-        Ingredient testIngredient2 = new Ingredient();
-        testIngredient2.setDescription("Duck Egg");
-        testIngredient2.setAmount(1.0);
-        testIngredient2.setCategory("Protein");
-        testIngredient2.setUnit("count");
+    public void testAddDeleteRecipe() throws InterruptedException {
+        Ingredient testIngredient = mockIngredient("Egg");
+        Ingredient testIngredient2 = mockIngredient("Duck Egg");
 
         Recipe testRecipe = new Recipe("Omelet");
         testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
@@ -102,77 +105,40 @@ public class RecipeDBTest {
         }
     }
 
-//    /**
-//     * This method tests the delRecipe functionality and getRecipe. If we try to get an already deleted recipe
-//     * which should return null
-//     * @throws InterruptedException A RecipeDB could not complete its transaction or the recipe was not deleted
-//     */
-//    @Test
-//    public void testDelRecipe() throws InterruptedException {
-//        Ingredient testIngredient = new Ingredient();
-//        testIngredient.setDescription("Egg");
-//        testIngredient.setAmount(1.0);
-//        testIngredient.setCategory("Test");
-//        testIngredient.setUnit("TestUnits");
-//
-//        Recipe testRecipe = new Recipe("Test");
-//        testRecipe.setComments("Test");
-//        testRecipe.setServings(1);
-//        testRecipe.setPrepTimeMinutes(1);
-//        testRecipe.addIngredient(testIngredient);
-//        testRecipe.setCategory("Test");
-//
-//        String recipeId = recipeDB.addRecipe(testRecipe);
-//
-//        recipeDB.delRecipe(testRecipe.getId());
-//        recipeIngredientDB.delIngredient(testIngredient.getId());
-//
-//        assert recipeDB.getRecipe(testRecipe.getId()) == null;
-//    }
-//
-//    /**
-//     * Deletes a nonexistent document from firebase, should not throw any error
-//     * @throws InterruptedException If the transaction in delRecipe could not be completed
-//     */
-//    @Test
-//    public void testDeleteOnNonExistentRecipe() throws InterruptedException{
-//        recipeDB.delRecipe("-1");
-//    }
-//
-//    @Test
-//    public void testUpdateOnRecipe() throws InterruptedException{
-//        Ingredient testIngredient = new Ingredient();
-//        testIngredient.setDescription("Egg");
-//        testIngredient.setAmount(1.0);
-//        testIngredient.setCategory("Test");
-//        testIngredient.setUnit("TestUnits");
-//
-//        Recipe testRecipe = new Recipe("Test");
-//        testRecipe.setComments("Test");
-//        testRecipe.setServings(1);
-//        testRecipe.setPrepTimeMinutes(1);
-//        testRecipe.addIngredient(testIngredient);
-//        testRecipe.setCategory("Test");
-//
-//        String recipeId = recipeDB.addRecipe(testRecipe);
-//
-//        testRecipe.setTitle("Test2");
-//        testRecipe.setComments("Test2");
-//        testRecipe.setServings(2);
-//        testRecipe.setPrepTimeMinutes(2);
-//        testRecipe.setCategory("Test2");
-//
-//        recipeDB.editRecipe(testRecipe);
-//        Recipe fromDbTestRecipe = recipeDB.getRecipe(testRecipe.getId());
-//        assert Objects.equals(testRecipe.getTitle(), fromDbTestRecipe.getTitle());
-//        assert Objects.equals(testRecipe.getCategory(), fromDbTestRecipe.getCategory());
-//        assert Objects.equals(testRecipe.getComments(), fromDbTestRecipe.getComments());
-//        assert Objects.equals(testRecipe.getId(), fromDbTestRecipe.getId());
-//        assert testRecipe.getPrepTimeMinutes() == fromDbTestRecipe.getPrepTimeMinutes();
-//
-//        recipeDB.delRecipe(testRecipe.getId());
-//        recipeIngredientDB.delIngredient(testIngredient.getId());
-//    }
+
+    /**
+     * Deletes a nonexistent document from firebase, should not throw any error
+     * @throws InterruptedException If the transaction in delRecipe could not be completed
+     */
+    @Test
+    public void testDeleteOnNonExistentRecipe() throws InterruptedException{
+        recipeDB.delRecipe("-1", (deletedRecipe, success) -> {
+            // assert the ID of the deleted recipe is -1 and everything is null
+            assertEquals(deletedRecipe.getId(), "-1");
+            assertNull(deletedRecipe.getTitle());
+            assertNull(deletedRecipe.getCategory());
+            assertNull(deletedRecipe.getComments());
+            assertNull(deletedRecipe.getPhotograph());
+            assertNull(deletedRecipe.getPrepTimeMinutes());
+            assertNull(deletedRecipe.getServings());
+        });
+    }
+
+    @Test
+    public void testUpdateOnRecipe() throws InterruptedException {
+        Ingredient testIngredient = mockIngredient("Egg");
+        Ingredient testIngredient2 = mockIngredient("Duck Egg");
+
+        Recipe testRecipe = new Recipe("Omelet");
+        testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
+        testRecipe.setServings(1);
+        testRecipe.setPrepTimeMinutes(5);
+        testRecipe.addIngredient(testIngredient);
+        testRecipe.addIngredient(testIngredient2);
+        testRecipe.setCategory("Breakfast");
+
+        
+    }
 //
 //    /**
 //     * Test editRecipe functionality by editing a nonexistent document which won't add to the collection
