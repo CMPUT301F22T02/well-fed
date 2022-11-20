@@ -144,6 +144,7 @@ import java.util.concurrent.atomic.AtomicReference;
                             mockStorageIngredient.getUnit());
                     assertEquals(foundStorageIngredient.getAmountAndUnit(),
                             mockStorageIngredient.getAmountAndUnit());
+                    getLatch.countDown();
                 });
 
 
