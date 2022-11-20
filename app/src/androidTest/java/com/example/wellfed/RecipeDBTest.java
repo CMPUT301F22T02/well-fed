@@ -32,7 +32,7 @@ import junit.framework.TestCase;
 public class RecipeDBTest {
     RecipeDB recipeDB;
     IngredientDB ingredientDB;
-    private static final long TIMEOUT = 10;
+    private static final long TIMEOUT = 20;
 
     /**
      * Sets up the DB connection before testing starts.
@@ -147,7 +147,6 @@ public class RecipeDBTest {
 
         CountDownLatch latch = new CountDownLatch(1);
         recipeDB.addRecipe(testRecipe, (addedRecipe, success) -> {
-
             latch.countDown();
         });
 
@@ -157,8 +156,8 @@ public class RecipeDBTest {
 
         CountDownLatch deleteLatch = new CountDownLatch(1);
         recipeDB.delRecipe(testRecipe.getId(), (deletedRecipe, success) -> {
-            deleteLatch.countDown();
             assertEqualRecipe(deletedRecipe, testRecipe);
+            deleteLatch.countDown();
         });
 
         if (!deleteLatch.await(TIMEOUT, SECONDS)) {
@@ -167,13 +166,13 @@ public class RecipeDBTest {
 
         CountDownLatch deleteIngredients = new CountDownLatch(2);
         ingredientDB.deleteIngredient(testIngredient, (deletedIngredient, success) -> {
-            deleteIngredients.countDown();
             assertNotNull(deletedIngredient);
+            deleteIngredients.countDown();
         });
 
         ingredientDB.deleteIngredient(testIngredient2, (deletedIngredient, success) -> {
-            deleteIngredients.countDown();
             assertNotNull(deletedIngredient);
+            deleteIngredients.countDown();
         });
 
         if (!deleteIngredients.await(2*TIMEOUT, SECONDS)) {
