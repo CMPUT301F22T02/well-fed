@@ -243,20 +243,23 @@ public class IngredientDBTest {
      * @throws InterruptedException if the test times out
      */
     @Test
-    public void getNonExistingIngredient() throws InterruptedException {
-        Log.d(TAG, "getNonExistingIngredient");
+    public void testGetNonExistentIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
-        ingredientDB.getIngredient("-1", (getIngredient, getSuccess) -> {
-            Log.d(TAG, ":onGetIngredient");
-            assertNull(getIngredient);
-            assertFalse(getSuccess);
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        AtomicReference<Ingredient> foundIngredientAtomic = new AtomicReference<>();
+        ingredientDB.getIngredient(mockNonExistingIngredient, (foundIngredient, success) -> {
+            successAtomic.set(success);
+            foundIngredientAtomic.set(foundIngredient);
             latch.countDown();
         });
 
         if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertFalse(successAtomic.get());
+        assertNull(foundIngredientAtomic.get());
     }
 
     @Test
