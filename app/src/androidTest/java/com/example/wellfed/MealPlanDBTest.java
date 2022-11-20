@@ -56,7 +56,7 @@ public class MealPlanDBTest {
 	/**
 	 * Timeout for the CountDownLatch.
 	 */
-	private static final long TIMEOUT = 5;
+	private static final long TIMEOUT = 10;
 
 	/**
 	 * Creates a new mock meal plan to test with.
@@ -520,7 +520,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -567,7 +567,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -624,7 +624,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -666,7 +666,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -713,7 +713,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -755,7 +755,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
@@ -797,7 +797,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(10, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
