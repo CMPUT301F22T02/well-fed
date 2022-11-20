@@ -82,8 +82,13 @@ public class IngredientDBTest {
         ingredientDB = new IngredientDB(connection);
         mockIngredient = new Ingredient("Broccoli");
         mockIngredient.setCategory("Vegetable");
-        nonExistingIngredient = new Ingredient(null);
-        nonExistingIngredient.setId("-1");
+        mockIngredient.setUnit("kg");
+        mockIngredient.setAmount(5.0);
+        mockNonExistingIngredient = new Ingredient("Broccoli");
+        mockNonExistingIngredient.setCategory("Vegetable");
+        mockNonExistingIngredient.setUnit("kg");
+        mockNonExistingIngredient.setAmount(5.0);
+        mockNonExistingIngredient.setId("-1");
     }
 
     /**
