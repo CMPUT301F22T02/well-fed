@@ -122,7 +122,11 @@ public class MealBookFragment extends Fragment
 
     @Override
     public void launch(MealPlan mealPlan) {
-        launcher.launch(mealPlan);
+        if (mealPlan == null) {
+            editLauncher.launch(null);
+        } else {
+            launcher.launch(mealPlan);
+        }
     }
 
     private void updateCallToAction() {

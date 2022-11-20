@@ -180,7 +180,11 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
      */
     @Override
     public void launch(StorageIngredient storageIngredient) {
-        editIngredientLauncher.launch(storageIngredient);
+        if (storageIngredient == null) {
+            editIngredientLauncher.launch(null);
+        } else {
+            launcher.launch(storageIngredient);
+        }
     }
 
     /**
