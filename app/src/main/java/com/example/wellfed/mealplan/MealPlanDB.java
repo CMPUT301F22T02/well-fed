@@ -300,7 +300,8 @@ public class MealPlanDB {
 
                     // Calls the listener's onAddMealPlanResult method.
                     listener.onAddMealPlanResult(mealPlan, true);
-                }).addOnFailureListener(failure -> {
+                })
+                .addOnFailureListener(failure -> {
                     listener.onAddMealPlanResult(null, false);
                 });
     }
@@ -349,8 +350,9 @@ public class MealPlanDB {
                 Objects.requireNonNull(snapshot.getLong("servings"))
                         .intValue());
 
-        // Initializes an empty ArrayList to store Ingredient objects.
+        // Initializes ArrayLists for ingredients & recipes.
         ArrayList<Ingredient> ingredients = new ArrayList<>();
+        ArrayList<Recipe> recipes = new ArrayList<>();
 
         // Get the list of MealPlan ingredients from the MealPlan document.
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
@@ -360,6 +362,20 @@ public class MealPlanDB {
         // Serves as a lock to ensure that the processes won't
         // run in parallel.
         AtomicInteger counter = new AtomicInteger(0);
+
+        // Calculates number of ingredients and recipes.
+        Integer numOfIngredientsAndRecipes = mealPlan.getIngredients().size() +
+                mealPlan.getRecipes().size();
+
+        // If the "ingredients" and "recipes" fields are empty, ie.,
+        // numOfIngredientsAndRecipes is 0, then we can call
+        // helper function directly. Ideally there should be sth in
+        // these fields.
+        if (numOfIngredientsAndRecipes == 0) {
+            getMealPlanHelper(mealPlan, ingredients, recipes, listener);
+        }
+
+
         // Iterate over the ArrayList of HashMaps and produce Ingredient
         // objects.
         for (HashMap<String, Object> ingredientMap : mealPlanIngredients) {
@@ -381,40 +397,58 @@ public class MealPlanDB {
 
                         // Adds the ingredient to the ArrayList.
                         ingredients.add(foundIngredient);
+
+                        if (counter.get() == numOfIngredientsAndRecipes) {
+                            getMealPlanHelper(mealPlan, ingredients, recipes,
+                                    listener);
+                        }
                     });
         }
 
-        // Adds ingredients to the MealPlan object.
-        for (Ingredient i : ingredients) {
-            mealPlan.addIngredient(i);
-        }
-
-        // Initializes an empty ArrayList to store Recipe objects.
-        ArrayList<Recipe> recipes = new ArrayList<>();
-
-        AtomicInteger counter1 = new AtomicInteger(0);
-
         // Iterate over the ArrayList of DocumentReferences and produce
-        // Recipe objects
-        // using the method implemented in RecipeDB.
+        // Recipe objects using the method implemented in RecipeDB.
         for (DocumentReference recipeRef :
                 (ArrayList<DocumentReference>) snapshot.get(
                         "recipes")) {
             recipeDB.getRecipe(recipeRef.getId(), (foundRecipe, success) -> {
-                counter1.addAndGet(1);
+                counter.addAndGet(1);
                 recipes.add(foundRecipe);
+
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    getMealPlanHelper(mealPlan, ingredients, recipes,
+                            listener);
+                }
             });
         }
+    }
 
-        // Adds recipes to the MealPlan object.
-        for (Recipe r : recipes) {
-            mealPlan.addRecipe(r);
+    /**
+     * Helper function for getMealPlan.
+     *
+     * @param mealPlan the MealPlan object to be returned.
+     * @param ingredients the ArrayList of ingredients to be added to the
+     *                    MealPlan object.
+     * @param recipes the ArrayList of recipes to be added to the MealPlan
+     *                object.
+     * @param listener the OnGetMealPlanListener object to handle the result.
+     */
+    public void getMealPlanHelper(MealPlan mealPlan,
+                                  ArrayList<Ingredient> ingredients,
+                                  ArrayList<Recipe> recipes,
+                                  OnGetMealPlanListener listener) {
+        // Add ingredients and recipes to the MealPlan object.
+        for (Ingredient ingredient : ingredients) {
+            mealPlan.addIngredient(ingredient);
+        }
+
+        for (Recipe recipe : recipes) {
+            mealPlan.addRecipe(recipe);
         }
 
         // Returns the MealPlan object.
         listener.onGetMealPlanResult(mealPlan, true);
-
     }
+
 
     /**
      * Deletes the MealPlan object with the given id from the db.
