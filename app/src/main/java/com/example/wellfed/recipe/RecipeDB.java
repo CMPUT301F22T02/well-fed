@@ -175,7 +175,7 @@ public class RecipeDB {
                     }
                 })
                 .addOnFailureListener(failure -> {
-
+                    listener.onAddRecipe(null, false);
                 });
     }
 
