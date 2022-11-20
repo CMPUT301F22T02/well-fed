@@ -15,6 +15,11 @@ public class IngredientStorageController {
 	 * the adapter that is used to display the ingredients in the list view
 	 */
 	private StorageIngredientAdapter adapter;
+
+	public StorageIngredientDB getDb() {
+		return db;
+	}
+
 	/**
 	 * the DB of ingredients
 	 */
