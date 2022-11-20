@@ -221,7 +221,7 @@ public class RecipeDBTest {
      * @throws InterruptedException If updateRecipe transactions cannot complete successfully
      */
     @Test
-    @Ignore
+    @Ignore("TODO: Fix callback for nonexistent recipes")
     public void testUpdateOnNonExistentRecipe() throws InterruptedException{
         Recipe testRecipe = new Recipe(null);
         testRecipe.setId("-1");
@@ -237,5 +237,19 @@ public class RecipeDBTest {
             throw new InterruptedException();
         }
     }
-    
+
+    @Test
+    public void testGetAddedRecipe() {
+
+    }
+
+    @Test
+    public void testGetUpdatedRecipe() {
+
+    }
+
+    @Test
+    public void testGetNonExistentRecipe() {
+
+    }
 }
