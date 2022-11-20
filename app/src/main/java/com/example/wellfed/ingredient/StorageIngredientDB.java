@@ -52,24 +52,6 @@ public class StorageIngredientDB {
 	 */
 	private CollectionReference collection;
 
-<<<<<<< HEAD
-    /**
-     * This interface is used to handle the result of
-     * adding StorageIngredient to the db
-     */
-    public interface OnAddStorageIngredientListener {
-        /**
-         * Called when addStorageIngredient returns a result
-         *
-         * @param storageIngredient the storageIngredient added to the db,
-         *                          null if the storageIngredient was not added
-         * @param success           true if the operation is successful,
-         *                          false otherwise
-         */
-        void onAddStoredIngredient(StorageIngredient storageIngredient,
-                                   Boolean success) throws Exception;
-    }
-=======
 	/**
 	 * This interface is used to handle the result of
 	 * adding StorageIngredient to the db
@@ -83,9 +65,8 @@ public class StorageIngredientDB {
 		 * @param success           true if the operation is successful,
 		 *                          false otherwise
 		 */
-		void onAddStoredIngredient(StorageIngredient storageIngredient, Boolean success) throws Exception;
+		void onAddStoredIngredient(StorageIngredient storageIngredient, Boolean success);
 	}
->>>>>>> origin/new-mealplan-db
 
 	/**
 	 * This interface is used to handle the result of
@@ -341,7 +322,7 @@ public class StorageIngredientDB {
 	 */
 	public Query getQuery() {
 		return this.collection.orderBy("best-before",
-				Query.Direction.DESCENDING);
+			Query.Direction.DESCENDING);
 	}
 
 	public interface OnAllIngredients {
@@ -356,36 +337,36 @@ public class StorageIngredientDB {
 		}
 		ArrayList<StorageIngredient> storageIngredients = new ArrayList<>();
 		this.collection.get()
-				.addOnSuccessListener(queryDocumentSnapshots -> {
-					AtomicInteger i = new AtomicInteger(queryDocumentSnapshots.size());
-					AtomicInteger found = new AtomicInteger(0);
-					for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-						DocumentReference ingredientRef = (DocumentReference) snapshot.getData().get("Ingredient");
-						ingredientRef.get()
-								.addOnSuccessListener(ingredientSnap -> {
-									String description = ingredientSnap.getString("description");
-									StorageIngredient storageIngredient = new StorageIngredient(description);
-									storageIngredient.setStorageId(snapshot.getId());
-									storageIngredient.setCategory(ingredientSnap.getString("category"));
-									storageIngredient.setAmount((Double) snapshot.getData().get("amount"));
-									storageIngredient.setUnit((String) snapshot.getData().get("unit"));
-									storageIngredient.setLocation((String) snapshot.getData().get("location"));
-									// Get Firebase Timestamp and convert to Date
-									Timestamp bestBefore = (Timestamp) snapshot.getData().get("best-before");
-									assert bestBefore != null;
-									storageIngredient.setBestBefore(bestBefore.toDate());
+			.addOnSuccessListener(queryDocumentSnapshots -> {
+				AtomicInteger i = new AtomicInteger(queryDocumentSnapshots.size());
+				AtomicInteger found = new AtomicInteger(0);
+				for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+					DocumentReference ingredientRef = (DocumentReference) snapshot.getData().get("Ingredient");
+					ingredientRef.get()
+						.addOnSuccessListener(ingredientSnap -> {
+							String description = ingredientSnap.getString("description");
+							StorageIngredient storageIngredient = new StorageIngredient(description);
+							storageIngredient.setStorageId(snapshot.getId());
+							storageIngredient.setCategory(ingredientSnap.getString("category"));
+							storageIngredient.setAmount((Double) snapshot.getData().get("amount"));
+							storageIngredient.setUnit((String) snapshot.getData().get("unit"));
+							storageIngredient.setLocation((String) snapshot.getData().get("location"));
+							// Get Firebase Timestamp and convert to Date
+							Timestamp bestBefore = (Timestamp) snapshot.getData().get("best-before");
+							assert bestBefore != null;
+							storageIngredient.setBestBefore(bestBefore.toDate());
 
-									storageIngredients.add(storageIngredient);
-									found.getAndAdd(1);
-									if (found.get() == i.get()) {
-										listener.onAllIngredients(storageIngredients, true);
-									}
-								})
-								.addOnFailureListener(failure -> {
-									listener.onAllIngredients(null, false);
-								});
-					}
-				});
+							storageIngredients.add(storageIngredient);
+							found.getAndAdd(1);
+							if (found.get() == i.get()) {
+								listener.onAllIngredients(storageIngredients, true);
+							}
+						})
+						.addOnFailureListener(failure -> {
+							listener.onAllIngredients(null, false);
+						});
+				}
+			});
 	}
 
 }

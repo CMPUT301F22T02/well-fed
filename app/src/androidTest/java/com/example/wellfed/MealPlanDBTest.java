@@ -162,8 +162,6 @@ public class MealPlanDBTest {
 				MealPlan mealPlan = mockMealPlan();
 				// Add the recipe to the meal plan
 				mealPlan.addRecipe(addedRecipe);
-				// CountDownLatch to wait for the meal plan to be added
-				CountDownLatch mealPlanLatch = new CountDownLatch(1);
 				// Add the meal plan to the database
 				mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success2) -> {
 					if (success2) {
@@ -191,11 +189,7 @@ public class MealPlanDBTest {
 					} else {
 						Log.e(TAG, "Failed to add meal plan");
 					}
-					mealPlanLatch.countDown();
 				});
-				if (!mealPlanLatch.await(TIMEOUT, SECONDS)) {
-					throw new InterruptedException();
-				}
 			} else {
 				Log.e(TAG, "Failed to add recipe");
 			}
