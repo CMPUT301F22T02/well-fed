@@ -1,5 +1,6 @@
 package com.example.wellfed;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -20,6 +21,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Tests for the MealPlanDB. Please note: These tests require functional StoredIngredientDB
@@ -50,6 +53,10 @@ public class MealPlanDBTest {
 	 * The Firestore database to test with.
 	 */
 	private FirebaseFirestore db;
+	/**
+	 * Timeout for the CountDownLatch.
+	 */
+	private static final long TIMEOUT = 5;
 
 	/**
 	 * Creates a new mock meal plan to test with.
@@ -106,9 +113,9 @@ public class MealPlanDBTest {
 	 * Testing adding a MealPlan
 	 */
 	@Test
-	public void testAddMealPlan() {
+	public void testAddMealPlan() throws InterruptedException {
 		MealPlan mealPlan = mockMealPlan();
-
+		CountDownLatch latch = new CountDownLatch(1);
 		// Add the meal plan to DB
 		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
 			if (success) {
@@ -132,23 +139,31 @@ public class MealPlanDBTest {
 			} else {
 				Log.e(TAG, "Failed to add meal plan");
 			}
+			latch.countDown();
 		});
+		if (!latch.await(TIMEOUT, SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Testing adding a MealPlan with a Recipe
 	 */
 	@Test
-	public void testAddMealPlanWithRecipe() {
+	public void testAddMealPlanWithRecipe() throws InterruptedException {
 		// Create a mock recipe
 		Recipe recipe = mockRecipe();
+		// CountDownLatch to wait for the recipe to be added
+		CountDownLatch recipeLatch = new CountDownLatch(1);
 		// Add the recipe to the database
 		recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
 			if (success) {
 				// Create a mock meal plan
 				MealPlan mealPlan = mockMealPlan();
-				// Set the recipe
+				// Add the recipe to the meal plan
 				mealPlan.addRecipe(addedRecipe);
+				// CountDownLatch to wait for the meal plan to be added
+				CountDownLatch mealPlanLatch = new CountDownLatch(1);
 				// Add the meal plan to the database
 				mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success2) -> {
 					if (success2) {
@@ -176,30 +191,38 @@ public class MealPlanDBTest {
 					} else {
 						Log.e(TAG, "Failed to add meal plan");
 					}
+					mealPlanLatch.countDown();
 				});
+				if (!mealPlanLatch.await(TIMEOUT, SECONDS)) {
+					throw new InterruptedException();
+				}
 			} else {
 				Log.e(TAG, "Failed to add recipe");
 			}
+			recipeLatch.countDown();
 		});
+		if (!recipeLatch.await(TIMEOUT, SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding recipe to meal plan after meal plan is added to database
 	 */
 	@Test
-	public void testAddRecipeToMealPlan() {
+	public void testAddRecipeToMealPlan() throws InterruptedException {
 		// Create a mock recipe
 		Recipe recipe = mockRecipe();
 		// Create a mock meal plan
 		MealPlan mealPlan = mockMealPlan();
+		// CountDownLatch to wait for the meal plan to be added
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Add the meal plan to the database
 		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
 			if (success) {
 				// Add the recipe to the database
 				recipeDB.addRecipe(recipe, (addedRecipe, success2) -> {
 					if (success2) {
-						// Update the meal plan with the recipe
-						addedMealPlan.addRecipe(addedRecipe);
 						// Add the recipe to the meal plan
 						mealPlanDB.updateMealPlan(addedMealPlan, (updatedMealPlan, success3) -> {
 							if (success3) {
@@ -235,7 +258,11 @@ public class MealPlanDBTest {
 			} else {
 				Log.e(TAG, "Failed to add meal plan");
 			}
+			mealPlanLatch.countDown();
 		});
+		if (!mealPlanLatch.await(TIMEOUT, SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
@@ -245,6 +272,8 @@ public class MealPlanDBTest {
 	public void testAddMealPlanWithIngredient() {
 		// Create a mock ingredient
 		StorageIngredient ingredient = mockIngredient();
+		// CountDownLatch to wait for the ingredient to be added
+		CountDownLatch ingredientLatch = new CountDownLatch(1);
 		// Add the ingredient to the database
 		storedIngredientDB.addStorageIngredient(ingredient, (addedIngredient, success) -> {
 			if (success) {
@@ -283,6 +312,7 @@ public class MealPlanDBTest {
 			} else {
 				Log.e(TAG, "Failed to add ingredient");
 			}
+			ingredientLatch.countDown();
 		});
 	}
 
@@ -290,11 +320,13 @@ public class MealPlanDBTest {
 	 * Test adding a MealPlan after adding an ingredient
 	 */
 	@Test
-	public void testAddIngredientToMealPlan() {
+	public void testAddIngredientToMealPlan() throws InterruptedException {
 		// Create a mock ingredient
 		StorageIngredient ingredient = mockIngredient();
 		// Create a mock meal plan
 		MealPlan mealPlan = mockMealPlan();
+		// CountDownLatch to wait for the meal plan to be added
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Add the meal plan to the database
 		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
 			if (success) {
@@ -340,15 +372,20 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(TIMEOUT, SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding multiple MealPlans to the database
 	 */
 	@Test
-	public void testAddMultipleMealPlans() {
+	public void testAddMultipleMealPlans() throws InterruptedException {
 		// Create a mock meal plan
 		MealPlan mealPlan = mockMealPlan();
+		// CountDownLatch to wait for the meal plan to be added
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Add the meal plan to the database
 		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
 			if (success) {
@@ -386,13 +423,18 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(TIMEOUT, SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding a MealPlan with a 2 ingredients and 3 recipes to the database
 	 */
 	@Test
-	public void testAddMealPlanWithIngredientsAndRecipes() {
+	public void testAddMealPlanWithIngredientsAndRecipes() throws InterruptedException {
+		// CountDownLatch to wait for the meal plan to be added
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Create a mock ingredient
 		StorageIngredient ingredient = mockIngredient();
 		// Create a mock ingredient
@@ -484,13 +526,18 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding 2 meal plans to the database and deleting them the second one
 	 */
 	@Test
-	public void testAdd2MealPlansDeleteSecond() {
+	public void testAdd2MealPlansDeleteSecond() throws InterruptedException {
+		// CountDownLatch to wait for the asynchronous calls to finish
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Create a meal plan
 		MealPlan mealPlan = mockMealPlan();
 		// Create a meal plan
@@ -526,6 +573,9 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
@@ -533,7 +583,9 @@ public class MealPlanDBTest {
 	 * recipes, and ingredients in the database and retrieving it
 	 */
 	@Test
-	public void testUpdateMealPlan() {
+	public void testUpdateMealPlan() throws InterruptedException {
+		// CountDownLatch to wait for the asynchronous calls to finish
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Create a meal plan
 		MealPlan mealPlan = mockMealPlan();
 		// Add the meal plan to the database
@@ -578,13 +630,18 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding a meal plan with 5 ingredients to the database
 	 */
 	@Test
-	public void testAddMealPlanWith5Ingredients() {
+	public void testAddMealPlanWith5Ingredients() throws InterruptedException {
+		// CountDownLatch to wait for the asynchronous calls to finish
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Create a meal plan
 		MealPlan mealPlan = mockMealPlan();
 		// Add 5 ingredients
@@ -615,13 +672,18 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding a meal plan with 5 different ingredients to the database
 	 */
 	@Test
-	public void testAddMealPlanWith5DifferentIngredients() {
+	public void testAddMealPlanWith5DifferentIngredients() throws InterruptedException {
+		// CountDownLatch to wait for the asynchronous calls to finish
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Create a meal plan
 		MealPlan mealPlan = mockMealPlan();
 		// Add 5 different ingredients
@@ -657,13 +719,18 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding a meal plan with 5 recipes to the database
 	 */
 	@Test
-	public void testAddMealPlanWith5Recipes() {
+	public void testAddMealPlanWith5Recipes() throws InterruptedException {
+		// CountDownLatch to wait for the asynchronous calls to finish
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Create a meal plan
 		MealPlan mealPlan = mockMealPlan();
 		// Add 5 recipes
@@ -694,13 +761,18 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Test adding a meal plan with 5 different recipes to the database
 	 */
 	@Test
-	public void testAddMealPlanWith5DifferentRecipes() {
+	public void testAddMealPlanWith5DifferentRecipes() throws InterruptedException {
+		// CountDownLatch to wait for the asynchronous calls to finish
+		CountDownLatch mealPlanLatch = new CountDownLatch(1);
 		// Create a meal plan
 		MealPlan mealPlan = mockMealPlan();
 		// Add 5 different recipes
@@ -731,5 +803,8 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
+		if (!mealPlanLatch.await(5, TimeUnit.SECONDS)) {
+			throw new InterruptedException();
+		}
 	}
 }
