@@ -56,7 +56,7 @@ public class StorageIngredientDB {
          *                          false otherwise
          */
         void onAddStoredIngredient(StorageIngredient storageIngredient,
-                                   Boolean success);
+                                   Boolean success) throws Exception;
     }
 
     /**

@@ -1,27 +1,29 @@
-//package com.example.wellfed;
-//
-//import static android.content.ContentValues.TAG;
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertNull;
-//import static org.junit.Assert.assertTrue;
-//
-//import android.util.Log;
-//
-//import com.example.wellfed.ingredient.Ingredient;
-//import com.example.wellfed.ingredient.StorageIngredient;
-//import com.example.wellfed.ingredient.StorageIngredientDB;
-//import com.example.wellfed.mealplan.MealPlan;
-//import com.example.wellfed.mealplan.MealPlanDB;
-//import com.example.wellfed.recipe.Recipe;
-//import com.example.wellfed.recipe.RecipeDB;
-//import com.example.wellfed.recipe.RecipeIngredientDB;
-//
-//import org.junit.Before;
-//import org.junit.Test;
-//
-//import java.util.ArrayList;
-//import java.util.Date;
-//
+package com.example.wellfed;
+
+import static android.content.ContentValues.TAG;
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import android.util.Log;
+
+import com.example.wellfed.common.DBConnection;
+import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.example.wellfed.ingredient.StorageIngredientDB;
+import com.example.wellfed.mealplan.MealPlan;
+import com.example.wellfed.mealplan.MealPlanDB;
+import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.recipe.RecipeDB;
+import com.example.wellfed.recipe.RecipeIngredientDB;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 ///**
 // * Tests for the MealPlanDB. Please note: These tests require functional StoredIngredientDB
 // * and RecipeDB. This is because the MealPlanDB requires that all StoredIngredient and
@@ -285,3 +287,419 @@
 //        assertNull(mealPlanDB.getMealPlan(mealPlan.getId()));
 //    }
 //}
+
+import static org.junit.Assert.assertTrue;
+
+import android.util.Log;
+
+import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.example.wellfed.ingredient.StorageIngredientDB;
+import com.example.wellfed.mealplan.MealPlan;
+import com.example.wellfed.mealplan.MealPlanDB;
+import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.recipe.RecipeDB;
+import com.example.wellfed.recipe.RecipeIngredientDB;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Tests for the MealPlanDB. Please note: These tests require functional StoredIngredientDB
+ * and RecipeDB. This is because the MealPlanDB requires that all StoredIngredient and
+ * RecipeIngredients exist in the database before attempting to create a MealPlan.
+ *
+ * Unfortunately, due to the nature of the database, it is hard to test only one function at once.
+ * So, you will see some tests call delete methods, even when they are not testing deletes.
+ */
+public class MealPlanDBTest {
+	/**
+	 * Tag for logging.
+	 */
+	private static final String TAG = "MealPlanDBTest";
+	/**
+	 * The database to test.
+	 */
+	private MealPlanDB mealPlanDB;
+	/**
+	 * The recipe database to test with.
+	 */
+	private RecipeDB recipeDB;
+	/**
+	 * The ingredient database to test with.
+	 */
+	private StorageIngredientDB storedIngredientDB;
+	/**
+	 * The Firestore database to test with.
+	 */
+	private FirebaseFirestore db;
+
+	/**
+	 * Creates a new mock meal plan to test with.
+	 */
+	private MealPlan mockMealPlan() {
+		MealPlan mealPlan = new MealPlan("Mock Meal Plan");
+		mealPlan.setCategory("Mock Category");
+		mealPlan.setEatDate(new Date());
+		mealPlan.setServings(1);
+		return mealPlan;
+	}
+
+	/**
+	 * Creates a new mock recipe to test with.
+	 */
+	private Recipe mockRecipe() {
+		Recipe recipe = new Recipe("Mock Recipe");
+		recipe.setCategory("Mock Category");
+		recipe.setServings(1);
+		recipe.setPrepTimeMinutes(1);
+		recipe.setComments("Mock Comments");
+		recipe.setPrepTimeMinutes(1);
+		recipe.setTitle("Mock Title");
+		return recipe;
+	}
+
+	/**
+	 * Creates a new mock ingredient to test with.
+	 */
+	private StorageIngredient mockIngredient() {
+		StorageIngredient ingredient = new StorageIngredient("Mock Ingredient");
+		ingredient.setCategory("Mock Category");
+		ingredient.setLocation("Mock Location");
+		ingredient.setDescription("Mock Description");
+		ingredient.setAmount(1.0);
+		ingredient.setUnit("Mock Unit");
+		ingredient.setBestBefore(new Date(2017, 1, 1));
+		return ingredient;
+	}
+
+	/**
+	 * Sets up the database to test with.
+	 */
+	@Before
+	public void setUpDB() {
+		db = FirebaseFirestore.getInstance();
+		mealPlanDB = new MealPlanDB();
+		DBConnection connection = new DBConnection(getApplicationContext());
+		recipeDB = new RecipeDB(connection);
+		storedIngredientDB = new StorageIngredientDB(connection);
+	}
+
+	/**
+	 * Testing adding a MealPlan
+	 */
+	@Test
+	public void testAddMealPlan() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		mealPlanDB.addMealPlan(mealPlan);
+		MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+
+		assertEquals(mealPlan, resultMealPlan);
+		mealPlanDB.deleteMealPlan(mealPlan.getId());
+	}
+
+	/**
+	 * Testing adding a MealPlan with a Recipe
+	 */
+	@Test
+	public void testAddMealPlanWithRecipe() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		Recipe recipe = mockRecipe();
+		recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
+			if (success) {
+				assertEquals(recipe.getId(), addedRecipe.getId());
+				mealPlan.addRecipe(addedRecipe);
+				mealPlanDB.addMealPlan(mealPlan);
+				MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+				assertEquals(mealPlan, resultMealPlan);
+				recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success2) -> {
+					if (success2) {
+						mealPlanDB.deleteMealPlan(mealPlan.getId());
+					} else {
+						Log.e(TAG, "Failed to delete recipe");
+					}
+				});
+			}
+		});
+	}
+
+	/**
+	 * Testing adding a MealPlan with a Recipe and Ingredients
+	 */
+	@Test
+	public void testAddMealPlanWithRecipeAndIngredients() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		Recipe recipe = mockRecipe();
+		recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
+			if (success) {
+				assertEquals(recipe.getId(), addedRecipe.getId());
+				mealPlan.addRecipe(addedRecipe);
+				StorageIngredient ingredient = mockIngredient();
+				storedIngredientDB.addStorageIngredient(ingredient,
+					(addedIngredient, success2) -> {
+					if (success2) {
+						assertEquals(ingredient.getId(), addedIngredient.getId());
+						mealPlan.addIngredient(addedIngredient);
+						mealPlanDB.addMealPlan(mealPlan);
+						MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+						assertEquals(mealPlan, resultMealPlan);
+					} else {
+						Log.e(TAG, "Failed to add ingredient");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add recipe");
+			}
+		});
+	}
+
+	/**
+	 * Testing adding a MealPlan with a Multiple Recipes and Ingredients
+	 */
+	@Test
+	public void testAddMealPlanWithMultipleRecipesAndIngredients() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		Recipe recipe = mockRecipe();
+		recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
+			if (success) {
+				assertEquals(recipe.getId(), addedRecipe.getId());
+				mealPlan.addRecipe(addedRecipe);
+				Recipe recipe2 = mockRecipe();
+				recipeDB.addRecipe(recipe2, (addedRecipe2, success2) -> {
+					if (success2) {
+						assertEquals(recipe2.getId(), addedRecipe2.getId());
+						mealPlan.addRecipe(addedRecipe2);
+						StorageIngredient ingredient = mockIngredient();
+						storedIngredientDB.addStorageIngredient(ingredient,
+							(addedIngredient, success3) -> {
+							if (success3) {
+								assertEquals(ingredient.getId(), addedIngredient.getId());
+								mealPlan.addIngredient(addedIngredient);
+								StorageIngredient ingredient2 = mockIngredient();
+								storedIngredientDB.addStorageIngredient(ingredient2,
+									(addedIngredient2, success4) -> {
+									if (success4) {
+										assertEquals(ingredient2.getId(), addedIngredient2.getId());
+										mealPlan.addIngredient(addedIngredient2);
+										mealPlanDB.addMealPlan(mealPlan);
+										MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+										assertEquals(mealPlan, resultMealPlan);
+									} else {
+										Log.e(TAG, "Failed to add ingredient");
+									}
+								});
+							} else {
+								Log.e(TAG, "Failed to add ingredient");
+							}
+						});
+					} else {
+						Log.e(TAG, "Failed to add recipe");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add recipe");
+			}
+		});
+	}
+
+	/**
+	 * Test updating a MealPlan details (no recipes or ingredients)
+	 */
+	@Test
+	public void testUpdateMealPlan() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		mealPlanDB.addMealPlan(mealPlan);
+		MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+		assertEquals(mealPlan, resultMealPlan);
+		mealPlan.setTitle("New Title");
+		mealPlanDB.editMealPlan(mealPlan);
+		MealPlan resultMealPlan2 = mealPlanDB.getMealPlan(mealPlan.getId());
+		assertEquals(mealPlan, resultMealPlan2);
+		mealPlanDB.deleteMealPlan(mealPlan.getId());
+	}
+
+	/**
+	 * Test updating a MealPlan with a Recipe
+	 */
+	@Test
+	public void testUpdateMealPlanWithRecipe() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		Recipe recipe = mockRecipe();
+		recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
+			if (success) {
+				assertEquals(recipe.getId(), addedRecipe.getId());
+				mealPlan.addRecipe(addedRecipe);
+				mealPlanDB.addMealPlan(mealPlan);
+				MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+				assertEquals(mealPlan, resultMealPlan);
+				Recipe recipe2 = mockRecipe();
+				recipeDB.addRecipe(recipe2, (addedRecipe2, success2) -> {
+					if (success2) {
+						assertEquals(recipe2.getId(), addedRecipe2.getId());
+						mealPlan.addRecipe(addedRecipe2);
+						mealPlanDB.editMealPlan(mealPlan);
+						MealPlan resultMealPlan2 = mealPlanDB.getMealPlan(mealPlan.getId());
+						assertEquals(mealPlan, resultMealPlan2);
+						recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success3) -> {
+							if (success3) {
+								recipeDB.delRecipe(recipe2.getId(), (deletedRecipe2, success4) -> {
+									if (success4) {
+										mealPlanDB.deleteMealPlan(mealPlan.getId());
+									} else {
+										Log.e(TAG, "Failed to delete recipe");
+									}
+								});
+							} else {
+								Log.e(TAG, "Failed to delete recipe");
+							}
+						});
+					} else {
+						Log.e(TAG, "Failed to add recipe");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add recipe");
+			}
+		});
+	}
+
+	/**
+	 * Test updating a MealPlan with a StorageIngredient
+	 */
+	@Test
+	public void testUpdateMealPlanWithStorageIngredient() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		StorageIngredient ingredient = mockIngredient();
+		storedIngredientDB.addStorageIngredient(ingredient,
+			(addedIngredient, success) -> {
+			if (success) {
+				assertEquals(ingredient.getId(), addedIngredient.getId());
+				mealPlan.addIngredient(addedIngredient);
+				mealPlanDB.addMealPlan(mealPlan);
+				MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+				assertEquals(mealPlan, resultMealPlan);
+				StorageIngredient ingredient2 = mockIngredient();
+				storedIngredientDB.addStorageIngredient(ingredient2,
+					(addedIngredient2, success2) -> {
+					if (success2) {
+						assertEquals(ingredient2.getId(), addedIngredient2.getId());
+						mealPlan.addIngredient(addedIngredient2);
+						mealPlanDB.editMealPlan(mealPlan);
+						MealPlan resultMealPlan2 = mealPlanDB.getMealPlan(mealPlan.getId());
+						assertEquals(mealPlan, resultMealPlan2);
+					} else {
+						Log.e(TAG, "Failed to add ingredient");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add ingredient");
+			}
+		});
+	}
+
+	/**
+	 * Test deleting an ingredient from a MealPlan
+	 */
+	@Test
+	public void testDeleteIngredientFromMealPlan() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		StorageIngredient ingredient = mockIngredient();
+		storedIngredientDB.addStorageIngredient(ingredient,
+			(addedIngredient, success) -> {
+			if (success) {
+				assertEquals(ingredient.getId(), addedIngredient.getId());
+				mealPlan.addIngredient(addedIngredient);
+				mealPlanDB.addMealPlan(mealPlan);
+				MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+				assertEquals(mealPlan, resultMealPlan);
+				mealPlan.removeIngredient(addedIngredient);
+				mealPlanDB.editMealPlan(mealPlan);
+				MealPlan resultMealPlan2 = mealPlanDB.getMealPlan(mealPlan.getId());
+				assertEquals(mealPlan, resultMealPlan2);
+			} else {
+				Log.e(TAG, "Failed to add ingredient");
+			}
+		});
+	}
+
+	/**
+	 * Test deleting a recipe from a MealPlan
+	 */
+	@Test
+	public void testDeleteRecipeFromMealPlan() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		Recipe recipe = mockRecipe();
+		recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
+			if (success) {
+				assertEquals(recipe.getId(), addedRecipe.getId());
+				mealPlan.addRecipe(addedRecipe);
+				mealPlanDB.addMealPlan(mealPlan);
+				MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+				assertEquals(mealPlan, resultMealPlan);
+				mealPlan.removeRecipe(addedRecipe);
+				mealPlanDB.editMealPlan(mealPlan);
+				MealPlan resultMealPlan2 = mealPlanDB.getMealPlan(mealPlan.getId());
+				assertEquals(mealPlan, resultMealPlan2);
+				recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success2) -> {
+					if (success2) {
+						mealPlanDB.deleteMealPlan(mealPlan.getId());
+					} else {
+						Log.e(TAG, "Failed to delete recipe");
+					}
+				});
+			} else {
+				Log.e(TAG, "Failed to add recipe");
+			}
+		});
+	}
+
+	/**
+	 * Test deleting a MealPlan
+	 */
+	@Test
+	public void testDeleteMealPlan() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		mealPlanDB.addMealPlan(mealPlan);
+		MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+		assertEquals(mealPlan, resultMealPlan);
+		mealPlanDB.deleteMealPlan(mealPlan.getId());
+		MealPlan resultMealPlan2 = mealPlanDB.getMealPlan(mealPlan.getId());
+		assertNull(resultMealPlan2);
+	}
+
+	/**
+	 * Test getting all MealPlans
+	 */
+	@Test
+	public void testGetAllMealPlans() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		mealPlanDB.addMealPlan(mealPlan);
+		MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+		assertEquals(mealPlan, resultMealPlan);
+		List<MealPlan> mealPlans = mealPlanDB.getMealPlans();
+		assertTrue(mealPlans.contains(mealPlan));
+	}
+
+	/**
+	 * Test getting all MealPlans and deleting them
+	 */
+	@Test
+	public void testGetAllMealPlansAndDeleteThem() throws Exception {
+		MealPlan mealPlan = mockMealPlan();
+		mealPlanDB.addMealPlan(mealPlan);
+		MealPlan resultMealPlan = mealPlanDB.getMealPlan(mealPlan.getId());
+		assertEquals(mealPlan, resultMealPlan);
+		List<MealPlan> mealPlans = mealPlanDB.getMealPlans();
+		assertTrue(mealPlans.contains(mealPlan));
+		for (MealPlan plan : mealPlans) {
+			mealPlanDB.deleteMealPlan(plan.getId());
+		}
+		List<MealPlan> mealPlans2 = mealPlanDB.getMealPlans();
+		assertTrue(mealPlans2.isEmpty());
+	}
+}

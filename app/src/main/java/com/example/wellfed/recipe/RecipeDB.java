@@ -43,7 +43,7 @@ public class RecipeDB {
     private CollectionReference collection;
 
     public interface OnRecipeDone {
-        public void onAddRecipe(Recipe recipe, Boolean success);
+        public void onAddRecipe(Recipe recipe, Boolean success) throws Exception;
     }
 
     public interface OnRecipeIngredientAdded {
