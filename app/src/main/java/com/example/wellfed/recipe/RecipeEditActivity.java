@@ -166,6 +166,7 @@ public class RecipeEditActivity extends EditActivityBase {
         if (!servings.isValid()) return false;
         if (!commentsTextInput.isValid()) return false;
         if (!recipeCategory.isValid()) return false;
+        if (recipeIngredients.size() == 0) return false;
         return true;
     }
 

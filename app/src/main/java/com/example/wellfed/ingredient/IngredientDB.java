@@ -50,6 +50,10 @@ public class IngredientDB {
         collection = this.ingredientsConnection.getCollection("Ingredients");
     }
 
+    public DocumentReference getDocumentReference(String id) {
+        return collection.document(id);
+    }
+
     /**
      * The OnAddIngredientListener interface is used to handle the result of the
      * addIngredient method.
@@ -334,4 +338,9 @@ public class IngredientDB {
     public Query getQuery(){
         return collection;
     }
+
+    public Query getQuery(String field, boolean ascending){
+        return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);
+    }
+
 }

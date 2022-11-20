@@ -1,16 +1,22 @@
 package com.example.wellfed.ingredient;
 
+import android.app.AlertDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,13 +25,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 
-/**
- * The fragment that displays all ingredients in storage.
- */
-public class IngredientStorageFragment extends Fragment
-        implements Launcher, StorageIngredientAdapter.OnItemClickListener {
+public class IngredientStorageFragment extends Fragment implements Launcher<StorageIngredient>,
+        StorageIngredientAdapter.OnItemClickListener {
     /**
      * The ingredientController is the controller for the ingredient.
      */
@@ -35,13 +43,17 @@ public class IngredientStorageFragment extends Fragment
      */
     RecyclerView recyclerView;
     /**
-     * The text input for the search bar.
-     */
-    int position;
-    /**
      * The selected item
      */
-    private int selected;
+    private StorageIngredient selectedStorageIngredient;
+    /**
+     * ImageFilterButton is the button that filters the ingredients by image.
+     */
+    private ImageFilterButton imageFilterButton;
+    /**
+     * The cross icon that clears the search bar.
+     */
+    private ImageView crossIcon;
 
     /**
      * ActivityResultLauncher for the IngredientEditActivity to edit an
@@ -49,27 +61,26 @@ public class IngredientStorageFragment extends Fragment
      * The result is a StorageIngredient.
      * The result is null if the user cancels the edit.
      */
-    ActivityResultLauncher<StorageIngredient> launcher =
-            registerForActivityResult(new IngredientContract(), result -> {
-                if (result == null) {
-                    return;
-                }
-                String type = result.first;
-                StorageIngredient ingredient = result.second;
-                switch (type) {
-                    case "delete":
-                        controller.deleteIngredient(ingredient);
-                        break;
-                    case "edit":
-                        controller.updateIngredient(ingredient);
-                        break;
-                    case "launch":
-                        this.launch(this.selected);
-                        break;
-                    default:
-                        throw new IllegalArgumentException();
-                }
-            });
+    ActivityResultLauncher<StorageIngredient> launcher = registerForActivityResult(new IngredientContract(), result -> {
+        if (result == null) {
+            return;
+        }
+        String type = result.first;
+        StorageIngredient ingredient = result.second;
+        switch (type) {
+            case "delete":
+                controller.deleteIngredient(ingredient);
+                break;
+            case "edit":
+                controller.updateIngredient(ingredient);
+                break;
+            case "launch":
+                this.onItemClick(selectedStorageIngredient);
+                break;
+            default:
+                break;
+        }
+    });
 
     /**
      * ActivityResultLauncher for the IngredientAddActivity to add an
@@ -77,23 +88,22 @@ public class IngredientStorageFragment extends Fragment
      * The result is a StorageIngredient.
      * The result is null if the user cancels the add.
      */
-    ActivityResultLauncher<StorageIngredient> editIngredientLauncher =
-            registerForActivityResult(new IngredientEditContract(), result -> {
-                if (result == null) {
-                    return;
-                }
-                String type = result.first;
-                StorageIngredient ingredient = result.second;
-                switch (type) {
-                    case "add":
-                        controller.addIngredient(ingredient);
-                        break;
-                    case "quit":
-                        break;
-                    default:
-                        throw new IllegalArgumentException();
-                }
-            });
+    ActivityResultLauncher<StorageIngredient> editIngredientLauncher = registerForActivityResult(new IngredientEditContract(), result -> {
+        if (result == null) {
+            return;
+        }
+        String type = result.first;
+        StorageIngredient ingredient = result.second;
+        switch (type) {
+            case "add":
+                controller.addIngredient(ingredient);
+                break;
+            case "quit":
+                break;
+            default:
+                break;
+        }
+    });
 
     /**
      * onCreate method for the IngredientStorageFragment.
@@ -107,14 +117,13 @@ public class IngredientStorageFragment extends Fragment
      *                           as given here.
      * @return Return the View for the fragment's UI, or null.
      */
-    @Nullable @Override public View onCreateView(
-            @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        controller = new IngredientStorageController(getActivity());
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        controller = new IngredientStorageController(requireActivity());
         controller.getAdapter().setOnItemClickListener(this);
 
-        return inflater.inflate(R.layout.fragment_ingredient_storage, container,
-                false);
+        return inflater.inflate(R.layout.fragment_ingredient_storage, container, false);
     }
 
     /**
@@ -125,59 +134,57 @@ public class IngredientStorageFragment extends Fragment
      *                           re-constructed from a previous saved state
      *                           as given here.
      */
-    @Override public void onViewCreated(@NonNull View view,
-                                        @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.ingredient_storage_list);
-
-
-        //        ingredientStorageController.setIngredients(foodStorage
-        //        .getIngredients());
         recyclerView.setAdapter(controller.getAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Search bar
-        TextInputEditText searchBar =
-                view.findViewById(R.id.ingredient_storage_search);
+        TextInputEditText searchBar = view.findViewById(R.id.ingredient_storage_search);
+        // Clear search bar
+        crossIcon = view.findViewById(R.id.clear_search);
+        crossIcon.setOnClickListener(v -> searchBar.setText(""));
 
         // On search bar text change show "Functionality not implemented yet"
         // message
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
-                Toast.makeText(getActivity(),
-                                "Functionality not implemented yet",
-                                Toast.LENGTH_SHORT)
-                        .show();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    crossIcon.setVisibility(View.VISIBLE);
+                } else {
+                    crossIcon.setVisibility(View.INVISIBLE);
+                }
             }
 
-            @Override public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                controller.getSearchResults(s.toString());
             }
         });
-    }
 
-    /**
-     * Launches the IngredientEditActivity to edit an ingredient.
-     *
-     * @param pos The position of the ingredient in the list.
-     */
-    @Override public void launch(int pos) {
-        this.selected = pos;
-        //TODO: fix this - causes crash in issue #139
-        //launcher.launch(foodStorage.getIngredients().get(pos));
+        // Link filter button to filter functionality
+        imageFilterButton = view.findViewById(R.id.image_filter_button);
+        imageFilterButton.setOnClickListener(this::filter);
     }
 
     /**
      * Launches the IngredientAddActivity to add an ingredient.
      */
-    @Override public void launch() {
-        editIngredientLauncher.launch(null);
+    @Override
+    public void launch(StorageIngredient storageIngredient) {
+        if (storageIngredient == null) {
+            editIngredientLauncher.launch(null);
+        } else {
+            launcher.launch(storageIngredient);
+        }
     }
 
     /**
@@ -186,7 +193,8 @@ public class IngredientStorageFragment extends Fragment
      *
      * @return A default ViewModelProviderFactory.
      */
-    @NonNull @Override
+    @NonNull
+    @Override
     public CreationExtras getDefaultViewModelCreationExtras() {
         return super.getDefaultViewModelCreationExtras();
     }
@@ -196,7 +204,70 @@ public class IngredientStorageFragment extends Fragment
      *
      * @param storageIngredient The StorageIngredient to view.
      */
-    @Override public void onItemClick(StorageIngredient storageIngredient) {
+    @Override
+    public void onItemClick(StorageIngredient storageIngredient) {
+        this.selectedStorageIngredient = storageIngredient;
         launcher.launch(storageIngredient);
+    }
+
+    /**
+     * Launches a dropdown menu to filter the ingredients. That contain the
+     * options to filter the ingredient by description, category, and
+     * best-before date.
+     *
+     * @param view The view that was clicked.
+     *             The view is the filter button.
+     */
+    public void filter(View view) {
+        // Inflate the AlertDialog with the custom layout
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        View customLayout =
+                getLayoutInflater().inflate(R.layout.ingredients_dropdown, null);
+        builder.setTitle("Filter");
+
+        builder.setView(customLayout);
+
+        MaterialTextView descriptionButton =
+                customLayout.findViewById(R.id.sort_by_name);
+        descriptionButton.setOnClickListener(v -> {
+            controller.getSortedResults("description", true);
+            StorageIngredientAdapter adapter = controller.getAdapter();
+            adapter.setOnItemClickListener(IngredientStorageFragment.this);
+            recyclerView.setAdapter(adapter);
+        });
+        MaterialTextView categoryButton =
+                customLayout.findViewById(R.id.sort_by_category);
+        categoryButton.setOnClickListener(v -> {
+            controller.getSortedResults("category", true);
+            StorageIngredientAdapter adapter = controller.getAdapter();
+            adapter.setOnItemClickListener(IngredientStorageFragment.this);
+            recyclerView.setAdapter(adapter);
+        });
+        MaterialTextView bestBeforeButton =
+                customLayout.findViewById(R.id.sort_by_expiration_date);
+        bestBeforeButton.setOnClickListener(v -> {
+            controller.getSortedResults("best-before", true);
+            StorageIngredientAdapter adapter = controller.getAdapter();
+            adapter.setOnItemClickListener(IngredientStorageFragment.this);
+            recyclerView.setAdapter(adapter);
+        });
+
+        MaterialTextView locationButton =
+                customLayout.findViewById(R.id.sort_by_location);
+        locationButton.setOnClickListener(v -> {
+            controller.getSortedResults("location", true);
+            StorageIngredientAdapter adapter = controller.getAdapter();
+            adapter.setOnItemClickListener(IngredientStorageFragment.this);
+            recyclerView.setAdapter(adapter);
+        });
+
+        // Create cancel button
+        builder.setNegativeButton("Close", (dialog, which) -> {
+            // Do nothing
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

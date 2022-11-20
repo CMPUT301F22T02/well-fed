@@ -51,5 +51,5 @@
     <string name="unit">Unit</string>
     <string name="amount_hint">Amount</string>
     <string name="location_tag">Location</string>
-    <string name="prepartion_time_in_mins">Prepartion time in mins</string>
+    <string name="preparation_time_in_mins">Preparation time in mins</string>
 </resources>

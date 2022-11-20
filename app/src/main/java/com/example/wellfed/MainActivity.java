@@ -82,10 +82,10 @@ public class MainActivity extends ActivityBase {
         fab.setOnClickListener(view -> {
             int i = viewPager.getCurrentItem();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            Launcher launcher =
-                    (Launcher) fragmentManager.findFragmentByTag("f" + i);
+            Launcher<Object> launcher =
+                    (Launcher<Object>) fragmentManager.findFragmentByTag("f" + i);
             if (launcher != null) {
-                launcher.launch();
+                launcher.launch(null);
             }
         });
 
