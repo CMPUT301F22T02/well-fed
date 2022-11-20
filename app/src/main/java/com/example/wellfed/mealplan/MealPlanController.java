@@ -2,31 +2,13 @@ package com.example.wellfed.mealplan;
 
 import android.app.Activity;
 
-import androidx.fragment.app.FragmentActivity;
-
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.common.DBConnection;
-import com.example.wellfed.ingredient.Ingredient;
-import com.example.wellfed.ingredient.StorageIngredientAdapter;
-import com.example.wellfed.ingredient.StorageIngredientDB;
-import com.example.wellfed.recipe.Recipe;
-import com.google.common.collect.Iterables;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.function.Predicate;
+import com.example.wellfed.common.Launcher;
 
 public class MealPlanController {
     private final ActivityBase activity;
     private MealPlanAdapter adapter;
-    /**
-     * The Field that is currently being sorted by
-     */
-    private String currentField = "description";
     /**
      * The DB of stored ingredients
      */
@@ -57,9 +39,15 @@ public class MealPlanController {
         });
     }
 
-    public void editMealPlan(int index, MealPlan modifiedMealPlan) {
-//        this.mealPlans.set(index, modifiedMealPlan);
-//        this.adapter.notifyItemChanged(index);
+    public void updateMealPlan(MealPlan mealPlan, Launcher launcher) {
+        db.updateMealPlan(mealPlan, (updateMealPlan, updateSuccess) -> {
+            if (!updateSuccess) {
+                this.activity.makeSnackbar("Failed to update " + updateMealPlan.getTitle());
+                launcher.launch(updateMealPlan);
+            } else {
+                this.activity.makeSnackbar("Updated " + updateMealPlan.getTitle());
+            }
+        });
     }
 
     public void deleteMealPlan(MealPlan mealPlan) {

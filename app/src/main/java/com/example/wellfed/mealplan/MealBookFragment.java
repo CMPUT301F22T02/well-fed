@@ -44,14 +44,14 @@ import com.example.wellfed.common.AdapterDataObserver;
 import com.example.wellfed.common.Launcher;
 
 public class MealBookFragment extends Fragment
-        implements Launcher, AdapterDataObserver.OnAdapterDataChangedListener,
+        implements Launcher<MealPlan>,
+                   AdapterDataObserver.OnAdapterDataChangedListener,
                    MealPlanAdapter.OnItemClickListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MealPlanController controller;
-    private MealPlan selectedMealPlan;
 
     ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanContract(), result -> {
@@ -65,10 +65,7 @@ public class MealBookFragment extends Fragment
                         controller.deleteMealPlan(mealPlan);
                         break;
                     case "edit":
-//                        controller.editMealPlan(selected, mealPlan);
-                        break;
-                    case "launch":
-//                        this.launch(this.selected);
+                        controller.updateMealPlan(mealPlan, this);
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -123,16 +120,9 @@ public class MealBookFragment extends Fragment
                 getString(R.string.greeting, "Akshat"));
     }
 
-    @Deprecated
-    public void launch(int pos) {
-    }
-
+    @Override
     public void launch(MealPlan mealPlan) {
         launcher.launch(mealPlan);
-    }
-
-    public void launch() {
-        editLauncher.launch(null);
     }
 
     private void updateCallToAction() {
@@ -159,7 +149,6 @@ public class MealBookFragment extends Fragment
 
     @Override
     public void onItemClick(MealPlan mealPlan) {
-        this.selectedMealPlan = mealPlan;
         this.launch(mealPlan);
     }
 }

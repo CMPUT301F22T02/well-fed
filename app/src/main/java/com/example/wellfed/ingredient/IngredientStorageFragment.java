@@ -32,7 +32,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class IngredientStorageFragment extends Fragment implements Launcher, StorageIngredientAdapter.OnItemClickListener {
+public class IngredientStorageFragment extends Fragment implements Launcher<StorageIngredient>,
+        StorageIngredientAdapter.OnItemClickListener {
     /**
      * The ingredientController is the controller for the ingredient.
      */
@@ -175,21 +176,11 @@ public class IngredientStorageFragment extends Fragment implements Launcher, Sto
     }
 
     /**
-     * Launches the IngredientEditActivity to edit an ingredient.
-     *
-     * @param pos The position of the ingredient in the list.
-     */
-    @Override
-    public void launch(int pos) {
-
-    }
-
-    /**
      * Launches the IngredientAddActivity to add an ingredient.
      */
     @Override
-    public void launch() {
-        editIngredientLauncher.launch(null);
+    public void launch(StorageIngredient storageIngredient) {
+        editIngredientLauncher.launch(storageIngredient);
     }
 
     /**
