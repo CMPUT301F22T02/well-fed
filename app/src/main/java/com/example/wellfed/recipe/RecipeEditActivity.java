@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.EditRecyclerViewFragment;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
@@ -61,6 +62,7 @@ public class RecipeEditActivity extends EditActivityBase {
     private RequiredTextInputLayout title;
     private RequiredTextInputLayout commentsTextInput;
     private RequiredDropdownTextInputLayout recipeCategory;
+    private EditRecipeIngredientsFragment ingredientEditFragment;
 
     // take picture
     ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
@@ -90,8 +92,15 @@ public class RecipeEditActivity extends EditActivityBase {
         servings = findViewById(R.id.recipe_no_of_servings_textView);
         commentsTextInput = findViewById(R.id.commentsTextInput);
         recipeCategory = findViewById(R.id.recipe_category);
-
         recipeCategory.setSimpleItems(new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer", "Dessert"});
+
+        ingredientEditFragment = new EditRecipeIngredientsFragment();
+        RecipeIngredientAdapter adapter = new RecipeIngredientAdapter();
+        ingredientEditFragment.setAdapter(adapter);
+        ingredientEditFragment.setTitle("Ingredients");
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainerView, ingredientEditFragment)
+                .commit();
 
         // activity started to add data a recipe
         if (recipe == null) {
@@ -112,11 +121,11 @@ public class RecipeEditActivity extends EditActivityBase {
             });
         } else {
             recipeIngredients = recipe.getIngredients();
-            title.setText(recipe.getTitle());
-            prepTime.setText(recipe.getPrepTimeMinutes().toString());
-            servings.setText(recipe.getServings().toString());
-            commentsTextInput.setText(recipe.getComments());
-            recipeCategory.setText(recipe.getCategory());
+            title.setPlaceholderText(recipe.getTitle());
+            prepTime.setPlaceholderText(recipe.getPrepTimeMinutes().toString());
+            servings.setPlaceholderText(recipe.getServings().toString());
+            commentsTextInput.setPlaceholderText(recipe.getComments());
+            recipeCategory.setPlaceholderText(recipe.getCategory());
             Picasso.get()
                     .load(recipe.getPhotograph())
                     .rotate(90)
@@ -235,20 +244,4 @@ public class RecipeEditActivity extends EditActivityBase {
 
         });
     }
-
-//    @Override
-//    public void onEditClick(String reason, int pos) {
-//        this.selectedIngredient = pos;
-//        switch (reason) {
-//            case "edit":
-//                ingredientLauncher.launch(recipeIngredients.get(pos));
-//                break;
-//            case "delete":
-//                recipeIngredients.remove(pos);
-//                recipeIngredientAdapter.notifyItemRemoved(pos);
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 }

@@ -132,7 +132,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         ingredient.setCategory(categoryInput.getText());
         Intent intent = new Intent();
         intent.putExtra("type", type);
-        intent.putExtra("ingredient", ingredient);
+        intent.putExtra("item", ingredient);
         setResult(Activity.RESULT_OK, intent);
         finish();
     }

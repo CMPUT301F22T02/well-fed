@@ -1,11 +1,15 @@
 package com.example.wellfed.common;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,62 +18,42 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.recipe.RecipeIngredientEditActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class EditRecyclerViewFragment<Item extends Serializable> extends Fragment {
+public abstract class EditRecyclerViewFragment<Item extends Serializable>
+        extends Fragment implements EditItemAdapter.OnEditListener<Item>,
+                                    EditItemAdapter.OnDeleteListener<Item> {
     private RecyclerView recyclerView;
     private ArrayList<Item> items;
+    private EditItemAdapter<Item> adapter;
+    private Item selectedItem;
+    private String title;
 
-    private ActivityResultLauncher<Item> editLauncher =
+    private final ActivityResultLauncher<Intent> editLauncher =
             registerForActivityResult(new EditItemContract<>(),
-                    result -> {
-                        if (result == null) {
-                            return;
-                        }
-                        String type = result.first;
-                        Item ingredient = result.second;
-                        switch (type) {
-                            case "add":
-                                items.add(ingredient);
-//                                recipeIngredientAdapter.notifyItemInserted(
-//                                        recipeIngredients.size());
-                                break;
-                            case "edit":
-//                                type
-//                                recipeIngredients.set(selectedIngredient,
-//                                        ingredient);
-//                                recipeIngredientAdapter.notifyItemChanged(
-//                                        selectedIngredient);
-                                break;
-                            default:
-                                throw new IllegalArgumentException();
-                        }
-                    });
+                    this::onEditActivityResult);
 
-    ActivityResultLauncher<Item> searchLauncher =
+    private final ActivityResultLauncher<Item> searchLauncher =
             registerForActivityResult(new SearchItemContract<>(),
-                    result -> {
-                        if (result == null) {
-                            return;
-                        }
-                        String type = result.first;
-                        Item item = result.second;
-                        switch (type) {
-                            case "edit":
-                                items.add(item);
-//                                recipeIngredientAdapter.notifyItemInserted(
-//                                        recipeIngredients.size());
-                            case "quit":
-                                break;
-                            default:
-                                throw new IllegalArgumentException();
-                        }
-                    });
+                    this::onSearchActivityResult);
+
+    public void setAdapter(EditItemAdapter<Item> adapter) {
+        this.adapter = adapter;
+        this.adapter.setItems(this.items);
+        this.adapter.setEditListener(this);
+        this.adapter.setDeleteListener(this);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public EditRecyclerViewFragment() {
-
+        this.items = new ArrayList<>();
     }
 
     @Nullable @Override
@@ -78,17 +62,19 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable> extend
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_recycler_view,
                 container, false);
-        super.onCreate(savedInstanceState);
+
+        TextView titleTextView = view.findViewById(R.id.titleTextView);
+        titleTextView.setText(title);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-//        recyclerView.setAdapter(recipeIngredientAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
 
         ImageView addButton = view.findViewById(R.id.addButton);
         ImageView searchButton = view.findViewById(R.id.searchButton);
 
         addButton.setOnClickListener(v -> {
-            editLauncher.launch(null);
+            onEdit(null);
         });
 
         searchButton.setOnClickListener(v -> {
@@ -96,5 +82,57 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable> extend
         });
 
         return view;
+    }
+
+    public abstract Intent createOnEditIntent(Item item);
+
+    @Override public void onEdit(Item item) {
+        this.selectedItem = item;
+        Intent intent = createOnEditIntent(item);
+        editLauncher.launch(intent);
+    }
+
+    @Override public void onDelete(Item item) {
+        int index = items.indexOf(item);
+        items.remove(item);
+        adapter.notifyItemRemoved(index);
+    }
+
+    private void onSearchActivityResult(Pair<String, Item> result) {
+        if (result == null) {
+            return;
+        }
+        String type = result.first;
+        Item item = result.second;
+        switch (type) {
+            case "add":
+                items.add(item);
+                adapter.notifyItemInserted(items.size());
+            case "quit":
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private void onEditActivityResult(Pair<String, Item> result) {
+        if (result == null) {
+            return;
+        }
+        String type = result.first;
+        Item ingredient = result.second;
+        switch (type) {
+            case "add":
+                items.add(ingredient);
+                adapter.notifyItemInserted(items.size());
+                break;
+            case "edit":
+                int index = items.indexOf(selectedItem);
+                items.set(index, ingredient);
+                adapter.notifyItemChanged(index);
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }

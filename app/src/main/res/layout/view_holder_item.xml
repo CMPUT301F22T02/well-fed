@@ -5,18 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/ingredient_quantity_textView"
+        android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/ingredient_name_textView"
+        android:id="@+id/headlineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ingredient_quantity_textView"
+        app:layout_constraintStart_toEndOf="@+id/titleTextView"
         android:layout_marginLeft="16dp" />
 
     <ImageView
@@ -25,8 +25,8 @@
         android:src="@drawable/info_fill0_wght400_grad0_opsz48"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ingredient_name_textView"
-        app:layout_constraintBottom_toBottomOf="@id/ingredient_name_textView"
+        app:layout_constraintTop_toTopOf="@id/headlineTextView"
+        app:layout_constraintBottom_toBottomOf="@id/headlineTextView"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

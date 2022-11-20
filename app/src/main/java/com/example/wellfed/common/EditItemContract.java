@@ -13,13 +13,11 @@ import com.example.wellfed.recipe.RecipeIngredientEditActivity;
 
 import java.io.Serializable;
 
-public class EditItemContract<Item extends Serializable> extends ActivityResultContract<Item,
-        Pair<String, Item>> {
-    @NonNull
-    @Override
-    public Intent createIntent(@NonNull Context context, Item item) {
-        Intent intent = new Intent(context, RecipeIngredientEditActivity.class);
-        intent.putExtra("item", item);
+public class EditItemContract<Item extends Serializable>
+        extends ActivityResultContract<Intent, Pair<String, Item>> {
+    @NonNull @Override
+//    TODO: find a nicer way to do this
+    public Intent createIntent(@NonNull Context context, Intent intent) {
         return intent;
     }
 
