@@ -34,6 +34,9 @@ public class RecipeDBTest {
     IngredientDB ingredientDB;
     private static final long TIMEOUT = 10;
 
+    /**
+     * Sets up the DB connection before testing starts.
+     */
     @Before
     public void before() {
         MockDBConnection connection = new MockDBConnection();
@@ -41,6 +44,12 @@ public class RecipeDBTest {
         ingredientDB = new IngredientDB(connection);
     }
 
+    /**
+     * Creates a mock ingredient for use in RecipeDB testing.
+     *
+     * @param description the description of the mock ingredient
+     * @return the mock ingredient created
+     */
     private Ingredient mockIngredient(String description) {
         Ingredient testIngredient = new Ingredient();
         testIngredient.setDescription(description);
@@ -50,6 +59,13 @@ public class RecipeDBTest {
         return testIngredient;
     }
 
+    /**
+     * Creates a mock recipe for use in RecipeDB testing.
+     *
+     * @param mockIngredient1 a mock ingredient to add to the recipe
+     * @param mockIngredient2 a mock ingredient to add to the recipe
+     * @return the mock recipe created
+     */
     private Recipe mockRecipe(Ingredient mockIngredient1, Ingredient mockIngredient2) {
         Recipe testRecipe = new Recipe("Omelet");
         testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
@@ -61,6 +77,12 @@ public class RecipeDBTest {
         return testRecipe;
     }
 
+    /**
+     * Asserts that two recipes are equal.
+     *
+     * @param actual the actual recipe after performing some DB operation
+     * @param expected the expected recipe to check against the actual recipe
+     */
     private void assertEqualRecipe(Recipe actual, Recipe expected) {
         assertEquals(actual.getId(), expected.getId());
         assertEquals(actual.getTitle(), expected.getTitle());
@@ -113,6 +135,7 @@ public class RecipeDBTest {
      * if it is the same (throwing an interrupt if it is not) and then deleting the recipe
      * and the ingredients in the recipe
      *
+     * @see RecipeDBTest#testGetAddedRecipe() for checking whether an added recipe has correct fields
      * @throws InterruptedException when latches are interrupted or the test times out
      */
     @Test
@@ -173,6 +196,12 @@ public class RecipeDBTest {
         });
     }
 
+    /**
+     * Tests updating a recipe.
+     *
+     * @see RecipeDBTest#testGetUpdatedRecipe() for testing whether an updated recipe has correct fields
+     * @throws InterruptedException when the DB operation times out
+     */
     @Test
     public void testUpdateOnRecipe() throws InterruptedException {
         Ingredient testIngredient = mockIngredient("Egg");
