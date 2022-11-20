@@ -364,8 +364,9 @@ public class MealPlanDB {
         AtomicInteger counter = new AtomicInteger(0);
 
         // Calculates number of ingredients and recipes.
-        Integer numOfIngredientsAndRecipes = mealPlan.getIngredients().size() +
-                mealPlan.getRecipes().size();
+        Integer numOfIngredientsAndRecipes =
+                mealPlanIngredients.size() + ((ArrayList<DocumentReference>)
+                        snapshot.get("recipes")).size();
 
         // If the "ingredients" and "recipes" fields are empty, ie.,
         // numOfIngredientsAndRecipes is 0, then we can call
