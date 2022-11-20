@@ -312,7 +312,8 @@ public class MealPlanDB {
      * @param mealPlan the MealPlan object to be updated.
      * @param listener the OnUpdateMealPlanListener object to handle the result.
      */
-    public void updateMealPlan(MealPlan mealPlan, OnUpdateMealPlanListener listener) throws Exception{
+    public void updateMealPlan(MealPlan mealPlan,
+                               OnUpdateMealPlanListener listener) {
         if (mealPlan == null) {
             listener.onUpdateMealPlanResult(null, false);
         }

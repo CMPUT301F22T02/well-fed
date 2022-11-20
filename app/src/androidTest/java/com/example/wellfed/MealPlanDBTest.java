@@ -96,7 +96,7 @@ public class MealPlanDBTest {
 	@Before
 	public void setUpDB() {
 		db = FirebaseFirestore.getInstance();
-		DBConnection connection = new DBConnection(getApplicationContext());
+		MockDBConnection connection = new MockDBConnection();
 		mealPlanDB = new MealPlanDB(connection);
 		recipeDB = new RecipeDB(connection);
 		storedIngredientDB = new StorageIngredientDB(connection);
