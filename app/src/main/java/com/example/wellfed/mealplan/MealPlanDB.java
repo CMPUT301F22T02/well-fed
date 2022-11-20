@@ -12,6 +12,7 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This class is used to access the meal plan database.
@@ -234,7 +235,7 @@ public class MealPlanDB {
                     mealPlan.setId(mealPlanDoc.getId());
                     mealPlan.setCategory(mealPlanDoc.getString("category"));
                     mealPlan.setEatDate(mealPlanDoc.getDate("eat date"));
-                    mealPlan.setServings(mealPlanDoc.getLong("servings").intValue());
+                    mealPlan.setServings(Objects.requireNonNull(mealPlanDoc.getLong("servings")).intValue());
 
                     // Initializes an empty ArrayList to store Ingredient objects.
                     ArrayList<Ingredient> ingredients = new ArrayList<>();
