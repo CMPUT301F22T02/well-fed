@@ -9,7 +9,6 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1 lb"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,8 +16,7 @@
         android:id="@+id/headlineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:text="Ground Beef"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/titleTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +24,7 @@
         android:id="@+id/deleteButton"
         android:layout_width="16sp"
         android:layout_height="16sp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_baseline_delete_24"
         app:layout_constraintBottom_toBottomOf="@id/headlineTextView"
         app:layout_constraintEnd_toStartOf="@+id/editButton"
@@ -36,7 +34,7 @@
         android:id="@+id/editButton"
         android:layout_width="16sp"
         android:layout_height="16sp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintBottom_toBottomOf="@id/headlineTextView"
         app:layout_constraintEnd_toEndOf="parent"

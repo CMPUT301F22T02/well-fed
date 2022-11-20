@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 
 import java.util.List;
@@ -65,14 +66,17 @@ public class EditItemAdapter<Item>
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1, int position) {
         ItemViewHolder holder = (ItemViewHolder) holder1;
+        Ingredient ingredient = (Ingredient) items.get(holder.getAdapterPosition());
+        holder.leadingTextView.setText(Double.toString(ingredient.getAmount()));
+        holder.headlineTextView.setText(ingredient.getDescription());
         holder.getEditButton().setOnClickListener(v -> {
             if (editListener != null) {
-                editListener.onEdit(items.get(position));
+                editListener.onEdit(items.get(holder.getAdapterPosition()));
             }
         });
         holder.getDeleteButton().setOnClickListener(v -> {
             if (deleteListener != null) {
-                deleteListener.onDelete(items.get(position));
+                deleteListener.onDelete(items.get(holder.getAdapterPosition()));
             }
         });
     }
