@@ -66,7 +66,7 @@ import java.util.concurrent.CountDownLatch;
      *
      * @throws InterruptedException
      */
-    @Test public void testAddFull() throws InterruptedException {
+    @Test public void testAddStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
         // testing whether it was what was inserted into db
