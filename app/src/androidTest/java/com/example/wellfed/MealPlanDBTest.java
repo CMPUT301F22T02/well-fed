@@ -129,9 +129,30 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
 						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
-						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
-						assertEquals(addedMealPlan.getIngredients(),
-							retrievedMealPlan.getIngredients());
+						// Check if the recipes are the same size
+						assertEquals(addedMealPlan.getRecipes().size(),
+							retrievedMealPlan.getRecipes().size());
+						// Check if the recipes are the same using their titles
+						for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+							assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+								retrievedMealPlan.getRecipes().get(i).getId());
+							assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+								retrievedMealPlan.getRecipes().get(i).getTitle());
+						}
+						// Check if the ingredients are the same size
+						assertEquals(addedMealPlan.getIngredients().size(),
+							retrievedMealPlan.getIngredients().size());
+						// Check if the ingredients are the same
+						for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+							assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+								retrievedMealPlan.getIngredients().get(i).getId());
+							assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+								retrievedMealPlan.getIngredients().get(i).getDescription());
+							assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+								retrievedMealPlan.getIngredients().get(i).getAmount());
+							assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+								retrievedMealPlan.getIngredients().get(i).getUnit());
+						}
 						latch.countDown();
 					} else {
 						Log.e(TAG, "Failed to retrieve meal plan");
@@ -178,10 +199,30 @@ public class MealPlanDBTest {
 									retrievedMealPlan.getEatDate());
 								assertEquals(addedMealPlan.getServings(),
 									retrievedMealPlan.getServings());
-								assertEquals(addedMealPlan.getRecipes(),
-									retrievedMealPlan.getRecipes());
-								assertEquals(addedMealPlan.getIngredients(),
-									retrievedMealPlan.getIngredients());
+								// Check if the recipes are the same size
+								assertEquals(addedMealPlan.getRecipes().size(),
+									retrievedMealPlan.getRecipes().size());
+								// Check if the recipes are the same using their titles
+								for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+									assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+										retrievedMealPlan.getRecipes().get(i).getId());
+									assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+										retrievedMealPlan.getRecipes().get(i).getTitle());
+								}
+								// Check if the ingredients are the same size
+								assertEquals(addedMealPlan.getIngredients().size(),
+									retrievedMealPlan.getIngredients().size());
+								// Check if the ingredients are the same
+								for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+									assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+										retrievedMealPlan.getIngredients().get(i).getId());
+									assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+										retrievedMealPlan.getIngredients().get(i).getDescription());
+									assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+										retrievedMealPlan.getIngredients().get(i).getAmount());
+									assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+										retrievedMealPlan.getIngredients().get(i).getUnit());
+								}
 								recipeLatch.countDown();
 							} else {
 								Log.e(TAG, "Failed to retrieve meal plan");
@@ -233,10 +274,30 @@ public class MealPlanDBTest {
 											retrievedMealPlan.getEatDate());
 										assertEquals(updatedMealPlan.getServings(),
 											retrievedMealPlan.getServings());
-										assertEquals(updatedMealPlan.getRecipes(),
-											retrievedMealPlan.getRecipes());
-										assertEquals(updatedMealPlan.getIngredients(),
-											retrievedMealPlan.getIngredients());
+										// Check if the recipes are the same size
+										assertEquals(addedMealPlan.getRecipes().size(),
+											retrievedMealPlan.getRecipes().size());
+										// Check if the recipes are the same using their titles
+										for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+											assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+												retrievedMealPlan.getRecipes().get(i).getId());
+											assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+												retrievedMealPlan.getRecipes().get(i).getTitle());
+										}
+										// Check if the ingredients are the same size
+										assertEquals(addedMealPlan.getIngredients().size(),
+											retrievedMealPlan.getIngredients().size());
+										// Check if the ingredients are the same
+										for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+											assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+												retrievedMealPlan.getIngredients().get(i).getId());
+											assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+												retrievedMealPlan.getIngredients().get(i).getDescription());
+											assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+												retrievedMealPlan.getIngredients().get(i).getAmount());
+											assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+												retrievedMealPlan.getIngredients().get(i).getUnit());
+										}
 										mealPlanLatch.countDown();
 									} else {
 										Log.e(TAG, "Failed to retrieve meal plan");
@@ -291,10 +352,30 @@ public class MealPlanDBTest {
 									retrievedMealPlan.getEatDate());
 								assertEquals(addedMealPlan.getServings(),
 									retrievedMealPlan.getServings());
-								assertEquals(addedMealPlan.getRecipes(),
-									retrievedMealPlan.getRecipes());
-								assertEquals(addedMealPlan.getIngredients(),
-									retrievedMealPlan.getIngredients());
+								// Check if the recipes are the same size
+								assertEquals(addedMealPlan.getRecipes().size(),
+									retrievedMealPlan.getRecipes().size());
+								// Check if the recipes are the same using their titles
+								for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+									assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+										retrievedMealPlan.getRecipes().get(i).getId());
+									assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+										retrievedMealPlan.getRecipes().get(i).getTitle());
+								}
+								// Check if the ingredients are the same size
+								assertEquals(addedMealPlan.getIngredients().size(),
+									retrievedMealPlan.getIngredients().size());
+								// Check if the ingredients are the same
+								for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+									assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+										retrievedMealPlan.getIngredients().get(i).getId());
+									assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+										retrievedMealPlan.getIngredients().get(i).getDescription());
+									assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+										retrievedMealPlan.getIngredients().get(i).getAmount());
+									assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+										retrievedMealPlan.getIngredients().get(i).getUnit());
+								}
 								ingredientLatch.countDown();
 							} else {
 								Log.e(TAG, "Failed to retrieve meal plan");
@@ -349,10 +430,30 @@ public class MealPlanDBTest {
 												retrievedMealPlan.getEatDate());
 											assertEquals(updatedMealPlan.getServings(),
 												retrievedMealPlan.getServings());
-											assertEquals(updatedMealPlan.getRecipes(),
-												retrievedMealPlan.getRecipes());
-											assertEquals(updatedMealPlan.getIngredients(),
-												retrievedMealPlan.getIngredients());
+											// Check if the recipes are the same size
+											assertEquals(addedMealPlan.getRecipes().size(),
+												retrievedMealPlan.getRecipes().size());
+											// Check if the recipes are the same using their titles
+											for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+												assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+													retrievedMealPlan.getRecipes().get(i).getId());
+												assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+													retrievedMealPlan.getRecipes().get(i).getTitle());
+											}
+											// Check if the ingredients are the same size
+											assertEquals(addedMealPlan.getIngredients().size(),
+												retrievedMealPlan.getIngredients().size());
+											// Check if the ingredients are the same
+											for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+												assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+													retrievedMealPlan.getIngredients().get(i).getId());
+												assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+													retrievedMealPlan.getIngredients().get(i).getDescription());
+												assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+													retrievedMealPlan.getIngredients().get(i).getAmount());
+												assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+													retrievedMealPlan.getIngredients().get(i).getUnit());
+											}
 											mealPlanLatch.countDown();
 										} else {
 											Log.e(TAG, "Failed to retrieve meal plan");
@@ -405,10 +506,30 @@ public class MealPlanDBTest {
 									retrievedMealPlan.getEatDate());
 								assertEquals(addedMealPlan2.getServings(),
 									retrievedMealPlan.getServings());
-								assertEquals(addedMealPlan2.getRecipes(),
-									retrievedMealPlan.getRecipes());
-								assertEquals(addedMealPlan2.getIngredients(),
-									retrievedMealPlan.getIngredients());
+								// Check if the recipes are the same size
+								assertEquals(addedMealPlan.getRecipes().size(),
+									retrievedMealPlan.getRecipes().size());
+								// Check if the recipes are the same using their titles
+								for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+									assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+										retrievedMealPlan.getRecipes().get(i).getId());
+									assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+										retrievedMealPlan.getRecipes().get(i).getTitle());
+								}
+								// Check if the ingredients are the same size
+								assertEquals(addedMealPlan.getIngredients().size(),
+									retrievedMealPlan.getIngredients().size());
+								// Check if the ingredients are the same
+								for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+									assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+										retrievedMealPlan.getIngredients().get(i).getId());
+									assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+										retrievedMealPlan.getIngredients().get(i).getDescription());
+									assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+										retrievedMealPlan.getIngredients().get(i).getAmount());
+									assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+										retrievedMealPlan.getIngredients().get(i).getUnit());
+								}
 								mealPlanLatch.countDown();
 							} else {
 								Log.e(TAG, "Failed to retrieve meal plan");
@@ -489,11 +610,30 @@ public class MealPlanDBTest {
 																					retrievedMealPlan.getEatDate());
 																				assertEquals(updatedMealPlan.getServings(),
 																					retrievedMealPlan.getServings());
-																				assertEquals(updatedMealPlan.getRecipes(),
-																					retrievedMealPlan.getRecipes());
-																				assertEquals(updatedMealPlan.getIngredients(),
-																					retrievedMealPlan.getIngredients());
-																				// Count down the latch
+																				// Check if the ingredients are the same size
+																				assertEquals(addedMealPlan.getIngredients().size(),
+																					retrievedMealPlan.getIngredients().size());
+																				// Check if the ingredients are the same
+																				for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+																					assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+																						retrievedMealPlan.getIngredients().get(i).getId());
+																					assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+																						retrievedMealPlan.getIngredients().get(i).getDescription());
+																					assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+																						retrievedMealPlan.getIngredients().get(i).getAmount());
+																					assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+																						retrievedMealPlan.getIngredients().get(i).getUnit());
+																				}
+																				// Check if the recipes are the same size
+																				assertEquals(addedMealPlan.getRecipes().size(),
+																					retrievedMealPlan.getRecipes().size());
+																				// Check if the recipes are the same using their titles
+																				for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+																					assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+																						retrievedMealPlan.getRecipes().get(i).getId());
+																					assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+																						retrievedMealPlan.getRecipes().get(i).getTitle());
+																				}
 																				mealPlanLatch.countDown();
 																			} else {
 																				Log.e(TAG, "Failed to retrieve meal plan");
@@ -619,9 +759,30 @@ public class MealPlanDBTest {
 									assertEquals(updatedMealPlan.getCategory(), retrievedMealPlan.getCategory());
 									assertEquals(updatedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
 									assertEquals(updatedMealPlan.getServings(), retrievedMealPlan.getServings());
-									assertEquals(updatedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
-									assertEquals(updatedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
-									// Count down the latch
+									// Check if the recipes are the same size
+									assertEquals(addedMealPlan.getRecipes().size(),
+										retrievedMealPlan.getRecipes().size());
+									// Check if the recipes are the same using their titles
+									for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+										assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+											retrievedMealPlan.getRecipes().get(i).getId());
+										assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+											retrievedMealPlan.getRecipes().get(i).getTitle());
+									}
+									// Check if the ingredients are the same size
+									assertEquals(addedMealPlan.getIngredients().size(),
+										retrievedMealPlan.getIngredients().size());
+									// Check if the ingredients are the same
+									for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+										assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+											retrievedMealPlan.getIngredients().get(i).getId());
+										assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+											retrievedMealPlan.getIngredients().get(i).getDescription());
+										assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+											retrievedMealPlan.getIngredients().get(i).getAmount());
+										assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+											retrievedMealPlan.getIngredients().get(i).getUnit());
+									}									// Count down the latch
 									mealPlanLatch.countDown();
 								} else {
 									Log.e(TAG, "Failed to retrieve meal plan");
@@ -667,8 +828,30 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
 						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
-						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
-						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Check if the recipes are the same size
+						assertEquals(addedMealPlan.getRecipes().size(),
+							retrievedMealPlan.getRecipes().size());
+						// Check if the recipes are the same using their titles
+						for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+							assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+								retrievedMealPlan.getRecipes().get(i).getId());
+							assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+								retrievedMealPlan.getRecipes().get(i).getTitle());
+						}
+						// Check if the ingredients are the same size
+						assertEquals(addedMealPlan.getIngredients().size(),
+							retrievedMealPlan.getIngredients().size());
+						// Check if the ingredients are the same
+						for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+							assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+								retrievedMealPlan.getIngredients().get(i).getId());
+							assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+								retrievedMealPlan.getIngredients().get(i).getDescription());
+							assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+								retrievedMealPlan.getIngredients().get(i).getAmount());
+							assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+								retrievedMealPlan.getIngredients().get(i).getUnit());
+						}
 						// Count down the latch
 						mealPlanLatch.countDown();
 					} else {
@@ -716,8 +899,30 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
 						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
-						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
-						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Check if the recipes are the same size
+						assertEquals(addedMealPlan.getRecipes().size(),
+							retrievedMealPlan.getRecipes().size());
+						// Check if the recipes are the same using their titles
+						for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+							assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+								retrievedMealPlan.getRecipes().get(i).getId());
+							assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+								retrievedMealPlan.getRecipes().get(i).getTitle());
+						}
+						// Check if the ingredients are the same size
+						assertEquals(addedMealPlan.getIngredients().size(),
+							retrievedMealPlan.getIngredients().size());
+						// Check if the ingredients are the same
+						for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+							assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+								retrievedMealPlan.getIngredients().get(i).getId());
+							assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+								retrievedMealPlan.getIngredients().get(i).getDescription());
+							assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+								retrievedMealPlan.getIngredients().get(i).getAmount());
+							assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+								retrievedMealPlan.getIngredients().get(i).getUnit());
+						}
 						// Count down the latch
 						mealPlanLatch.countDown();
 					} else {
@@ -760,8 +965,30 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
 						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
-						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
-						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Check if the recipes are the same size
+						assertEquals(addedMealPlan.getRecipes().size(),
+							retrievedMealPlan.getRecipes().size());
+						// Check if the recipes are the same using their titles
+						for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+							assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+								retrievedMealPlan.getRecipes().get(i).getId());
+							assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+								retrievedMealPlan.getRecipes().get(i).getTitle());
+						}
+						// Check if the ingredients are the same size
+						assertEquals(addedMealPlan.getIngredients().size(),
+							retrievedMealPlan.getIngredients().size());
+						// Check if the ingredients are the same
+						for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+							assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+								retrievedMealPlan.getIngredients().get(i).getId());
+							assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+								retrievedMealPlan.getIngredients().get(i).getDescription());
+							assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+								retrievedMealPlan.getIngredients().get(i).getAmount());
+							assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+								retrievedMealPlan.getIngredients().get(i).getUnit());
+						}
 						// Count down the latch
 						mealPlanLatch.countDown();
 					} else {
@@ -804,8 +1031,30 @@ public class MealPlanDBTest {
 						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
 						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
 						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
-						assertEquals(addedMealPlan.getRecipes(), retrievedMealPlan.getRecipes());
-						assertEquals(addedMealPlan.getIngredients(), retrievedMealPlan.getIngredients());
+						// Check if the recipes are the same size
+						assertEquals(addedMealPlan.getRecipes().size(),
+							retrievedMealPlan.getRecipes().size());
+						// Check if the recipes are the same using their titles
+						for (int i = 0; i < addedMealPlan.getRecipes().size(); i++) {
+							assertEquals(addedMealPlan.getRecipes().get(i).getId(),
+								retrievedMealPlan.getRecipes().get(i).getId());
+							assertEquals(addedMealPlan.getRecipes().get(i).getTitle(),
+								retrievedMealPlan.getRecipes().get(i).getTitle());
+						}
+						// Check if the ingredients are the same size
+						assertEquals(addedMealPlan.getIngredients().size(),
+							retrievedMealPlan.getIngredients().size());
+						// Check if the ingredients are the same
+						for (int i = 0; i < addedMealPlan.getIngredients().size(); i++) {
+							assertEquals(addedMealPlan.getIngredients().get(i).getId(),
+								retrievedMealPlan.getIngredients().get(i).getId());
+							assertEquals(addedMealPlan.getIngredients().get(i).getDescription(),
+								retrievedMealPlan.getIngredients().get(i).getDescription());
+							assertEquals(addedMealPlan.getIngredients().get(i).getAmount(),
+								retrievedMealPlan.getIngredients().get(i).getAmount());
+							assertEquals(addedMealPlan.getIngredients().get(i).getUnit(),
+								retrievedMealPlan.getIngredients().get(i).getUnit());
+						}
 						// Count down the latch
 						mealPlanLatch.countDown();
 					} else {
