@@ -57,7 +57,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
     /**
      * The listener for an item click in the RecyclerView
      */
-    private StorageIngredientAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
     // TODO: keep the context for now, try to remove it later
     public MealPlanAdapter(MealPlanDB db) {
@@ -77,7 +77,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      * @param listener the listener to set
      */
     // TODO: move this to superclass
-    public void setOnItemClickListener(StorageIngredientAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -107,7 +107,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                 holder.getTitleTextView().setText(mealPlan.getTitle());
                 holder.getCategoryTextView().setText(mealPlan.getCategory());
                 holder.getMaterialCardView().setOnClickListener(
-                        view -> .launch(holder.getAdapterPosition()));
+                        view -> listener.onItemClick(mealPlan));
 
                 UTCDate today = new UTCDate();
                 UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
@@ -146,11 +146,11 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                 weekLabel += eatDateLastDayOfWeek.format("d");
                 holder.getWeekTextView().setText(weekLabel);
                 holder.getWeekTextView().setVisibility(View.VISIBLE);
-                if (today.equals(eatDate)) {
-                    holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
-                } else {
-                    holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
-                }
+//                if (today.equals(eatDate)) {
+//                    holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
+//                } else {
+//                    holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
+//                }
             }
         });
     }

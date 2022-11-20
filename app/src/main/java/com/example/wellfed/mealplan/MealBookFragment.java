@@ -41,19 +41,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.AdapterDataObserver;
-import com.example.wellfed.common.Launcher;
 
 public class MealBookFragment extends Fragment
-        implements Launcher,
-                   AdapterDataObserver.OnAdapterDataChangedListener,
+        implements AdapterDataObserver.OnAdapterDataChangedListener,
                    MealPlanAdapter.OnItemClickListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private MealPlanAdapter mealPlanAdapter;
     private MealPlanController controller;
-    private int selected;
 
     ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanContract(), result -> {
@@ -64,13 +60,13 @@ public class MealBookFragment extends Fragment
                 MealPlan mealPlan = result.second;
                 switch (type) {
                     case "delete":
-                        controller.deleteMealPlan(this.selected);
+//                        controller.deleteMealPlan(this.selected);
                         break;
                     case "edit":
-                        controller.editMealPlan(selected, mealPlan);
+//                        controller.editMealPlan(selected, mealPlan);
                         break;
                     case "launch":
-                        this.launch(this.selected);
+//                        this.launch(this.selected);
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -118,8 +114,7 @@ public class MealBookFragment extends Fragment
 
         this.controller.getAdapter().registerAdapterDataObserver(
                 new AdapterDataObserver(this));
-        this.controller.setAdapter(this.mealPlanAdapter);
-        this.mealPlanRecyclerView.setAdapter(this.mealPlanAdapter);
+        this.mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
         this.controller.getAdapter().notifyItemRangeChanged(0,
                 this.controller.getMealPlans().size());
@@ -128,13 +123,8 @@ public class MealBookFragment extends Fragment
                 getString(R.string.greeting, "Akshat"));
     }
 
-    @Override public void launch(MealPlan mealPlan) {
+    public void launch(MealPlan mealPlan) {
         launcher.launch(mealPlan);
-    }
-
-    @Override
-    public void launch() {
-        editLauncher.launch(null);
     }
 
     private void updateCallToAction() {
@@ -160,7 +150,7 @@ public class MealBookFragment extends Fragment
     }
 
     @Override
-    public onItemClick(MealPlan mealPlan) {
+    public void onItemClick(MealPlan mealPlan) {
         this.launch(mealPlan);
     }
 }
