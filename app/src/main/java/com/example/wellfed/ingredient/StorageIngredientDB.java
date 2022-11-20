@@ -68,21 +68,20 @@ public class StorageIngredientDB {
 		void onAddStoredIngredient(StorageIngredient storageIngredient, Boolean success);
 	}
 
-    /**
-     * This interface is used to handle the result of
-     * deleting the chosen StorageIngredient object from the db
-     */
-    public interface OnDeleteStorageIngredientListener {
-        /**
-         * Called when addStorageIngredient returns a result
-         *
-         * @param storageIngredient the storageIngredient deleted from the db
-         * @param success           true if the operation is successful, false
-         *                          otherwise
-         */
-        void onDeleteStorageIngredient(StorageIngredient storageIngredient,
-                                       Boolean success);
-    }
+	/**
+	 * This interface is used to handle the result of
+	 * delete StorageIngredient to the db
+	 */
+	public interface OnDeleteStorageIngredientListener {
+		/**
+		 * Called when addStorageIngredient returns a result
+		 *
+		 * @param storageIngredient the storageIngredient deleted from the db
+		 * @param success           true if the operation is successful, false
+		 *                          otherwise
+		 */
+		void onDeleteStorageIngredient(StorageIngredient storageIngredient, Boolean success);
+	}
 
 	/**
 	 * This interface is used to handle the result of
@@ -316,23 +315,58 @@ public class StorageIngredientDB {
 		});
 	}
 
-    /**
-     * Get the DocumentReference from Recipes collection for the given id
-     *
-     * @param id The String of the document in Recipes collection we want
-     * @return DocumentReference of the Recipe
-     */
-    public DocumentReference getDocumentReference(String id) {
-        return this.collection.document(id);
-    }
+	/**
+	 * Gets a query for StorageIngredients in Firestore
+	 *
+	 * @return the query
+	 */
+	public Query getQuery() {
+		return this.collection.orderBy("best-before",
+				Query.Direction.DESCENDING);
+	}
 
-    /**
-     * Gets a query for StorageIngredients in Firestore
-     *
-     * @return the query
-     */
-    public Query getQuery() {
-        return this.collection;
-        //                .orderBy("timestamp", Query.Direction.DESCENDING)
-    }
+	public interface OnAllIngredients {
+		void onAllIngredients(ArrayList<StorageIngredient> ingredients, boolean success);
+	}
+
+	public void getAllStorageIngredients(OnAllIngredients listener) {
+		// If collection is empty, return empty query
+		if (this.collection == null) {
+			listener.onAllIngredients(null, false);
+			return;
+		}
+		ArrayList<StorageIngredient> storageIngredients = new ArrayList<>();
+		this.collection.get()
+				.addOnSuccessListener(queryDocumentSnapshots -> {
+					AtomicInteger i = new AtomicInteger(queryDocumentSnapshots.size());
+					AtomicInteger found = new AtomicInteger(0);
+					for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+						DocumentReference ingredientRef = (DocumentReference) snapshot.getData().get("Ingredient");
+						ingredientRef.get()
+								.addOnSuccessListener(ingredientSnap -> {
+									String description = ingredientSnap.getString("description");
+									StorageIngredient storageIngredient = new StorageIngredient(description);
+									storageIngredient.setStorageId(snapshot.getId());
+									storageIngredient.setCategory(ingredientSnap.getString("category"));
+									storageIngredient.setAmount((Double) snapshot.getData().get("amount"));
+									storageIngredient.setUnit((String) snapshot.getData().get("unit"));
+									storageIngredient.setLocation((String) snapshot.getData().get("location"));
+									// Get Firebase Timestamp and convert to Date
+									Timestamp bestBefore = (Timestamp) snapshot.getData().get("best-before");
+									assert bestBefore != null;
+									storageIngredient.setBestBefore(bestBefore.toDate());
+
+									storageIngredients.add(storageIngredient);
+									found.getAndAdd(1);
+									if (found.get() == i.get()) {
+										listener.onAllIngredients(storageIngredients, true);
+									}
+								})
+								.addOnFailureListener(failure -> {
+									listener.onAllIngredients(null, false);
+								});
+					}
+				});
+	}
+
 }
