@@ -14,6 +14,7 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class is used to access the meal plan database.
@@ -353,30 +354,132 @@ public class MealPlanDB {
     public void updateMealPlan(MealPlan mealPlan,
                                OnUpdateMealPlanListener listener) {
         //        TODO: use update function instead of delete and add
-        if (mealPlan == null) {
-            listener.onUpdateMealPlanResult(null, false);
+        // Get reference to the MealPlan document with the given id
+        // so that we can perform update() on it.
+        DocumentReference mealPlanRef =
+                this.mealPlanCollection.document(mealPlan.getId());
+
+        // Using the helper functions, convert ingredients & recipes
+        // stored in the MealPlan object to a format that can be
+        // stored in the db.
+        ArrayList<HashMap<String, Object>> mealPlanIngredients =
+                getMealPlanIngredients(mealPlan);
+        ArrayList<DocumentReference> mealPlanRecipes =
+                getMealPlanRecipes(mealPlan);
+
+        mealPlanRef.update(
+                "title", mealPlan.getTitle(),
+                "category", mealPlan.getCategory(),
+                "eat date", mealPlan.getEatDate(),
+                "servings", mealPlan.getServings(),
+                "ingredients", mealPlanIngredients,
+                "recipes", mealPlanRecipes
+        ).addOnSuccessListener(success -> {
+            listener.onUpdateMealPlanResult(mealPlan, true);
+        }).addOnFailureListener(failure -> {
+            listener.onUpdateMealPlanResult(mealPlan, false);
+        });
+    }
+
+    /**
+     * Helper function that gets the list of ingredients from the given
+     * MealPlan object and returns an ArrayList of HashMaps that contain
+     * the ingredientRef, amount & unit of each ingredient.
+     *
+     * @param mealPlan the MealPlan object.
+     * @return ArrayList of HashMaps of converted ingredients.
+     */
+    public ArrayList<HashMap<String, Object>> getMealPlanIngredients(MealPlan mealPlan) {
+        // Initializes an empty ArrayList to store the HashMaps.
+        ArrayList<HashMap<String, Object>> mealPlanIngredients = new ArrayList<>();
+
+        // AtomicInteger used later as a lock to ensure that the
+        // ArrayList of HashMaps is returned only after all the
+        // ingredients have been converted.
+        AtomicInteger counter = new AtomicInteger(0);
+        for (Ingredient ingredient: mealPlan.getIngredients()) {
+            ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
+                // If the ingredient already exists in Ingredient collection.
+                if (foundIngredient != null) {
+                    // Initializes HashMap for mapping.
+                    HashMap<String, Object> ingredientMap = new HashMap<>();
+
+                    // Sets fields.
+                    ingredientMap.put("ingredientRef",
+                            ingredientDB.getDocumentReference(foundIngredient));
+                    ingredientMap.put("amount", ingredient.getAmount());
+                    ingredientMap.put("unit", ingredient.getUnit());
+
+                    // Atomically adds the given value to the current value,
+                    // with memory effects as specified by VarHandle.getAndAdd.
+                    counter.addAndGet(1);
+                    mealPlanIngredients.add(ingredientMap);
+                } else {
+                    // If the ingredient does not exist in our Ingredient collection,
+                    // we will create a new ingredient for it.
+                    ingredientDB.addIngredient(ingredient, (addedIngredient, success1) -> {
+                        if (addedIngredient == null) {
+                            return;
+                        }
+                        ingredient.setId(addedIngredient.getId());
+
+                        // Initializes HashMap for mapping.
+                        HashMap<String, Object> ingredientMap = new HashMap<>();
+                        ingredientMap.put("ingredientRef",
+                                ingredientDB.getDocumentReference(addedIngredient));
+                        ingredientMap.put("amount", ingredient.getAmount());
+                        ingredientMap.put("unit", ingredient.getUnit());
+
+                        counter.addAndGet(1);
+                        mealPlanIngredients.add(ingredientMap);
+                    });
+                }
+            });
         }
-        String oldId = mealPlan.getId();
-        // Adds the new MealPlan object to the db.
-        addMealPlan(mealPlan, (addedMealPlan, success1) -> {
-            // Check if the MealPlan object was added successfully.
-            if (!success1) {
-                listener.onUpdateMealPlanResult(mealPlan, false);
+
+        return mealPlanIngredients;
+    }
+
+    /**
+     * Helper function that gets the list of recipes from the given
+     * MealPlan object and returns an ArrayList of DocumentReferences.
+     *
+     * @param mealPlan the MealPlan object.
+     * @return ArrayList of DocumentReferences of converted recipes.
+     */
+    public ArrayList<DocumentReference> getMealPlanRecipes(MealPlan mealPlan) {
+        // Initializes an empty ArrayList to store the DocumentReferences.
+        ArrayList<DocumentReference> mealPlanRecipes = new ArrayList<>();
+
+        // AtomicInteger used later as a lock to ensure that the
+        // ArrayList of DocumentReferences is returned only after all the
+        // recipes have been converted.
+        AtomicInteger counter = new AtomicInteger(0);
+        for (Recipe recipe : mealPlan.getRecipes()) {
+            if (recipe.getId() != null) {
+                // If the recipe has an id, gets the recipe's reference from db.
+                DocumentReference recipeRef =
+                        recipeDB.getDocumentReference(recipe.getId());
+
+                counter.addAndGet(1);
+                mealPlanRecipes.add(recipeRef);
             } else {
-                String newId = addedMealPlan.getId();
-                mealPlan.setId(oldId);
-                // Deletes the old MealPlan object.
-                delMealPlan(mealPlan, (deletedMealPlan, success2) -> {
-                    // Check if the MealPlan object was deleted successfully.
-                    mealPlan.setId(newId);
-                    if (!success2) {
-                        listener.onUpdateMealPlanResult(mealPlan, false);
-                    } else {
-                        listener.onUpdateMealPlanResult(mealPlan, true);
+                // If the recipe does not exist, we add it to the db.
+                recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
+                    if (addedRecipe == null) {
+                        return;
                     }
+                    recipe.setId(addedRecipe.getId());
+
+                    counter.addAndGet(1);
+                    // Adds DocumentReference to the ArrayList.
+                    mealPlanRecipes.add(
+                            recipeDB.getDocumentReference(addedRecipe.getId()));
                 });
             }
-        });
+        }
+
+        return mealPlanRecipes;
     }
 
 
