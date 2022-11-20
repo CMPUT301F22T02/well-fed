@@ -95,10 +95,19 @@ public class RecipeDBTest {
 
         // checking ingredients
         assertEquals(expected.getIngredients().size(), actual.getIngredients().size());
-        for (int i = 0; i < expected.getIngredients().size(); i++) {
+        for (int i = 0; i < actual.getIngredients().size(); i++) {
             Ingredient actualIngredient = actual.getIngredient(i);
-            Ingredient expectedIngredient = expected.getIngredient(i);
-            assertEquals(expectedIngredient.getId(), actualIngredient.getId());
+            // search for the needed Ingredient
+            Integer expectedIndex = null;
+            for (int j = 0; j < expected.getIngredients().size(); j++) {
+                if (Objects.equals(expected.getIngredient(j).getId(), actualIngredient.getId())) {
+                    expectedIndex = j;
+                    break;
+                }
+            }
+            assertNotNull(expectedIndex);
+            Ingredient expectedIngredient = expected.getIngredient(expectedIndex);
+
             assertEquals(expectedIngredient.getCategory(), actualIngredient.getCategory());
             assertEquals(expectedIngredient.getDescription(), actualIngredient.getDescription());
             assertEquals(expectedIngredient.getUnit(), actualIngredient.getUnit());
@@ -376,7 +385,7 @@ public class RecipeDBTest {
         testRecipe.setComments("This egg salad is great for picnics.");
         testRecipe.setServings(3);
         testRecipe.setPrepTimeMinutes(20);
-        testRecipe.removeIngredient(testIngredient);
+        testRecipe.removeIngredient(testIngredient2);
         testRecipe.addIngredient(newTestIngredient);
         testRecipe.setCategory("Lunch");
 
@@ -413,7 +422,41 @@ public class RecipeDBTest {
      * Tests getting a non-existent recipe.
      */
     @Test
-    public void testGetNonExistentRecipe() {
+    @Ignore("TODO: Manpreet implement this")
+    public void testGetNonExistentRecipe() throws InterruptedException {
+        // add the recipe
+        Ingredient testIngredient = mockIngredient("Egg");
+        Ingredient testIngredient2 = mockIngredient("Duck Egg");
 
+        Recipe testRecipe = mockRecipe(testIngredient, testIngredient2);
+
+        // changing each field of the recipe
+        Ingredient newTestIngredient = mockIngredient("Mayonnaise");
+        newTestIngredient.setCategory("Condiment");
+
+        testRecipe.setId("-1");
+        testRecipe.setTitle("Egg Salad");
+        testRecipe.setComments("This egg salad is great for picnics.");
+        testRecipe.setServings(3);
+        testRecipe.setPrepTimeMinutes(20);
+        testRecipe.removeIngredient(testIngredient);
+        testRecipe.addIngredient(newTestIngredient);
+        testRecipe.setCategory("Lunch");
+
+        // now, get the non-existing recipe
+        CountDownLatch getLatch = new CountDownLatch(1);
+        AtomicReference<Recipe> resultRecipeRef = new AtomicReference<Recipe>();
+        recipeDB.getRecipe(testRecipe.getId(), (resultRecipe, success) -> {
+            resultRecipeRef.set(resultRecipe);
+            getLatch.countDown();
+        });
+
+        if (!getLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertEqualRecipe(testRecipe, resultRecipeRef.get());
+
+        cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }
 }
