@@ -32,7 +32,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBAdapter;
 import com.example.wellfed.common.UTCDate;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.example.wellfed.ingredient.StorageIngredientAdapter;
 import com.google.android.material.color.MaterialColors;
 
 import java.util.ArrayList;
@@ -48,14 +51,34 @@ import java.util.ArrayList;
  * @author Steven Tang
  * @version v1.0.0 2022-10-24
  **/
-public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
-    private final MealBookFragment context;
-    private final ArrayList<MealPlan> mealPlans;
+public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
+    private final MealPlanDB db;
 
-    public MealPlanAdapter(MealBookFragment context,
-                           ArrayList<MealPlan> mealPlans) {
-        this.context = context;
-        this.mealPlans = mealPlans;
+    /**
+     * The listener for an item click in the RecyclerView
+     */
+    private StorageIngredientAdapter.OnItemClickListener listener;
+
+    // TODO: keep the context for now, try to remove it later
+    public MealPlanAdapter(MealPlanDB db) {
+        super(db.getQuery());
+        this.db = db;
+    }
+
+    /**
+     * The listener for an item click in the RecyclerView
+     */
+    public interface OnItemClickListener {
+        void onItemClick(MealPlan mealPlan);
+    }
+
+    /**
+     * Sets the listener for an item click in the Recyclerview
+     * @param listener the listener to set
+     */
+    // TODO: move this to superclass
+    public void setOnItemClickListener(StorageIngredientAdapter.OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     /*
@@ -79,57 +102,56 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
     @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
                                            int position) {
 
-        MealPlan mealPlan = this.mealPlans.get(position);
-        holder.getTitleTextView().setText(mealPlan.getTitle());
-        holder.getCategoryTextView().setText(mealPlan.getCategory());
-        holder.getMaterialCardView().setOnClickListener(
-                view -> context.launch(holder.getAdapterPosition()));
+        db.getMealPlan(getSnapshot(position).getId(), (mealPlan, success) -> {
+            if (success) {
+                holder.getTitleTextView().setText(mealPlan.getTitle());
+                holder.getCategoryTextView().setText(mealPlan.getCategory());
+                holder.getMaterialCardView().setOnClickListener(
+                        view -> .launch(holder.getAdapterPosition()));
 
-        UTCDate today = new UTCDate();
-        UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
+                UTCDate today = new UTCDate();
+                UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
 
-        int colorPrimary = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorPrimary);
-        int colorOnPrimary = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorOnPrimary);
-        int colorSurface = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorSurface);
-        int colorOnSurface = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorOnSurface);
+//                int colorPrimary = MaterialColors.getColor(context.getView(),
+//                        com.google.android.material.R.attr.colorPrimary);
+//                int colorOnPrimary = MaterialColors.getColor(context.getView(),
+//                        com.google.android.material.R.attr.colorOnPrimary);
+//                int colorSurface = MaterialColors.getColor(context.getView(),
+//                        com.google.android.material.R.attr.colorSurface);
+//                int colorOnSurface = MaterialColors.getColor(context.getView(),
+//                        com.google.android.material.R.attr.colorOnSurface);
 
-        UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
-        if (position > 0) {
-            MealPlan priorMealPlan = this.mealPlans.get(position - 1);
-            UTCDate priorEatDate = UTCDate.from(priorMealPlan.getEatDate());
-            if (priorEatDate.equals(eatDate)) {
-                return;
+                UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
+                if (position > 0) {
+//                    // TODO: this is a hack, fix it later
+//                    MealPlan priorMealPlan = this.mealPlans.get(position - 1);
+//                    UTCDate priorEatDate = UTCDate.from(priorMealPlan.getEatDate());
+//                    if (priorEatDate.equals(eatDate)) {
+//                        return;
+//                    }
+//                    UTCDate priorEatDateFirstDayOfWeek =
+//                            priorEatDate.getFirstDayOfWeek();
+//                    if (eatDateFirstDayOfWeek.equals(priorEatDateFirstDayOfWeek)) {
+//                        return;
+//                    }
+                }
+                UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
+                String eatDateFirstDayOfWeekMonth = eatDateFirstDayOfWeek.format("MMMM ");
+                String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
+                String weekLabel = eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
+                String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
+                if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
+                    weekLabel += eatDateLastDayOfWeekMonth;
+                }
+                weekLabel += eatDateLastDayOfWeek.format("d");
+                holder.getWeekTextView().setText(weekLabel);
+                holder.getWeekTextView().setVisibility(View.VISIBLE);
+                if (today.equals(eatDate)) {
+                    holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
+                } else {
+                    holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
+                }
             }
-            UTCDate priorEatDateFirstDayOfWeek =
-                    priorEatDate.getFirstDayOfWeek();
-            if (eatDateFirstDayOfWeek.equals(priorEatDateFirstDayOfWeek)) {
-                return;
-            }
-        }
-        UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
-        String eatDateFirstDayOfWeekMonth = eatDateFirstDayOfWeek.format("MMMM ");
-        String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
-        String weekLabel = eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
-        String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
-        if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
-            weekLabel += eatDateLastDayOfWeekMonth;
-        }
-        weekLabel += eatDateLastDayOfWeek.format("d");
-        holder.getWeekTextView().setText(weekLabel);
-        holder.getWeekTextView().setVisibility(View.VISIBLE);
-        if (today.equals(eatDate)) {
-            holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
-        } else {
-            holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
-        }
+        });
     }
-
-    @Override public int getItemCount() {
-        return this.mealPlans.size();
-    }
-
 }

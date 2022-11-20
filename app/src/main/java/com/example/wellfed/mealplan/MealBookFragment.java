@@ -45,7 +45,8 @@ import com.example.wellfed.common.Launcher;
 
 public class MealBookFragment extends Fragment
         implements Launcher,
-                   AdapterDataObserver.OnAdapterDataChangedListener {
+                   AdapterDataObserver.OnAdapterDataChangedListener,
+                   MealPlanAdapter.OnItemClickListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
@@ -113,25 +114,22 @@ public class MealBookFragment extends Fragment
                 new LinearLayoutManager(getContext());
         this.mealPlanRecyclerView.setLayoutManager(linearLayoutManager);
 
-        controller = new MealPlanController();
+        controller = new MealPlanController(getActivity());
 
-        this.mealPlanAdapter =
-                new MealPlanAdapter(this, this.controller.getMealPlans());
-        this.mealPlanAdapter.registerAdapterDataObserver(
+        this.controller.getAdapter().registerAdapterDataObserver(
                 new AdapterDataObserver(this));
         this.controller.setAdapter(this.mealPlanAdapter);
         this.mealPlanRecyclerView.setAdapter(this.mealPlanAdapter);
 
-        this.mealPlanAdapter.notifyItemRangeChanged(0,
+        this.controller.getAdapter().notifyItemRangeChanged(0,
                 this.controller.getMealPlans().size());
 
         this.userFirstNameTextView.setText(
                 getString(R.string.greeting, "Akshat"));
     }
 
-    @Override public void launch(int selected) {
-        this.selected = selected;
-        launcher.launch(this.controller.getMealPlans().get(selected));
+    @Override public void launch(MealPlan mealPlan) {
+        launcher.launch(mealPlan);
     }
 
     @Override
@@ -159,5 +157,10 @@ public class MealBookFragment extends Fragment
 
     @Override public void onAdapterDataChanged() {
         this.updateCallToAction();
+    }
+
+    @Override
+    public onItemClick(MealPlan mealPlan) {
+        this.launch(mealPlan);
     }
 }
