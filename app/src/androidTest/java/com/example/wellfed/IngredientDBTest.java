@@ -16,6 +16,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
 
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,8 +53,6 @@ public class IngredientDBTest {
         assertEquals(resultIngredient.getId(), expectedIngredient.getId());
         assertEquals(resultIngredient.getDescription(), expectedIngredient.getDescription());
         assertEquals(resultIngredient.getCategory(), expectedIngredient.getCategory());
-        assertEquals(resultIngredient.getAmount(), expectedIngredient.getAmount());
-        assertEquals(resultIngredient.getUnit(), expectedIngredient.getUnit());
     }
 
     private void removeIngredient(Ingredient mockIngredient) throws InterruptedException {
