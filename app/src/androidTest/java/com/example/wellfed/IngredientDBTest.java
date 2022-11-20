@@ -20,7 +20,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.sql.Time;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * The IngredientDBTest class is used to test the IngredientDB class.
@@ -43,7 +45,33 @@ public class IngredientDBTest {
     /**
      * Holds the instance of the nonExistingIngredient
      */
-    Ingredient nonExistingIngredient;
+    Ingredient mockNonExistingIngredient;
+
+    private void assertIngredientsEqual(Ingredient resultIngredient, Ingredient expectedIngredient){
+        assertNotNull(resultIngredient);
+        assertEquals(resultIngredient.getId(), expectedIngredient.getId());
+        assertEquals(resultIngredient.getDescription(), expectedIngredient.getDescription());
+        assertEquals(resultIngredient.getCategory(), expectedIngredient.getCategory());
+        assertEquals(resultIngredient.getAmount(), expectedIngredient.getAmount());
+        assertEquals(resultIngredient.getUnit(), expectedIngredient.getUnit());
+    }
+
+    private void removeIngredient(Ingredient mockIngredient) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        ingredientDB.deleteIngredient(mockIngredient,
+                (deletedIngredient, success) -> {
+            successAtomic.set(success);
+            latch.countDown();
+        });
+
+        if(!latch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+    }
 
     /**
      * Creates a new IngredientDB object and mock ingredients.
