@@ -22,25 +22,6 @@ public class RecipeIngredientSearch extends ActivityBase
         implements RecipeIngredientSearchAdapter.OnItemClickListener {
     private RecyclerView ingredientRecycleView;
 
-    // launch the edit recipeIngredientActivity
-//    ActivityResultLauncher<Pair<Ingredient, Class>> editIngredientLauncher =
-//            registerForActivityResult(new EditItemContract<>(),
-//            result -> {
-//                if (result == null){
-//                    return;
-//                }
-//                String type = result.first;
-//                Ingredient ingredient = result.second;
-//
-//                if (type.equals("edit")) {
-//                    Intent intent = new Intent();
-//                    intent.putExtra("type", type);
-//                    intent.putExtra("ingredient", ingredient);
-//                    setResult(Activity.RESULT_OK, intent);
-//                    finish();
-//                }
-//            });
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,15 +39,11 @@ public class RecipeIngredientSearch extends ActivityBase
 
     @Override
     public void onItemClick(Ingredient recipeIngredient) {
-        StorageIngredient storageIngredient = new StorageIngredient(recipeIngredient.getDescription());
-        storageIngredient.setCategory(recipeIngredient.getCategory());
         Intent intent = new Intent();
         intent.putExtra("type","add");
-        intent.putExtra("item",recipeIngredient);
+        intent.putExtra("item", recipeIngredient);
                 setResult(Activity.RESULT_OK, intent);
         finish();
-//        editIngredientLauncher.launch(new Pair<Ingredient, Class>(storageIngredient,
-//                RecipeIngredientEditActivity.class));
     }
 
 }
