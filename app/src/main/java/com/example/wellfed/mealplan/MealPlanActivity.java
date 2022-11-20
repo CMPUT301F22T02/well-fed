@@ -90,6 +90,7 @@ public class MealPlanActivity extends ActivityBase implements
         Intent intent = new Intent();
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
+        intent.putExtra("mealPlan", mealPlan);
         finish();
     }
 
