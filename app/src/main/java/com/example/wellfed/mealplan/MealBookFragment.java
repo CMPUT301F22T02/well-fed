@@ -44,15 +44,14 @@ import com.example.wellfed.common.AdapterDataObserver;
 import com.example.wellfed.common.Launcher;
 
 public class MealBookFragment extends Fragment
-        implements Launcher,
-                   AdapterDataObserver.OnAdapterDataChangedListener {
+        implements Launcher, AdapterDataObserver.OnAdapterDataChangedListener,
+                   MealPlanAdapter.OnItemClickListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private MealPlanAdapter mealPlanAdapter;
     private MealPlanController controller;
-    private int selected;
+    private MealPlan selectedMealPlan;
 
     ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanContract(), result -> {
@@ -63,13 +62,13 @@ public class MealBookFragment extends Fragment
                 MealPlan mealPlan = result.second;
                 switch (type) {
                     case "delete":
-                        controller.deleteMealPlan(this.selected);
+                        controller.deleteMealPlan(mealPlan);
                         break;
                     case "edit":
-                        controller.editMealPlan(selected, mealPlan);
+//                        controller.editMealPlan(selected, mealPlan);
                         break;
                     case "launch":
-                        this.launch(this.selected);
+//                        this.launch(this.selected);
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -113,28 +112,25 @@ public class MealBookFragment extends Fragment
                 new LinearLayoutManager(getContext());
         this.mealPlanRecyclerView.setLayoutManager(linearLayoutManager);
 
-        controller = new MealPlanController();
+        controller = new MealPlanController(getActivity());
 
-        this.mealPlanAdapter =
-                new MealPlanAdapter(this, this.controller.getMealPlans());
-        this.mealPlanAdapter.registerAdapterDataObserver(
+        this.controller.getAdapter().registerAdapterDataObserver(
                 new AdapterDataObserver(this));
-        this.controller.setAdapter(this.mealPlanAdapter);
-        this.mealPlanRecyclerView.setAdapter(this.mealPlanAdapter);
-
-        this.mealPlanAdapter.notifyItemRangeChanged(0,
-                this.controller.getMealPlans().size());
+        this.controller.getAdapter().setOnItemClickListener(this);
+        this.mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
         this.userFirstNameTextView.setText(
                 getString(R.string.greeting, "Akshat"));
     }
 
-    @Override public void launch(int selected) {
-        this.selected = selected;
-        launcher.launch(this.controller.getMealPlans().get(selected));
+    @Deprecated
+    public void launch(int pos) {
     }
 
-    @Override
+    public void launch(MealPlan mealPlan) {
+        launcher.launch(mealPlan);
+    }
+
     public void launch() {
         editLauncher.launch(null);
     }
@@ -142,8 +138,8 @@ public class MealBookFragment extends Fragment
     private void updateCallToAction() {
         MealPlan nextMealPlan = this.controller.getNextMealPlan();
         if (nextMealPlan != null) {
-            this.linearLayoutManager.scrollToPosition(
-                    this.controller.getMealPlans().indexOf(nextMealPlan));
+//            this.linearLayoutManager.scrollToPosition(
+//                    this.controller.getMealPlans().indexOf(nextMealPlan));
             SpannableStringBuilder callToAction =
                     new SpannableStringBuilder().append(
                                     getString(R.string.call_to_action_make_meal_plan))
@@ -159,5 +155,11 @@ public class MealBookFragment extends Fragment
 
     @Override public void onAdapterDataChanged() {
         this.updateCallToAction();
+    }
+
+    @Override
+    public void onItemClick(MealPlan mealPlan) {
+        this.selectedMealPlan = mealPlan;
+        this.launch(mealPlan);
     }
 }

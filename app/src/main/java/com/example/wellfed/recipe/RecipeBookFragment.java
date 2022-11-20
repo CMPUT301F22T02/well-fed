@@ -70,8 +70,10 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                         switch (type) {
                             case "delete":
                                 recipeController.deleteRecipe(recipe.getId());
+                                break;
                             case "edit":
                                 recipeController.editRecipe(recipe);
+                                break;
                             default:
                                 new IllegalArgumentException();
                         }

@@ -1,337 +1,358 @@
 package com.example.wellfed.mealplan;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-
-import android.media.Image;
-import android.util.Log;
-
+import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
-import com.example.wellfed.ingredient.StorageIngredient;
-import com.example.wellfed.ingredient.StorageIngredientDB;
+import com.example.wellfed.ingredient.IngredientDB;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
-import com.example.wellfed.recipe.RecipeIngredientDB;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Transaction;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 
+/**
+ * This class is used to access the meal plan database.
+ * It contains methods to add, remove, and update meal plans.
+ * It also contains methods to add, remove, and update recipes in meal plans.
+ */
 public class MealPlanDB {
+    /**
+     * Declares tag for logging purposes.
+     */
+    private final static String TAG = "MealPlanDB";
 
     /**
-     * Holds an instance of the Firebase Firestore database
+     * Holds the instance of the Firebase FireStore DB.
      */
-    private final FirebaseFirestore db;
+    private FirebaseFirestore db;
 
     /**
-     * Holds a collection to the Recipes stored in the FireStore db database
+     * Holds the instance of the RecipeDB.
      */
-    final CollectionReference mealCollection;
+    private RecipeDB recipeDB;
 
     /**
-     * Holds a collection to Ingredients stored in the FireStore db database
+     * Holds the instance of the StorageIngredientDB.
      */
-    final StorageIngredientDB ingredientDB;
+    private IngredientDB ingredientDB;
 
     /**
-     * Holds a collection to Ingredients stored in the FireStore db database
+     * Holds the CollectionReference for the users MealPlan collection.
      */
-    final RecipeDB recipeDB;
-
+    private CollectionReference mealPlanCollection;
 
     /**
-     * Create a MealPlanDB object
+     * This interface is used to handle the result of
+     * adding MealPlan to the db.
      */
-    public MealPlanDB(){
-        db = FirebaseFirestore.getInstance();
-        this.mealCollection = db.collection("MealPlans");
-        this.recipeDB = new RecipeDB();
-        this.ingredientDB = new StorageIngredientDB();
+    public interface OnAddMealPlanListener {
+        /**
+         * Called when addMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object added to the db,
+         *                 null if the add operation failed.
+         * @param success  true if the add operation was successful,
+         *                 false otherwise.
+         */
+        void onAddMealPlanResult(MealPlan mealPlan, boolean success);
     }
 
     /**
-     * Adds new MealPlan to the database.
-     * @param mealPlan the MealPlan to add to the database. Adding it to the DB
-     *                 will assign the id parameter of the MealPlan.
-     * @return A string containing the ID of the MealPlan added.
-     * @throws Exception if any ingredient or recipe is not in the database
+     * This interface is used to handle the result of
+     * deleting the chosen MealPlan object from the db.
      */
-    public String addMealPlan(MealPlan mealPlan) throws Exception {
-        CountDownLatch addLatch = new CountDownLatch(1);
-        ArrayList<DocumentReference> mealPlanIngredientDocuments = new ArrayList<>();
-        ArrayList<DocumentReference> mealPlanRecipeDocuments = new ArrayList<>();
+    public interface OnDeleteMealPlanListener {
+        /**
+         * Called when deleteMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object deleted from the db,
+         *                 null if the delete operation failed.
+         * @param success  true if the delete operation was successful,
+         *                 false otherwise.
+         */
+        void onDeleteMealPlanResult(MealPlan mealPlan, boolean success);
+    }
 
-        for(Ingredient i: mealPlan.getIngredients()) {
-            if (i.getId() != null) {
-                DocumentReference newDocumentReference = ingredientDB.getDocumentReference(i.getId());
-                mealPlanIngredientDocuments.add(newDocumentReference);
-            }
-            else{
-                throw new Exception("Ingredient cannot be null.");
-            }
+    /**
+     * This interface is used to handle the result of
+     * finding the MealPlan object in the db.
+     */
+    public interface OnGetMealPlanListener {
+        /**
+         * Called when getMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object found in the db,
+         *                 null if the get operation failed.
+         * @param success  true if the get operation was successful,
+         *                 false otherwise.
+         */
+        void onGetMealPlanResult(MealPlan mealPlan, boolean success);
+    }
+
+    /**
+     * This interface is used to handle the result of
+     * updating the chosen MealPlan object in the db.
+     */
+    public interface OnUpdateMealPlanListener {
+        /**
+         * Called when updateMealPlan returns a result.
+         *
+         * @param mealPlan the MealPlan object updated in the db,
+         *                 null if the update operation failed.
+         * @param success  true if the update operation was successful,
+         *                 false otherwise.
+         */
+        void onUpdateMealPlanResult(MealPlan mealPlan, boolean success);
+    }
+
+    /**
+     * Constructor for class MealPlanDB, initializes declared fields.
+     * @param connection the DBConnection object used to access the db.
+     */
+    public MealPlanDB(DBConnection connection) {
+        // Creates new instances of RecipeDB and storageIngredientDB
+        // based on current user connection.
+        recipeDB = new RecipeDB(connection);
+        ingredientDB = new IngredientDB(connection);
+
+        // Gets the instance of the Firebase FireStore DB based
+        // on current user connection.
+        this.db = connection.getDB();
+
+        // Gets the current user's MealPlan collection from db,
+        // create one if the collection DNE.
+        this.mealPlanCollection = connection.getCollection("MealPlan");
+    }
+
+    /**
+     * This method is used to add a MealPlan object to the db.
+     * @param mealPlan the MealPlan object to be added to the db.
+     * @param listener the OnAddMealPlanListener object to handle the result.
+     */
+    public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) {
+        // Stores each ingredient as a HashMap with fields:
+        // ingredientRef, amount & unit.
+        ArrayList<HashMap<String, Object>> mealPlanIngredients = new ArrayList<>();
+
+        for (Ingredient i: mealPlan.getIngredients()) {
+            // Gets ingredient from db.
+            ingredientDB.getIngredient(i, (foundIngredient, success1) -> {
+                // Initializes a mapping for the ingredient.
+                HashMap<String, Object> ingredientMap = new HashMap<>();
+
+                // If the ingredient already exists in our Ingredient collection.
+                if (foundIngredient != null) {
+                    DocumentReference ingredientRef = ingredientDB.getDocumentReference(foundIngredient);
+                    i.setId(foundIngredient.getId());
+
+                    ingredientMap.put("ingredientRef", ingredientRef);
+                    ingredientMap.put("amount", i.getAmount());
+                    ingredientMap.put("unit", i.getUnit());
+                } else {
+                    // If the ingredient does not exist in our Ingredient collection,
+                    // we will create a new ingredient for it.
+                    ingredientDB.addIngredient(i, (addedIngredient, success2) -> {
+//                        if (addedIngredient == null) {
+//                            listener.onAddMealPlanResult(null, false);
+//                            return;
+//                        }
+                        i.setId(addedIngredient.getId());
+
+                        ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(addedIngredient));
+                        ingredientMap.put("amount", i.getAmount());
+                        ingredientMap.put("unit", i.getUnit());
+                    });
+                }
+            });
         }
 
-        for(Recipe r: mealPlan.getRecipes()) {
+        // Stores references to recipes in the MealPlan object.
+        ArrayList<DocumentReference> mealPlanRecipes = new ArrayList<>();
+        for (Recipe r: mealPlan.getRecipes()) {
             if (r.getId() != null) {
-                DocumentReference newDocumentReference = recipeDB.getDocumentReference(r.getId());
-                mealPlanRecipeDocuments.add(newDocumentReference);
-            }
-            else{
-                throw new Exception("Ingredient cannot be null.");
+                // If the recipe has an id, gets the recipe's reference from db.
+                DocumentReference recipeRef = recipeDB.getDocumentReference(r.getId());
+                mealPlanRecipes.add(recipeRef);
+            } else {
+                // If the recipe does not exist, we add it to the db.
+                recipeDB.addRecipe(r, (addedRecipe, success) -> {
+                    if (addedRecipe == null) {
+                        listener.onAddMealPlanResult(null, false);
+                        return;
+                    }
+                    r.setId(addedRecipe.getId());
+
+                    mealPlanRecipes.add(recipeDB.getDocumentReference(addedRecipe.getId()));
+                });
             }
         }
 
-        Map<String, Object> mealPlanMap = new HashMap<>();
-
-        String newMealID = mealCollection.document().getId();
-
+        // Initialize MealPlan document mapping.
+        HashMap<String, Object> mealPlanMap = new HashMap<>();
+        // Fill the map.
         mealPlanMap.put("title", mealPlan.getTitle());
         mealPlanMap.put("category", mealPlan.getCategory());
-        mealPlanMap.put("eat-date", mealPlan.getEatDate());
+        mealPlanMap.put("eat date", mealPlan.getEatDate());
         mealPlanMap.put("servings", mealPlan.getServings());
-        mealPlanMap.put("ingredients", mealPlanIngredientDocuments);
-        mealPlanMap.put("recipes", mealPlanRecipeDocuments);
+        mealPlanMap.put("ingredients", mealPlanIngredients);
+        mealPlanMap.put("recipes", mealPlanRecipes);
 
-        DocumentReference newMealPlan = mealCollection.document(newMealID);
-
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
-            transaction.set(newMealPlan, mealPlanMap);
-            return null;
-        }).addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            addLatch.countDown();
-        }).addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            addLatch.countDown();
-        });
-
-        addLatch.await();
-
-        mealPlan.setId(newMealID);
-
-        return newMealID;
+        // Adds the MealPlan mapping to the db.
+        this.mealPlanCollection
+            .add(mealPlanMap)
+            .addOnSuccessListener(addedMealPlanDoc -> {
+                // Sets the document id for the MealPlan object.
+                mealPlan.setId(addedMealPlanDoc.getId());
+                listener.onAddMealPlanResult(mealPlan, true);
+            })
+            .addOnFailureListener(failure -> {
+                listener.onAddMealPlanResult(null, false);
+            });
     }
 
     /**
-     * Deletes a MealPlan document with the id from the collection
-     * of recipes
-     * @param id The id of MealPlan document we want to delete
-     * @throws InterruptedException If the transaction in the method was not complete
+     * Gets the MealPlan object with the given id from the db.
+     * @param id the id of the MealPlan object to be retrieved.
+     * @param listener the OnGetMealPlanListener object to handle the result.
      */
-    public void deleteMealPlan(String id) throws InterruptedException {
-        CountDownLatch deleteLatch = new CountDownLatch(1);
-
-        if(id.equals(NULL)){
-            Log.d("Delete Recipe", "The Recipe does not have an id");
+    public void getMealPlan(String id, OnGetMealPlanListener listener) {
+        if (id == null) {
+            listener.onGetMealPlanResult(null, false);
             return;
         }
 
-        DocumentReference mealToDelete = mealCollection.document(id);
+        // Get reference to the MealPlan document with the given id.
+        DocumentReference mealPlanRef = this.mealPlanCollection.document(id);
+        mealPlanRef.get()
+            .addOnSuccessListener(mealPlanDoc -> {
 
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
+                // Initializes a new MealPlan object and sets its fields.
+                MealPlan mealPlan = new MealPlan(mealPlanDoc.getString("title"));
+                mealPlan.setId(mealPlanDoc.getId());
+                mealPlan.setCategory(mealPlanDoc.getString("category"));
+                mealPlan.setEatDate(mealPlanDoc.getDate("eat date"));
+                mealPlan.setServings(Objects.requireNonNull(mealPlanDoc.getLong("servings")).intValue());
 
-            transaction.delete(mealToDelete);
+                // Initializes an empty ArrayList to store Ingredient objects.
+                ArrayList<Ingredient> ingredients = new ArrayList<>();
 
-            return null;
-        }).addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            deleteLatch.countDown();
-        }).addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            deleteLatch.countDown();
-        });
+                // Get the list of ingredients from the MealPlan document.
+                ArrayList<HashMap<String, Object>> mealPlanIngredients = (ArrayList<HashMap<String, Object>>)
+                    mealPlanDoc.get("ingredients");
 
-        deleteLatch.await();
-    }
+                // Iterate over the ArrayList of HashMaps and produce Ingredient objects.
+                for (HashMap<String, Object> ingredientMap: mealPlanIngredients) {
+                    DocumentReference ingredientRef = (DocumentReference) ingredientMap.get("ingredientRef");
+                    ingredientDB.getIngredient(ingredientRef, (foundIngredient, success) -> {
+                        // Sets amount and unit for the ingredient found in the db via ingredientRef.
+                        foundIngredient.setAmount((Double) ingredientMap.get("amount"));
+                        foundIngredient.setUnit((String) ingredientMap.get("unit"));
 
-    /**
-     * Updates the corresponding MealPlan document in the collection with the fields of the
-     * MealPlan object.
-     * @param mealPlan A MealPlan object whose changes we want to push to the collection of MealPlans
-     *                 Note: All of the recipes and ingredients in the MealPlan must be in the DB.
-     * @throws InterruptedException If the transaction in the method was not complete
-     */
-    public void editMealPlan(MealPlan mealPlan) throws Exception {
-        String id = mealPlan.getId();
-
-        CountDownLatch editLatch = new CountDownLatch(1);
-
-        ArrayList<DocumentReference> mealPlanIngredientDocuments = new ArrayList<>();
-        ArrayList<DocumentReference> mealPlanRecipeDocuments = new ArrayList<>();
-
-        for(Ingredient i: mealPlan.getIngredients()) {
-            if (i.getId() != null) {
-                DocumentReference newDocumentReference = ingredientDB.getDocumentReference(i.getId());
-                mealPlanIngredientDocuments.add(newDocumentReference);
-            }
-            else{
-                throw new Exception("Ingredient cannot be null.");
-            }
-        }
-
-        for(Recipe r: mealPlan.getRecipes()) {
-            if (r.getId() != null) {
-                DocumentReference newDocumentReference = recipeDB.getDocumentReference(r.getId());
-                mealPlanRecipeDocuments.add(newDocumentReference);
-            }
-            else{
-                throw new Exception("Ingredient cannot be null.");
-            }
-        }
-
-        Map<String, Object> mealPlanMap = new HashMap<>();
-
-        mealPlanMap.put("title", mealPlan.getTitle());
-        mealPlanMap.put("category", mealPlan.getCategory());
-        mealPlanMap.put("eat-date", mealPlan.getEatDate());
-        mealPlanMap.put("servings", mealPlan.getServings());
-        mealPlanMap.put("ingredients", mealPlanIngredientDocuments);
-        mealPlanMap.put("recipes", mealPlanRecipeDocuments);
-
-
-        DocumentReference newMealPlan = mealCollection.document(id);
-
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
-
-            transaction.update(newMealPlan, mealPlanMap);
-
-            return null;
-        }).addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            editLatch.countDown();
-        }).addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            editLatch.countDown();
-        });
-
-        editLatch.await();
-    }
-
-    /**
-     * Gets a MealPlan from the DB.
-     * @param id A String with the id of the document who MealPlan we want
-     * @return The MealPlan object that corresponds to the document in the collection
-     * If it does not exist then return null
-     * @throws InterruptedException If the transaction in the method was not complete
-     */
-    public MealPlan getMealPlan(String id) throws InterruptedException {
-        CountDownLatch getLatch = new CountDownLatch(1);
-
-        MealPlan mealPlan = new MealPlan(null);
-        mealPlan.setId(id);
-        DocumentReference mealDocument = mealCollection.document(id);
-        final DocumentSnapshot[] mealSnapshot = new DocumentSnapshot[1];
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
-
-            mealSnapshot[0] = transaction.get(mealDocument);
-
-            return null;
-        }).addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            getLatch.countDown();
-        }).addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            getLatch.countDown();
-        });
-
-        getLatch.await();
-
-        if(!mealSnapshot[0].exists()){
-            return null;
-        }
-
-        mealPlan.setTitle(mealSnapshot[0].getString("title"));
-        mealPlan.setCategory(mealSnapshot[0].getString("category"));
-        mealPlan.setEatDate(mealSnapshot[0].getDate("eat-date"));
-        if (mealSnapshot[0].getLong("servings") == null) {
-            mealPlan.setServings(null);
-        } else {
-            mealPlan.setServings(Objects.requireNonNull(mealSnapshot[0].getLong("servings")).intValue());
-        }
-        // getting the ingredients
-        List<DocumentReference> mealPlanIngredients =
-                (List<DocumentReference>) Objects.requireNonNull(mealSnapshot[0].get("ingredients"));
-
-        for(DocumentReference ingredient: mealPlanIngredients){
-            try {
-                Ingredient result = ingredientDB.getStoredIngredient(ingredient.getId());
-                mealPlan.addIngredient(result);
-            }
-            catch(Exception err){
-                Log.d(TAG, "addMealPlan: Failed to get ingredient");
-            }
-        }
-
-        // getting the recipes
-        List<DocumentReference> mealPlanRecipes =
-                (List<DocumentReference>) Objects.requireNonNull(mealSnapshot[0].get("recipes"));
-
-        for(DocumentReference recipe: mealPlanRecipes){
-            try {
-                Recipe result = recipeDB.getRecipe(recipe.getId());
-                mealPlan.addRecipe(result);
-            }
-            catch(Exception err){
-                Log.d(TAG, "addMealPlan: Failed to get recipe with id: " + recipe.getId());
-            }
-        }
-
-        return mealPlan;
-    }
-
-    /**
-     * Makes an ArrayList of MealPlans out of all the documents in the collection of MealPlans
-     * @return ArrayList<MealPlan> The List of all MealPlans contained in the database
-     * @throws InterruptedException If the transaction in the method was not complete
-     */
-    public ArrayList<MealPlan> getMealPlans() throws InterruptedException {
-        CountDownLatch mealsLatch = new CountDownLatch(1);
-
-        ArrayList<MealPlan> meals = new ArrayList<>();
-        db.runTransaction((Transaction.Function<Void>) transaction -> {
-
-            List<DocumentSnapshot> mealSnapshots = mealCollection.get().getResult().getDocuments();
-
-            for(DocumentSnapshot recipeSnapshot: mealSnapshots){
-                MealPlan mealPlan = null;
-                try {
-                    mealPlan = this.getMealPlan(recipeSnapshot.getId());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                        // Adds the ingredient to the ArrayList.
+                        ingredients.add(foundIngredient);
+                    });
                 }
-                meals.add(mealPlan);
-            }
 
-            return null;
-        }).addOnSuccessListener(unused -> {
-            Log.d(TAG, "onSuccess: ");
-            mealsLatch.countDown();
-        }).addOnFailureListener(e -> {
-            Log.d(TAG, "onFailure: ");
-            mealsLatch.countDown();
-        });
+                // Adds ingredients to the MealPlan object.
+                for (Ingredient i: ingredients) {
+                    mealPlan.addIngredient(i);
+                }
 
-        mealsLatch.await();
+                // Initializes an empty ArrayList to store Recipe objects.
+                ArrayList<Recipe> recipes = new ArrayList<>();
 
-        return meals;
+                // Iterate over the ArrayList of DocumentReferences and produce Recipe objects
+                // using the method implemented in RecipeDB.
+                for (DocumentReference recipeRef: (ArrayList<DocumentReference>) mealPlanDoc.get("recipes")) {
+                    recipeDB.getRecipe(recipeRef.getId(), (foundRecipe, success) -> {
+                        recipes.add(foundRecipe);
+                    });
+                }
+
+                // Adds recipes to the MealPlan object.
+                for (Recipe r: recipes) {
+                    mealPlan.addRecipe(r);
+                }
+
+                // Return the MealPlan object.
+                listener.onGetMealPlanResult(mealPlan, true);
+            })
+            // If the MealPlan document is not found, return null.
+            .addOnFailureListener(failure -> {
+                listener.onGetMealPlanResult(null, false);
+            });
     }
 
     /**
-     * Get the DocumentReference from MealPlans collection for the given id
-     * @param id The String of the document in MealPlan collection we want
-     * @return DocumentReference of the MealPlan
+     * Deletes the MealPlan object with the given id from the db.
+     *
+     * @param mealPlan
+     * @param listener the OnDeleteMealPlanListener object to handle the result.
      */
-    public DocumentReference getDocumentReference(String id){
-        return mealCollection.document(id);
+    public void delMealPlan(MealPlan mealPlan, OnDeleteMealPlanListener listener) {
+        // Get reference to the MealPlan document with the given id.
+        DocumentReference mealPlanRef =
+            this.mealPlanCollection.document(mealPlan.getId());
+        mealPlanRef.delete()
+            .addOnSuccessListener(success -> {
+                listener.onDeleteMealPlanResult(mealPlan, true);
+            })
+            .addOnFailureListener(failure -> {
+                listener.onDeleteMealPlanResult(mealPlan, false);
+            });
+    }
+
+    /**
+     * Updates
+     *
+     * @param mealPlan the MealPlan object to be updated.
+     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     */
+    public void updateMealPlan(MealPlan mealPlan, OnUpdateMealPlanListener listener) {
+        if (mealPlan == null) {
+            listener.onUpdateMealPlanResult(null, false);
+        }
+
+        // Adds the new MealPlan object to the db.
+        addMealPlan(mealPlan, (addedMealPlan, success1) -> {
+            // Check if the MealPlan object was added successfully.
+            if (addedMealPlan == null) {
+                listener.onUpdateMealPlanResult(null, false);
+            } else {
+                listener.onUpdateMealPlanResult(addedMealPlan, true);
+            }
+
+            // Deletes the old MealPlan object.
+            delMealPlan(mealPlan, (deletedMealPlan, success2) -> {
+                // Check if the MealPlan object was deleted successfully.
+                if (deletedMealPlan == null) {
+                    listener.onUpdateMealPlanResult(null, false);
+                } else {
+                    listener.onUpdateMealPlanResult(addedMealPlan, true);
+                }
+            });
+        });
+    }
+
+
+    /**
+     * Fet the DocumentReference object for the MealPlan document with the given id.
+     *
+     * @param id the id of the MealPlan document.
+     * @return the DocumentReference object for the MealPlan document.
+     */
+    public DocumentReference getMealPlanDocumentReference(String id) {
+        return this.mealPlanCollection.document(id);
+    }
+
+    /** Gets a query for MealPlans in the db.
+     * @return the query for MealPlans in the db.
+     */
+    public Query getQuery() {
+        return this.mealPlanCollection;
     }
 }
