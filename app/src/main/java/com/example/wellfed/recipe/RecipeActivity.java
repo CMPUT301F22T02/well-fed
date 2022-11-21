@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,7 +56,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
                 if (type.equals("edit")) {
                     Intent intent = new Intent();
-                    intent.putExtra("Recipe", recipe);
+                    intent.putExtra("item", recipe);
                     intent.putExtra("type", "edit");
                     setResult(Activity.RESULT_OK, intent);
                     finish();
@@ -85,7 +86,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         Intent intent = getIntent();
 
 
-        recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        recipe = (Recipe) intent.getSerializableExtra("item");
+        Boolean viewonly = intent.getBooleanExtra("viewonly", false);
 
         // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
@@ -95,6 +97,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         TextView description = findViewById(R.id.recipe_description_textView);
         ImageView img = findViewById(R.id.recipe_img);
         FloatingActionButton fab = findViewById(R.id.save_fab);
+        Button deleteButton = findViewById(R.id.recipe_delete_btn);
 
         DBConnection connection = new DBConnection(getApplicationContext());
         RecipeDB recipeDB = new RecipeDB(connection);
@@ -129,14 +132,20 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 //        ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
-        /**
-         * DeleteBtn to create a dialog asking for delete confirmation
-         */
-        DeleteButton deleteBtn = new DeleteButton(
-                this,
-                findViewById(R.id.recipe_delete_btn),
-                "Delete Recipe",
-                this);
+
+        if (viewonly) {
+            fab.setVisibility(ImageView.GONE);
+            deleteButton.setVisibility(ImageView.GONE);
+        } else {
+            /**
+             * DeleteBtn to create a dialog asking for delete confirmation
+             */
+            new DeleteButton(
+                    this,
+                    deleteButton,
+                    "Delete Recipe",
+                    this);
+        }
 
         fab.setOnClickListener(view->{
             recipeEditLauncher.launch(recipe);
@@ -150,7 +159,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
     @Override
     public void onConfirm() {
         Intent intent = new Intent();
-        intent.putExtra("Recipe", recipe);
+        intent.putExtra("item", recipe);
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
         finish();

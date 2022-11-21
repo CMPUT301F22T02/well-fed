@@ -29,7 +29,7 @@ public class EditRecipesFragment extends EditRecyclerViewFragment<Recipe> {
         Recipe item = result.second;
         switch (type) {
             case "add":
-                onEdit(item);
+                add(item);
             case "quit":
                 break;
             default:

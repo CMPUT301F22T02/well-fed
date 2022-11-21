@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.utils.widget.ImageFilterButton xmlns:android="http://schemas.android.com/apk/res/android"
+<Button
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/materialIconButtonStyle"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/image_filter_button"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:background="@drawable/ic_baseline_filter_list_24" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:icon="@drawable/ic_baseline_filter_list_24"
+    />
