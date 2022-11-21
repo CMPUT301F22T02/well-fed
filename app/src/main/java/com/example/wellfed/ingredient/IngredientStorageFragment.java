@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
+import com.example.wellfed.common.SortingFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,7 +38,7 @@ import java.util.Objects;
 
 
 public class IngredientStorageFragment extends Fragment implements Launcher<StorageIngredient>,
-        StorageIngredientAdapter.OnItemClickListener {
+        StorageIngredientAdapter.OnItemClickListener, SortingFragment.OnSortClick {
     /**
      * The ingredientController is the controller for the ingredient.
      */
@@ -146,22 +147,13 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         imageFilterButton = view.findViewById(R.id.image_filter_button);
 
-        ListPopupWindow popupWindow = new ListPopupWindow(requireContext(), null, androidx.appcompat.R.attr.listPopupWindowStyle);
-        popupWindow.setAnchorView(imageFilterButton);
-        String[] items = new String[]{"description", "category","best-before"};
-        ArrayAdapter sortAdapter = new ArrayAdapter(requireContext(),R.layout.list_popup_window_item, Arrays.asList(items));
-        popupWindow.setWidth(400);
-        popupWindow.setAdapter(sortAdapter);
+        SortingFragment sortingFragment = new SortingFragment();
+        sortingFragment.setListener(this);
+        sortingFragment.setOptions(Arrays.asList(new String[]{"description","best-before","category","location"}));
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_sort_container, sortingFragment)
+                .commit();
 
-        popupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                controller.getSortedResults(items[(int) id], true);
-                popupWindow.dismiss();
-            }
-        });
-
-        imageFilterButton.setOnClickListener(v->{popupWindow.show();});
 
         // Search bar
         TextInputEditText searchBar = view.findViewById(R.id.ingredient_storage_search);
@@ -232,4 +224,8 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
         launcher.launch(storageIngredient);
     }
 
+    @Override
+    public void onClick(String field) {
+        controller.getSortedResults(field, true);
+    }
 }

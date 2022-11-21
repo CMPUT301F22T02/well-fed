@@ -148,9 +148,10 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
         if (recipe == null) {
             recipeEditLauncher.launch(null);
         } else {
-            recipeLauncher.launch(recipe);
+            getActivity().onBackPressed();
         }
     }
+
 
     //        TODO: fix view recipes using onItemClick listener instead of
     //         this one @manpreet
