@@ -91,6 +91,7 @@ public class IngredientDBTest {
         mockNonExistingIngredient = new Ingredient("Broccoli");
         mockNonExistingIngredient.setCategory("Vegetable");
         mockNonExistingIngredient.setUnit("kg");
+        mockNonExistingIngredient.setId("-1");
     }
 
     /**
