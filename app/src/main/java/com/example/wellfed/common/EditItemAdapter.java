@@ -109,12 +109,12 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
         /**
          * edit button
          */
-        private ImageView editButton;
+        private Button editButton;
 
         /**
          * delete button
          */
-        private ImageView deleteButton;
+        private Button deleteButton;
 
         public TextView getLeadingTextView() {
             return leadingTextView;
@@ -124,11 +124,11 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
             return headlineTextView;
         }
 
-        public ImageView getEditButton() {
+        public Button getEditButton() {
             return editButton;
         }
 
-        public ImageView getDeleteButton() {
+        public Button getDeleteButton() {
             return deleteButton;
         }
 
