@@ -140,10 +140,10 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         SortingFragment sortingFragment = new SortingFragment();
-        sortingFragment.setListener(this);
         sortingFragment.setOptions(Arrays.asList(new String[]{"title", "preparation-time", "servings", "category"}));
+        sortingFragment.setListener(this);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_sort_container, sortingFragment)
+                .add(R.id.fragment_sort_container2, sortingFragment)
                 .commit();
 
 

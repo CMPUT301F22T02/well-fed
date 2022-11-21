@@ -56,8 +56,8 @@ import java.util.concurrent.atomic.AtomicReference;
                 result.getAmount());
         assertEquals(expected.getCategory(),
                 result.getCategory());
-        assertEquals(expected.getBestBeforeDate(),
-                result.getBestBeforeDate());
+        assertEquals(expected.getBestBefore(),
+                result.getBestBefore());
         assertEquals(expected.getUnit(),
                 result.getUnit());
         assertEquals(expected.getAmountAndUnit(),

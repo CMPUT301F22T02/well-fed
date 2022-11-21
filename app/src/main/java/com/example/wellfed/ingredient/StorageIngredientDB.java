@@ -1,7 +1,5 @@
 package com.example.wellfed.ingredient;
 
-import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,23 +9,14 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.SnapshotMetadata;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class StorageIngredientDB {
 	/**
@@ -164,7 +153,7 @@ public class StorageIngredientDB {
 		storageIngredientMap.put("category",
 				storageIngredient.getCategory());
 		storageIngredientMap.put("description", storageIngredient.getDescription());
-		storageIngredientMap.put("best-before", storageIngredient.getBestBeforeDate());
+		storageIngredientMap.put("best-before", storageIngredient.getBestBefore());
 		storageIngredientMap.put("location", storageIngredient.getLocation());
 		storageIngredientMap.put("amount", storageIngredient.getAmount());
 		storageIngredientMap.put("unit", storageIngredient.getUnit());
@@ -226,7 +215,7 @@ public class StorageIngredientDB {
 		batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
 		batch.update(storageIngredientRef, "amount", storageIngredient.getAmount());
 		batch.update(storageIngredientRef, "location", storageIngredient.getLocation());
-		batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBeforeDate());
+		batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBefore());
 		batch.update(storageIngredientRef, "Ingredient", ingredientDB.getDocumentReference(ingredient));
 
 		batch.commit().addOnCompleteListener(task -> {

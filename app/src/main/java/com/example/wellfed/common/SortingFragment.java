@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListPopupWindow;
 
 import androidx.annotation.NonNull;
@@ -43,7 +44,7 @@ public class SortingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ImageFilterButton imageFilterButton = view.findViewById(R.id.image_filter_button);
+        Button imageFilterButton = view.findViewById(R.id.image_filter_button);
         ListPopupWindow popupWindow = new ListPopupWindow(requireContext(), null, androidx.appcompat.R.attr.listPopupWindowStyle);
         popupWindow.setAnchorView(imageFilterButton);
         ArrayAdapter<String> sortAdapter = new ArrayAdapter(requireContext(), R.layout.list_popup_window_item, sortOptions);
