@@ -15,7 +15,7 @@ public class EditRecipesFragment extends EditRecyclerViewFragment<Recipe> {
     }
 
     public Intent createOnSearchIntent(Recipe item) {
-        Intent intent = new Intent(getContext(), RecipeBookFragment.class);
+        Intent intent = new Intent(getContext(), RecipesSearch.class);
         intent.putExtra("item", item);
         return intent;
     }

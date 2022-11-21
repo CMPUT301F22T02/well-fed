@@ -110,19 +110,23 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
             return;
         }
         String type = result.first;
-        Item ingredient = result.second;
+        Item item = result.second;
         switch (type) {
             case "add":
-                adapter.getItems().add(ingredient);
-                adapter.notifyItemInserted(adapter.getItemCount());
+                add(item);
                 break;
             case "edit":
                 int index = adapter.getItems().indexOf(selectedItem);
-                adapter.getItems().set(index, ingredient);
+                adapter.getItems().set(index, item);
                 adapter.notifyItemChanged(index);
                 break;
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    public void add(Item item) {
+        adapter.getItems().add(item);
+        adapter.notifyItemInserted(adapter.getItemCount());
     }
 }
