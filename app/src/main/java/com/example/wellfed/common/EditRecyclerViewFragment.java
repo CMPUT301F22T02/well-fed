@@ -6,6 +6,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,8 +67,8 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        ImageView addButton = view.findViewById(R.id.addButton);
-        ImageView searchButton = view.findViewById(R.id.searchButton);
+        Button addButton = view.findViewById(R.id.addButton);
+        Button searchButton = view.findViewById(R.id.searchButton);
 
         addButton.setOnClickListener(v -> {
             onEdit(null);
@@ -104,24 +105,29 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
     }
 
     abstract public void onSearchActivityResult(Pair<String, Item> result);
+
     private void onEditActivityResult(Pair<String, Item> result) {
         if (result == null) {
             return;
         }
         String type = result.first;
-        Item ingredient = result.second;
+        Item item = result.second;
         switch (type) {
             case "add":
-                adapter.getItems().add(ingredient);
-                adapter.notifyItemInserted(adapter.getItemCount());
+                add(item);
                 break;
             case "edit":
                 int index = adapter.getItems().indexOf(selectedItem);
-                adapter.getItems().set(index, ingredient);
+                adapter.getItems().set(index, item);
                 adapter.notifyItemChanged(index);
                 break;
             default:
                 throw new IllegalArgumentException();
         }
+    }
+
+    public void add(Item item) {
+        adapter.getItems().add(item);
+        adapter.notifyItemInserted(adapter.getItemCount());
     }
 }
