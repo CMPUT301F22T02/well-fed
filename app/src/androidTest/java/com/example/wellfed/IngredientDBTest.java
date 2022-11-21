@@ -8,21 +8,16 @@ import static org.junit.Assert.assertTrue;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-import android.util.Log;
-
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
 import com.google.firebase.firestore.DocumentReference;
 
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.sql.Time;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
