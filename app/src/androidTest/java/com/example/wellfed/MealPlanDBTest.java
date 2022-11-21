@@ -795,10 +795,10 @@ public class MealPlanDBTest {
 									assertEquals(updatedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
 									assertEquals(updatedMealPlan.getServings(), retrievedMealPlan.getServings());
 									// Check if the recipes are the same size
-									assertEquals(addedMealPlan.getRecipes().size(),
+									assertEquals(updatedMealPlan.getRecipes().size(),
 										retrievedMealPlan.getRecipes().size());
 									// Check if the recipes exist in the retrieved meal plan using the getters id
-									for (Recipe currentRecipe : addedMealPlan.getRecipes()) {
+									for (Recipe currentRecipe : updatedMealPlan.getRecipes()) {
 										boolean found = false;
 										for (Recipe retrievedRecipe : retrievedMealPlan.getRecipes()) {
 											if (currentRecipe.getId().equals(retrievedRecipe.getId())) {
@@ -809,10 +809,10 @@ public class MealPlanDBTest {
 										assertTrue(found);
 									}
 									// Check if the ingredients are the same size
-									assertEquals(addedMealPlan.getIngredients().size(),
+									assertEquals(updatedMealPlan.getIngredients().size(),
 										retrievedMealPlan.getIngredients().size());
 									// Check if the ingredients exist in the retrieved meal plan using the getters id
-									for (Ingredient currentIngredient : addedMealPlan.getIngredients()) {
+									for (Ingredient currentIngredient : updatedMealPlan.getIngredients()) {
 										boolean found = false;
 										for (Ingredient retrievedIngredient : retrievedMealPlan.getIngredients()) {
 											if (currentIngredient.getId().equals(retrievedIngredient.getId())) {
@@ -1066,11 +1066,49 @@ public class MealPlanDBTest {
 		// Create a meal plan
 		MealPlan mealPlan = mockMealPlan();
 		// Add 5 different recipes
-		mealPlan.addRecipe(new Recipe("Chicken"));
-		mealPlan.addRecipe(new Recipe("Beef"));
-		mealPlan.addRecipe(new Recipe("Pork"));
-		mealPlan.addRecipe(new Recipe("Fish"));
-		mealPlan.addRecipe(new Recipe("Lamb"));
+		Recipe recipe1 = new Recipe("Chicken");
+		Ingredient ingredient1 = new Ingredient("Chicken");
+		recipe1.addIngredient(ingredient1);
+		recipe1.setCategory("Main");
+		recipe1.setServings(1);
+		recipe1.setPrepTimeMinutes(10);
+		recipe1.setComments("Test");
+		mealPlan.addRecipe(recipe1);
+		Recipe recipe2 = new Recipe("Beef");
+		Ingredient ingredient2 = new Ingredient("Beef");
+		recipe2.addIngredient(ingredient2);
+		recipe2.setCategory("Main");
+		recipe2.setServings(1);
+		recipe2.setPrepTimeMinutes(10);
+		recipe2.setComments("Test");
+		mealPlan.addRecipe(recipe2);
+		Recipe recipe3 = new Recipe("Pork");
+		Ingredient ingredient3 = new Ingredient("Pork");
+		recipe3.addIngredient(ingredient3);
+		recipe3.setCategory("Main");
+		recipe3.setServings(1);
+		recipe3.setPrepTimeMinutes(10);
+		recipe3.setComments("Test");
+		mealPlan.addRecipe(recipe3);
+		Recipe recipe4 = new Recipe("Fish");
+		Ingredient ingredient4 = new Ingredient("Fish");
+		recipe4.addIngredient(ingredient4);
+		recipe4.setCategory("Main");
+		recipe4.setServings(1);
+		recipe4.setPrepTimeMinutes(10);
+		recipe4.setComments("Test");
+		mealPlan.addRecipe(recipe4);
+		Recipe recipe5 = new Recipe("Lamb");
+		Ingredient ingredient5 = new Ingredient("Lamb");
+		recipe5.addIngredient(ingredient5);
+		recipe5.setCategory("Main");
+		recipe5.setServings(1);
+		recipe5.setPrepTimeMinutes(10);
+		recipe5.setComments("Test");
+		mealPlan.addRecipe(recipe5);
+
+
+
 		// Add the meal plan to the database
 		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
 			if (success) {
