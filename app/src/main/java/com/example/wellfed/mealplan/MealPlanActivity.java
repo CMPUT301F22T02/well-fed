@@ -15,7 +15,6 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -72,12 +71,20 @@ public class MealPlanActivity extends ActivityBase implements
         }
         mealPlanNumberOfServingsTextView.setText(
                 "Number of servings: " + mealPlan.getServings());
-        ArrayList<Recipe> recipes = mealPlan.getRecipes();
+
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
-        RecipeAdapter recipeAdapter = null;
+        MealPlanRecipeItemAdapter recipeAdapter = new MealPlanRecipeItemAdapter();
+        recipeAdapter.setItems(mealPlan.getRecipes());
         recipeRecyclerView.setAdapter(recipeAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recipeRecyclerView.setLayoutManager(linearLayoutManager);
+        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        RecyclerView ingredientRecyclerView =
+                findViewById(R.id.ingredientRecyclerView);
+        MealPlanIngredientItemAdapter ingredientAdapter =
+                new MealPlanIngredientItemAdapter();
+        ingredientAdapter.setItems(mealPlan.getIngredients());
+        ingredientRecyclerView.setAdapter(ingredientAdapter);
+        ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
                 "Delete Meal Plan", this);

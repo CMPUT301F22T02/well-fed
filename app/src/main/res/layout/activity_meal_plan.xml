@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/mealPlanDateTextView"
-        style="@style/TextAppearance.Material3.TitleLarge"
+        style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/mealPlanNumberOfServingsTextView"
-        style="@style/TextAppearance.Material3.TitleLarge"
+        style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,37 +38,39 @@
 
     <TextView
         android:id="@+id/textView2"
+        style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Recipes"
+        android:text="@string/recipes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mealPlanNumberOfServingsTextView"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/mealPlanNumberOfServingsTextView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:layout_editor_absoluteX="0dp"></androidx.recyclerview.widget.RecyclerView>
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/textView"
+        style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Ingredients"
+        android:text="@string/ingredients"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeRecyclerView"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/recipeRecyclerView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredientRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="-16dp"></androidx.recyclerview.widget.RecyclerView>
+        tools:layout_editor_absoluteX="-16dp" />
 
     <Button
         android:id="@+id/deleteButton"
