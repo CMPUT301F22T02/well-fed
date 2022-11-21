@@ -363,7 +363,8 @@ public class MealPlanDB {
         // run in parallel.
         AtomicInteger counter = new AtomicInteger(0);
 
-        // Calculates number of ingredients and recipes.
+        // Calculates number of ingredients and recipes based on
+        // the snapshot.
         Integer numOfIngredientsAndRecipes =
                 mealPlanIngredients.size() + ((ArrayList<DocumentReference>)
                         snapshot.get("recipes")).size();

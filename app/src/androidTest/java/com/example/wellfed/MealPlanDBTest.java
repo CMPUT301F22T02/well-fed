@@ -8,6 +8,7 @@ import static org.junit.Assert.assertNull;
 import android.util.Log;
 
 import com.example.wellfed.common.DBConnection;
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
 import com.example.wellfed.mealplan.MealPlan;
@@ -80,6 +81,11 @@ public class MealPlanDBTest {
 		recipe.setComments("Mock Comments");
 		recipe.setPrepTimeMinutes(1);
 		recipe.setTitle("Mock Title");
+		Ingredient ingredient = new Ingredient("Mock Ingredient");
+		ingredient.setCategory("Mock Category");
+		ingredient.setAmount(1.0);
+		ingredient.setUnit("g");
+		recipe.addIngredient(ingredient);
 		return recipe;
 	}
 
@@ -999,7 +1005,7 @@ public class MealPlanDBTest {
 				Log.e(TAG, "Failed to add meal plan");
 			}
 		});
-		if (!mealPlanLatch.await(TIMEOUT0, TimeUnit.SECONDS)) {
+		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
 			throw new InterruptedException();
 		}
 	}
