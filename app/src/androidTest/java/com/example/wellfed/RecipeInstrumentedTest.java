@@ -132,7 +132,7 @@ import org.junit.runner.RunWith;
      */
     public void addMockIngredient(String description) {
         //add an ingredient
-        onView(withId(R.id.ingredient_add_btn)).perform(click());
+        onView(withId(R.id.addButton)).perform(click());
         onView(withId(R.id.edit_descriptionInput)).perform(typeText(description));
         closeSoftKeyboard();
 
@@ -159,7 +159,7 @@ import org.junit.runner.RunWith;
         addPreexistingIngredient("Tortilla");
         typeMockRecipe("Egg Wrap");
 
-        onView(withId(R.id.ingredient_search_btn)).perform(click());
+        onView(withId(R.id.searchButton)).perform(click());
         //pick an ingredient check if recycler view is non empty
         onView(withText("Tortilla")).perform(click());
 
@@ -200,7 +200,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.save_fab)).perform(click());
         intended(hasComponent(RecipeEditActivity.class.getName()));
 
-        onView(withId(R.id.ingredient_search_btn)).perform(click());
+        onView(withId(R.id.searchButton)).perform(click());
         //pick an ingredient check if recycler view is non empty
         onView(withId(R.id.ingredient_storage_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
         intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
@@ -266,6 +266,7 @@ import org.junit.runner.RunWith;
 
         intended(hasComponent(RecipeActivity.class.getName()));
 
+        Thread.sleep(2000);
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Egg Wrap")));
         onView(withId(R.id.recipe_prep_time_textView)).check(matches(withText("Preparation time: 5")));
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
@@ -287,7 +288,7 @@ import org.junit.runner.RunWith;
         addMockIngredient("Egg");
 
         //add separate ingredient
-        onView(withId(R.id.ingredient_add_btn)).perform(click());
+        onView(withId(R.id.addButton)).perform(click());
         onView(withId(R.id.edit_descriptionInput)).perform(typeText("Chicken Breast"));
         closeSoftKeyboard();
 
@@ -307,12 +308,12 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         // deleting egg
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewClickViewAction.clickChildViewWithId(R.id.ingredient_delete_imgView)));
+        onView(withId(R.id.recyclerView)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewClickViewAction.clickChildViewWithId(R.id.deleteButton)));
 
         // asserting that chicken breast is still there with correct details
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Chicken Breast"))));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("2.0 cups"))));
+        onView(withId(R.id.recyclerView)).check(matches(hasDescendant(withText("Chicken Breast"))));
+        onView(withId(R.id.recyclerView)).check(matches(hasDescendant(withText("2.0 cups"))));
 
         // asserting that egg is NOT there
         Thread.sleep(2000);
@@ -355,7 +356,8 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
         onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0count"))));
+        //onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
         // press edit button
@@ -379,7 +381,8 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 1")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
         onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0count"))));
+        //onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
         // press edit button
@@ -403,7 +406,8 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Breakfast")));
         onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0count"))));
+        //onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
         // press edit button
@@ -427,7 +431,8 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Lunch")));
         onView(withId(R.id.recipe_description_textView)).check(matches(withText("This breakfast is great for on the go.")));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0count"))));
+        //onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
         // press edit button
@@ -451,7 +456,8 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_no_of_servings_textView)).check(matches(withText("Servings: 2")));
         onView(withId(R.id.recipe_category)).check(matches(withText("Category: Lunch")));
         onView(withId(R.id.recipe_description_textView)).check(matches(withText("This lunch is filling and delicious.")));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0count"))));
+        //onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Egg"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
@@ -466,8 +472,8 @@ import org.junit.runner.RunWith;
         addMockIngredient("Egg");
 
         // editing the ingredient
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewClickViewAction.clickChildViewWithId(R.id.ingredient_edit_imgView)));
+        onView(withId(R.id.recyclerView)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewClickViewAction.clickChildViewWithId(R.id.editButton)));
 
         // change all of the fields
         onView(withId(R.id.edit_descriptionInput)).perform(clearText());
@@ -489,8 +495,9 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         // check the ingredient is changed
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("3.0 eggs"))));
-        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("Duck Egg"))));
+        Thread.sleep(5000);
+        onView(withId(R.id.recyclerView)).check(matches(hasDescendant(withText("3.0 eggs"))));
+        onView(withId(R.id.recyclerView)).check(matches(hasDescendant(withText("Duck Egg"))));
 
     }
 
