@@ -125,7 +125,7 @@ public class MealPlanActivity extends ActivityBase
 
     @Override public void onItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeActivity.class);
-        intent.putExtra("Recipe", recipe);
+        intent.putExtra("item", recipe);
         startActivity(intent);
     }
 }

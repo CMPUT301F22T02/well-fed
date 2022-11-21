@@ -55,7 +55,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
                 if (type.equals("edit")) {
                     Intent intent = new Intent();
-                    intent.putExtra("Recipe", recipe);
+                    intent.putExtra("item", recipe);
                     intent.putExtra("type", "edit");
                     setResult(Activity.RESULT_OK, intent);
                     finish();
@@ -85,7 +85,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         Intent intent = getIntent();
 
 
-        recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        recipe = (Recipe) intent.getSerializableExtra("item");
 
         // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
@@ -132,7 +132,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         /**
          * DeleteBtn to create a dialog asking for delete confirmation
          */
-        DeleteButton deleteBtn = new DeleteButton(
+        new DeleteButton(
                 this,
                 findViewById(R.id.recipe_delete_btn),
                 "Delete Recipe",
@@ -150,7 +150,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
     @Override
     public void onConfirm() {
         Intent intent = new Intent();
-        intent.putExtra("Recipe", recipe);
+        intent.putExtra("item", recipe);
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
         finish();
