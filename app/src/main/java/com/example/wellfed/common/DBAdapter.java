@@ -77,9 +77,14 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
                     }
                     break;
                 case REMOVED:
-                    oldIndex = oldIndexMap.get(change.getDocument().getId());
-                    snapshots.remove(oldIndex);
-                    notifyItemRemoved(oldIndex);
+                    if (oldIndexMap.get(change.getDocument().getId()) != null) {
+                        oldIndex = oldIndexMap.get(change.getDocument().getId());
+                        snapshots.remove(oldIndex);
+                        notifyItemRemoved(oldIndex);
+                    }else{
+                        snapshots.remove(change.getOldIndex());
+                        notifyItemRemoved(change.getOldIndex());
+                    }
                     break;
             }
         }
