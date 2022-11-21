@@ -724,23 +724,25 @@ public class MealPlanDBTest {
 				// Add the meal plan to the database
 				mealPlanDB.addMealPlan(mealPlan2, (addedMealPlan2, success2) -> {
 					if (success2) {
-						// Delete the second meal plan
-						mealPlanDB.delMealPlan(addedMealPlan2,
-							(deletedMealPlan, success3) -> {
-								if (success3) {
-									mealPlanDB.getMealPlans((retrievedMealPlans, success4) -> {
-										if (success4) {
-											// Check if length is 0 (no meal plans)
-											assertEquals(0, retrievedMealPlans.size());
-										} else {
-											Log.e(TAG, "Failed to retrieve meal plans");
-										}
-										mealPlanLatch.countDown();
-									});
-								} else {
-									Log.e(TAG, "Failed to delete meal plan");
-								}
-							});
+						mealPlanDB.getMealPlans((allMealPlans1, success3) -> {
+							// Delete the second meal plan
+							mealPlanDB.delMealPlan(addedMealPlan2,
+								(deletedMealPlan, success4) -> {
+									if (success4) {
+										mealPlanDB.getMealPlans((retrievedMealPlans, success5) -> {
+											if (success5) {
+												// Check if length is 0 (no meal plans)
+												assertEquals(allMealPlans1.size() - 1, retrievedMealPlans.size());
+											} else {
+												Log.e(TAG, "Failed to retrieve meal plans");
+											}
+											mealPlanLatch.countDown();
+										});
+									} else {
+										Log.e(TAG, "Failed to delete meal plan");
+									}
+								});
+						});
 					} else {
 						Log.e(TAG, "Failed to add meal plan 2");
 					}
