@@ -256,38 +256,31 @@ public class MealPlan implements Serializable {
         // checking all ingredients in the MealPlan (in any order!)
         flags.add(this.getIngredients().size() == ((MealPlan) o).getIngredients().size());
 
-        // checking all ingredients by matching them up
+        // searching for ingredient
         for (int i = 0; i < this.getIngredients().size(); i++) {
-            Ingredient actualIngredient = this.getIngredient(i);
             // search for the needed Ingredient
-            Integer expectedIndex = null;
+            boolean found = false;
             for (int j = 0; j < ((MealPlan) o).getIngredients().size(); j++) {
-                if (Objects.equals(((MealPlan) o).getIngredient(j).getId(), actualIngredient.getId())) {
-                    expectedIndex = j;
+                if (this.getIngredient(i).equals(((MealPlan) o).getIngredient(j))) {
+                    found = true;
                     break;
                 }
             }
-            assertNotNull(expectedIndex);
-            Ingredient expectedIngredient = ((MealPlan) o).getIngredient(expectedIndex);
-
-            flags.add(actualIngredient.equals(expectedIngredient));
+            flags.add(found);
         }
 
         // checking all recipes by matching them up
+        flags.add(this.getRecipes().size() == ((MealPlan) o).getRecipes().size());
         for (int i = 0; i < this.getRecipes().size(); i++) {
-            Recipe actualRecipe = this.getRecipe(i);
-            // search for the needed Ingredient
-            Integer expectedIndex = null;
+            // search for the needed Recipe
+            boolean found = false;
             for (int j = 0; j < ((MealPlan) o).getRecipes().size(); j++) {
-                if (Objects.equals(((MealPlan) o).getRecipe(j).getId(), actualRecipe.getId())) {
-                    expectedIndex = j;
+                if (this.getRecipe(i).equals(((MealPlan) o).getRecipe(j))) {
+                    found = true;
                     break;
                 }
             }
-            assertNotNull(expectedIndex);
-            Recipe expectedRecipe = ((MealPlan) o).getRecipe(expectedIndex);
-
-            flags.add(actualRecipe.equals(expectedRecipe));
+            flags.add(found);
         }
 
         return !flags.contains(false);

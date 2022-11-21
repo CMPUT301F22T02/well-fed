@@ -267,19 +267,14 @@ public class Recipe implements Serializable {
 
         // searching for ingredient
         for (int i = 0; i < this.getIngredients().size(); i++) {
-            Ingredient actualIngredient = this.getIngredient(i);
             // search for the needed Ingredient
-            Integer expectedIndex = null;
+            boolean found = false;
             for (int j = 0; j < ((Recipe) o).getIngredients().size(); j++) {
-                if (Objects.equals(((Recipe) o).getIngredient(j).getId(), actualIngredient.getId())) {
-                    expectedIndex = j;
-                    break;
+                if (this.getIngredient(i).equals(((Recipe) o).getIngredient(j))) {
+                    found = true;
                 }
             }
-            assertNotNull(expectedIndex);
-            Ingredient expectedIngredient = ((Recipe) o).getIngredient(expectedIndex);
-
-            flags.add(actualIngredient.equals(expectedIngredient));
+            flags.add(found);
         }
 
         return !flags.contains(false);

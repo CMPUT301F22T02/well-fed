@@ -1,7 +1,9 @@
 package com.example.wellfed;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.mealplan.MealPlan;
@@ -255,5 +257,160 @@ public class MealPlanTest {
         Date eatDate = new Date();
         mealPlan.setEatDate(eatDate);
         assertEquals(eatDate, mealPlan.getEatDate());
+    }
+
+    /**
+     * Tests that a meal plan is always equals if all of the fields are identical.
+     * This is done by changing each field individually, and then invoking equals
+     */
+    @Test
+    public void testEquals() {
+        Ingredient mockIngredient = mockMealIngredient();
+        Ingredient mockIngredient2 = mockMealIngredient();
+        mockIngredient.setDescription("Milk");
+        mockIngredient2.setDescription("Frosted Flakes");
+
+        Recipe mockRecipe = mockMealRecipe();
+        Recipe mockRecipe2 = mockMealRecipe();
+        mockRecipe.setTitle("Cereal");
+        mockRecipe2.setTitle("Glass of milk");
+        mockRecipe.addIngredient(mockIngredient);
+        mockRecipe.addIngredient(mockIngredient2);
+        mockRecipe2.addIngredient(mockIngredient);
+
+        MealPlan mockMealPlan = mockMealPlan();
+        MealPlan mockMealPlan2 = mockMealPlan();
+
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.setTitle("Cereal");
+        mockMealPlan2.setTitle("Cereal");
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.setId("ID");
+        mockMealPlan2.setId("ID");
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.setCategory("Breakfast");
+        mockMealPlan2.setCategory("Breakfast");
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.setServings(5);
+        mockMealPlan2.setServings(5);
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.setEatDate(new Date(11, 12, 2022));
+        mockMealPlan2.setEatDate(new Date(11, 12, 2022));
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+
+        // adding ingredients out of order
+        mockMealPlan.addIngredient(mockIngredient);
+        mockMealPlan.addIngredient(mockIngredient2);
+
+        mockMealPlan2.addIngredient(mockIngredient2);
+        mockMealPlan2.addIngredient(mockIngredient);
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        // adding recipes out of order
+        mockMealPlan.addRecipe(mockRecipe);
+        mockMealPlan.addRecipe(mockRecipe2);
+
+        mockMealPlan2.addRecipe(mockRecipe2);
+        mockMealPlan2.addRecipe(mockRecipe);
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+    }
+
+    /**
+     * Tests that a meal plan is always equals if all of the fields are identical.
+     * This is done by changing each field individually, and then invoking equals
+     */
+    @Test
+    public void testNotEquals() {
+        Ingredient mockIngredient = mockMealIngredient();
+        Ingredient mockIngredient2 = mockMealIngredient();
+        mockIngredient.setDescription("Milk");
+        mockIngredient2.setDescription("Frosted Flakes");
+
+        Recipe mockRecipe = mockMealRecipe();
+        Recipe mockRecipe2 = mockMealRecipe();
+        mockRecipe.setTitle("Cereal");
+        mockRecipe2.setTitle("Glass of milk");
+        mockRecipe.addIngredient(mockIngredient);
+        mockRecipe.addIngredient(mockIngredient2);
+        mockRecipe2.addIngredient(mockIngredient);
+
+        MealPlan mockMealPlan = mockMealPlan();
+        MealPlan mockMealPlan2 = mockMealPlan();
+
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.setTitle("Cereal");
+        mockMealPlan2.setTitle("Frosted Flakes");
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan2.setTitle("Cereal");
+        mockMealPlan.setId("ID");
+        mockMealPlan2.setId("ID2");
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan2.setId("ID");
+        mockMealPlan.setCategory("Breakfast");
+        mockMealPlan2.setCategory("Break fast");
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan2.setCategory("Breakfast");
+        mockMealPlan.setServings(5);
+        mockMealPlan2.setServings(6);
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan2.setServings(5);
+        mockMealPlan.setEatDate(new Date(11, 12, 2022));
+        mockMealPlan2.setEatDate(new Date(11, 12, 2023));
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan2.setEatDate(new Date(11, 12, 2022));
+
+        // adding ingredients
+        mockMealPlan.addIngredient(mockIngredient);
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.addIngredient(mockIngredient2);
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan2.addIngredient(mockIngredient2);
+        mockMealPlan2.addIngredient(mockIngredient);
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
+
+        // adding recipes
+        mockMealPlan.addRecipe(mockRecipe);
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan.addRecipe(mockRecipe2);
+        assertFalse(mockMealPlan.equals(mockMealPlan2));
+        assertFalse(mockMealPlan2.equals(mockMealPlan));
+
+        mockMealPlan2.addRecipe(mockRecipe2);
+        mockMealPlan2.addRecipe(mockRecipe);
+        assertTrue(mockMealPlan.equals(mockMealPlan2));
+        assertTrue(mockMealPlan2.equals(mockMealPlan));
     }
 }

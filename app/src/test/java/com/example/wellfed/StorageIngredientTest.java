@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.StorageIngredient;
 
 import org.junit.Test;
@@ -17,6 +18,14 @@ import java.util.Date;
  * Unit tests for the StorageIngredient class.
  */
 public class StorageIngredientTest {
+    /**
+     * Creates a mock ingredient to be used in the tests, with no title.
+     * @return the mock ingredient created
+     */
+    public StorageIngredient mockIngredient() {
+        return new StorageIngredient("Apple");
+    }
+
     /**
      * Tests the constructor of the StorageIngredient class.
      */
@@ -165,33 +174,112 @@ public class StorageIngredientTest {
     }
 
     /**
-     * Test the equals method of the StorageIngredient class.
+     * Tests that a ingredient is always equals if all of the fields are identical.
+     * This is done by changing each field individually, and then invoking equals
      */
     @Test
     public void testEquals() {
-        StorageIngredient ingredient = new StorageIngredient("Apple");
-        StorageIngredient ingredient2 = new StorageIngredient("Apple");
-        StorageIngredient ingredient3 = new StorageIngredient("Banana");
-        StorageIngredient ingredient4 = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1));
-        StorageIngredient ingredient5 = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1));
-        StorageIngredient ingredient6 = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 2));
-        StorageIngredient ingredient7 = new StorageIngredient("Test4", 1.0,
-                "g", "Pantry", new Date(2020, 1, 1), "Fruit");
-        StorageIngredient ingredient8 = new StorageIngredient("Test5", 1.0,
-                "g", "Pantry", new Date(2020, 1, 1), "Fruit");
-        StorageIngredient ingredient9 = new StorageIngredient("Test7", 1.0,
-                "g", "Pantry", new Date(2020, 1, 1), "Fruit2");
-        assertTrue(ingredient.equals(ingredient2));
-        assertFalse(ingredient.equals(ingredient3));
-        assertTrue(ingredient4.equals(ingredient5));
-        assertTrue(ingredient4.equals(ingredient6));
-        assertFalse(ingredient7.equals(ingredient8));
-        assertFalse(ingredient7.equals(ingredient9));
+        StorageIngredient mock = mockIngredient();
+        StorageIngredient mock2 = mockIngredient();
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setDescription("Orange");
+        mock2.setDescription("Orange");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setId("ID");
+        mock2.setId("ID");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setCategory("Fruit");
+        mock2.setCategory("Fruit");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setUnit("count");
+        mock2.setUnit("count");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setAmount(5.0);
+        mock2.setAmount(5.0);
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setLocation("Fruit bowl");
+        mock2.setLocation("Fruit bowl");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setBestBefore(new Date(11, 12, 2005));
+        mock2.setBestBefore(new Date(11, 12, 2005));
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setStorageId("SID");
+        mock2.setStorageId("SID");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+    }
+
+    /**
+     * Tests that a ingredient is always equals if at least one of the fields is non-identical
+     * This is done by changing each field individually, and then invoking equals
+     */
+    @Test
+    public void testNotEquals() {
+        StorageIngredient mock = mockIngredient();
+        StorageIngredient mock2 = mockIngredient();
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setDescription("Orange");
+        mock2.setDescription("Apple");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock2.setDescription("Orange");
+        mock.setId("ID");
+        mock2.setId("ID2");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock2.setId("ID");
+        mock.setCategory("Fruit");
+        mock2.setCategory("Citrus");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock2.setCategory("Fruit");
+        mock.setUnit("count");
+        mock2.setUnit("fruits");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock.setUnit("count");
+        mock.setAmount(5.0);
+        mock2.setAmount(3.0);
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock.setLocation("Fruit bowl");
+        mock2.setLocation("Counter");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock2.setLocation("Fruit bowl");
+        mock.setBestBefore(new Date(11, 12, 2005));
+        mock2.setBestBefore(new Date(11, 12, 2006));
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock.setBestBefore(new Date(11, 12, 2005));
+        mock.setStorageId("SID");
+        mock2.setStorageId("SID2");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
     }
 }

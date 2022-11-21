@@ -1,8 +1,10 @@
 package com.example.wellfed;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.example.wellfed.ingredient.Ingredient;
 
@@ -118,5 +120,83 @@ public class IngredientTest {
         Double testFloat = 5.0;
         mock.setAmount(testFloat);
         assertEquals(testFloat, mock.getAmount());
+    }
+
+    /**
+     * Tests that a ingredient is always equals if all of the fields are identical.
+     * This is done by changing each field individually, and then invoking equals
+     */
+    @Test
+    public void testEquals() {
+        Ingredient mock = mockIngredient();
+        Ingredient mock2 = mockIngredient();
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setDescription("Orange");
+        mock2.setDescription("Orange");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setId("ID");
+        mock2.setId("ID");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setCategory("Fruit");
+        mock2.setCategory("Fruit");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setUnit("count");
+        mock2.setUnit("count");
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setAmount(5.0);
+        mock2.setAmount(5.0);
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+    }
+
+    /**
+     * Tests that a ingredient is always equals if at least one of the fields is non-identical
+     * This is done by changing each field individually, and then invoking equals
+     */
+    @Test
+    public void testNotEquals() {
+        Ingredient mock = mockIngredient();
+        Ingredient mock2 = mockIngredient();
+        assertTrue(mock.equals(mock2));
+        assertTrue(mock2.equals(mock));
+
+        mock.setDescription("Orange");
+        mock2.setDescription("Apple");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock2.setDescription("Orange");
+        mock.setId("ID");
+        mock2.setId("ID2");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock2.setId("ID");
+        mock.setCategory("Fruit");
+        mock2.setCategory("Citrus");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock2.setCategory("Fruit");
+        mock.setUnit("count");
+        mock2.setUnit("fruits");
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
+
+        mock.setUnit("count");
+        mock.setAmount(5.0);
+        mock2.setAmount(3.0);
+        assertFalse(mock.equals(mock2));
+        assertFalse(mock2.equals(mock));
     }
 }
