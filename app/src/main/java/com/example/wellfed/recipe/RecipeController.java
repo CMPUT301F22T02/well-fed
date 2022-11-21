@@ -81,6 +81,11 @@ public class RecipeController {
         });
     }
 
+    public void sort(String field){
+        recipeAdapter.clearSnapshots();
+        recipeAdapter.changeQuery(recipeDB.getSortQuery(field));
+    }
+
     public RecipeAdapter getRecipeAdapter() {
         return recipeAdapter;
     }
