@@ -24,7 +24,7 @@ public class RecipeEditContract extends ActivityResultContract<Recipe, Pair<Stri
     @Override
     public Intent createIntent(@NonNull Context context, Recipe recipe) {
         Intent intent = new Intent(context, RecipeEditActivity.class);
-        intent.putExtra("Recipe", recipe);
+        intent.putExtra("item", recipe);
         return intent;
     }
 
@@ -41,7 +41,7 @@ public class RecipeEditContract extends ActivityResultContract<Recipe, Pair<Stri
             return null;
         } else {
             String type = intent.getStringExtra("type");
-            Recipe recipe = (Recipe) intent.getSerializableExtra("Recipe");
+            Recipe recipe = (Recipe) intent.getSerializableExtra("item");
             return new Pair<>(type,recipe);
         }
     }
