@@ -210,7 +210,7 @@ public class ShoppingCartDB {
 	/**
 	 * Get the shopping cart.
 	 */
-	public void getAllShoppingCartIngredients(OnGetShoppingCart listener) {
+	public void getShoppingCart(OnGetShoppingCart listener) {
 		collection.get().addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
 				ShoppingCart shoppingCart = new ShoppingCart();
