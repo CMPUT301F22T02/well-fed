@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
+import com.example.wellfed.common.SortingFragment;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 // todo create sample data for recipes
@@ -36,7 +38,7 @@ import java.util.Objects;
  * @version 1.0.0
  */
 public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
-        RecipeAdapter.RecipeLauncher {
+        RecipeAdapter.RecipeLauncher, SortingFragment.OnSortClick {
     /**
      * Recipes contains a list of Recipes {@link Recipe}
      */
@@ -137,6 +139,14 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
         rvRecipes.setAdapter(recipeController.getRecipeAdapter());
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        SortingFragment sortingFragment = new SortingFragment();
+        sortingFragment.setListener(this);
+        sortingFragment.setOptions(Arrays.asList(new String[]{"title", "preparation-time", "servings", "category"}));
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_sort_container, sortingFragment)
+                .commit();
+
+
     }
 
     /**
@@ -147,9 +157,14 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
     public void launch(Recipe recipe) {
         if (recipe == null) {
             recipeEditLauncher.launch(null);
-        } else {
-            getActivity().onBackPressed();
+        }else{
+            recipeLauncher.launch(recipe);
         }
+    }
+
+    @Override
+    public void onClick(String field) {
+        recipeController.sort(field);
     }
 
 
