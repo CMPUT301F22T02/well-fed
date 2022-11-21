@@ -14,18 +14,29 @@ import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.EditItemContract;
+import com.example.wellfed.common.SortingFragment;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
 import com.example.wellfed.ingredient.StorageIngredient;
 
+import java.util.Arrays;
+
 public class RecipeIngredientSearch extends ActivityBase
-        implements RecipeIngredientSearchAdapter.OnItemClickListener {
+        implements RecipeIngredientSearchAdapter.OnItemClickListener, SortingFragment.OnSortClick {
     private RecyclerView ingredientRecycleView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_ingredient_storage);
+
+        SortingFragment sortingFragment = new SortingFragment();
+        sortingFragment.setListener(this);
+        sortingFragment.setOptions(Arrays.asList(new String[]{"description", "best-before"}));
+        this.getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_sort_container, sortingFragment)
+                .commit();
+
 
         DBConnection connection = new DBConnection(getApplicationContext());
         IngredientDB db = new IngredientDB(connection);
@@ -40,10 +51,14 @@ public class RecipeIngredientSearch extends ActivityBase
     @Override
     public void onItemClick(Ingredient recipeIngredient) {
         Intent intent = new Intent();
-        intent.putExtra("type","add");
+        intent.putExtra("type", "add");
         intent.putExtra("item", recipeIngredient);
-                setResult(Activity.RESULT_OK, intent);
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
+    @Override
+    public void onClick(String field) {
+
+    }
 }

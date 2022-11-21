@@ -9,7 +9,6 @@ import static org.junit.Assert.assertTrue;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
@@ -21,13 +20,69 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: javadoc
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
-    private static final String TAG = "StorageIngredientDBTest";
+    /**
+     * Dictates how long until a database function timeout and throws an error
+     */
     private static final long TIMEOUT = 5;
+    /**
+     * Holds an instance of the StorageIngredientDB.
+     */
     StorageIngredientDB storageIngredientDB;
+    /**
+     * An instance of StorageIngredient we use for testing the StorageIngredientDB
+     */
     StorageIngredient mockStorageIngredient;
+    /**
+     * An instance of StorageIngredient that we use for testing the StorageIngredientDB on
+     * ingredients we do not add to the StorageIngredientDB.
+     */
+    StorageIngredient mockNonExistentStorageIngredient;
+
+    private void assertStorageIngredientsEqual(StorageIngredient result, StorageIngredient expected){
+        assertNotNull(result);
+        assertEquals(expected.getId(),
+                result.getId());
+        assertEquals(expected.getStorageId(),
+                result.getStorageId());
+        assertEquals(expected.getDescription(),
+                result.getDescription());
+        assertEquals(expected.getLocation(),
+                result.getLocation());
+        assertEquals(expected.getAmount(),
+                result.getAmount());
+        assertEquals(expected.getCategory(),
+                result.getCategory());
+        assertEquals(expected.getBestBeforeDate(),
+                result.getBestBeforeDate());
+        assertEquals(expected.getUnit(),
+                result.getUnit());
+        assertEquals(expected.getAmountAndUnit(),
+                result.getAmountAndUnit());
+    }
+
+    /**
+     * For removing a StorageIngredient we have added to the database during testing.
+     *
+     * @param mockStorageIngredient The StorageIngredient that is to be removed
+     * @throws InterruptedException Thrown when deleting from StorageIngredientDB fails.
+     */
+    private void removeStorageIngredient(StorageIngredient mockStorageIngredient) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        storageIngredientDB.deleteStorageIngredient(mockStorageIngredient,(deletedStorageIngredient, success) -> {
+            assertTrue(success);
+            assertNotNull(deletedStorageIngredient);
+            latch.countDown();
+        });
+
+        if(!latch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+    }
 
     @Before public void before() {
         MockDBConnection connection = new MockDBConnection();
@@ -35,203 +90,229 @@ import java.util.concurrent.CountDownLatch;
         mockStorageIngredient =
                 new StorageIngredient("Broccoli", 5.0, "kg", "Fridge",
                         new Date(), "Vegetable");
+        mockNonExistentStorageIngredient =
+                new StorageIngredient("Broccoli", 5.0, "kg", "Fridge",
+                        new Date(), "Vegetable");
+        mockNonExistentStorageIngredient.setStorageId("-1");
     }
 
     /**
-     * Tests the add functionality and get functionality of db,
-     * with a complete ingredient.
+     * Tests the add functionality of the StorageIngredientDB. The mockStorageIngredient
+     * object is used to test addStorageIngredient method in StorageIngredientDB. The call to
+     * addStorageIngredient is expected to succeed for this test to pass.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Thrown when adding to StorageIngredientDB
+     * or deleting from StorageIngredientDB fails.
      */
-    @Test public void testAddFull() throws InterruptedException {
+    @Test public void testAddStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
         // testing whether it was what was inserted into db
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        AtomicReference<StorageIngredient> addedStorageIngredientAtomic = new AtomicReference<>();
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
+                (addedStorageIngredient, success) -> {
+                    successAtomic.set(success);
+                    addedStorageIngredientAtomic.set(addedStorageIngredient);
 
-                    assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
-                    assertEquals(mockStorageIngredient.getDescription(),
-                            addedStorageIngredient.getDescription());
-                    assertEquals(mockStorageIngredient.getLocation(),
-                            addedStorageIngredient.getLocation());
-                    assertEquals(mockStorageIngredient.getAmount(),
-                            addedStorageIngredient.getAmount());
-                    storageIngredientDB.deleteStorageIngredient(
-                            addedStorageIngredient,
-                            (deletedStorageIngredient, deleteSuccess) -> {
-                                assertNotNull(deletedStorageIngredient);
-                                assertTrue(deleteSuccess);
-                                latch.countDown();
-                            });
+                    latch.countDown();
                 });
 
         if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertStorageIngredientsEqual(addedStorageIngredientAtomic.get(), mockStorageIngredient);
+
+        removeStorageIngredient(mockStorageIngredient);
     }
-
-    @Test public void testGetStorageIngredient() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-        storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
-                    assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
-                    storageIngredientDB.getStorageIngredient(
-                            addedStorageIngredient.getStorageId(),
-                            (foundStorageIngredient, foundSuccess) -> {
-                                assertNotNull(foundStorageIngredient);
-                                assertTrue(foundSuccess);
-                                assertEquals(mockStorageIngredient.getAmount(),
-                                        foundStorageIngredient.getAmount());
-                                assertEquals(
-                                        mockStorageIngredient.getDescription(),
-                                        foundStorageIngredient.getDescription());
-                                storageIngredientDB.deleteStorageIngredient(
-                                        foundStorageIngredient,
-                                        (deletedStorageIngredient,
-                                         deleteSuccess) -> {
-                                            assertNotNull(
-                                                    deletedStorageIngredient);
-                                            assertTrue(deleteSuccess);
-                                            latch.countDown();
-                                        });
-                            });
-                });
-
-        if (!latch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException();
-        }
-    }
-
-    //    /**
-    //     * Tests the add and get functionality, when fields are blank.
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void testAddMissingFields() throws InterruptedException {
-    //        StorageIngredient storedIngredient = new StorageIngredient
-    //        ("Broccoli");
-    //
-    //        // testing whether it was what was inserted into db
-    //        String id = storageIngredientDB.addStoredIngredient
-    //        (storedIngredient);
-    //        StorageIngredient resultIngredient = storageIngredientDB
-    //        .getStoredIngredient(id);
-    //        assertEquals("Broccoli", resultIngredient.getDescription());
-    //        assertNull(resultIngredient.getCategory());
-    //        assertNull(resultIngredient.getBestBefore());
-    //        assertNull(resultIngredient.getLocation());
-    //        assertNull(resultIngredient.getAmount());
-    //        assertNull(resultIngredient.getUnit());
-    //
-    //        // removing it afterward
-    //        storageIngredientDB.removeFromIngredients(id);
-    //    }
-    //
 
     /**
-     * Tests deleting an ingredient from the database
-     */
-    @Test public void testDeleteIngredient() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-
-        storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
-                    assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
-                    storageIngredientDB.deleteStorageIngredient(
-                            addedStorageIngredient,
-                            (deletedStorageIngredient, deleteSuccess) -> {
-                                assertNotNull(deletedStorageIngredient);
-                                assertTrue(deleteSuccess);
-                                latch.countDown();
-                            });
-                });
-
-        if (!latch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException();
-        }
-
-    }
-    //
-    //    /**
-    //     * Tests deleting a non-existing ingredient.
-    //     */
-    //    @Test
-    //    public void deleteNonExistingIngredient() throws
-    //    InterruptedException {
-    //        // attempting to remove non-existing ingredient from db
-    //        // this test will succeed if no error is thrown
-    //        storageIngredientDB.removeFromIngredients("-1");
-    //    }
-    //
-    //    /**
-    //     * Tests whether an exception is thrown upon getting an invalid
-    //     ingredient.
-    //     * @throws InterruptedException
-    //     */
-    //    @Test
-    //    public void getNonExistingIngredient() throws InterruptedException {
-    //        // TODO: change this to a assertThrows()
-    //        boolean valid = true;
-    //        try {
-    //            storageIngredientDB.getStoredIngredient("-1");
-    //        } catch (IllegalArgumentException e) {
-    //            valid = false;
-    //        }
-    //        assertFalse(valid);
-    //    }
-    //
-
-    /**
-     * Tests whether all of the updated fields are reflected in the database.
+     * Tests the get functionality of the StorageIngredientDB. The mockStorageIngredient object is
+     * used to test getStorageIngredient method in StorageIngredientDB. The call to
+     * getStorageIngredient is expected to succeed for this test to pass.
      *
-     * @throws InterruptedException
+     * @throws InterruptedException Thrown when adding to, getting from
+     * or deleting from StorageIngredientDB fail. Deleting is done via removeStorageIngredient method
      */
-    @Test public void testUpdateIngredient() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
+    @Test public void testGetStorageIngredient() throws InterruptedException {
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch getLatch = new CountDownLatch(1);
 
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
-                    assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
-                    StorageIngredient updatedStorageIngredient =
-                            addedStorageIngredient;
-                    updatedStorageIngredient.setDescription("Steamed Broccoli");
-                    updatedStorageIngredient.setAmount(4.0);
-                    updatedStorageIngredient.setUnit("lb");
-                    Date newBestBefore = new Date();
-                    updatedStorageIngredient.setBestBefore(newBestBefore);
-                    updatedStorageIngredient.setLocation("Freezer");
-                    storageIngredientDB.updateStorageIngredient(
-                            updatedStorageIngredient,
-                            (updatedIngredient, updateSuccess) -> {
-                                assertNotNull(updatedIngredient);
-                                assertTrue(updateSuccess);
-                                assertEquals("Steamed Broccoli",
-                                        updatedIngredient.getDescription());
-                                assertEquals((Double) 4.0,
-                                        updatedIngredient.getAmount());
-                                assertEquals("lb", updatedIngredient.getUnit());
-                                assertEquals(newBestBefore,
-                                        updatedIngredient.getBestBeforeDate());
-                                assertEquals("Freezer",
-                                        updatedIngredient.getLocation());
-                                storageIngredientDB.deleteStorageIngredient(
-                                        updatedIngredient,
-                                        (deletedStorageIngredient, deleteSuccess) -> {
-                                            assertNotNull(
-                                                    deletedStorageIngredient);
-                                            assertTrue(deleteSuccess);
-                                            latch.countDown();
-                                        });
-                            });
+                (addedStorageIngredient, success) -> {
+                    successAtomic.set(success);
+                    addLatch.countDown();
                 });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+        if(!addLatch.await(TIMEOUT, SECONDS)){
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
+
+        AtomicReference<StorageIngredient> deletedStorageIngredientAtomic = new AtomicReference<>();
+        storageIngredientDB.getStorageIngredient(mockStorageIngredient.getStorageId(),
+                (foundStorageIngredient, success) -> {
+                    successAtomic.set(success);
+                    deletedStorageIngredientAtomic.set(foundStorageIngredient);
+
+                    getLatch.countDown();
+                });
+
+
+        if (!getLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+        assertStorageIngredientsEqual(deletedStorageIngredientAtomic.get(), mockStorageIngredient);
+
+        removeStorageIngredient(mockStorageIngredient);
+    }
+
+    /**
+     * Tests the get functionality of the StorageIngredientDB. The mockNonExistentStorageIngredient
+     * object is used to test getStorageIngredient method in StorageIngredientDB. The call to
+     * getStorageIngredient is expected to fail for this test to succeed.
+     *
+     * @throws InterruptedException Thrown when getting from StorageIngredientDB fails.
+     */
+    @Test
+    public void testGetNonExistenceStorageIngredient() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        AtomicReference<StorageIngredient> foundStorageIngredientAtomic = new AtomicReference<>();
+        storageIngredientDB.getStorageIngredient(mockNonExistentStorageIngredient.getStorageId(),
+                (foundStorageIngredient, success) ->{
+                    successAtomic.set(success);
+                    foundStorageIngredientAtomic.set(foundStorageIngredient);
+                    latch.countDown();
+                });
+
+        if(!latch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+
+        assertFalse(successAtomic.get());
+        assertNull(foundStorageIngredientAtomic.get());
+    }
+
+    /**
+     * Tests the delete functionality of the StorageIngredientDB. The mockStorageIngredient object
+     * is used to test the deleteStorageIngredient method in StorageIngredientDB. The call to
+     * deleteStorageIngredient is expected to succeed for this test to pass.
+     *
+     * @throws InterruptedException Thrown when adding to, or deleting from StorageIngredientDB
+     * fails
+     */
+    @Test public void testDeleteStorageIngredient() throws InterruptedException {
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch delLatch = new CountDownLatch(1);
+
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        storageIngredientDB.addStorageIngredient(mockStorageIngredient,
+                (addedStorageIngredient, success)->{
+                    successAtomic.set(success);
+                    addLatch.countDown();
+                });
+
+        if (!addLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+
+        AtomicReference<StorageIngredient> deletedStorageIngredientAtomic = new AtomicReference<>();
+        storageIngredientDB.deleteStorageIngredient(mockStorageIngredient,
+                (deletedStorageIngredient, success)-> {
+                    successAtomic.set(success);
+                    deletedStorageIngredientAtomic.set(deletedStorageIngredient);
+                    delLatch.countDown();
+                });
+
+        if (!delLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertStorageIngredientsEqual(deletedStorageIngredientAtomic.get(), mockStorageIngredient);
+    }
+
+    /**
+     * Tests the update functionality of the StorageIngredientDB. The mockStorageIngredient object
+     * is used to test the updateStorageIngredient method in StorageIngredientDB. The call to
+     * updateStorageIngredient is expected to succeed for this test to pass.
+     *
+     * @throws InterruptedException Thrown when adding to, updating in, or deleting from
+     * StorageIngredientDB fails
+     */
+    @Test public void testUpdateStorageIngredient() throws InterruptedException {
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch updateLatch = new CountDownLatch(1);
+
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        storageIngredientDB.addStorageIngredient(mockStorageIngredient,
+                (addedStorageIngredient, success) -> {
+                    successAtomic.set(success);
+                    addLatch.countDown();
+                });
+
+        if (!addLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+
+        mockStorageIngredient.setCategory("Protein");
+        mockStorageIngredient.setDescription("Chicken");
+        mockStorageIngredient.setUnit("lb");
+        mockStorageIngredient.setAmount(11.0);
+        mockStorageIngredient.setLocation("Freezer");
+        mockStorageIngredient.setBestBefore(new Date());
+
+        AtomicReference<StorageIngredient> updatedStorageIngredientAtomic = new AtomicReference<>();
+        storageIngredientDB.updateStorageIngredient(mockStorageIngredient,
+                (updatedStorageIngredient, success) ->{
+                    successAtomic.set(success);
+                    updatedStorageIngredientAtomic.set(updatedStorageIngredient);
+                    updateLatch.countDown();
+                });
+
+        if(!updateLatch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+        assertStorageIngredientsEqual(updatedStorageIngredientAtomic.get(), mockStorageIngredient);
+
+        removeStorageIngredient(mockStorageIngredient);
+    }
+
+    /**
+     * Tests the update functionality of the StorageIngredientDB. The
+     * mockNonExistentStorageIngredient object is used to test the updateStorageIngredient method in
+     * StorageIngredientDB. The call to updateStorageIngredient is expect to fail for this test to
+     * succeed.
+     *
+     * @throws InterruptedException Thrown when updating in StorageIngredientDB fails
+     */
+    @Test
+    public void testUpdateNonExistentStorageIngredient() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        storageIngredientDB.updateStorageIngredient(mockNonExistentStorageIngredient,
+                (updatedStorageIngredient, success) ->{
+                    successAtomic.set(success);
+                    latch.countDown();
+                });
+
+        if(!latch.await(TIMEOUT, SECONDS)){
+            throw new InterruptedException();
+        }
+
+        assertFalse(successAtomic.get());
     }
 }
