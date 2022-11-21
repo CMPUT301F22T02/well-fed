@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.RecipeIngredientEditActivity;
+import com.google.firebase.database.collection.LLRBNode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,6 +65,9 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         titleTextView.setText(title);
 
         errorTextView = view.findViewById(R.id.errorTextView);
+        String errorText = "One or more " + errorTextView.getHint() + " are needed";
+        errorTextView.setText(errorText);
+        errorTextView.setTextColor(0xFFB3261E);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -104,6 +108,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         int index = adapter.getItems().indexOf(item);
         adapter.getItems().remove(index);
         adapter.notifyItemRemoved(index);
+        this.isValid();
     }
 
     public boolean isValid(){
