@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.common.DBConnection;
+import com.google.firebase.firestore.Query;
 
 public class IngredientStorageController {
 	/**
@@ -113,7 +114,8 @@ public class IngredientStorageController {
 	 */
 	public void getSortedResults(String field, boolean ascending) {
 		this.currentField = field;
-		adapter.sortString(field, ascending);
+		Query query = db.getSortedQuery(field);
+		adapter.sortString(query);
 	}
 
 	/**
