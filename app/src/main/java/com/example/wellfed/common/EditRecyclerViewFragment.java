@@ -6,6 +6,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -66,8 +67,8 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        ImageView addButton = view.findViewById(R.id.addButton);
-        ImageView searchButton = view.findViewById(R.id.searchButton);
+        Button addButton = view.findViewById(R.id.addButton);
+        Button searchButton = view.findViewById(R.id.searchButton);
 
         addButton.setOnClickListener(v -> {
             onEdit(null);
