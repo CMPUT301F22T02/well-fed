@@ -52,6 +52,7 @@ public class MealBookFragment extends Fragment
     private RecyclerView mealPlanRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MealPlanController controller;
+    private MealPlan selectedMealPlan;
 
     ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanContract(), result -> {
@@ -66,6 +67,9 @@ public class MealBookFragment extends Fragment
                         break;
                     case "edit":
                         controller.updateMealPlan(mealPlan, this);
+                        break;
+                    case "launch":
+                        this.launch(selectedMealPlan);
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -125,6 +129,7 @@ public class MealBookFragment extends Fragment
         if (mealPlan == null) {
             editLauncher.launch(null);
         } else {
+            selectedMealPlan = mealPlan;
             launcher.launch(mealPlan);
         }
     }
