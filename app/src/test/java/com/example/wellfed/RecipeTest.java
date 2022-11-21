@@ -1,8 +1,10 @@
 package com.example.wellfed;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 
 import com.example.wellfed.ingredient.Ingredient;
@@ -202,11 +204,6 @@ public class RecipeTest {
         assertEquals(minutes, recipe.getPrepTimeMinutes());
     }
 
-    // todo: not sure how to do this properly
-    @Test
-    public void testImage() {
-
-    }
 
     /**
      * Tests getting/setting the ID of a Recipe.
@@ -223,5 +220,130 @@ public class RecipeTest {
         // test with literal
         recipe.setId("recipe_id_156345343");
         assertEquals("recipe_id_156345343", recipe.getId());
+    }
+
+    /**
+     * Tests that a recipe is always equals if all of the fields are identical.
+     * This is done by changing each field individually, and then invoking equals
+     */
+    @Test
+    public void testEquals() {
+        Ingredient mockIngredient = mockRecipeIngredient();
+        Ingredient mockIngredient2 = mockRecipeIngredient();
+        mockIngredient.setDescription("Milk");
+        mockIngredient2.setDescription("Frosted Flakes");
+
+        Recipe mockRecipe = mockRecipe();
+        Recipe mockRecipe2 = mockRecipe();
+
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.setTitle("Cereal");
+        mockRecipe2.setTitle("Cereal");
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.setId("ID");
+        mockRecipe2.setId("ID");
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.setCategory("Breakfast");
+        mockRecipe2.setCategory("Breakfast");
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.setServings(5);
+        mockRecipe2.setServings(5);
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.setComments("This is a great breakfast.");
+        mockRecipe2.setComments("This is a great breakfast.");
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.setPrepTimeMinutes(5);
+        mockRecipe2.setPrepTimeMinutes(5);
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        // adding ingredients out of order
+        mockRecipe.addIngredient(mockIngredient);
+        mockRecipe.addIngredient(mockIngredient2);
+
+        mockRecipe2.addIngredient(mockIngredient2);
+        mockRecipe2.addIngredient(mockIngredient);
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+    }
+
+    /**
+     * Tests that a recipe is not equals if any of the fields are not the same.
+     * This is done by changing each field individually, and then invoking equals.
+     */
+    @Test
+    public void testNotEquals() {
+        Ingredient mockIngredient = mockRecipeIngredient();
+        Ingredient mockIngredient2 = mockRecipeIngredient();
+        mockIngredient.setDescription("Milk");
+        mockIngredient2.setDescription("Frosted Flakes");
+
+        Recipe mockRecipe = mockRecipe();
+        Recipe mockRecipe2 = mockRecipe();
+
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.setTitle("Cereal");
+        mockRecipe2.setTitle("Frosted Flakes");
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe2.setTitle("Cereal");
+        mockRecipe.setId("ID");
+        mockRecipe2.setId("ID2");
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe2.setId("ID");
+        mockRecipe.setCategory("Breakfast");
+        mockRecipe2.setCategory("Break fast");
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe2.setCategory("Breakfast");
+        mockRecipe.setServings(5);
+        mockRecipe2.setServings(6);
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe2.setServings(5);
+        mockRecipe.setComments("This is a great breakfast.");
+        mockRecipe2.setComments("This is a good breakfast.");
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe2.setComments("This is a great breakfast.");
+        mockRecipe.setPrepTimeMinutes(5);
+        mockRecipe2.setPrepTimeMinutes(6);
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        // adding ingredients out of order
+        mockRecipe2.setPrepTimeMinutes(5);
+        mockRecipe.addIngredient(mockIngredient);
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe.addIngredient(mockIngredient2);
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
+
+        mockRecipe2.addIngredient(mockIngredient2);
+        mockRecipe2.addIngredient(mockIngredient);
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
     }
 }

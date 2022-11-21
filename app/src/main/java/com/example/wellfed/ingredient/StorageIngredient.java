@@ -3,7 +3,9 @@ package com.example.wellfed.ingredient;
 
 import com.example.wellfed.common.UTCDate;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * An Ingredient represented in a user's storage, with added amount, unit, location, and best before.
@@ -201,23 +203,29 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
     }
 
     /**
-     * Checks if the ingredient is equal to another ingredient.
-     * @param o The ingredient to compare to.
-     * @return True if the ingredients are equal, false otherwise.
+     * Checks whether the ingredient is equal to another ingredient.
+     *
+     * @param o the object to check equality with
+     *
+     * @return true if the objects are equal, false otherwise
      */
     @Override
-    public boolean equals(Object o) {
-        if (o == null) {
+    public boolean isEqual(Object o) {
+        if (o.getClass() != StorageIngredient.class) {
             return false;
         }
-        if (o == this) {
-            return true;
-        }
-        if (!(o instanceof StorageIngredient)) {
-            return false;
-        }
-        StorageIngredient other = (StorageIngredient) o;
-        return this.getDescription().equalsIgnoreCase(other.getDescription());
+
+        ArrayList<Boolean> flags = new ArrayList<Boolean>();
+        flags.add(Objects.equals(this.getId(), ((StorageIngredient) o).getId()));
+        flags.add(Objects.equals(this.getDescription(), ((StorageIngredient) o).getDescription()));
+        flags.add(Objects.equals(this.getCategory(), ((StorageIngredient) o).getCategory()));
+        flags.add(Objects.equals(this.getUnit(), ((StorageIngredient) o).getUnit()));
+        flags.add(Objects.equals(this.getAmount(), ((StorageIngredient) o).getAmount()));
+        flags.add(Objects.equals(this.getBestBeforeDate(), ((StorageIngredient) o).getBestBeforeDate()));
+        flags.add(Objects.equals(this.getStorageId(), ((StorageIngredient) o).getStorageId()));
+        flags.add(Objects.equals(this.getAmountAndUnit(), ((StorageIngredient) o).getAmountAndUnit()));
+
+        return !flags.contains(false);
     }
 
     /**
