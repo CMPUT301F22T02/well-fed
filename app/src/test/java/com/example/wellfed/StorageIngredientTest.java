@@ -35,7 +35,7 @@ public class StorageIngredientTest {
         assertNull(ingredient.getAmount());
         assertNull(ingredient.getUnit());
         assertNull(ingredient.getLocation());
-        assertNull(ingredient.getBestBeforeDate());
+        assertNull(ingredient.getBestBefore());
         assertNull(ingredient.getCategory());
     }
 
@@ -51,9 +51,9 @@ public class StorageIngredientTest {
         assertEquals((Double) 1.0, ingredient.getAmount());
         assertEquals("g", ingredient.getUnit());
         assertEquals("Pantry", ingredient.getLocation());
-        assertEquals(new Date(2020, 1, 1), ingredient.getBestBeforeDate());
+        assertEquals(new Date(2020, 1, 1), ingredient.getBestBefore());
         Date bestBefore = new Date(2020, 1, 1);
-        assertEquals(bestBefore, ingredient.getBestBeforeDate());
+        assertEquals(bestBefore, ingredient.getBestBefore());
         assertNull(ingredient.getCategory());
     }
 
@@ -69,9 +69,9 @@ public class StorageIngredientTest {
         assertEquals((Double) 1.0, ingredient.getAmount());
         assertEquals("g", ingredient.getUnit());
         assertEquals("Pantry", ingredient.getLocation());
-        assertEquals(new Date(2020, 1, 1), ingredient.getBestBeforeDate());
+        assertEquals(new Date(2020, 1, 1), ingredient.getBestBefore());
         Date bestBefore = new Date(2020, 1, 1);
-        assertEquals(bestBefore, ingredient.getBestBeforeDate());
+        assertEquals(bestBefore, ingredient.getBestBefore());
         assertEquals("Fruit", ingredient.getCategory());
     }
 
@@ -85,7 +85,7 @@ public class StorageIngredientTest {
         assertNull(ingredient.getAmount());
         assertNull(ingredient.getUnit());
         assertNull(ingredient.getLocation());
-        assertNull(ingredient.getBestBeforeDate());
+        assertNull(ingredient.getBestBefore());
         assertNull(ingredient.getCategory());
 
         StorageIngredient ingredient2 = new StorageIngredient("Apple", 1.0,
@@ -95,9 +95,9 @@ public class StorageIngredientTest {
         assertEquals((Double) 1.0, ingredient2.getAmount());
         assertEquals("g", ingredient2.getUnit());
         assertEquals("Pantry", ingredient2.getLocation());
-        assertEquals(new Date(2020, 1, 1), ingredient2.getBestBeforeDate());
+        assertEquals(new Date(2020, 1, 1), ingredient2.getBestBefore());
         Date bestBefore = new Date(2020, 1, 1);
-        assertEquals(bestBefore, ingredient2.getBestBeforeDate());
+        assertEquals(bestBefore, ingredient2.getBestBefore());
         assertNull(ingredient2.getCategory());
 
         StorageIngredient ingredient3 = new StorageIngredient("Apple", 1.0,
@@ -108,9 +108,9 @@ public class StorageIngredientTest {
         assertEquals("g", ingredient3.getUnit());
         assertEquals("Pantry", ingredient3.getLocation());
 
-        assertEquals(new Date(2020, 1, 1), ingredient3.getBestBeforeDate());
+        assertEquals(new Date(2020, 1, 1), ingredient3.getBestBefore());
         Date bestBefore2 = new Date(2020, 1, 1);
-        assertEquals(bestBefore2, ingredient3.getBestBeforeDate());
+        assertEquals(bestBefore2, ingredient3.getBestBefore());
         assertEquals("Fruit", ingredient3.getCategory());
     }
 
@@ -129,9 +129,9 @@ public class StorageIngredientTest {
         ingredient.setLocation("Pantry");
         assertEquals("Pantry", ingredient.getLocation());
         ingredient.setBestBefore(new Date(2020, 1, 1));
-        assertEquals(new Date(2020, 1, 1), ingredient.getBestBeforeDate());
+        assertEquals(new Date(2020, 1, 1), ingredient.getBestBefore());
         Date bestBefore = new Date(2020, 1, 1);
-        assertEquals(bestBefore, ingredient.getBestBeforeDate());
+        assertEquals(bestBefore, ingredient.getBestBefore());
         ingredient.setCategory("Fruit");
         assertEquals("Fruit", ingredient.getCategory());
 
@@ -147,9 +147,9 @@ public class StorageIngredientTest {
         ingredient2.setLocation("Pantry");
         assertEquals("Pantry", ingredient2.getLocation());
         ingredient2.setBestBefore(new Date(2020, 1, 2));
-        assertEquals(new Date(2020, 1, 2), ingredient2.getBestBeforeDate());
+        assertEquals(new Date(2020, 1, 2), ingredient2.getBestBefore());
         Date bestBefore2 = new Date(2020, 1, 2);
-        assertEquals(bestBefore2, ingredient2.getBestBeforeDate());
+        assertEquals(bestBefore2, ingredient2.getBestBefore());
         ingredient2.setCategory("Fruit");
         assertEquals("Fruit", ingredient2.getCategory());
 
@@ -165,9 +165,9 @@ public class StorageIngredientTest {
         ingredient3.setLocation("Pantry");
         assertEquals("Pantry", ingredient3.getLocation());
         ingredient3.setBestBefore(new Date(2020, 1, 2));
-        assertEquals(new Date(2020, 1, 2), ingredient3.getBestBeforeDate());
+        assertEquals(new Date(2020, 1, 2), ingredient3.getBestBefore());
         Date bestBefore3 = new Date(2020, 1, 2);
-        assertEquals(bestBefore3, ingredient3.getBestBeforeDate());
+        assertEquals(bestBefore3, ingredient3.getBestBefore());
         ingredient3.setCategory("Fruit2");
         assertEquals("Fruit2", ingredient3.getCategory());
     }
