@@ -44,6 +44,7 @@ public class MealPlanActivity extends ActivityBase implements
     private DateFormat dateFormat;
     private TextView mealPlanTitleTextView;
     private TextView mealPlanDateTextView;
+    private TextView mealPLanCategoryTextView;
     private TextView mealPlanNumberOfServingsTextView;
     private DeleteButton deleteButton;
     private FloatingActionButton fab;
@@ -60,15 +61,15 @@ public class MealPlanActivity extends ActivityBase implements
         this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         mealPlanTitleTextView = findViewById(R.id.mealPlanTitleTextView);
+        mealPLanCategoryTextView = findViewById(R.id.mealPlanCategoryTextView);
         mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
         mealPlanNumberOfServingsTextView =
                 findViewById(R.id.mealPlanNumberOfServingsTextView);
 
         mealPlanTitleTextView.setText(mealPlan.getTitle());
-        if (mealPlan.getEatDate() != null) {
-            mealPlanDateTextView.setText(
-                    dateFormat.format(mealPlan.getEatDate()));
-        }
+        mealPlanDateTextView.setText("Date: " +
+                dateFormat.format(mealPlan.getEatDate()));
+        mealPLanCategoryTextView.setText("Category: " + mealPlan.getCategory());
         mealPlanNumberOfServingsTextView.setText(
                 "Number of servings: " + mealPlan.getServings());
 
