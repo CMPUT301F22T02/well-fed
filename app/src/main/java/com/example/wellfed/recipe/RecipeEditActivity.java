@@ -81,7 +81,7 @@ public class RecipeEditActivity extends EditActivityBase {
         // intialize the variables
         Intent intent = getIntent();
         recipeIngredients = new ArrayList<>();
-        recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        recipe = (Recipe) intent.getSerializableExtra("item");
         fab = findViewById(R.id.save_fab);
 
 
@@ -147,7 +147,7 @@ public class RecipeEditActivity extends EditActivityBase {
                     recipe.addIngredients(recipeIngredients);
                     recipe.setPrepTimeMinutes(prepTime.getInteger());
                     intent.putExtra("type", "edit");
-                    intent.putExtra("Recipe", recipe);
+                    intent.putExtra("item", recipe);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -183,8 +183,8 @@ public class RecipeEditActivity extends EditActivityBase {
     public void onSave() {
         // return the new recipe via intent
         Intent intent = new Intent();
-        intent.putExtra("type", "save");
-        intent.putExtra("Recipe", recipe);
+        intent.putExtra("type", "add");
+        intent.putExtra("item", recipe);
         setResult(RESULT_OK, intent);
         finish();
     }
