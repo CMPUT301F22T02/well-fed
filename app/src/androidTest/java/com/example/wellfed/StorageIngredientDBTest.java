@@ -3,6 +3,7 @@ package com.example.wellfed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -19,6 +20,7 @@ import org.junit.runner.RunWith;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 // TODO: javadoc
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
@@ -39,6 +41,28 @@ import java.util.concurrent.CountDownLatch;
      * ingredients we do not add to the StorageIngredientDB.
      */
     StorageIngredient mockNonExistentStorageIngredient;
+
+    private void assertStorageIngredientsEqual(StorageIngredient result, StorageIngredient expected){
+        assertNotNull(result);
+        assertEquals(expected.getId(),
+                result.getId());
+        assertEquals(expected.getStorageId(),
+                result.getStorageId());
+        assertEquals(expected.getDescription(),
+                result.getDescription());
+        assertEquals(expected.getLocation(),
+                result.getLocation());
+        assertEquals(expected.getAmount(),
+                result.getAmount());
+        assertEquals(expected.getCategory(),
+                result.getCategory());
+        assertEquals(expected.getBestBeforeDate(),
+                result.getBestBeforeDate());
+        assertEquals(expected.getUnit(),
+                result.getUnit());
+        assertEquals(expected.getAmountAndUnit(),
+                result.getAmountAndUnit());
+    }
 
     /**
      * For removing a StorageIngredient we have added to the database during testing.
@@ -84,35 +108,21 @@ import java.util.concurrent.CountDownLatch;
         CountDownLatch latch = new CountDownLatch(1);
 
         // testing whether it was what was inserted into db
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        AtomicReference<StorageIngredient> addedStorageIngredientAtomic = new AtomicReference<>();
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
+                (addedStorageIngredient, success) -> {
+                    successAtomic.set(success);
+                    addedStorageIngredientAtomic.set(addedStorageIngredient);
 
-                    assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
-                    assertEquals(mockStorageIngredient.getId(),
-                            addedStorageIngredient.getId());
-                    assertEquals(mockStorageIngredient.getStorageId(),
-                            addedStorageIngredient.getStorageId());
-                    assertEquals(mockStorageIngredient.getDescription(),
-                            addedStorageIngredient.getDescription());
-                    assertEquals(mockStorageIngredient.getLocation(),
-                            addedStorageIngredient.getLocation());
-                    assertEquals(mockStorageIngredient.getAmount(),
-                            addedStorageIngredient.getAmount());
-                    assertEquals(mockStorageIngredient.getCategory(),
-                            addedStorageIngredient.getCategory());
-                    assertEquals(mockStorageIngredient.getBestBeforeDate(),
-                            addedStorageIngredient.getBestBeforeDate());
-                    assertEquals(mockStorageIngredient.getUnit(),
-                            addedStorageIngredient.getUnit());
-                    assertEquals(mockStorageIngredient.getAmountAndUnit(),
-                            addedStorageIngredient.getAmountAndUnit());
                     latch.countDown();
                 });
 
         if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertStorageIngredientsEqual(addedStorageIngredientAtomic.get(), mockStorageIngredient);
 
         removeStorageIngredient(mockStorageIngredient);
     }
@@ -129,10 +139,10 @@ import java.util.concurrent.CountDownLatch;
         CountDownLatch addLatch = new CountDownLatch(1);
         CountDownLatch getLatch = new CountDownLatch(1);
 
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
-                    assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
+                (addedStorageIngredient, success) -> {
+                    successAtomic.set(success);
                     addLatch.countDown();
                 });
 
@@ -140,30 +150,14 @@ import java.util.concurrent.CountDownLatch;
             throw new InterruptedException();
         }
 
+        assertTrue(successAtomic.get());
+
+        AtomicReference<StorageIngredient> deletedStorageIngredientAtomic = new AtomicReference<>();
         storageIngredientDB.getStorageIngredient(mockStorageIngredient.getStorageId(),
                 (foundStorageIngredient, success) -> {
-                    assertTrue(success);
-                    assertNotNull(foundStorageIngredient);
-                    assertEquals(foundStorageIngredient.getId(),
-                            mockStorageIngredient.getId());
-                    assertEquals(foundStorageIngredient.getStorageId(),
-                            mockStorageIngredient.getStorageId());
-                    assertEquals(foundStorageIngredient.getDescription(),
-                            mockStorageIngredient.getDescription());
-                    assertEquals(foundStorageIngredient.getLocation(),
-                            mockStorageIngredient.getLocation());
-                    assertEquals(foundStorageIngredient.getAmount(),
-                            mockStorageIngredient.getAmount());
-                    assertEquals(foundStorageIngredient.getAmount(),
-                            mockStorageIngredient.getAmount());
-                    assertEquals(foundStorageIngredient.getCategory(),
-                            mockStorageIngredient.getCategory());
-                    assertEquals(foundStorageIngredient.getBestBeforeDate(),
-                            mockStorageIngredient.getBestBeforeDate());
-                    assertEquals(foundStorageIngredient.getUnit(),
-                            mockStorageIngredient.getUnit());
-                    assertEquals(foundStorageIngredient.getAmountAndUnit(),
-                            mockStorageIngredient.getAmountAndUnit());
+                    successAtomic.set(success);
+                    deletedStorageIngredientAtomic.set(foundStorageIngredient);
+
                     getLatch.countDown();
                 });
 
@@ -171,6 +165,9 @@ import java.util.concurrent.CountDownLatch;
         if (!getLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
+        assertStorageIngredientsEqual(deletedStorageIngredientAtomic.get(), mockStorageIngredient);
 
         removeStorageIngredient(mockStorageIngredient);
     }
@@ -186,15 +183,21 @@ import java.util.concurrent.CountDownLatch;
     public void testGetNonExistenceStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        AtomicReference<StorageIngredient> foundStorageIngredientAtomic = new AtomicReference<>();
         storageIngredientDB.getStorageIngredient(mockNonExistentStorageIngredient.getStorageId(),
                 (foundStorageIngredient, success) ->{
-                    assertFalse(success);
+                    successAtomic.set(success);
+                    foundStorageIngredientAtomic.set(foundStorageIngredient);
                     latch.countDown();
                 });
 
         if(!latch.await(TIMEOUT, SECONDS)){
             throw new InterruptedException();
         }
+
+        assertFalse(successAtomic.get());
+        assertNull(foundStorageIngredientAtomic.get());
     }
 
     /**
@@ -209,12 +212,10 @@ import java.util.concurrent.CountDownLatch;
         CountDownLatch addLatch = new CountDownLatch(1);
         CountDownLatch delLatch = new CountDownLatch(1);
 
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
                 (addedStorageIngredient, success)->{
-                    assertTrue(success);
-                    assertNotNull(addedStorageIngredient);
-                    assertEquals(addedStorageIngredient.getStorageId(),
-                            mockStorageIngredient.getStorageId());
+                    successAtomic.set(success);
                     addLatch.countDown();
                 });
 
@@ -222,34 +223,21 @@ import java.util.concurrent.CountDownLatch;
             throw new InterruptedException();
         }
 
+        assertTrue(successAtomic.get());
+
+        AtomicReference<StorageIngredient> deletedStorageIngredientAtomic = new AtomicReference<>();
         storageIngredientDB.deleteStorageIngredient(mockStorageIngredient,
                 (deletedStorageIngredient, success)-> {
-                    assertTrue(success);
-                    assertNotNull(deletedStorageIngredient);
-                    assertEquals(mockStorageIngredient.getId(),
-                            deletedStorageIngredient.getId());
-                    assertEquals(mockStorageIngredient.getStorageId(),
-                            deletedStorageIngredient.getStorageId());
-                    assertEquals(mockStorageIngredient.getDescription(),
-                            deletedStorageIngredient.getDescription());
-                    assertEquals(mockStorageIngredient.getLocation(),
-                            deletedStorageIngredient.getLocation());
-                    assertEquals(mockStorageIngredient.getAmount(),
-                            deletedStorageIngredient.getAmount());
-                    assertEquals(mockStorageIngredient.getCategory(),
-                            deletedStorageIngredient.getCategory());
-                    assertEquals(mockStorageIngredient.getBestBeforeDate(),
-                            deletedStorageIngredient.getBestBeforeDate());
-                    assertEquals(mockStorageIngredient.getUnit(),
-                            deletedStorageIngredient.getUnit());
-                    assertEquals(mockStorageIngredient.getAmountAndUnit(),
-                            deletedStorageIngredient.getAmountAndUnit());
+                    successAtomic.set(success);
+                    deletedStorageIngredientAtomic.set(deletedStorageIngredient);
                     delLatch.countDown();
                 });
 
         if (!delLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertStorageIngredientsEqual(deletedStorageIngredientAtomic.get(), mockStorageIngredient);
     }
 
     /**
@@ -264,16 +252,18 @@ import java.util.concurrent.CountDownLatch;
         CountDownLatch addLatch = new CountDownLatch(1);
         CountDownLatch updateLatch = new CountDownLatch(1);
 
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
         storageIngredientDB.addStorageIngredient(mockStorageIngredient,
-                (addedStorageIngredient, addSuccess) -> {
-                    assertNotNull(addedStorageIngredient);
-                    assertTrue(addSuccess);
+                (addedStorageIngredient, success) -> {
+                    successAtomic.set(success);
                     addLatch.countDown();
                 });
 
         if (!addLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
 
         mockStorageIngredient.setCategory("Protein");
         mockStorageIngredient.setDescription("Chicken");
@@ -282,36 +272,20 @@ import java.util.concurrent.CountDownLatch;
         mockStorageIngredient.setLocation("Freezer");
         mockStorageIngredient.setBestBefore(new Date());
 
+        AtomicReference<StorageIngredient> updatedStorageIngredientAtomic = new AtomicReference<>();
         storageIngredientDB.updateStorageIngredient(mockStorageIngredient,
                 (updatedStorageIngredient, success) ->{
-                    assertTrue(success);
-                    assertNotNull(updatedStorageIngredient);
-
-                    assertEquals(mockStorageIngredient.getId(),
-                            updatedStorageIngredient.getId());
-                    assertEquals(mockStorageIngredient.getStorageId(),
-                            updatedStorageIngredient.getStorageId());
-                    assertEquals(mockStorageIngredient.getDescription(),
-                            updatedStorageIngredient.getDescription());
-                    assertEquals(mockStorageIngredient.getLocation(),
-                            updatedStorageIngredient.getLocation());
-                    assertEquals(mockStorageIngredient.getAmount(),
-                            updatedStorageIngredient.getAmount());
-                    assertEquals(mockStorageIngredient.getCategory(),
-                            updatedStorageIngredient.getCategory());
-                    assertEquals(mockStorageIngredient.getBestBeforeDate(),
-                            updatedStorageIngredient.getBestBeforeDate());
-                    assertEquals(mockStorageIngredient.getUnit(),
-                            updatedStorageIngredient.getUnit());
-                    assertEquals(mockStorageIngredient.getAmountAndUnit(),
-                            updatedStorageIngredient.getAmountAndUnit());
-
+                    successAtomic.set(success);
+                    updatedStorageIngredientAtomic.set(updatedStorageIngredient);
                     updateLatch.countDown();
                 });
 
         if(!updateLatch.await(TIMEOUT, SECONDS)){
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
+        assertStorageIngredientsEqual(updatedStorageIngredientAtomic.get(), mockStorageIngredient);
 
         removeStorageIngredient(mockStorageIngredient);
     }
@@ -328,14 +302,17 @@ import java.util.concurrent.CountDownLatch;
     public void testUpdateNonExistentStorageIngredient() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
         storageIngredientDB.updateStorageIngredient(mockNonExistentStorageIngredient,
                 (updatedStorageIngredient, success) ->{
-                    assertFalse(success);
+                    successAtomic.set(success);
                     latch.countDown();
                 });
 
         if(!latch.await(TIMEOUT, SECONDS)){
             throw new InterruptedException();
         }
+
+        assertFalse(successAtomic.get());
     }
 }
