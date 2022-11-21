@@ -43,8 +43,9 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         query.addSnapshotListener(this);
     }
 
-    @Override public void onEvent(@Nullable QuerySnapshot documentSnapshots,
-                                  @Nullable FirebaseFirestoreException error) {
+    @Override
+    public void onEvent(@Nullable QuerySnapshot documentSnapshots,
+                        @Nullable FirebaseFirestoreException error) {
         if (error != null || documentSnapshots == null) {
             Log.w(TAG, "onEvent:error", error);
             // TODO: call onError handler
@@ -52,7 +53,7 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         }
 
         HashMap<String, Integer> oldIndexMap = new HashMap<>();
-        for (int i = 0; i< snapshots.size(); i++){
+        for (int i = 0; i < snapshots.size(); i++) {
             oldIndexMap.put(snapshots.get(i).getId(), i);
         }
 
@@ -90,24 +91,25 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    protected void setSnapshots(List<DocumentSnapshot> snapshots){
+    protected void setSnapshots(List<DocumentSnapshot> snapshots) {
         this.snapshots.clear();
         this.snapshots.addAll(snapshots);
         notifyDataSetChanged();
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void clearSnapshots(){
+    public void clearSnapshots() {
         this.snapshots.clear();
         notifyDataSetChanged();
     }
 
 
-    protected ArrayList<DocumentSnapshot> getSnapshots(){
+    protected ArrayList<DocumentSnapshot> getSnapshots() {
         return snapshots;
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return snapshots.size();
     }
 }
