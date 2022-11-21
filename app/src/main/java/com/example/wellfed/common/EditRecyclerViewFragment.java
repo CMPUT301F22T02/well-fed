@@ -28,6 +28,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         extends Fragment implements EditItemAdapter.OnEditListener<Item>,
         EditItemAdapter.OnDeleteListener<Item> {
     private RecyclerView recyclerView;
+    private TextView errorTextView;
     private EditItemAdapter<Item> adapter;
     private Item selectedItem;
     private String title;
@@ -61,6 +62,8 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
 
         TextView titleTextView = view.findViewById(R.id.titleTextView);
         titleTextView.setText(title);
+
+        errorTextView = view.findViewById(R.id.errorTextView);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -103,6 +106,19 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         adapter.notifyItemRemoved(index);
     }
 
+    public boolean isValid(){
+        if(adapter.getItemCount() == 0){
+            errorTextView.setVisibility(View.VISIBLE);
+            return false;
+        }
+        else if(adapter.getItemCount() > 0){
+            errorTextView.setVisibility(View.INVISIBLE);
+            return true;
+        }
+
+        return false;
+    }
+
     abstract public void onSearchActivityResult(Pair<String, Item> result);
     private void onEditActivityResult(Pair<String, Item> result) {
         if (result == null) {
@@ -114,6 +130,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
             case "add":
                 adapter.getItems().add(ingredient);
                 adapter.notifyItemInserted(adapter.getItemCount());
+                this.isValid();
                 break;
             case "edit":
                 int index = adapter.getItems().indexOf(selectedItem);
