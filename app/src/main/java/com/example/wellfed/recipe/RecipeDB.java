@@ -252,6 +252,10 @@ public class RecipeDB {
         return this.collection;
     }
 
+    public Query getSortQuery(String field){
+        return this.collection.orderBy(field);
+    }
+
 
 }
 
