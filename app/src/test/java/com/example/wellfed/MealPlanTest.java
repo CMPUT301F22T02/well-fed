@@ -281,33 +281,33 @@ public class MealPlanTest {
         MealPlan mockMealPlan = mockMealPlan();
         MealPlan mockMealPlan2 = mockMealPlan();
 
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.setTitle("Cereal");
         mockMealPlan2.setTitle("Cereal");
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.setId("ID");
         mockMealPlan2.setId("ID");
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.setCategory("Breakfast");
         mockMealPlan2.setCategory("Breakfast");
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.setServings(5);
         mockMealPlan2.setServings(5);
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.setEatDate(new Date(11, 12, 2022));
         mockMealPlan2.setEatDate(new Date(11, 12, 2022));
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
 
         // adding ingredients out of order
@@ -316,8 +316,8 @@ public class MealPlanTest {
 
         mockMealPlan2.addIngredient(mockIngredient2);
         mockMealPlan2.addIngredient(mockIngredient);
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         // adding recipes out of order
         mockMealPlan.addRecipe(mockRecipe);
@@ -325,8 +325,8 @@ public class MealPlanTest {
 
         mockMealPlan2.addRecipe(mockRecipe2);
         mockMealPlan2.addRecipe(mockRecipe);
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
     }
 
     /**
@@ -351,66 +351,66 @@ public class MealPlanTest {
         MealPlan mockMealPlan = mockMealPlan();
         MealPlan mockMealPlan2 = mockMealPlan();
 
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.setTitle("Cereal");
         mockMealPlan2.setTitle("Frosted Flakes");
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.setTitle("Cereal");
         mockMealPlan.setId("ID");
         mockMealPlan2.setId("ID2");
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.setId("ID");
         mockMealPlan.setCategory("Breakfast");
         mockMealPlan2.setCategory("Break fast");
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.setCategory("Breakfast");
         mockMealPlan.setServings(5);
         mockMealPlan2.setServings(6);
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.setServings(5);
         mockMealPlan.setEatDate(new Date(11, 12, 2022));
         mockMealPlan2.setEatDate(new Date(11, 12, 2023));
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.setEatDate(new Date(11, 12, 2022));
 
         // adding ingredients
         mockMealPlan.addIngredient(mockIngredient);
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.addIngredient(mockIngredient2);
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.addIngredient(mockIngredient2);
         mockMealPlan2.addIngredient(mockIngredient);
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
         // adding recipes
         mockMealPlan.addRecipe(mockRecipe);
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan.addRecipe(mockRecipe2);
-        assertFalse(mockMealPlan.equals(mockMealPlan2));
-        assertFalse(mockMealPlan2.equals(mockMealPlan));
+        assertFalse(mockMealPlan.isEqual(mockMealPlan2));
+        assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.addRecipe(mockRecipe2);
         mockMealPlan2.addRecipe(mockRecipe);
-        assertTrue(mockMealPlan.equals(mockMealPlan2));
-        assertTrue(mockMealPlan2.equals(mockMealPlan));
+        assertTrue(mockMealPlan.isEqual(mockMealPlan2));
+        assertTrue(mockMealPlan2.isEqual(mockMealPlan));
     }
 }

@@ -6,7 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.StorageIngredient;
 
 import org.junit.Test;
@@ -181,48 +180,48 @@ public class StorageIngredientTest {
     public void testEquals() {
         StorageIngredient mock = mockIngredient();
         StorageIngredient mock2 = mockIngredient();
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setDescription("Orange");
         mock2.setDescription("Orange");
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setId("ID");
         mock2.setId("ID");
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setCategory("Fruit");
         mock2.setCategory("Fruit");
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setUnit("count");
         mock2.setUnit("count");
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setAmount(5.0);
         mock2.setAmount(5.0);
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setLocation("Fruit bowl");
         mock2.setLocation("Fruit bowl");
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setBestBefore(new Date(11, 12, 2005));
         mock2.setBestBefore(new Date(11, 12, 2005));
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setStorageId("SID");
         mock2.setStorageId("SID");
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
     }
 
     /**
@@ -233,53 +232,53 @@ public class StorageIngredientTest {
     public void testNotEquals() {
         StorageIngredient mock = mockIngredient();
         StorageIngredient mock2 = mockIngredient();
-        assertTrue(mock.equals(mock2));
-        assertTrue(mock2.equals(mock));
+        assertTrue(mock.isEqual(mock2));
+        assertTrue(mock2.isEqual(mock));
 
         mock.setDescription("Orange");
         mock2.setDescription("Apple");
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
 
         mock2.setDescription("Orange");
         mock.setId("ID");
         mock2.setId("ID2");
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
 
         mock2.setId("ID");
         mock.setCategory("Fruit");
         mock2.setCategory("Citrus");
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
 
         mock2.setCategory("Fruit");
         mock.setUnit("count");
         mock2.setUnit("fruits");
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
 
         mock.setUnit("count");
         mock.setAmount(5.0);
         mock2.setAmount(3.0);
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
 
         mock.setLocation("Fruit bowl");
         mock2.setLocation("Counter");
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
 
         mock2.setLocation("Fruit bowl");
         mock.setBestBefore(new Date(11, 12, 2005));
         mock2.setBestBefore(new Date(11, 12, 2006));
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
 
         mock.setBestBefore(new Date(11, 12, 2005));
         mock.setStorageId("SID");
         mock2.setStorageId("SID2");
-        assertFalse(mock.equals(mock2));
-        assertFalse(mock2.equals(mock));
+        assertFalse(mock.isEqual(mock2));
+        assertFalse(mock2.isEqual(mock));
     }
 }

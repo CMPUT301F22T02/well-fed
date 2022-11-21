@@ -14,8 +14,6 @@ package com.example.wellfed.ingredient;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import com.example.wellfed.recipe.Recipe;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -151,8 +149,7 @@ public class Ingredient implements Serializable {
      *
      * @return true if the objects are equal, false otherwise
      */
-    @Override
-    public boolean equals(Object o) {
+    public boolean isEqual(Object o) {
         if (o.getClass() != Ingredient.class) {
             return false;
         }

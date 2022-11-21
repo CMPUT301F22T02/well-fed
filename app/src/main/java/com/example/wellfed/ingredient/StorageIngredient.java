@@ -210,7 +210,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
      * @return true if the objects are equal, false otherwise
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean isEqual(Object o) {
         if (o.getClass() != StorageIngredient.class) {
             return false;
         }

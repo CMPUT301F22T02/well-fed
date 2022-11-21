@@ -240,8 +240,7 @@ public class MealPlan implements Serializable {
      *
      * @return true if the objects are equal, false otherwise
      */
-    @Override
-    public boolean equals( Object o) {
+    public boolean isEqual(Object o) {
         if (o.getClass() != MealPlan.class) {
             return false;
         }
@@ -261,7 +260,7 @@ public class MealPlan implements Serializable {
             // search for the needed Ingredient
             boolean found = false;
             for (int j = 0; j < ((MealPlan) o).getIngredients().size(); j++) {
-                if (this.getIngredient(i).equals(((MealPlan) o).getIngredient(j))) {
+                if (this.getIngredient(i).isEqual(((MealPlan) o).getIngredient(j))) {
                     found = true;
                     break;
                 }
@@ -275,7 +274,7 @@ public class MealPlan implements Serializable {
             // search for the needed Recipe
             boolean found = false;
             for (int j = 0; j < ((MealPlan) o).getRecipes().size(); j++) {
-                if (this.getRecipe(i).equals(((MealPlan) o).getRecipe(j))) {
+                if (this.getRecipe(i).isEqual(((MealPlan) o).getRecipe(j))) {
                     found = true;
                     break;
                 }

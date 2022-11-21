@@ -16,15 +16,12 @@ import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.N
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import android.media.Image;
-
 import androidx.annotation.Nullable;
 
 import com.example.wellfed.ingredient.Ingredient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -247,8 +244,7 @@ public class Recipe implements Serializable {
      *
      * @return true if the objects are equal, false otherwise
      */
-    @Override
-    public boolean equals( Object o) {
+    public boolean isEqual(Object o) {
         if (o.getClass() != Recipe.class) {
             return false;
         }
@@ -270,7 +266,7 @@ public class Recipe implements Serializable {
             // search for the needed Ingredient
             boolean found = false;
             for (int j = 0; j < ((Recipe) o).getIngredients().size(); j++) {
-                if (this.getIngredient(i).equals(((Recipe) o).getIngredient(j))) {
+                if (this.getIngredient(i).isEqual(((Recipe) o).getIngredient(j))) {
                     found = true;
                 }
             }

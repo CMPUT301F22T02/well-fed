@@ -236,38 +236,38 @@ public class RecipeTest {
         Recipe mockRecipe = mockRecipe();
         Recipe mockRecipe2 = mockRecipe();
 
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.setTitle("Cereal");
         mockRecipe2.setTitle("Cereal");
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.setId("ID");
         mockRecipe2.setId("ID");
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.setCategory("Breakfast");
         mockRecipe2.setCategory("Breakfast");
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.setServings(5);
         mockRecipe2.setServings(5);
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.setComments("This is a great breakfast.");
         mockRecipe2.setComments("This is a great breakfast.");
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.setPrepTimeMinutes(5);
         mockRecipe2.setPrepTimeMinutes(5);
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         // adding ingredients out of order
         mockRecipe.addIngredient(mockIngredient);
@@ -275,8 +275,8 @@ public class RecipeTest {
 
         mockRecipe2.addIngredient(mockIngredient2);
         mockRecipe2.addIngredient(mockIngredient);
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
     }
 
     /**
@@ -293,57 +293,57 @@ public class RecipeTest {
         Recipe mockRecipe = mockRecipe();
         Recipe mockRecipe2 = mockRecipe();
 
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.setTitle("Cereal");
         mockRecipe2.setTitle("Frosted Flakes");
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.setTitle("Cereal");
         mockRecipe.setId("ID");
         mockRecipe2.setId("ID2");
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.setId("ID");
         mockRecipe.setCategory("Breakfast");
         mockRecipe2.setCategory("Break fast");
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.setCategory("Breakfast");
         mockRecipe.setServings(5);
         mockRecipe2.setServings(6);
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.setServings(5);
         mockRecipe.setComments("This is a great breakfast.");
         mockRecipe2.setComments("This is a good breakfast.");
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.setComments("This is a great breakfast.");
         mockRecipe.setPrepTimeMinutes(5);
         mockRecipe2.setPrepTimeMinutes(6);
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         // adding ingredients out of order
         mockRecipe2.setPrepTimeMinutes(5);
         mockRecipe.addIngredient(mockIngredient);
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe.addIngredient(mockIngredient2);
-        assertFalse(mockRecipe.equals(mockRecipe2));
-        assertFalse(mockRecipe2.equals(mockRecipe));
+        assertFalse(mockRecipe.isEqual(mockRecipe2));
+        assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.addIngredient(mockIngredient2);
         mockRecipe2.addIngredient(mockIngredient);
-        assertTrue(mockRecipe.equals(mockRecipe2));
-        assertTrue(mockRecipe2.equals(mockRecipe));
+        assertTrue(mockRecipe.isEqual(mockRecipe2));
+        assertTrue(mockRecipe2.isEqual(mockRecipe));
     }
 }
