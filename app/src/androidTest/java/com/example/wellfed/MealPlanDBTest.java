@@ -728,10 +728,12 @@ public class MealPlanDBTest {
 						mealPlanDB.delMealPlan(addedMealPlan2,
 							(deletedMealPlan, success3) -> {
 								if (success3) {
-									// Check that the meal plan was deleted
-									mealPlanDB.getMealPlan(addedMealPlan2.getId(), (retrievedMealPlan, success4) -> {
-										if (!success4) {
-											assertNull(retrievedMealPlan);
+									mealPlanDB.getMealPlans((retrievedMealPlans, success4) -> {
+										if (success4) {
+											// Check if length is 0 (no meal plans)
+											assertEquals(0, retrievedMealPlans.size());
+										} else {
+											Log.e(TAG, "Failed to retrieve meal plans");
 										}
 										mealPlanLatch.countDown();
 									});

@@ -83,6 +83,23 @@ public class MealPlanDB {
 
     /**
      * This interface is used to handle the result of
+     * getting all the MealPlan objects from the db.
+     */
+    public interface OnGetMealPlansListener {
+        /**
+         * Called when getMealPlans returns a result.
+         *
+         * @param mealPlans the ArrayList of MealPlan objects
+         *                  retrieved from the db,
+         *                  null if the get operation failed.
+         * @param success   true if the get operation was successful,
+         *                  false otherwise.
+         */
+        void onGetMealPlansResult(ArrayList<MealPlan> mealPlans, boolean success);
+    }
+
+    /**
+     * This interface is used to handle the result of
      * finding the MealPlan object in the db.
      */
     public interface OnGetMealPlanListener {
@@ -455,7 +472,7 @@ public class MealPlanDB {
     /**
      * Deletes the MealPlan object with the given id from the db.
      *
-     * @param mealPlan
+     * @param mealPlan the MealPlan object to be deleted.
      * @param listener the OnDeleteMealPlanListener object to handle the result.
      */
     public void delMealPlan(MealPlan mealPlan,
@@ -466,6 +483,27 @@ public class MealPlanDB {
             listener.onDeleteMealPlanResult(mealPlan, true);
         }).addOnFailureListener(failure -> {
             listener.onDeleteMealPlanResult(mealPlan, false);
+        });
+    }
+
+    /**
+     * Get all MealPlan objects from the db.
+     *
+     * @param listener the OnGetMealPlansListener object to handle the result.
+     */
+    public void getMealPlans(OnGetMealPlansListener listener) {
+        this.mealPlanCollection.get().addOnSuccessListener(mealPlans -> {
+            ArrayList<MealPlan> mealPlanList = new ArrayList<>();
+            for (DocumentSnapshot mealPlanDoc : mealPlans) {
+                getMealPlan(mealPlanDoc, (foundMealPlan, success) -> {
+                    mealPlanList.add(foundMealPlan);
+                    if (mealPlanList.size() == mealPlans.size()) {
+                        listener.onGetMealPlansResult(mealPlanList, true);
+                    }
+                });
+            }
+        }).addOnFailureListener(failure -> {
+            listener.onGetMealPlansResult(null, false);
         });
     }
 
