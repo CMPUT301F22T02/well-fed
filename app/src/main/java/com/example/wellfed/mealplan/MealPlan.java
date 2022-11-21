@@ -116,6 +116,14 @@ public class MealPlan implements Serializable {
     }
 
     /**
+     * Sets the entire ArrayList of Ingredients in the MealPlan object.
+     */
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients.clear();
+        this.ingredients.addAll(ingredients);
+    }
+
+    /**
      * Adds a Recipe to the MealPlan object.
      * @param recipe The Recipe to be added.
      */
@@ -146,6 +154,14 @@ public class MealPlan implements Serializable {
      */
     public ArrayList<Recipe> getRecipes() {
         return this.recipes;
+    }
+
+    /**
+     * Sets the entire ArrayList of Recipes in the MealPlan object.
+     */
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes.clear();
+        this.recipes.addAll(recipes);
     }
 
     /**

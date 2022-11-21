@@ -101,9 +101,9 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
             recipe = foundRecipe;
             title.setText(recipe.getTitle());
-            prepTime.setText("Preparation time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+            prepTime.setText(Integer.toString(recipe.getPrepTimeMinutes()) + " mins");
             servings.setText("Servings: " + Integer.toString(recipe.getServings()));
-            category.setText("Category: " + recipe.getCategory());
+            category.setText(recipe.getCategory());
             description.setText(recipe.getComments());
 
             Picasso.get()

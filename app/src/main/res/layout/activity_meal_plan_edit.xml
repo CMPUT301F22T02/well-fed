@@ -109,101 +109,30 @@
 
     </com.example.wellfed.common.RequiredNumberTextInputLayout>
 
-    <TextView
-        android:id="@+id/mealPlan_ingredient_textView"
-        android:layout_width="0dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/recipeEditFragment"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/ingredients"
-        android:textStyle="bold"
-        android:textSize="19sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numberOfServingsTextInput" />
-
-    <ImageView
-        android:id="@+id/ingredient_search_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:padding="0dp"
-        android:src="@drawable/ic_baseline_search_24"
-        app:layout_constraintBottom_toBottomOf="@id/mealPlan_ingredient_textView"
-        app:layout_constraintEnd_toStartOf="@+id/ingredient_add_btn" />
-
-
-    <ImageView
-        android:id="@+id/ingredient_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:padding="0dp"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="@+id/mealPlan_ingredient_textView"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mealPlan_ingredient_recycleViewer"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:minHeight="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mealPlan_ingredient_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/numberOfServingsTextInput"
+        tools:layout="@layout/fragment_edit_recycler_view" />
 
-    <TextView
-        android:id="@+id/mealPlan_recipe_textView"
-        android:layout_width="0dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/ingredientEditFragment"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Recipes"
-        android:textStyle="bold"
-        android:textSize="19sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mealPlan_ingredient_recycleViewer" />
-
-    <ImageView
-        android:id="@+id/recipe_search_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:padding="0dp"
-        android:src="@drawable/ic_baseline_search_24"
-        app:layout_constraintBottom_toBottomOf="@id/mealPlan_recipe_textView"
-        app:layout_constraintEnd_toStartOf="@+id/recipe_add_btn" />
-
-
-    <ImageView
-        android:id="@+id/recipe_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:padding="0dp"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="@+id/mealPlan_recipe_textView"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mealPlan_recipe_recycleViewer"
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/mealPlan_recipe_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/recipeEditFragment"
+        tools:layout="@layout/fragment_edit_recycler_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
