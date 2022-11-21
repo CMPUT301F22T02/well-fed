@@ -52,10 +52,6 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
      */
     private StorageIngredient selectedStorageIngredient;
     /**
-     * ImageFilterButton is the button that filters the ingredients by image.
-     */
-    private ImageFilterButton imageFilterButton;
-    /**
      * The cross icon that clears the search bar.
      */
     private ImageView crossIcon;
@@ -145,7 +141,6 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
         recyclerView = view.findViewById(R.id.ingredient_storage_list);
         recyclerView.setAdapter(controller.getAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        imageFilterButton = view.findViewById(R.id.image_filter_button);
 
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setListener(this);
@@ -195,18 +190,6 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
         } else {
             launcher.launch(storageIngredient);
         }
-    }
-
-    /**
-     * getDefaultViewModelProviderFactory method for the
-     * IngredientStorageFragment.
-     *
-     * @return A default ViewModelProviderFactory.
-     */
-    @NonNull
-    @Override
-    public CreationExtras getDefaultViewModelCreationExtras() {
-        return super.getDefaultViewModelCreationExtras();
     }
 
     /**
