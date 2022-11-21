@@ -154,9 +154,9 @@ public class StorageIngredientDB {
 	/**
 	 * todo
 	 *
-	 * @param storageIngredient
-	 * @param ingredient
-	 * @param listener
+	 * @param storageIngredient the ingredient to be added
+	 * @param ingredient 	  the ingredient to be added
+	 * @param listener 	   the listener to be called when the operation is
 	 */
 	private void addStorageIngredient(StorageIngredient storageIngredient, Ingredient ingredient, OnAddStorageIngredientListener listener) {
 		Log.d(TAG, "addStorageIngredient:");

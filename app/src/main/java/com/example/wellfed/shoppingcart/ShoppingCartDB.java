@@ -14,8 +14,14 @@ import com.example.wellfed.recipe.RecipeDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.util.HashMap;
+import java.util.Map;
 
 // TODO: create DB connection between shopping cart and Firestore.
 public class ShoppingCartDB {
@@ -84,7 +90,7 @@ public class ShoppingCartDB {
 	 * @param ingredient The ingredient to add to the shopping cart.
 	 * @param listener   The listener to call when the ingredient is added.
 	 */
-	public void addIngredient(ShoppingCartIngredient ingredient,
+	public void addIngredient(Ingredient ingredient,
 							  OnAddShoppingCart listener) {
 		if (ingredient == null) {
 			listener.onAddShoppingCart(null, false);
@@ -102,6 +108,29 @@ public class ShoppingCartDB {
 				}
 			});
 		}
+
+		ShoppingCartIngredient shoppingCartIngredient =
+				new ShoppingCartIngredient(ingredient);
+
+		shoppingCartIngredient.setId(ingredient.getId());
+		shoppingCartIngredient.setDescription(ingredient.getDescription());
+		shoppingCartIngredient.setAmount(ingredient.getAmount());
+		shoppingCartIngredient.setUnit(ingredient.getUnit());
+		shoppingCartIngredient.setCategory(ingredient.getCategory());
+		HashMap<String, Object> storageIngredientMap = new HashMap<>();
+		storageIngredientMap.put("id", ingredient.getId());
+		storageIngredientMap.put("description", ingredient.getDescription());
+		storageIngredientMap.put("amount", ingredient.getAmount());
+		storageIngredientMap.put("unit", ingredient.getUnit());
+		storageIngredientMap.put("category", ingredient.getCategory());
+		storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient.getId()));
+		collection.document(ingredient.getId()).set(storageIngredientMap).addOnCompleteListener(task -> {
+			if (task.isSuccessful()) {
+				listener.onAddShoppingCart(shoppingCartIngredient, true);
+			} else {
+				listener.onAddShoppingCart(null, false);
+			}
+		});
 	}
 
 	/**
@@ -150,9 +179,20 @@ public class ShoppingCartDB {
 			return;
 		}
 
-		collection.document(ingredient.getId()).set(ingredient)
-			.addOnCompleteListener(task ->
-				listener.onAddShoppingCart(ingredient, task.isSuccessful()));
+		HashMap<String, Object> storageIngredientMap = new HashMap<>();
+		storageIngredientMap.put("id", ingredient.getId());
+		storageIngredientMap.put("description", ingredient.getDescription());
+		storageIngredientMap.put("amount", ingredient.getAmount());
+		storageIngredientMap.put("unit", ingredient.getUnit());
+		storageIngredientMap.put("category", ingredient.getCategory());
+		storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient.getId()));
+		collection.document(ingredient.getId()).set(storageIngredientMap).addOnCompleteListener(task -> {
+			if (task.isSuccessful()) {
+				listener.onAddShoppingCart(ingredient, true);
+			} else {
+				listener.onAddShoppingCart(null, false);
+			}
+		});
 	}
 
 	/**
@@ -170,13 +210,30 @@ public class ShoppingCartDB {
 	/**
 	 * Get the shopping cart.
 	 */
-	public void getShoppingCart(OnGetShoppingCart listener) {
+	public void getAllShoppingCartIngredients(OnGetShoppingCart listener) {
 		collection.get().addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
 				ShoppingCart shoppingCart = new ShoppingCart();
-				for (DocumentSnapshot document : task.getResult()) {
-					ShoppingCartIngredient ingredient = document.toObject(ShoppingCartIngredient.class);
-					shoppingCart.addIngredient(ingredient);
+				for (QueryDocumentSnapshot document : task.getResult()) {
+					DocumentReference ingredientRef = (DocumentReference) document.get("Ingredient");
+					assert ingredientRef != null;
+					ingredientRef.get().addOnCompleteListener(task1 -> {
+						if (task1.isSuccessful()) {
+							DocumentSnapshot document1 = task1.getResult();
+							if (document1.exists()) {
+								Ingredient ingredient = document1.toObject(Ingredient.class);
+								assert ingredient != null;
+								ShoppingCartIngredient shoppingCartIngredient =
+									new ShoppingCartIngredient(ingredient);
+								shoppingCartIngredient.setId(ingredient.getId());
+								shoppingCartIngredient.setDescription(ingredient.getDescription());
+								shoppingCartIngredient.setAmount(ingredient.getAmount());
+								shoppingCartIngredient.setUnit(ingredient.getUnit());
+								shoppingCartIngredient.setCategory(ingredient.getCategory());
+								shoppingCart.addIngredient(shoppingCartIngredient);
+							}
+						}
+					});
 				}
 				listener.onGetShoppingCart(shoppingCart, true);
 			} else {
@@ -184,6 +241,7 @@ public class ShoppingCartDB {
 			}
 		});
 	}
+
 
 	/**
 	 * This interface is used to handle the updating of the shopping cart
