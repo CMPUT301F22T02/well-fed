@@ -55,7 +55,6 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
         this.recipeDB = db;
     }
 
-
     /**
      * Stores the view for the recipes
      *
