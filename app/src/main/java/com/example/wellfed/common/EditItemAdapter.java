@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class EditItemAdapter<Item>
         extends ItemAdapter<Item> {
-
+    private List<Item> placeholderItems;
     private OnEditListener<Item> editListener;
     private OnDeleteListener<Item> deleteListener;
 
@@ -80,6 +80,15 @@ public class EditItemAdapter<Item>
                 deleteListener.onDelete(items.get(holder.getAdapterPosition()));
             }
         });
+    }
+
+    @Override public void setItems(List<Item> items) {
+        super.setItems(items);
+        placeholderItems = new ArrayList<>(items);
+    }
+
+    public Boolean hasChanges() {
+        return !placeholderItems.equals(items);
     }
 
     /**
