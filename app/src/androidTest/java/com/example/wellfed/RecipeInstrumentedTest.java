@@ -37,9 +37,6 @@ import org.junit.runner.RunWith;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class) public class RecipeInstrumentedTest {
-
-    private final Object lock = new Object();
-
     /**
      * Holds the ActivityScenarioRule
      */
@@ -49,7 +46,7 @@ import org.junit.runner.RunWith;
     /**
      * Setup Recipe test by navigating to RecipeBookFragment
      */
-    @Before public void before() throws InterruptedException {
+    @Before public void before() {
         onView(withId(R.id.recipe_book_item)).perform(click());
 
         Intents.init();
@@ -103,7 +100,7 @@ import org.junit.runner.RunWith;
      * Types out a mock recipe.
      * @throws InterruptedException
      */
-    public void typeMockRecipe(String description) throws InterruptedException {
+    public void typeMockRecipe(String description) {
         onView(withId(R.id.fab)).perform(click());
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText(description));
@@ -191,7 +188,7 @@ import org.junit.runner.RunWith;
     }
 
 
-    @Test public void testAddOnInvalidRecipe() throws InterruptedException {
+    @Test public void testAddOnInvalidRecipe() {
         addPreexistingIngredient("Tortilla");
 
         typeMockRecipe("Egg Wrap");
@@ -262,7 +259,8 @@ import org.junit.runner.RunWith;
         Thread.sleep(2000);
 
         onView(withId(R.id.recipe_rv))
-                .perform(RecyclerViewActions.actionOnItem(withText("Egg Wrap"), click()));
+                .perform(RecyclerViewActions.actionOnItem(withText("Egg Wrap"),
+                        click()));
 
         intended(hasComponent(RecipeActivity.class.getName()));
 
