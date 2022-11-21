@@ -5,12 +5,16 @@ import androidx.annotation.NonNull;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
+import com.example.wellfed.ingredient.StorageIngredient;
 import com.example.wellfed.ingredient.StorageIngredientDB;
+import com.example.wellfed.mealplan.MealPlan;
 import com.example.wellfed.mealplan.MealPlanDB;
+import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 // TODO: create DB connection between shopping cart and Firestore.
@@ -71,7 +75,7 @@ public class ShoppingCartDB {
 		 *
 		 * @param success True if the shopping cart was updated successfully.
 		 */
-		void onAddShoppingCart(Ingredient ingredient, boolean success);
+		void onAddShoppingCart(ShoppingCartIngredient ingredient, boolean success);
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class ShoppingCartDB {
 	 * @param ingredient The ingredient to add to the shopping cart.
 	 * @param listener   The listener to call when the ingredient is added.
 	 */
-	public void addIngredient(Ingredient ingredient,
+	public void addIngredient(ShoppingCartIngredient ingredient,
 							  OnAddShoppingCart listener) {
 		if (ingredient == null) {
 			listener.onAddShoppingCart(null, false);
@@ -108,13 +112,13 @@ public class ShoppingCartDB {
 		 *
 		 * @param success True if the shopping cart was updated successfully.
 		 */
-		void onRemoveShoppingCart(Ingredient ingredient, boolean success);
+		void onRemoveShoppingCart(ShoppingCartIngredient ingredient, boolean success);
 	}
 
 	/**
 	 * Delete an ingredient from the shopping cart.
 	 */
-	public void deleteIngredient(Ingredient ingredient,
+	public void deleteIngredient(ShoppingCartIngredient ingredient,
 								 OnRemoveShoppingCart listener) {
 		if (ingredient == null) {
 			listener.onRemoveShoppingCart(null, false);
@@ -128,6 +132,55 @@ public class ShoppingCartDB {
 		collection.document(ingredient.getId()).delete()
 			.addOnCompleteListener(task ->
 				listener.onRemoveShoppingCart(ingredient, task.isSuccessful()));
+	}
+
+	/**
+	 * Update an ingredient in the shopping cart.
+	 */
+	public void updateIngredient(ShoppingCartIngredient ingredient,
+								 OnAddShoppingCart listener) {
+		if (ingredient == null) {
+			listener.onAddShoppingCart(null, false);
+			return;
+		}
+		if (ingredient.getId() == null) {
+			listener.onAddShoppingCart(null, false);
+			return;
+		}
+
+		collection.document(ingredient.getId()).set(ingredient)
+			.addOnCompleteListener(task ->
+				listener.onAddShoppingCart(ingredient, task.isSuccessful()));
+	}
+
+	/**
+	 * This interface is used to handle the result of getting the shopping cart.
+	 */
+	public interface OnGetShoppingCart {
+		/**
+		 * This method is called when the shopping cart is retrieved.
+		 *
+		 * @param success True if the shopping cart was retrieved successfully.
+		 */
+		void onGetShoppingCart(ShoppingCart shoppingCart, boolean success);
+	}
+
+	/**
+	 * Get the shopping cart.
+	 */
+	public void getShoppingCart(OnGetShoppingCart listener) {
+		collection.get().addOnCompleteListener(task -> {
+			if (task.isSuccessful()) {
+				ShoppingCart shoppingCart = new ShoppingCart();
+				for (DocumentSnapshot document : task.getResult()) {
+					ShoppingCartIngredient ingredient = document.toObject(ShoppingCartIngredient.class);
+					shoppingCart.addIngredient(ingredient);
+				}
+				listener.onGetShoppingCart(shoppingCart, true);
+			} else {
+				listener.onGetShoppingCart(null, false);
+			}
+		});
 	}
 
 	/**
@@ -148,33 +201,32 @@ public class ShoppingCartDB {
 	 * not present in the StorageIngredientDB.
 	 */
 	public void updateShoppingCart(OnUpdateShoppingCart listener) {
-		mealPlanDB.getMealPlans((mealPlans, success) -> {
+		mealPlanDB.getMealPlans((mealPlan, success) -> {
 			if (success) {
-				for (int i = 0; i < mealPlans.size(); i++) {
-					recipeDB.getRecipe(mealPlans.get(i).getId(), (recipe,
-																  success1) -> {
-						if (success1) {
-							for (int j = 0; j < recipe.getIngredients().size(); j++) {
-								Ingredient ingredient = recipe.getIngredients().get(j);
-								storageIngredientDB.getStorageIngredient(ingredient.getId(), (storageIngredient, success2) -> {
-									if (success2) {
-										if (storageIngredient == null) {
-											addIngredient(ingredient, (ingredient1, success3) -> {
-												listener.onUpdateShoppingCart(success3);
-											});
-										}
-									} else {
-										listener.onUpdateShoppingCart(false);
+				storageIngredientDB.getAllStorageIngredients((storageIngredients, success2) -> {
+					if (success2) {
+						ShoppingCart shoppingCart = new ShoppingCart();
+						for (MealPlan meal : mealPlan) {
+							for (Ingredient ingredient : meal.getIngredients()) {
+								// Check if the ingredient is in the storage
+								// using getDescription
+								boolean inStorage = false;
+								for (StorageIngredient storageIngredient : storageIngredients) {
+									if (storageIngredient.getDescription().equals(ingredient.getDescription())) {
+										inStorage = true;
+										break;
 									}
-								});
+								}
+								if (!inStorage) {
+									shoppingCart.addIngredient(new ShoppingCartIngredient(ingredient));
+								}
 							}
-						} else {
-							listener.onUpdateShoppingCart(false);
 						}
-					});
-				}
-			} else {
-				listener.onUpdateShoppingCart(false);
+						updateShoppingCart(listener);
+					} else {
+						listener.onUpdateShoppingCart(false);
+					}
+				});
 			}
 		});
 	}

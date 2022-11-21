@@ -45,6 +45,17 @@ public class ShoppingCartIngredient extends Ingredient {
     }
 
     /**
+     * Create a ShoppingCartIngredient using an Ingredient.
+     *
+     * @param ingredient The Ingredient to use.
+     */
+    public ShoppingCartIngredient(Ingredient ingredient) {
+        super(ingredient.getDescription());
+        isPickedUp = false;
+        isComplete = false;
+    }
+
+    /**
      * Gets whether the ShoppingCartIngredient has been picked up.
      * @return A boolean representing whether the ShoppingCartIngredient has been picked up.
      */
