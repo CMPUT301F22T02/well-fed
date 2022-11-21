@@ -17,6 +17,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
@@ -123,6 +124,8 @@ public class ShoppingCartDB {
 		storageIngredientMap.put("amount", ingredient.getAmount());
 		storageIngredientMap.put("unit", ingredient.getUnit());
 		storageIngredientMap.put("category", ingredient.getCategory());
+		storageIngredientMap.put("picked", false);
+		storageIngredientMap.put("complete", false);
 		storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient.getId()));
 		collection.document(ingredient.getId()).set(storageIngredientMap).addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
@@ -186,6 +189,8 @@ public class ShoppingCartDB {
 		storageIngredientMap.put("unit", ingredient.getUnit());
 		storageIngredientMap.put("category", ingredient.getCategory());
 		storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient.getId()));
+		storageIngredientMap.put("picked", ingredient.isPickedUp());
+		storageIngredientMap.put("complete", ingredient.isComplete());
 		collection.document(ingredient.getId()).set(storageIngredientMap).addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
 				listener.onAddShoppingCart(ingredient, true);
@@ -289,5 +294,14 @@ public class ShoppingCartDB {
 				});
 			}
 		});
+	}
+
+	/**
+	 * Get a query of the shopping cart.
+	 *
+	 * @return The query of the shopping cart.
+	 */
+	public Query getQuery() {
+		return collection.orderBy("picked", Query.Direction.ASCENDING);
 	}
 }
