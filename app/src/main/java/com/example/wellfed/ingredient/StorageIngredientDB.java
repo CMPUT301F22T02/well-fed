@@ -320,6 +320,10 @@ public class StorageIngredientDB {
 			Query.Direction.DESCENDING);
 	}
 
+	public Query getSortedQuery(String field){
+		return this.collection.orderBy(field);
+	}
+
 	public interface OnAllIngredients {
 		void onAllIngredients(ArrayList<StorageIngredient> ingredients, boolean success);
 	}

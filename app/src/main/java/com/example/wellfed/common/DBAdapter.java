@@ -10,6 +10,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -18,6 +19,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.crypto.interfaces.PBEKey;
 
 // TODO: Cite: firestore/quickstart
 
@@ -34,13 +37,26 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         implements EventListener<QuerySnapshot> {
     private static final String TAG = "DBAdapter";
     private final ArrayList<DocumentSnapshot> snapshots = new ArrayList<>();
+    private Query mQuery;
+    private ListenerRegistration mRegistration;
+
 
     public DBAdapter(Query query) {
-        query.addSnapshotListener(this);
+        this.mQuery = query;
+        startListening();
     }
 
     public void changeQuery(Query query) {
-        query.addSnapshotListener(this);
+        // Stop listening
+        stopListening();
+
+        // Clear existing data
+        snapshots.clear();
+        notifyDataSetChanged();
+
+        // Listen to new query
+        mQuery = query;
+        startListening();
     }
 
     @Override
@@ -52,13 +68,8 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
             return;
         }
 
-        HashMap<String, Integer> oldIndexMap = new HashMap<>();
-        for (int i = 0; i < snapshots.size(); i++) {
-            oldIndexMap.put(snapshots.get(i).getId(), i);
-        }
-
         for (DocumentChange change : documentSnapshots.getDocumentChanges()) {
-            int oldIndex;
+            int oldIndex = change.getOldIndex();
             int newIndex = change.getNewIndex();
             switch (change.getType()) {
                 case ADDED:
@@ -66,7 +77,6 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
                     notifyItemInserted(newIndex);
                     break;
                 case MODIFIED:
-                    oldIndex = oldIndexMap.get(change.getDocument().getId());
                     if (oldIndex == newIndex) {
                         snapshots.set(oldIndex, change.getDocument());
                         notifyItemChanged(oldIndex);
@@ -77,14 +87,8 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
                     }
                     break;
                 case REMOVED:
-                    if (oldIndexMap.get(change.getDocument().getId()) != null) {
-                        oldIndex = oldIndexMap.get(change.getDocument().getId());
-                        snapshots.remove(oldIndex);
-                        notifyItemRemoved(oldIndex);
-                    }else{
-                        snapshots.remove(change.getOldIndex());
-                        notifyItemRemoved(change.getOldIndex());
-                    }
+                    snapshots.remove(change.getOldIndex());
+                    notifyItemRemoved(change.getOldIndex());
                     break;
             }
         }
@@ -105,6 +109,23 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
     @SuppressLint("NotifyDataSetChanged")
     public void clearSnapshots() {
         this.snapshots.clear();
+        notifyDataSetChanged();
+    }
+
+
+    public void startListening() {
+        if (mQuery != null && mRegistration == null) {
+            mRegistration = mQuery.addSnapshotListener(this);
+        }
+    }
+
+    public void stopListening() {
+        if (mRegistration != null) {
+            mRegistration.remove();
+            mRegistration = null;
+        }
+
+        snapshots.clear();
         notifyDataSetChanged();
     }
 

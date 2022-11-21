@@ -65,41 +65,8 @@ public class StorageIngredientAdapter
 	}
 
 
-	protected void sortString(String field, boolean ascending) {
-		// load all the data
-		db.getAllStorageIngredients((storageIngredients, success) -> {
-			if (!success) return;
-			Collections.sort(storageIngredients, (o1, o2) -> {
-				switch (field) {
-					case "description":
-						return compareByDescription(o1, o2);
-					case "category":
-						return compareByCategory(o1, o2);
-					case "best-before":
-						return compareByBestBefore(o1, o2);
-					case "location":
-						return compareByLocation(o1, o2);
-					default:
-						return 0;
-				}
-			});
-
-			if (!ascending) {
-				Collections.reverse(storageIngredients);
-			}
-
-			HashMap<String, Integer> pos = new HashMap<>();
-			ArrayList<DocumentSnapshot> snaps = new ArrayList<>();
-			for (int i = 0; i < getSnapshots().size(); i++) {
-				pos.put(getSnapshots().get(i).getId(), i);
-			}
-			for (int i = 0; i < storageIngredients.size(); i++) {
-				String id = storageIngredients.get(i).getStorageId();
-				int storedAt = pos.get(id);
-				snaps.add(getSnapshots().get(storedAt));
-			}
-			setSnapshots(snaps);
-		});
+	protected void sortString(Query query) {
+		changeQuery(query);
 	}
 
 	protected void search(String query) {
