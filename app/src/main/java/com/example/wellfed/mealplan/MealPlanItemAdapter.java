@@ -16,8 +16,15 @@ import com.example.wellfed.common.ItemAdapter;
 import com.example.wellfed.recipe.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 
 public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
+    private OnItemClickListener<Item> listener;
+    public interface OnItemClickListener<Item> {
+        void onItemClick(Item item);
+    }
+
     /**
      * inflates the view
      *
@@ -35,10 +42,27 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
         return new ItemViewHolder(itemView);
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
+                                 int position) {
+        Item item = items.get(position);
+        ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+        itemViewHolder.getItemView().setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(item);
+            }
+        });
+    }
+
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private View itemView;
         private TextView primaryTextView;
         private TextView secondaryTextView;
         private ImageView imageView;
+
+        public View getItemView() {
+            return itemView;
+        }
 
         public TextView getPrimaryTextView() {
             return primaryTextView;
@@ -54,9 +78,14 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.itemView = itemView;
             primaryTextView = itemView.findViewById(R.id.primaryTextView);
             secondaryTextView = itemView.findViewById(R.id.secondaryTextView);
             imageView = itemView.findViewById(R.id.imageView);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener<Item> onItemClickListener) {
+        this.listener = onItemClickListener;
     }
 }

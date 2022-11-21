@@ -15,6 +15,8 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.recipe.RecipeActivity;
+import com.example.wellfed.recipe.RecipeContract;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
@@ -24,7 +26,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class MealPlanActivity extends ActivityBase implements
-                                                   ConfirmDialog.OnConfirmListener {
+                                                   ConfirmDialog.OnConfirmListener,
+                                                   MealPlanItemAdapter.OnItemClickListener<Recipe> {
     private static final String ARG_MEAL_PLAN = "mealPlan";
     private final ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanEditContract(), result -> {
@@ -76,6 +79,7 @@ public class MealPlanActivity extends ActivityBase implements
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
         MealPlanRecipeItemAdapter recipeAdapter = new MealPlanRecipeItemAdapter();
         recipeAdapter.setItems(mealPlan.getRecipes());
+        recipeAdapter.setOnItemClickListener(this);
         recipeRecyclerView.setAdapter(recipeAdapter);
         recipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -115,5 +119,11 @@ public class MealPlanActivity extends ActivityBase implements
         intent.putExtra("type", "launch");
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    @Override public void onItemClick(Recipe recipe) {
+        Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra("Recipe", recipe);
+        startActivity(intent);
     }
 }

@@ -21,9 +21,10 @@ import com.squareup.picasso.Picasso;
 public class MealPlanIngredientItemAdapter extends MealPlanItemAdapter<Ingredient> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1, int position) {
+        super.onBindViewHolder(holder1, position);
         ItemViewHolder holder = (ItemViewHolder) holder1;
         Ingredient recipe = items.get(position);
         holder.getPrimaryTextView().setText(recipe.getDescription());
-        holder.getSecondaryTextView().setText("Ingredient available");
+        holder.getSecondaryTextView().setText(recipe.getAmount() + " " + recipe.getUnit() + " | " + recipe.getCategory());
     }
 }

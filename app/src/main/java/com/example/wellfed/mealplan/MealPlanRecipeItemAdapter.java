@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 public class MealPlanRecipeItemAdapter extends MealPlanItemAdapter<Recipe> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1, int position) {
+        super.onBindViewHolder(holder1, position);
         ItemViewHolder holder = (ItemViewHolder) holder1;
         Recipe recipe = items.get(position);
         holder.getPrimaryTextView().setText(recipe.getTitle());
