@@ -79,7 +79,7 @@ public class Recipe implements Serializable {
     public Recipe(String title) {
         this.title = title;
         this.ingredients = new ArrayList<>();
-        this.id = NULL;
+        this.id = null;
     }
 
     /**

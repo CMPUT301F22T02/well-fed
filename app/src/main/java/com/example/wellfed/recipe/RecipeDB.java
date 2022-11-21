@@ -129,14 +129,14 @@ public class RecipeDB {
         recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
 
         this.collection
-                .add(recipeMap)
-                .addOnSuccessListener(addedSnapshot -> {
-                    recipe.setId(addedSnapshot.getId());
-                    listener.onAddRecipe(recipe, true);
-                })
-                .addOnFailureListener(failure -> {
-                    listener.onAddRecipe(null, false);
-                });
+            .add(recipeMap)
+            .addOnSuccessListener(addedSnapshot -> {
+                recipe.setId(addedSnapshot.getId());
+                listener.onAddRecipe(recipe, true);
+            })
+            .addOnFailureListener(failure -> {
+                listener.onAddRecipe(null, false);
+            });
     }
 
 
@@ -208,12 +208,12 @@ public class RecipeDB {
 
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.delete()
-                .addOnSuccessListener(r->{
-                    listener.onAddRecipe(new Recipe(id), true);
-                })
-                .addOnFailureListener(f->{
-                    listener.onAddRecipe(null, false);
-                });
+            .addOnSuccessListener(r->{
+                listener.onAddRecipe(new Recipe(id), true);
+            })
+            .addOnFailureListener(f->{
+                listener.onAddRecipe(null, false);
+            });
     }
 
 
@@ -258,4 +258,3 @@ public class RecipeDB {
 
 
 }
-
