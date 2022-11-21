@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ItemAdapter<Item> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -21,6 +22,10 @@ public abstract class ItemAdapter<Item> extends RecyclerView.Adapter<RecyclerVie
 
     public List<Item> getItems(){
         return items;
+    }
+
+    public ItemAdapter() {
+        this.items = new ArrayList<>();
     }
 
     /**
