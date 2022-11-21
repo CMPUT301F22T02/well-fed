@@ -183,10 +183,6 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
                 controller.getSearchResults(s.toString());
             }
         });
-
-        // Link filter button to filter functionality
-
-//        imageFilterButton.setOnClickListener(this::filter);
     }
 
     /**

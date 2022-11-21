@@ -55,11 +55,6 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
         this.recipeDB = db;
     }
 
-    @Override
-    public void clearSnapshots() {
-        super.clearSnapshots();
-    }
-
     /**
      * Stores the view for the recipes
      *

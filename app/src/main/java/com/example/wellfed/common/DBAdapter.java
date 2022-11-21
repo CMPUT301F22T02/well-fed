@@ -97,7 +97,7 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    protected void clearSnapshots(){
+    public void clearSnapshots(){
         this.snapshots.clear();
         notifyDataSetChanged();
     }
