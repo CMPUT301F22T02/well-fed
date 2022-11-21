@@ -13,7 +13,8 @@ public class RecipeIngredientAdapter extends EditItemAdapter<Ingredient> {
         super.onBindViewHolder(holder1, position);
         ItemViewHolder holder = (ItemViewHolder) holder1;
         Ingredient ingredient = (Ingredient) items.get(position);
-        holder.getLeadingTextView().setText(Double.toString(ingredient.getAmount()));
+        holder.getLeadingTextView().setText(
+                ingredient.getAmount() + " " + ingredient.getUnit());
         holder.getHeadlineTextView().setText(ingredient.getDescription());
     }
 }
