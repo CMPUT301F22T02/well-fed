@@ -14,6 +14,7 @@ import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DeleteButton;
+import com.example.wellfed.common.UTCDate;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeActivity;
 import com.example.wellfed.recipe.RecipeContract;
@@ -25,9 +26,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MealPlanActivity extends ActivityBase implements
-                                                   ConfirmDialog.OnConfirmListener,
-                                                   MealPlanItemAdapter.OnItemClickListener<Recipe> {
+public class MealPlanActivity extends ActivityBase
+        implements ConfirmDialog.OnConfirmListener,
+                   MealPlanItemAdapter.OnItemClickListener<Recipe> {
     private static final String ARG_MEAL_PLAN = "mealPlan";
     private final ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanEditContract(), result -> {
@@ -70,14 +71,15 @@ public class MealPlanActivity extends ActivityBase implements
                 findViewById(R.id.mealPlanNumberOfServingsTextView);
 
         mealPlanTitleTextView.setText(mealPlan.getTitle());
-        mealPlanDateTextView.setText("Date: " +
-                dateFormat.format(mealPlan.getEatDate()));
+        mealPlanDateTextView.setText(
+                "Date: " + dateFormat.format(mealPlan.getEatDate()));
         mealPLanCategoryTextView.setText("Category: " + mealPlan.getCategory());
         mealPlanNumberOfServingsTextView.setText(
                 "Number of servings: " + mealPlan.getServings());
 
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
-        MealPlanRecipeItemAdapter recipeAdapter = new MealPlanRecipeItemAdapter();
+        MealPlanRecipeItemAdapter recipeAdapter =
+                new MealPlanRecipeItemAdapter();
         recipeAdapter.setItems(mealPlan.getRecipes());
         recipeAdapter.setOnItemClickListener(this);
         recipeRecyclerView.setAdapter(recipeAdapter);
