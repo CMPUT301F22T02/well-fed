@@ -121,48 +121,6 @@ public class IngredientDBTest {
     }
 
     /**
-     * Tests the add and get functionality, when fields are blank.
-     *
-     * @throws InterruptedException if the test times out
-     */
-    @Test
-    public void testAddMissingFields() throws InterruptedException {
-        Log.d(TAG, "testAddMissingFields");
-        CountDownLatch latch = new CountDownLatch(1);
-
-        mockIngredient.setCategory(null);
-
-        // testing whether it was what was inserted into db
-        ingredientDB.addIngredient(mockIngredient, (addIngredient, addSuccess) -> {
-            Log.d(TAG, ":onAddIngredient");
-            String id = addIngredient.getId();
-            assertNotNull(addIngredient);
-            assertTrue(addSuccess);
-
-            ingredientDB.getIngredient(id, (getIngredient, getSuccess) -> {
-                Log.d(TAG, ":onGetIngredient");
-                assertNotNull(getIngredient);
-                assertTrue(getSuccess);
-                assertEquals("Broccoli", getIngredient.getDescription());
-                assertNull(getIngredient.getCategory());
-
-                // remove the ingredient
-                ingredientDB.deleteIngredient(getIngredient,
-                        (deleteIngredient, deleteSuccess) -> {
-                            Log.d(TAG, ":onDeleteIngredient");
-                            assertNotNull(deleteIngredient);
-                            assertTrue(deleteSuccess);
-                            latch.countDown();
-                        });
-            });
-        });
-
-        if (!latch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException();
-        }
-    }
-
-    /**
      * Tests deleteIngredient on DB, checks if the ingredient is deleted.
      *
      * @throws InterruptedException if the test times out
