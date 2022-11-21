@@ -11,6 +11,8 @@
 
 package com.example.wellfed.mealplan;
 
+import static org.junit.Assert.assertNotNull;
+
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -20,6 +22,7 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * This class represents a MealPlan, which contains recipes and ingredients
@@ -227,5 +230,66 @@ public class MealPlan implements Serializable {
      */
     public String getId(){
         return this.id;
+    }
+
+    /**
+     * Checks whether the meal plan is equal to another meal plan.
+     * Note: Any order of ingredients/recipes is accepted.
+     *
+     * @param o the object to check equality with
+     *
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals( Object o) {
+        if (o.getClass() != MealPlan.class) {
+            return false;
+        }
+
+        ArrayList<Boolean> flags = new ArrayList<Boolean>();
+        flags.add(Objects.equals(this.getId(), ((MealPlan) o).getId()));
+        flags.add(Objects.equals(this.getTitle(), ((MealPlan) o).getTitle()));
+        flags.add(Objects.equals(this.getCategory(), ((MealPlan) o).getCategory()));
+        flags.add(Objects.equals(this.getEatDate(), ((MealPlan) o).getEatDate()));
+        flags.add(Objects.equals(this.getServings(), ((MealPlan) o).getServings()));
+
+        // checking all ingredients in the MealPlan (in any order!)
+        flags.add(this.getIngredients().size() == ((MealPlan) o).getIngredients().size());
+
+        // checking all ingredients by matching them up
+        for (int i = 0; i < this.getIngredients().size(); i++) {
+            Ingredient actualIngredient = this.getIngredient(i);
+            // search for the needed Ingredient
+            Integer expectedIndex = null;
+            for (int j = 0; j < ((MealPlan) o).getIngredients().size(); j++) {
+                if (Objects.equals(((MealPlan) o).getIngredient(j).getId(), actualIngredient.getId())) {
+                    expectedIndex = j;
+                    break;
+                }
+            }
+            assertNotNull(expectedIndex);
+            Ingredient expectedIngredient = ((MealPlan) o).getIngredient(expectedIndex);
+
+            flags.add(actualIngredient.equals(expectedIngredient));
+        }
+
+        // checking all recipes by matching them up
+        for (int i = 0; i < this.getRecipes().size(); i++) {
+            Recipe actualRecipe = this.getRecipe(i);
+            // search for the needed Ingredient
+            Integer expectedIndex = null;
+            for (int j = 0; j < ((MealPlan) o).getRecipes().size(); j++) {
+                if (Objects.equals(((MealPlan) o).getRecipe(j).getId(), actualRecipe.getId())) {
+                    expectedIndex = j;
+                    break;
+                }
+            }
+            assertNotNull(expectedIndex);
+            Recipe expectedRecipe = ((MealPlan) o).getRecipe(expectedIndex);
+
+            flags.add(actualRecipe.equals(expectedRecipe));
+        }
+
+        return !flags.contains(false);
     }
 }
