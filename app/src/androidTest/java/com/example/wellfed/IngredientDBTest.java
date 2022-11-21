@@ -15,6 +15,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
+import com.google.firebase.firestore.DocumentReference;
 
 import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
@@ -263,32 +264,44 @@ public class IngredientDBTest {
     }
 
     @Test
-    public void getIngredientByCategory() throws InterruptedException {
-        Log.d(TAG, "get Ingredient based on category and description");
-        CountDownLatch latch = new CountDownLatch(1);
+    public void testGetIngredientByDocumentReference() throws InterruptedException {
+        CountDownLatch addLatch = new CountDownLatch(1);
+        CountDownLatch getLatch = new CountDownLatch(1);
 
+        //add
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
         ingredientDB.addIngredient(mockIngredient,
-                (addedIngredient, addSuccess) -> {
-            assertNotNull(addedIngredient);
-            assertTrue(addSuccess);
-            ingredientDB.getIngredient(mockIngredient,
-                    (searchedIngredient, searchSuccess) -> {
-                Log.d(TAG, ":onGetIngredient by category");
-                assertNotNull(searchedIngredient);
-                assertTrue(searchSuccess);
-                ingredientDB.deleteIngredient(searchedIngredient,
-                        (deletedIngredient, deleteSuccess) -> {
-                    Log.d(TAG, ":onDeleteIngredient");
-                    assertNotNull(deletedIngredient);
-                    assertTrue(deleteSuccess);
-                    latch.countDown();
-                });
-            });
+                (addedIngredient, success) -> {
+            successAtomic.set(success);
+            addLatch.countDown();
         });
 
-        if (!latch.await(TIMEOUT, SECONDS)) {
+        if(!addLatch.await(TIMEOUT, SECONDS)){
             throw new InterruptedException();
         }
+
+        assertTrue(successAtomic.get());
+        //get document reference
+        DocumentReference mockIngredientDocumentReference =  ingredientDB.getDocumentReference(mockIngredient);
+        //get ingredient
+
+        AtomicReference<Ingredient> foundIngredientAtomic = new AtomicReference<>();
+        ingredientDB.getIngredient(mockIngredientDocumentReference,
+                (foundIngredient, success) -> {
+            successAtomic.set(success);
+            foundIngredientAtomic.set(foundIngredient);
+            getLatch.countDown();
+        });
+
+        if (!getLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertTrue(successAtomic.get());
+        assertIngredientsEqual(foundIngredientAtomic.get(), mockIngredient);
+
+        //deleteIngredient
+        removeIngredient(mockIngredient);
     }
 
     @Test
