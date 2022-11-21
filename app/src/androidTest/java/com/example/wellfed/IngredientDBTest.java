@@ -305,23 +305,27 @@ public class IngredientDBTest {
     }
 
     @Test
-    public void getIngredientByCategoryNotExists() throws InterruptedException {
-        Log.d(TAG, "get Ingredient based on category and description");
+    public void testGetNonExistentIngredientByDocumentReference() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        Ingredient testIngredient = new Ingredient();
-        testIngredient.setCategory("Protein");
-        testIngredient.setDescription("Steak");
 
-        ingredientDB.getIngredient(testIngredient,
-                (searchIngredient, getSuccess) -> {
-            assertNull(searchIngredient);
-            assertFalse(getSuccess);
+        DocumentReference mockNonExistentIngredientDocumentReference =
+                ingredientDB.getDocumentReference(mockNonExistingIngredient);
+
+        AtomicReference<Boolean> successAtomic = new AtomicReference<>();
+        AtomicReference<Ingredient> foundIngredientAtomic = new AtomicReference<>();
+        ingredientDB.getIngredient(mockNonExistentIngredientDocumentReference,
+                (foundIngredient, success) -> {
+            successAtomic.set(success);
+            foundIngredientAtomic.set(foundIngredient);
             latch.countDown();
         });
 
         if (!latch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException("Timed out");
+            throw new InterruptedException();
         }
+
+        assertFalse(successAtomic.get());
+        assertNull(foundIngredientAtomic.get());
     }
 }
 
