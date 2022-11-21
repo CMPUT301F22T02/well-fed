@@ -94,7 +94,9 @@ public class ShoppingCartDB {
 		if (ingredient.getId() == null) {
 			ingredientDB.addIngredient(ingredient, (addedIngredient, success) -> {
 				if (success) {
-					addIngredient(addedIngredient, listener);
+					ShoppingCartIngredient shoppingCartIngredient =
+							new ShoppingCartIngredient(addedIngredient);
+					addIngredient(shoppingCartIngredient, listener);
 				} else {
 					listener.onAddShoppingCart(null, false);
 				}
