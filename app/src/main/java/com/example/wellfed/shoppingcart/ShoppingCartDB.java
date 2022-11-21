@@ -1,7 +1,5 @@
 package com.example.wellfed.shoppingcart;
 
-import androidx.annotation.NonNull;
-
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
@@ -11,18 +9,13 @@ import com.example.wellfed.mealplan.MealPlan;
 import com.example.wellfed.mealplan.MealPlanDB;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeDB;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.WriteBatch;
-
 import java.util.HashMap;
-import java.util.Map;
 
 // TODO: create DB connection between shopping cart and Firestore.
 public class ShoppingCartDB {
@@ -41,29 +34,24 @@ public class ShoppingCartDB {
 	/**
 	 * Holds a reference to StorageIngredientDB.
 	 */
-	private StorageIngredientDB storageIngredientDB;
+	private final StorageIngredientDB storageIngredientDB;
 	/**
 	 * Holds a reference to the recipeDB.
 	 */
-	private RecipeDB recipeDB;
+	private final RecipeDB recipeDB;
 	/**
 	 * Holds a reference to MealPlanDB.
 	 */
-	private MealPlanDB mealPlanDB;
-	/**
-	 * Holds a connection to the users ingredient collection in the DB.
-	 */
-	private DBConnection connection;
+	private final MealPlanDB mealPlanDB;
 	/**
 	 * Holds the collection for the users
 	 */
-	private CollectionReference collection;
+	private final CollectionReference collection;
 
 	/**
 	 * Constructor for the ShoppingCartDB.
 	 */
 	public ShoppingCartDB(DBConnection connection) {
-		this.connection = connection;
 		this.ingredientDB = new IngredientDB(connection);
 		this.storageIngredientDB = new StorageIngredientDB(connection);
 		this.recipeDB = new RecipeDB(connection);
@@ -286,7 +274,25 @@ public class ShoppingCartDB {
 									shoppingCart.addIngredient(new ShoppingCartIngredient(ingredient));
 								}
 							}
+
+							for (Recipe recipe : meal.getRecipes()) {
+								for (Ingredient ingredient : recipe.getIngredients()) {
+									// Check if the ingredient is in the storage
+									// using getDescription
+									boolean inStorage = false;
+									for (StorageIngredient storageIngredient : storageIngredients) {
+										if (storageIngredient.getDescription().equals(ingredient.getDescription())) {
+											inStorage = true;
+											break;
+										}
+									}
+									if (!inStorage) {
+										shoppingCart.addIngredient(new ShoppingCartIngredient(ingredient));
+									}
+								}
+							}
 						}
+
 						updateShoppingCart(listener);
 					} else {
 						listener.onUpdateShoppingCart(false);
