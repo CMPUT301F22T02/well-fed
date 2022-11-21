@@ -6,40 +6,40 @@
     android:layout_marginTop="16dp">
 
     <TextView
-        android:id="@+id/ingredient_quantity_textView"
+        android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1 lb"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ingredient_name_textView"
+        android:id="@+id/headlineTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:text="Ground Beef"
-        app:layout_constraintStart_toEndOf="@+id/ingredient_quantity_textView"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/titleTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ingredient_delete_imgView"
+        android:id="@+id/deleteButton"
         android:layout_width="16sp"
         android:layout_height="16sp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_baseline_delete_24"
-        app:layout_constraintBottom_toBottomOf="@id/ingredient_name_textView"
-        app:layout_constraintEnd_toStartOf="@+id/ingredient_edit_imgView"
-        app:layout_constraintTop_toTopOf="@id/ingredient_name_textView" />
+        app:layout_constraintBottom_toBottomOf="@id/headlineTextView"
+        app:layout_constraintEnd_toStartOf="@+id/editButton"
+        app:layout_constraintTop_toTopOf="@id/headlineTextView"
+        app:tint="?android:attr/textColorSecondary" />
 
     <ImageView
-        android:id="@+id/ingredient_edit_imgView"
+        android:id="@+id/editButton"
         android:layout_width="16sp"
         android:layout_height="16sp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_baseline_edit_24"
-        app:layout_constraintBottom_toBottomOf="@id/ingredient_name_textView"
+        app:layout_constraintBottom_toBottomOf="@id/headlineTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ingredient_name_textView" />
+        app:layout_constraintTop_toTopOf="@id/headlineTextView"
+        app:tint="?android:attr/textColorSecondary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

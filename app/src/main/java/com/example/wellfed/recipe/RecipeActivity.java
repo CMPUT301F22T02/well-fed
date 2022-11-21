@@ -15,6 +15,7 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.DeleteButton;
+import com.example.wellfed.common.ItemDetailAdapter;
 import com.example.wellfed.ingredient.Ingredient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -34,21 +35,12 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
      */
     private List<Ingredient> ingredientList;
 
+    private ItemDetailAdapter adapter;
+
     /**
      * stores the recipe {@link Recipe}
      */
     private Recipe recipe;
-
-    /**
-     * RecyclerView for the ingredients in the recipe
-     */
-    private RecyclerView ingredientRv;
-
-    /**
-     * Adapter that works with ingredentRv{@link RecipeActivity#ingredientRv}
-     */
-    private RecipeIngredientAdapter recipeIngredientAdapter;
-
 
     /**
      * Launcher that launches RecipeEditActivity {@link RecipeEditActivity}
@@ -85,7 +77,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
         // Initialize the variables
         ingredientList = new ArrayList<>();
-
+        adapter = new ItemDetailAdapter();
+        adapter.setItems(ingredientList);
         /**
          * Stores the intent the activity was created with
          */
@@ -108,9 +101,9 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
             recipe = foundRecipe;
             title.setText(recipe.getTitle());
-            prepTime.setText("Preparation time: " + Integer.toString(recipe.getPrepTimeMinutes()));
+            prepTime.setText(Integer.toString(recipe.getPrepTimeMinutes()) + " mins");
             servings.setText("Servings: " + Integer.toString(recipe.getServings()));
-            category.setText("Category: " + recipe.getCategory());
+            category.setText(recipe.getCategory());
             description.setText(recipe.getComments());
 
             Picasso.get()
@@ -120,16 +113,20 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
             // add ingredients to the recipe
             for (Ingredient ingredient : recipe.getIngredients()) {
                 ingredientList.add(ingredient);
-                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
+//                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
             }
+            adapter.notifyDataSetChanged();
         });
 
 
-        // ingredient recycle view
-        ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
-        recipeIngredientAdapter = new RecipeIngredientAdapter(ingredientList,
-                R.layout.recipe_ingredient);
-        ingredientRv.setAdapter(recipeIngredientAdapter);
+
+
+
+//        // ingredient recycle view
+        RecyclerView ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
+        ingredientRv.setAdapter(adapter);
+//                R.layout.recipe_ingredient);
+//        ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
         /**

@@ -145,38 +145,38 @@ public class RecipeDB {
     public void getRecipe(String id, OnRecipeDone listener) {
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get()
-            .addOnSuccessListener(doc -> {
-                List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
-                Recipe recipe = new Recipe(doc.getString("title"));
-                recipe.setId(doc.getId());
-                recipe.setCategory(doc.getString("category"));
-                recipe.setComments(doc.getString("comments"));
-                recipe.setPhotograph(doc.getString("photograph"));
-                Long prepTime = (Long) doc.getData().get("preparation-time");
-                recipe.setPrepTimeMinutes(Integer.parseInt(Long.toString(prepTime)));
-                Long servings = (Long) doc.getData().get("servings");
-                recipe.setServings(Integer.parseInt(Long.toString(servings)));
-                ArrayList<HashMap<String,Object>> ingredients = (ArrayList<HashMap<String, Object>>)
-                    doc.getData().get("ingredients");
-                int toFetch = ingredients.size();
-                AtomicInteger fetched = new AtomicInteger();
-                for (int i = 0; i<toFetch; i++){
-                    DocumentReference ingredientRef = (DocumentReference) ingredients.get(i).get("ingredientRef");
-                    int finalI = i;
-                    ingredientDB.getIngredient(ingredientRef.getId(), (foundIngredient, success)->{
-                        foundIngredient.setAmount((Double) ingredients.get(finalI).get("amount"));
-                        foundIngredient.setUnit((String) ingredients.get(finalI).get("unit"));
-                        recipe.addIngredient(foundIngredient);
-                        fetched.addAndGet(1);
-                        if(fetched.get() == toFetch){
-                            listener.onAddRecipe(recipe, true);
-                        }
-                    });
-                }
-            })
-            .addOnFailureListener(failure -> {
-
-            });
+                .addOnSuccessListener(doc -> {
+                    List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
+                    Recipe recipe = new Recipe(doc.getString("title"));
+                    recipe.setId(doc.getId());
+                    recipe.setCategory(doc.getString("category"));
+                    recipe.setComments(doc.getString("comments"));
+                    recipe.setPhotograph(doc.getString("photograph"));
+                    Long prepTime = (Long) doc.getData().get("preparation-time");
+                    recipe.setPrepTimeMinutes(Integer.parseInt(Long.toString(prepTime)));
+                    Long servings = (Long) doc.getData().get("servings");
+                    recipe.setServings(Integer.parseInt(Long.toString(servings)));
+                    ArrayList<HashMap<String,Object>> ingredients = (ArrayList<HashMap<String, Object>>)
+                            doc.getData().get("ingredients");
+                    int toFetch = ingredients.size();
+                    AtomicInteger fetched = new AtomicInteger();
+                    for (int i = 0; i<toFetch; i++){
+                        DocumentReference ingredientRef = (DocumentReference) ingredients.get(i).get("ingredientRef");
+                        int finalI = i;
+                        ingredientDB.getIngredient(ingredientRef.getId(), (foundIngredient, success)->{
+                            foundIngredient.setAmount((Double) ingredients.get(finalI).get("amount"));
+                            foundIngredient.setUnit((String) ingredients.get(finalI).get("unit"));
+                            recipe.addIngredient(foundIngredient);
+                            fetched.addAndGet(1);
+                            if(fetched.get() == toFetch){
+                                listener.onAddRecipe(recipe, true);
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(failure -> {
+                    listener.onAddRecipe(null, false);
+                });
     }
 
     public void updateRecipe(Recipe recipe, OnRecipeDone listener) {
@@ -250,6 +250,10 @@ public class RecipeDB {
 
     public Query getQuery() {
         return this.collection;
+    }
+
+    public Query getSortQuery(String field){
+        return this.collection.orderBy(field);
     }
 
 
