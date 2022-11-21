@@ -26,7 +26,6 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @RunWith(AndroidJUnit4.class)
 public class IngredientDBTest {
-    private static final String TAG = "IngredientDBTest";
     /**
      * Holds the timeout in seconds for the CountDownLatch.
      */
@@ -44,6 +43,12 @@ public class IngredientDBTest {
      */
     Ingredient mockNonExistingIngredient;
 
+    /**
+     * Check that the returned Ingredient from a IngredientDB method is consistent with Ingredient
+     * that was passed to the parameter
+     * @param resultIngredient The returned Ingredient
+     * @param expectedIngredient The passed Ingredient
+     */
     private void assertIngredientsEqual(Ingredient resultIngredient, Ingredient expectedIngredient){
         assertNotNull(resultIngredient);
         assertEquals(resultIngredient.getId(), expectedIngredient.getId());
@@ -51,6 +56,12 @@ public class IngredientDBTest {
         assertEquals(resultIngredient.getCategory(), expectedIngredient.getCategory());
     }
 
+    /**
+     * Remove an Ingredient we have added to the database during testing.
+     *
+     * @param mockIngredient The Ingredient that is to be removed
+     * @throws InterruptedException Thrown when deleting from IngredientDB fails.
+     */
     private void removeIngredient(Ingredient mockIngredient) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -77,21 +88,18 @@ public class IngredientDBTest {
         ingredientDB = new IngredientDB(connection);
         mockIngredient = new Ingredient("Broccoli");
         mockIngredient.setCategory("Vegetable");
-        mockIngredient.setUnit("kg");
-        mockIngredient.setAmount(5.0);
         mockNonExistingIngredient = new Ingredient("Broccoli");
         mockNonExistingIngredient.setCategory("Vegetable");
         mockNonExistingIngredient.setUnit("kg");
-        mockNonExistingIngredient.setAmount(5.0);
-        mockNonExistingIngredient.setId("-1");
     }
 
     /**
-     * Tests addIngredient and getIngredient on DB with a complete
-     * ingredient, checks if the ingredient is added to DB and retrieved from
-     * DB.
+     * Tests the add functionality of the IngredientDB. The mockIngredient object is used to test
+     * addIngredient method in IngredientDB. The call to addIngredient is expected to succeed for
+     * this test to pass.
      *
-     * @throws InterruptedException if the test times out
+     * @throws InterruptedException Thrown when adding to IngredientDB
+     * or deleting from IngredientDB fails.
      */
     @Test
     public void testAddIngredient() throws InterruptedException {
@@ -116,9 +124,12 @@ public class IngredientDBTest {
     }
 
     /**
-     * Tests deleteIngredient on DB, checks if the ingredient is deleted.
+     * Tests the delete functionality of the IngredientDB. The mockIngredient object
+     * is used to test the deleteIngredient method in IngredientDB. The call to
+     * deleteIngredient is expected to succeed for this test to pass.
      *
-     * @throws InterruptedException if the test times out
+     * @throws InterruptedException Thrown when adding to, or deleting from IngredientDB
+     * fails
      */
     @Test
     public void testDeleteIngredient() throws InterruptedException {
@@ -154,6 +165,14 @@ public class IngredientDBTest {
         assertIngredientsEqual(deletedIngredientAtomic.get(), mockIngredient);
     }
 
+    /**
+     * Tests the get functionality of the IngredientDB. The mockIngredient object is used to test
+     * getIngredient method in IngredientDB. The call to getIngredient is expected to succeed for
+     * this test to pass.
+     *
+     * @throws InterruptedException Thrown when adding to, getting from
+     * or deleting from IngredientDB fail. Deleting is done via removeIngredient method
+     */
     @Test
     public void testGetIngredient() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -191,10 +210,11 @@ public class IngredientDBTest {
     }
 
     /**
-     * Tests whether null is returned upon getting an invalid
-     * ingredient.
+     * Tests the get functionality of the IngredientDB. The mockNonExistentIngredient
+     * object is used to test getIngredient method in IngredientDB. The call to
+     * getIngredient is expected to fail for this test to succeed.
      *
-     * @throws InterruptedException if the test times out
+     * @throws InterruptedException Thrown when getting from IngredientDB fails.
      */
     @Test
     public void testGetNonExistentIngredient() throws InterruptedException {
@@ -216,6 +236,15 @@ public class IngredientDBTest {
         assertNull(foundIngredientAtomic.get());
     }
 
+    /**
+     * Tests the get functionality of the IngredientDB. The mockIngredient object is used to test
+     * getIngredient method in IngredientDB. The call to getIngredient is expected to succeed for
+     * this test to pass. This Test differs from testGetIngredient as it tests the getIngredient
+     * method that requires a document reference
+     *
+     * @throws InterruptedException Thrown when adding to, getting from
+     * or deleting from IngredientDB fail. Deleting is done via removeIngredient method
+     */
     @Test
     public void testGetIngredientByDocumentReference() throws InterruptedException {
         CountDownLatch addLatch = new CountDownLatch(1);
@@ -257,6 +286,14 @@ public class IngredientDBTest {
         removeIngredient(mockIngredient);
     }
 
+    /**
+     * Tests the get functionality of the IngredientDB. The mockNonExistentIngredient
+     * object is used to test getIngredient method in IngredientDB. The call to
+     * getIngredient is expected to fail for this test to succeed. This Test differs from
+     * testGetIngredient as it tests the getIngredient method that requires a document reference
+     *
+     * @throws InterruptedException Thrown when getting from IngredientDB fails.
+     */
     @Test
     public void testGetNonExistentIngredientByDocumentReference() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
