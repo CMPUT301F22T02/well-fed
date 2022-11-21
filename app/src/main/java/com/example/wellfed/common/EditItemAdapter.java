@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,11 +24,10 @@ import java.util.List;
  *
  * @version 1.0.0
  */
-public class EditItemAdapter<Item>
-        extends ItemAdapter<Item> {
+public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
     private List<Item> placeholderItems;
-    private OnEditListener<Item> editListener;
-    private OnDeleteListener<Item> deleteListener;
+    protected OnEditListener<Item> editListener;
+    protected OnDeleteListener<Item> deleteListener;
 
     public interface OnEditListener<Item> {
         void onEdit(Item item);
@@ -52,9 +52,7 @@ public class EditItemAdapter<Item>
      * @param viewType
      * @return
      */
-    @NonNull
-    @Override
-    public ItemViewHolder onCreateViewHolder(
+    @NonNull @Override public ItemViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -65,19 +63,21 @@ public class EditItemAdapter<Item>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1, int position) {
-        ItemViewHolder holder = (ItemViewHolder) holder1;
-        Ingredient ingredient = (Ingredient) items.get(holder.getAdapterPosition());
-        holder.leadingTextView.setText(Double.toString(ingredient.getAmount()));
-        holder.headlineTextView.setText(ingredient.getDescription());
-        holder.getEditButton().setOnClickListener(v -> {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
+                                 int position) {
+        ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+        Item item = items.get(position);
+        itemViewHolder.getEditButton().setOnClickListener(v -> {
             if (editListener != null) {
-                editListener.onEdit(items.get(holder.getAdapterPosition()));
+                editListener.onEdit(item);
             }
         });
-        holder.getDeleteButton().setOnClickListener(v -> {
+        new DeleteButton(
+                ((ItemViewHolder) holder).deleteButton.getContext(),
+                itemViewHolder.getDeleteButton(), "Delete item?",
+                () -> {
             if (deleteListener != null) {
-                deleteListener.onDelete(items.get(holder.getAdapterPosition()));
+                deleteListener.onDelete(item);
             }
         });
     }

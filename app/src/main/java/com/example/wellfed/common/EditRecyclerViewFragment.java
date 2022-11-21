@@ -104,6 +104,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
     }
 
     abstract public void onSearchActivityResult(Pair<String, Item> result);
+
     private void onEditActivityResult(Pair<String, Item> result) {
         if (result == null) {
             return;

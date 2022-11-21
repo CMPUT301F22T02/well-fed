@@ -91,7 +91,7 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
                 String type = result.first;
                 Recipe recipe = result.second;
                 switch (type) {
-                    case "save":
+                    case "add":
                         recipeController.addRecipe(recipe);
                         break;
                     default:

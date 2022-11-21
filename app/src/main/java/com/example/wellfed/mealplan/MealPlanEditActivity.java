@@ -15,6 +15,9 @@ import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.EditRecipeIngredientsFragment;
+import com.example.wellfed.recipe.EditRecipesAdapter;
+import com.example.wellfed.recipe.EditRecipesFragment;
+import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeIngredientAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,7 +30,9 @@ public class MealPlanEditActivity extends EditActivityBase {
     private RequiredNumberTextInputLayout numberOfServingsTextInput;
     private FloatingActionButton fab;
     private EditRecipeIngredientsFragment ingredientEditFragment;
-    private EditItemAdapter<Ingredient> ingredientEditAdapter;
+    private RecipeIngredientAdapter ingredientEditAdapter;
+    private EditRecipesFragment recipesEditFragment;
+    private EditRecipesAdapter recipesEditAdapter;
     private MealPlan mealPlan;
     private String type;
 
@@ -50,6 +55,14 @@ public class MealPlanEditActivity extends EditActivityBase {
         //        TODO: don't hard code
         this.categoryTextInput.setSimpleItems(
                 new String[]{"Breakfast", "Lunch", "Dinner"});
+
+        this.recipesEditFragment = new EditRecipesFragment();
+        this.recipesEditAdapter = new EditRecipesAdapter();
+        this.recipesEditFragment.setAdapter(this.recipesEditAdapter);
+        this.recipesEditFragment.setTitle("Recipes");
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.recipeEditFragment, this.recipesEditFragment)
+                .commit();
 
         this.ingredientEditFragment = new EditRecipeIngredientsFragment();
         this.ingredientEditAdapter = new RecipeIngredientAdapter();
@@ -75,6 +88,7 @@ public class MealPlanEditActivity extends EditActivityBase {
             this.mealPlan = new MealPlan(null);
         }
         ingredientEditAdapter.setItems(this.mealPlan.getIngredients());
+        recipesEditAdapter.setItems(this.mealPlan.getRecipes());
     }
 
     public Boolean hasUnsavedChanges() {
@@ -91,6 +105,9 @@ public class MealPlanEditActivity extends EditActivityBase {
             return true;
         }
         if (this.ingredientEditAdapter.hasChanges()) {
+            return true;
+        }
+        if (this.recipesEditAdapter.hasChanges()) {
             return true;
         }
         return false;
@@ -111,6 +128,7 @@ public class MealPlanEditActivity extends EditActivityBase {
         }
         if (this.mealPlan.getIngredients().size() +
                 this.mealPlan.getRecipes().size() < 1) {
+            this.makeSnackbar("Please add at least one ingredient or recipe");
             return;
         }
         String title = this.titleTextInput.getText();
