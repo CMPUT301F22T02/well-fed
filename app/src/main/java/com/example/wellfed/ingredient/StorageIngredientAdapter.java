@@ -61,54 +61,6 @@ public class StorageIngredientAdapter
 	}
 
 
-	protected void sortString(Query query) {
-		changeQuery(query);
-	}
-
-	protected void search(String query) {
-		if (query.isEmpty() || query.isBlank()) {
-			clearSnapshots();
-			changeQuery(db.getQuery());
-		}
-
-		// Get sorted search results
-		db.getAllStorageIngredients((storageIngredients, success) -> {
-			if (!success) return;
-			Collections.sort(storageIngredients, this::compareByDescription);
-
-			ArrayList<DocumentSnapshot> snaps = new ArrayList<>();
-			for (int i = 0; i < storageIngredients.size(); i++) {
-				StorageIngredient si = storageIngredients.get(i);
-				if (si.getDescription().toLowerCase().contains(query.toLowerCase())) {
-					String id = si.getStorageId();
-					for (int j = 0; j < getSnapshots().size(); j++) {
-						if (getSnapshots().get(j).getId().equals(id)) {
-							snaps.add(getSnapshots().get(j));
-							break;
-						}
-					}
-				}
-			}
-			setSnapshots(snaps);
-		});
-	}
-
-	public int compareByDescription(StorageIngredient o1, StorageIngredient o2) {
-		return o1.getDescription().toLowerCase().compareTo(o2.getDescription().toLowerCase());
-	}
-
-	public int compareByCategory(StorageIngredient o1, StorageIngredient o2) {
-		return o1.getCategory().toLowerCase().compareTo(o2.getCategory().toLowerCase());
-	}
-
-	public int compareByBestBefore(StorageIngredient o1, StorageIngredient o2) {
-		return o1.getBestBefore().compareTo(o2.getBestBefore());
-	}
-
-	public int compareByLocation(StorageIngredient o1, StorageIngredient o2) {
-		return o1.getLocation().toLowerCase().compareTo(o2.getLocation().toLowerCase());
-	}
-
 	public void setOnItemClickListener(OnItemClickListener listener) {
 		this.listener = listener;
 	}
