@@ -3,7 +3,6 @@ package com.example.wellfed.ingredient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
@@ -12,6 +11,7 @@ import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
+import com.example.wellfed.common.UTCDate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
@@ -75,38 +75,28 @@ public class IngredientEditActivity extends EditActivityBase
         this.unitInput.setSimpleItems(new String[]{"oz", "lb", "g", "kg",
                 "tsp", "tbsp", "cup", "qt", "gal", "ml", "l", "pt", "fl oz",
                 "count"});
-        RequiredDateTextInputLayout bestBeforeLayout = findViewById(R.id.bestBeforeInput);
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
 
 
         if (ingredient != null) {
-            String description = ingredient.getDescription();
-            if (description != null) {
-                descriptionInput.setPlaceholderText(description);
+            descriptionInput.setPlaceholderText(ingredient.getDescription());
+            amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
+            unitInput.setPlaceholderText(ingredient.getUnit());
+            if (ingredient.getLocation() != null) {
+                locationInput.setPlaceholderText(ingredient.getLocation());
             }
-            Double amount = ingredient.getAmount();
-            if (amount != null) {
-                amountInput.setPlaceholderText(String.valueOf(amount));
+            if (ingredient.getCategory() != null) {
+                categoryInput.setPlaceholderText(ingredient.getCategory());
             }
-            String unit = ingredient.getUnit();
-            if (unit != null){
-                unitInput.setPlaceholderText(unit);
-            };
-            String location = ingredient.getLocation();
-            if (location != null) {
-                locationInput.setPlaceholderText(location);
+            // Set date in yyyy-MM-dd format
+            if (ingredient.getBestBefore() != null) {
+                // Get date in UTC
+                UTCDate date = UTCDate.from(ingredient.getBestBefore());
+                bestBeforeInput.setDate(date);
+                bestBeforeInput.setPlaceholderText(date.format("yyyy-MM-dd"));
             }
-            String category = ingredient.getCategory();
-            if (category != null) {
-                categoryInput.setPlaceholderText(category);
-            }
-            Date bestBefore = ingredient.getBestBeforeDate();
-            if (bestBefore != null) {
-                bestBeforeLayout.setPlaceholderDate(bestBefore);
-            }
-
         }
 
 
@@ -145,7 +135,7 @@ public class IngredientEditActivity extends EditActivityBase
     }
 
     /**
-     * Saves the ingredient.
+     * Method to save the ingredient.
      */
     private void onSave() {
         // Verify that all fields are filled

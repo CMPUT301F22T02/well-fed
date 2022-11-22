@@ -88,7 +88,14 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
+        <activity
+            android:name=".recipe.RecipesSearch"
+            android:exported="false"
+            android:parentActivityName=".mealplan.MealPlanEditActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".mealplan.MealPlanActivity"
             android:exported="false"

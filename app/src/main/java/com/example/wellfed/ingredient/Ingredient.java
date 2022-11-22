@@ -11,7 +11,12 @@
 
 package com.example.wellfed.ingredient;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class represents an Ingredient which can be used in many ways in a MealPlanning application.
@@ -135,5 +140,27 @@ public class Ingredient implements Serializable {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * Checks whether the ingredient is equal to another ingredient.
+     *
+     * @param o the object to check equality with
+     *
+     * @return true if the objects are equal, false otherwise
+     */
+    public boolean isEqual(Object o) {
+        if (o.getClass() != Ingredient.class) {
+            return false;
+        }
+
+        ArrayList<Boolean> flags = new ArrayList<Boolean>();
+        flags.add(Objects.equals(this.getId(), ((Ingredient) o).getId()));
+        flags.add(Objects.equals(this.getDescription(), ((Ingredient) o).getDescription()));
+        flags.add(Objects.equals(this.getCategory(), ((Ingredient) o).getCategory()));
+        flags.add(Objects.equals(this.getUnit(), ((Ingredient) o).getUnit()));
+        flags.add(Objects.equals(this.getAmount(), ((Ingredient) o).getAmount()));
+
+        return !flags.contains(false);
     }
 }

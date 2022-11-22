@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
+import com.example.wellfed.common.SortingFragment;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 // todo create sample data for recipes
@@ -35,7 +37,8 @@ import java.util.Objects;
  *
  * @version 1.0.0
  */
-public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdapter.RecipeLauncher {
+public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
+        RecipeAdapter.RecipeLauncher, SortingFragment.OnSortClick {
     /**
      * Recipes contains a list of Recipes {@link Recipe}
      */
@@ -69,11 +72,13 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                         Recipe recipe = result.second;
                         switch (type) {
                             case "delete":
-                                recipeDB.delRecipe(recipe.getId(), (deletedRecipe, success) -> {
-                                    deletedRecipe.setId("");
-                                });
+                                recipeController.deleteRecipe(recipe.getId());
+                                break;
+                            case "edit":
+                                recipeController.editRecipe(recipe);
+                                break;
                             default:
-                                new IllegalArgumentException();
+                                break;
                         }
                     }
             );
@@ -88,17 +93,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
                 String type = result.first;
                 Recipe recipe = result.second;
                 switch (type) {
-                    case "save":
-                        DBConnection connection = new DBConnection(requireContext().getApplicationContext());
-                        RecipeDB recipeDB = new RecipeDB(connection);
-                        try {
-                            recipeDB.addRecipe(recipe, (a, b) -> {
-                            });
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "edit":
+                    case "add":
+                        recipeController.addRecipe(recipe);
                         break;
                     default:
                         break;
@@ -124,9 +120,8 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
         recipes = new ArrayList<>();
-        recipeController = new RecipeController(getContext().getApplicationContext());
-        DBConnection connection = new DBConnection(getContext().getApplicationContext());
-        recipeDB = new RecipeDB(connection);
+        recipeController = new RecipeController(getActivity());
+        recipeController.getRecipeAdapter().setRecipeLauncher(this);
         return inflater.inflate(R.layout.fragment_recipe_book, container, false);
     }
 
@@ -141,26 +136,16 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
         Bundle args = getArguments();
 
         RecyclerView rvRecipes = (RecyclerView) view.findViewById(R.id.recipe_rv);
-
-        adapter = new RecipeAdapter(recipeDB);
-        adapter.setRecipeLauncher(this);
-        recipeController.setRecipes(recipes);
-        recipeController.setRecipeAdapter(adapter);
-        rvRecipes.setAdapter(adapter);
+        rvRecipes.setAdapter(recipeController.getRecipeAdapter());
         rvRecipes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-    }
+        SortingFragment sortingFragment = new SortingFragment();
+        sortingFragment.setOptions(Arrays.asList(new String[]{"title", "preparation-time", "servings", "category"}));
+        sortingFragment.setListener(this);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_sort_container2, sortingFragment)
+                .commit();
 
-    /**
-     * launches activity to create new recipe
-     */
-    @Override
-    public void launch() {
-        recipeEditLauncher.launch(null);
-    }
-
-    @Override
-    public void launch(int pos) {
 
     }
 
@@ -170,6 +155,19 @@ public class RecipeBookFragment extends Fragment implements Launcher, RecipeAdap
      */
     @Override
     public void launch(Recipe recipe) {
-        recipeLauncher.launch(recipe);
+        if (recipe == null) {
+            recipeEditLauncher.launch(null);
+        }else{
+            recipeLauncher.launch(recipe);
+        }
     }
+
+    @Override
+    public void onClick(String field) {
+        recipeController.sort(field);
+    }
+
+
+    //        TODO: fix view recipes using onItemClick listener instead of
+    //         this one @manpreet
 }

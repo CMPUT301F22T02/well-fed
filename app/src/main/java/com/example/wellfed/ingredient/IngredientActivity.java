@@ -68,7 +68,7 @@ public class IngredientActivity extends ActivityBase
         // Set ingredient best before with id=ingredient_best_before_date_value
         TextView ingredientBestBefore =
                 findViewById(R.id.ingredient_best_before_date_value);
-        UTCDate bestBefore = UTCDate.from(ingredient.getBestBeforeDate());
+        UTCDate bestBefore = UTCDate.from(ingredient.getBestBefore());
         ingredientBestBefore.setText(bestBefore.format("yyyy-MM-dd"));
 
         // Set ingredient quantity with id=ingredient_quantity_value
@@ -102,9 +102,7 @@ public class IngredientActivity extends ActivityBase
         // Set edit button
         FloatingActionButton editButton =
                 findViewById(R.id.ingredient_edit_button);
-        editButton.setOnClickListener(v -> {
-            launcher.launch(ingredient);
-        });
+        editButton.setOnClickListener(v -> launcher.launch(ingredient));
     }
 
     /**
@@ -134,7 +132,7 @@ public class IngredientActivity extends ActivityBase
      * onEdit method for the activity. This method is called when the user
      * edits an ingredient.
      *
-     * @param ingredient
+     * @param ingredient The edited ingredient.
      */
     public void onEdit(StorageIngredient ingredient) {
         Intent intent = new Intent();

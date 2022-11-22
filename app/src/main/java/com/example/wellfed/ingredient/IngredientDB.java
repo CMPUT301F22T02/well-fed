@@ -50,6 +50,10 @@ public class IngredientDB {
         collection = this.ingredientsConnection.getCollection("Ingredients");
     }
 
+    public DocumentReference getDocumentReference(String id) {
+        return collection.document(id);
+    }
+
     /**
      * The OnAddIngredientListener interface is used to handle the result of the
      * addIngredient method.
@@ -180,7 +184,7 @@ public class IngredientDB {
                     Ingredient ingredient = new Ingredient();
                     ingredient.setCategory(document.getString("category"));
                     ingredient.setDescription(
-                            document.getString("description"));
+                        document.getString("description"));
                     ingredient.setId(id);
                     listener.onGetIngredient(ingredient, true);
                 } else {
@@ -206,27 +210,27 @@ public class IngredientDB {
     public void getIngredient(Ingredient ingredient,
                               OnGetIngredientListener listener) {
         collection.whereEqualTo("category", ingredient.getCategory())
-                .whereEqualTo("description", ingredient.getDescription())
-                .limit(1).get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document :
-                                task.getResult()) {
-                            Log.d(TAG,
-                                    document.getId() + " => " + document.getData());
-                            Ingredient ingredientInDb =
-                                    snapshotToIngredient(document);
-                            ingredientInDb.setId(document.getId());
-                            listener.onGetIngredient(ingredientInDb, true);
-                            return;
-                        }
-                        listener.onGetIngredient(null, false);
-
-                    } else {
-                        Log.d(TAG, "Error getting documents: ",
-                                task.getException());
-                        listener.onGetIngredient(null, false);
+            .whereEqualTo("description", ingredient.getDescription())
+            .limit(1).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document :
+                        task.getResult()) {
+                        Log.d(TAG,
+                            document.getId() + " => " + document.getData());
+                        Ingredient ingredientInDb =
+                            snapshotToIngredient(document);
+                        ingredientInDb.setId(document.getId());
+                        listener.onGetIngredient(ingredientInDb, true);
+                        return;
                     }
-                });
+                    listener.onGetIngredient(null, false);
+
+                } else {
+                    Log.d(TAG, "Error getting documents: ",
+                        task.getException());
+                    listener.onGetIngredient(null, false);
+                }
+            });
     }
 
     /**
@@ -240,7 +244,7 @@ public class IngredientDB {
         WriteBatch batch = db.batch();
 
         DocumentReference ingredientDocument =
-                collection.document(ingredient.getId());
+            collection.document(ingredient.getId());
         batch.delete(ingredientDocument);
 
         batch.commit().addOnCompleteListener(task -> {
@@ -268,38 +272,38 @@ public class IngredientDB {
                                      OnUpdateIngredientReferenceCountListener listener) {
         String id = getDocumentReference(ingredient).getId();
         collection.document(id).get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Long count = document.getLong("count");
-                            if (count == null) {
-                                count = 0L;
-                            }
-                            count += delta;
-                            if (count > 0) {
-                                collection.document(id)
-                                        .update("count", count)
-                                        .addOnCompleteListener(task1 -> {
-                                            listener.onUpdateReferenceCount(
-                                                    ingredient,
-                                                    task1.isSuccessful());
-                                        });
-                            } else {
-                                // can safely remove unused ingredients from db
-                                deleteIngredient(ingredient,
-                                        (deleteIngredient, success) -> {
-                                            listener.onUpdateReferenceCount(
-                                                    ingredient, success);
-                                        });
-                            }
+            .addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Long count = document.getLong("count");
+                        if (count == null) {
+                            count = 0L;
+                        }
+                        count += delta;
+                        if (count > 0) {
+                            collection.document(id)
+                                .update("count", count)
+                                .addOnCompleteListener(task1 -> {
+                                    listener.onUpdateReferenceCount(
+                                        ingredient,
+                                        task1.isSuccessful());
+                                });
                         } else {
-                            listener.onUpdateReferenceCount(ingredient, false);
+                            // can safely remove unused ingredients from db
+                            deleteIngredient(ingredient,
+                                (deleteIngredient, success) -> {
+                                    listener.onUpdateReferenceCount(
+                                        ingredient, success);
+                                });
                         }
                     } else {
                         listener.onUpdateReferenceCount(ingredient, false);
                     }
-                });
+                } else {
+                    listener.onUpdateReferenceCount(ingredient, false);
+                }
+            });
     }
 
     /**
@@ -334,4 +338,9 @@ public class IngredientDB {
     public Query getQuery(){
         return collection;
     }
+
+    public Query getQuery(String field, boolean ascending){
+        return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);
+    }
+
 }
