@@ -193,8 +193,6 @@ public class RecipeDB {
         });
     }
 
-
-
     /**
      * Deletes a recipe document with the id  from the collection
      * of recipes
