@@ -44,19 +44,6 @@ public class IngredientDBTest {
     Ingredient mockNonExistingIngredient;
 
     /**
-     * Check that the returned Ingredient from a IngredientDB method is consistent with Ingredient
-     * that was passed to the parameter
-     * @param resultIngredient The returned Ingredient
-     * @param expectedIngredient The passed Ingredient
-     */
-    private void assertIngredientsEqual(Ingredient resultIngredient, Ingredient expectedIngredient){
-        assertNotNull(resultIngredient);
-        assertEquals(resultIngredient.getId(), expectedIngredient.getId());
-        assertEquals(resultIngredient.getDescription(), expectedIngredient.getDescription());
-        assertEquals(resultIngredient.getCategory(), expectedIngredient.getCategory());
-    }
-
-    /**
      * Remove an Ingredient we have added to the database during testing.
      *
      * @param mockIngredient The Ingredient that is to be removed
@@ -119,7 +106,7 @@ public class IngredientDBTest {
         }
 
         assertTrue(successAtomic.get());
-        assertIngredientsEqual(addedIngredientAtomic.get(), mockIngredient);
+        assertTrue(addedIngredientAtomic.get().isEqual(mockIngredient));
 
         removeIngredient(mockIngredient);
     }
@@ -163,7 +150,7 @@ public class IngredientDBTest {
         }
 
         assertTrue(successAtomic.get());
-        assertIngredientsEqual(deletedIngredientAtomic.get(), mockIngredient);
+        assertTrue(deletedIngredientAtomic.get().isEqual(mockIngredient));
     }
 
     /**
@@ -205,7 +192,7 @@ public class IngredientDBTest {
         }
 
         assertTrue(successAtomic.get());
-        assertIngredientsEqual(foundIngredientAtomic.get(), mockIngredient);
+        assertTrue(foundIngredientAtomic.get().isEqual(mockIngredient));
 
         removeIngredient(mockIngredient);
     }
@@ -281,7 +268,7 @@ public class IngredientDBTest {
         }
 
         assertTrue(successAtomic.get());
-        assertIngredientsEqual(foundIngredientAtomic.get(), mockIngredient);
+        assertTrue(foundIngredientAtomic.get().isEqual(mockIngredient));
 
         //deleteIngredient
         removeIngredient(mockIngredient);
