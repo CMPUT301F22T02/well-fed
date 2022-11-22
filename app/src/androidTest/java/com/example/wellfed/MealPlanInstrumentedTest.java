@@ -132,8 +132,16 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
-    private void cleanUpRecipes(){
+    private void cleanUpRecipe(String title){
+        onView(withId(R.id.recipe_book_item)).perform(click());
 
+        onView(withText(title)).perform(click());
+
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+
+        onView(withText("Delete")).perform(click());
+
+        onView(withId(R.id.meal_book_item)).perform(click());
     }
 
     private void cleanUpMealPlan(){
