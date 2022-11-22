@@ -61,6 +61,10 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      * The listener for an item click in the RecyclerView
      */
     private OnItemClickListener listener;
+    /**
+     * The listener for an item click in the RecyclerView
+     */
+    private OnItemLoadListener itemLoadListener;
 
     // TODO: keep the context for now, try to remove it later
     public MealPlanAdapter(MealPlanDB db) {
@@ -76,6 +80,13 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
     }
 
     /**
+     * The listener for an item load in the RecyclerView
+     */
+    public interface OnItemLoadListener {
+        void onItemLoad(MealPlan mealPlan);
+    }
+
+    /**
      * Sets the listener for an item click in the Recyclerview
      *
      * @param listener the listener to set
@@ -83,6 +94,16 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
     // TODO: move this to superclass
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Sets the listener for an item load in the Recyclerview
+     *
+     * @param listener the listener to set
+     */
+    // TODO: move this to superclass
+    public void setOnItemLoadListener(OnItemLoadListener listener) {
+        this.itemLoadListener = listener;
     }
 
     /*
@@ -145,6 +166,9 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                     renderDates(eatDate, eatDateFirstDayOfWeek, holder);
                     renderWeeks(eatDate, eatDateFirstDayOfWeek, holder);
                 }
+            }
+            if (itemLoadListener != null) {
+                itemLoadListener.onItemLoad(mealPlan);
             }
         });
     }

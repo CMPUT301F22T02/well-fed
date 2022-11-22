@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.ActivityBase;
+import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
+import com.example.wellfed.common.EditRecyclerViewFragment;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
@@ -48,22 +50,14 @@ import java.util.List;
  *
  * @version 1.0.0
  */
-public class RecipeEditActivity extends ActivityBase implements RecipeIngredientAdapter.OnIngredientClick {
+public class RecipeEditActivity extends EditActivityBase {
     /**
-     * The RecyclerView that displays all of the ingredients associated with a recipe.
-     */
-    private RecyclerView ingredientRV;
-
-    /**
-     * The list of Ingredient objects associated with a recipe.
+     * The list of ingredients included in a recipe.
      */
     private List<Ingredient> recipeIngredients;
 
-
-    private RecipeIngredientAdapter recipeIngredientAdapter;
-
     /**
-     * The recipe that is currently being edited
+     * The recipe to view the edit screen for
      */
     private Recipe recipe;
 
@@ -113,9 +107,10 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
     private RequiredDropdownTextInputLayout recipeCategory;
 
     /**
-     * The index of the ingredient that is selected in a recipe
+     * The fragment for editing recipe ingredients
      */
-    private int selectedIngredient;
+    private EditRecipeIngredientsFragment ingredientEditFragment;
+
 
     /**
      * Launcher for the camera activity, to take a picture of the recipe
@@ -128,53 +123,10 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                 }
             });
 
-
-    ActivityResultLauncher<Ingredient> ingredientLauncher = registerForActivityResult(
-            new RecipeIngredientEditContract(), result -> {
-                if (result == null) {
-                    return;
-                }
-                String type = result.first;
-                Ingredient ingredient = result.second;
-                switch (type) {
-                    case "add":
-                        recipeIngredients.add(ingredient);
-                        recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size());
-                        break;
-                    case "edit":
-                        recipeIngredients.set(selectedIngredient, ingredient);
-                        recipeIngredientAdapter.notifyItemChanged(selectedIngredient);
-                        break;
-                    default:
-                        throw new IllegalArgumentException();
-                }
-            }
-    );
-
-
-    ActivityResultLauncher<Ingredient> ingredientSearchLauncher = registerForActivityResult(
-            new RecipeIngredientSearchContract(), result -> {
-                if (result == null) {
-                    return;
-                }
-                String type = result.first;
-                StorageIngredient ingredient = result.second;
-                switch (type) {
-                    case "edit":
-                        recipeIngredients.add(ingredient);
-                        recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size());
-                    case "quit":
-                        break;
-                    default:
-                        throw new IllegalArgumentException();
-                }
-            }
-    );
-
     /**
-     * Method called when the RecipeEditActivity is  created.
+     * OnCreate method for the recipe edit activity.
      *
-     * @param savedInstanceState The information needed to restore to a previous state, if necessary
+     * @param savedInstanceState Bundle object for the activity, to restore to earlier state.
      */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -184,23 +136,27 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         // intialize the variables
         Intent intent = getIntent();
         recipeIngredients = new ArrayList<>();
-        recipe = (Recipe) intent.getSerializableExtra("Recipe");
+        recipe = (Recipe) intent.getSerializableExtra("item");
         fab = findViewById(R.id.save_fab);
 
 
         // views
-        ingredientRV = findViewById(R.id.recipe_ingredient_recycleViewer);
         recipeImg = findViewById(R.id.recipe_img);
         title = findViewById(R.id.recipe_title);
         prepTime = findViewById(R.id.recipe_prep_time_textView);
         servings = findViewById(R.id.recipe_no_of_servings_textView);
         commentsTextInput = findViewById(R.id.commentsTextInput);
         recipeCategory = findViewById(R.id.recipe_category);
-        ImageView addIngredient = findViewById(R.id.ingredient_add_btn);
-        ImageView searchIngredient = findViewById(R.id.ingredient_search_btn);
-
         recipeCategory.setSimpleItems(new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer", "Dessert"});
 
+        ingredientEditFragment = new EditRecipeIngredientsFragment();
+        RecipeIngredientAdapter adapter = new RecipeIngredientAdapter();
+        adapter.setItems(recipeIngredients);
+        ingredientEditFragment.setAdapter(adapter);
+        ingredientEditFragment.setTitle("Ingredients");
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentContainerView, ingredientEditFragment)
+                .commit();
 
         // activity started to add data a recipe
         if (recipe == null) {
@@ -221,11 +177,13 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
             });
         } else {
             recipeIngredients = recipe.getIngredients();
-            title.setText(recipe.getTitle());
-            prepTime.setText(recipe.getPrepTimeMinutes().toString());
-            servings.setText(recipe.getServings().toString());
-            commentsTextInput.setText(recipe.getComments());
-            recipeCategory.setText(recipe.getCategory());
+            adapter.setItems(recipeIngredients);
+            adapter.notifyDataSetChanged();
+            title.setPlaceholderText(recipe.getTitle());
+            prepTime.setPlaceholderText(recipe.getPrepTimeMinutes().toString());
+            servings.setPlaceholderText(recipe.getServings().toString());
+            commentsTextInput.setPlaceholderText(recipe.getComments());
+            recipeCategory.setPlaceholderText(recipe.getCategory());
             Picasso.get()
                     .load(recipe.getPhotograph())
                     .rotate(90)
@@ -244,31 +202,17 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                     recipe.addIngredients(recipeIngredients);
                     recipe.setPrepTimeMinutes(prepTime.getInteger());
                     intent.putExtra("type", "edit");
-                    intent.putExtra("Recipe", recipe);
+                    intent.putExtra("item", recipe);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
             });
         }
 
-        // ingredient recycle viewer and it's adapter
-        recipeIngredientAdapter = new RecipeIngredientAdapter(recipeIngredients, R.layout.recipe_ingredient_edit, this);
-        ingredientRV.setAdapter(recipeIngredientAdapter);
-        ingredientRV.setLayoutManager(new LinearLayoutManager(RecipeEditActivity.this));
-
         uri = initTempUri();
         recipeImg.setOnClickListener(view -> {
             cameraLauncher.launch(uri);
         });
-
-        addIngredient.setOnClickListener(view -> {
-            ingredientLauncher.launch(null);
-        });
-
-        searchIngredient.setOnClickListener(view -> {
-            ingredientSearchLauncher.launch(null);
-        });
-
     }
 
     /**
@@ -283,8 +227,22 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
         if (!servings.isValid()) return false;
         if (!commentsTextInput.isValid()) return false;
         if (!recipeCategory.isValid()) return false;
-        if (recipeIngredients.size() == 0) return false;
+        if (!ingredientEditFragment.isValid()) return false;
         return true;
+    }
+
+    /**
+     * Checks whether there are unsaved changes in the edit activity
+     * @return true if there are unsaved changes, false otherwise
+     */
+    @Override public Boolean hasUnsavedChanges() {
+        if (title.hasChanges()) return true;
+        if (prepTime.hasChanges()) return true;
+        if (servings.hasChanges()) return true;
+        if (commentsTextInput.hasChanges()) return true;
+        if (recipeCategory.hasChanges()) return true;
+        if (ingredientEditFragment.hasChanged()) return true;
+        return false;
     }
 
     /**
@@ -293,8 +251,8 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
     public void onSave() {
         // return the new recipe via intent
         Intent intent = new Intent();
-        intent.putExtra("type", "save");
-        intent.putExtra("Recipe", recipe);
+        intent.putExtra("type", "add");
+        intent.putExtra("item", recipe);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -359,7 +317,9 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
                 int temp = 0;
                 recipesRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     downloadUrl = uri.toString();
-                    recipe.setPhotograph(downloadUrl);
+                    if (recipe != null){
+                        recipe.setPhotograph(downloadUrl);
+                    }
                     Picasso.get()
                             .load(downloadUrl)
                             .rotate(90)
@@ -368,30 +328,5 @@ public class RecipeEditActivity extends ActivityBase implements RecipeIngredient
             }
 
         });
-    }
-
-    /**
-     * Listener for when parts of an ingredient is clicked.
-     * Will be called for different reasons (edit or delete) depending
-     * on whether the user clicks the edit button or delete button
-     * next to a recipe.
-     *
-     * @param reason    The reason why the ingredient was clicked.
-     * @param pos       The position of the ingredient in the list/RecyclerView
-     */
-    @Override
-    public void onEditClick(String reason, int pos) {
-        this.selectedIngredient = pos;
-        switch (reason) {
-            case "edit":
-                ingredientLauncher.launch(recipeIngredients.get(pos));
-                break;
-            case "delete":
-                recipeIngredients.remove(pos);
-                recipeIngredientAdapter.notifyItemRemoved(pos);
-                break;
-            default:
-                break;
-        }
     }
 }

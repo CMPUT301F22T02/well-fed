@@ -42,13 +42,13 @@ public class DeleteButton implements View.OnClickListener {
      * Constructs a DeleteButton
      *
      * @param context           the context
-     * @param button            the button
+     * @param view              the view
      * @param title             the title
      * @param onConfirmListener the OnConfirmListener
      */
-    public DeleteButton(Context context, Button button, String title,
+    public DeleteButton(Context context, View view, String title,
                         ConfirmDialog.OnConfirmListener onConfirmListener) {
-        button.setOnClickListener(this);
+        view.setOnClickListener(this);
         this.confirmDeleteDialog =
                 new ConfirmDeleteDialog(context, onConfirmListener, title);
     }

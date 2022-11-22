@@ -86,6 +86,16 @@ public class RecipeController {
         });
     }
 
+
+    /**
+     * Gets the sorted query of recipes.
+     * @param field the field to sort by
+     */
+    public void sort(String field){
+        recipeAdapter.clearSnapshots();
+        recipeAdapter.changeQuery(recipeDB.getSortQuery(field));
+    }
+
     /**
      * Gets the RecipeAdapter that connects the list of Recipes to the DB
      *

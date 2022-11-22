@@ -13,16 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
 import com.example.wellfed.common.UTCDate;
-import com.example.wellfed.common.UTCDateFormat;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
 
 public class StorageIngredientAdapter
 	extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
@@ -65,41 +61,8 @@ public class StorageIngredientAdapter
 	}
 
 
-	protected void sortString(String field, boolean ascending) {
-		// load all the data
-		db.getAllStorageIngredients((storageIngredients, success) -> {
-			if (!success) return;
-			Collections.sort(storageIngredients, (o1, o2) -> {
-				switch (field) {
-					case "description":
-						return compareByDescription(o1, o2);
-					case "category":
-						return compareByCategory(o1, o2);
-					case "best-before":
-						return compareByBestBefore(o1, o2);
-					case "location":
-						return compareByLocation(o1, o2);
-					default:
-						return 0;
-				}
-			});
-
-			if (!ascending) {
-				Collections.reverse(storageIngredients);
-			}
-
-			HashMap<String, Integer> pos = new HashMap<>();
-			ArrayList<DocumentSnapshot> snaps = new ArrayList<>();
-			for (int i = 0; i < getSnapshots().size(); i++) {
-				pos.put(getSnapshots().get(i).getId(), i);
-			}
-			for (int i = 0; i < storageIngredients.size(); i++) {
-				String id = storageIngredients.get(i).getStorageId();
-				int storedAt = pos.get(id);
-				snaps.add(getSnapshots().get(storedAt));
-			}
-			setSnapshots(snaps);
-		});
+	protected void sortString(Query query) {
+		changeQuery(query);
 	}
 
 	protected void search(String query) {
@@ -139,7 +102,7 @@ public class StorageIngredientAdapter
 	}
 
 	public int compareByBestBefore(StorageIngredient o1, StorageIngredient o2) {
-		return o1.getBestBeforeDate().compareTo(o2.getBestBeforeDate());
+		return o1.getBestBefore().compareTo(o2.getBestBefore());
 	}
 
 	public int compareByLocation(StorageIngredient o1, StorageIngredient o2) {
@@ -180,9 +143,9 @@ public class StorageIngredientAdapter
 			String subText = category + " | " + location;
 			this.subTextView.setText(subText);
 			UTCDate bestBefore =
-				UTCDate.from(storageIngredient.getBestBeforeDate());
+				UTCDate.from(storageIngredient.getBestBefore());
 			this.bestBeforeTextView.setText(bestBefore.format("yyyy-MM-dd"));
-			if (storageIngredient.getBestBeforeDate().before(
+			if (storageIngredient.getBestBefore().before(
 				new Date(new Date().getTime() - (new Date().getTime() % 86400000)))) {
 				this.bestBeforeTextView.setTextColor(Color.RED);
 				this.subTextView.setTextColor(Color.RED);

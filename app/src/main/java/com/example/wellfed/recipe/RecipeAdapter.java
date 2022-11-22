@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -18,6 +19,7 @@ import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
 import com.example.wellfed.common.Launcher;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;
@@ -50,9 +52,9 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
     private RecipeLauncher recipeLauncher;
 
     /**
-     * Interface for launching a new RecipeActivity
+     * Interface for launching a new recipe activity.
      */
-    public interface RecipeLauncher{
+    public interface RecipeLauncher {
         void launch(Recipe recipe);
     }
 
@@ -66,7 +68,6 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
         this.recipeDB = db;
     }
 
-
     /**
      * Holds the views for the recipes
      */
@@ -75,6 +76,12 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
          * Holds the recipe title view
          */
         public TextView recipeTitleTextView;
+        public TextView prepTime;
+        public TextView description;
+        public TextView category;
+        public TextView servings;
+        public ImageView recipeImg;
+        public View view;
 
         /**
          * Creates a new ViewHolder
@@ -82,7 +89,13 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
          */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            recipeTitleTextView = (TextView) itemView.findViewById(R.id.recipe_title_textView);
+            recipeTitleTextView = (TextView) itemView.findViewById(R.id.recipe_title_TextView);
+            prepTime = itemView.findViewById(R.id.prep_time_TextView);
+            recipeImg = itemView.findViewById(R.id.recipe_ImageView);
+            view = itemView;
+            description = itemView.findViewById(R.id.recipe_description_TextView);
+            category = itemView.findViewById(R.id.recipe_category_TextView);
+            servings = itemView.findViewById(R.id.recipe_servings_TextView);
         }
     }
 
@@ -115,18 +128,34 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
         DocumentSnapshot recipeSnapshot = getSnapshot(position);
         Recipe recipe = new Recipe(recipeSnapshot.getString("title"));
         recipe.setId(recipeSnapshot.getId());
+        recipe.setPhotograph(recipeSnapshot.getString("photograph"));
+
 
         TextView recipeTitle = holder.recipeTitleTextView;
-        recipeTitle.setText(recipe.getTitle());
+        TextView prepTime = holder.prepTime;
+        TextView descriptionView = holder.description;
+        TextView servings = holder.servings;
+        TextView category = holder.category;
+        ImageView img = holder.recipeImg;
 
-        if (recipeLauncher != null) {
-            recipeTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recipeLauncher.launch(recipe);
-                }
-            });
-        }
+        String description = recipeSnapshot.getString("comments");
+        description = description.length() > 100 ? description.substring(0,100) + "..." : description;
+        descriptionView.setText(description);
+        prepTime.setText(Long.toString((Long) recipeSnapshot.getData().get("preparation-time")) + " mins");
+        recipeTitle.setText(recipe.getTitle());
+        category.setText(recipeSnapshot.getString("category"));
+        servings.setText("Serves: " + ((Long) recipeSnapshot.getData().get("servings")).toString());
+        Picasso.get()
+                .load(recipe.getPhotograph())
+                .rotate(90)
+                .into(img);
+        holder.view.setOnClickListener(v -> {
+
+            if (recipeLauncher != null) {
+                recipeLauncher.launch(recipe);
+            }
+        });
+
     }
 
 }
