@@ -14,9 +14,6 @@ import com.example.wellfed.R;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Adapter that manages the view and data for the ingredients
  * in the {@link Recipe}
@@ -28,6 +25,15 @@ public class EditItemAdapter<Item>
 
     private OnEditListener<Item> editListener;
     private OnDeleteListener<Item> deleteListener;
+    private Boolean changed = false;
+
+    public Boolean getChanged() {
+        return changed;
+    }
+
+    public void setChanged(Boolean changed) {
+        this.changed = changed;
+    }
 
     public interface OnEditListener<Item> {
         void onEdit(Item item);

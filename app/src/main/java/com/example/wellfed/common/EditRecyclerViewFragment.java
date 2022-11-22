@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
-import com.example.wellfed.ingredient.Ingredient;
-import com.example.wellfed.recipe.RecipeIngredientEditActivity;
-import com.google.firebase.database.collection.LLRBNode;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public abstract class EditRecyclerViewFragment<Item extends Serializable>
         extends Fragment implements EditItemAdapter.OnEditListener<Item>,
@@ -94,6 +89,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
     @Override
     public void onEdit(Item item) {
         this.selectedItem = item;
+        adapter.setChanged(true);
         Intent intent = createOnEditIntent(item);
         editLauncher.launch(intent);
     }
@@ -108,10 +104,11 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         int index = adapter.getItems().indexOf(item);
         adapter.getItems().remove(index);
         adapter.notifyItemRemoved(index);
+        adapter.setChanged(true);
         this.isValid();
     }
 
-    public boolean isValid(){
+    public Boolean isValid(){
         if(adapter.getItemCount() == 0){
             errorTextView.setVisibility(View.VISIBLE);
             return false;
@@ -122,6 +119,10 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         }
 
         return false;
+    }
+
+    public Boolean hasChanged(){
+        return adapter.getChanged();
     }
 
     abstract public void onSearchActivityResult(Pair<String, Item> result);
@@ -136,11 +137,13 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
                 adapter.getItems().add(ingredient);
                 adapter.notifyItemInserted(adapter.getItemCount());
                 this.isValid();
+                adapter.setChanged(true);
                 break;
             case "edit":
                 int index = adapter.getItems().indexOf(selectedItem);
                 adapter.getItems().set(index, ingredient);
                 adapter.notifyItemChanged(index);
+                adapter.setChanged(true);
                 break;
             default:
                 throw new IllegalArgumentException();

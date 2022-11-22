@@ -176,7 +176,7 @@ public class RecipeEditActivity extends EditActivityBase {
         if (servings.hasChanges()) return true;
         if (commentsTextInput.hasChanges()) return true;
         if (recipeCategory.hasChanges()) return true;
-//      if (editRecyclerViewAdapter.hasChanges()) return true;
+        if (ingredientEditFragment.hasChanged()) return true;
         return false;
     }
 
