@@ -15,7 +15,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // TODO: create DB connection between shopping cart and Firestore.
 public class ShoppingCartDB {
@@ -90,16 +92,19 @@ public class ShoppingCartDB {
 			ingredientDB.addIngredient(ingredient, (addedIngredient, success) -> {
 				if (success) {
 					ShoppingCartIngredient shoppingCartIngredient =
-							new ShoppingCartIngredient(addedIngredient);
+						new ShoppingCartIngredient(addedIngredient);
+					shoppingCartIngredient.setId(addedIngredient.getId());
+					shoppingCartIngredient.setCategory(addedIngredient.getCategory());
 					addIngredient(shoppingCartIngredient, listener);
 				} else {
 					listener.onAddShoppingCart(null, false);
 				}
 			});
+			return;
 		}
 
 		ShoppingCartIngredient shoppingCartIngredient =
-				new ShoppingCartIngredient(ingredient);
+			new ShoppingCartIngredient(ingredient);
 
 		shoppingCartIngredient.setId(ingredient.getId());
 		shoppingCartIngredient.setDescription(ingredient.getDescription());
@@ -204,31 +209,29 @@ public class ShoppingCartDB {
 	 * Get the shopping cart.
 	 */
 	public void getShoppingCart(OnGetShoppingCart listener) {
+		AtomicInteger counter = new AtomicInteger(0);
 		collection.get().addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
+				int numIngredients = task.getResult().size();
 				ShoppingCart shoppingCart = new ShoppingCart();
 				for (QueryDocumentSnapshot document : task.getResult()) {
-					DocumentReference ingredientRef = (DocumentReference) document.get("Ingredient");
-					assert ingredientRef != null;
-					ingredientRef.get().addOnCompleteListener(task1 -> {
-						if (task1.isSuccessful()) {
-							DocumentSnapshot document1 = task1.getResult();
-							if (document1.exists()) {
-								Ingredient ingredient = document1.toObject(Ingredient.class);
-								assert ingredient != null;
-								ShoppingCartIngredient shoppingCartIngredient =
-									new ShoppingCartIngredient(ingredient);
-								shoppingCartIngredient.setId(ingredient.getId());
-								shoppingCartIngredient.setDescription(ingredient.getDescription());
-								shoppingCartIngredient.setAmount(ingredient.getAmount());
-								shoppingCartIngredient.setUnit(ingredient.getUnit());
-								shoppingCartIngredient.setCategory(ingredient.getCategory());
-								shoppingCart.addIngredient(shoppingCartIngredient);
-							}
-						}
-					});
+					// Do not use toObject() because it does not work with
+					// subcollections.
+					ShoppingCartIngredient ingredient =
+						new ShoppingCartIngredient(document.getString(
+							"description"));
+					ingredient.setId(document.getString("id"));
+					ingredient.setAmount(document.getDouble("amount"));
+					ingredient.setUnit(document.getString("unit"));
+					ingredient.setCategory(document.getString("category"));
+					ingredient.setPickedUp(Boolean.TRUE.equals(document.getBoolean("picked")));
+					ingredient.setComplete(Boolean.TRUE.equals(document.getBoolean("complete")));
+					shoppingCart.addIngredient(ingredient);
+					counter.incrementAndGet();
+					if (counter.get() == numIngredients) {
+						listener.onGetShoppingCart(shoppingCart, true);
+					}
 				}
-				listener.onGetShoppingCart(shoppingCart, true);
 			} else {
 				listener.onGetShoppingCart(null, false);
 			}
@@ -246,7 +249,7 @@ public class ShoppingCartDB {
 		 *
 		 * @param success True if the shopping cart was updated successfully.
 		 */
-		void onUpdateShoppingCart(boolean success);
+		void onUpdateShoppingCart(ShoppingCart shoppingCart, boolean success);
 	}
 
 	/**
@@ -292,10 +295,9 @@ public class ShoppingCartDB {
 								}
 							}
 						}
-
 						updateShoppingCart(listener);
 					} else {
-						listener.onUpdateShoppingCart(false);
+						listener.onUpdateShoppingCart(null, false);
 					}
 				});
 			}
@@ -308,6 +310,30 @@ public class ShoppingCartDB {
 	 * @return The query of the shopping cart.
 	 */
 	public Query getQuery() {
-		return collection.orderBy("picked", Query.Direction.ASCENDING);
+		return collection.orderBy("description", Query.Direction.ASCENDING);
 	}
+
+	/**
+	 * Sort the shopping cart by the given field.
+	 * @param category The category to sort by.
+	 * @return The query of the shopping cart.
+	 */
+	public Query getQuery(String category) {
+		return collection.whereEqualTo("category", category);
+	}
+
+	/**
+	 * Search the shopping cart by the given query string.
+	 * @param query The query string.
+	 * @return The query of the shopping cart.
+	 */
+	public Query searchQuery(String query) {
+		return collection.whereGreaterThanOrEqualTo("description", query)
+			.whereLessThanOrEqualTo("description", query + "\uf8ff");
+	}
+
+	public Query getQueryByPickedUp(boolean pickedUp) {
+		return collection.whereEqualTo("picked", pickedUp);
+	}
+
 }
