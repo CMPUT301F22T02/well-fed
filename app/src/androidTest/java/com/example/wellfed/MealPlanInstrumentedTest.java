@@ -1,9 +1,11 @@
 package com.example.wellfed;
 
+import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Context;
 
@@ -34,7 +36,31 @@ public class MealPlanInstrumentedTest {
     }
 
     private void addIngredient(String description){
+        onView(withId(R.id.ingredient_storage_item)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
 
+        onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.bestBeforeInput)).perform(click());
+        onView(withText("OK")).perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.categoryInputEditText)).perform(typeText("Bread"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.amountInputEditText)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.unitInputEditText)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.locationInputEditText)).perform(typeText("Pantry"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        onView(withId(R.id.meal_book_item)).perform(click());
     }
 
     private void addRecipe(String title){
