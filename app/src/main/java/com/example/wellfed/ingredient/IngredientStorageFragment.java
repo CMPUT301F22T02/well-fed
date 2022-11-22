@@ -1,41 +1,24 @@
 package com.example.wellfed.ingredient;
 
-import android.app.AlertDialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.ListPopupWindow;
-import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
-import com.example.wellfed.common.SearchFragment;
+import com.example.wellfed.common.SearchInput;
 import com.example.wellfed.common.SortingFragment;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 
 public class IngredientStorageFragment extends Fragment implements Launcher<StorageIngredient>,
@@ -151,11 +134,8 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
                 .commit();
 
 
-        SearchFragment searchFragment = new SearchFragment();
-        searchFragment.setOnTextChange(s->{controller.getSearchResults(s);});
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_search_container, searchFragment)
-                .commit();
+        SearchInput searchInput = view.findViewById(R.id.search_input);
+        searchInput.setOnTextChange(s->controller.getSearchResults(s));
     }
 
     /**
