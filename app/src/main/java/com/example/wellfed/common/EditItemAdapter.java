@@ -15,17 +15,19 @@ import com.example.wellfed.R;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.Recipe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Adapter that manages the view and data for the ingredients
  * in the {@link Recipe}
  *
  * @version 1.0.0
  */
-public class EditItemAdapter<Item>
-        extends ItemAdapter<Item> {
-
-    private OnEditListener<Item> editListener;
-    private OnDeleteListener<Item> deleteListener;
+public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
+    private List<Item> placeholderItems;
+    protected OnEditListener<Item> editListener;
+    protected OnDeleteListener<Item> deleteListener;
     private Boolean changed = false;
 
     public Boolean getChanged() {
