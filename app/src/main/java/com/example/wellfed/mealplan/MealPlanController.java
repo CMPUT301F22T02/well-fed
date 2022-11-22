@@ -6,6 +6,9 @@ import com.example.wellfed.ActivityBase;
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
 public class MealPlanController {
     private final ActivityBase activity;
     private MealPlanAdapter adapter;
@@ -59,25 +62,5 @@ public class MealPlanController {
                 this.activity.makeSnackbar("Deleted " + deleteMealPlan.getTitle());
             }
         }));
-    }
-
-    public MealPlan getNextMealPlan() {
-//        Date today = new Date();
-//        //        TODO: refactor move all date logic to its own class?
-//        SimpleDateFormat hashDateFormat =
-//                new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-//        hashDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-//        try {
-//            today = hashDateFormat.parse(hashDateFormat.format(today));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        for (MealPlan mealPlan : mealPlans) {
-//            if (mealPlan.getEatDate().after(today) ||
-//                    mealPlan.getEatDate().equals(today)) {
-//                return mealPlan;
-//            }
-//        }
-        return null;
     }
 }

@@ -24,8 +24,9 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_sort_container"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:name="com.example.wellfed.common.SortingFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"
@@ -33,7 +34,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
-        android:name="com.example.wellfed.common.SortingFragment"
         tools:layout="@layout/fragment_sort" />
 
     <com.google.android.material.textfield.TextInputLayout

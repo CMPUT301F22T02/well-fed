@@ -73,7 +73,6 @@ public class IngredientEditActivity extends EditActivityBase
         this.unitInput.setSimpleItems(new String[]{"oz", "lb", "g", "kg",
                 "tsp", "tbsp", "cup", "qt", "gal", "ml", "l", "pt", "fl oz",
                 "count"});
-        RequiredDateTextInputLayout bestBeforeLayout = findViewById(R.id.bestBeforeInput);
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra("ingredient");
@@ -83,12 +82,16 @@ public class IngredientEditActivity extends EditActivityBase
             descriptionInput.setPlaceholderText(ingredient.getDescription());
             amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
             unitInput.setPlaceholderText(ingredient.getUnit());
-            locationInput.setPlaceholderText(ingredient.getLocation());
+            if (ingredient.getLocation() != null) {
+                locationInput.setPlaceholderText(ingredient.getLocation());
+            }
             if (ingredient.getCategory() != null) {
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
             // Set date in yyyy-MM-dd format
-            bestBeforeInput.setPlaceholderDate(ingredient.getBestBeforeDate());
+            if (ingredient.getBestBefore() != null) {
+                bestBeforeInput.setPlaceholderText(ingredient.getBestBefore().toString());
+            }
         }
 
 

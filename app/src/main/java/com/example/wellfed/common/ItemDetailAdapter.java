@@ -30,7 +30,7 @@ public class ItemDetailAdapter extends ItemAdapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Ingredient ingredient = (Ingredient) getItems().get(position);
-        holder1.title.setText(ingredient.getAmount() + ingredient.getUnit());
+        holder1.title.setText(ingredient.getAmount() + " " + ingredient.getUnit());
         holder1.headline.setText(ingredient.getDescription());
         holder1.moreInfo.setOnClickListener(view->{
         });

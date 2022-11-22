@@ -13,7 +13,8 @@ package com.example.wellfed.recipe;
 
 import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
 
-import android.media.Image;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import androidx.annotation.Nullable;
 
@@ -21,8 +22,8 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents a Recipe, which contains ingredients and instructions on how to prepare
@@ -79,7 +80,7 @@ public class Recipe implements Serializable {
     public Recipe(String title) {
         this.title = title;
         this.ingredients = new ArrayList<>();
-        this.id = NULL;
+        this.id = null;
     }
 
     /**
@@ -233,5 +234,45 @@ public class Recipe implements Serializable {
      */
     public String getId(){
         return this.id;
+    }
+
+    /**
+     * Checks whether the recipe is equal to another recipe.
+     * Note: Any order of ingredients is accepted.
+     *
+     * @param o the object to check equality with
+     *
+     * @return true if the objects are equal, false otherwise
+     */
+    public boolean isEqual(Object o) {
+        if (o.getClass() != Recipe.class) {
+            return false;
+        }
+
+        ArrayList<Boolean> flags = new ArrayList<Boolean>();
+        flags.add(Objects.equals(this.getId(), ((Recipe) o).getId()));
+        flags.add(Objects.equals(this.getTitle(), ((Recipe) o).getTitle()));
+        flags.add(Objects.equals(this.getCategory(), ((Recipe) o).getCategory()));
+        flags.add(Objects.equals(this.getComments(), ((Recipe) o).getComments()));
+        flags.add(Objects.equals(this.getPhotograph(), ((Recipe) o).getPhotograph()));
+        flags.add(Objects.equals(this.getPrepTimeMinutes(), ((Recipe) o).getPrepTimeMinutes()));
+        flags.add(Objects.equals(this.getServings(), ((Recipe) o).getServings()));
+
+        // checking all ingredients (in any order!)
+        flags.add(this.getIngredients().size() == ((Recipe) o).getIngredients().size());
+
+        // searching for ingredient
+        for (int i = 0; i < this.getIngredients().size(); i++) {
+            // search for the needed Ingredient
+            boolean found = false;
+            for (int j = 0; j < ((Recipe) o).getIngredients().size(); j++) {
+                if (this.getIngredient(i).isEqual(((Recipe) o).getIngredient(j))) {
+                    found = true;
+                }
+            }
+            flags.add(found);
+        }
+
+        return !flags.contains(false);
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class EditItemAdapter<Item>
         this.changed = changed;
     }
 
+
     public interface OnEditListener<Item> {
         void onEdit(Item item);
     }
@@ -58,9 +60,7 @@ public class EditItemAdapter<Item>
      * @param viewType
      * @return
      */
-    @NonNull
-    @Override
-    public ItemViewHolder onCreateViewHolder(
+    @NonNull @Override public ItemViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -71,21 +71,32 @@ public class EditItemAdapter<Item>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1, int position) {
-        ItemViewHolder holder = (ItemViewHolder) holder1;
-        Ingredient ingredient = (Ingredient) items.get(holder.getAdapterPosition());
-        holder.leadingTextView.setText(Double.toString(ingredient.getAmount()));
-        holder.headlineTextView.setText(ingredient.getDescription());
-        holder.getEditButton().setOnClickListener(v -> {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
+                                 int position) {
+        ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+        Item item = items.get(position);
+        itemViewHolder.getEditButton().setOnClickListener(v -> {
             if (editListener != null) {
-                editListener.onEdit(items.get(holder.getAdapterPosition()));
+                editListener.onEdit(item);
             }
         });
-        holder.getDeleteButton().setOnClickListener(v -> {
+        new DeleteButton(
+                ((ItemViewHolder) holder).deleteButton.getContext(),
+                itemViewHolder.getDeleteButton(), "Delete item?",
+                () -> {
             if (deleteListener != null) {
-                deleteListener.onDelete(items.get(holder.getAdapterPosition()));
+                deleteListener.onDelete(item);
             }
         });
+    }
+
+    @Override public void setItems(List<Item> items) {
+        super.setItems(items);
+        placeholderItems = new ArrayList<>(items);
+    }
+
+    public Boolean hasChanges() {
+        return !placeholderItems.equals(items);
     }
 
     /**
@@ -106,12 +117,12 @@ public class EditItemAdapter<Item>
         /**
          * edit button
          */
-        private ImageView editButton;
+        private Button editButton;
 
         /**
          * delete button
          */
-        private ImageView deleteButton;
+        private Button deleteButton;
 
         public TextView getLeadingTextView() {
             return leadingTextView;
@@ -121,11 +132,11 @@ public class EditItemAdapter<Item>
             return headlineTextView;
         }
 
-        public ImageView getEditButton() {
+        public Button getEditButton() {
             return editButton;
         }
 
-        public ImageView getDeleteButton() {
+        public Button getDeleteButton() {
             return deleteButton;
         }
 
