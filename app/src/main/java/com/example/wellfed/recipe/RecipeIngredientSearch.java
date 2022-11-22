@@ -24,6 +24,7 @@ import java.util.Arrays;
 public class RecipeIngredientSearch extends ActivityBase
         implements RecipeIngredientSearchAdapter.OnItemClickListener, SortingFragment.OnSortClick {
     private RecyclerView ingredientRecycleView;
+    private RecipeIngredientSearchAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class RecipeIngredientSearch extends ActivityBase
 
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setListener(this);
-        sortingFragment.setOptions(Arrays.asList(new String[]{"description", "best-before"}));
+        sortingFragment.setOptions(Arrays.asList(new String[]{"description", "category"}));
         this.getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container, sortingFragment)
                 .commit();
@@ -40,7 +41,7 @@ public class RecipeIngredientSearch extends ActivityBase
 
         DBConnection connection = new DBConnection(getApplicationContext());
         IngredientDB db = new IngredientDB(connection);
-        RecipeIngredientSearchAdapter adapter = new RecipeIngredientSearchAdapter(db);
+        adapter = new RecipeIngredientSearchAdapter(db);
         adapter.setListener(this);
         ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
         ingredientRecycleView.setAdapter(adapter);
@@ -59,6 +60,6 @@ public class RecipeIngredientSearch extends ActivityBase
 
     @Override
     public void onClick(String field) {
-
+        this.adapter.sortByField(field);
     }
 }

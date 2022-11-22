@@ -30,6 +30,10 @@ public class RecipeIngredientSearchAdapter extends DBAdapter<RecipeIngredientSea
         this.db = db;
     }
 
+    public void sortByField(String field){
+        changeQuery(db.getQuery(field, true));
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
