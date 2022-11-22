@@ -13,11 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.ImageFilterButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
-import com.example.wellfed.ingredient.IngredientEditContract;
+import com.example.wellfed.common.Launcher;
+import com.example.wellfed.ingredient.StorageIngredientAdapter;
+import com.example.wellfed.shoppingcart.IngredientEditContract;
 import com.example.wellfed.ingredient.IngredientStorageController;
 import com.example.wellfed.ingredient.StorageIngredient;
 
@@ -26,7 +29,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class ShoppingCartFragment extends Fragment implements
-        PopupMenu.OnMenuItemClickListener {
+        PopupMenu.OnMenuItemClickListener, Launcher<ShoppingCartIngredient>,
+    ShoppingCartIngredientAdapter.OnItemClickListener {
     /**
      * ShoppingCart is a singleton class that stores all ShoppingCartIngredient objects.
      */
@@ -46,13 +50,14 @@ public class ShoppingCartFragment extends Fragment implements
      * Recycler view for the ingredients.
      */
     RecyclerView recyclerView;
-
     /**
-     * todo
+     * Selected ingredient.
+     */
+    private ShoppingCartIngredient selectedIngredient;
+    /**
+     * Shopping cart dialog.
      */
     private ShoppingCartDialog dialog;
-
-    int position;
 
     /**
      * ActivityResultLauncher for the IngredientAddActivity to add an
@@ -60,21 +65,37 @@ public class ShoppingCartFragment extends Fragment implements
      * The result is a StorageIngredient.
      * The result is null if the user cancels the add.
      */
-    ActivityResultLauncher<StorageIngredient> editIngredientLauncher =
+    ActivityResultLauncher<ShoppingCartIngredient> addLauncher =
+            registerForActivityResult(new IngredientContract(), result -> {
+                if (result == null) {
+                    return;
+                }
+                String type = result.first;
+                ShoppingCartIngredient ingredient = result.second;
+                switch (type) {
+                    case "add":
+                        shoppingCartIngredientController.addIngredientToShoppingCart(ingredient);
+                        break;
+                    case "edit":
+                        shoppingCartIngredientController.updateIngredientInShoppingCart(ingredient);
+                        break;
+                    case "launch":
+                        this.onItemClick(selectedIngredient);
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            });
+
+    ActivityResultLauncher<ShoppingCartIngredient> editLauncher =
             registerForActivityResult(new IngredientEditContract(), result -> {
                 if (result == null) {
                     return;
                 }
                 String type = result.first;
-                StorageIngredient ingredient = result.second;
+                ShoppingCartIngredient ingredient = result.second;
                 switch (type) {
                     case "add":
-//                        shoppingcartcontroller.addIngredient()
-//                        inside your shoppingcartcontroller:
-//                        todo
-                        shoppingCartIngredientController.addIngredient(ingredient);
-//                        IngredientStorageController controller = new IngredientStorageController(getActivity());
-//                        controller.addIngredient(ingredient);
+                        shoppingCartIngredientController.addIngredientToShoppingCart(ingredient);
                         break;
                     case "quit":
                         break;
@@ -82,6 +103,12 @@ public class ShoppingCartFragment extends Fragment implements
                         throw new IllegalArgumentException();
                 }
             });
+
+    @Override
+    public void onItemClick(ShoppingCartIngredient ingredient) {
+        this.selectedIngredient = ingredient;
+        addLauncher.launch(ingredient);
+    }
 
     /**
      * onCreate method for the hoppingCartFragment.
@@ -96,8 +123,11 @@ public class ShoppingCartFragment extends Fragment implements
             ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         shoppingCart = new ShoppingCart();
-        shoppingCartIngredientController = new ShoppingCartIngredientController(new IngredientStorageController(getActivity()));
-        // dialog = new ShoppingCartDialog(getActivity(), "title", "message", "confirm", this);
+        shoppingCartIngredientController =
+            new ShoppingCartIngredientController(requireActivity());
+        shoppingCartIngredientAdapter =
+            shoppingCartIngredientController.getAdapter();
+        shoppingCartIngredientAdapter.setOnItemClickListener(this);
 
         return inflater.inflate(R.layout.fragment_shopping_cart, container, false);
     }
@@ -129,12 +159,8 @@ public class ShoppingCartFragment extends Fragment implements
     }
 
     public void setRecyclerView() {
-        shoppingCartIngredientAdapter = new ShoppingCartIngredientAdapter(
-                shoppingCart.getIngredients(), this);
-        shoppingCartIngredientController.setIngredients(shoppingCart.getIngredients());
-        shoppingCartIngredientController.setAdapter(shoppingCartIngredientAdapter);
         recyclerView.setAdapter(shoppingCartIngredientAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager((getActivity())));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     // Define behavior for each option in dropdown menu
@@ -220,15 +246,19 @@ public class ShoppingCartFragment extends Fragment implements
 //    }
 
     public void onClick(ShoppingCartIngredient ingredient) {
-        StorageIngredient si = new StorageIngredient(ingredient.getDescription());
-        si.setAmount(ingredient.getAmount());
-        si.setCategory(ingredient.getCategory());
-        si.setUnit(ingredient.getUnit());
-        editIngredientLauncher.launch(si);
+        editLauncher.launch(ingredient);
     }
 
+    /**
+     * Launches the IngredientAddActivity to add an ingredient.
+     */
+    @Override
     public void launch(ShoppingCartIngredient ingredient) {
-        dialog.show();
+        if (ingredient == null) {
+            editLauncher.launch(null);
+        } else {
+            addLauncher.launch(ingredient);
+        }
     }
 
     // show dropdown menu when button is clicked
@@ -237,5 +267,12 @@ public class ShoppingCartFragment extends Fragment implements
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.inflate(R.menu.shopping_cart_dropdown);
         popupMenu.show();
+    }
+
+
+    @NonNull
+    @Override
+    public CreationExtras getDefaultViewModelCreationExtras() {
+        return super.getDefaultViewModelCreationExtras();
     }
 }

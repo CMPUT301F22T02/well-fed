@@ -1,31 +1,37 @@
 package com.example.wellfed.shoppingcart;
 
-import com.example.wellfed.ingredient.IngredientStorageController;
-import com.example.wellfed.ingredient.StorageIngredient;
+import android.app.Activity;
 
-import org.checkerframework.checker.units.qual.A;
+import com.example.wellfed.ActivityBase;
+import com.example.wellfed.common.DBConnection;
+import com.example.wellfed.ingredient.StorageIngredient;
 
 import java.util.ArrayList;
 
 public class ShoppingCartIngredientController {
     /**
-     * Holds a list of ShoppingCartIngredients in the shopping cart.
+     * The Activity that the controller is attached to.
      */
-    private ArrayList<ShoppingCartIngredient> ingredients;
-
+    private ActivityBase activity;
     /**
-     * adapter is used to display the ingredients in the recycler view.
+     * ShoppingCart adapter. This is used to update the recycler view.
      */
     private ShoppingCartIngredientAdapter adapter;
-
-    private IngredientStorageController controller;
+    /**
+     * This is the db of the shopping cart.
+     */
+    private ShoppingCartDB db;
 
     /**
-     * Initialize ingredient list.
+     * The constructor for the controller.
+     *
+     * @param activity The activity that the controller is attached to.
      */
-    public ShoppingCartIngredientController(IngredientStorageController isController) {
-        controller = isController;
-        ingredients = new ArrayList<>();
+    public ShoppingCartIngredientController(Activity activity) {
+        this.activity = (ActivityBase) activity;
+        DBConnection connection = new DBConnection(activity.getApplicationContext());
+        db = new ShoppingCartDB(connection);
+        adapter = new ShoppingCartIngredientAdapter(db);
     }
 
     /**
@@ -37,76 +43,52 @@ public class ShoppingCartIngredientController {
     }
 
     /**
-     * Deletes the ingredient at the given index from the shopping cart.
-     * @param pos the index of the ingredient to delete
+     * Gets the adapter.
+     * @return the adapter
      */
-    public void deleteIngredient(int pos) {
-        if (pos >= 0 && pos < ingredients.size()) {
-            ingredients.remove(pos);
-            adapter.notifyItemRemoved(pos);
-        }
+    public ShoppingCartIngredientAdapter getAdapter() {
+        return adapter;
     }
 
     /**
-     * Adds an Ingredient to the shopping cart.
-     * @param ingredient An ShoppingCartIngredient object to add
+     * Adds the ingredient to the shopping cart.
+     * @param ingredient the ingredient to add
      */
-    public void addIngredient(StorageIngredient ingredient) {
-//        if (ingredient != null) {
-//            if (!ingredients.contains(ingredient)) {
-//                ingredients.add(ingredient);
-//                adapter.notifyItemInserted(ingredients.size() - 1);
-//            } else {
-//                int index = ingredients.indexOf(ingredient);
-//                ingredients.set(index, ingredient);
-//                adapter.notifyItemChanged(index);
-//            }
-//        }
-        controller.addIngredient(ingredient);
-//        ingredients.add(ingredient);
-//        adapter.notifyItemInserted(ingredients.size()-1);
+    public void addIngredientToShoppingCart(ShoppingCartIngredient ingredient) {
+        db.addIngredient(ingredient, (addIngredient, addSuccess) -> {
+            if (!addSuccess) {
+                this.activity.makeSnackbar("Failed to add " + addIngredient.getDescription());
+            } else {
+                this.activity.makeSnackbar("Added " + addIngredient.getDescription());
+            }
+        });
     }
-
     /**
-     * Set ingredients to the given list of ingredients.
-     * @param ingredients the list of ingredients to set
+     * Deletes the ingredient from the shopping cart.
+     *
+     * @param ingredient the ingredient to delete
      */
-    public void setIngredients(ArrayList<ShoppingCartIngredient> ingredients){
-        this.ingredients = ingredients;
+    public void deleteIngredientFromShoppingCart(ShoppingCartIngredient ingredient) {
+        db.deleteIngredient(ingredient, (delIngredient, delSuccess) -> {
+            if (!delSuccess) {
+                this.activity.makeSnackbar("Failed to delete " + delIngredient.getDescription());
+            } else {
+                this.activity.makeSnackbar("Deleted " + delIngredient.getDescription());
+            }
+        });
     }
-
     /**
-     * Update the ingredient at the given index.
-     * @param position the index of the ingredient to update
+     * Updates the ingredient in the shopping cart.
+     *
      * @param ingredient the ingredient to update
      */
-    public void updateIngredient(int position, ShoppingCartIngredient ingredient){
-        ingredients.set(position, ingredient);
-        adapter.notifyItemChanged(position);
-    }
-
-    /**
-     * Method overloading. Update the ingredient.
-     * @param ingredient the ingredient to update
-     */
-    public void updateIngredient(ShoppingCartIngredient ingredient){
-        int position = ingredients.indexOf(ingredient);
-        if(position >= 0 && position < ingredients.size()){
-            ingredients.set(position, ingredient);
-            adapter.notifyItemChanged(position);
-        }
-    }
-
-    public void editIngredient(int position, ShoppingCartIngredient modifiedIngredient) {
-        ingredients.set(position, modifiedIngredient);
-        adapter.notifyItemChanged(position);
-    }
-
-    /**
-     * Get ingredients.
-     * @return the list of ingredients
-     */
-    public ArrayList<ShoppingCartIngredient> getIngredients() {
-        return ingredients;
+    public void updateIngredientInShoppingCart(ShoppingCartIngredient ingredient) {
+        db.updateIngredient(ingredient, (updateIngredient, updateSuccess) -> {
+            if (!updateSuccess) {
+                this.activity.makeSnackbar("Failed to update " + updateIngredient.getDescription());
+            } else {
+                this.activity.makeSnackbar("Updated " + updateIngredient.getDescription());
+            }
+        });
     }
 }

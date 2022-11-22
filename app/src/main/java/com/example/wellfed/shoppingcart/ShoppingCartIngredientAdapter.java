@@ -41,7 +41,7 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

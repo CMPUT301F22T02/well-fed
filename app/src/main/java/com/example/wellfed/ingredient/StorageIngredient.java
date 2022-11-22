@@ -2,6 +2,7 @@ package com.example.wellfed.ingredient;
 
 
 import com.example.wellfed.common.UTCDate;
+import com.example.wellfed.shoppingcart.ShoppingCartIngredient;
 
 import java.util.Date;
 
@@ -236,4 +237,5 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
     public void setStorageId(String storageId) {
         this.storageId = storageId;
     }
+
 }
