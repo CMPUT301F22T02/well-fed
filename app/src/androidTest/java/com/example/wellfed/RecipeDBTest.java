@@ -79,43 +79,6 @@ public class RecipeDBTest {
     }
 
     /**
-     * Asserts that two recipes are equal.
-     *
-     * @param actual the actual recipe after performing some DB operation
-     * @param expected the expected recipe to check against the actual recipe
-     */
-    private void assertEqualRecipe(Recipe expected, Recipe actual) {
-        assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getTitle(), actual.getTitle());
-        assertEquals(expected.getCategory(), actual.getCategory());
-        assertEquals(expected.getComments(), actual.getComments());
-        assertEquals(expected.getPhotograph(), actual.getPhotograph());
-        assertEquals(expected.getPrepTimeMinutes(), actual.getPrepTimeMinutes());
-        assertEquals(expected.getServings(), actual.getServings());
-
-        // checking ingredients
-        assertEquals(expected.getIngredients().size(), actual.getIngredients().size());
-        for (int i = 0; i < actual.getIngredients().size(); i++) {
-            Ingredient actualIngredient = actual.getIngredient(i);
-            // search for the needed Ingredient
-            Integer expectedIndex = null;
-            for (int j = 0; j < expected.getIngredients().size(); j++) {
-                if (Objects.equals(expected.getIngredient(j).getId(), actualIngredient.getId())) {
-                    expectedIndex = j;
-                    break;
-                }
-            }
-            assertNotNull(expectedIndex);
-            Ingredient expectedIngredient = expected.getIngredient(expectedIndex);
-
-            assertEquals(expectedIngredient.getCategory(), actualIngredient.getCategory());
-            assertEquals(expectedIngredient.getDescription(), actualIngredient.getDescription());
-            assertEquals(expectedIngredient.getUnit(), actualIngredient.getUnit());
-            assertEquals(expectedIngredient.getAmount(), actualIngredient.getAmount());
-        }
-    }
-
-    /**
      * Cleans up after the recipe in the test.
      *
      * @param testRecipe        the Recipe added to the DB in the test, to clean up
@@ -184,7 +147,7 @@ public class RecipeDBTest {
         if (!latch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
-        assertEqualRecipe(testRecipe, addedRecipeRef.get());
+        assertTrue(testRecipe.isEqual(addedRecipeRef.get()));
 
         CountDownLatch deleteLatch = new CountDownLatch(1);
         AtomicReference<Recipe> deletedRecipeRef = new AtomicReference<Recipe>();
@@ -199,7 +162,7 @@ public class RecipeDBTest {
         }
 
         // deleted recipe returns a new recipe with empty fields
-        assertEqualRecipe(deletedRecipeRef.get(), new Recipe(testRecipe.getId()));
+        assertTrue(deletedRecipeRef.get().isEqual(new Recipe(testRecipe.getId())));
 
         CountDownLatch deleteIngredients = new CountDownLatch(2);
         AtomicReference<Ingredient> deletedIngredientRef1 = new AtomicReference<Ingredient>();
@@ -233,7 +196,7 @@ public class RecipeDBTest {
             // assert the ID of the deleted recipe is -1 and everything is null
             Recipe emptyRecipe = new Recipe(null);
             emptyRecipe.setId("-1");
-            assertEqualRecipe(emptyRecipe, deletedRecipe);
+            assertTrue(emptyRecipe.isEqual(deletedRecipe));
         });
     }
 
@@ -284,7 +247,7 @@ public class RecipeDBTest {
         if (!updateLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
-        assertEqualRecipe(testRecipe, updatedRecipeRef.get());
+        assertTrue(testRecipe.isEqual(updatedRecipeRef.get()));
 
         cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }
@@ -309,7 +272,7 @@ public class RecipeDBTest {
         if (!updateLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
-        assertEqualRecipe(testRecipe, updatedRecipeRef.get());
+        assertTrue(testRecipe.isEqual(updatedRecipeRef.get()));
     }
 
     /**
@@ -334,7 +297,7 @@ public class RecipeDBTest {
         if (!addLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
-        assertEqualRecipe(testRecipe, addedRecipeRef.get());
+        assertTrue(testRecipe.isEqual(addedRecipeRef.get()));
 
         // now, get the recipe
         CountDownLatch getLatch = new CountDownLatch(1);
@@ -348,7 +311,7 @@ public class RecipeDBTest {
             throw new InterruptedException();
         }
 
-        assertEqualRecipe(testRecipe, resultRecipeRef.get());
+        assertTrue(testRecipe.isEqual( resultRecipeRef.get()));
 
         cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }
@@ -375,7 +338,7 @@ public class RecipeDBTest {
         if (!addLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
-        assertEqualRecipe(testRecipe, addedRecipeRef.get());
+        assertTrue(testRecipe.isEqual(addedRecipeRef.get()));
 
         // changing each field of the recipe
         Ingredient newTestIngredient = mockIngredient("Mayonnaise");
@@ -399,7 +362,7 @@ public class RecipeDBTest {
         if (!updateLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
-        assertEqualRecipe(testRecipe, updatedRecipeRef.get());
+        assertTrue(testRecipe.isEqual( updatedRecipeRef.get()));
 
         // now, get the recipe
         CountDownLatch getLatch = new CountDownLatch(1);
@@ -413,7 +376,7 @@ public class RecipeDBTest {
             throw new InterruptedException();
         }
 
-        assertEqualRecipe(testRecipe, resultRecipeRef.get());
+        assertTrue(testRecipe.isEqual(resultRecipeRef.get()));
 
         cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }
@@ -455,7 +418,7 @@ public class RecipeDBTest {
             throw new InterruptedException();
         }
 
-        assertEqualRecipe(testRecipe, resultRecipeRef.get());
+        assertTrue(testRecipe.isEqual(resultRecipeRef.get()));
 
         cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }

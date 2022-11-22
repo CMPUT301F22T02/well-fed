@@ -42,28 +42,6 @@ import java.util.concurrent.atomic.AtomicReference;
      */
     StorageIngredient mockNonExistentStorageIngredient;
 
-    private void assertStorageIngredientsEqual(StorageIngredient result, StorageIngredient expected){
-        assertNotNull(result);
-        assertEquals(expected.getId(),
-                result.getId());
-        assertEquals(expected.getStorageId(),
-                result.getStorageId());
-        assertEquals(expected.getDescription(),
-                result.getDescription());
-        assertEquals(expected.getLocation(),
-                result.getLocation());
-        assertEquals(expected.getAmount(),
-                result.getAmount());
-        assertEquals(expected.getCategory(),
-                result.getCategory());
-        assertEquals(expected.getBestBefore(),
-                result.getBestBefore());
-        assertEquals(expected.getUnit(),
-                result.getUnit());
-        assertEquals(expected.getAmountAndUnit(),
-                result.getAmountAndUnit());
-    }
-
     /**
      * For removing a StorageIngredient we have added to the database during testing.
      *
@@ -122,7 +100,7 @@ import java.util.concurrent.atomic.AtomicReference;
             throw new InterruptedException();
         }
 
-        assertStorageIngredientsEqual(addedStorageIngredientAtomic.get(), mockStorageIngredient);
+        assertTrue(addedStorageIngredientAtomic.get().isEqual(mockStorageIngredient));
 
         removeStorageIngredient(mockStorageIngredient);
     }
@@ -167,7 +145,7 @@ import java.util.concurrent.atomic.AtomicReference;
         }
 
         assertTrue(successAtomic.get());
-        assertStorageIngredientsEqual(deletedStorageIngredientAtomic.get(), mockStorageIngredient);
+        assertTrue(deletedStorageIngredientAtomic.get().isEqual(mockStorageIngredient));
 
         removeStorageIngredient(mockStorageIngredient);
     }
@@ -237,7 +215,7 @@ import java.util.concurrent.atomic.AtomicReference;
             throw new InterruptedException();
         }
 
-        assertStorageIngredientsEqual(deletedStorageIngredientAtomic.get(), mockStorageIngredient);
+        assertTrue(deletedStorageIngredientAtomic.get().isEqual(mockStorageIngredient));
     }
 
     /**
@@ -285,7 +263,7 @@ import java.util.concurrent.atomic.AtomicReference;
         }
 
         assertTrue(successAtomic.get());
-        assertStorageIngredientsEqual(updatedStorageIngredientAtomic.get(), mockStorageIngredient);
+        assertTrue(updatedStorageIngredientAtomic.get().isEqual(mockStorageIngredient));
 
         removeStorageIngredient(mockStorageIngredient);
     }
