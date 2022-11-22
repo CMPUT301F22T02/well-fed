@@ -25,6 +25,7 @@ import com.example.wellfed.ingredient.IngredientStorageController;
 import com.example.wellfed.ingredient.StorageIngredient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -112,8 +113,9 @@ public class ShoppingCartFragment extends Fragment implements
 
     /**
      * onCreate method for the hoppingCartFragment.
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
-     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached to.
      * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
      * @return Return the View for the fragment's UI, or null.
      */
@@ -134,7 +136,8 @@ public class ShoppingCartFragment extends Fragment implements
 
     /**
      * onViewCreated method for the ShoppingCartFragment.
-     * @param view The View returned by onCreateView.
+     *
+     * @param view               The View returned by onCreateView.
      * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
      */
     @Override
@@ -142,72 +145,23 @@ public class ShoppingCartFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.shopping_cart_list);
 
+        SortingFragment sortingFragment = new SortingFragment();
+        sortingFragment.setOptions(Arrays.asList(new String[]{"description", "category"}));
+        sortingFragment.setListener(this);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_sort_container3, sortingFragment)
+                .commit();
+
         // Create mockup data
         mockData();
-
         // Display data in recycler view
         setRecyclerView();
 
-        // create listener for dropdown menu
-        ImageFilterButton btn = view.findViewById(R.id.shopping_cart_filter_button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDropDown(view);
-            }
-        });
     }
 
     public void setRecyclerView() {
         recyclerView.setAdapter(shoppingCartIngredientAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    // Define behavior for each option in dropdown menu
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.description:
-                // sort the ingredients
-                sortIngredients("description", shoppingCart.getIngredients());
-
-                // set adapter
-                setRecyclerView();
-                Toast.makeText(getContext(), "Sort By Description", Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.category:
-                sortIngredients("category", shoppingCart.getIngredients());
-                setRecyclerView();
-
-                Toast.makeText(getContext(), "Sort By Category", Toast.LENGTH_LONG).show();
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    public void sortIngredients(String option, ArrayList<ShoppingCartIngredient> ingredients) {
-        Collections.sort(ingredients, new Comparator<ShoppingCartIngredient>() {
-            @Override
-            public int compare(ShoppingCartIngredient o1, ShoppingCartIngredient o2) {
-                switch (option) {
-                    case "description":
-                        return compareByDescription(o1, o2);
-                    case "category":
-                        return compareByCategory(o1, o2);
-                    default:
-                        return 0;
-                }
-            }
-        });
-    }
-
-    public int compareByDescription(ShoppingCartIngredient o1, ShoppingCartIngredient o2) {
-        return o1.getDescription().compareTo(o2.getDescription());
-    }
-
-    public int compareByCategory(ShoppingCartIngredient o1, ShoppingCartIngredient o2) {
-        return o1.getCategory().compareTo(o2.getCategory());
     }
 
     public void mockData() {
@@ -261,12 +215,9 @@ public class ShoppingCartFragment extends Fragment implements
         }
     }
 
-    // show dropdown menu when button is clicked
-    public void showDropDown(View v) {
-        PopupMenu popupMenu = new PopupMenu(getContext(), v);
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.shopping_cart_dropdown);
-        popupMenu.show();
+    @Override
+    public void onClick(String field) {
+
     }
 
 

@@ -69,7 +69,8 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
 
     /**
      * onCreateViewHolder method for the ShoppingCartIngredientAdapter.
-     * @param parent ViewGroup for the adapter.
+     *
+     * @param parent   ViewGroup for the adapter.
      * @param viewType int for the adapter.
      * @return ViewHolder object for the adapter.
      */
@@ -87,7 +88,8 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
 
     /**
      * onBindViewHolder method for the ShoppingCartIngredientAdapter.
-     * @param holder ViewHolder object for the adapter.
+     *
+     * @param holder   ViewHolder object for the adapter.
      * @param position int for the adapter.
      */
     @Override
@@ -106,6 +108,7 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
 
     /**
      * getItemCount method for the ShoppingCartIngredientAdapter.
+     *
      * @return int for the adapter.
      */
     @Override
