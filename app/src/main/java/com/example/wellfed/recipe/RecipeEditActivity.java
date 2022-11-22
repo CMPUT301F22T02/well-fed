@@ -166,7 +166,7 @@ public class RecipeEditActivity extends EditActivityBase {
         if (!servings.isValid()) return false;
         if (!commentsTextInput.isValid()) return false;
         if (!recipeCategory.isValid()) return false;
-        if (recipeIngredients.size() == 0) return false;
+        if (!ingredientEditFragment.isValid()) return false;
         return true;
     }
 
@@ -176,7 +176,7 @@ public class RecipeEditActivity extends EditActivityBase {
         if (servings.hasChanges()) return true;
         if (commentsTextInput.hasChanges()) return true;
         if (recipeCategory.hasChanges()) return true;
-//      if (editRecyclerViewAdapter.hasChanges()) return true;
+        if (ingredientEditFragment.hasChanged()) return true;
         return false;
     }
 

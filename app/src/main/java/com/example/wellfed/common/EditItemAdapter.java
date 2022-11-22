@@ -28,6 +28,16 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
     private List<Item> placeholderItems;
     protected OnEditListener<Item> editListener;
     protected OnDeleteListener<Item> deleteListener;
+    private Boolean changed = false;
+
+    public Boolean getChanged() {
+        return changed;
+    }
+
+    public void setChanged(Boolean changed) {
+        this.changed = changed;
+    }
+
 
     public interface OnEditListener<Item> {
         void onEdit(Item item);

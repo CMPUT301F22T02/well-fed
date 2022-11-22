@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,16 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
-import com.example.wellfed.ingredient.Ingredient;
-import com.example.wellfed.recipe.RecipeIngredientEditActivity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public abstract class EditRecyclerViewFragment<Item extends Serializable>
         extends Fragment implements EditItemAdapter.OnEditListener<Item>,
         EditItemAdapter.OnDeleteListener<Item> {
     private RecyclerView recyclerView;
+    private TextView errorTextView;
     private EditItemAdapter<Item> adapter;
     private Item selectedItem;
     private String title;
@@ -63,6 +60,11 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         TextView titleTextView = view.findViewById(R.id.titleTextView);
         titleTextView.setText(title);
 
+        errorTextView = view.findViewById(R.id.errorTextView);
+        String errorText = "One or more " + errorTextView.getHint() + " are needed";
+        errorTextView.setText(errorText);
+        errorTextView.setTextColor(0xFFB3261E);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -88,6 +90,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
     @Override
     public void onEdit(Item item) {
         this.selectedItem = item;
+        adapter.setChanged(true);
         Intent intent = createOnEditIntent(item);
         editLauncher.launch(intent);
     }
@@ -102,6 +105,25 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         int index = adapter.getItems().indexOf(item);
         adapter.getItems().remove(index);
         adapter.notifyItemRemoved(index);
+        adapter.setChanged(true);
+        this.isValid();
+    }
+
+    public Boolean isValid(){
+        if(adapter.getItemCount() == 0){
+            errorTextView.setVisibility(View.VISIBLE);
+            return false;
+        }
+        else if(adapter.getItemCount() > 0){
+            errorTextView.setVisibility(View.INVISIBLE);
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean hasChanged(){
+        return adapter.getChanged();
     }
 
     abstract public void onSearchActivityResult(Pair<String, Item> result);
@@ -115,11 +137,14 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         switch (type) {
             case "add":
                 add(item);
+                this.isValid();
+                adapter.setChanged(true);
                 break;
             case "edit":
                 int index = adapter.getItems().indexOf(selectedItem);
                 adapter.getItems().set(index, item);
                 adapter.notifyItemChanged(index);
+                adapter.setChanged(true);
                 break;
             default:
                 throw new IllegalArgumentException();
