@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -96,9 +97,10 @@ public class ShoppingCartDB {
                     ingredient.setId(addedIngredient.getId());
                     addShoppingHelper(ingredient, listener);
                 });
+            } else {
+                ingredient.setId(foundIngredient.getId());
+                addShoppingHelper(ingredient, listener);
             }
-            ingredient.setId(foundIngredient.getId());
-            addShoppingHelper(ingredient,listener);
         });
 
 
@@ -200,39 +202,32 @@ public class ShoppingCartDB {
          *
          * @param success True if the shopping cart was retrieved successfully.
          */
-        void onGetShoppingCart(ShoppingCart shoppingCart, boolean success);
+        void onGetShoppingCart(ArrayList<ShoppingCartIngredient> shoppingCart, boolean success);
     }
 
     /**
      * Get the shopping cart.
      */
     public void getShoppingCart(OnGetShoppingCart listener) {
-        AtomicInteger counter = new AtomicInteger(0);
         collection.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                int numIngredients = task.getResult().size();
-                ShoppingCart shoppingCart = new ShoppingCart();
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    // Do not use toObject() because it does not work with
-                    // subcollections.
-                    ShoppingCartIngredient ingredient =
-                            new ShoppingCartIngredient(document.getString(
-                                    "description"));
-                    ingredient.setId(document.getString("id"));
-                    ingredient.setAmount(document.getDouble("amount"));
-                    ingredient.setUnit(document.getString("unit"));
-                    ingredient.setCategory(document.getString("category"));
-                    ingredient.setPickedUp(Boolean.TRUE.equals(document.getBoolean("picked")));
-                    ingredient.setComplete(Boolean.TRUE.equals(document.getBoolean("complete")));
-                    shoppingCart.addIngredient(ingredient);
-                    counter.incrementAndGet();
-                    if (counter.get() == numIngredients) {
-                        listener.onGetShoppingCart(shoppingCart, true);
-                    }
-                }
-            } else {
+            if (!task.isSuccessful()) {
                 listener.onGetShoppingCart(null, false);
+                return;
             }
+            ArrayList<ShoppingCartIngredient> shoppingCart = new ArrayList<>();
+            for (QueryDocumentSnapshot document : task.getResult()) {
+                ShoppingCartIngredient ingredient =
+                        new ShoppingCartIngredient(document.getString(
+                                "description"));
+                ingredient.setId(document.getId());
+                ingredient.setAmount(document.getDouble("amount"));
+                ingredient.setUnit(document.getString("unit"));
+                ingredient.setCategory(document.getString("category"));
+                ingredient.setPickedUp(Boolean.TRUE.equals(document.getBoolean("picked")));
+                ingredient.setComplete(Boolean.TRUE.equals(document.getBoolean("complete")));
+                shoppingCart.add(ingredient);
+            }
+            listener.onGetShoppingCart(shoppingCart, true);
         });
     }
 
@@ -248,6 +243,7 @@ public class ShoppingCartDB {
          * @param success True if the shopping cart was updated successfully.
          */
         void onUpdateShoppingCart(ShoppingCart shoppingCart, boolean success);
+
     }
 
     /**

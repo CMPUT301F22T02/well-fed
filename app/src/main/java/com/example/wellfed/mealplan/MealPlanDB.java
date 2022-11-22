@@ -285,14 +285,14 @@ public class MealPlanDB {
      * Helper function that adds the MealPlan document to db
      * once all transactions are finished.
      *
-     * @param mealPlanMap           the mapping of the MealPlan object.
-     * @param mealPlan              the MealPlan object to be added to the db.
-     * @param mealPlanIngredients   the ArrayList of HashMaps that stores
-     *                              the ingredients in the MealPlan object.
-     * @param mealPlanRecipes       the ArrayList of DocumentReferences that
-     *                              stores the recipes in the MealPlan object.
-     * @param listener              the OnAddMealPlanListener object to handle
-     *                              the result.
+     * @param mealPlanMap         the mapping of the MealPlan object.
+     * @param mealPlan            the MealPlan object to be added to the db.
+     * @param mealPlanIngredients the ArrayList of HashMaps that stores
+     *                            the ingredients in the MealPlan object.
+     * @param mealPlanRecipes     the ArrayList of DocumentReferences that
+     *                            stores the recipes in the MealPlan object.
+     * @param listener            the OnAddMealPlanListener object to handle
+     *                            the result.
      */
     public void addMealPlanHelper(HashMap<String, Object> mealPlanMap,
                                   MealPlan mealPlan,
@@ -444,12 +444,12 @@ public class MealPlanDB {
     /**
      * Helper function for getMealPlan.
      *
-     * @param mealPlan the MealPlan object to be returned.
+     * @param mealPlan    the MealPlan object to be returned.
      * @param ingredients the ArrayList of ingredients to be added to the
      *                    MealPlan object.
-     * @param recipes the ArrayList of recipes to be added to the MealPlan
-     *                object.
-     * @param listener the OnGetMealPlanListener object to handle the result.
+     * @param recipes     the ArrayList of recipes to be added to the MealPlan
+     *                    object.
+     * @param listener    the OnGetMealPlanListener object to handle the result.
      */
     public void getMealPlanHelper(MealPlan mealPlan,
                                   ArrayList<Ingredient> ingredients,
@@ -494,6 +494,10 @@ public class MealPlanDB {
     public void getMealPlans(OnGetMealPlansListener listener) {
         this.mealPlanCollection.get().addOnSuccessListener(mealPlans -> {
             ArrayList<MealPlan> mealPlanList = new ArrayList<>();
+            if (mealPlans.size() == 0){
+                listener.onGetMealPlansResult(mealPlanList, true);
+                return;
+            }
             for (DocumentSnapshot mealPlanDoc : mealPlans) {
                 getMealPlan(mealPlanDoc, (foundMealPlan, success) -> {
                     mealPlanList.add(foundMealPlan);
@@ -628,10 +632,10 @@ public class MealPlanDB {
     /**
      * Given the MealPlan object, updates it in the db.
      *
-     * @param mealPlan the MealPlan object to be updated.
-     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlan            the MealPlan object to be updated.
+     * @param listener            the OnUpdateMealPlanListener object to handle the result.
      * @param mealPlanIngredients the ArrayList of Ingredient objects to be updated.
-     * @param mealPlanRecipes the ArrayList of Recipe objects to be updated.
+     * @param mealPlanRecipes     the ArrayList of Recipe objects to be updated.
      */
     public void updateMealPlanHelper(MealPlan mealPlan,
                                      OnUpdateMealPlanListener listener,
