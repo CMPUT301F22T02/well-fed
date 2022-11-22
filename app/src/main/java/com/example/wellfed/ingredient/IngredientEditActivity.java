@@ -84,7 +84,9 @@ public class IngredientEditActivity extends EditActivityBase
             descriptionInput.setPlaceholderText(ingredient.getDescription());
             amountInput.setPlaceholderText(String.valueOf(ingredient.getAmount()));
             unitInput.setPlaceholderText(ingredient.getUnit());
-            locationInput.setPlaceholderText(ingredient.getLocation());
+            if (ingredient.getLocation() != null) {
+                locationInput.setPlaceholderText(ingredient.getLocation());
+            }
             if (ingredient.getCategory() != null) {
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
