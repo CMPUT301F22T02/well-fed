@@ -6,6 +6,7 @@ import com.example.wellfed.common.UTCDate;
 import com.example.wellfed.shoppingcart.ShoppingCartIngredient;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * An Ingredient represented in a user's storage, with added amount, unit, location, and best before.
@@ -221,7 +222,7 @@ public class StorageIngredient extends Ingredient implements Comparable<StorageI
         flags.add(Objects.equals(this.getCategory(), ((StorageIngredient) o).getCategory()));
         flags.add(Objects.equals(this.getUnit(), ((StorageIngredient) o).getUnit()));
         flags.add(Objects.equals(this.getAmount(), ((StorageIngredient) o).getAmount()));
-        flags.add(Objects.equals(this.getBestBefore(), ((StorageIngredient) o).getBestBefore()));
+        flags.add(Objects.equals(this.getBestBeforeDate(), ((StorageIngredient) o).getBestBeforeDate()));
         flags.add(Objects.equals(this.getStorageId(), ((StorageIngredient) o).getStorageId()));
         flags.add(Objects.equals(this.getAmountAndUnit(), ((StorageIngredient) o).getAmountAndUnit()));
 

@@ -22,33 +22,19 @@ import java.util.ArrayList;
 
 // This class is used to display the list of ingredients in the shopping cart
 public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
-    /**
-     * DB for the shopping cart
-     */
-    private final ShoppingCartDB db;
-    /**
-     * Listener for an item click in the RecyclerView
-     */
-    private OnItemClickListener listener;
 
     /**
      * Constructor for the adapter
      */
     public ShoppingCartIngredientAdapter(ShoppingCartDB db) {
         super(db.getQuery());
-        this.db = db;
-
     }
 
     public interface OnItemClickListener {
         void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
-    /**
+      /**
      * ViewHolder class for the ShoppingCartIngredientAdapter.
      * It contains the TextViews for the description, amount,
      * unit and category of the ingredient.
@@ -92,16 +78,7 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        db.getShoppingCart((mealCart, success) -> {
-            if (success) {
-                ShoppingCartIngredient ingredient = mealCart.getIngredient(position);
-                holder.description.setText(ingredient.getDescription());
-                String subtext = ingredient.getAmount() + " " + ingredient.getUnit() + " " +
-                    ingredient.getCategory();
-                holder.subtext.setText(subtext);
-                holder.checkBox.setChecked(ingredient.isPickedUp());
-            }
-        });
+        getSnapshot(position);
     }
 
     /**

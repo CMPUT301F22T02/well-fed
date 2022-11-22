@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.common.DBConnection;
+import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.StorageIngredient;
 
 import java.util.ArrayList;
@@ -50,7 +51,16 @@ public class ShoppingCartIngredientController {
         return adapter;
     }
 
-    /**
+    public void generateShoppingCart(){
+        Ingredient ingredient = new Ingredient();
+        ingredient.setDescription("test");
+        ingredient.setUnit("lb");
+        ingredient.setAmount(2.0);
+        ingredient.setCategory("fruit");
+        db.addIngredient(ingredient, (a,s)->{
+
+        });
+    }    /**
      * Adds the ingredient to the shopping cart.
      * @param ingredient the ingredient to add
      */

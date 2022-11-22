@@ -68,7 +68,7 @@ public class IngredientActivity extends ActivityBase
         // Set ingredient best before with id=ingredient_best_before_date_value
         TextView ingredientBestBefore =
                 findViewById(R.id.ingredient_best_before_date_value);
-        UTCDate bestBefore = UTCDate.from(ingredient.getBestBefore());
+        UTCDate bestBefore = UTCDate.from(ingredient.getBestBeforeDate());
         ingredientBestBefore.setText(bestBefore.format("yyyy-MM-dd"));
 
         // Set ingredient quantity with id=ingredient_quantity_value

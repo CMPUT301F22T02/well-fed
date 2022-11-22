@@ -153,7 +153,7 @@ public class StorageIngredientDB {
 		storageIngredientMap.put("category",
 				storageIngredient.getCategory());
 		storageIngredientMap.put("description", storageIngredient.getDescription());
-		storageIngredientMap.put("best-before", storageIngredient.getBestBefore());
+		storageIngredientMap.put("best-before", storageIngredient.getBestBeforeDate());
 		storageIngredientMap.put("location", storageIngredient.getLocation());
 		storageIngredientMap.put("amount", storageIngredient.getAmount());
 		storageIngredientMap.put("unit", storageIngredient.getUnit());
@@ -215,7 +215,7 @@ public class StorageIngredientDB {
 		batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
 		batch.update(storageIngredientRef, "amount", storageIngredient.getAmount());
 		batch.update(storageIngredientRef, "location", storageIngredient.getLocation());
-		batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBefore());
+		batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBeforeDate());
 		batch.update(storageIngredientRef, "Ingredient", ingredientDB.getDocumentReference(ingredient));
 
 		batch.commit().addOnCompleteListener(task -> {

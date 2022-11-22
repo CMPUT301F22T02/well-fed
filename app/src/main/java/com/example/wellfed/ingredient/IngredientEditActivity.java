@@ -91,9 +91,9 @@ public class IngredientEditActivity extends EditActivityBase
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
             // Set date in yyyy-MM-dd format
-            if (ingredient.getBestBefore() != null) {
+            if (ingredient.getBestBeforeDate() != null) {
                 // Get date in UTC
-                UTCDate date = UTCDate.from(ingredient.getBestBefore());
+                UTCDate date = UTCDate.from(ingredient.getBestBeforeDate());
                 bestBeforeInput.setDate(date);
                 bestBeforeInput.setPlaceholderText(date.format("yyyy-MM-dd"));
             }
