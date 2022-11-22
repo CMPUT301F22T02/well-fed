@@ -64,7 +64,61 @@ public class MealPlanInstrumentedTest {
     }
 
     private void addRecipe(String title){
+        onView(withId(R.id.recipe_book_item)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
 
+        onView(withId(R.id.edit_recipe_title)).perform(typeText(title));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("10"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("A hearty breakfast meal"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.addButton)).perform(click());
+
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Eggs"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Protein"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(click());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        onView(withId(R.id.addButton)).perform(click());
+
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Bacon"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Protein"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(click());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("75"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("g"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        onView(withId(R.id.meal_book_item)).perform(click());
     }
 
     private void cleanUpIngredients(){
