@@ -11,8 +11,10 @@ import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
+import com.example.wellfed.common.UTCDate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -90,7 +92,10 @@ public class IngredientEditActivity extends EditActivityBase
             }
             // Set date in yyyy-MM-dd format
             if (ingredient.getBestBefore() != null) {
-                bestBeforeInput.setPlaceholderText(ingredient.getBestBefore().toString());
+                // Get date in UTC
+                UTCDate date = UTCDate.from(ingredient.getBestBefore());
+                bestBeforeInput.setDate(date);
+                bestBeforeInput.setPlaceholderText(date.format("yyyy-MM-dd"));
             }
         }
 
