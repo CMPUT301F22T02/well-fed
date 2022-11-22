@@ -60,9 +60,6 @@ public class StorageIngredientAdapter
 			});
 	}
 
-	protected void sortString(Query query) {
-		changeQuery(query);
-	}
 
 	public void setOnItemClickListener(OnItemClickListener listener) {
 		this.listener = listener;

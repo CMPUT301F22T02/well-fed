@@ -16,6 +16,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -136,6 +137,7 @@ public class IngredientDB {
         Map<String, Object> item = new HashMap<>();
         item.put("category", ingredient.getCategory());
         item.put("description", ingredient.getDescription());
+        item.put("search-field", ingredient.getDescription().toLowerCase());
         batch.set(ingredientRef, item);
 
         batch.commit().addOnCompleteListener(task -> {
@@ -339,7 +341,7 @@ public class IngredientDB {
         return collection;
     }
 
-    public Query getQuery(String field, boolean ascending){
+    public Query getSortQuery(String field, boolean ascending){
         return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);
     }
 
