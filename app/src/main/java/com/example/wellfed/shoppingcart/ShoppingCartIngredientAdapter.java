@@ -37,8 +37,9 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
 
     /**
      * Constructor for the IngredientAdapter.
+     *
      * @param shoppingCartIngredients ArrayList of ShoppingCartIngredient objects for the adapter.
-     * @param shoppingCartFragment ShoppingCartFragment object for the adapter.
+     * @param shoppingCartFragment    ShoppingCartFragment object for the adapter.
      */
     public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> shoppingCartIngredients,
                                          ShoppingCartFragment shoppingCartFragment) {
@@ -67,7 +68,8 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
 
     /**
      * onCreateViewHolder method for the ShoppingCartIngredientAdapter.
-     * @param parent ViewGroup for the adapter.
+     *
+     * @param parent   ViewGroup for the adapter.
      * @param viewType int for the adapter.
      * @return ViewHolder object for the adapter.
      */
@@ -85,7 +87,8 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
 
     /**
      * onBindViewHolder method for the ShoppingCartIngredientAdapter.
-     * @param holder ViewHolder object for the adapter.
+     *
+     * @param holder   ViewHolder object for the adapter.
      * @param position int for the adapter.
      */
     @Override
@@ -115,13 +118,20 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         holder.subtext.setText(String.valueOf(ingredient.getAmount()) + " " +
                 ingredient.getUnit() + " | " + ingredient.getCategory());
 
-        holder.itemView.setOnClickListener(view -> context.onClick(ingredient));
+        holder.itemView.setOnClickListener(view -> {
+            if (checkBox.isChecked()) {
+                context.onClick(ingredient);
+            }
+        });
     }
 
     /**
      * getItemCount method for the ShoppingCartIngredientAdapter.
+     *
      * @return int for the adapter.
      */
     @Override
-    public int getItemCount() {return shoppingCartIngredients.size();}
+    public int getItemCount() {
+        return shoppingCartIngredients.size();
+    }
 }
