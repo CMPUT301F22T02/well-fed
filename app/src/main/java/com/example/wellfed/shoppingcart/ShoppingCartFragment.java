@@ -52,7 +52,7 @@ public class ShoppingCartFragment extends Fragment implements
                              @Nullable Bundle savedInstanceState) {
         controller =
                 new ShoppingCartIngredientController(requireActivity());
-        controller.generateShoppingCart();
+
         adapter = controller.getAdapter();
         return inflater.inflate(R.layout.fragment_shopping_cart, container, false);
     }
@@ -66,6 +66,7 @@ public class ShoppingCartFragment extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        controller.generateShoppingCart();
         recyclerView = view.findViewById(R.id.shopping_cart_list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

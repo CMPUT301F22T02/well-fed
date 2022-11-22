@@ -37,6 +37,7 @@ public class ShoppingCartIngredientController {
 
     /**
      * Sets adapter to the given adapter.
+     *
      * @param adapter the adapter to set
      */
     public void setAdapter(ShoppingCartIngredientAdapter adapter) {
@@ -45,23 +46,27 @@ public class ShoppingCartIngredientController {
 
     /**
      * Gets the adapter.
+     *
      * @return the adapter
      */
     public ShoppingCartIngredientAdapter getAdapter() {
         return adapter;
     }
 
-    public void generateShoppingCart(){
+    public void generateShoppingCart() {
         Ingredient ingredient = new Ingredient();
         ingredient.setDescription("test");
         ingredient.setUnit("lb");
         ingredient.setAmount(2.0);
         ingredient.setCategory("fruit");
-        db.addIngredient(ingredient, (a,s)->{
-
+        db.addIngredient(ingredient, (a, s) -> {
+            s = false;
         });
-    }    /**
+    }
+
+    /**
      * Adds the ingredient to the shopping cart.
+     *
      * @param ingredient the ingredient to add
      */
     public void addIngredientToShoppingCart(ShoppingCartIngredient ingredient) {
@@ -73,6 +78,7 @@ public class ShoppingCartIngredientController {
             }
         });
     }
+
     /**
      * Deletes the ingredient from the shopping cart.
      *
@@ -87,6 +93,7 @@ public class ShoppingCartIngredientController {
             }
         });
     }
+
     /**
      * Updates the ingredient in the shopping cart.
      *

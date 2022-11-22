@@ -94,36 +94,41 @@ public class ShoppingCartDB {
                         listener.onAddShoppingCart(null, false);
                     }
                     ingredient.setId(addedIngredient.getId());
-                    ShoppingCartIngredient shoppingCartIngredient = new ShoppingCartIngredient(ingredient.getDescription());
-                    shoppingCartIngredient.setCategory(ingredient.getCategory());
-                    shoppingCartIngredient.setAmount(ingredient.getAmount());
-                    shoppingCartIngredient.setUnit(ingredient.getUnit());
-
-
-                    shoppingCartIngredient.setComplete(false);
-                    shoppingCartIngredient.setPickedUp(false);
-
-                    HashMap<String, Object> storageIngredientMap = new HashMap<>();
-                    storageIngredientMap.put("id", ingredient.getId());
-                    storageIngredientMap.put("description", ingredient.getDescription());
-                    storageIngredientMap.put("amount", ingredient.getAmount());
-                    storageIngredientMap.put("unit", ingredient.getUnit());
-                    storageIngredientMap.put("category", ingredient.getCategory());
-                    storageIngredientMap.put("picked", false);
-                    storageIngredientMap.put("complete", false);
-                    storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient.getId()));
-
-                    collection.add(storageIngredientMap).addOnCompleteListener(task -> {
-                        if (!task.isSuccessful()) {
-                            listener.onAddShoppingCart(null, false);
-                        }
-                        listener.onAddShoppingCart(shoppingCartIngredient, true);
-                    });
+                    addShoppingHelper(ingredient, listener);
                 });
             }
+            ingredient.setId(foundIngredient.getId());
+            addShoppingHelper(ingredient,listener);
         });
 
 
+    }
+
+    public void addShoppingHelper(Ingredient ingredient, OnAddShoppingCart listener) {
+        ShoppingCartIngredient shoppingCartIngredient = new ShoppingCartIngredient(ingredient.getDescription());
+        shoppingCartIngredient.setCategory(ingredient.getCategory());
+        shoppingCartIngredient.setAmount(ingredient.getAmount());
+        shoppingCartIngredient.setUnit(ingredient.getUnit());
+
+        shoppingCartIngredient.setComplete(false);
+        shoppingCartIngredient.setPickedUp(false);
+
+        HashMap<String, Object> storageIngredientMap = new HashMap<>();
+        storageIngredientMap.put("id", ingredient.getId());
+        storageIngredientMap.put("description", ingredient.getDescription());
+        storageIngredientMap.put("amount", ingredient.getAmount());
+        storageIngredientMap.put("unit", ingredient.getUnit());
+        storageIngredientMap.put("category", ingredient.getCategory());
+        storageIngredientMap.put("picked", false);
+        storageIngredientMap.put("complete", false);
+        storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient.getId()));
+
+        collection.add(storageIngredientMap).addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                listener.onAddShoppingCart(null, false);
+            }
+            listener.onAddShoppingCart(shoppingCartIngredient, true);
+        });
     }
 
     /**
@@ -144,11 +149,7 @@ public class ShoppingCartDB {
      */
     public void deleteIngredient(ShoppingCartIngredient ingredient,
                                  OnRemoveShoppingCart listener) {
-        if (ingredient == null) {
-            listener.onRemoveShoppingCart(null, false);
-            return;
-        }
-        if (ingredient.getId() == null) {
+        if (ingredient == null || ingredient.getId() == null) {
             listener.onRemoveShoppingCart(null, false);
             return;
         }
