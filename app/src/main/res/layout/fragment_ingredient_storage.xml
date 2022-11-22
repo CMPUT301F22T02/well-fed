@@ -17,7 +17,6 @@
         android:text="@string/storage"
         android:textSize="38sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/text_input_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -30,65 +29,40 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_input_layout"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_search_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
         tools:layout="@layout/fragment_sort" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="100dp"
         android:layout_marginEnd="30dp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ingredient_storage_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:drawablePadding="8dp"
-            android:hint="@string/search_for_ingredients"
-            android:inputType="text" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Cross icon to clear the search, put it inside the search bar to the end -->
+        app:layout_constraintTop_toBottomOf="@id/ingredient_storage_title"
+        android:name="com.example.wellfed.common.SearchFragment"
+        tools:layout="@layout/fragment_search"/>
 
 
-    <ImageView
-        android:id="@+id/clear_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginStart="-40dp"
-        android:layout_marginTop="45dp"
-        android:src="@drawable/ic_baseline_close_24"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/text_input_layout"
-        app:layout_constraintTop_toBottomOf="@+id/ingredient_storage_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ingredient_storage_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="170dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="80dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_layout"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_search_container"
         app:layout_constraintVertical_bias="1.0" />
 
 

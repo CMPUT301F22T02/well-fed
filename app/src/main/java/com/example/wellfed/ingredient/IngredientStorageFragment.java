@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
+import com.example.wellfed.common.SearchFragment;
 import com.example.wellfed.common.SortingFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -150,34 +151,11 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
                 .commit();
 
 
-        // Search bar
-        TextInputEditText searchBar = view.findViewById(R.id.ingredient_storage_search);
-        // Clear search bar
-        crossIcon = view.findViewById(R.id.clear_search);
-        crossIcon.setOnClickListener(v -> searchBar.setText(""));
-
-        // On search bar text change show "Functionality not implemented yet"
-        // message
-        searchBar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 0) {
-                    crossIcon.setVisibility(View.VISIBLE);
-                } else {
-                    crossIcon.setVisibility(View.INVISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                controller.getSearchResults(s.toString());
-            }
-        });
+        SearchFragment searchFragment = new SearchFragment();
+        searchFragment.setOnTextChange(s->{controller.getSearchResults(s);});
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_search_container, searchFragment)
+                .commit();
     }
 
     /**

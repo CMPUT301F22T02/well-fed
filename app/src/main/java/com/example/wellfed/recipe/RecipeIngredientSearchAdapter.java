@@ -31,7 +31,7 @@ public class RecipeIngredientSearchAdapter extends DBAdapter<RecipeIngredientSea
     }
 
     public void sortByField(String field){
-        changeQuery(db.getQuery(field, true));
+        changeQuery(db.getSortQuery(field, true));
     }
 
     @NonNull
