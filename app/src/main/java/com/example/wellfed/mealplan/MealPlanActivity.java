@@ -19,15 +19,21 @@ import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.TimeZone;
-
+/**
+ * MealPlanActivity class. It is the activity that displays the meal plan. It
+ * is launched by the meal plan fragment.
+ */
 public class MealPlanActivity extends ActivityBase
         implements ConfirmDialog.OnConfirmListener,
                    MealPlanItemAdapter.OnItemClickListener<Recipe> {
+    /**
+     * The ARG_MEAL_PLAN constant is the key for the meal plan extra.
+     */
     private static final String ARG_MEAL_PLAN = "mealPlan";
+    /**
+     * The ActivityResultLauncher for the recipe activity to launch the
+     * recipe so that the user can edit the recipes in the meal plan.
+     */
     private final ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanEditContract(), result -> {
                 String type = result.first;
@@ -43,15 +49,16 @@ public class MealPlanActivity extends ActivityBase
                         break;
                 }
             });
-    private DateUtil dateUtil;
-    private TextView mealPlanTitleTextView;
-    private TextView mealPlanDateTextView;
-    private TextView mealPLanCategoryTextView;
-    private TextView mealPlanNumberOfServingsTextView;
-    private DeleteButton deleteButton;
-    private FloatingActionButton fab;
+    /**
+     * The meal plan object.
+     */
     private MealPlan mealPlan;
 
+    /**
+     * OnCreate method. It is called when the activity is created. It sets up
+     * the activity and displays the meal plan.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
@@ -59,19 +66,21 @@ public class MealPlanActivity extends ActivityBase
 
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
 
-        mealPlanTitleTextView = findViewById(R.id.mealPlanTitleTextView);
-        mealPLanCategoryTextView = findViewById(R.id.mealPlanCategoryTextView);
-        mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
-        mealPlanNumberOfServingsTextView =
-                findViewById(R.id.mealPlanNumberOfServingsTextView);
+        TextView mealPlanTitleTextView = findViewById(R.id.mealPlanTitleTextView);
+        TextView mealPLanCategoryTextView = findViewById(R.id.mealPlanCategoryTextView);
+        TextView mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
+        TextView mealPlanNumberOfServingsTextView = findViewById(R.id.mealPlanNumberOfServingsTextView);
 
         mealPlanTitleTextView.setText(mealPlan.getTitle());
-        dateUtil = new DateUtil();
-        mealPlanDateTextView.setText(
-                "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd"));
-        mealPLanCategoryTextView.setText("Category: " + mealPlan.getCategory());
-        mealPlanNumberOfServingsTextView.setText(
-                "Number of servings: " + mealPlan.getServings());
+        DateUtil dateUtil = new DateUtil();
+        String mealPlanDateText =
+            "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd");
+        mealPlanDateTextView.setText(mealPlanDateText);
+        String mealPlanCategoryText = "Category: " + mealPlan.getCategory();
+        mealPLanCategoryTextView.setText(mealPlanCategoryText);
+        String mealPlanNumberOfServingsText =
+            "Number of servings: " + mealPlan.getServings();
+        mealPlanNumberOfServingsTextView.setText(mealPlanNumberOfServingsText);
 
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
         MealPlanRecipeItemAdapter recipeAdapter =
@@ -89,13 +98,17 @@ public class MealPlanActivity extends ActivityBase
         ingredientRecyclerView.setAdapter(ingredientAdapter);
         ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
-                "Delete Meal Plan", this);
+        DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
+            "Delete Meal Plan", this);
 
-        fab = findViewById(R.id.save_fab);
+        FloatingActionButton fab = findViewById(R.id.save_fab);
         fab.setOnClickListener(view -> launcher.launch(mealPlan));
     }
 
+    /**
+     * OnConfirm method. It is called when the user confirms the delete of
+     * the meal plan.
+     */
     public void onConfirm() {
         Intent intent = new Intent();
         intent.putExtra("type", "delete");
@@ -104,6 +117,11 @@ public class MealPlanActivity extends ActivityBase
         finish();
     }
 
+    /**
+     * onEdit method. It is called when the user edits the meal plan. It
+     * confirms the edit and returns the meal plan to the meal plan fragment.
+     * @param mealPlan The meal plan.
+     */
     private void onEdit(MealPlan mealPlan) {
         Intent intent = new Intent();
         intent.putExtra("type", "edit");
@@ -112,6 +130,10 @@ public class MealPlanActivity extends ActivityBase
         finish();
     }
 
+    /**
+     * onQuitEdit method. It is called when the user quits the edit of the
+     * meal plan edit activity. It does nothing.
+     */
     private void onQuitEdit() {
         Intent intent = new Intent();
         intent.putExtra("type", "launch");
@@ -119,6 +141,12 @@ public class MealPlanActivity extends ActivityBase
         finish();
     }
 
+    /**
+     * OnItemClick method. It is called when the user clicks on a recipe in
+     * the meal plan. It launches the recipe activity so that the user can
+     * edit the recipe.
+     * @param recipe The recipe that was clicked.
+     */
     @Override public void onItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeActivity.class);
         intent.putExtra("item", recipe);
