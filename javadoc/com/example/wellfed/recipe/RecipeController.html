@@ -153,9 +153,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.content.Context)">RecipeController</a></span>&#8203;(android.content.Context&nbsp;context)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(androidx.fragment.app.FragmentActivity)">RecipeController</a></span>&#8203;(androidx.fragment.app.FragmentActivity&nbsp;activity)</code></th>
 <td class="colLast">
-<div class="block">Constructor that initializes the db</div>
+<div class="block">Constructor that initializes the db connection and the adapter for the recipes</div>
 </td>
 </tr>
 </table>
@@ -180,35 +180,35 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipe(com.example.wellfed.recipe.Recipe)">addRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
 <td class="colLast">
-<div class="block">adds the recipe to db and notifies the adapter</div>
+<div class="block">Adds the recipe to db and notifies the adapter</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteRecipe(java.lang.String)">deleteRecipe</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
-<div class="block">handles the logic for deleting the recipe</div>
+<div class="block">Requests the database to delete a Recipe and handles the result</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipes()">getRecipes</a></span>()</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editRecipe(com.example.wellfed.recipe.Recipe)">editRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
 <td class="colLast">
-<div class="block">gets the list of recipes from the db</div>
+<div class="block">Requests the database to edit a Recipe and handles the result</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecipeAdapter(com.example.wellfed.recipe.RecipeAdapter)">setRecipeAdapter</a></span>&#8203;(<a href="RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a>&nbsp;recipeAdapter)</code></th>
+<td class="colFirst"><code><a href="RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipeAdapter()">getRecipeAdapter</a></span>()</code></th>
 <td class="colLast">
-<div class="block">sets the recipeAdapter</div>
+<div class="block">Gets the RecipeAdapter that connects the list of Recipes to the DB</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecipes(java.util.ArrayList)">setRecipes</a></span>&#8203;(java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sort(java.lang.String)">sort</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
-<div class="block">set the recipes</div>
+<div class="block">Gets the sorted query of recipes.</div>
 </td>
 </tr>
 </table>
@@ -235,14 +235,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(android.content.Context)">
+<a id="&lt;init&gt;(androidx.fragment.app.FragmentActivity)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RecipeController</h4>
-<pre>public&nbsp;RecipeController&#8203;(android.content.Context&nbsp;context)</pre>
-<div class="block">Constructor that initializes the db</div>
+<pre>public&nbsp;RecipeController&#8203;(androidx.fragment.app.FragmentActivity&nbsp;activity)</pre>
+<div class="block">Constructor that initializes the db connection and the adapter for the recipes</div>
 </li>
 </ul>
 </li>
@@ -255,17 +255,17 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="setRecipeAdapter(com.example.wellfed.recipe.RecipeAdapter)">
+<a id="editRecipe(com.example.wellfed.recipe.Recipe)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setRecipeAdapter</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRecipeAdapter&#8203;(<a href="RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a>&nbsp;recipeAdapter)</pre>
-<div class="block">sets the recipeAdapter</div>
+<h4>editRecipe</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;editRecipe&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</pre>
+<div class="block">Requests the database to edit a Recipe and handles the result</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recipeAdapter</code> - </dd>
+<dd><code>recipe</code> - the recipe to edit in the database</dd>
 </dl>
 </li>
 </ul>
@@ -276,7 +276,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>deleteRecipe</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;deleteRecipe&#8203;(java.lang.String&nbsp;id)</pre>
-<div class="block">handles the logic for deleting the recipe</div>
+<div class="block">Requests the database to delete a Recipe and handles the result</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - of the recipe to delete</dd>
@@ -290,41 +290,38 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>addRecipe</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addRecipe&#8203;(<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</pre>
-<div class="block">adds the recipe to db and notifies the adapter</div>
+<div class="block">Adds the recipe to db and notifies the adapter</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recipe</code> - </dd>
+<dd><code>recipe</code> - the recipe to add</dd>
 </dl>
 </li>
 </ul>
-<a id="getRecipes()">
+<a id="sort(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getRecipes</h4>
-<pre class="methodSignature">public&nbsp;java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;getRecipes()
-                                       throws java.lang.InterruptedException</pre>
-<div class="block">gets the list of recipes from the db</div>
+<h4>sort</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;sort&#8203;(java.lang.String&nbsp;field)</pre>
+<div class="block">Gets the sorted query of recipes.</div>
 <dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>list of recipes</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.InterruptedException</code> - when db fails to execute</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - the field to sort by</dd>
 </dl>
 </li>
 </ul>
-<a id="setRecipes(java.util.ArrayList)">
+<a id="getRecipeAdapter()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>setRecipes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRecipes&#8203;(java.util.ArrayList&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes)</pre>
-<div class="block">set the recipes</div>
+<h4>getRecipeAdapter</h4>
+<pre class="methodSignature">public&nbsp;<a href="RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a>&nbsp;getRecipeAdapter()</pre>
+<div class="block">Gets the RecipeAdapter that connects the list of Recipes to the DB</div>
 <dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recipes</code> - </dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the RecipeAdapter</dd>
 </dl>
 </li>
 </ul>

@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -146,6 +146,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeIngredientSearchAdapter</span>
 extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.common">DBAdapter</a>&lt;<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a>&gt;</pre>
+<div class="block">Adapter that connects the RecyclerView and data for the ingredients
+ in the <a href="RecipeIngredientSearch.html" title="class in com.example.wellfed.recipe"><code>RecipeIngredientSearch</code></a></div>
 </li>
 </ul>
 </div>
@@ -169,12 +171,16 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Interface for listeners that listen for clicks on an ingredient</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>class&nbsp;</code></td>
+<td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Holds the views for the ingredients in the search</div>
+</td>
 </tr>
 </table>
 </li>
@@ -195,7 +201,9 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.example.wellfed.ingredient.IngredientDB)">RecipeIngredientSearchAdapter</a></span>&#8203;(<a href="../ingredient/IngredientDB.html" title="class in com.example.wellfed.ingredient">IngredientDB</a>&nbsp;db)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Creates a new RecipeIngredientSearchAdapter</div>
+</td>
 </tr>
 </table>
 </li>
@@ -217,20 +225,31 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.recipe.RecipeIngredientSearchAdapter.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a>&nbsp;holder,
-                int&nbsp;position)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#changeQuery(java.lang.String)">changeQuery</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.recipe.RecipeIngredientSearchAdapter.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a>&nbsp;holder,
+                int&nbsp;position)</code></th>
+<td class="colLast">
+<div class="block">Bind the data with the views in the RecyclerView</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder</a></span>&#8203;(android.view.ViewGroup&nbsp;parent,
                   int&nbsp;viewType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Inflate the layout of a single View into the parent ViewGroup</div>
+</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setListener(com.example.wellfed.recipe.RecipeIngredientSearchAdapter.OnItemClickListener)">setListener</a></span>&#8203;(<a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sets the on-click listener for the RecyclerView</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -238,7 +257,7 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.common.<a href="../common/DBAdapter.html" title="class in com.example.wellfed.common">DBAdapter</a></h3>
-<code><a href="../common/DBAdapter.html#getItemCount()">getItemCount</a>, <a href="../common/DBAdapter.html#getSnapshot(int)">getSnapshot</a>, <a href="../common/DBAdapter.html#onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">onEvent</a></code></li>
+<code><a href="../common/DBAdapter.html#changeQuery(com.google.firebase.firestore.Query)">changeQuery</a>, <a href="../common/DBAdapter.html#clearSnapshots()">clearSnapshots</a>, <a href="../common/DBAdapter.html#getItemCount()">getItemCount</a>, <a href="../common/DBAdapter.html#getSnapshot(int)">getSnapshot</a>, <a href="../common/DBAdapter.html#getSnapshots()">getSnapshots</a>, <a href="../common/DBAdapter.html#onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">onEvent</a>, <a href="../common/DBAdapter.html#setSnapshots(java.util.List)">setSnapshots</a>, <a href="../common/DBAdapter.html#startListening()">startListening</a>, <a href="../common/DBAdapter.html#stopListening()">stopListening</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.androidx.recyclerview.widget.RecyclerView.Adapter">
@@ -277,6 +296,11 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <li class="blockList">
 <h4>RecipeIngredientSearchAdapter</h4>
 <pre>public&nbsp;RecipeIngredientSearchAdapter&#8203;(<a href="../ingredient/IngredientDB.html" title="class in com.example.wellfed.ingredient">IngredientDB</a>&nbsp;db)</pre>
+<div class="block">Creates a new RecipeIngredientSearchAdapter</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>db</code> - the Ingredient database that the adapter is connected to</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -289,6 +313,15 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="changeQuery(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>changeQuery</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;changeQuery&#8203;(java.lang.String&nbsp;field)</pre>
+</li>
+</ul>
 <a id="onCreateViewHolder(android.view.ViewGroup,int)">
 <!--   -->
 </a>
@@ -299,9 +332,15 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 public&nbsp;<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a>&nbsp;onCreateViewHolder&#8203;(@NonNull
                                                                    android.view.ViewGroup&nbsp;parent,
                                                                    int&nbsp;viewType)</pre>
+<div class="block">Inflate the layout of a single View into the parent ViewGroup</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onCreateViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - the parent ViewGroup to inflate the layout in</dd>
+<dd><code>viewType</code> - an identifier for the view type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the new ViewHolder for a Recipe created</dd>
 </dl>
 </li>
 </ul>
@@ -314,9 +353,13 @@ public&nbsp;<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class
 <pre class="methodSignature">public&nbsp;void&nbsp;onBindViewHolder&#8203;(@NonNull
                              <a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a>&nbsp;holder,
                              int&nbsp;position)</pre>
+<div class="block">Bind the data with the views in the RecyclerView</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onBindViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>holder</code> - the ViewHolder which holds Views to be bound to the recipe</dd>
+<dd><code>position</code> - the position of the View in the ViewHolder to bind the data to</dd>
 </dl>
 </li>
 </ul>
@@ -327,6 +370,11 @@ public&nbsp;<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class
 <li class="blockList">
 <h4>setListener</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setListener&#8203;(<a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>&nbsp;listener)</pre>
+<div class="block">Sets the on-click listener for the RecyclerView</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>listener</code> - the on-click listener that will be notified when an item is clicked</dd>
+</dl>
 </li>
 </ul>
 </li>

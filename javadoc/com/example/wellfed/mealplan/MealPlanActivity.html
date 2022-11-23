@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -176,12 +176,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code>, <code><a href="MealPlanItemAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.mealplan">MealPlanItemAdapter.OnItemClickListener</a>&lt;<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">MealPlanActivity</span>
 extends <a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a>
-implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></pre>
+implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>, <a href="MealPlanItemAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.mealplan">MealPlanItemAdapter.OnItemClickListener</a>&lt;<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</pre>
+<div class="block">MealPlanActivity class. It is the activity that displays the meal plan. It
+ is launched by the meal plan fragment.</div>
 </li>
 </ul>
 </div>
@@ -275,13 +277,22 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onConfirm()">onConfirm</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Handler for when the user confirms.</div>
+<div class="block">OnConfirm method.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">OnCreate method.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onItemClick(com.example.wellfed.recipe.Recipe)">onItemClick</a></span>&#8203;(<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
+<td class="colLast">
+<div class="block">OnItemClick method.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -403,24 +414,46 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <li class="blockList">
 <h4>onCreate</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onCreate&#8203;(android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">OnCreate method. It is called when the activity is created. It sets up
+ the activity and displays the meal plan.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>savedInstanceState</code> - The saved instance state.</dd>
 </dl>
 </li>
 </ul>
 <a id="onConfirm()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onConfirm</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onConfirm()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">ConfirmDialog.OnConfirmListener</a></code></span></div>
-<div class="block">Handler for when the user confirms.</div>
+<div class="block">OnConfirm method. It is called when the user confirms the delete of
+ the meal plan.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code>&nbsp;in interface&nbsp;<code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="onItemClick(com.example.wellfed.recipe.Recipe)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>onItemClick</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onItemClick&#8203;(<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</pre>
+<div class="block">OnItemClick method. It is called when the user clicks on a recipe in
+ the meal plan. It launches the recipe activity so that the user can
+ edit the recipe.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="MealPlanItemAdapter.OnItemClickListener.html#onItemClick(Item)">onItemClick</a></code>&nbsp;in interface&nbsp;<code><a href="MealPlanItemAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.mealplan">MealPlanItemAdapter.OnItemClickListener</a>&lt;<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipe</code> - The recipe that was clicked.</dd>
 </dl>
 </li>
 </ul>

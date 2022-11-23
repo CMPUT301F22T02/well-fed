@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -266,48 +266,69 @@ implements java.io.Serializable</pre>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEqual(java.lang.Object)">isEqual</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">
+<div class="block">Checks whether the meal plan is equal to another meal plan.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeIngredient(com.example.wellfed.ingredient.Ingredient)">removeIngredient</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</code></th>
 <td class="colLast">
 <div class="block">Removes an Ingredient from the MealPlan object.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeRecipe(com.example.wellfed.recipe.Recipe)">removeRecipe</a></span>&#8203;(<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
 <td class="colLast">
 <div class="block">Removes a Recipe from the MealPlan object.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCategory(java.lang.String)">setCategory</a></span>&#8203;(java.lang.String&nbsp;category)</code></th>
 <td class="colLast">
 <div class="block">Sets the category of a MealPlan object.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEatDate(java.util.Date)">setEatDate</a></span>&#8203;(java.util.Date&nbsp;eatDate)</code></th>
 <td class="colLast">
 <div class="block">Sets the eat date that a MealPlan is to be eaten on</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(java.lang.String)">setId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Sets the id of a MealPlan</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIngredients(java.util.ArrayList)">setIngredients</a></span>&#8203;(java.util.ArrayList&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;ingredients)</code></th>
+<td class="colLast">
+<div class="block">Sets the entire ArrayList of Ingredients in the MealPlan object.</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecipes(java.util.ArrayList)">setRecipes</a></span>&#8203;(java.util.ArrayList&lt;<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes)</code></th>
+<td class="colLast">
+<div class="block">Sets the entire ArrayList of Recipes in the MealPlan object.</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setServings(java.lang.Integer)">setServings</a></span>&#8203;(java.lang.Integer&nbsp;servings)</code></th>
 <td class="colLast">
 <div class="block">Sets the number of servings in a MealPlan</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTitle(java.lang.String)">setTitle</a></span>&#8203;(java.lang.String&nbsp;title)</code></th>
 <td class="colLast">
@@ -421,6 +442,16 @@ implements java.io.Serializable</pre>
 </dl>
 </li>
 </ul>
+<a id="setIngredients(java.util.ArrayList)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setIngredients</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setIngredients&#8203;(java.util.ArrayList&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;&nbsp;ingredients)</pre>
+<div class="block">Sets the entire ArrayList of Ingredients in the MealPlan object.</div>
+</li>
+</ul>
 <a id="addRecipe(com.example.wellfed.recipe.Recipe)">
 <!--   -->
 </a>
@@ -477,6 +508,16 @@ implements java.io.Serializable</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The ArrayList containing all Recipes within a MealPlan.</dd>
 </dl>
+</li>
+</ul>
+<a id="setRecipes(java.util.ArrayList)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRecipes</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRecipes&#8203;(java.util.ArrayList&lt;<a href="../recipe/Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;recipes)</pre>
+<div class="block">Sets the entire ArrayList of Recipes in the MealPlan object.</div>
 </li>
 </ul>
 <a id="getTitle()">
@@ -612,7 +653,7 @@ public&nbsp;java.util.Date&nbsp;getEatDate()</pre>
 <a id="getId()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getId()</pre>
@@ -620,6 +661,23 @@ public&nbsp;java.util.Date&nbsp;getEatDate()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A string representing the id of the document in the db</dd>
+</dl>
+</li>
+</ul>
+<a id="isEqual(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isEqual</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isEqual&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="block">Checks whether the meal plan is equal to another meal plan.
+ Note: Any order of ingredients/recipes is accepted.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>o</code> - the object to check equality with</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the objects are equal, false otherwise</dd>
 </dl>
 </li>
 </ul>
