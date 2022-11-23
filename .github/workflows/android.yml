@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: set up JDK 11
+    - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         java-version: '11'
@@ -23,7 +23,7 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Test with Gradle
+    - name: Run unit tests
       run: ./gradlew test
 
     - name: Build with Gradle
@@ -32,7 +32,6 @@ jobs:
   #https://github.com/actions/runner-images/issues/6152#issuecomment-1243718140
   intent_test:
     runs-on: macos-12
-    timeout-minutes: 30
     steps:
      - name: Checkout
        uses: actions/checkout@v3
@@ -50,7 +49,7 @@ jobs:
         key: avd
 
      - name: Cache AVD
-      #  if: steps.avd-cache.outputs.cache-hit != 'true'
+       if: steps.avd-cache.outputs.cache-hit != 'true'
        run: |
           # Install AVD files
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;default;x86_64'
@@ -82,14 +81,14 @@ jobs:
           cat "$emulator_config"
           fi
 
-     - name: set up JDK 11
+     - name: Set up JDK 11
        uses: actions/setup-java@v3
        with:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
 
-     - name: Run Tests
+     - name: Boot Emulator
        run: |
           echo "Starting emulator and waiting for boot to complete...."
           ls -la $ANDROID_HOME/emulator
@@ -97,4 +96,9 @@ jobs:
           $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do echo "wait..."; sleep 1; done; input keyevent 82'
           echo "Emulator has finished booting"
           $ANDROID_HOME/platform-tools/adb devices
+
+     - name: Run Intent Tests
+       run: |
+          chmod +x gradlew
+          ./gradlew build --parallel
           ./gradlew connectedCheck
