@@ -72,4 +72,9 @@ public class ShoppingCartFragment extends Fragment implements
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        controller.generateShoppingCart();
+    }
 }

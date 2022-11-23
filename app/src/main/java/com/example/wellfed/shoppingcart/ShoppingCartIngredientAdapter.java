@@ -80,7 +80,8 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DocumentSnapshot doc = getSnapshot(position);
         holder.description.setText(doc.getString("description"));
-        holder.subtext.setText(doc.getString("category"));
+        String amount = Double.toString((Double) doc.getData().get("amount"));
+        holder.subtext.setText( amount + " " + doc.getString("unit") + " | "  + doc.getString("category"));
         holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));
 //                storageIngredientMap.put("id", ingredient.getId());
 //        storageIngredientMap.put("description", ingredient.getDescription());

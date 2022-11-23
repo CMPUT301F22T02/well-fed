@@ -175,22 +175,22 @@ public class ShoppingCartDB {
             return;
         }
 
-        HashMap<String, Object> storageIngredientMap = new HashMap<>();
-        storageIngredientMap.put("id", ingredient.getId());
-        storageIngredientMap.put("description", ingredient.getDescription());
-        storageIngredientMap.put("amount", ingredient.getAmount());
-        storageIngredientMap.put("unit", ingredient.getUnit());
-        storageIngredientMap.put("category", ingredient.getCategory());
-        storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient));
-        storageIngredientMap.put("picked", ingredient.isPickedUp());
-        storageIngredientMap.put("complete", ingredient.isComplete());
-        collection.document(ingredient.getId()).set(storageIngredientMap).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                listener.onAddShoppingCart(ingredient, true);
-            } else {
-                listener.onAddShoppingCart(null, false);
-            }
+        DocumentReference doc = collection.document(ingredient.getId());
+        doc.update(
+                "id", ingredient.getId(),
+                "description", ingredient.getDescription(),
+                "amount", ingredient.getAmount(),
+                "unit", ingredient.getUnit(),
+                "category", ingredient.getCategory(),
+                "Ingredient", ingredientDB.getDocumentReference(ingredient),
+                "picked", ingredient.isPickedUp,
+                "complete", ingredient.isComplete
+        ).addOnSuccessListener(success->{
+            listener.onAddShoppingCart(ingredient, true);
+        }).addOnFailureListener(failure->{
+            listener.onAddShoppingCart(null, false);
         });
+
     }
 
     /**

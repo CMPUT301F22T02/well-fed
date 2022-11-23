@@ -121,14 +121,19 @@ public class ShoppingCartIngredientController {
                             ShoppingCartIngredient cartItem = cart.get(inCart.get(key));
                             cartItem.setUnit(unit);
                             cartItem.setAmount(needed.get(key));
-                            db.updateIngredient(cartItem, (a,s)->{});
+                            db.updateIngredient(cartItem, (a,s)->{
+                                s = false;
+                            });
                         } else { // else create those items
                             String [] details = key.split("####");
                             String unit = details[2];
                             Ingredient ingredient = new Ingredient(details[0]);
                             ingredient.setUnit(unit);
                             ingredient.setCategory(details[1]);
-                            db.addIngredient(ingredient, (a,s)->{});
+                            ingredient.setAmount(needed.get(key));
+                            db.addIngredient(ingredient, (a,s)->{
+                                s = false;
+                            });
                         }
 
                     }
