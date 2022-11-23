@@ -29,7 +29,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build --parallel
 
-  # https://gist.github.com/mrk-han/a0a11ed9bed966bb8b775ff55f2a87e9
+  #https://github.com/actions/runner-images/issues/6152#issuecomment-1243718140
   intent_test:
     runs-on: macos-12
     timeout-minutes: 30
@@ -59,48 +59,43 @@ jobs:
 
      - name: Cache AVD
        if: steps.avd-cache.outputs.cache-hit != 'true'
-       uses: reactivecircus/android-emulator-runner@v2
-       with:
-         api-level: 28
-         force-avd-creation: false
-         emulator-options: -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -partition-size 2048 -qemu -m 2048
-         disable-animations: false
-         avd-name: API_28_AOSP_ATD
-         script: |
-            echo 'create emulator and alter config.ini settings for caching'
-            # Create emulator
-            $ANDROID_HOME/emulator/emulator -list-avds
-            $ANDROID_HOME/emulator/emulator -accel-check 2>&1 | tee "$GITHUB_WORKSPACE"/haxm-check-"$GITHUB_RUN_NUMBER".txt
-            if false; then
-            emulator_config=~/.android/avd/API_28_AOSP_ATD.avd/config.ini
-            # The following madness is to support empty OR populated config.ini files,
-            # the state of which is dependant on the version of the emulator used (which we don't control),
-            # so let's be defensive to be safe.
-            # Replace existing config (NOTE we're on MacOS so sed works differently!)
-            sed -i .bak 's/hw.lcd.density=.*/hw.lcd.density=420/' "$emulator_config"
-            sed -i .bak 's/hw.lcd.height=.*/hw.lcd.height=1920/' "$emulator_config"
-            sed -i .bak 's/hw.lcd.width=.*/hw.lcd.width=1080/' "$emulator_config"
-            # Or, add new config
-            if ! grep -q "hw.lcd.density" "$emulator_config"; then
-              echo "hw.lcd.density=420" >> "$emulator_config"
-            fi
-            if ! grep -q "hw.lcd.height" "$emulator_config"; then
-              echo "hw.lcd.height=1920" >> "$emulator_config"
-            fi
-            if ! grep -q "hw.lcd.width" "$emulator_config"; then
-              echo "hw.lcd.width=1080" >> "$emulator_config"
-            fi
-            echo "Emulator settings ($emulator_config)"
-            cat "$emulator_config"
-            fi
-            # Optionally enable skia rendering https://developer.android.com/studio/run/emulator-acceleration#skia-emulator
-            $ANDROID_HOME/platform-tools/adb shell 'su;setprop debug.hwui.renderer skiagl;stop;start'
+       run: |
+          # Install AVD files
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;default;x86_64'
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+
+          # Create emulator
+          $ANDROID_HOME/tools/bin/avdmanager create avd -n Pixel_API_29_AOSP -d pixel --package 'system-images;android-27;default;x86_64'
+          $ANDROID_HOME/emulator/emulator -list-avds
+          if false; then
+          emulator_config=~/.android/avd/Pixel_API_29_AOSP.avd/config.ini
+          # The following madness is to support empty OR populated config.ini files,
+          # the state of which is dependant on the version of the emulator used (which we don't control),
+          # so let's be defensive to be safe.
+          # Replace existing config (NOTE we're on MacOS so sed works differently!)
+          sed -i .bak 's/hw.lcd.density=.*/hw.lcd.density=420/' "$emulator_config"
+          sed -i .bak 's/hw.lcd.height=.*/hw.lcd.height=1920/' "$emulator_config"
+          sed -i .bak 's/hw.lcd.width=.*/hw.lcd.width=1080/' "$emulator_config"
+          # Or, add new config
+          if ! grep -q "hw.lcd.density" "$emulator_config"; then
+            echo "hw.lcd.density=420" >> "$emulator_config"
+          fi
+          if ! grep -q "hw.lcd.height" "$emulator_config"; then
+            echo "hw.lcd.height=1920" >> "$emulator_config"
+          fi
+          if ! grep -q "hw.lcd.width" "$emulator_config"; then
+            echo "hw.lcd.width=1080" >> "$emulator_config"
+          fi
+          echo "Emulator settings ($emulator_config)"
+          cat "$emulator_config"
+          fi
 
      - name: Run Tests
-       uses: reactivecircus/android-emulator-runner@v2
-       with:
-         api-level: 28
-         force-avd-creation: false
-         emulator-options: -no-snapshot-save -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -partition-size 2048 -qemu -m 2048
-         disable-animations: true
-         script: ./gradlew connectedCheck
+       run: |
+          echo "Starting emulator and waiting for boot to complete...."
+          ls -la $ANDROID_HOME/emulator
+          nohup $ANDROID_HOME/tools/emulator -avd Pixel_API_29_AOSP -gpu host -no-audio -no-boot-anim -camera-back none -camera-front none -qemu -m 2048 2>&1 &
+          $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do echo "wait..."; sleep 1; done; input keyevent 82'
+          echo "Emulator has finished booting"
+          $ANDROID_HOME/platform-tools/adb devices
+          ./gradlew connectedCheck
