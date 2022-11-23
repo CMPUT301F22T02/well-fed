@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Well Fed</string>
     <string name="content_description_ingredient_storage">Ingredient Storage</string>
-    <string name="content_description_recipe_book">Recipe Book</string>
-    <string name="content_description_meal_book">Meal Book</string>
-    <string name="content_description_shopping_cart">Shopping Cart</string>
     <string name="ingredient_storage">Ingredient Storage</string>
     <string name="recipe_book">Recipe Book</string>
     <string name="meal_book">Meal Book</string>
@@ -12,7 +9,6 @@
     <string name="call_to_action_make_meal_plan">Ready to make </string>
     <string name="call_to_action_add_meal_plan">Add a meal plan to get started!</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
@@ -24,34 +20,19 @@
     <string name="storage">Storage</string>
     <string name="number_of_servings">Number of Servings</string>
     <string name="search_for_ingredients">Search for ingredients</string>
-    <string name="button_takePicture">Take Picture</string>
     <string name="temp_images_dir">temp_images</string>
     <string name="temp_image">temp_image.jpg</string>
     <string name="authorities">com.example.fileprovider</string>
     <string name="comments">Comments</string>
     <string name="ingredients">Ingredients</string>
-    <string name="ingredientName">Ingredient Name</string>
     <string name="ingredient_subtext">Ingredient Subtext</string>
-    <string name="sort_category">Category</string>
-    <string name="sort_description">Description</string>
-    <string name="sort_best_before">Best Before</string>
-    <string name="ingredient_name">Ground beef</string>
-    <string name="back_button">Back</string>
     <string name="best_before">Best Before:</string>
-    <string name="dummy_date">October 14, 2022</string>
     <string name="amount">Amount:</string>
-    <string name="dummy_quantity">5 lb</string>
-    <string name="dummy_category">Meat</string>
     <string name="location">Location</string>
-    <string name="freezer">Freezer</string>
-    <string name="delete_ingredient">Delete ingredient?</string>
     <string name="description">Description</string>
     <string name="best_before_date">Best Before Date</string>
-    <string name="categories">Categories</string>
     <string name="unit">Unit</string>
     <string name="amount_hint">Amount</string>
-    <string name="location_tag">Location</string>
-    <string name="preparation_time_in_mins">Preparation time in mins</string>
     <string name="recipes">Recipes</string>
     <string name="category_">Category:</string>
     <string name="location_">Location:</string>
