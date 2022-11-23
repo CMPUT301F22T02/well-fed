@@ -38,7 +38,8 @@
 //        }
 //    }
 //
-//    static ShoppingCartDialog newInstance(ShoppingCartIngredient shoppingCartIngredient) {
+//    static ShoppingCartDialog newInstance(ShoppingCartIngredient
+//    shoppingCartIngredient) {
 //        Bundle args = new Bundle();
 //        args.putSerializable("ingredient", shoppingCartIngredient);
 //
@@ -50,7 +51,8 @@
 //    @NonNull
 //    @Override
 //    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_shopping_cart, null);
+//        View view = LayoutInflater.from(getActivity()).inflate(R.layout
+//        .dialog_shopping_cart, null);
 //        bestBeforeDate = view.findViewById(R.id.date);
 //        actualAmount = view.findViewById(R.id.actualAmount);
 //        unit = view.findViewById(R.id.unit);
@@ -58,7 +60,8 @@
 //
 //        Bundle args = getArguments();
 //        if (args != null) {
-//            ShoppingCartIngredient shoppingCartIngredient = (ShoppingCartIngredient) args.getSerializable("ingredient");
+//            ShoppingCartIngredient shoppingCartIngredient =
+//            (ShoppingCartIngredient) args.getSerializable("ingredient");
 //
 //            // TODO: include description & other fields and set values here
 //        }
@@ -69,11 +72,13 @@
 //                .setTitle("Complete Details")
 //                .setNegativeButton("Cancel", null)
 //                // define behavior when Complete is selected
-//                .setPositiveButton("Complete", new DialogInterface.OnClickListener() {
+//                .setPositiveButton("Complete", new DialogInterface
+//                .OnClickListener() {
 //                    @Override
 //                    public void onClick(DialogInterface dialog, int i) {
 //                        // TODO: define behavior after clicking Complete
-//                        listener.onCompletePressed(new ShoppingCartIngredient(""));
+//                        listener.onCompletePressed(new
+//                        ShoppingCartIngredient(""));
 //                    }
 //                }).create();
 //    }
@@ -108,9 +113,9 @@ import android.content.Context;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.xffffff.wellfed.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.R.style;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.xffffff.wellfed.R;
 
 /**
  * The ConfirmDialog class provides a dialog for confirming user intentions.
@@ -122,17 +127,6 @@ public class ShoppingCartDialog {
     private final AlertDialog dialog;
 
     /**
-     * The OnQuitListener interface defines the onConfirm handler that is
-     * called when the user confirms.
-     */
-    public interface OnConfirmListener {
-        /**
-         * Handler for when the user confirms.
-         */
-        void onConfirm();
-    }
-
-    /**
      * Constructs a ConfirmQuitDialog
      *
      * @param context           the context
@@ -142,16 +136,15 @@ public class ShoppingCartDialog {
      * @param onConfirmListener the OnConfirmListener
      */
     public ShoppingCartDialog(Context context, String title, String message,
-                         String confirmButtonText,
-                         ShoppingCartDialog.OnConfirmListener onConfirmListener) {
+                              String confirmButtonText,
+                              ShoppingCartDialog.OnConfirmListener onConfirmListener) {
         this.dialog = new MaterialAlertDialogBuilder(context,
                 style.ThemeOverlay_Material3_MaterialAlertDialog_Centered).setIcon(
                         R.drawable.ic_baseline_cancel_24).setTitle(title)
                 .setMessage(message).setNeutralButton("Cancel", null)
                 .setPositiveButton(confirmButtonText,
                         (dialog, which) -> onConfirmListener.onConfirm())
-                .setView(R.layout.dialog_shopping_cart)
-                .create();
+                .setView(R.layout.dialog_shopping_cart).create();
     }
 
     /**
@@ -159,6 +152,17 @@ public class ShoppingCartDialog {
      */
     public void show() {
         this.dialog.show();
+    }
+
+    /**
+     * The OnQuitListener interface defines the onConfirm handler that is
+     * called when the user confirms.
+     */
+    public interface OnConfirmListener {
+        /**
+         * Handler for when the user confirms.
+         */
+        void onConfirm();
     }
 }
 

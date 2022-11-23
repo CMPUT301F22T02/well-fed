@@ -10,23 +10,13 @@ public class MassUnit extends Unit {
     public final static String smallestImperialUnit = "oz";
 
     public final static HashMap<String, Double> CONVERSION_FACTORS =
-            new HashMap<>(
-            Map.of(
-                    "g", 1d,
-                    "kg", 1000d,
-                    "oz", 28.349523125,
-                    "lb", 453.59237
-            )
-    );
+            new HashMap<>(Map.of("g", 1d, "kg", 1000d, "oz", 28.349523125, "lb",
+                    453.59237));
     public static final HashMap<String, Set<String>> UNIT_SYSTEMS =
             new HashMap<>(
-            Map.of(
-                    "g", Set.of("metric"),
-                    "kg", Set.of("metric"),
-                    "oz", Set.of("imperial"),
-                    "lb", Set.of("imperial")
-            )
-    );
+                    Map.of("g", Set.of("metric"), "kg", Set.of("metric"), "oz",
+                            Set.of("imperial"), "lb", Set.of("imperial")));
+
     public MassUnit(String unit) {
         super(unit);
         if (!CONVERSION_FACTORS.containsKey(unit)) {

@@ -10,8 +10,10 @@ import androidx.annotation.Nullable;
 import com.xffffff.wellfed.common.ConfirmDialog;
 import com.xffffff.wellfed.common.ConfirmQuitDialog;
 
-public abstract class EditActivityBase extends ActivityBase implements ConfirmDialog.OnConfirmListener {
+public abstract class EditActivityBase extends ActivityBase
+        implements ConfirmDialog.OnConfirmListener {
     private ConfirmQuitDialog confirmQuitDialog;
+
     @Override public void onBackPressed() {
         if (this.hasUnsavedChanges()) {
             this.confirmQuitDialog.show();
@@ -36,8 +38,7 @@ public abstract class EditActivityBase extends ActivityBase implements ConfirmDi
 
     abstract public Boolean hasUnsavedChanges();
 
-    @Override
-    public void onConfirm() {
+    @Override public void onConfirm() {
         Intent intent = new Intent();
         setResult(Activity.RESULT_CANCELED, intent);
         finish();

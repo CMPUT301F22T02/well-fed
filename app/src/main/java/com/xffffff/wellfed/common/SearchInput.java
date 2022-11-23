@@ -56,6 +56,7 @@ public class SearchInput extends TextInputLayout
      * Holds the EditText associated with the TextInputLayout
      */
     private EditText editText;
+    private OnTextChange onTextChange;
 
     /**
      * Constructs a RequiredTextInputLayout object
@@ -72,8 +73,7 @@ public class SearchInput extends TextInputLayout
      * @param context the context
      * @param attrs   the attributes
      */
-    public SearchInput(@NonNull Context context,
-                       @Nullable AttributeSet attrs) {
+    public SearchInput(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.addOnEditTextAttachedListener(this);
     }
@@ -85,8 +85,7 @@ public class SearchInput extends TextInputLayout
      * @param attrs        the attributes
      * @param defStyleAttr the default style attribute
      */
-    public SearchInput(@NonNull Context context,
-                       @Nullable AttributeSet attrs,
+    public SearchInput(@NonNull Context context, @Nullable AttributeSet attrs,
                        int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.addOnEditTextAttachedListener(this);
@@ -97,13 +96,11 @@ public class SearchInput extends TextInputLayout
      *
      * @param textInputLayout the TextInputLayout
      */
-    @Override
-    public void onEditTextAttached(
+    @Override public void onEditTextAttached(
             @NonNull TextInputLayout textInputLayout) {
         this.editText = Objects.requireNonNull(textInputLayout.getEditText());
         this.editText.addTextChangedListener(this);
     }
-
 
     /*
      * Validates that the EditText is non-empty.
@@ -130,9 +127,8 @@ public class SearchInput extends TextInputLayout
      * @param count count of characters about to be replaced
      * @param after length of new text
      */
-    @Override
-    public void beforeTextChanged(CharSequence s, int start,
-                                  int count, int after) {
+    @Override public void beforeTextChanged(CharSequence s, int start,
+                                            int count, int after) {
     }
 
     /**
@@ -144,12 +140,9 @@ public class SearchInput extends TextInputLayout
      * @param before length of old text
      * @param count  count of characters about to be replaced
      */
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before,
-                              int count) {
+    @Override public void onTextChanged(CharSequence s, int start, int before,
+                                        int count) {
     }
-
-    private OnTextChange onTextChange;
 
     /**
      * The afterTextChanged handler is called when somewhere within s, the text
@@ -158,16 +151,16 @@ public class SearchInput extends TextInputLayout
      *
      * @param s the Editable text
      */
-    @Override
-    public void afterTextChanged(Editable s) {
+    @Override public void afterTextChanged(Editable s) {
         onTextChange.onTextChange(s.toString());
+    }
+
+    public void setOnTextChange(OnTextChange listener) {
+        this.onTextChange = listener;
     }
 
     public interface OnTextChange {
         void onTextChange(String newText);
-    }
-    public void setOnTextChange(OnTextChange listener){
-        this.onTextChange = listener;
     }
 
 }

@@ -23,9 +23,9 @@ import java.util.List;
  * @version 1.0.0
  */
 public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
-    private List<Item> placeholderItems;
     protected OnEditListener<Item> editListener;
     protected OnDeleteListener<Item> deleteListener;
+    private List<Item> placeholderItems;
     private Boolean changed = false;
 
     public Boolean getChanged() {
@@ -34,15 +34,6 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
 
     public void setChanged(Boolean changed) {
         this.changed = changed;
-    }
-
-
-    public interface OnEditListener<Item> {
-        void onEdit(Item item);
-    }
-
-    public interface OnDeleteListener<Item> {
-        void onDelete(Item item);
     }
 
     public void setEditListener(OnEditListener<Item> editListener) {
@@ -80,10 +71,8 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
                 editListener.onEdit(item);
             }
         });
-        new DeleteButton(
-                ((ItemViewHolder) holder).deleteButton.getContext(),
-                itemViewHolder.getDeleteButton(), "Delete item?",
-                () -> {
+        new DeleteButton(((ItemViewHolder) holder).deleteButton.getContext(),
+                itemViewHolder.getDeleteButton(), "Delete item?", () -> {
             if (deleteListener != null) {
                 deleteListener.onDelete(item);
             }
@@ -97,6 +86,14 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
 
     public Boolean hasChanges() {
         return !placeholderItems.equals(items);
+    }
+
+    public interface OnEditListener<Item> {
+        void onEdit(Item item);
+    }
+
+    public interface OnDeleteListener<Item> {
+        void onDelete(Item item);
     }
 
     /**
@@ -124,6 +121,19 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
          */
         private Button deleteButton;
 
+        /**
+         * constructor for creating the view
+         *
+         * @param itemView view that holds the data
+         */
+        public ItemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            leadingTextView = itemView.findViewById(R.id.titleTextView);
+            headlineTextView = itemView.findViewById(R.id.headlineTextView);
+            editButton = itemView.findViewById(R.id.editButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
+        }
+
         public TextView getLeadingTextView() {
             return leadingTextView;
         }
@@ -138,19 +148,6 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
 
         public Button getDeleteButton() {
             return deleteButton;
-        }
-
-        /**
-         * constructor for creating the view
-         *
-         * @param itemView view that holds the data
-         */
-        public ItemViewHolder(@NonNull View itemView) {
-            super(itemView);
-            leadingTextView = itemView.findViewById(R.id.titleTextView);
-            headlineTextView = itemView.findViewById(R.id.headlineTextView);
-            editButton = itemView.findViewById(R.id.editButton);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 }

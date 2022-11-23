@@ -14,9 +14,9 @@ import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.ingredient.Ingredient;
 
 public class ItemDetailAdapter extends ItemAdapter {
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    @NonNull @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                      int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View itemView =
@@ -26,17 +26,19 @@ public class ItemDetailAdapter extends ItemAdapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
+                                 int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Ingredient ingredient = (Ingredient) getItems().get(position);
-        holder1.title.setText(ingredient.getAmount() + " " + ingredient.getUnit());
+        holder1.title.setText(
+                ingredient.getAmount() + " " + ingredient.getUnit());
         holder1.headline.setText(ingredient.getDescription());
-        holder1.moreInfo.setOnClickListener(view->{
+        holder1.moreInfo.setOnClickListener(view -> {
         });
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView title;
         public TextView headline;

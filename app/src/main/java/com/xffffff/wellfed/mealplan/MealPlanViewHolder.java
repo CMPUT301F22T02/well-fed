@@ -31,9 +31,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.xffffff.wellfed.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.color.MaterialColors;
+import com.xffffff.wellfed.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -103,66 +103,15 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
     private final int colorOnSurface;
 
     /**
-     * getMaterialCardView is the getter for materialCardView
-     * @return the materialCardView
-     */
-    public MaterialCardView getMaterialCardView() {
-        return materialCardView;
-    }
-
-/**
-     * getWeekTextView is the getter for weekTextView
-     * @return the weekTextView
-     */
-    public TextView getWeekTextView() {
-        return weekTextView;
-    }
-
-    /**
-     * getTitleTextView is the getter for titleTextView
-     * @return the titleTextView
-     */
-    public TextView getTitleTextView() {
-        return titleTextView;
-    }
-
-    /**
-     * getCategoryTextView is the getter for categoryTextView
-     * @return the categoryTextView
-     */
-    public TextView getCategoryTextView() {
-        return categoryTextView;
-    }
-
-    /**
-     * setDateCircle method sets the date circle
-     * @param date the date
-     * @param isPrimary whether the date circle is primary
-     */
-    public void setDateCircle(Date date, Boolean isPrimary) {
-        dayTextView.setText(circleDateFormat.format(date));
-        weekDayTextView.setText(weekDayDateFormat.format(date));
-        if (isPrimary) {
-            dayTextView.setBackgroundTintList(ColorStateList.valueOf(
-                    colorPrimary));
-            dayTextView.setTextColor(colorOnPrimary);
-        } else {
-            dayTextView.setBackgroundTintList(ColorStateList.valueOf(
-                    colorSurface));
-            dayTextView.setTextColor(colorOnSurface);
-        }
-    }
-
-    /**
      * MealPlanViewHolder is the constructor for the MealPlanViewHolder
+     *
      * @param itemView the view
      */
     public MealPlanViewHolder(@NonNull View itemView) {
         super(itemView);
         this.circleDateFormat = new SimpleDateFormat("d", Locale.US);
         this.circleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        this.weekDayDateFormat = new SimpleDateFormat("E",
-                Locale.US);
+        this.weekDayDateFormat = new SimpleDateFormat("E", Locale.US);
         this.weekDayDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         this.materialCardView = itemView.findViewById(R.id.materialCardView);
         this.weekTextView = itemView.findViewById(R.id.weekTextView);
@@ -178,5 +127,61 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
                 com.google.android.material.R.attr.colorSurface);
         this.colorOnSurface = MaterialColors.getColor(itemView,
                 com.google.android.material.R.attr.colorOnSurface);
+    }
+
+    /**
+     * getMaterialCardView is the getter for materialCardView
+     *
+     * @return the materialCardView
+     */
+    public MaterialCardView getMaterialCardView() {
+        return materialCardView;
+    }
+
+    /**
+     * getWeekTextView is the getter for weekTextView
+     *
+     * @return the weekTextView
+     */
+    public TextView getWeekTextView() {
+        return weekTextView;
+    }
+
+    /**
+     * getTitleTextView is the getter for titleTextView
+     *
+     * @return the titleTextView
+     */
+    public TextView getTitleTextView() {
+        return titleTextView;
+    }
+
+    /**
+     * getCategoryTextView is the getter for categoryTextView
+     *
+     * @return the categoryTextView
+     */
+    public TextView getCategoryTextView() {
+        return categoryTextView;
+    }
+
+    /**
+     * setDateCircle method sets the date circle
+     *
+     * @param date      the date
+     * @param isPrimary whether the date circle is primary
+     */
+    public void setDateCircle(Date date, Boolean isPrimary) {
+        dayTextView.setText(circleDateFormat.format(date));
+        weekDayTextView.setText(weekDayDateFormat.format(date));
+        if (isPrimary) {
+            dayTextView.setBackgroundTintList(
+                    ColorStateList.valueOf(colorPrimary));
+            dayTextView.setTextColor(colorOnPrimary);
+        } else {
+            dayTextView.setBackgroundTintList(
+                    ColorStateList.valueOf(colorSurface));
+            dayTextView.setTextColor(colorOnSurface);
+        }
     }
 }

@@ -19,6 +19,7 @@ import java.util.Date;
 public class StorageIngredientTest {
     /**
      * Creates a mock ingredient to be used in the tests, with no title.
+     *
      * @return the mock ingredient created
      */
     public StorageIngredient mockIngredient() {
@@ -28,8 +29,7 @@ public class StorageIngredientTest {
     /**
      * Tests the constructor of the StorageIngredient class.
      */
-    @Test
-    public void testConstructor() {
+    @Test public void testConstructor() {
         StorageIngredient ingredient = new StorageIngredient("Apple");
         assertEquals("Apple", ingredient.getDescription());
         assertNull(ingredient.getAmount());
@@ -42,11 +42,10 @@ public class StorageIngredientTest {
     /**
      * Tests the constructor of the StorageIngredient class.
      */
-    @Test
-    public void testConstructor2() {
-        StorageIngredient ingredient = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1));
+    @Test public void testConstructor2() {
+        StorageIngredient ingredient =
+                new StorageIngredient("Apple", 1.0, "g", "Pantry",
+                        new Date(2020, 1, 1));
         assertEquals("Apple", ingredient.getDescription());
         assertEquals((Double) 1.0, ingredient.getAmount());
         assertEquals("g", ingredient.getUnit());
@@ -60,11 +59,10 @@ public class StorageIngredientTest {
     /**
      * Tests the constructor of the StorageIngredient class.
      */
-    @Test
-    public void testConstructor3() {
-        StorageIngredient ingredient = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1), "Fruit");
+    @Test public void testConstructor3() {
+        StorageIngredient ingredient =
+                new StorageIngredient("Apple", 1.0, "g", "Pantry",
+                        new Date(2020, 1, 1), "Fruit");
         assertEquals("Apple", ingredient.getDescription());
         assertEquals((Double) 1.0, ingredient.getAmount());
         assertEquals("g", ingredient.getUnit());
@@ -78,8 +76,7 @@ public class StorageIngredientTest {
     /**
      * Test the getters of the StorageIngredient class.
      */
-    @Test
-    public void testGetters() {
+    @Test public void testGetters() {
         StorageIngredient ingredient = new StorageIngredient("Apple");
         assertEquals("Apple", ingredient.getDescription());
         assertNull(ingredient.getAmount());
@@ -88,9 +85,9 @@ public class StorageIngredientTest {
         assertNull(ingredient.getBestBefore());
         assertNull(ingredient.getCategory());
 
-        StorageIngredient ingredient2 = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1));
+        StorageIngredient ingredient2 =
+                new StorageIngredient("Apple", 1.0, "g", "Pantry",
+                        new Date(2020, 1, 1));
         assertEquals("Apple", ingredient2.getDescription());
         assertEquals((Double) 1.0, ingredient2.getAmount());
         assertEquals("g", ingredient2.getUnit());
@@ -100,9 +97,9 @@ public class StorageIngredientTest {
         assertEquals(bestBefore, ingredient2.getBestBefore());
         assertNull(ingredient2.getCategory());
 
-        StorageIngredient ingredient3 = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1), "Fruit");
+        StorageIngredient ingredient3 =
+                new StorageIngredient("Apple", 1.0, "g", "Pantry",
+                        new Date(2020, 1, 1), "Fruit");
         assertEquals("Apple", ingredient3.getDescription());
         assertEquals((Double) 1.0, ingredient3.getAmount());
         assertEquals("g", ingredient3.getUnit());
@@ -117,8 +114,7 @@ public class StorageIngredientTest {
     /**
      * Test the setters of the StorageIngredient class.
      */
-    @Test
-    public void testSetters() {
+    @Test public void testSetters() {
         StorageIngredient ingredient = new StorageIngredient("Apple");
         ingredient.setDescription("Banana");
         assertEquals("Banana", ingredient.getDescription());
@@ -135,9 +131,9 @@ public class StorageIngredientTest {
         ingredient.setCategory("Fruit");
         assertEquals("Fruit", ingredient.getCategory());
 
-        StorageIngredient ingredient2 = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1));
+        StorageIngredient ingredient2 =
+                new StorageIngredient("Apple", 1.0, "g", "Pantry",
+                        new Date(2020, 1, 1));
         ingredient2.setDescription("Banana");
         assertEquals("Banana", ingredient2.getDescription());
         ingredient2.setAmount(1.0);
@@ -153,9 +149,9 @@ public class StorageIngredientTest {
         ingredient2.setCategory("Fruit");
         assertEquals("Fruit", ingredient2.getCategory());
 
-        StorageIngredient ingredient3 = new StorageIngredient("Apple", 1.0,
-                "g",
-                "Pantry", new Date(2020, 1, 1), "Fruit");
+        StorageIngredient ingredient3 =
+                new StorageIngredient("Apple", 1.0, "g", "Pantry",
+                        new Date(2020, 1, 1), "Fruit");
         ingredient3.setDescription("Banana");
         assertEquals("Banana", ingredient3.getDescription());
         ingredient3.setAmount(1.0);
@@ -173,11 +169,12 @@ public class StorageIngredientTest {
     }
 
     /**
-     * Tests that a ingredient is always equals if all of the fields are identical.
-     * This is done by changing each field individually, and then invoking equals
+     * Tests that a ingredient is always equals if all of the fields are
+     * identical.
+     * This is done by changing each field individually, and then invoking
+     * equals
      */
-    @Test
-    public void testEquals() {
+    @Test public void testEquals() {
         StorageIngredient mock = mockIngredient();
         StorageIngredient mock2 = mockIngredient();
         assertTrue(mock.isEqual(mock2));
@@ -225,11 +222,12 @@ public class StorageIngredientTest {
     }
 
     /**
-     * Tests that a ingredient is always equals if at least one of the fields is non-identical
-     * This is done by changing each field individually, and then invoking equals
+     * Tests that a ingredient is always equals if at least one of the fields
+     * is non-identical
+     * This is done by changing each field individually, and then invoking
+     * equals
      */
-    @Test
-    public void testNotEquals() {
+    @Test public void testNotEquals() {
         StorageIngredient mock = mockIngredient();
         StorageIngredient mock2 = mockIngredient();
         assertTrue(mock.isEqual(mock2));

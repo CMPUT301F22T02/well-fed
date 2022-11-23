@@ -22,20 +22,18 @@ import java.io.Serializable;
 
 public abstract class EditRecyclerViewFragment<Item extends Serializable>
         extends Fragment implements EditItemAdapter.OnEditListener<Item>,
-        EditItemAdapter.OnDeleteListener<Item> {
+                                    EditItemAdapter.OnDeleteListener<Item> {
+    private final ActivityResultLauncher<Intent> searchLauncher =
+            registerForActivityResult(new SearchItemContract<>(),
+                    this::onSearchActivityResult);
     private RecyclerView recyclerView;
     private TextView errorTextView;
     private EditItemAdapter<Item> adapter;
     private Item selectedItem;
-    private String title;
-
     private final ActivityResultLauncher<Intent> editLauncher =
             registerForActivityResult(new EditItemContract<>(),
                     this::onEditActivityResult);
-
-    private final ActivityResultLauncher<Intent> searchLauncher =
-            registerForActivityResult(new SearchItemContract<>(),
-                    this::onSearchActivityResult);
+    private String title;
 
     public void setAdapter(EditItemAdapter<Item> adapter) {
         this.adapter = adapter;
@@ -48,8 +46,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
     }
 
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -81,8 +78,7 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
 
     public abstract Intent createOnSearchIntent(Item item);
 
-    @Override
-    public void onEdit(Item item) {
+    @Override public void onEdit(Item item) {
         this.selectedItem = item;
         adapter.setChanged(true);
         Intent intent = createOnEditIntent(item);
@@ -94,15 +90,14 @@ public abstract class EditRecyclerViewFragment<Item extends Serializable>
         searchLauncher.launch(intent);
     }
 
-    @Override
-    public void onDelete(Item item) {
+    @Override public void onDelete(Item item) {
         int index = adapter.getItems().indexOf(item);
         adapter.getItems().remove(index);
         adapter.notifyItemRemoved(index);
         adapter.setChanged(true);
     }
 
-    public Boolean hasChanged(){
+    public Boolean hasChanged() {
         return adapter.getChanged();
     }
 

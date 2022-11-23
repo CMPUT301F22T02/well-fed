@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.xffffff.wellfed.EditActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.RequiredDateTextInputLayout;
@@ -15,7 +16,6 @@ import com.xffffff.wellfed.recipe.EditRecipeIngredientsFragment;
 import com.xffffff.wellfed.recipe.EditRecipesAdapter;
 import com.xffffff.wellfed.recipe.EditRecipesFragment;
 import com.xffffff.wellfed.recipe.RecipeIngredientAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
@@ -61,6 +61,7 @@ public class MealPlanEditActivity extends EditActivityBase {
     /**
      * OnCreate method. It is called when the activity is created. It sets up
      * the activity and displays the meal plan.
+     *
      * @param savedInstanceState The saved instance state.
      */
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +89,10 @@ public class MealPlanEditActivity extends EditActivityBase {
         recipesEditFragment.setAdapter(this.recipesEditAdapter);
         recipesEditFragment.setTitle("Recipes");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.recipeEditFragment, recipesEditFragment)
-                .commit();
+                .add(R.id.recipeEditFragment, recipesEditFragment).commit();
 
-        EditRecipeIngredientsFragment ingredientEditFragment = new EditRecipeIngredientsFragment();
+        EditRecipeIngredientsFragment ingredientEditFragment =
+                new EditRecipeIngredientsFragment();
         this.ingredientEditAdapter = new RecipeIngredientAdapter();
         ingredientEditFragment.setAdapter(this.ingredientEditAdapter);
         ingredientEditFragment.setTitle("Ingredients");
@@ -120,6 +121,7 @@ public class MealPlanEditActivity extends EditActivityBase {
 
     /**
      * hasUnsavedChanges returns true if there are unsaved changes.
+     *
      * @return true if there are unsaved changes.
      */
     public Boolean hasUnsavedChanges() {
@@ -176,6 +178,7 @@ public class MealPlanEditActivity extends EditActivityBase {
 
     /**
      * onPointerCaptureChanged is called when the pointer capture changes.
+     *
      * @param hasCapture true if the pointer has capture.
      */
     @Override public void onPointerCaptureChanged(boolean hasCapture) {

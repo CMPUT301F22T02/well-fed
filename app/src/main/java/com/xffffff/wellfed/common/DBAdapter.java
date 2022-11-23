@@ -15,12 +15,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.crypto.interfaces.PBEKey;
 
 // TODO: Cite: firestore/quickstart
 
@@ -59,9 +54,8 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         startListening();
     }
 
-    @Override
-    public void onEvent(@Nullable QuerySnapshot documentSnapshots,
-                        @Nullable FirebaseFirestoreException error) {
+    @Override public void onEvent(@Nullable QuerySnapshot documentSnapshots,
+                                  @Nullable FirebaseFirestoreException error) {
         if (error != null || documentSnapshots == null) {
             Log.w(TAG, "onEvent:error", error);
             // TODO: call onError handler
@@ -99,19 +93,10 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         return snapshots.get(index);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    protected void setSnapshots(List<DocumentSnapshot> snapshots) {
-        this.snapshots.clear();
-        this.snapshots.addAll(snapshots);
-        notifyDataSetChanged();
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void clearSnapshots() {
+    @SuppressLint("NotifyDataSetChanged") public void clearSnapshots() {
         this.snapshots.clear();
         notifyDataSetChanged();
     }
-
 
     public void startListening() {
         if (mQuery != null && mRegistration == null) {
@@ -129,13 +114,18 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
-
     protected ArrayList<DocumentSnapshot> getSnapshots() {
         return snapshots;
     }
 
-    @Override
-    public int getItemCount() {
+    @SuppressLint("NotifyDataSetChanged")
+    protected void setSnapshots(List<DocumentSnapshot> snapshots) {
+        this.snapshots.clear();
+        this.snapshots.addAll(snapshots);
+        notifyDataSetChanged();
+    }
+
+    @Override public int getItemCount() {
         return snapshots.size();
     }
 }

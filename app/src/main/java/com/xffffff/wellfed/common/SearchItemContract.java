@@ -11,9 +11,8 @@ import androidx.annotation.Nullable;
 
 import java.io.Serializable;
 
-public class SearchItemContract<Item extends Serializable> extends ActivityResultContract<Intent,
-        Pair<String
-        , Item>> {
+public class SearchItemContract<Item extends Serializable>
+        extends ActivityResultContract<Intent, Pair<String, Item>> {
 
     public Intent createIntent(@NonNull Context context, Intent intent) {
         return intent;
@@ -25,8 +24,7 @@ public class SearchItemContract<Item extends Serializable> extends ActivityResul
             return null;
         } else {
             String type = intent.getStringExtra("type");
-            Item item = (Item) intent.getSerializableExtra(
-                    "item");
+            Item item = (Item) intent.getSerializableExtra("item");
             return new Pair<>(type, item);
         }
     }

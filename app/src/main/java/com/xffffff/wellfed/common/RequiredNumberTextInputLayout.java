@@ -30,7 +30,6 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-
 import java.util.Objects;
 
 /**
@@ -204,8 +203,7 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
      *
      * @return true if the EditText is valid.
      */
-    @Override
-    public Boolean isValid() {
+    @Override public Boolean isValid() {
         super.isValid();
         if (this.requireDouble) {
             if (!this.isValidDouble()) {

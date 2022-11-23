@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-
 import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.recipe.Recipe;
 
@@ -21,6 +20,7 @@ import java.util.List;
 public class RecipeTest {
     /**
      * Creates a mock Recipe to be used in the tests, with no title.
+     *
      * @return the mock Recipe created
      */
     public Recipe mockRecipe() {
@@ -29,15 +29,17 @@ public class RecipeTest {
 
     /**
      * Creates a mock RecipeIngredient to be used in the tests.
+     *
      * @return the mock RecipeIngredient created
      */
-    public Ingredient mockRecipeIngredient() {return new Ingredient();}
+    public Ingredient mockRecipeIngredient() {
+        return new Ingredient();
+    }
 
     /**
      * Tests whether a new Ingredient has the correctly initialized fields.
      */
-    @Test
-    public void testNullFields() {
+    @Test public void testNullFields() {
         Recipe mock = mockRecipe();
         assertNull(mock.getCategory());
         assertNull(mock.getComments());
@@ -49,8 +51,7 @@ public class RecipeTest {
     /**
      * Tests adding of a recipe ingredient to the recipe.
      */
-    @Test
-    public void testAddAndGetIngredient() {
+    @Test public void testAddAndGetIngredient() {
         Recipe recipe = mockRecipe();
         Ingredient ingredient1 = mockRecipeIngredient();
         Ingredient ingredient2 = mockRecipeIngredient();
@@ -70,8 +71,7 @@ public class RecipeTest {
     /**
      * Tests deleting of an recipe ingredient from the recipe.
      */
-    @Test
-    public void testRemoveIngredient() {
+    @Test public void testRemoveIngredient() {
         Recipe recipe = mockRecipe();
         Ingredient ingredient1 = mockRecipeIngredient();
         Ingredient ingredient2 = mockRecipeIngredient();
@@ -96,15 +96,16 @@ public class RecipeTest {
     /**
      * Tests the behaviour of removing an ingredient that is not in the recipe.
      */
-    @Test
-    public void testRemoveIngredientNotInRecipe() {
+    @Test public void testRemoveIngredientNotInRecipe() {
         Recipe recipe = mockRecipe();
         Ingredient ingredient = mockRecipeIngredient();
         Ingredient ingredient2 = mockRecipeIngredient();
-        // no error should be thrown, as deleting a non existing ingredient is fine
+        // no error should be thrown, as deleting a non existing ingredient
+        // is fine
         recipe.removeIngredient(ingredient);
 
-        // a removed ingredient not in recipe should not affect other ingredients
+        // a removed ingredient not in recipe should not affect other
+        // ingredients
         recipe.addIngredient(ingredient);
         recipe.removeIngredient(ingredient2);
         assertEquals(ingredient, recipe.getIngredient(0));
@@ -113,8 +114,7 @@ public class RecipeTest {
     /**
      * Tests getting the List of ingredients from a recipe.
      */
-    @Test
-    public void testGetIngredients() {
+    @Test public void testGetIngredients() {
         Recipe recipe = mockRecipe();
         Ingredient ingredient = mockRecipeIngredient();
         Ingredient ingredient2 = mockRecipeIngredient();
@@ -130,8 +130,7 @@ public class RecipeTest {
     /**
      * Tests getting and setting the category of a Recipe.
      */
-    @Test
-    public void testCategory() {
+    @Test public void testCategory() {
         Recipe recipe = mockRecipe();
 
         // test with string
@@ -147,8 +146,7 @@ public class RecipeTest {
     /**
      * Tests getting/setting title of the Recipe.
      */
-    @Test
-    public void testTitle() {
+    @Test public void testTitle() {
         Recipe recipe = mockRecipe();
 
         // test with string
@@ -164,8 +162,7 @@ public class RecipeTest {
     /**
      * Tests getting/setting comments of a Recipe.
      */
-    @Test
-    public void testComments() {
+    @Test public void testComments() {
         Recipe recipe = mockRecipe();
 
         // test with string
@@ -175,14 +172,14 @@ public class RecipeTest {
 
         // test with literal
         recipe.setComments("This yummy meal is made for special events.");
-        assertEquals("This yummy meal is made for special events.", recipe.getComments());
+        assertEquals("This yummy meal is made for special events.",
+                recipe.getComments());
     }
 
     /**
      * Tests getting/setting servings of a Recipe.
      */
-    @Test
-    public void testServings() {
+    @Test public void testServings() {
         Recipe recipe = mockRecipe();
 
         // test with integer
@@ -194,8 +191,7 @@ public class RecipeTest {
     /**
      * Tests getting/setting prep time of a Recipe.
      */
-    @Test
-    public void testPrepTime() {
+    @Test public void testPrepTime() {
         Recipe recipe = mockRecipe();
 
         // test with integer
@@ -208,8 +204,7 @@ public class RecipeTest {
     /**
      * Tests getting/setting the ID of a Recipe.
      */
-    @Test
-    public void testID() {
+    @Test public void testID() {
         Recipe recipe = mockRecipe();
 
         // test with string
@@ -224,10 +219,10 @@ public class RecipeTest {
 
     /**
      * Tests that a recipe is always equals if all of the fields are identical.
-     * This is done by changing each field individually, and then invoking equals
+     * This is done by changing each field individually, and then invoking
+     * equals
      */
-    @Test
-    public void testEquals() {
+    @Test public void testEquals() {
         Ingredient mockIngredient = mockRecipeIngredient();
         Ingredient mockIngredient2 = mockRecipeIngredient();
         mockIngredient.setDescription("Milk");
@@ -281,10 +276,10 @@ public class RecipeTest {
 
     /**
      * Tests that a recipe is not equals if any of the fields are not the same.
-     * This is done by changing each field individually, and then invoking equals.
+     * This is done by changing each field individually, and then invoking
+     * equals.
      */
-    @Test
-    public void testNotEquals() {
+    @Test public void testNotEquals() {
         Ingredient mockIngredient = mockRecipeIngredient();
         Ingredient mockIngredient2 = mockRecipeIngredient();
         mockIngredient.setDescription("Milk");

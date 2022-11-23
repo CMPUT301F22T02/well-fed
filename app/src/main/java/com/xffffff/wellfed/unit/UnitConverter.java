@@ -2,9 +2,9 @@ package com.xffffff.wellfed.unit;
 
 import android.content.Context;
 
-import com.xffffff.wellfed.R;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.xffffff.wellfed.R;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,7 +26,8 @@ public class UnitConverter {
 
 
     public UnitConverter(Context context) {
-        InputStream is = context.getResources().openRawResource(R.raw.densities);
+        InputStream is =
+                context.getResources().openRawResource(R.raw.densities);
         JsonReader reader = new JsonReader(new InputStreamReader(is));
         ingredientDensityMap = new Gson().fromJson(reader, HashMap.class);
     }
@@ -37,9 +38,11 @@ public class UnitConverter {
             return value;
         }
 
-        String foundMatch = "######";   // no key in our dictionary will match this
+        String foundMatch =
+                "######";   // no key in our dictionary will match this
         if (ingredientDensityMap.get(ingredient) == null) {
-            Pattern pattern = Pattern.compile(ingredient, Pattern.CASE_INSENSITIVE);
+            Pattern pattern =
+                    Pattern.compile(ingredient, Pattern.CASE_INSENSITIVE);
             for (String key : ingredientDensityMap.keySet()) {
                 Matcher matcher = pattern.matcher(key);
                 if (matcher.find()) {
@@ -56,12 +59,10 @@ public class UnitConverter {
                 throw new IllegalArgumentException("Ingredient not found");
             }
             if (from instanceof VolumeUnit && to instanceof MassUnit) {
-                Double volume =
-                        convert(value, foundMatch, from, build("mL"));
+                Double volume = convert(value, foundMatch, from, build("mL"));
                 value = volume * ingredientDensityMap.get(foundMatch);
             } else if (from instanceof MassUnit && to instanceof VolumeUnit) {
-                Double mass =
-                        convert(value, foundMatch, from, build("g"));
+                Double mass = convert(value, foundMatch, from, build("g"));
                 value = mass / ingredientDensityMap.get(foundMatch);
             } else {
                 throw new IllegalArgumentException(
@@ -74,15 +75,16 @@ public class UnitConverter {
         return value / to.getConversionFactor();
     }
 
-    public Double convert (double value, Unit from, Unit to) {
-        if ((from instanceof MassUnit && to instanceof MassUnit)
-                || (from instanceof VolumeUnit && to instanceof VolumeUnit)
-                || (from instanceof CountUnit && to instanceof CountUnit)
-        ) {
-            return value * (from.getConversionFactor() / to.getConversionFactor());
+    public Double convert(double value, Unit from, Unit to) {
+        if ((from instanceof MassUnit && to instanceof MassUnit) ||
+                (from instanceof VolumeUnit && to instanceof VolumeUnit) ||
+                (from instanceof CountUnit && to instanceof CountUnit)) {
+            return value *
+                    (from.getConversionFactor() / to.getConversionFactor());
         } else {
-            throw new IllegalArgumentException("Cannot convert " + " from " +
-                    from.getUnit() + " to " + to.getUnit());
+            throw new IllegalArgumentException(
+                    "Cannot convert " + " from " + from.getUnit() + " to " +
+                            to.getUnit());
         }
     }
 

@@ -29,11 +29,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import java.util.Date;
 
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
 import com.xffffff.wellfed.common.DateUtil;
+
+import java.util.Date;
 
 /**
  * The MealPlanAdapter class binds ArrayList to RecyclerView.
@@ -64,20 +65,6 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         super(db.getQuery());
         this.db = db;
         dateUtil = new DateUtil();
-    }
-
-    /**
-     * The listener for an item click in the RecyclerView
-     */
-    public interface OnItemClickListener {
-        void onItemClick(MealPlan mealPlan);
-    }
-
-    /**
-     * The listener for an item load in the RecyclerView
-     */
-    public interface OnItemLoadListener {
-        void onItemLoad(MealPlan mealPlan);
     }
 
     /**
@@ -118,7 +105,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      * taking the data in the MealPlan object and mapping it into a human
      * readable format to be presented in the RecyclerView.
      *
-     * @param holder The MealPlanViewHolder object.
+     * @param holder   The MealPlanViewHolder object.
      * @param position The position of the MealPlan object in the ArrayList.
      */
     @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
@@ -135,18 +122,22 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                 });
 
                 Date eatDate = mealPlan.getEatDate();
-                Date eatDateFirstDayOfWeek = dateUtil.getFirstDayOfWeek(eatDate);
+                Date eatDateFirstDayOfWeek =
+                        dateUtil.getFirstDayOfWeek(eatDate);
                 if (position > 0) {
                     db.getMealPlan(getSnapshot(position - 1),
                             (priorMealPlan, success2) -> {
                                 if (success2) {
-                                    Date priorEatDate = priorMealPlan.getEatDate();
-                                    if (dateUtil.equals(priorEatDate,eatDate)) {
+                                    Date priorEatDate =
+                                            priorMealPlan.getEatDate();
+                                    if (dateUtil.equals(priorEatDate,
+                                            eatDate)) {
                                         return;
                                     }
                                     renderDates(eatDate, holder);
                                     Date priorEatDateFirstDayOfWeek =
-                                            dateUtil.getFirstDayOfWeek(priorEatDate);
+                                            dateUtil.getFirstDayOfWeek(
+                                                    priorEatDate);
                                     if (dateUtil.equals(eatDateFirstDayOfWeek,
                                             priorEatDateFirstDayOfWeek)) {
                                         return;
@@ -169,8 +160,9 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
 
     /**
      * Renders the dates in the MealPlanViewHolder
+     *
      * @param eatDate the date to render
-     * @param holder the MealPlanViewHolder to render the date in
+     * @param holder  the MealPlanViewHolder to render the date in
      */
     private void renderDates(Date eatDate, @NonNull MealPlanViewHolder holder) {
         Date today = new Date();
@@ -179,9 +171,11 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
 
     /**
      * Renders the weeks in the MealPlanViewHolder
-     * @param eatDate the date to render
-     * @param eatDateFirstDayOfWeek the first day of the week of the date to render
-     * @param holder the MealPlanViewHolder to render the week in
+     *
+     * @param eatDate               the date to render
+     * @param eatDateFirstDayOfWeek the first day of the week of the date to
+     *                              render
+     * @param holder                the MealPlanViewHolder to render the week in
      */
     private void renderWeeks(Date eatDate, Date eatDateFirstDayOfWeek,
                              @NonNull MealPlanViewHolder holder) {
@@ -190,16 +184,30 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         String eatDateFirstDayOfWeekMonth =
                 dateUtil.format(eatDateFirstDayOfWeek, "MMMM ");
         String eatDateFirstDayOfWeekDay =
-                dateUtil.format(eatDateFirstDayOfWeek,"d");
+                dateUtil.format(eatDateFirstDayOfWeek, "d");
         String weekLabel =
                 eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
         String eatDateLastDayOfWeekMonth =
-                dateUtil.format(eatDateLastDayOfWeek,"MMMM ");
+                dateUtil.format(eatDateLastDayOfWeek, "MMMM ");
         if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
             weekLabel += eatDateLastDayOfWeekMonth;
         }
         weekLabel += dateUtil.format(eatDateLastDayOfWeek, "d");
         holder.getWeekTextView().setText(weekLabel);
         holder.getWeekTextView().setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * The listener for an item click in the RecyclerView
+     */
+    public interface OnItemClickListener {
+        void onItemClick(MealPlan mealPlan);
+    }
+
+    /**
+     * The listener for an item load in the RecyclerView
+     */
+    public interface OnItemLoadListener {
+        void onItemLoad(MealPlan mealPlan);
     }
 }

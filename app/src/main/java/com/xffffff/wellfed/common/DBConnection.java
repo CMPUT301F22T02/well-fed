@@ -1,25 +1,18 @@
 package com.xffffff.wellfed.common;
 
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.installations.FirebaseInstallations;
 
 import java.util.UUID;
 
 /**
  * Connects to the DB, getting the users unique FirestoreID to identify them.
- * Citation: https://firebase.google.com/docs/projects/manage-installations#android
+ * Citation: https://firebase.google
+ * .com/docs/projects/manage-installations#android
  */
 public class DBConnection {
     /**
@@ -33,7 +26,8 @@ public class DBConnection {
 
 
     /**
-     * Holds a reference to the User's collection (with specific subcollection) in the Firebase DB.
+     * Holds a reference to the User's collection (with specific
+     * subcollection) in the Firebase DB.
      */
     private CollectionReference collection;
 
@@ -44,7 +38,8 @@ public class DBConnection {
 
     /**
      * Connects to the Firebase Firestore database, at the given subcollection.
-     * The user is given by the FID, which is a Firebase ID given to each unique installation.
+     * The user is given by the FID, which is a Firebase ID given to each
+     * unique installation.
      *
      * @param context: the context of the application
      */
@@ -86,12 +81,13 @@ public class DBConnection {
      * @return the collection that was retrieved
      */
     public CollectionReference getCollection(String subcollection) {
-        return this.db.collection("users")
-                .document("user" + uuid).collection(subcollection);
+        return this.db.collection("users").document("user" + uuid)
+                .collection(subcollection);
     }
 
     /**
      * Gets the DB
+     *
      * @return the DB
      */
     public FirebaseFirestore getDB() {

@@ -16,6 +16,7 @@ import java.util.List;
 public class ShoppingCartTest {
     /**
      * Creates a mock shopping cart for use in the unit tests.
+     *
      * @return the created mock shopping cart
      */
     private ShoppingCart mockShoppingCart() {
@@ -24,15 +25,17 @@ public class ShoppingCartTest {
 
     /**
      * Creates a shopping cart ingredient for use in the unit tests.
+     *
      * @return the created mock ingredient
      */
-    private ShoppingCartIngredient mockShoppingCartIngredient(){return new ShoppingCartIngredient("Banana");}
+    private ShoppingCartIngredient mockShoppingCartIngredient() {
+        return new ShoppingCartIngredient("Banana");
+    }
 
     /**
      * Tests adding of an Ingredient to the ShoppingCart.
      */
-    @Test
-    public void testAddAndGetIngredient() {
+    @Test public void testAddAndGetIngredient() {
         ShoppingCart shoppingCart = mockShoppingCart();
         ShoppingCartIngredient ingredient1 = mockShoppingCartIngredient();
         ShoppingCartIngredient ingredient2 = mockShoppingCartIngredient();
@@ -52,8 +55,7 @@ public class ShoppingCartTest {
     /**
      * Tests deleting of an Ingredient from the ShoppingCart.
      */
-    @Test
-    public void testRemoveIngredient() {
+    @Test public void testRemoveIngredient() {
         ShoppingCart shoppingCart = mockShoppingCart();
         ShoppingCartIngredient ingredient1 = mockShoppingCartIngredient();
         ShoppingCartIngredient ingredient2 = mockShoppingCartIngredient();
@@ -76,17 +78,19 @@ public class ShoppingCartTest {
     }
 
     /**
-     * Tests the behaviour of removing an ingredient that is not in the ShoppingCart.
+     * Tests the behaviour of removing an ingredient that is not in the
+     * ShoppingCart.
      */
-    @Test
-    public void testRemoveIngredientNotInMealPlan() {
+    @Test public void testRemoveIngredientNotInMealPlan() {
         ShoppingCart shoppingCart = mockShoppingCart();
         ShoppingCartIngredient ingredient = mockShoppingCartIngredient();
         ShoppingCartIngredient ingredient2 = mockShoppingCartIngredient();
-        // no error should be thrown, as deleting a non existing ingredient is fine
+        // no error should be thrown, as deleting a non existing ingredient
+        // is fine
         shoppingCart.removeIngredient(ingredient);
 
-        // a removed ingredient not in recipe should not affect other ingredients
+        // a removed ingredient not in recipe should not affect other
+        // ingredients
         shoppingCart.addIngredient(ingredient);
         shoppingCart.removeIngredient(ingredient2);
         assertEquals(ingredient, shoppingCart.getIngredient(0));
@@ -95,15 +99,15 @@ public class ShoppingCartTest {
     /**
      * Tests getting the List of Ingredients from a Shopping Cart.
      */
-    @Test
-    public void testGetIngredients() {
+    @Test public void testGetIngredients() {
         ShoppingCart shoppingCart = mockShoppingCart();
         ShoppingCartIngredient ingredient = mockShoppingCartIngredient();
         ShoppingCartIngredient ingredient2 = mockShoppingCartIngredient();
 
         shoppingCart.addIngredient(ingredient);
         shoppingCart.addIngredient(ingredient2);
-        List<ShoppingCartIngredient> ingredientList = shoppingCart.getIngredients();
+        List<ShoppingCartIngredient> ingredientList =
+                shoppingCart.getIngredients();
 
         assertEquals(ingredient, ingredientList.get(0));
         assertEquals(ingredient2, ingredientList.get(1));

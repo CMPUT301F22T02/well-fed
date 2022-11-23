@@ -15,8 +15,8 @@ import java.util.UUID;
 public class MockDBConnection extends DBConnection {
     /**
      * Connects to the Firebase Firestore database, at the given subcollection.
-     * The user is given by the FID, which is a Firebase ID given to each unique installation.
-     *
+     * The user is given by the FID, which is a Firebase ID given to each
+     * unique installation.
      */
     public MockDBConnection() {
         super(null);
@@ -28,8 +28,7 @@ public class MockDBConnection extends DBConnection {
      *
      * @param context: the context of the application
      */
-    @Override
-    protected String getUUID(Context context) {
+    @Override protected String getUUID(Context context) {
         String uuid = "test" + UUID.randomUUID().toString();
         return uuid;
     }

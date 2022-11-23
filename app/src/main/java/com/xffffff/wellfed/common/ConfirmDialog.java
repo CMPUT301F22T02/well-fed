@@ -27,9 +27,9 @@ import android.content.Context;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.xffffff.wellfed.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.R.style;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.xffffff.wellfed.R;
 
 /**
  * The ConfirmDialog class provides a dialog for confirming user intentions.
@@ -39,17 +39,6 @@ public class ConfirmDialog {
      * Holds the AlertDialog dialog
      */
     private final AlertDialog dialog;
-
-    /**
-     * The OnQuitListener interface defines the onConfirm handler that is
-     * called when the user confirms.
-     */
-    public interface OnConfirmListener {
-        /**
-         * Handler for when the user confirms.
-         */
-        void onConfirm();
-    }
 
     /**
      * Constructs a ConfirmQuitDialog
@@ -77,5 +66,16 @@ public class ConfirmDialog {
      */
     public void show() {
         this.dialog.show();
+    }
+
+    /**
+     * The OnQuitListener interface defines the onConfirm handler that is
+     * called when the user confirms.
+     */
+    public interface OnConfirmListener {
+        /**
+         * Handler for when the user confirms.
+         */
+        void onConfirm();
     }
 }

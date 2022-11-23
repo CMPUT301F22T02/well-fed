@@ -51,7 +51,7 @@ public class DateUtil {
      */
     public DateUtil() {
         this.hashFormat = getSimpleDateFormat("yyyy-MM-dd");
-        this.dayNameInWeekFormat =  getSimpleDateFormat("E");
+        this.dayNameInWeekFormat = getSimpleDateFormat("E");
 
     }
 

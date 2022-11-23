@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class EditItemContract<Item extends Serializable>
         extends ActivityResultContract<Intent, Pair<String, Item>> {
     @NonNull @Override
-//    TODO: find a nicer way to do this
+    //    TODO: find a nicer way to do this
     public Intent createIntent(@NonNull Context context, Intent intent) {
         return intent;
     }

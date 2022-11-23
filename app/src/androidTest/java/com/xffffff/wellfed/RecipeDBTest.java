@@ -1,5 +1,7 @@
 package com.xffffff.wellfed;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -17,22 +19,15 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-@RunWith(AndroidJUnit4.class)
-public class RecipeDBTest {
+@RunWith(AndroidJUnit4.class) public class RecipeDBTest {
+    private static final long TIMEOUT = 5;
     RecipeDB recipeDB;
     IngredientDB ingredientDB;
-    private static final long TIMEOUT = 5;
 
     /**
      * Sets up the DB connection before testing starts.
      */
-    @Before
-    public void before() {
+    @Before public void before() {
         MockDBConnection connection = new MockDBConnection();
         recipeDB = new RecipeDB(connection);
         ingredientDB = new IngredientDB(connection);
@@ -60,9 +55,11 @@ public class RecipeDBTest {
      * @param mockIngredient2 a mock ingredient to add to the recipe
      * @return the mock recipe created
      */
-    private Recipe mockRecipe(Ingredient mockIngredient1, Ingredient mockIngredient2) {
+    private Recipe mockRecipe(Ingredient mockIngredient1,
+                              Ingredient mockIngredient2) {
         Recipe testRecipe = new Recipe("Omelet");
-        testRecipe.setComments("This delicious omelette uses duck eggs and chicken eggs");
+        testRecipe.setComments(
+                "This delicious omelette uses duck eggs and chicken eggs");
         testRecipe.setServings(1);
         testRecipe.setPrepTimeMinutes(5);
         testRecipe.addIngredient(mockIngredient1);
@@ -74,14 +71,21 @@ public class RecipeDBTest {
     /**
      * Cleans up after the recipe in the test.
      *
-     * @param testRecipe        the Recipe added to the DB in the test, to clean up
-     * @param testIngredient    the first Ingredient added to the DB in the test, to clean up
-     * @param testIngredient2   the second Ingredient added to the DB in the test, to clean up
-     * @throws InterruptedException when latches are interrupted or the test times out
+     * @param testRecipe      the Recipe added to the DB in the test, to
+     *                        clean up
+     * @param testIngredient  the first Ingredient added to the DB in the
+     *                        test, to clean up
+     * @param testIngredient2 the second Ingredient added to the DB in the
+     *                        test, to clean up
+     * @throws InterruptedException when latches are interrupted or the test
+     * times out
      */
-    private void cleanUpRecipe(Recipe testRecipe, Ingredient testIngredient, Ingredient testIngredient2) throws InterruptedException {
+    private void cleanUpRecipe(Recipe testRecipe, Ingredient testIngredient,
+                               Ingredient testIngredient2)
+            throws InterruptedException {
         CountDownLatch deleteLatch = new CountDownLatch(1);
-        AtomicReference<Recipe> deletedRecipeRef = new AtomicReference<Recipe>();
+        AtomicReference<Recipe> deletedRecipeRef =
+                new AtomicReference<Recipe>();
         recipeDB.delRecipe(testRecipe, (deletedRecipe, success) -> {
             deletedRecipeRef.set(deletedRecipe);
             deleteLatch.countDown();
@@ -94,19 +98,23 @@ public class RecipeDBTest {
         assertNotNull(deletedRecipeRef.get());
 
         CountDownLatch deleteIngredients = new CountDownLatch(2);
-        AtomicReference<Ingredient> deletedIngredientRef1 = new AtomicReference<Ingredient>();
-        AtomicReference<Ingredient> deletedIngredientRef2 = new AtomicReference<Ingredient>();
-        ingredientDB.deleteIngredient(testIngredient, (deletedIngredient, success) -> {
-            deletedIngredientRef1.set(deletedIngredient);
-            deleteIngredients.countDown();
-        });
+        AtomicReference<Ingredient> deletedIngredientRef1 =
+                new AtomicReference<Ingredient>();
+        AtomicReference<Ingredient> deletedIngredientRef2 =
+                new AtomicReference<Ingredient>();
+        ingredientDB.deleteIngredient(testIngredient,
+                (deletedIngredient, success) -> {
+                    deletedIngredientRef1.set(deletedIngredient);
+                    deleteIngredients.countDown();
+                });
 
-        ingredientDB.deleteIngredient(testIngredient2, (deletedIngredient, success) -> {
-            deletedIngredientRef2.set(deletedIngredient);
-            deleteIngredients.countDown();
-        });
+        ingredientDB.deleteIngredient(testIngredient2,
+                (deletedIngredient, success) -> {
+                    deletedIngredientRef2.set(deletedIngredient);
+                    deleteIngredients.countDown();
+                });
 
-        if (!deleteIngredients.await(2*TIMEOUT, SECONDS)) {
+        if (!deleteIngredients.await(2 * TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 
@@ -115,16 +123,20 @@ public class RecipeDBTest {
     }
 
     /**
-     * This method tests the AddRecipe functionality and the GetRecipeFunctionality.
-     * Works by adding an recipe to the database and then getting that recipe checking
-     * if it is the same (throwing an interrupt if it is not) and then deleting the recipe
+     * This method tests the AddRecipe functionality and the
+     * GetRecipeFunctionality.
+     * Works by adding an recipe to the database and then getting that recipe
+     * checking
+     * if it is the same (throwing an interrupt if it is not) and then
+     * deleting the recipe
      * and the ingredients in the recipe
      *
-     * @see RecipeDBTest#testGetAddedRecipe() for checking whether an added recipe has correct fields
-     * @throws InterruptedException when latches are interrupted or the test times out
+     * @throws InterruptedException when latches are interrupted or the test
+     * times out
+     * @see RecipeDBTest#testGetAddedRecipe() for checking whether an added
+     * recipe has correct fields
      */
-    @Test
-    public void testAddDeleteRecipe() throws InterruptedException {
+    @Test public void testAddDeleteRecipe() throws InterruptedException {
         Ingredient testIngredient = mockIngredient("Egg");
         Ingredient testIngredient2 = mockIngredient("Duck Egg");
 
@@ -143,7 +155,8 @@ public class RecipeDBTest {
         assertTrue(testRecipe.isEqual(addedRecipeRef.get()));
 
         CountDownLatch deleteLatch = new CountDownLatch(1);
-        AtomicReference<Recipe> deletedRecipeRef = new AtomicReference<Recipe>();
+        AtomicReference<Recipe> deletedRecipeRef =
+                new AtomicReference<Recipe>();
         recipeDB.delRecipe(testRecipe, (deletedRecipe, success) -> {
             deletedRecipeRef.set(deletedRecipe);
             deleteLatch.countDown();
@@ -155,22 +168,27 @@ public class RecipeDBTest {
         }
 
         // deleted recipe returns a new recipe with empty fields
-        assertTrue(deletedRecipeRef.get().isEqual(new Recipe(testRecipe.getId())));
+        assertTrue(
+                deletedRecipeRef.get().isEqual(new Recipe(testRecipe.getId())));
 
         CountDownLatch deleteIngredients = new CountDownLatch(2);
-        AtomicReference<Ingredient> deletedIngredientRef1 = new AtomicReference<Ingredient>();
-        AtomicReference<Ingredient> deletedIngredientRef2 = new AtomicReference<Ingredient>();
-        ingredientDB.deleteIngredient(testIngredient, (deletedIngredient, success) -> {
-            deletedIngredientRef1.set(deletedIngredient);
-            deleteIngredients.countDown();
-        });
+        AtomicReference<Ingredient> deletedIngredientRef1 =
+                new AtomicReference<Ingredient>();
+        AtomicReference<Ingredient> deletedIngredientRef2 =
+                new AtomicReference<Ingredient>();
+        ingredientDB.deleteIngredient(testIngredient,
+                (deletedIngredient, success) -> {
+                    deletedIngredientRef1.set(deletedIngredient);
+                    deleteIngredients.countDown();
+                });
 
-        ingredientDB.deleteIngredient(testIngredient2, (deletedIngredient, success) -> {
-            deletedIngredientRef2.set(deletedIngredient);
-            deleteIngredients.countDown();
-        });
+        ingredientDB.deleteIngredient(testIngredient2,
+                (deletedIngredient, success) -> {
+                    deletedIngredientRef2.set(deletedIngredient);
+                    deleteIngredients.countDown();
+                });
 
-        if (!deleteIngredients.await(2*TIMEOUT, SECONDS)) {
+        if (!deleteIngredients.await(2 * TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 
@@ -181,10 +199,12 @@ public class RecipeDBTest {
 
     /**
      * Deletes a nonexistent document from firebase, should not throw any error
-     * @throws InterruptedException If the transaction in delRecipe could not be completed
+     *
+     * @throws InterruptedException If the transaction in delRecipe could not
+     * be completed
      */
-    @Test
-    public void testDeleteOnNonExistentRecipe() throws InterruptedException{
+    @Test public void testDeleteOnNonExistentRecipe()
+            throws InterruptedException {
         recipeDB.delRecipe(new Recipe("-1"), (deletedRecipe, success) -> {
             // assert the ID of the deleted recipe is -1 and everything is null
             Recipe emptyRecipe = new Recipe(null);
@@ -196,11 +216,11 @@ public class RecipeDBTest {
     /**
      * Tests updating a recipe.
      *
-     * @see RecipeDBTest#testGetUpdatedRecipe() for testing whether an updated recipe has correct fields
      * @throws InterruptedException when the DB operation times out
+     * @see RecipeDBTest#testGetUpdatedRecipe() for testing whether an
+     * updated recipe has correct fields
      */
-    @Test
-    public void testUpdateOnRecipe() throws InterruptedException {
+    @Test public void testUpdateOnRecipe() throws InterruptedException {
         Ingredient testIngredient = mockIngredient("Egg");
         Ingredient testIngredient2 = mockIngredient("Duck Egg");
 
@@ -231,7 +251,8 @@ public class RecipeDBTest {
         testRecipe.setCategory("Lunch");
 
         CountDownLatch updateLatch = new CountDownLatch(1);
-        AtomicReference<Recipe> updatedRecipeRef = new AtomicReference<Recipe>();
+        AtomicReference<Recipe> updatedRecipeRef =
+                new AtomicReference<Recipe>();
         recipeDB.updateRecipe(testRecipe, (updatedRecipe, success) -> {
             updatedRecipeRef.set(updatedRecipe);
             updateLatch.countDown();
@@ -246,17 +267,20 @@ public class RecipeDBTest {
     }
 
     /**
-     * Test updateRecipe functionality by updating a nonexistent document which won't add to the collection
-     * @throws InterruptedException If updateRecipe transactions cannot complete successfully
+     * Test updateRecipe functionality by updating a nonexistent document
+     * which won't add to the collection
+     *
+     * @throws InterruptedException If updateRecipe transactions cannot
+     * complete successfully
      */
-    @Test
-    @Ignore("TODO: Manpreet implement this")
-    public void testUpdateOnNonExistentRecipe() throws InterruptedException{
+    @Test @Ignore("TODO: Manpreet implement this")
+    public void testUpdateOnNonExistentRecipe() throws InterruptedException {
         Recipe testRecipe = new Recipe(null);
         testRecipe.setId("-1");
 
         CountDownLatch updateLatch = new CountDownLatch(1);
-        AtomicReference<Recipe> updatedRecipeRef = new AtomicReference<Recipe>();
+        AtomicReference<Recipe> updatedRecipeRef =
+                new AtomicReference<Recipe>();
         recipeDB.updateRecipe(testRecipe, (updatedRecipe, success) -> {
             updatedRecipeRef.set(updatedRecipe);
             updateLatch.countDown();
@@ -272,8 +296,7 @@ public class RecipeDBTest {
      * Tests adding a new recipe, and then getting it.
      * Checks whether all of the fields are correct after getting it.
      */
-    @Test
-    public void testGetAddedRecipe() throws InterruptedException {
+    @Test public void testGetAddedRecipe() throws InterruptedException {
         // add the recipe
         Ingredient testIngredient = mockIngredient("Egg");
         Ingredient testIngredient2 = mockIngredient("Duck Egg");
@@ -295,16 +318,17 @@ public class RecipeDBTest {
         // now, get the recipe
         CountDownLatch getLatch = new CountDownLatch(1);
         AtomicReference<Recipe> resultRecipeRef = new AtomicReference<Recipe>();
-        recipeDB.getRecipe(addedRecipeRef.get().getId(), (resultRecipe, success) -> {
-            resultRecipeRef.set(resultRecipe);
-            getLatch.countDown();
-        });
+        recipeDB.getRecipe(addedRecipeRef.get().getId(),
+                (resultRecipe, success) -> {
+                    resultRecipeRef.set(resultRecipe);
+                    getLatch.countDown();
+                });
 
         if (!getLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 
-        assertTrue(testRecipe.isEqual( resultRecipeRef.get()));
+        assertTrue(testRecipe.isEqual(resultRecipeRef.get()));
 
         cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
     }
@@ -313,8 +337,7 @@ public class RecipeDBTest {
      * Tests updating a recipe, and then getting it.
      * Checks whether all of the fields are correct after getting it.
      */
-    @Test
-    public void testGetUpdatedRecipe() throws InterruptedException {
+    @Test public void testGetUpdatedRecipe() throws InterruptedException {
         // add the recipe
         Ingredient testIngredient = mockIngredient("Egg");
         Ingredient testIngredient2 = mockIngredient("Duck Egg");
@@ -346,7 +369,8 @@ public class RecipeDBTest {
         testRecipe.setCategory("Lunch");
 
         CountDownLatch updateLatch = new CountDownLatch(1);
-        AtomicReference<Recipe> updatedRecipeRef = new AtomicReference<Recipe>();
+        AtomicReference<Recipe> updatedRecipeRef =
+                new AtomicReference<Recipe>();
         recipeDB.updateRecipe(testRecipe, (updatedRecipe, success) -> {
             updatedRecipeRef.set(updatedRecipe);
             updateLatch.countDown();
@@ -355,15 +379,16 @@ public class RecipeDBTest {
         if (!updateLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
-        assertTrue(testRecipe.isEqual( updatedRecipeRef.get()));
+        assertTrue(testRecipe.isEqual(updatedRecipeRef.get()));
 
         // now, get the recipe
         CountDownLatch getLatch = new CountDownLatch(1);
         AtomicReference<Recipe> resultRecipeRef = new AtomicReference<Recipe>();
-        recipeDB.getRecipe(addedRecipeRef.get().getId(), (resultRecipe, success) -> {
-            resultRecipeRef.set(resultRecipe);
-            getLatch.countDown();
-        });
+        recipeDB.getRecipe(addedRecipeRef.get().getId(),
+                (resultRecipe, success) -> {
+                    resultRecipeRef.set(resultRecipe);
+                    getLatch.countDown();
+                });
 
         if (!getLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
@@ -377,8 +402,7 @@ public class RecipeDBTest {
     /**
      * Tests getting a non-existent recipe.
      */
-    @Test
-    @Ignore("TODO: Manpreet implement this")
+    @Test @Ignore("TODO: Manpreet implement this")
     public void testGetNonExistentRecipe() throws InterruptedException {
         // add the recipe
         Ingredient testIngredient = mockIngredient("Egg");

@@ -1,20 +1,19 @@
 package com.xffffff.wellfed;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.xffffff.wellfed.common.Launcher;
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.xffffff.wellfed.navigation.NavigationCollectionAdapter;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.xffffff.wellfed.common.Launcher;
+import com.xffffff.wellfed.navigation.NavigationCollectionAdapter;
 
 import java.util.Stack;
 

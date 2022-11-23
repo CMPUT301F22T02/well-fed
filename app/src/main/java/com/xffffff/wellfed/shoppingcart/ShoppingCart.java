@@ -1,10 +1,10 @@
 /**
  * ShoppingCart
- *
+ * <p>
  * Version 1.0
- *
+ * <p>
  * 21 October, 2022
- *
+ * <p>
  * Copyright (c) 2022.  0xFFFFFF
  * All rights reserved.
  */
@@ -14,7 +14,8 @@ package com.xffffff.wellfed.shoppingcart;
 import java.util.ArrayList;
 
 /**
- * This class represents a ShoppingCart, which represents a cart that ingredients are picked up in,
+ * This class represents a ShoppingCart, which represents a cart that
+ * ingredients are picked up in,
  * and information is added to.
  *
  * @version 1.0
@@ -27,7 +28,8 @@ public class ShoppingCart {
     private final ArrayList<ShoppingCartIngredient> ingredients;
 
     /**
-     * Creates a ShoppingCart object representing a ShoppingCart that holds ShoppingCartIngredients
+     * Creates a ShoppingCart object representing a ShoppingCart that holds
+     * ShoppingCartIngredients
      * to be picked up.
      */
     public ShoppingCart() {
@@ -36,7 +38,8 @@ public class ShoppingCart {
 
     /**
      * Adds a ShoppingCartIngredient to the ShoppingCart.
-     * @param ingredient The ShoppingCartIngredient to be added to the ShoppingCart.
+     * @param ingredient The ShoppingCartIngredient to be added to the
+     *                   ShoppingCart.
      */
     public void addIngredient(ShoppingCartIngredient ingredient) {
         this.ingredients.add(ingredient);
@@ -44,14 +47,16 @@ public class ShoppingCart {
 
     /**
      * Removes a ShoppingCartIngredient from the ShoppingCart.
-     * @param ingredient The ShoppingCartIngredient to be removed from the ShoppingCart.
+     * @param ingredient The ShoppingCartIngredient to be removed from the
+     *                   ShoppingCart.
      */
     public void removeIngredient(ShoppingCartIngredient ingredient) {
         this.ingredients.remove(ingredient);
     }
 
     /**
-     * Gets a ShoppingCartIngredient from the ShoppingCart at the specified index.
+     * Gets a ShoppingCartIngredient from the ShoppingCart at the specified
+     * index.
      * @param index The index to get the ShoppingCartIngredient at.
      * @return A ShoppingCartIngredient that was indexed.
      */
@@ -61,7 +66,8 @@ public class ShoppingCart {
 
     /**
      * Gets the entire list of ShoppingCartIngredients in a ShoppingCart.
-     * @return The entire ArrayList of ShoppingCartIngredients in the ShoppingCart.
+     * @return The entire ArrayList of ShoppingCartIngredients in the
+     * ShoppingCart.
      */
     public ArrayList<ShoppingCartIngredient> getIngredients() {
         return this.ingredients;

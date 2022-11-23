@@ -1,10 +1,10 @@
 /**
  * ShoppingCartIngredient
- *
+ * <p>
  * Version 1.0
- *
+ * <p>
  * 21 October, 2022
- *
+ * <p>
  * Copyright (c) 2022.  0xFFFFFF
  * All rights reserved.
  */
@@ -14,7 +14,8 @@ package com.xffffff.wellfed.shoppingcart;
 import com.xffffff.wellfed.ingredient.Ingredient;
 
 /**
- * This class represents a ShoppingCartIngredient, which are Ingredients that can be added to a
+ * This class represents a ShoppingCartIngredient, which are Ingredients that
+ * can be added to a
  * ShoppingCart.
  *
  * @version 1.0
@@ -31,9 +32,11 @@ public class ShoppingCartIngredient extends Ingredient {
     boolean isComplete;
 
     /**
-     * Creates a ShoppingCartIngredient which represents an Ingredient which can be added to a
+     * Creates a ShoppingCartIngredient which represents an Ingredient which
+     * can be added to a
      * ShoppingCart.
-     * @param description A String representing the description of a ShoppingCartIngredient.
+     * @param description A String representing the description of a
+     *                    ShoppingCartIngredient.
      */
     public ShoppingCartIngredient(String description) {
         super(description);
@@ -54,7 +57,8 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Gets whether the ShoppingCartIngredient has been picked up.
-     * @return A boolean representing whether the ShoppingCartIngredient has been picked up.
+     * @return A boolean representing whether the ShoppingCartIngredient has
+     * been picked up.
      */
     public boolean isPickedUp() {
         return isPickedUp;
@@ -62,7 +66,8 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Sets whether a ShoppingCartIngredient has been picked up.
-     * @param pickedUp A boolean representing whether the ShoppingCartIngredient has been picked up.
+     * @param pickedUp A boolean representing whether the
+     *                 ShoppingCartIngredient has been picked up.
      */
     public void setPickedUp(boolean pickedUp) {
         isPickedUp = pickedUp;
@@ -70,7 +75,8 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Gets whether a ShoppingCartIngredient has its fields completed.
-     * @return A boolean representing whether the ShoppingCartIngredient has completed fields.
+     * @return A boolean representing whether the ShoppingCartIngredient has
+     * completed fields.
      */
     public boolean isComplete() {
         return isComplete;
@@ -78,7 +84,8 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Sets whether a ShoppingCartIngredient has its fields completed.
-     * @param complete A boolean representing whether the ShoppingCartIngredient has
+     * @param complete A boolean representing whether the
+     *                 ShoppingCartIngredient has
      *                 completed fields.
      */
     public void setComplete(boolean complete) {

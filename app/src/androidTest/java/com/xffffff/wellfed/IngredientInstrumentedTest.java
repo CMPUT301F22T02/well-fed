@@ -10,16 +10,11 @@ import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
-
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.assertion.ViewAssertions;
@@ -27,7 +22,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
 
 import junit.framework.AssertionFailedError;
 
@@ -37,24 +31,22 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Instrumented test for Ingredients page, which will execute on an Android device.
+ * Instrumented test for Ingredients page, which will execute on an Android
+ * device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-@RunWith(AndroidJUnit4.class)
-public class IngredientInstrumentedTest {
+@RunWith(AndroidJUnit4.class) public class IngredientInstrumentedTest {
     /**
      * Holds the ActivityScenarioRule
      */
-    @Rule
-    public ActivityScenarioRule<MainActivity> activityRule =
+    @Rule public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     /**
      * Setup Ingredient test by navigating to IngredientFragment
      */
-    @Before
-    public void before() {
+    @Before public void before() {
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_storage_item)).perform(click());
     }
@@ -66,7 +58,8 @@ public class IngredientInstrumentedTest {
         // typing description input
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
+        onView(withId(R.id.descriptionInputEditText)).perform(
+                typeText(description));
         closeSoftKeyboard();
 
         // typing best before input - this should get current day as best before
@@ -102,15 +95,16 @@ public class IngredientInstrumentedTest {
         // finding the ingredient in the RecyclerView
         onView(withText(description)).perform(click());
 
-        // checking the correctness of the ingredient by seeing if all text is visible
-        onView(withText(description)).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Meat")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("5.0 lb")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Freezer")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        // checking the correctness of the ingredient by seeing if all text
+        // is visible
+        onView(withText(description)).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Meat")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("5.0 lb")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Freezer")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
@@ -127,18 +121,21 @@ public class IngredientInstrumentedTest {
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         // todo: replace this with something else?
-        // todo: this is here to ensure data actually is populated before testing
+        // todo: this is here to ensure data actually is populated before
+        //  testing
         Thread.sleep(2000);
     }
 
     /**
      * Adds mock ingredient w/ specified fields.
      */
-    private void addMockIngredient(String description, String category, String amount,
-                                   String count, String location) {
+    private void addMockIngredient(String description, String category,
+                                   String amount, String count,
+                                   String location) {
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(click());
-        onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
+        onView(withId(R.id.descriptionInputEditText)).perform(
+                typeText(description));
         closeSoftKeyboard();
 
         onView(withId(R.id.bestBeforeInputEditText)).perform(clearText());
@@ -170,20 +167,15 @@ public class IngredientInstrumentedTest {
      */
     private void add5Ingredients() {
         // adding apple
-        addMockIngredient("Apple", "Fruit", "5", "count",
-                "Fruit bowl");
+        addMockIngredient("Apple", "Fruit", "5", "count", "Fruit bowl");
 
-        addMockIngredient("Banana", "Fruit", "4", "count",
-                "Fruit bowl");
+        addMockIngredient("Banana", "Fruit", "4", "count", "Fruit bowl");
 
-        addMockIngredient("Ground Beef", "Meat", "5", "lb",
-                "Freezer");
+        addMockIngredient("Ground Beef", "Meat", "5", "lb", "Freezer");
 
-        addMockIngredient("Milk", "Dairy", "4", "litre",
-                "Fridge");
+        addMockIngredient("Milk", "Dairy", "4", "litre", "Fridge");
 
-        addMockIngredient("Cheese", "Dairy", "10", "packages",
-                "Pantry");
+        addMockIngredient("Cheese", "Dairy", "10", "packages", "Pantry");
     }
 
     /**
@@ -221,15 +213,13 @@ public class IngredientInstrumentedTest {
      * Clicks on the sort button (for ingredients)
      */
     private void clickSortButton() {
-        ViewInteraction materialButton = onView(
-                allOf(withId(R.id.image_filter_button),
+        ViewInteraction materialButton =
+                onView(allOf(withId(R.id.image_filter_button),
                         ChildAtPositionMatcher.childAtPosition(
                                 allOf(withId(R.id.fragment_sort_container),
                                         ChildAtPositionMatcher.childAtPosition(
                                                 withId(R.id.fragment_ingredient_storage),
-                                                1)),
-                                1),
-                        isDisplayed()));
+                                                1)), 1), isDisplayed()));
         materialButton.perform(click());
     }
 
@@ -238,10 +228,11 @@ public class IngredientInstrumentedTest {
      */
     private void assertTextNotVisible(String text) throws Exception {
         try {
-            onView(withText(text)).check(ViewAssertions
-                    .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-            throw new Exception("The view with text " + text + " was present when it shouldn't be.");
-        } catch (NoMatchingViewException e){
+            onView(withText(text)).check(ViewAssertions.matches(
+                    withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+            throw new Exception("The view with text " + text +
+                    " was present when it shouldn't be.");
+        } catch (NoMatchingViewException e) {
             return;
         }
     }
@@ -249,8 +240,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests adding a complete Ingredient.
      */
-    @Test
-    public void testAddIngredient() throws InterruptedException {
+    @Test public void testAddIngredient() throws InterruptedException {
         // adding the mock ingredient
         addMockIngredient();
 
@@ -261,8 +251,8 @@ public class IngredientInstrumentedTest {
     /**
      * Tests adding and viewing a list of multiple Ingredients
      */
-    @Test
-    public void testViewMultipleIngredients() throws InterruptedException {
+    @Test public void testViewMultipleIngredients()
+            throws InterruptedException {
         // adding the mock ingredient
         String ingredient1 = "Ground Beef";
         String ingredient2 = "Ground Chicken";
@@ -279,12 +269,12 @@ public class IngredientInstrumentedTest {
 
         // making sure it is visible
         Thread.sleep(2000);
-        onView(withText(ingredient1)).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText(ingredient2)).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText(ingredient3)).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText(ingredient1)).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText(ingredient2)).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText(ingredient3)).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         checkIngredientPresent(ingredient1);
         checkIngredientPresent(ingredient2);
@@ -294,38 +284,38 @@ public class IngredientInstrumentedTest {
     /**
      * Tests adding an incomplete Ingredient.
      */
-    @Test
-    public void testIncompleteMessages() {
+    @Test public void testIncompleteMessages() {
         typeMockIngredient("Ground Beef");
 
         // testing the description error message
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withText("Description is required")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Description is required")).check(
+                ViewAssertions.matches(withEffectiveVisibility(
+                        ViewMatchers.Visibility.VISIBLE)));
 
         onView(withId(R.id.bestBeforeInputEditText)).perform(clearText());
-        onView(withText("Best Before Date is required")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Best Before Date is required")).check(
+                ViewAssertions.matches(withEffectiveVisibility(
+                        ViewMatchers.Visibility.VISIBLE)));
 
         onView(withId(R.id.categoryInputEditText)).perform(clearText());
-        onView(withText("Category is required")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Category is required")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(withId(R.id.unitInputEditText)).perform(clearText());
-        onView(withText("Unit is required")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Unit is required")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(withId(R.id.locationInputEditText)).perform(clearText());
-        onView(withText("Location is required")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Location is required")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
     }
 
     /**
      * Tests deleting an ingredient
      */
-    @Test
-    public void testDeleteIngredient() throws InterruptedException {
+    @Test public void testDeleteIngredient() throws InterruptedException {
         addMockIngredient();
 
         // finding the ingredient in the RecyclerView
@@ -341,8 +331,8 @@ public class IngredientInstrumentedTest {
     /**
      * Tests that the delete confirmation message shows up
      */
-    @Test
-    public void testDeleteConfirmationMessage() throws InterruptedException {
+    @Test public void testDeleteConfirmationMessage()
+            throws InterruptedException {
         addMockIngredient();
 
         onView(withText("Ground Beef")).perform(click());
@@ -350,10 +340,10 @@ public class IngredientInstrumentedTest {
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
 
-        onView(withText("Delete")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Cancel")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Delete")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cancel")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(withText("Delete")).perform(click());
     }
@@ -361,8 +351,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests editing an ingredient
      */
-    @Test
-    public void testEditIngredient() throws InterruptedException {
+    @Test public void testEditIngredient() throws InterruptedException {
         addMockIngredient();
 
         onView(withText("Ground Beef")).perform(click());
@@ -370,7 +359,8 @@ public class IngredientInstrumentedTest {
         onView(withId(R.id.ingredient_edit_button)).perform(click());
 
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withId(R.id.descriptionInputEditText)).perform(typeText("Ground Chicken"));
+        onView(withId(R.id.descriptionInputEditText)).perform(
+                typeText("Ground Chicken"));
         closeSoftKeyboard();
 
         onView(withId(R.id.categoryInputEditText)).perform(clearText());
@@ -399,15 +389,16 @@ public class IngredientInstrumentedTest {
         // finding the ingredient in the RecyclerView
         onView(withText("Ground Chicken")).perform(click());
 
-        // checking the correctness of the ingredient by seeing if all text is visible
-        onView(withText("Ground Chicken")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Poultry")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("6.0 kg")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Fridge")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        // checking the correctness of the ingredient by seeing if all text
+        // is visible
+        onView(withText("Ground Chicken")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Poultry")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("6.0 kg")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Fridge")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
@@ -418,25 +409,23 @@ public class IngredientInstrumentedTest {
     /**
      * Tests that the cancel confirmation message shows up when adding
      */
-    @Test
-    public void testCancelConfirmationMessageAdd() {
+    @Test public void testCancelConfirmationMessageAdd() {
         // testing adding and then exiting
         typeMockIngredient("Ground Beef");
         pressBack();
         pressBack();
 
         // ensure the dialog shows up
-        onView(withText("Quit")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Cancel")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Quit")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cancel")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     /**
      * Tests exiting the add process + ensuring a confirmation message appears
      */
-    @Test
-    public void testExitAdd() throws InterruptedException {
+    @Test public void testExitAdd() throws InterruptedException {
         // testing adding and then exiting
         typeMockIngredient("Ground Beef");
         pressBack();
@@ -450,8 +439,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests cancelling the exit of the add process
      */
-    @Test
-    public void testCancelExitAdd() throws InterruptedException {
+    @Test public void testCancelExitAdd() throws InterruptedException {
         // cancelling and saving what we have
         typeMockIngredient("Ground Beef");
         pressBack();
@@ -465,26 +453,27 @@ public class IngredientInstrumentedTest {
 
     /**
      * Tests that the cancel confirmation message shows up when editing
-     * This test currently fails due to our app crashing when back button is pressed.
+     * This test currently fails due to our app crashing when back button is
+     * pressed.
      */
-    @Test
-    public void testCancelConfirmationMessageEdit() throws InterruptedException {
+    @Test public void testCancelConfirmationMessageEdit()
+            throws InterruptedException {
         // testing adding and then exiting
         addMockIngredient();
         onView(withText("Ground Beef")).perform(click());
         onView(withId(R.id.ingredient_edit_button)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withId(R.id.descriptionInputEditText))
-                .perform(typeText("Ground Chicken"));
+        onView(withId(R.id.descriptionInputEditText)).perform(
+                typeText("Ground Chicken"));
         closeSoftKeyboard();
 
         pressBack();
 
         // ensure the dialog shows up
-        onView(withText("Quit")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Cancel")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Quit")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cancel")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(withText("Cancel")).perform(click());
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -499,43 +488,43 @@ public class IngredientInstrumentedTest {
 
     /**
      * Tests exiting the edit process + ensuring a confirmation message appears
-     * This test currently fails due to our app crashing when back button is pressed.
+     * This test currently fails due to our app crashing when back button is
+     * pressed.
      */
-    @Test
-    public void testExitEdit() throws InterruptedException {
+    @Test public void testExitEdit() throws InterruptedException {
         // ensuring quit works, by editing our item and exiting
         addMockIngredient();
         onView(withText("Ground Beef")).perform(click());
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withId(R.id.descriptionInputEditText))
-                .perform(typeText("Ground Chicken"));
+        onView(withId(R.id.descriptionInputEditText)).perform(
+                typeText("Ground Chicken"));
         closeSoftKeyboard();
 
         pressBack();
 
         // quitting and ensuring ground beef is the same
         onView(withText("Quit")).perform(click());
-        onView(withText("Ground Beef")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ground Beef")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         checkIngredientPresent("Ground Beef");
 
     }
 
     /**
      * Tests cancelling an exit of an edit.
-     * This test currently fails due to our app crashing when back button is pressed.
+     * This test currently fails due to our app crashing when back button is
+     * pressed.
      */
-    @Test
-    public void testCancelExitEdit() throws InterruptedException {
+    @Test public void testCancelExitEdit() throws InterruptedException {
         addMockIngredient();
         onView(withText("Ground Beef")).perform(click());
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
-        onView(withId(R.id.descriptionInputEditText))
-                .perform(typeText("Ground Chicken"));
+        onView(withId(R.id.descriptionInputEditText)).perform(
+                typeText("Ground Chicken"));
         closeSoftKeyboard();
 
         pressBack();
@@ -545,16 +534,17 @@ public class IngredientInstrumentedTest {
         onView(withId(R.id.ingredient_save_button)).perform(click());
         Thread.sleep(2000);
 
-        // checking the correctness of the ingredient by seeing if all text is visible
+        // checking the correctness of the ingredient by seeing if all text
+        // is visible
         onView(withText("Ground Chicken")).perform(click());
-        onView(withText("Ground Chicken")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Meat")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("5.0 lb")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Freezer")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ground Chicken")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Meat")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("5.0 lb")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Freezer")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
@@ -564,13 +554,13 @@ public class IngredientInstrumentedTest {
     /**
      * Tests sorting Ingredients by description.
      */
-    @Test
-    public void testSortByDescription() {
+    @Test public void testSortByDescription() {
         // should be Apple, Banana, Cheese, Ground Beef, Milk
         add5Ingredients();
         // sort by description
         clickSortButton();
-        onView(withText("description")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("description")).inRoot(isPlatformPopup())
+                .perform(click());
 
         // check that stuff is sorted
         onView(withId(R.id.ingredient_storage_list)).perform(
@@ -590,7 +580,8 @@ public class IngredientInstrumentedTest {
 
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
-        onView(withId(R.id.ingredient_name)).check(matches(withText("Ground Beef")));
+        onView(withId(R.id.ingredient_name)).check(
+                matches(withText("Ground Beef")));
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
@@ -604,8 +595,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests sorting Ingredients by category.
      */
-    @Test
-    public void testSortByCategory() {
+    @Test public void testSortByCategory() {
         // should be Apple, Banana, Cheese, Ground Beef, Milk
         add5Ingredients();
         // sort by description
@@ -617,18 +607,22 @@ public class IngredientInstrumentedTest {
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // check for milk or cheese in either order
         try {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Milk")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Milk")));
         } catch (AssertionFailedError e) {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Cheese")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Cheese")));
         }
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(1, click()));
         try {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Milk")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Milk")));
         } catch (AssertionFailedError e) {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Cheese")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Cheese")));
         }
         pressBack();
 
@@ -636,24 +630,29 @@ public class IngredientInstrumentedTest {
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(2, click()));
         try {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Banana")));
         } catch (AssertionFailedError e) {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Apple")));
         }
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
         try {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Banana")));
         } catch (AssertionFailedError e) {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Apple")));
         }
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(4, click()));
-        onView(withId(R.id.ingredient_name)).check(matches(withText("Ground Beef")));
+        onView(withId(R.id.ingredient_name)).check(
+                matches(withText("Ground Beef")));
         pressBack();
 
         delete5Ingredients();
@@ -662,8 +661,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests sorting Ingredients by location.
      */
-    @Test
-    public void testSortByLocation() throws InterruptedException {
+    @Test public void testSortByLocation() throws InterruptedException {
         // should be Apple, Banana, Cheese, Ground Beef, Milk
         add5Ingredients();
         // sort by description
@@ -673,7 +671,8 @@ public class IngredientInstrumentedTest {
         // check that stuff is sorted
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.ingredient_name)).check(matches(withText("Ground Beef")));
+        onView(withId(R.id.ingredient_name)).check(
+                matches(withText("Ground Beef")));
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
@@ -685,18 +684,22 @@ public class IngredientInstrumentedTest {
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(2, click()));
         try {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Banana")));
         } catch (AssertionFailedError e) {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Apple")));
         }
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
         try {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Banana")));
         } catch (AssertionFailedError e) {
-            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+            onView(withId(R.id.ingredient_name)).check(
+                    matches(withText("Apple")));
         }
         pressBack();
 
@@ -711,8 +714,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests searching for a nonexisting Ingredient.
      */
-    @Test
-    public void testSearchNonexistent() throws Exception {
+    @Test public void testSearchNonexistent() throws Exception {
         add5Ingredients();
 
         // search for something not there
@@ -735,8 +737,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests searching and then clearing the search.
      */
-    @Test
-    public void testClearText() throws Exception {
+    @Test public void testClearText() throws Exception {
         add5Ingredients();
 
         // search for something not there
@@ -754,16 +755,16 @@ public class IngredientInstrumentedTest {
 
         onView(withId(R.id.search_text)).perform(clearText());
 
-        onView(withText("Apple")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Banana")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Ground Beef")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Milk")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Cheese")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Banana")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ground Beef")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Milk")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cheese")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         delete5Ingredients();
     }
@@ -771,8 +772,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests searching for the whole string in the description
      */
-    @Test
-    public void testWholeSearch() throws Exception {
+    @Test public void testWholeSearch() throws Exception {
         add5Ingredients();
 
         onView(withId(R.id.search_text)).perform(click());
@@ -784,8 +784,8 @@ public class IngredientInstrumentedTest {
         assertTextNotVisible("Ground Beef");
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
-        onView(withText("Banana")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Banana")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(withId(R.id.search_text)).perform(clearText());
         delete5Ingredients();
@@ -794,8 +794,7 @@ public class IngredientInstrumentedTest {
     /**
      * Tests whether search is case-insensitive
      */
-    @Test
-    public void testCaseInsensitivity() throws Exception {
+    @Test public void testCaseInsensitivity() throws Exception {
         add5Ingredients();
 
         onView(withId(R.id.search_text)).perform(click());
@@ -806,8 +805,8 @@ public class IngredientInstrumentedTest {
         assertTextNotVisible("Apple");
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
-        onView(withText("Banana")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Banana")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         assertTextNotVisible("Ground Beef");
 
         onView(withId(R.id.search_text)).perform(clearText());

@@ -20,6 +20,7 @@ import java.util.List;
 public class MealPlanTest {
     /**
      * Creates a mock MealPlan to be used in the tests.
+     *
      * @return the mock MealPlan created
      */
     private MealPlan mockMealPlan() {
@@ -28,15 +29,19 @@ public class MealPlanTest {
 
     /**
      * Creates a mock MealIngredient to be used in the tests.
+     *
      * @return the mock MealIngredient created
      */
-    private Ingredient mockMealIngredient(){return new Ingredient();}
+    private Ingredient mockMealIngredient() {
+        return new Ingredient();
+    }
 
     /**
      * Creates a mock Recipe to be used in the tests.
+     *
      * @return the mock Recipe created
      */
-    private Recipe mockMealRecipe(){
+    private Recipe mockMealRecipe() {
         Recipe recipe = new Recipe("Stuffing");
         return recipe;
     }
@@ -44,8 +49,7 @@ public class MealPlanTest {
     /**
      * Tests adding of an Ingredient to the MealPlan.
      */
-    @Test
-    public void testAddAndGetIngredient() {
+    @Test public void testAddAndGetIngredient() {
         MealPlan mealPlan = mockMealPlan();
         Ingredient ingredient1 = mockMealIngredient();
         Ingredient ingredient2 = mockMealIngredient();
@@ -65,8 +69,7 @@ public class MealPlanTest {
     /**
      * Tests deleting of an Ingredient from the MealPlan.
      */
-    @Test
-    public void testRemoveIngredient() {
+    @Test public void testRemoveIngredient() {
         MealPlan mealPlan = mockMealPlan();
         Ingredient ingredient1 = mockMealIngredient();
         Ingredient ingredient2 = mockMealIngredient();
@@ -89,17 +92,19 @@ public class MealPlanTest {
     }
 
     /**
-     * Tests the behaviour of removing an ingredient that is not in the MealPlan.
+     * Tests the behaviour of removing an ingredient that is not in the
+     * MealPlan.
      */
-    @Test
-    public void testRemoveIngredientNotInMealPlan() {
+    @Test public void testRemoveIngredientNotInMealPlan() {
         MealPlan mealPlan = mockMealPlan();
         Ingredient ingredient = mockMealIngredient();
         Ingredient ingredient2 = mockMealIngredient();
-        // no error should be thrown, as deleting a non existing ingredient is fine
+        // no error should be thrown, as deleting a non existing ingredient
+        // is fine
         mealPlan.removeIngredient(ingredient);
 
-        // a removed ingredient not in recipe should not affect other ingredients
+        // a removed ingredient not in recipe should not affect other
+        // ingredients
         mealPlan.addIngredient(ingredient);
         mealPlan.removeIngredient(ingredient2);
         assertEquals(ingredient, mealPlan.getIngredient(0));
@@ -108,8 +113,7 @@ public class MealPlanTest {
     /**
      * Tests adding and getting of a Recipe to/from the MealPlan.
      */
-    @Test
-    public void testAddAndGetRecipe() {
+    @Test public void testAddAndGetRecipe() {
         MealPlan mealPlan = mockMealPlan();
         Recipe recipe1 = mockMealRecipe();
         Recipe recipe2 = mockMealRecipe();
@@ -128,8 +132,7 @@ public class MealPlanTest {
     /**
      * Tests deleting of an Recipe from the MealPlan.
      */
-    @Test
-    public void testRemoveRecipe() {
+    @Test public void testRemoveRecipe() {
         MealPlan mealPlan = mockMealPlan();
         Recipe recipe1 = mockMealRecipe();
         Recipe recipe2 = mockMealRecipe();
@@ -152,15 +155,16 @@ public class MealPlanTest {
     /**
      * Tests the behaviour of removing an Recipe that is not in the MealPlan.
      */
-    @Test
-    public void testRemoveRecipeNotInMealPlan() {
+    @Test public void testRemoveRecipeNotInMealPlan() {
         MealPlan mealPlan = mockMealPlan();
         Recipe recipe1 = mockMealRecipe();
         Recipe recipe2 = mockMealRecipe();
-        // no error should be thrown, as deleting a non existing ingredient is fine
+        // no error should be thrown, as deleting a non existing ingredient
+        // is fine
         mealPlan.removeRecipe(recipe1);
 
-        // a removed ingredient not in recipe should not affect other ingredients
+        // a removed ingredient not in recipe should not affect other
+        // ingredients
         mealPlan.addRecipe(recipe1);
         mealPlan.removeRecipe(recipe2);
         assertEquals(recipe1, mealPlan.getRecipe(0));
@@ -169,8 +173,7 @@ public class MealPlanTest {
     /**
      * Tests getting the List of Ingredients from a MealPlan.
      */
-    @Test
-    public void testGetIngredients() {
+    @Test public void testGetIngredients() {
         MealPlan mealPlan = mockMealPlan();
         Ingredient ingredient = mockMealIngredient();
         Ingredient ingredient2 = mockMealIngredient();
@@ -186,8 +189,7 @@ public class MealPlanTest {
     /**
      * Tests getting the List of Ingredients from a MealPlan.
      */
-    @Test
-    public void testGetRecipes() {
+    @Test public void testGetRecipes() {
         MealPlan mealPlan = mockMealPlan();
         Recipe recipe = mockMealRecipe();
         Recipe recipe2 = mockMealRecipe();
@@ -203,8 +205,7 @@ public class MealPlanTest {
     /**
      * Tests and setting the category of a MealPlan.
      */
-    @Test
-    public void testCategory() {
+    @Test public void testCategory() {
         MealPlan mealPlan = mockMealPlan();
 
         // test with string
@@ -220,8 +221,7 @@ public class MealPlanTest {
     /**
      * Tests getting and setting the title of a MealPlan.
      */
-    @Test
-    public void testTitle() {
+    @Test public void testTitle() {
         MealPlan mealPlan = mockMealPlan();
 
         // test with string
@@ -237,8 +237,7 @@ public class MealPlanTest {
     /**
      * Tests getting and setting the servings of a MealPlan.
      */
-    @Test
-    public void testServings() {
+    @Test public void testServings() {
         MealPlan mealPlan = mockMealPlan();
 
         // test with integer
@@ -250,8 +249,7 @@ public class MealPlanTest {
     /**
      * Tests getting and setting the eat date of the MealPlan
      */
-    @Test
-    public void testEatDate() {
+    @Test public void testEatDate() {
         MealPlan mealPlan = mockMealPlan();
 
         Date eatDate = new Date();
@@ -260,11 +258,12 @@ public class MealPlanTest {
     }
 
     /**
-     * Tests that a meal plan is always equals if all of the fields are identical.
-     * This is done by changing each field individually, and then invoking equals
+     * Tests that a meal plan is always equals if all of the fields are
+     * identical.
+     * This is done by changing each field individually, and then invoking
+     * equals
      */
-    @Test
-    public void testEquals() {
+    @Test public void testEquals() {
         Ingredient mockIngredient = mockMealIngredient();
         Ingredient mockIngredient2 = mockMealIngredient();
         mockIngredient.setDescription("Milk");
@@ -330,11 +329,12 @@ public class MealPlanTest {
     }
 
     /**
-     * Tests that a meal plan is always equals if all of the fields are identical.
-     * This is done by changing each field individually, and then invoking equals
+     * Tests that a meal plan is always equals if all of the fields are
+     * identical.
+     * This is done by changing each field individually, and then invoking
+     * equals
      */
-    @Test
-    public void testNotEquals() {
+    @Test public void testNotEquals() {
         Ingredient mockIngredient = mockMealIngredient();
         Ingredient mockIngredient2 = mockMealIngredient();
         mockIngredient.setDescription("Milk");

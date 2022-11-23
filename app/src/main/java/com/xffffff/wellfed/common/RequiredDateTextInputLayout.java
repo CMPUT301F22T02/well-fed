@@ -26,7 +26,6 @@ package com.xffffff.wellfed.common;
 
 import android.content.Context;
 import android.util.AttributeSet;
-
 import android.view.View;
 
 import androidx.annotation.NonNull;

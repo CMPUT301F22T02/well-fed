@@ -38,17 +38,6 @@ public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
     private final OnAdapterDataChangedListener listener;
 
     /**
-     * The OnDataChangedListener interface requires a handler for changes in
-     * RecyclerView.Adapter data.
-     */
-    public interface OnAdapterDataChangedListener {
-        /**
-         * Handler for changes in RecyclerView.Adapter data.
-         */
-        void onAdapterDataChanged();
-    }
-
-    /**
      * Constructs AdapterDataObserver
      *
      * @param listener the OnAdapterDataChangedListener
@@ -69,7 +58,7 @@ public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
      * Notifies the listener that the RecyclerView.Adapter data has changed
      *
      * @param positionStart the start position
-     * @param itemCount    the item count
+     * @param itemCount     the item count
      */
     @Override public void onItemRangeChanged(int positionStart, int itemCount) {
         super.onItemRangeChanged(positionStart, itemCount);
@@ -80,8 +69,8 @@ public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
      * Notifies the listener that the RecyclerView.Adapter data has changed
      *
      * @param positionStart the start position
-     * @param itemCount    the item count
-     * @param payload      the payload
+     * @param itemCount     the item count
+     * @param payload       the payload
      */
     @Override public void onItemRangeChanged(int positionStart, int itemCount,
                                              @Nullable Object payload) {
@@ -93,7 +82,7 @@ public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
      * Notifies the listener that the RecyclerView.Adapter data has changed
      *
      * @param positionStart the start position
-     * @param itemCount the item count
+     * @param itemCount     the item count
      */
     @Override public void onItemRangeInserted(int positionStart,
                                               int itemCount) {
@@ -123,5 +112,16 @@ public class AdapterDataObserver extends RecyclerView.AdapterDataObserver {
     @Override public void onItemRangeRemoved(int positionStart, int itemCount) {
         super.onItemRangeRemoved(positionStart, itemCount);
         listener.onAdapterDataChanged();
+    }
+
+    /**
+     * The OnDataChangedListener interface requires a handler for changes in
+     * RecyclerView.Adapter data.
+     */
+    public interface OnAdapterDataChangedListener {
+        /**
+         * Handler for changes in RecyclerView.Adapter data.
+         */
+        void onAdapterDataChanged();
     }
 }

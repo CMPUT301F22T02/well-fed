@@ -16,6 +16,7 @@ import org.junit.Test;
 public class IngredientTest {
     /**
      * Creates a mock ingredient to be used in the tests, with no title.
+     *
      * @return the mock ingredient created
      */
     public Ingredient mockIngredient() {
@@ -24,6 +25,7 @@ public class IngredientTest {
 
     /**
      * Creates a mock ingredient to be used in the tests, with a title.
+     *
      * @return the mock ingredient created
      */
     public Ingredient mockIngredientTitled() {
@@ -33,8 +35,7 @@ public class IngredientTest {
     /**
      * Tests whether a new Ingredient has the correctly initialized fields.
      */
-    @Test
-    public void testNullFields() {
+    @Test public void testNullFields() {
         Ingredient mock = mockIngredient();
         assertNull(mock.getAmount());
         assertNull(mock.getCategory());
@@ -45,8 +46,7 @@ public class IngredientTest {
     /**
      * Tests the set and get functionality of the description.
      */
-    @Test
-    public void testDescription() {
+    @Test public void testDescription() {
         Ingredient mock = mockIngredient();
         assertNull(mock.getDescription());
 
@@ -75,8 +75,7 @@ public class IngredientTest {
     /**
      * Tests the set and get functionality of the category.
      */
-    @Test
-    public void testCategory() {
+    @Test public void testCategory() {
         Ingredient mock = mockIngredient();
         assertNull(mock.getCategory());
 
@@ -93,8 +92,7 @@ public class IngredientTest {
     /**
      * Tests the set and get functionality of the unit.
      */
-    @Test
-    public void testUnit() {
+    @Test public void testUnit() {
         Ingredient mock = mockIngredient();
         assertNull(mock.getUnit());
 
@@ -111,8 +109,7 @@ public class IngredientTest {
     /**
      * Tests the set and get functionality of the description.
      */
-    @Test
-    public void testAmount() {
+    @Test public void testAmount() {
         Ingredient mock = mockIngredient();
         assertNull(mock.getAmount());
 
@@ -123,11 +120,12 @@ public class IngredientTest {
     }
 
     /**
-     * Tests that a ingredient is always equals if all of the fields are identical.
-     * This is done by changing each field individually, and then invoking equals
+     * Tests that a ingredient is always equals if all of the fields are
+     * identical.
+     * This is done by changing each field individually, and then invoking
+     * equals
      */
-    @Test
-    public void testEquals() {
+    @Test public void testEquals() {
         Ingredient mock = mockIngredient();
         Ingredient mock2 = mockIngredient();
         assertTrue(mock.isEqual(mock2));
@@ -160,11 +158,12 @@ public class IngredientTest {
     }
 
     /**
-     * Tests that a ingredient is always equals if at least one of the fields is non-identical
-     * This is done by changing each field individually, and then invoking equals
+     * Tests that a ingredient is always equals if at least one of the fields
+     * is non-identical
+     * This is done by changing each field individually, and then invoking
+     * equals
      */
-    @Test
-    public void testNotEquals() {
+    @Test public void testNotEquals() {
         Ingredient mock = mockIngredient();
         Ingredient mock2 = mockIngredient();
         assertTrue(mock.isEqual(mock2));

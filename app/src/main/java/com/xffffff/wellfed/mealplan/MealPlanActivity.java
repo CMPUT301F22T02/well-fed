@@ -3,13 +3,13 @@ package com.xffffff.wellfed.mealplan;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ConfirmDialog;
@@ -17,7 +17,6 @@ import com.xffffff.wellfed.common.DateUtil;
 import com.xffffff.wellfed.common.DeleteButton;
 import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.recipe.RecipeActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * MealPlanActivity class. It is the activity that displays the meal plan. It
@@ -57,6 +56,7 @@ public class MealPlanActivity extends ActivityBase
     /**
      * OnCreate method. It is called when the activity is created. It sets up
      * the activity and displays the meal plan.
+     *
      * @param savedInstanceState The saved instance state.
      */
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +66,23 @@ public class MealPlanActivity extends ActivityBase
 
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
 
-        TextView mealPlanTitleTextView = findViewById(R.id.mealPlanTitleTextView);
-        TextView mealPLanCategoryTextView = findViewById(R.id.mealPlanCategoryTextView);
+        TextView mealPlanTitleTextView =
+                findViewById(R.id.mealPlanTitleTextView);
+        TextView mealPLanCategoryTextView =
+                findViewById(R.id.mealPlanCategoryTextView);
         TextView mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
-        TextView mealPlanNumberOfServingsTextView = findViewById(R.id.mealPlanNumberOfServingsTextView);
+        TextView mealPlanNumberOfServingsTextView =
+                findViewById(R.id.mealPlanNumberOfServingsTextView);
 
         mealPlanTitleTextView.setText(mealPlan.getTitle());
         DateUtil dateUtil = new DateUtil();
         String mealPlanDateText =
-            "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd");
+                "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd");
         mealPlanDateTextView.setText(mealPlanDateText);
         String mealPlanCategoryText = "Category: " + mealPlan.getCategory();
         mealPLanCategoryTextView.setText(mealPlanCategoryText);
         String mealPlanNumberOfServingsText =
-            "Number of servings: " + mealPlan.getServings();
+                "Number of servings: " + mealPlan.getServings();
         mealPlanNumberOfServingsTextView.setText(mealPlanNumberOfServingsText);
 
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
@@ -98,8 +101,9 @@ public class MealPlanActivity extends ActivityBase
         ingredientRecyclerView.setAdapter(ingredientAdapter);
         ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        DeleteButton deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
-            "Delete Meal Plan", this);
+        DeleteButton deleteButton =
+                new DeleteButton(this, findViewById(R.id.deleteButton),
+                        "Delete Meal Plan", this);
 
         FloatingActionButton fab = findViewById(R.id.save_fab);
         fab.setOnClickListener(view -> launcher.launch(mealPlan));
@@ -120,6 +124,7 @@ public class MealPlanActivity extends ActivityBase
     /**
      * onEdit method. It is called when the user edits the meal plan. It
      * confirms the edit and returns the meal plan to the meal plan fragment.
+     *
      * @param mealPlan The meal plan.
      */
     private void onEdit(MealPlan mealPlan) {
@@ -145,6 +150,7 @@ public class MealPlanActivity extends ActivityBase
      * OnItemClick method. It is called when the user clicks on a recipe in
      * the meal plan. It launches the recipe activity so that the user can
      * edit the recipe.
+     *
      * @param recipe The recipe that was clicked.
      */
     @Override public void onItemClick(Recipe recipe) {
