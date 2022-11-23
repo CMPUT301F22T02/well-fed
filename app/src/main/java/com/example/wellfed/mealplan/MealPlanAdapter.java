@@ -29,19 +29,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.Date;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
-import com.example.wellfed.common.UTCDate;
-import com.example.wellfed.ingredient.StorageIngredient;
-import com.example.wellfed.ingredient.StorageIngredientAdapter;
-import com.google.android.material.color.MaterialColors;
-import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import com.example.wellfed.common.DateUtil;
 
 /**
  * The MealPlanAdapter class binds ArrayList to RecyclerView.
@@ -65,11 +57,13 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      * The listener for an item click in the RecyclerView
      */
     private OnItemLoadListener itemLoadListener;
+    private DateUtil dateUtil;
 
     // TODO: keep the context for now, try to remove it later
     public MealPlanAdapter(MealPlanDB db) {
         super(db.getQuery());
         this.db = db;
+        dateUtil = new DateUtil();
     }
 
     /**
@@ -137,23 +131,20 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                     }
                 });
 
-                UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
-
-                UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
+                Date eatDate = mealPlan.getEatDate();
+                Date eatDateFirstDayOfWeek = dateUtil.getFirstDayOfWeek(eatDate);
                 if (position > 0) {
                     db.getMealPlan(getSnapshot(position - 1),
                             (priorMealPlan, success2) -> {
                                 if (success2) {
-                                    UTCDate priorEatDate = UTCDate.from(
-                                            priorMealPlan.getEatDate());
-                                    if (priorEatDate.equals(eatDate)) {
+                                    Date priorEatDate = priorMealPlan.getEatDate();
+                                    if (dateUtil.equals(priorEatDate,eatDate)) {
                                         return;
                                     }
-                                    renderDates(eatDate, eatDateFirstDayOfWeek,
-                                            holder);
-                                    UTCDate priorEatDateFirstDayOfWeek =
-                                            priorEatDate.getFirstDayOfWeek();
-                                    if (eatDateFirstDayOfWeek.equals(
+                                    renderDates(eatDate, holder);
+                                    Date priorEatDateFirstDayOfWeek =
+                                            dateUtil.getFirstDayOfWeek(priorEatDate);
+                                    if (dateUtil.equals(eatDateFirstDayOfWeek,
                                             priorEatDateFirstDayOfWeek)) {
                                         return;
                                     }
@@ -163,7 +154,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                                 }
                             });
                 } else {
-                    renderDates(eatDate, eatDateFirstDayOfWeek, holder);
+                    renderDates(eatDate, holder);
                     renderWeeks(eatDate, eatDateFirstDayOfWeek, holder);
                 }
             }
@@ -173,26 +164,27 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         });
     }
 
-    private void renderDates(UTCDate eatDate, UTCDate eatDateFirstDayOfWeek,
-                             @NonNull MealPlanViewHolder holder) {
-        UTCDate today = new UTCDate();
+    private void renderDates(Date eatDate, @NonNull MealPlanViewHolder holder) {
+        Date today = new Date();
         holder.setDateCircle(eatDate, today.equals(eatDate));
-
     }
 
-    private void renderWeeks(UTCDate eatDate, UTCDate eatDateFirstDayOfWeek,
+    private void renderWeeks(Date eatDate, Date eatDateFirstDayOfWeek,
                              @NonNull MealPlanViewHolder holder) {
-        UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
+        dateUtil = new DateUtil();
+        Date eatDateLastDayOfWeek = dateUtil.getLastDayOfWeek(eatDate);
         String eatDateFirstDayOfWeekMonth =
-                eatDateFirstDayOfWeek.format("MMMM ");
-        String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
+                dateUtil.format(eatDateFirstDayOfWeek, "MMMM ");
+        String eatDateFirstDayOfWeekDay =
+                dateUtil.format(eatDateFirstDayOfWeek,"d");
         String weekLabel =
                 eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
-        String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
+        String eatDateLastDayOfWeekMonth =
+                dateUtil.format(eatDateLastDayOfWeek,"MMMM ");
         if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
             weekLabel += eatDateLastDayOfWeekMonth;
         }
-        weekLabel += eatDateLastDayOfWeek.format("d");
+        weekLabel += dateUtil.format(eatDateLastDayOfWeek, "d");
         holder.getWeekTextView().setText(weekLabel);
         holder.getWeekTextView().setVisibility(View.VISIBLE);
     }
