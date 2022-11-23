@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 // todo create an xml file for this class
 
 
@@ -282,7 +283,7 @@ public class RecipeEditActivity extends EditActivityBase {
 		}
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-		String path = MediaStore.Images.Media.insertImage(RecipeEditActivity.this.getContentResolver(), bitmap, "temp", null);
+		String path = MediaStore.Images.Media.insertImage(RecipeEditActivity.this.getContentResolver(), bitmap, UUID.randomUUID().toString(), null);
 		Uri uri = Uri.parse(path);
 		UploadTask uploadTask = recipesRef.putFile(uri);
 // Register observers to listen for when the download is done or if it fails

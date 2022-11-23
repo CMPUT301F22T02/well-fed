@@ -1,35 +1,57 @@
 package com.example.wellfed.shoppingcart;
 
-import com.example.wellfed.ingredient.IngredientStorageController;
-import com.example.wellfed.ingredient.StorageIngredient;
+import android.app.Activity;
+import android.util.Pair;
 
-import org.checkerframework.checker.units.qual.A;
+import com.example.wellfed.ActivityBase;
+import com.example.wellfed.common.DBConnection;
+import com.example.wellfed.ingredient.Ingredient;
+import com.example.wellfed.ingredient.StorageIngredient;
+import com.example.wellfed.ingredient.StorageIngredientDB;
+import com.example.wellfed.mealplan.MealPlan;
+import com.example.wellfed.mealplan.MealPlanDB;
+import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.unit.UnitConverter;
+import com.example.wellfed.unit.UnitHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShoppingCartIngredientController {
     /**
-     * Holds a list of ShoppingCartIngredients in the shopping cart.
+     * The Activity that the controller is attached to.
      */
-    private ArrayList<ShoppingCartIngredient> ingredients;
-
+    private ActivityBase activity;
     /**
-     * adapter is used to display the ingredients in the recycler view.
+     * ShoppingCart adapter. This is used to update the recycler view.
      */
     private ShoppingCartIngredientAdapter adapter;
+    /**
+     * This is the db of the shopping cart.
+     */
+    private ShoppingCartDB db;
 
-    private IngredientStorageController controller;
+    private StorageIngredientDB storageIngredientDB;
+
+    private MealPlanDB mealPlanDB;
 
     /**
-     * Initialize ingredient list.
+     * The constructor for the controller.
+     *
+     * @param activity The activity that the controller is attached to.
      */
-    public ShoppingCartIngredientController(IngredientStorageController isController) {
-        controller = isController;
-        ingredients = new ArrayList<>();
+    public ShoppingCartIngredientController(Activity activity) {
+        this.activity = (ActivityBase) activity;
+        DBConnection connection = new DBConnection(activity.getApplicationContext());
+        db = new ShoppingCartDB(connection);
+        adapter = new ShoppingCartIngredientAdapter(db);
+        storageIngredientDB = new StorageIngredientDB(connection);
+        mealPlanDB = new MealPlanDB(connection);
     }
 
     /**
      * Sets adapter to the given adapter.
+     *
      * @param adapter the adapter to set
      */
     public void setAdapter(ShoppingCartIngredientAdapter adapter) {
@@ -37,76 +59,156 @@ public class ShoppingCartIngredientController {
     }
 
     /**
-     * Deletes the ingredient at the given index from the shopping cart.
-     * @param pos the index of the ingredient to delete
+     * Gets the adapter.
+     *
+     * @return the adapter
      */
-    public void deleteIngredient(int pos) {
-        if (pos >= 0 && pos < ingredients.size()) {
-            ingredients.remove(pos);
-            adapter.notifyItemRemoved(pos);
-        }
+    public ShoppingCartIngredientAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void generateShoppingCart() {
+        UnitConverter unitConverter = new UnitConverter(activity.getApplicationContext());
+        UnitHelper unitHelper = new UnitHelper(unitConverter);
+        HashMap<String, Double> needed = new HashMap<>();
+        mealPlanDB.getMealPlans((mealPlans, success) -> {
+            for (MealPlan mealPlan : mealPlans) {
+                for (Recipe r : mealPlan.getRecipes()) {
+                    for (Ingredient ingredient : r.getIngredients()) {
+                        Pair<Double, String> val = bestUnitHelper(ingredient, unitHelper);
+                        needed.put(val.second, val.first);
+                    }
+                }
+                for (Ingredient ingredient : mealPlan.getIngredients()) {
+                    String uid = ingredientUid(ingredient);
+                    if (needed.get(uid) != null) {
+                        Pair<Double, String> val = bestUnitHelper(ingredient, unitHelper);
+                        needed.put(val.second, needed.get(uid) + val.first);
+                    } else {
+                        Pair<Double, String> val = bestUnitHelper(ingredient, unitHelper);
+                        needed.put(val.second, val.first);
+                    }
+                }
+            }
+            // get all the items in the list
+            storageIngredientDB.getAllStorageIngredients((storedIngredients, success1) -> {
+                if (!success1) {
+
+                }
+                for (StorageIngredient stored : storedIngredients) {
+                    Pair<Double, String> val = bestUnitHelper(stored, unitHelper);
+                    String uid = val.second;
+                    if (needed.get(uid) != null) {
+                        needed.put(val.second, needed.get(uid) - val.first);
+                    }
+                }
+
+                // get all the items in the storage
+                db.getShoppingCart((cart, success2) -> {
+                    HashMap<String, Integer> inCart = new HashMap<>();
+
+                    for (int i = 0; i < cart.size(); i++) {
+                        ShoppingCartIngredient cartItem = cart.get(i);
+                        String uid = ingredientUid(cartItem);
+                        inCart.put(uid, i);
+                    }
+                    // if shopping cart has those items update them accordingly
+                    for (String key : needed.keySet()) {
+                        if (inCart.get(key) != null) {
+                            String [] details = key.split("####");
+                            String unit = details[2];
+                            // get items from the shopping cart
+                            ShoppingCartIngredient cartItem = cart.get(inCart.get(key));
+                            cartItem.setUnit(unit);
+                            cartItem.setAmount(needed.get(key));
+                            db.updateIngredient(cartItem, (a,s)->{
+                                s = false;
+                            });
+                        } else { // else create those items
+                            String [] details = key.split("####");
+                            String unit = details[2];
+                            Ingredient ingredient = new Ingredient(details[0]);
+                            ingredient.setUnit(unit);
+                            ingredient.setCategory(details[1]);
+                            ingredient.setAmount(needed.get(key));
+                            db.addIngredient(ingredient, (a,s)->{
+                                s = false;
+                            });
+                        }
+
+                    }
+
+                });
+            });
+        });
+
+
+    }
+
+    private Pair<Double, String> bestUnitHelper(Ingredient ingredient, UnitHelper unitHelper) {
+        // reduce to smallest
+        Pair<Double, String> smallest = unitHelper.convertToSmallest(ingredient.getUnit(), ingredient.getAmount());
+        ingredient.setUnit(smallest.second);
+        ingredient.setAmount(smallest.first);
+
+        Pair<Double, String> best = unitHelper.availableUnits(ingredient);
+        ingredient.setAmount(best.first);
+        ingredient.setUnit(best.second);
+
+        return new Pair<>(ingredient.getAmount(), ingredientUid(ingredient));
+
+    }
+
+    private String ingredientUid(Ingredient ingredient) {
+        String seperator = "####";
+        String uid = ingredient.getDescription() + seperator
+                + ingredient.getCategory() + seperator
+                + ingredient.getUnit();
+        return uid;
     }
 
     /**
-     * Adds an Ingredient to the shopping cart.
-     * @param ingredient An ShoppingCartIngredient object to add
+     * Adds the ingredient to the shopping cart.
+     *
+     * @param ingredient the ingredient to add
      */
-    public void addIngredient(StorageIngredient ingredient) {
-//        if (ingredient != null) {
-//            if (!ingredients.contains(ingredient)) {
-//                ingredients.add(ingredient);
-//                adapter.notifyItemInserted(ingredients.size() - 1);
-//            } else {
-//                int index = ingredients.indexOf(ingredient);
-//                ingredients.set(index, ingredient);
-//                adapter.notifyItemChanged(index);
-//            }
-//        }
-        controller.addIngredient(ingredient);
-//        ingredients.add(ingredient);
-//        adapter.notifyItemInserted(ingredients.size()-1);
+    public void addIngredientToShoppingCart(ShoppingCartIngredient ingredient) {
+        db.addIngredient(ingredient, (addIngredient, addSuccess) -> {
+            if (!addSuccess) {
+                this.activity.makeSnackbar("Failed to add " + addIngredient.getDescription());
+            } else {
+                this.activity.makeSnackbar("Added " + addIngredient.getDescription());
+            }
+        });
     }
 
     /**
-     * Set ingredients to the given list of ingredients.
-     * @param ingredients the list of ingredients to set
+     * Deletes the ingredient from the shopping cart.
+     *
+     * @param ingredient the ingredient to delete
      */
-    public void setIngredients(ArrayList<ShoppingCartIngredient> ingredients){
-        this.ingredients = ingredients;
+    public void deleteIngredientFromShoppingCart(ShoppingCartIngredient ingredient) {
+        db.deleteIngredient(ingredient, (delIngredient, delSuccess) -> {
+            if (!delSuccess) {
+                this.activity.makeSnackbar("Failed to delete " + delIngredient.getDescription());
+            } else {
+                this.activity.makeSnackbar("Deleted " + delIngredient.getDescription());
+            }
+        });
     }
 
     /**
-     * Update the ingredient at the given index.
-     * @param position the index of the ingredient to update
+     * Updates the ingredient in the shopping cart.
+     *
      * @param ingredient the ingredient to update
      */
-    public void updateIngredient(int position, ShoppingCartIngredient ingredient){
-        ingredients.set(position, ingredient);
-        adapter.notifyItemChanged(position);
-    }
-
-    /**
-     * Method overloading. Update the ingredient.
-     * @param ingredient the ingredient to update
-     */
-    public void updateIngredient(ShoppingCartIngredient ingredient){
-        int position = ingredients.indexOf(ingredient);
-        if(position >= 0 && position < ingredients.size()){
-            ingredients.set(position, ingredient);
-            adapter.notifyItemChanged(position);
-        }
-    }
-
-    public void editIngredient(int position, ShoppingCartIngredient modifiedIngredient) {
-        ingredients.set(position, modifiedIngredient);
-        adapter.notifyItemChanged(position);
-    }
-
-    /**
-     * Get ingredients.
-     * @return the list of ingredients
-     */
-    public ArrayList<ShoppingCartIngredient> getIngredients() {
-        return ingredients;
+    public void updateIngredientInShoppingCart(ShoppingCartIngredient ingredient) {
+        db.updateIngredient(ingredient, (updateIngredient, updateSuccess) -> {
+            if (!updateSuccess) {
+                this.activity.makeSnackbar("Failed to update " + updateIngredient.getDescription());
+            } else {
+                this.activity.makeSnackbar("Updated " + updateIngredient.getDescription());
+            }
+        });
     }
 }

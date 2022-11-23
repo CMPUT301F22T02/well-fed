@@ -14,40 +14,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.wellfed.R;
+import com.example.wellfed.common.DBAdapter;
+import com.example.wellfed.ingredient.Ingredient;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
 // This class is used to display the list of ingredients in the shopping cart
-public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<ShoppingCartIngredientAdapter.ViewHolder> {
-    private ArrayList<ShoppingCartIngredient> shoppingCartIngredients;
+public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
 
     /**
-     * ShoppingCartIngredientLauncher object for the adapter.
+     * Constructor for the adapter
      */
-//    private ShoppingCartIngredientLauncher shoppingCartIngredientLauncher;
-//    TODO: convert to listener
-    private ShoppingCartFragment context;
-
-    /**
-     * Constructor for the launcher.
-     */
-//    public interface ShoppingCartIngredientLauncher {
-//        public void launch(int pos);
-//    }
-
-    /**
-     * Constructor for the IngredientAdapter.
-     *
-     * @param shoppingCartIngredients ArrayList of ShoppingCartIngredient objects for the adapter.
-     * @param shoppingCartFragment    ShoppingCartFragment object for the adapter.
-     */
-    public ShoppingCartIngredientAdapter(ArrayList<ShoppingCartIngredient> shoppingCartIngredients,
-                                         ShoppingCartFragment shoppingCartFragment) {
-        this.shoppingCartIngredients = shoppingCartIngredients;
-        this.context = shoppingCartFragment;
+    public ShoppingCartIngredientAdapter(ShoppingCartDB db) {
+        super(db.getQuery());
     }
 
-    /**
+    public interface OnItemClickListener {
+        void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
+    }
+
+      /**
      * ViewHolder class for the ShoppingCartIngredientAdapter.
      * It contains the TextViews for the description, amount,
      * unit and category of the ingredient.
@@ -59,7 +47,6 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             description = itemView.findViewById(R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(R.id.shopping_cart_ingredient_subtext);
             checkBox = itemView.findViewById(R.id.checkBox);
@@ -68,8 +55,7 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
 
     /**
      * onCreateViewHolder method for the ShoppingCartIngredientAdapter.
-     *
-     * @param parent   ViewGroup for the adapter.
+     * @param parent ViewGroup for the adapter.
      * @param viewType int for the adapter.
      * @return ViewHolder object for the adapter.
      */
@@ -80,58 +66,39 @@ public class ShoppingCartIngredientAdapter extends RecyclerView.Adapter<Shopping
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View shoppingCartIngredientView = inflater.inflate(R.layout.shopping_cart_ingredient, parent,
-                false);
+            false);
 
         return new ViewHolder(shoppingCartIngredientView);
     }
 
     /**
      * onBindViewHolder method for the ShoppingCartIngredientAdapter.
-     *
-     * @param holder   ViewHolder object for the adapter.
+     * @param holder ViewHolder object for the adapter.
      * @param position int for the adapter.
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ShoppingCartIngredient ingredient = shoppingCartIngredients.get(position);
-
-        // Allow user to change pickup status when checking or unchecking checkbox
-        CheckBox checkBox = holder.checkBox;
-
-        // set checkbox to checked if ingredient already picked up
-        checkBox.setChecked(ingredient.isPickedUp);
-
-        checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkBox.isChecked()) {
-                    ingredient.setPickedUp(true);
-                    Toast.makeText(context.getContext(), "Picked up status set to " + String.valueOf(ingredient.isPickedUp), Toast.LENGTH_LONG).show();
-                } else {
-                    ingredient.setPickedUp(false);
-                    Toast.makeText(context.getContext(), "Picked up status set to " + String.valueOf(ingredient.isPickedUp), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        holder.description.setText(ingredient.getDescription());
-        holder.subtext.setText(String.valueOf(ingredient.getAmount()) + " " +
-                ingredient.getUnit() + " | " + ingredient.getCategory());
-
-        holder.itemView.setOnClickListener(view -> {
-            if (checkBox.isChecked()) {
-                context.onClick(ingredient);
-            }
-        });
+        DocumentSnapshot doc = getSnapshot(position);
+        holder.description.setText(doc.getString("description"));
+        String amount = Double.toString((Double) doc.getData().get("amount"));
+        holder.subtext.setText( amount + " " + doc.getString("unit") + " | "  + doc.getString("category"));
+        holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));
+//                storageIngredientMap.put("id", ingredient.getId());
+//        storageIngredientMap.put("description", ingredient.getDescription());
+//        storageIngredientMap.put("amount", ingredient.getAmount());
+//        storageIngredientMap.put("unit", ingredient.getUnit());
+//        storageIngredientMap.put("category", ingredient.getCategory());
+//        storageIngredientMap.put("picked", false);
+//        storageIngredientMap.put("complete", false);
+//        storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient));
     }
 
     /**
      * getItemCount method for the ShoppingCartIngredientAdapter.
-     *
      * @return int for the adapter.
      */
     @Override
     public int getItemCount() {
-        return shoppingCartIngredients.size();
+        return super.getItemCount();
     }
 }
