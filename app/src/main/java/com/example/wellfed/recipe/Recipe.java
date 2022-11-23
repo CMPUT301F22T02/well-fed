@@ -11,11 +11,6 @@
 
 package com.example.wellfed.recipe;
 
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import androidx.annotation.Nullable;
 
 import com.example.wellfed.ingredient.Ingredient;
@@ -249,7 +244,7 @@ public class Recipe implements Serializable {
             return false;
         }
 
-        ArrayList<Boolean> flags = new ArrayList<Boolean>();
+        ArrayList<Boolean> flags = new ArrayList<>();
         flags.add(Objects.equals(this.getId(), ((Recipe) o).getId()));
         flags.add(Objects.equals(this.getTitle(), ((Recipe) o).getTitle()));
         flags.add(Objects.equals(this.getCategory(), ((Recipe) o).getCategory()));
