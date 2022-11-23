@@ -104,7 +104,7 @@ public class MealBookFragment extends Fragment
                         controller.deleteMealPlan(mealPlan);
                         break;
                     case "edit":
-                        controller.updateMealPlan(mealPlan, this);
+                        controller.updateMealPlan(mealPlan);
                         break;
                     case "launch":
                         this.launch(selectedMealPlan);
