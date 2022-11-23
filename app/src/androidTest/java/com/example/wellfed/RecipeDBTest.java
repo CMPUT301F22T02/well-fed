@@ -89,7 +89,7 @@ public class RecipeDBTest {
     private void cleanUpRecipe(Recipe testRecipe, Ingredient testIngredient, Ingredient testIngredient2) throws InterruptedException {
         CountDownLatch deleteLatch = new CountDownLatch(1);
         AtomicReference<Recipe> deletedRecipeRef = new AtomicReference<Recipe>();
-        recipeDB.delRecipe(testRecipe.getId(), (deletedRecipe, success) -> {
+        recipeDB.delRecipe(testRecipe, (deletedRecipe, success) -> {
             deletedRecipeRef.set(deletedRecipe);
             deleteLatch.countDown();
         });
@@ -151,7 +151,7 @@ public class RecipeDBTest {
 
         CountDownLatch deleteLatch = new CountDownLatch(1);
         AtomicReference<Recipe> deletedRecipeRef = new AtomicReference<Recipe>();
-        recipeDB.delRecipe(testRecipe.getId(), (deletedRecipe, success) -> {
+        recipeDB.delRecipe(testRecipe, (deletedRecipe, success) -> {
             deletedRecipeRef.set(deletedRecipe);
             deleteLatch.countDown();
 
@@ -192,7 +192,7 @@ public class RecipeDBTest {
      */
     @Test
     public void testDeleteOnNonExistentRecipe() throws InterruptedException{
-        recipeDB.delRecipe("-1", (deletedRecipe, success) -> {
+        recipeDB.delRecipe(new Recipe("-1"), (deletedRecipe, success) -> {
             // assert the ID of the deleted recipe is -1 and everything is null
             Recipe emptyRecipe = new Recipe(null);
             emptyRecipe.setId("-1");

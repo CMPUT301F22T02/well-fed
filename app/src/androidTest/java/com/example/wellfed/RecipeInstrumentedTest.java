@@ -913,4 +913,49 @@ import org.junit.runner.RunWith;
 
         cleanup5Recipes();
     }
+
+    /**
+     * Tests deleting an ingredient when it is in a Recipe.
+     * This should not crash the app, and the ingredient should remain in the
+     * recipe but be removed from storage.
+     */
+    @Test
+    public void testDeleteIngredientInStorageWhileInRecipe() throws InterruptedException {
+        // add the pre-existing ingredient
+        addPreexistingIngredient("English muffin");
+
+        // add recipe
+        typeMockRecipe("Breakfast sandwich");
+
+        onView(withId(R.id.searchButton)).perform(click());
+        //pick an ingredient check if recycler view is non empty
+        onView(withId(R.id.ingredient_storage_list)).perform(RecyclerViewActions
+                .actionOnItem(hasDescendant(withText("English muffin")) ,click()));
+        intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+
+        closeSoftKeyboard();
+        onView(withId(R.id.edit_unitInput)).perform(clearText());
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // deleting the ingredient from storage
+        onView(withId(R.id.ingredient_storage_item)).perform(click());
+        onView(withText("English muffin")).perform(click());
+        onView(withId(R.id.ingredient_delete_button)).perform(click());
+        onView(withText("Delete")).perform(click());
+
+        // returning to the recipe
+        onView(withId(R.id.recipe_book_item)).perform(click());
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Breakfast sandwich")));
+
+        // checking the ingredient is still there
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("1.0 count"))));
+        onView(withId(R.id.recipe_ingredient_recycleViewer)).check(matches(hasDescendant(withText("English muffin"))));
+    }
 }

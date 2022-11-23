@@ -35,9 +35,6 @@ public class StorageIngredientAdapter
 	 * The storage ingredient DB.
 	 */
 	private final StorageIngredientDB db;
-	/**
-	 * The listener for the adapter.
-	 */
 	private OnItemClickListener listener;
 
 	/**

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class CountUnit extends Unit {
+    public static final String smallestMetricUnit = "count";
+    public static final String smallestImperialUnit = "count";
     public static final HashMap<String, Double> CONVERSION_FACTORS =
             new HashMap<>(
             Map.of(

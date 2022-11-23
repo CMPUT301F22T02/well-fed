@@ -67,4 +67,16 @@ public class ShoppingCart {
         return this.ingredients;
     }
 
+    /**
+     * Set ingredients in the ShoppingCart.
+     *
+     * @param ingredients The ingredients to be set in the ShoppingCart.
+     *                    This is used to set the ingredients in the
+     *                    ShoppingCart.
+     */
+    public void setIngredients(ArrayList<ShoppingCartIngredient> ingredients) {
+        this.ingredients.clear();
+        this.ingredients.addAll(ingredients);
+    }
+
 }
