@@ -7,16 +7,23 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.Transaction;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,6 +156,7 @@ public class RecipeDB {
         recipeMap.put("comments", recipe.getComments());
         recipeMap.put("photograph", recipe.getPhotograph());
         recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
+        recipeMap.put("count", 0);
 
         this.collection
             .add(recipeMap)
@@ -289,7 +297,7 @@ public class RecipeDB {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numOfIngredients = recipe.getIngredients().size();
 
-        // Increment counter for each ingredient in the new Recipe object.
+        // Increment count for each ingredient in the updated Recipe object.
         for (Ingredient ingredient: recipe.getIngredients()) {
             ingredientDB.updateReferenceCount(ingredient, 1, (i, s) -> {
                 counter.addAndGet(1);
@@ -357,43 +365,51 @@ public class RecipeDB {
             listener.onAddRecipe(null, false);
         }
 
-
-        // TODO: if greater than 0, don't delete
-        // TODO: listener.onDeleteRecipe(null, null);
-        // TODO: add a check in controller to differentiate error messages
-
         DocumentReference recipeRef = this.collection.document(recipe.getId());
 
-        // Check if there are any MealPlan objects referencing this recipe.
-        // Get a snapshot of the document that this ref points to
-        // TODO: race condition
-//        recipeRef.get()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        DocumentSnapshot document = task.getResult();
-//                        if (document.exists()) {
-//                            Long count = document.getLong("count");
-//                            if (count > 0) {
-//                                listener.onAddRecipe(null, false);
-//                                return;
-//                            }
-//                        }
-//                    }
-//                });
 
-        // Decrement count of each ingredient.
-        // TODO: race condition
-//        for (Ingredient ingredient: recipe.getIngredients()) {
-//            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {});
-//        }
+        // Check if the Recipe exists in the Recipe collection.
+        recipeRef.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Long count = document.getLong("count");
+                            if (count != null && count > 0) {
+                                // Do not allow user to delete recipe if count is > 0.
+                                listener.onAddRecipe(null, false);
+                                return;
+                            } else {
+                                delRecipeAsync(recipe, recipeRef, listener);
+                            }
+                        }
+                    }
+                });
+    }
 
-        recipeRef.delete()
-            .addOnSuccessListener(r->{
-                listener.onAddRecipe(recipe, true);
-            })
-            .addOnFailureListener(f->{
-                listener.onAddRecipe(null, false);
+    public void delRecipeAsync(Recipe recipe, DocumentReference recipeRef, OnRecipeDone listener) {
+        AtomicInteger counter = new AtomicInteger(0);
+        Integer numOfIngredients = recipe.getIngredients().size();
+
+        // Decrement count for each ingredient in the Recipe object.
+        for (Ingredient ingredient: recipe.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, -1, (i, s) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredients) {
+                    delRecipeHelper(recipe, recipeRef, listener);
+                }
             });
+        }
+    }
+
+    public void delRecipeHelper(Recipe recipe, DocumentReference recipeRef, OnRecipeDone listener) {
+        recipeRef.delete()
+                .addOnSuccessListener(r->{
+                    listener.onAddRecipe(recipe, true);
+                })
+                .addOnFailureListener(f->{
+                    listener.onAddRecipe(null, false);
+                });
     }
 
 
@@ -439,47 +455,76 @@ public class RecipeDB {
     // TODO: updateReferenceCount(), see IngredientDB
     public void updateReferenceCount(Recipe recipe, int delta,
                                      OnUpdateRecipeReferenceCountListener listener) {
-        // Get reference of the recipe document.
-        String id = getDocumentReference(recipe.getId()).getId();
+        final DocumentReference recipeRef =
+                this.collection.document(recipe.getId());
 
-        // Get recipe document snapshot from db.
-        collection.document(id).get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Long count = document.getLong("count");
-                            if (count == null) {
-                                count = 0L;
-                            }
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(recipeRef);
 
-                            count += delta;
-                            if (count > 0) {
-                                collection.document(id)
-                                        .update("count", count)
-                                        .addOnCompleteListener(task1 -> {
-                                            listener.onUpdateReferenceCount(
-                                                    recipe,
-                                                    task1.isSuccessful()
-                                            );
-                                        });
-                            } else {
-                                // Even if none of the meal plans reference this recipe,,
-                                // we still won't delete it. Only users can delete recipes.
+                Long newCount = snapshot.getLong("count") + delta;
+                transaction.update(recipeRef, "count", newCount);
 
-//                                delRecipe(recipe, (deletedRecipe, success) -> {
-//                                    listener.onUpdateReferenceCount(
-//                                            recipe,
-//                                            success
-//                                    );
-//                                });
-                            }
-                        } else {
-                            listener.onUpdateReferenceCount(recipe, false);
-                        }
-                    } else {
-                        listener.onUpdateReferenceCount(recipe, false);
-                    }
-                });
+                // Success
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                listener.onUpdateReferenceCount(recipe, true);
+                Log.d(TAG, "Transaction success!");
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.onUpdateReferenceCount(recipe, false);
+                Log.w(TAG, "Transaction failure.", e);
+            }
+        });
+
+//        // Get reference of the recipe document.
+//        String id = getDocumentReference(recipe.getId()).getId();
+//
+//        // Get recipe document snapshot from db.
+//        collection.document(id).get()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//                        if (document.exists()) {
+//                            Long count = document.getLong("count");
+////                            if (count == null) {
+////                                count = 0L;
+////                            }
+//
+//                            count += delta;
+//                            if (count > 0) {
+//                                collection.document(id)
+//                                        .update("count", count)
+//                                        .addOnCompleteListener(task1 -> {
+//                                            listener.onUpdateReferenceCount(
+//                                                    recipe,
+//                                                    task1.isSuccessful()
+//                                            );
+//                                        });
+//                            } else {
+//                                // Even if none of the meal plans reference this recipe,,
+//                                // we still won't delete it. Only users can delete recipes.
+//
+////                                delRecipe(recipe, (deletedRecipe, success) -> {
+////                                    listener.onUpdateReferenceCount(
+////                                            recipe,
+////                                            success
+////                                    );
+////                                });
+//                            }
+//                        } else {
+//                            listener.onUpdateReferenceCount(recipe, false);
+//                        }
+//                    } else {
+//                        listener.onUpdateReferenceCount(recipe, false);
+//                    }
+//                });
     }
 }
