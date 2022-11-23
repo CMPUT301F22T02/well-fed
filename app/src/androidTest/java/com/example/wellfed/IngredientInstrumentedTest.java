@@ -24,6 +24,7 @@ import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -32,6 +33,8 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+
+import junit.framework.AssertionFailedError;
 
 import org.junit.After;
 import org.junit.Before;
@@ -181,13 +184,13 @@ public class IngredientInstrumentedTest {
                 "Fruit bowl");
 
         addMockIngredient("Ground Beef", "Meat", "5", "lb",
-                "Fridge");
+                "Freezer");
 
         addMockIngredient("Milk", "Dairy", "4", "litre",
                 "Fridge");
 
         addMockIngredient("Cheese", "Dairy", "10", "packages",
-                "Fridge");
+                "Pantry");
     }
 
     /**
@@ -195,23 +198,28 @@ public class IngredientInstrumentedTest {
      * Should be called after {@link #add5Ingredients()}
      */
     private void delete5Ingredients() {
-        onView(withText("Apple")).perform(click());
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
 
-        onView(withText("Banana")).perform(click());
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
 
-        onView(withText("Ground Beef")).perform(click());
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
 
-        onView(withText("Milk")).perform(click());
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
 
-        onView(withText("Cheese")).perform(click());
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
     }
@@ -230,6 +238,19 @@ public class IngredientInstrumentedTest {
                                 1),
                         isDisplayed()));
         materialButton.perform(click());
+    }
+
+    /**
+     * Asserts that a view is not visible.
+     */
+    private void assertTextNotVisible(String text) throws Exception {
+        try {
+            onView(withText(text)).check(ViewAssertions
+                    .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+            throw new Exception("The view with text " + text + " was present when it shouldn't be.");
+        } catch (NoMatchingViewException e){
+            return;
+        }
     }
 
     /**
@@ -583,14 +604,8 @@ public class IngredientInstrumentedTest {
                 RecyclerViewActions.actionOnItemAtPosition(4, click()));
         onView(withId(R.id.ingredient_name)).check(matches(withText("Milk")));
         pressBack();
-    }
 
-    /**
-     * Tests sorting Ingredients by best-before.
-     */
-    @Test
-    public void testSortByBestBefore() {
-
+        delete5Ingredients();
     }
 
     /**
@@ -598,14 +613,236 @@ public class IngredientInstrumentedTest {
      */
     @Test
     public void testSortByCategory() {
+        // should be Apple, Banana, Cheese, Ground Beef, Milk
+        add5Ingredients();
+        // sort by description
+        clickSortButton();
+        onView(withText("category")).inRoot(isPlatformPopup()).perform(click());
 
+        // check that stuff is sorted
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        // check for milk or cheese in either order
+        try {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Milk")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Cheese")));
+        }
+        pressBack();
+
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        try {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Milk")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Cheese")));
+        }
+        pressBack();
+
+        // check for banana or apple in either order
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        try {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+        }
+        pressBack();
+
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        try {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+        }
+        pressBack();
+
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        onView(withId(R.id.ingredient_name)).check(matches(withText("Ground Beef")));
+        pressBack();
+
+        delete5Ingredients();
     }
 
     /**
      * Tests sorting Ingredients by location.
      */
     @Test
-    public void testSortByLocation() {
+    public void testSortByLocation() throws InterruptedException {
+        // should be Apple, Banana, Cheese, Ground Beef, Milk
+        add5Ingredients();
+        // sort by description
+        clickSortButton();
+        onView(withText("location")).inRoot(isPlatformPopup()).perform(click());
 
+        // check that stuff is sorted
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.ingredient_name)).check(matches(withText("Ground Beef")));
+        pressBack();
+
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        onView(withId(R.id.ingredient_name)).check(matches(withText("Milk")));
+        pressBack();
+
+        // check for banana or apple in either order
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        try {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+        }
+        pressBack();
+
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        try {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Banana")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
+        }
+        pressBack();
+
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        onView(withId(R.id.ingredient_name)).check(matches(withText("Cheese")));
+        pressBack();
+
+        delete5Ingredients();
+    }
+
+    /**
+     * Tests searching for a nonexisting Ingredient.
+     */
+    @Test
+    public void testSearchNonexistent() throws Exception {
+        add5Ingredients();
+
+        // search for something not there
+        onView(withId(R.id.ingredient_storage_search)).perform(click());
+        onView(withId(R.id.ingredient_storage_search)).perform(typeText("X"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        // assert none of the ingredients are visible
+        assertTextNotVisible("Apple");
+        assertTextNotVisible("Banana");
+        assertTextNotVisible("Ground Beef");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+
+        onView(withId(R.id.clear_search)).perform(click());
+        delete5Ingredients();
+    }
+
+    /**
+     * Tests searching and then clearing the search.
+     */
+    @Test
+    public void testSearchClearButton() throws Exception {
+        add5Ingredients();
+
+        // search for something not there
+        onView(withId(R.id.ingredient_storage_search)).perform(click());
+        onView(withId(R.id.ingredient_storage_search)).perform(typeText("X"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        // assert none of the ingredients are visible
+        assertTextNotVisible("Apple");
+        assertTextNotVisible("Banana");
+        assertTextNotVisible("Ground Beef");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+
+        onView(withId(R.id.clear_search)).perform(click());
+
+        onView(withText("Apple")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Banana")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ground Beef")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Milk")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cheese")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        delete5Ingredients();
+    }
+
+    /**
+     * Tests searching for a substring in a description
+     */
+    @Test
+    public void testContainsSearch() throws Exception {
+        add5Ingredients();
+
+        onView(withId(R.id.ingredient_storage_search)).perform(click());
+        onView(withId(R.id.ingredient_storage_search)).perform(typeText("B"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Apple");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Banana")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ground Beef")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.clear_search)).perform(click());
+        delete5Ingredients();
+    }
+
+    /**
+     * Tests searching for the whole string in the description
+     */
+    @Test
+    public void testWholeSearch() throws Exception {
+        add5Ingredients();
+
+        onView(withId(R.id.ingredient_storage_search)).perform(click());
+        onView(withId(R.id.ingredient_storage_search)).perform(typeText("banana"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Apple");
+        assertTextNotVisible("Ground Beef");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Banana")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.clear_search)).perform(click());
+        delete5Ingredients();
+    }
+
+    /**
+     * Tests whether search is case-insensitive
+     */
+    @Test
+    public void testCaseInsensitivity() throws Exception {
+        add5Ingredients();
+
+        onView(withId(R.id.ingredient_storage_search)).perform(click());
+        onView(withId(R.id.ingredient_storage_search)).perform(typeText("b"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Apple");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Banana")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ground Beef")).check(ViewAssertions
+                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(withId(R.id.clear_search)).perform(click());
+        delete5Ingredients();
     }
 }
