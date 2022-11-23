@@ -101,11 +101,17 @@ public class StorageIngredientAdapter
 					"yyyy-MM-dd", Locale.US).format(bestBefore));
 			int colorError = MaterialColors.getColor(this.view,
 					com.google.android.material.R.attr.colorError);
+			int colorOnSurface = MaterialColors.getColor(this.view,
+					com.google.android.material.R.attr.colorOnSurface);
 
 			if (storageIngredient.getBestBefore().before(new Date())) {
 				this.bestBeforeTextView.setTextColor(colorError);
 				this.subTextView.setTextColor(colorError);
 				this.textView.setTextColor(colorError);
+			} else {
+				this.bestBeforeTextView.setTextColor(colorOnSurface);
+				this.subTextView.setTextColor(colorOnSurface);
+				this.textView.setTextColor(colorOnSurface);
 			}
 			this.view.setOnClickListener(view -> {
 				if (listener != null) {

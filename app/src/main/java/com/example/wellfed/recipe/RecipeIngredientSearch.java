@@ -71,6 +71,6 @@ public class RecipeIngredientSearch extends ActivityBase
 
     @Override
     public void onClick(String field) {
-        this.adapter.sortByField(field);
+		adapter.changeQuery(field);
     }
 }
