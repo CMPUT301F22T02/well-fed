@@ -11,16 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
-import com.example.wellfed.common.EditItemAdapter;
 import com.example.wellfed.common.ItemAdapter;
-import com.example.wellfed.recipe.Recipe;
-import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
-
+/**
+ * The MealPlanItemAdapter class binds ArrayList to RecyclerView.
+ * @param <Item> The type of item in the ArrayList.
+ */
 public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
+    /**
+     * Listener for the on click event of the item.
+     */
     private OnItemClickListener<Item> listener;
+
+    /**
+     * OnItemClickListener interface. The listener for an item click in the
+     * RecyclerView.
+     * @param <Item>
+     */
     public interface OnItemClickListener<Item> {
         void onItemClick(Item item);
     }
@@ -29,8 +36,8 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
      * inflates the view
      *
      * @param parent   activity that handles the ingredients
-     * @param viewType
-     * @return
+     * @param viewType type of view
+     * @return the view
      */
     @NonNull @Override public ItemViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
@@ -42,6 +49,12 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
         return new ItemViewHolder(itemView);
     }
 
+    /**
+     * onBindViewHolder method binds a MealPlan object and a MealPlanViewHolder
+     * object.
+     * @param holder  the view holder
+     * @param position the position of the item in the ArrayList
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
                                  int position) {
@@ -54,11 +67,14 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
         });
     }
 
+    /**
+     * ItemViewHolder class holds the view for the item.
+     */
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        private View itemView;
-        private TextView primaryTextView;
-        private TextView secondaryTextView;
-        private ImageView imageView;
+        private final View itemView;
+        private final TextView primaryTextView;
+        private final TextView secondaryTextView;
+        private final ImageView imageView;
 
         public View getItemView() {
             return itemView;
@@ -85,6 +101,10 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
         }
     }
 
+    /**
+     * Sets the listener for an item click in the Recyclerview
+     * @param onItemClickListener the listener to set
+     */
     public void setOnItemClickListener(OnItemClickListener<Item> onItemClickListener) {
         this.listener = onItemClickListener;
     }
