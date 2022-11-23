@@ -120,6 +120,12 @@ public class RecipeDB {
 
     public void addRecipeHelper(HashMap<String, Object> recipeMap, ArrayList<HashMap<String, Object>> ingredients,
                                 Recipe recipe, OnRecipeDone listener) {
+        // Update count of each ingredient.
+        for (Ingredient ingredient: recipe.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {
+            });
+        }
+
         recipeMap.put("ingredients", ingredients);
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("servings", recipe.getServings());
@@ -180,34 +186,44 @@ public class RecipeDB {
     }
 
     public void updateRecipe(Recipe recipe, OnRecipeDone listener) {
-        String id = recipe.getId();
         addRecipe(recipe, (addedRecipe, success)->{
             if (addedRecipe == null){
                 listener.onAddRecipe(null, false);
                 return;
             }
 
-            delRecipe(id, (deletedRecipe, success1)->{
+            delRecipe(recipe, (deletedRecipe, success1)->{
                 listener.onAddRecipe(addedRecipe, true);
             });
         });
     }
 
     /**
-     * Deletes a recipe document with the id  from the collection
+     * Deletes a recipe document with the id from the collection
      * of recipes
      *
-     * @param id The id of recipe document we want to delete
+     * @param recipe The recipe to delete.
      */
-    public void delRecipe(String id, OnRecipeDone listener){
-        if (id == null){
+    public void delRecipe(Recipe recipe, OnRecipeDone listener){
+        if (recipe == null){
             listener.onAddRecipe(null, false);
         }
 
-        DocumentReference recipeRef = this.collection.document(id);
+
+        // TODO: if greater than 0, don't delete
+        // TODO: listener.onDeleteRecipe(null, null);
+        // TODO: add a check in controller to differentiate error messages
+
+        DocumentReference recipeRef = this.collection.document(recipe.getId());
+
+        for (Ingredient ingredient: recipe.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {
+            });
+        }
+
         recipeRef.delete()
             .addOnSuccessListener(r->{
-                listener.onAddRecipe(new Recipe(id), true);
+                listener.onAddRecipe(recipe, true);
             })
             .addOnFailureListener(f->{
                 listener.onAddRecipe(null, false);

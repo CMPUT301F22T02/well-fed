@@ -72,7 +72,7 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>,
                         Recipe recipe = result.second;
                         switch (type) {
                             case "delete":
-                                recipeController.deleteRecipe(recipe.getId());
+                                recipeController.deleteRecipe(recipe);
                                 break;
                             case "edit":
                                 recipeController.editRecipe(recipe);

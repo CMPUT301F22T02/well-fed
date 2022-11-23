@@ -58,10 +58,10 @@ public class RecipeController {
     /**
      * handles the logic for deleting the recipe
      *
-     * @param id of the recipe to delete
+     * @param recipe recipe to be deleted
      */
-    public void deleteRecipe(String id) {
-        recipeDB.delRecipe(id, (deleted, success) -> {
+    public void deleteRecipe(Recipe recipe) {
+        recipeDB.delRecipe(recipe, (deleted, success) -> {
             if (!success) {
                 this.activity.makeSnackbar("Failed to delete recipe");
             }
