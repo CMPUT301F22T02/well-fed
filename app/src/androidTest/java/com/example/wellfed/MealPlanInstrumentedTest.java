@@ -4,11 +4,18 @@ import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withParentIndex;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Context;
 
+import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -19,6 +26,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -63,7 +72,7 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
-    private void addRecipe(String title){
+    private void addRecipe(String title) throws InterruptedException {
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
 
@@ -98,6 +107,7 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.addButton)).perform(click());
 
@@ -115,15 +125,17 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.save_fab)).perform(click());
 
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
-    private void cleanUpIngredient(String description){
+    private void cleanUpIngredient(String description) throws InterruptedException {
+        Thread.sleep(500);
         onView(withId(R.id.ingredient_storage_item)).perform(click());
-
+        Thread.sleep(500);
         onView(withText(description)).perform(click());
 
         onView(withId(R.id.ingredient_delete_button)).perform(click());
@@ -132,9 +144,10 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
-    private void cleanUpRecipe(String title){
+    private void cleanUpRecipe(String title) throws InterruptedException {
+        Thread.sleep(500);
         onView(withId(R.id.recipe_book_item)).perform(click());
-
+        Thread.sleep(500);
         onView(withText(title)).perform(click());
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
@@ -144,8 +157,14 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
-    private void cleanUpMealPlan(){
+    private void cleanUpMealPlan(String title) throws InterruptedException {
+        Thread.sleep(500);
+        onView(withId(R.id.meal_book_item)).perform(click());
+        Thread.sleep(500);
+        onView(withText(title)).perform(click());
 
+        onView(withText("Delete")).perform(click());
+        onView(withText("Delete")).perform(click());
     }
 
 
