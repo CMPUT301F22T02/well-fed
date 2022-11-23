@@ -134,10 +134,10 @@ public class StorageIngredientDB {
         });
     }
 
-	/**
-	 * Adds an ingredient in storage to the Firebase DB.
+    /**
+     * Adds an ingredient in storage to the Firebase DB.
 	 *
-	 * @param storageIngredient the ingredient to be added
+     * @param storageIngredient the ingredient to be added
 	 * @param ingredient        the ingredient to be added
 	 * @param listener          the listener to be called when the operation is
 	 */

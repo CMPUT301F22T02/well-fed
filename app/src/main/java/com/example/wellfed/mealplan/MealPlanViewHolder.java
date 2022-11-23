@@ -53,35 +53,92 @@ import java.util.TimeZone;
  * @version v1.0.0 2022-10-24
  **/
 public class MealPlanViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * circleDateFormat is the format for the date in the circle
+     */
     private final SimpleDateFormat circleDateFormat;
+    /**
+     * weekDayDateFormat is the format for the week day in the circle
+     */
     private final SimpleDateFormat weekDayDateFormat;
+    /**
+     * materialCartView is the card view for the item
+     */
     private final MaterialCardView materialCardView;
+    /**
+     * weekTextView is the text view for the week day
+     */
     private final TextView weekTextView;
+    /**
+     * weekDayTextView is the text view for the date
+     */
     private final TextView weekDayTextView;
+    /**
+     * dayTextView is the text view for the day
+     */
     private final TextView dayTextView;
+    /**
+     * titleTextView is the text view for the title
+     */
     private final TextView titleTextView;
+    /**
+     * categoryTextView is the text view for the category
+     */
     private final TextView categoryTextView;
+    /**
+     * colorPrimary is the primary color of the app
+     */
     private final int colorPrimary;
+    /**
+     * colorOnPrimary is the on primary color of the app
+     */
     private final int colorOnPrimary;
+    /**
+     * colorSuface is the surface color of the app
+     */
     private final int colorSurface;
+    /**
+     * colorOnSurface is the on surface color of the app
+     */
     private final int colorOnSurface;
 
+    /**
+     * getMaterialCardView is the getter for materialCardView
+     * @return the materialCardView
+     */
     public MaterialCardView getMaterialCardView() {
         return materialCardView;
     }
 
+/**
+     * getWeekTextView is the getter for weekTextView
+     * @return the weekTextView
+     */
     public TextView getWeekTextView() {
         return weekTextView;
     }
 
+    /**
+     * getTitleTextView is the getter for titleTextView
+     * @return the titleTextView
+     */
     public TextView getTitleTextView() {
         return titleTextView;
     }
 
+    /**
+     * getCategoryTextView is the getter for categoryTextView
+     * @return the categoryTextView
+     */
     public TextView getCategoryTextView() {
         return categoryTextView;
     }
 
+    /**
+     * setDateCircle method sets the date circle
+     * @param date the date
+     * @param isPrimary whether the date circle is primary
+     */
     public void setDateCircle(Date date, Boolean isPrimary) {
         dayTextView.setText(circleDateFormat.format(date));
         weekDayTextView.setText(weekDayDateFormat.format(date));
@@ -96,6 +153,10 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    /**
+     * MealPlanViewHolder is the constructor for the MealPlanViewHolder
+     * @param itemView the view
+     */
     public MealPlanViewHolder(@NonNull View itemView) {
         super(itemView);
         this.circleDateFormat = new SimpleDateFormat("d", Locale.US);

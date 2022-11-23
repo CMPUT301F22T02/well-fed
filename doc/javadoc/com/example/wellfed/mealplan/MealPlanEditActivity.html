@@ -186,6 +186,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">MealPlanEditActivity</span>
 extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></pre>
+<div class="block">MealPlanEditActivity class. It is the activity that allows the user to edit
+ the meal plan.</div>
 </li>
 </ul>
 </div>
@@ -278,17 +280,23 @@ extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasUnsavedChanges()">hasUnsavedChanges</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">hasUnsavedChanges returns true if there are unsaved changes.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">OnCreate method.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onPointerCaptureChanged(boolean)">onPointerCaptureChanged</a></span>&#8203;(boolean&nbsp;hasCapture)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onPointerCaptureChanged is called when the pointer capture changes.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -410,9 +418,13 @@ extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">
 <li class="blockList">
 <h4>onCreate</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onCreate&#8203;(android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">OnCreate method. It is called when the activity is created. It sets up
+ the activity and displays the meal plan.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../EditActivityBase.html#onCreate(android.os.Bundle)">onCreate</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>savedInstanceState</code> - The saved instance state.</dd>
 </dl>
 </li>
 </ul>
@@ -423,9 +435,12 @@ extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">
 <li class="blockList">
 <h4>hasUnsavedChanges</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;hasUnsavedChanges()</pre>
+<div class="block">hasUnsavedChanges returns true if there are unsaved changes.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../EditActivityBase.html#hasUnsavedChanges()">hasUnsavedChanges</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if there are unsaved changes.</dd>
 </dl>
 </li>
 </ul>
@@ -436,6 +451,11 @@ extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">
 <li class="blockList">
 <h4>onPointerCaptureChanged</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onPointerCaptureChanged&#8203;(boolean&nbsp;hasCapture)</pre>
+<div class="block">onPointerCaptureChanged is called when the pointer capture changes.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hasCapture</code> - true if the pointer has capture.</dd>
+</dl>
 </li>
 </ul>
 </li>

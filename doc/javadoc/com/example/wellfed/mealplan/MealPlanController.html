@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -152,8 +152,10 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">MealPlanController</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.app.Activity)">MealPlanController</a></span>&#8203;(android.app.Activity&nbsp;activity)</code></th>
+<td class="colLast">
+<div class="block">The MealPlanController constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -176,33 +178,38 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addMealPlan(com.example.wellfed.mealplan.MealPlan)">addMealPlan</a></span>&#8203;(<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The addMealPlan method for the MealPlanController.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteMealPlan(int)">deleteMealPlan</a></span>&#8203;(int&nbsp;index)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteMealPlan(com.example.wellfed.mealplan.MealPlan)">deleteMealPlan</a></span>&#8203;(<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</code></th>
+<td class="colLast">
+<div class="block">The deleteMealPlan method for the MealPlanController.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editMealPlan(int,com.example.wellfed.mealplan.MealPlan)">editMealPlan</a></span>&#8203;(int&nbsp;index,
-            <a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;modifiedMealPlan)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code><a href="MealPlanAdapter.html" title="class in com.example.wellfed.mealplan">MealPlanAdapter</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdapter()">getAdapter</a></span>()</code></th>
+<td class="colLast">
+<div class="block">GetAdapter method for the MealPlanController.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMealPlans()">getMealPlans</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNextMealPlan()">getNextMealPlan</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdapter(com.example.wellfed.mealplan.MealPlanAdapter)">setAdapter</a></span>&#8203;(<a href="MealPlanAdapter.html" title="class in com.example.wellfed.mealplan">MealPlanAdapter</a>&nbsp;adapter)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The setAdapter method for the ingredient search screen.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateMealPlan(com.example.wellfed.mealplan.MealPlan,com.example.wellfed.common.Launcher)">updateMealPlan</a></span>&#8203;(<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan,
+              <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;&nbsp;launcher)</code></th>
+<td class="colLast">
+<div class="block">The updateMealPlan method for the MealPlanController.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -228,13 +235,19 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
+<a id="&lt;init&gt;(android.app.Activity)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>MealPlanController</h4>
-<pre>public&nbsp;MealPlanController()</pre>
+<pre>public&nbsp;MealPlanController&#8203;(android.app.Activity&nbsp;activity)</pre>
+<div class="block">The MealPlanController constructor. Creates a new MealPlanController
+ object.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>activity</code> - The activity that the controller is being created in.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -247,15 +260,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getMealPlans()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMealPlans</h4>
-<pre class="methodSignature">public&nbsp;java.util.ArrayList&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;&nbsp;getMealPlans()</pre>
-</li>
-</ul>
 <a id="setAdapter(com.example.wellfed.mealplan.MealPlanAdapter)">
 <!--   -->
 </a>
@@ -263,6 +267,27 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setAdapter</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setAdapter&#8203;(<a href="MealPlanAdapter.html" title="class in com.example.wellfed.mealplan">MealPlanAdapter</a>&nbsp;adapter)</pre>
+<div class="block">The setAdapter method for the ingredient search screen. Sets the
+ adapter for the RecyclerView of meal plans.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>adapter</code> - The adapter for the RecyclerView of meal plans.</dd>
+</dl>
+</li>
+</ul>
+<a id="getAdapter()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAdapter</h4>
+<pre class="methodSignature">public&nbsp;<a href="MealPlanAdapter.html" title="class in com.example.wellfed.mealplan">MealPlanAdapter</a>&nbsp;getAdapter()</pre>
+<div class="block">GetAdapter method for the MealPlanController. Returns the adapter
+ for the RecyclerView of meal plans.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The adapter for the RecyclerView of meal plans.</dd>
+</dl>
 </li>
 </ul>
 <a id="addMealPlan(com.example.wellfed.mealplan.MealPlan)">
@@ -272,34 +297,44 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>addMealPlan</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addMealPlan&#8203;(<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</pre>
+<div class="block">The addMealPlan method for the MealPlanController. Adds a new meal plan
+ to the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mealPlan</code> - The meal plan to be added to the database.</dd>
+</dl>
 </li>
 </ul>
-<a id="editMealPlan(int,com.example.wellfed.mealplan.MealPlan)">
+<a id="updateMealPlan(com.example.wellfed.mealplan.MealPlan,com.example.wellfed.common.Launcher)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>editMealPlan</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;editMealPlan&#8203;(int&nbsp;index,
-                         <a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;modifiedMealPlan)</pre>
+<h4>updateMealPlan</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateMealPlan&#8203;(<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan,
+                           <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;&nbsp;launcher)</pre>
+<div class="block">The updateMealPlan method for the MealPlanController. Updates a meal
+ plan in the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mealPlan</code> - The meal plan to be updated in the database.</dd>
+<dd><code>launcher</code> - The launcher to be used to launch the activity.</dd>
+</dl>
 </li>
 </ul>
-<a id="deleteMealPlan(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>deleteMealPlan</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;deleteMealPlan&#8203;(int&nbsp;index)</pre>
-</li>
-</ul>
-<a id="getNextMealPlan()">
+<a id="deleteMealPlan(com.example.wellfed.mealplan.MealPlan)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getNextMealPlan</h4>
-<pre class="methodSignature">public&nbsp;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;getNextMealPlan()</pre>
+<h4>deleteMealPlan</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;deleteMealPlan&#8203;(<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</pre>
+<div class="block">The deleteMealPlan method for the MealPlanController. Deletes a meal
+ plan from the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mealPlan</code> - The meal plan to be deleted from the database.</dd>
+</dl>
 </li>
 </ul>
 </li>

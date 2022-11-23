@@ -5,15 +5,20 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.wellfed.common.DBConnection;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -124,6 +129,8 @@ public class IngredientDB {
 		Map<String, Object> item = new HashMap<>();
 		item.put("category", ingredient.getCategory());
 		item.put("description", ingredient.getDescription());
+		item.put("count", 0);
+		item.put("search-field", ingredient.getDescription().toLowerCase());
 		batch.set(ingredientRef, item);
 
 		batch.commit().addOnCompleteListener(task -> {
@@ -258,36 +265,65 @@ public class IngredientDB {
 	 */
 	public void updateReferenceCount(Ingredient ingredient, int delta,
 									 OnUpdateIngredientReferenceCountListener listener) {
-		String id = getDocumentReference(ingredient).getId();
-		collection.document(id).get()
-			.addOnCompleteListener(task -> {
-				if (task.isSuccessful()) {
-					DocumentSnapshot document = task.getResult();
-					if (document.exists()) {
-						Long count = document.getLong("count");
-						if (count == null) {
-							count = 0L;
-						}
-						count += delta;
-						if (count > 0) {
-							collection.document(id)
-								.update("count", count)
-								.addOnCompleteListener(task1 -> listener.onUpdateReferenceCount(
-									ingredient,
-									task1.isSuccessful()));
-						} else {
-							// can safely remove unused ingredients from db
-							deleteIngredient(ingredient,
-								(deleteIngredient, success) -> listener.onUpdateReferenceCount(
-									ingredient, success));
-						}
-					} else {
-						listener.onUpdateReferenceCount(ingredient, false);
-					}
-				} else {
-					listener.onUpdateReferenceCount(ingredient, false);
+		final DocumentReference ingredientRef =
+			collection.document(ingredient.getId());
+
+		db.runTransaction(new Transaction.Function<Void>() {
+			@Override
+			public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+				DocumentSnapshot snapshot = transaction.get(ingredientRef);
+
+				Long newCount = snapshot.getLong("count") + delta;
+				transaction.update(ingredientRef, "count", newCount);
+
+				// Success
+				return null;
+			}
+			}).addOnSuccessListener(new OnSuccessListener<Void>() {
+				@Override
+				public void onSuccess(Void aVoid) {
+					listener.onUpdateReferenceCount(ingredient, true);
+					Log.d(TAG, "Transaction success!");
 				}
-			});
+			})
+				.addOnFailureListener(new OnFailureListener() {
+					@Override
+					public void onFailure(@NonNull Exception e) {
+						listener.onUpdateReferenceCount(ingredient, false);
+						Log.w(TAG, "Transaction failure.", e);
+					}
+				});
+
+//		String id = getDocumentReference(ingredient).getId();
+//		collection.document(id).get()
+//			.addOnCompleteListener(task -> {
+//				if (task.isSuccessful()) {
+//					DocumentSnapshot document = task.getResult();
+//					if (document.exists()) {
+//						Long count = document.getLong("count");
+////						if (count == null) {
+////							count = 0L;
+////						}
+//						count += delta;
+//						if (count > 0) {
+//							collection.document(id)
+//								.update("count", count)
+//								.addOnCompleteListener(task1 -> listener.onUpdateReferenceCount(
+//									ingredient,
+//									task1.isSuccessful()));
+//						} else {
+//							// can safely remove unused ingredients from db
+//							deleteIngredient(ingredient,
+//								(deleteIngredient, success) -> listener.onUpdateReferenceCount(
+//									ingredient, success));
+//						}
+//					} else {
+//						listener.onUpdateReferenceCount(ingredient, false);
+//					}
+//				} else {
+//					listener.onUpdateReferenceCount(ingredient, false);
+//				}
+//			});
 	}
 
 	/**
@@ -323,5 +359,9 @@ public class IngredientDB {
 	public Query getQuery() {
 		return collection;
 	}
+
+    public Query getSortQuery(String field, boolean ascending){
+        return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);
+    }
 
 }

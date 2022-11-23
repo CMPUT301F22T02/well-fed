@@ -15,6 +15,7 @@ import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.common.Launcher;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.example.wellfed.navigation.NavigationCollectionAdapter;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -89,6 +90,10 @@ public class MainActivity extends ActivityBase {
             }
         });
 
+        int colorPrimary = MaterialColors.getColor(bottomAppBar,
+                com.google.android.material.R.attr.colorPrimary);
+        int colorOutline = MaterialColors.getColor(bottomAppBar,
+                com.google.android.material.R.attr.colorOutline);
         viewPager.registerOnPageChangeCallback(
                 new ViewPager2.OnPageChangeCallback() {
                     @Override public void onPageSelected(int position) {
@@ -98,12 +103,10 @@ public class MainActivity extends ActivityBase {
                         Menu menu = bottomAppBar.getMenu();
 
                         for (int i = 0; i < menu.size(); ++i) {
-                            menu.getItem(i).getIcon().setTint(
-                                    getResources().getColor(R.color.black));
+                            menu.getItem(i).getIcon().setTint(colorOutline);
                         }
 
-                        menu.getItem(position).getIcon().setTint(
-                                getResources().getColor(R.color.purple_200));
+                        menu.getItem(position).getIcon().setTint(colorPrimary);
                         if (history.size() == 0 || history.peek() != position) {
                             history.push(position);
                         }

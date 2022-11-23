@@ -7,35 +7,62 @@ import android.widget.TextView;
 
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
-import com.example.wellfed.common.EditItemAdapter;
-import com.example.wellfed.common.ItemAdapter;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
-import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.recipe.EditRecipeIngredientsFragment;
 import com.example.wellfed.recipe.EditRecipesAdapter;
 import com.example.wellfed.recipe.EditRecipesFragment;
-import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeIngredientAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
+/**
+ * MealPlanEditActivity class. It is the activity that allows the user to edit
+ * the meal plan.
+ */
 public class MealPlanEditActivity extends EditActivityBase {
+    /**
+     * titleTextInput is the text input for the title.
+     */
     private RequiredTextInputLayout titleTextInput;
+    /**
+     * dateTextInput is the text input for the date.
+     */
     private RequiredDateTextInputLayout dateTextInput;
+    /**
+     * categoryTextInput is the text input for the category.
+     */
     private RequiredDropdownTextInputLayout categoryTextInput;
+    /**
+     * numberOfServingsTextInput is the text input for the number of servings.
+     */
     private RequiredNumberTextInputLayout numberOfServingsTextInput;
-    private FloatingActionButton fab;
-    private EditRecipeIngredientsFragment ingredientEditFragment;
+    /**
+     * ingredientEditAdapter is the adapter to edit the ingredients.
+     */
     private RecipeIngredientAdapter ingredientEditAdapter;
-    private EditRecipesFragment recipesEditFragment;
+    /**
+     * recipesEditAdapter is the adapter to edit the recipes.
+     */
     private EditRecipesAdapter recipesEditAdapter;
+    /**
+     * mealPlan is the meal plan object.
+     */
     private MealPlan mealPlan;
+    /**
+     * type is either "add" or "edit" or "delete". It is used to determine what
+     * to do when the activity is finished.
+     */
     private String type;
 
+    /**
+     * OnCreate method. It is called when the activity is created. It sets up
+     * the activity and displays the meal plan.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan_edit);
@@ -48,28 +75,28 @@ public class MealPlanEditActivity extends EditActivityBase {
                 findViewById(R.id.numberOfServingsTextInput);
         this.numberOfServingsTextInput.setRequireInteger();
         this.numberOfServingsTextInput.setRequirePositiveNumber(true);
-        this.fab = findViewById(R.id.save_fab);
-        this.fab.setOnClickListener(view -> onSave());
+        FloatingActionButton fab = findViewById(R.id.save_fab);
+        fab.setOnClickListener(view -> onSave());
         Intent intent = this.getIntent();
         this.mealPlan = (MealPlan) intent.getSerializableExtra("mealPlan");
         //        TODO: don't hard code
         this.categoryTextInput.setSimpleItems(
                 new String[]{"Breakfast", "Lunch", "Dinner"});
 
-        this.recipesEditFragment = new EditRecipesFragment();
+        EditRecipesFragment recipesEditFragment = new EditRecipesFragment();
         this.recipesEditAdapter = new EditRecipesAdapter();
-        this.recipesEditFragment.setAdapter(this.recipesEditAdapter);
-        this.recipesEditFragment.setTitle("Recipes");
+        recipesEditFragment.setAdapter(this.recipesEditAdapter);
+        recipesEditFragment.setTitle("Recipes");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.recipeEditFragment, this.recipesEditFragment)
+                .add(R.id.recipeEditFragment, recipesEditFragment)
                 .commit();
 
-        this.ingredientEditFragment = new EditRecipeIngredientsFragment();
+        EditRecipeIngredientsFragment ingredientEditFragment = new EditRecipeIngredientsFragment();
         this.ingredientEditAdapter = new RecipeIngredientAdapter();
-        this.ingredientEditFragment.setAdapter(this.ingredientEditAdapter);
-        this.ingredientEditFragment.setTitle("Ingredients");
+        ingredientEditFragment.setAdapter(this.ingredientEditAdapter);
+        ingredientEditFragment.setTitle("Ingredients");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.ingredientEditFragment, this.ingredientEditFragment)
+                .add(R.id.ingredientEditFragment, ingredientEditFragment)
                 .commit();
 
 
@@ -91,6 +118,10 @@ public class MealPlanEditActivity extends EditActivityBase {
         recipesEditAdapter.setItems(this.mealPlan.getRecipes());
     }
 
+    /**
+     * hasUnsavedChanges returns true if there are unsaved changes.
+     * @return true if there are unsaved changes.
+     */
     public Boolean hasUnsavedChanges() {
         if (this.titleTextInput.hasChanges()) {
             return true;
@@ -107,12 +138,12 @@ public class MealPlanEditActivity extends EditActivityBase {
         if (this.ingredientEditAdapter.hasChanges()) {
             return true;
         }
-        if (this.recipesEditAdapter.hasChanges()) {
-            return true;
-        }
-        return false;
+        return this.recipesEditAdapter.hasChanges();
     }
 
+    /**
+     * onSave is called when the save button is clicked. It saves the meal plan.
+     */
     private void onSave() {
         if (!this.titleTextInput.isValid()) {
             return;
@@ -143,6 +174,10 @@ public class MealPlanEditActivity extends EditActivityBase {
         finish();
     }
 
+    /**
+     * onPointerCaptureChanged is called when the pointer capture changes.
+     * @param hasCapture true if the pointer has capture.
+     */
     @Override public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }

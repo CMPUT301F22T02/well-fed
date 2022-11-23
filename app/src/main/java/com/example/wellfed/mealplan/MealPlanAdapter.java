@@ -112,11 +112,14 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         return new MealPlanViewHolder(view);
     }
 
-    /*
+    /**
      * The onBindViewHolder method binds a MealPlan object and a
      * MealPlanViewHolder,
      * taking the data in the MealPlan object and mapping it into a human
      * readable format to be presented in the RecyclerView.
+     *
+     * @param holder The MealPlanViewHolder object.
+     * @param position The position of the MealPlan object in the ArrayList.
      */
     @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
                                            int position) {
@@ -164,11 +167,22 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         });
     }
 
+    /**
+     * Renders the dates in the MealPlanViewHolder
+     * @param eatDate the date to render
+     * @param holder the MealPlanViewHolder to render the date in
+     */
     private void renderDates(Date eatDate, @NonNull MealPlanViewHolder holder) {
         Date today = new Date();
         holder.setDateCircle(eatDate, today.equals(eatDate));
     }
 
+    /**
+     * Renders the weeks in the MealPlanViewHolder
+     * @param eatDate the date to render
+     * @param eatDateFirstDayOfWeek the first day of the week of the date to render
+     * @param holder the MealPlanViewHolder to render the week in
+     */
     private void renderWeeks(Date eatDate, Date eatDateFirstDayOfWeek,
                              @NonNull MealPlanViewHolder holder) {
         dateUtil = new DateUtil();
