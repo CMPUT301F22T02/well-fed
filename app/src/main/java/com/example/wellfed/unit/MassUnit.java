@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class MassUnit extends Unit {
+
+    public final static String smallestMetricUnit = "g";
+    public final static String smallestImperialUnit = "oz";
+
     public final static HashMap<String, Double> CONVERSION_FACTORS =
             new HashMap<>(
             Map.of(

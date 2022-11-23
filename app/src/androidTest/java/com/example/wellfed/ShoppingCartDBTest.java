@@ -294,9 +294,9 @@ public class ShoppingCartDBTest {
 				shoppingCartDB.getShoppingCart((shoppingCart, success2) -> {
 					assertNotNull(shoppingCart);
 					assertTrue(success2);
-					assertEquals(1, shoppingCart.getIngredients().size());
+					assertEquals(1, shoppingCart.size());
 					assertEquals(addedIngredient.getDescription(),
-						shoppingCart.getIngredients().get(0).getDescription());
+						shoppingCart.get(0).getDescription());
 					latch.countDown();
 				});
 		});
@@ -328,9 +328,9 @@ public class ShoppingCartDBTest {
 				shoppingCartDB.getShoppingCart((shoppingCart, success2) -> {
 					assertNotNull(shoppingCart);
 					assertTrue(success2);
-					assertEquals(1, shoppingCart.getIngredients().size());
+					assertEquals(1, shoppingCart.size());
 					assertEquals(addedIngredient.getDescription(),
-						shoppingCart.getIngredients().get(0).getDescription());
+						shoppingCart.get(0).getDescription());
 					// Add another ingredient to the shopping cart
 					Ingredient ingredient2 = mockIngredients().get(1);
 					shoppingCartDB.addIngredient(ingredient2,
@@ -345,13 +345,13 @@ public class ShoppingCartDBTest {
 							shoppingCartDB.getShoppingCart((shoppingCart2, success4) -> {
 								assertNotNull(shoppingCart2);
 								assertTrue(success4);
-								assertEquals(2, shoppingCart2.getIngredients().size());
+								assertEquals(2, shoppingCart2.size());
 								// Since the ingredients are added in a
 								// random order, we need to check both
 								// ingredients
 								boolean foundIngredient1 = false;
 								boolean foundIngredient2 = false;
-								for (Ingredient ingredient3 : shoppingCart2.getIngredients()) {
+								for (Ingredient ingredient3 : shoppingCart2) {
 									if (ingredient3.getDescription().equals(addedIngredient.getDescription())) {
 										foundIngredient1 = true;
 									}

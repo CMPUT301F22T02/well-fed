@@ -11,6 +11,8 @@ import com.example.wellfed.ingredient.StorageIngredientDB;
 import com.example.wellfed.mealplan.MealPlan;
 import com.example.wellfed.mealplan.MealPlanDB;
 import com.example.wellfed.recipe.Recipe;
+import com.example.wellfed.unit.UnitConverter;
+import com.example.wellfed.unit.UnitHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,18 +68,26 @@ public class ShoppingCartIngredientController {
     }
 
     public void generateShoppingCart() {
+        UnitConverter unitConverter = new UnitConverter(activity.getApplicationContext());
+        UnitHelper unitHelper = new UnitHelper(unitConverter);
         HashMap<String, Double> needed = new HashMap<>();
         mealPlanDB.getMealPlans((mealPlans, success) -> {
             for (MealPlan mealPlan : mealPlans) {
                 for (Recipe r : mealPlan.getRecipes()) {
                     for (Ingredient ingredient : r.getIngredients()) {
-                        needed.put(ingredient.getDescription().toLowerCase()
-                                + ingredient.getCategory().toLowerCase(), ingredient.getAmount());
+                        Pair<Double, String> val = bestUnitHelper(ingredient, unitHelper);
+                        needed.put(val.second, val.first);
                     }
                 }
                 for (Ingredient ingredient : mealPlan.getIngredients()) {
-                    needed.put(ingredient.getDescription().toLowerCase()
-                            + ingredient.getCategory().toLowerCase(), ingredient.getAmount());
+                    String uid = ingredientUid(ingredient);
+                    if (needed.get(uid) != null) {
+                        Pair<Double, String> val = bestUnitHelper(ingredient, unitHelper);
+                        needed.put(val.second, needed.get(uid) + val.first);
+                    } else {
+                        Pair<Double, String> val = bestUnitHelper(ingredient, unitHelper);
+                        needed.put(val.second, val.first);
+                    }
                 }
             }
             // get all the items in the list
@@ -86,25 +96,30 @@ public class ShoppingCartIngredientController {
 
                 }
                 for (StorageIngredient stored : storedIngredients) {
-                    String uid = stored.getDescription().toLowerCase() + stored.getCategory().toLowerCase();
+                    String uid = ingredientUid(stored);
                     if (needed.get(uid) != null) {
-                        needed.put(uid, needed.get(uid) - stored.getAmount());
+                        Pair<Double, String> val = bestUnitHelper(stored, unitHelper);
+                        needed.put(val.second, needed.get(uid) - val.first);
                     }
                 }
+
                 // get all the items in the storage
                 db.getShoppingCart((cart, success2) -> {
                     HashMap<String, Pair<String, Double>> inCart = new HashMap<>();
+
                     for (ShoppingCartIngredient cartItem : cart) {
-                        String uid = cartItem.getDescription().toLowerCase() + cartItem.getCategory().toLowerCase()
-                                + cartItem.getId();
-                        inCart.put(uid, new Pair<>(cartItem.getId(), cartItem.getAmount()));
+                        String uid = ingredientUid(cartItem);
+                        Pair<Double, String> val = bestUnitHelper(cartItem, unitHelper);
+                        needed.put(val.second, val.first);
                     }
                     // if shopping cart has those items update them accordingly
                     for (String key : needed.keySet()) {
                         if (inCart.get(key) != null) {
 
                         } else { // else create those items
+
                         }
+
                     }
 
                 });
@@ -112,6 +127,28 @@ public class ShoppingCartIngredientController {
         });
 
 
+    }
+
+    private Pair<Double, String> bestUnitHelper(Ingredient ingredient, UnitHelper unitHelper) {
+        // reduce to smallest
+        Pair<Double, String> smallest = unitHelper.convertToSmallest(ingredient.getUnit(), ingredient.getAmount());
+        ingredient.setUnit(smallest.second);
+        ingredient.setAmount(smallest.first);
+
+        Pair<Double, String> best = unitHelper.availableUnits(ingredient);
+        ingredient.setAmount(best.first);
+        ingredient.setUnit(best.second);
+
+        return new Pair<>(ingredient.getAmount(), ingredientUid(ingredient));
+
+    }
+
+    private String ingredientUid(Ingredient ingredient) {
+        String seperator = "####";
+        String uid = ingredient.getDescription() + seperator
+                + ingredient.getCategory() + seperator
+                + ingredient.getUnit();
+        return uid;
     }
 
     /**
