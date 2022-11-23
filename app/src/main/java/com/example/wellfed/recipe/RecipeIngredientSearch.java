@@ -3,9 +3,7 @@ package com.example.wellfed.recipe;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,23 +11,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBConnection;
-import com.example.wellfed.common.EditItemContract;
 import com.example.wellfed.common.SortingFragment;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
-import com.example.wellfed.ingredient.StorageIngredient;
 
 import java.util.Arrays;
 
+/**
+ * Activity which allows user to search for an existing ingredient
+ * in the user's ingredient storage, or previously added recipe ingredients
+ * to add to a recipe
+ */
 public class RecipeIngredientSearch extends ActivityBase
         implements RecipeIngredientSearchAdapter.OnItemClickListener, SortingFragment.OnSortClick {
     private RecyclerView ingredientRecycleView;
     private RecipeIngredientSearchAdapter adapter;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_ingredient_storage);
+	/**
+	 * The onCreate method for the ingredient search screen.
+	 *
+	 * @param savedInstanceState Bundle object for the activity.
+	 */
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_ingredient_storage);
 
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setListener(this);
@@ -47,16 +53,21 @@ public class RecipeIngredientSearch extends ActivityBase
         ingredientRecycleView.setAdapter(adapter);
         ingredientRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
-    }
+	}
 
-    @Override
-    public void onItemClick(Ingredient recipeIngredient) {
-        Intent intent = new Intent();
-        intent.putExtra("type", "add");
-        intent.putExtra("item", recipeIngredient);
-        setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
+	/**
+	 * Listener for when an item is clicked within the RecyclerView of ingredients
+	 *
+	 * @param recipeIngredient The item that was clicked on
+	 */
+	@Override
+	public void onItemClick(Ingredient recipeIngredient) {
+		Intent intent = new Intent();
+		intent.putExtra("type", "add");
+		intent.putExtra("item", recipeIngredient);
+		setResult(Activity.RESULT_OK, intent);
+		finish();
+	}
 
     @Override
     public void onClick(String field) {
