@@ -692,10 +692,10 @@ public class MealPlanDB {
                     }
                     recipe.setId(addedRecipe.getId());
 
-                    counter.addAndGet(1);
-                    // Adds DocumentReference to the ArrayList.
-                    mealPlanRecipes.add(
-                            recipeDB.getDocumentReference(addedRecipe.getId()));
+					counter.addAndGet(1);
+					// Adds DocumentReference to the ArrayList.
+					mealPlanRecipes.add(
+						recipeDB.getDocumentReference(addedRecipe.getId()));
 
                     if (counter.get() == numOfIngredientsAndRecipes) {
                         updateMealPlanAsync(mealPlan, listener,
@@ -811,24 +811,24 @@ public class MealPlanDB {
     }
 
 
-    /**
-     * Fet the DocumentReference object for the MealPlan document with the
-     * given id.
-     *
-     * @param id the id of the MealPlan document.
-     * @return the DocumentReference object for the MealPlan document.
-     */
-    public DocumentReference getMealPlanDocumentReference(String id) {
-        return this.mealPlanCollection.document(id);
-    }
+	/**
+	 * Fet the DocumentReference object for the MealPlan document with the
+	 * given id.
+	 *
+	 * @param id the id of the MealPlan document.
+	 * @return the DocumentReference object for the MealPlan document.
+	 */
+	public DocumentReference getMealPlanDocumentReference(String id) {
+		return this.mealPlanCollection.document(id);
+	}
 
-    /**
-     * Gets a query for MealPlans in the db.
-     *
-     * @return the query for MealPlans in the db.
-     */
-    public Query getQuery() {
-        return this.mealPlanCollection.orderBy("eat date",
-                Query.Direction.ASCENDING);
-    }
+	/**
+	 * Gets a query for MealPlans in the db.
+	 *
+	 * @return the query for MealPlans in the db.
+	 */
+	public Query getQuery() {
+		return this.mealPlanCollection.orderBy("eat date",
+			Query.Direction.ASCENDING);
+	}
 }

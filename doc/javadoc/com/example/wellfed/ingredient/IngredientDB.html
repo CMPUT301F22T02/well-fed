@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -256,7 +256,9 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">getIngredient</a></span>&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
              <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets an ingredient from Firebase DB</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -277,22 +279,30 @@ extends java.lang.Object</pre>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuery()">getQuery</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets the CollectionReference that Ingredients are stored in</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSortQuery(java.lang.String,boolean)">getSortQuery</a></span>&#8203;(java.lang.String&nbsp;field,
+            boolean&nbsp;ascending)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#snapshotToIngredient(com.google.firebase.firestore.DocumentSnapshot)">snapshotToIngredient</a></span>&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;document)</code></th>
 <td class="colLast">
-<div class="block">Converts a DocumentSnapshot of an ingredient to an ingredient object</div>
+<div class="block">Converts a DocumentSnapshot of an ingredient to an Ingredient object</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateReferenceCount(com.example.wellfed.ingredient.Ingredient,int,com.example.wellfed.ingredient.IngredientDB.OnUpdateIngredientReferenceCountListener)">updateReferenceCount</a></span>&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
                     int&nbsp;delta,
                     <a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a>&nbsp;listener)</code></th>
 <td class="colLast">
-<div class="block">TODO</div>
+<div class="block">Updates the reference count of an ingredient in the Firebase DB.</div>
 </td>
 </tr>
 </table>
@@ -399,6 +409,14 @@ extends java.lang.Object</pre>
 <h4>getIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;getIngredient&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
                           <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</pre>
+<div class="block">Gets an ingredient from Firebase DB</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredient</code> - the ingredient to be
+                   retrieved</dd>
+<dd><code>listener</code> - the listener to be called when the ingredient is
+                   retrieved</dd>
+</dl>
 </li>
 </ul>
 <a id="deleteIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnDeleteIngredientListener)">
@@ -427,12 +445,14 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;updateReferenceCount&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
                                  int&nbsp;delta,
                                  <a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a>&nbsp;listener)</pre>
-<div class="block">TODO</div>
+<div class="block">Updates the reference count of an ingredient in the Firebase DB. The reference count keeps
+ track of how many references exist to an object - if the object has 0 references, it is
+ safely deleted.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ingredient</code> - </dd>
-<dd><code>delta</code> - </dd>
-<dd><code>listener</code> - </dd>
+<dd><code>ingredient</code> - the ingredient to update the reference count of</dd>
+<dd><code>delta</code> - how much to shift the reference count by</dd>
+<dd><code>listener</code> - the listener to be called when the reference count is updated</dd>
 </dl>
 </li>
 </ul>
@@ -443,7 +463,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>snapshotToIngredient</h4>
 <pre class="methodSignature">public&nbsp;<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;snapshotToIngredient&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;document)</pre>
-<div class="block">Converts a DocumentSnapshot of an ingredient to an ingredient object</div>
+<div class="block">Converts a DocumentSnapshot of an ingredient to an Ingredient object</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>document</code> - the DocumentSnapshot to convert</dd>
@@ -471,10 +491,25 @@ extends java.lang.Object</pre>
 <a id="getQuery()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getQuery</h4>
 <pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getQuery()</pre>
+<div class="block">Gets the CollectionReference that Ingredients are stored in</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the CollectionReference</dd>
+</dl>
+</li>
+</ul>
+<a id="getSortQuery(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getSortQuery</h4>
+<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getSortQuery&#8203;(java.lang.String&nbsp;field,
+                                                        boolean&nbsp;ascending)</pre>
 </li>
 </ul>
 </li>

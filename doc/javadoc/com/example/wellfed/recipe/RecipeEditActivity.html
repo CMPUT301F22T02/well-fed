@@ -149,7 +149,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="../ActivityBase.html" title="class in com.example.wellfed">com.example.wellfed.ActivityBase</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="../EditActivityBase.html" title="class in com.example.wellfed">com.example.wellfed.EditActivityBase</a></li>
+<li>
+<ul class="inheritance">
 <li>com.example.wellfed.recipe.RecipeEditActivity</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -176,12 +181,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeEditActivity</span>
-extends <a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a>
-implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a></pre>
+extends <a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></pre>
 <div class="block">Activity which allows user to edit an existing recipe</div>
 </li>
 </ul>
@@ -223,17 +227,9 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <tr class="altColor">
 <td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;android.net.Uri&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cameraLauncher">cameraLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ingredientLauncher">ingredientLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ingredientSearchLauncher">ingredientSearchLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Launcher for the camera activity, to take a picture of the recipe</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -298,41 +294,59 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#areValidFields()">areValidFields</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Checks whether the fields of the recipe currently being edited are valid or not.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>android.net.Uri</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initTempUri()">initTempUri</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasUnsavedChanges()">hasUnsavedChanges</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Checks whether there are unsaved changes in the edit activity</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>android.net.Uri</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initTempUri()">initTempUri</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Initializes a temporary URI for the image associated with a recipe.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEditClick(java.lang.String,int)">onEditClick</a></span>&#8203;(java.lang.String&nbsp;reason,
-           int&nbsp;pos)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
+<td class="colLast">
+<div class="block">OnCreate method for the recipe edit activity.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onSave()">onSave</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Handles saving a recipe, and returns it via an intent to the previous activity</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#uploadImg()">uploadImg</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Uploads the image taken for a recipe to an external image hoster.</div>
+</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.EditActivityBase">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.example.wellfed.<a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></h3>
+<code><a href="../EditActivityBase.html#onBackPressed()">onBackPressed</a>, <a href="../EditActivityBase.html#onConfirm()">onConfirm</a>, <a href="../EditActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.example.wellfed.ActivityBase">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.<a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a></h3>
-<code><a href="../ActivityBase.html#makeSnackbar(java.lang.String)">makeSnackbar</a>, <a href="../ActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected</a></code></li>
+<code><a href="../ActivityBase.html#makeSnackbar(java.lang.String)">makeSnackbar</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.androidx.appcompat.app.AppCompatActivity">
@@ -353,7 +367,7 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;androidx.activity.ComponentActivity</h3>
-<code>addMenuProvider, addMenuProvider, addMenuProvider, addOnConfigurationChangedListener, addOnContextAvailableListener, addOnMultiWindowModeChangedListener, addOnNewIntentListener, addOnPictureInPictureModeChangedListener, addOnTrimMemoryListener, getActivityResultRegistry, getDefaultViewModelCreationExtras, getDefaultViewModelProviderFactory, getLastCustomNonConfigurationInstance, getLifecycle, getOnBackPressedDispatcher, getSavedStateRegistry, getViewModelStore, invalidateMenu, onBackPressed, onMultiWindowModeChanged, onPictureInPictureModeChanged, onRetainCustomNonConfigurationInstance, onRetainNonConfigurationInstance, onSaveInstanceState, onTrimMemory, peekAvailableContext, registerForActivityResult, registerForActivityResult, removeMenuProvider, removeOnConfigurationChangedListener, removeOnContextAvailableListener, removeOnMultiWindowModeChangedListener, removeOnNewIntentListener, removeOnPictureInPictureModeChangedListener, removeOnTrimMemoryListener, reportFullyDrawn, startActivityForResult, startActivityForResult, startIntentSenderForResult, startIntentSenderForResult</code></li>
+<code>addMenuProvider, addMenuProvider, addMenuProvider, addOnConfigurationChangedListener, addOnContextAvailableListener, addOnMultiWindowModeChangedListener, addOnNewIntentListener, addOnPictureInPictureModeChangedListener, addOnTrimMemoryListener, getActivityResultRegistry, getDefaultViewModelCreationExtras, getDefaultViewModelProviderFactory, getLastCustomNonConfigurationInstance, getLifecycle, getOnBackPressedDispatcher, getSavedStateRegistry, getViewModelStore, invalidateMenu, onMultiWindowModeChanged, onPictureInPictureModeChanged, onRetainCustomNonConfigurationInstance, onRetainNonConfigurationInstance, onSaveInstanceState, onTrimMemory, peekAvailableContext, registerForActivityResult, registerForActivityResult, removeMenuProvider, removeOnConfigurationChangedListener, removeOnContextAvailableListener, removeOnMultiWindowModeChangedListener, removeOnNewIntentListener, removeOnPictureInPictureModeChangedListener, removeOnTrimMemoryListener, reportFullyDrawn, startActivityForResult, startActivityForResult, startIntentSenderForResult, startIntentSenderForResult</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.androidx.core.app.ComponentActivity">
@@ -423,28 +437,11 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <a id="cameraLauncher">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>cameraLauncher</h4>
 <pre>androidx.activity.result.ActivityResultLauncher&lt;android.net.Uri&gt; cameraLauncher</pre>
-</li>
-</ul>
-<a id="ingredientLauncher">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ingredientLauncher</h4>
-<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt; ingredientLauncher</pre>
-</li>
-</ul>
-<a id="ingredientSearchLauncher">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>ingredientSearchLauncher</h4>
-<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt; ingredientSearchLauncher</pre>
+<div class="block">Launcher for the camera activity, to take a picture of the recipe</div>
 </li>
 </ul>
 </li>
@@ -484,9 +481,12 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <h4>onCreate</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onCreate&#8203;(@Nullable
                         android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">OnCreate method for the recipe edit activity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
+<dd><code><a href="../EditActivityBase.html#onCreate(android.os.Bundle)">onCreate</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>savedInstanceState</code> - Bundle object for the activity, to restore to earlier state.</dd>
 </dl>
 </li>
 </ul>
@@ -497,6 +497,28 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <li class="blockList">
 <h4>areValidFields</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;areValidFields()</pre>
+<div class="block">Checks whether the fields of the recipe currently being edited are valid or not.
+ A valid recipe must have information in all text boxes, and at least one ingredient.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a boolean indicating the validity of the recipe being edited</dd>
+</dl>
+</li>
+</ul>
+<a id="hasUnsavedChanges()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasUnsavedChanges</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;hasUnsavedChanges()</pre>
+<div class="block">Checks whether there are unsaved changes in the edit activity</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../EditActivityBase.html#hasUnsavedChanges()">hasUnsavedChanges</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.example.wellfed">EditActivityBase</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if there are unsaved changes, false otherwise</dd>
+</dl>
 </li>
 </ul>
 <a id="onSave()">
@@ -506,6 +528,7 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <li class="blockList">
 <h4>onSave</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onSave()</pre>
+<div class="block">Handles saving a recipe, and returns it via an intent to the previous activity</div>
 </li>
 </ul>
 <a id="initTempUri()">
@@ -515,29 +538,24 @@ implements <a href="RecipeIngredientAdapter.OnIngredientClick.html" title="inter
 <li class="blockList">
 <h4>initTempUri</h4>
 <pre class="methodSignature">public&nbsp;android.net.Uri&nbsp;initTempUri()</pre>
+<div class="block">Initializes a temporary URI for the image associated with a recipe.
+ This is the default image associated with a recipe if one doesn't exist.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the default temporary URI</dd>
+</dl>
 </li>
 </ul>
 <a id="uploadImg()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>uploadImg</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;uploadImg()</pre>
-</li>
-</ul>
-<a id="onEditClick(java.lang.String,int)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>onEditClick</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onEditClick&#8203;(java.lang.String&nbsp;reason,
-                        int&nbsp;pos)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="RecipeIngredientAdapter.OnIngredientClick.html#onEditClick(java.lang.String,int)">onEditClick</a></code>&nbsp;in interface&nbsp;<code><a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a></code></dd>
-</dl>
+<div class="block">Uploads the image taken for a recipe to an external image hoster.
+ Also stores a reference to this image in the Firebase Firestore document
+ that is associated with the recipe being edited.</div>
 </li>
 </ul>
 </li>

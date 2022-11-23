@@ -9,8 +9,18 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * The MealPlanContract class is the contract for the meal plan activity. It
+ * launches the meal plan activity and parses the result.
+ */
 public class MealPlanEditContract extends ActivityResultContract<MealPlan,
         Pair<String, MealPlan>> {
+    /**
+     * The createIntent method creates the intent to launch the meal plan
+     * @param context The context.
+     * @param mealPlan The meal plan.
+     * @return The intent to launch the meal plan activity.
+     */
     @NonNull
     @Override
     public Intent createIntent(@NonNull Context context,
@@ -20,6 +30,13 @@ public class MealPlanEditContract extends ActivityResultContract<MealPlan,
         return intent;
     }
 
+    /**
+     * The parseResult method parses the result from the meal plan activity. It
+     * returns the type of result and the meal plan.
+     * @param i The result code.
+     * @param intent The intent.
+     * @return The type of result and the meal plan.
+     */
     @Override
     public Pair<String, MealPlan> parseResult(int i, Intent intent) {
         switch (i) {

@@ -146,6 +146,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">StorageIngredientAdapter</span>
 extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.common">DBAdapter</a>&lt;<a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a>&gt;</pre>
+<div class="block">The adapter class for the storage ingredient list.</div>
 </li>
 </ul>
 </div>
@@ -169,12 +170,16 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient">StorageIngredientAdapter.OnItemClickListener</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The on click listener interface for the adapter.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The view holder class for the storage ingredient list.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -195,7 +200,9 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.example.wellfed.ingredient.StorageIngredientDB)">StorageIngredientAdapter</a></span>&#8203;(<a href="StorageIngredientDB.html" title="class in com.example.wellfed.ingredient">StorageIngredientDB</a>&nbsp;db)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The constructor for the adapter.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -219,13 +226,17 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.ingredient.StorageIngredientAdapter.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a>&nbsp;holder,
                 int&nbsp;position)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onBindViewHolder is called when the view holder is bound.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder</a></span>&#8203;(android.view.ViewGroup&nbsp;parent,
                   int&nbsp;viewType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onCreateViewHolder is called when the view holder is created.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -238,7 +249,7 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.example.wellfed.common.<a href="../common/DBAdapter.html" title="class in com.example.wellfed.common">DBAdapter</a></h3>
-<code><a href="../common/DBAdapter.html#getItemCount()">getItemCount</a>, <a href="../common/DBAdapter.html#getSnapshot(int)">getSnapshot</a>, <a href="../common/DBAdapter.html#onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">onEvent</a></code></li>
+<code><a href="../common/DBAdapter.html#changeQuery(com.google.firebase.firestore.Query)">changeQuery</a>, <a href="../common/DBAdapter.html#clearSnapshots()">clearSnapshots</a>, <a href="../common/DBAdapter.html#getItemCount()">getItemCount</a>, <a href="../common/DBAdapter.html#getSnapshot(int)">getSnapshot</a>, <a href="../common/DBAdapter.html#getSnapshots()">getSnapshots</a>, <a href="../common/DBAdapter.html#onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">onEvent</a>, <a href="../common/DBAdapter.html#setSnapshots(java.util.List)">setSnapshots</a>, <a href="../common/DBAdapter.html#startListening()">startListening</a>, <a href="../common/DBAdapter.html#stopListening()">stopListening</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.androidx.recyclerview.widget.RecyclerView.Adapter">
@@ -277,6 +288,11 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 <li class="blockList">
 <h4>StorageIngredientAdapter</h4>
 <pre>public&nbsp;StorageIngredientAdapter&#8203;(<a href="StorageIngredientDB.html" title="class in com.example.wellfed.ingredient">StorageIngredientDB</a>&nbsp;db)</pre>
+<div class="block">The constructor for the adapter.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>db</code> - the storage ingredient DB</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -299,9 +315,15 @@ extends <a href="../common/DBAdapter.html" title="class in com.example.wellfed.c
 public&nbsp;<a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a>&nbsp;onCreateViewHolder&#8203;(@NonNull
                                                               android.view.ViewGroup&nbsp;parent,
                                                               int&nbsp;viewType)</pre>
+<div class="block">onCreateViewHolder is called when the view holder is created.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onCreateViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - the parent view group</dd>
+<dd><code>viewType</code> - the view type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the view holder</dd>
 </dl>
 </li>
 </ul>
@@ -314,9 +336,13 @@ public&nbsp;<a href="StorageIngredientAdapter.ViewHolder.html" title="class in c
 <pre class="methodSignature">public&nbsp;void&nbsp;onBindViewHolder&#8203;(@NonNull
                              <a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a>&nbsp;holder,
                              int&nbsp;position)</pre>
+<div class="block">onBindViewHolder is called when the view holder is bound.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onBindViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="StorageIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>holder</code> - the view holder</dd>
+<dd><code>position</code> - the position of the storage ingredient in the list</dd>
 </dl>
 </li>
 </ul>

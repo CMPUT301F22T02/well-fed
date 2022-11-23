@@ -45,6 +45,10 @@ public class RecipeIngredientSearchAdapter extends DBAdapter<RecipeIngredientSea
 		this.db = db;
 	}
 
+	public void changeQuery(String field) {
+		changeQuery(db.getSortQuery(field, true));
+	}
+
 	/**
 	 * Inflate the layout of a single View into the parent ViewGroup
 	 *

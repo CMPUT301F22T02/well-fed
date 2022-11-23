@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -176,12 +176,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></code>, <code><a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeIngredientSearch</span>
 extends <a href="../ActivityBase.html" title="class in com.example.wellfed">ActivityBase</a>
-implements <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a></pre>
+implements <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>, <a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></pre>
+<div class="block">Activity which allows user to search for an existing ingredient
+ in the user's ingredient storage, or previously added recipe ingredients
+ to add to a recipe</div>
 </li>
 </ul>
 </div>
@@ -212,24 +215,6 @@ implements <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" titl
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editIngredientLauncher">editIngredientLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>(package private) <a href="../ingredient/StorageIngredientAdapter.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#storageIngredientAdapter">storageIngredientAdapter</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.android.app.Activity">
 <!--   -->
@@ -290,14 +275,23 @@ implements <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" titl
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(java.lang.String)">onClick</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
+<td class="colLast">
+<div class="block">The onCreate method for the ingredient search screen.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onItemClick(com.example.wellfed.ingredient.Ingredient)">onItemClick</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;recipeIngredient)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Listener for when an item is clicked within the RecyclerView of ingredients</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -386,34 +380,6 @@ implements <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" titl
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="storageIngredientAdapter">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>storageIngredientAdapter</h4>
-<pre><a href="../ingredient/StorageIngredientAdapter.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter</a> storageIngredientAdapter</pre>
-</li>
-</ul>
-<a id="editIngredientLauncher">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>editIngredientLauncher</h4>
-<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&gt; editIngredientLauncher</pre>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -448,22 +414,41 @@ implements <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" titl
 <h4>onCreate</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onCreate&#8203;(@Nullable
                         android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">The onCreate method for the ingredient search screen.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>savedInstanceState</code> - Bundle object for the activity.</dd>
 </dl>
 </li>
 </ul>
 <a id="onItemClick(com.example.wellfed.ingredient.Ingredient)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onItemClick</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onItemClick&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;recipeIngredient)</pre>
+<div class="block">Listener for when an item is clicked within the RecyclerView of ingredients</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="RecipeIngredientSearchAdapter.OnItemClickListener.html#onItemClick(com.example.wellfed.ingredient.Ingredient)">onItemClick</a></code>&nbsp;in interface&nbsp;<code><a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipeIngredient</code> - The item that was clicked on</dd>
+</dl>
+</li>
+</ul>
+<a id="onClick(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>onClick</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(java.lang.String&nbsp;field)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../common/SortingFragment.OnSortClick.html#onClick(java.lang.String)">onClick</a></code>&nbsp;in interface&nbsp;<code><a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -525,7 +510,7 @@ implements <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" titl
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

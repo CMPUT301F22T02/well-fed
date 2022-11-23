@@ -133,9 +133,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><a href="RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a></dd>
 </dl>
 <hr>
-<pre>public class <span class="typeNameLabel">RecipeAdapter.ViewHolder</span>
+<pre>public static class <span class="typeNameLabel">RecipeAdapter.ViewHolder</span>
 extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
-<div class="block">Stores the view for the recipes</div>
+<div class="block">Holds the views for the recipes</div>
 </li>
 </ul>
 </div>
@@ -158,7 +158,37 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>android.widget.TextView</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#category">category</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>android.widget.TextView</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description">description</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>android.widget.TextView</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepTime">prepTime</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>android.widget.ImageView</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipeImg">recipeImg</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>android.widget.TextView</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recipeTitleTextView">recipeTitleTextView</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>android.widget.TextView</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#servings">servings</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>android.view.View</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#view">view</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -187,7 +217,9 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.view.View)">ViewHolder</a></span>&#8203;(android.view.View&nbsp;itemView)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Creates a new ViewHolder</div>
+</td>
 </tr>
 </table>
 </li>
@@ -233,10 +265,64 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 <a id="recipeTitleTextView">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>recipeTitleTextView</h4>
 <pre>public&nbsp;android.widget.TextView recipeTitleTextView</pre>
+</li>
+</ul>
+<a id="prepTime">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>prepTime</h4>
+<pre>public&nbsp;android.widget.TextView prepTime</pre>
+</li>
+</ul>
+<a id="description">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>description</h4>
+<pre>public&nbsp;android.widget.TextView description</pre>
+</li>
+</ul>
+<a id="category">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>category</h4>
+<pre>public&nbsp;android.widget.TextView category</pre>
+</li>
+</ul>
+<a id="servings">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>servings</h4>
+<pre>public&nbsp;android.widget.TextView servings</pre>
+</li>
+</ul>
+<a id="recipeImg">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>recipeImg</h4>
+<pre>public&nbsp;android.widget.ImageView recipeImg</pre>
+</li>
+</ul>
+<a id="view">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>view</h4>
+<pre>public&nbsp;android.view.View view</pre>
 </li>
 </ul>
 </li>
@@ -257,6 +343,11 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 <h4>ViewHolder</h4>
 <pre>public&nbsp;ViewHolder&#8203;(@NonNull
                   android.view.View&nbsp;itemView)</pre>
+<div class="block">Creates a new ViewHolder</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>itemView</code> - the view to be used for each item in the ViewHolder</dd>
+</dl>
 </li>
 </ul>
 </li>

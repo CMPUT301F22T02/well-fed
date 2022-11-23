@@ -18,6 +18,7 @@ import com.google.firebase.firestore.Transaction;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -129,6 +130,7 @@ public class IngredientDB {
 		item.put("category", ingredient.getCategory());
 		item.put("description", ingredient.getDescription());
 		item.put("count", 0);
+		item.put("search-field", ingredient.getDescription().toLowerCase());
 		batch.set(ingredientRef, item);
 
 		batch.commit().addOnCompleteListener(task -> {
@@ -357,5 +359,9 @@ public class IngredientDB {
 	public Query getQuery() {
 		return collection;
 	}
+
+    public Query getSortQuery(String field, boolean ascending){
+        return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);
+    }
 
 }

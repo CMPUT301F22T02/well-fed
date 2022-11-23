@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -198,6 +198,25 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="StorageIngredientDB.html" title="class in com.example.wellfed.ingredient">StorageIngredientDB</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDb()">getDb</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSearchResults(java.lang.String)">getSearchResults</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
+<td class="colLast">
+<div class="block">Get the search results from the DB</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSortedResults(java.lang.String)">getSortedResults</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
+<td class="colLast">
+<div class="block">Gets the DB of ingredients sorted by field</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateIngredient(com.example.wellfed.ingredient.StorageIngredient)">updateIngredient</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</code></th>
 <td class="colLast">
@@ -238,7 +257,7 @@ extends java.lang.Object</pre>
 <div class="block">Creates ingredients list that represents an empty food storage.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>activity</code> - </dd>
+<dd><code>activity</code> - the activity that is using this controller</dd>
 </dl>
 </li>
 </ul>
@@ -252,6 +271,15 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getDb()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDb</h4>
+<pre class="methodSignature">public&nbsp;<a href="StorageIngredientDB.html" title="class in com.example.wellfed.ingredient">StorageIngredientDB</a>&nbsp;getDb()</pre>
+</li>
+</ul>
 <a id="getAdapter()">
 <!--   -->
 </a>
@@ -299,7 +327,7 @@ extends java.lang.Object</pre>
 <a id="updateIngredient(com.example.wellfed.ingredient.StorageIngredient)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>updateIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;updateIngredient&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</pre>
@@ -307,6 +335,35 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>storageIngredient</code> - the StorageIngredient object to update</dd>
+</dl>
+</li>
+</ul>
+<a id="getSortedResults(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSortedResults</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;getSortedResults&#8203;(java.lang.String&nbsp;field)</pre>
+<div class="block">Gets the DB of ingredients sorted by field</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - the field to sort by
+              description | category | expiration</dd>
+</dl>
+</li>
+</ul>
+<a id="getSearchResults(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getSearchResults</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;getSearchResults&#8203;(java.lang.String&nbsp;field)</pre>
+<div class="block">Get the search results from the DB</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>query</code> - the query to search for</dd>
 </dl>
 </li>
 </ul>
