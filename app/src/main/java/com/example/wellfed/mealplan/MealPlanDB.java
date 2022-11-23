@@ -301,12 +301,13 @@ public class MealPlanDB {
                                   OnAddMealPlanListener listener) {
         // Increment count for all Ingredient objects and
         // Recipe objects in the db.
-        for (Ingredient ingredient : mealPlan.getIngredients()) {
-            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {});
-        }
-        for (Recipe recipe : mealPlan.getRecipes()) {
-            recipeDB.updateReferenceCount(recipe, 1, (r, success) -> {});
-        }
+        // TODO: race condition
+//        for (Ingredient ingredient : mealPlan.getIngredients()) {
+//            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {});
+//        }
+//        for (Recipe recipe : mealPlan.getRecipes()) {
+//            recipeDB.updateReferenceCount(recipe, 1, (r, success) -> {});
+//        }
 
         // Fill the mealPlanMap with correct values.
         mealPlanMap.put("ingredients", mealPlanIngredients);
@@ -489,12 +490,13 @@ public class MealPlanDB {
                 this.mealPlanCollection.document(mealPlan.getId());
 
         // Decrement count of Ingredients & Recipes.
-        for (Ingredient ingredient: mealPlan.getIngredients()) {
-            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {});
-        }
-        for (Recipe recipe: mealPlan.getRecipes()) {
-            recipeDB.updateReferenceCount(recipe, -1, (r, success) -> {});
-        }
+        // TODO: race condition
+//        for (Ingredient ingredient: mealPlan.getIngredients()) {
+//            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {});
+//        }
+//        for (Recipe recipe: mealPlan.getRecipes()) {
+//            recipeDB.updateReferenceCount(recipe, -1, (r, success) -> {});
+//        }
 
         mealPlanRef.delete().addOnSuccessListener(success -> {
             listener.onDeleteMealPlanResult(mealPlan, true);
@@ -659,6 +661,9 @@ public class MealPlanDB {
         DocumentReference mealPlanRef =
                 this.mealPlanCollection.document(mealPlan.getId());
 
+        // TODO: async update, beware of race condition
+        // TODO: see logic in recipe
+
         // Update the MealPlan document in the db.
         mealPlanRef.update(
                 "title", mealPlan.getTitle(),
@@ -696,3 +701,39 @@ public class MealPlanDB {
                 Query.Direction.ASCENDING);
     }
 }
+
+//for (int i = 0; i < recipe.getIngredients().size(); i++) {
+//        Ingredient ingredient = recipe.getIngredients().get(i);
+//        ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
+//        if (foundIngredient != null) {
+//        DocumentReference doc = ingredientDB.getDocumentReference(foundIngredient);
+//        Task<DocumentSnapshot> task = doc.get();
+//        HashMap<String, Object> ingredientMap = new HashMap<>();
+//        ingredient.setId(foundIngredient.getId());
+//        ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(ingredient));
+//        ingredientMap.put("amount", ingredient.getAmount());
+//        ingredientMap.put("unit", ingredient.getUnit());
+//        added.addAndGet(1);
+//        recipeIngredients.add(ingredientMap);
+//        if (added.get() == recipe.getIngredients().size()) {
+//        addRecipeAsync(recipeMap, recipeIngredients, recipe, listener);
+//        }
+//
+//        } else {
+//        ingredientDB.addIngredient(ingredient, (addedIngredient, success1) -> {
+//        if (addedIngredient == null) {
+//        listener.onAddRecipe(null, false);
+//        return;
+//        }
+//        ingredient.setId(addedIngredient.getId());
+//        HashMap<String, Object> ingredientMap = new HashMap<>();
+//        ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(addedIngredient));
+//        ingredientMap.put("amount", ingredient.getAmount());
+//        ingredientMap.put("unit", ingredient.getUnit());
+//        added.addAndGet(1);
+//        recipeIngredients.add(ingredientMap);
+//        if (added.get() == recipe.getIngredients().size()) {
+//        addRecipeAsync(recipeMap, recipeIngredients, recipe, listener);
+//        }
+//        });
+//        }

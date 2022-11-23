@@ -101,7 +101,7 @@ public class RecipeDB {
                     added.addAndGet(1);
                     recipeIngredients.add(ingredientMap);
                     if (added.get() == recipe.getIngredients().size()) {
-                        addRecipeHelper(recipeMap, recipeIngredients, recipe, listener);
+                        addRecipeAsync(recipeMap, recipeIngredients, recipe, listener);
                     }
 
                 } else {
@@ -118,22 +118,30 @@ public class RecipeDB {
                         added.addAndGet(1);
                         recipeIngredients.add(ingredientMap);
                         if (added.get() == recipe.getIngredients().size()) {
-                            addRecipeHelper(recipeMap, recipeIngredients, recipe, listener);
+                            addRecipeAsync(recipeMap, recipeIngredients, recipe, listener);
                         }
                     });
                 }
             });
         }
+    }
 
+    public void addRecipeAsync(HashMap<String, Object> recipeMap, ArrayList<HashMap<String, Object>> ingredients,
+                               Recipe recipe, OnRecipeDone listener) {
+        // Update count of each ingredient.
+        AtomicInteger counter = new AtomicInteger(0);
+        for (Ingredient ingredient: recipe.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {
+                counter.addAndGet(1);
+                if (counter.get() == recipe.getIngredients().size()) {
+                    addRecipeHelper(recipeMap, ingredients, recipe, listener);
+                }
+            });
+        }
     }
 
     public void addRecipeHelper(HashMap<String, Object> recipeMap, ArrayList<HashMap<String, Object>> ingredients,
                                 Recipe recipe, OnRecipeDone listener) {
-        // Update count of each ingredient.
-        for (Ingredient ingredient: recipe.getIngredients()) {
-            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {});
-        }
-
         recipeMap.put("ingredients", ingredients);
         recipeMap.put("title", recipe.getTitle());
         recipeMap.put("servings", recipe.getServings());
@@ -152,7 +160,6 @@ public class RecipeDB {
                 listener.onAddRecipe(null, false);
             });
     }
-
 
     // todo call the listener when results fail
     // todo add db-tests for it
@@ -193,19 +200,6 @@ public class RecipeDB {
                 });
     }
 
-//    public void updateRecipe(Recipe recipe, OnRecipeDone listener) {
-//        addRecipe(recipe, (addedRecipe, success)->{
-//            if (addedRecipe == null){
-//                listener.onAddRecipe(null, false);
-//                return;
-//            }
-//
-//            delRecipe(recipe, (deletedRecipe, success1)->{
-//                listener.onAddRecipe(addedRecipe, true);
-//            });
-//        });
-//    }
-
     /**
      * Updates the Recipe object in the DB
      *
@@ -226,6 +220,8 @@ public class RecipeDB {
             ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
                 // If the ingredient already exists in Ingredient collection.
                 if (foundIngredient != null) {
+                    ingredient.setId(foundIngredient.getId());
+
                     // Initializes HashMap for mapping.
                     HashMap<String, Object> ingredientMap = new HashMap<>();
 
@@ -242,7 +238,7 @@ public class RecipeDB {
                     // Check if the counter has reached the number of
                     // ingredients and recipes.
                     if (counter.get() == numOfIngredients) {
-                        updateRecipeHelper(recipe, recipeIngredients, listener);
+                        updateRecipeAsync(recipe, recipeIngredients, listener);
                     }
                 } else {
                     // If the ingredient does not exist in our Ingredient collection,
@@ -266,9 +262,56 @@ public class RecipeDB {
                         recipeIngredients.add(ingredientMap);
 
                         if (counter.get() == numOfIngredients) {
-                            updateRecipeHelper(recipe, recipeIngredients, listener);
+                            updateRecipeAsync(recipe, recipeIngredients, listener);
                         }
                     });
+                }
+            });
+        }
+    }
+
+    public void updateRecipeAsync(Recipe recipe,
+                                  ArrayList<HashMap<String, Object>> recipeIngredients,
+                                  OnUpdateRecipeListener listener) {
+        getRecipe(recipe.getId(), (foundRecipe, success) -> {
+                    if (foundRecipe == null) {
+                        listener.onUpdateRecipe(null, false);
+                        return;
+                    } else {
+                        updateRecipeAsync1(recipe, foundRecipe, recipeIngredients, listener);
+                    }
+                });
+    }
+
+    public void updateRecipeAsync1(Recipe recipe, Recipe foundRecipe,
+                                   ArrayList<HashMap<String, Object>> recipeIngredients,
+                                   OnUpdateRecipeListener listener) {
+        AtomicInteger counter = new AtomicInteger(0);
+        Integer numOfIngredients = recipe.getIngredients().size();
+
+        // Increment counter for each ingredient in the new Recipe object.
+        for (Ingredient ingredient: recipe.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, 1, (i, s) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredients) {
+                    updateRecipeAsync2(recipe, foundRecipe, recipeIngredients, listener);
+                }
+            });
+        }
+    }
+
+    public void updateRecipeAsync2(Recipe recipe, Recipe foundRecipe,
+                                   ArrayList<HashMap<String, Object>> recipeIngredients,
+                                   OnUpdateRecipeListener listener) {
+        AtomicInteger counter = new AtomicInteger(0);
+        Integer numOfIngredients = foundRecipe.getIngredients().size();
+
+        // Decrement counter for each ingredient in the old Recipe object.
+        for (Ingredient ingredient: foundRecipe.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, -1, (i, s) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredients) {
+                    updateRecipeHelper(recipe, recipeIngredients, listener);
                 }
             });
         }
@@ -323,6 +366,7 @@ public class RecipeDB {
 
         // Check if there are any MealPlan objects referencing this recipe.
         // Get a snapshot of the document that this ref points to
+        // TODO: race condition
 //        recipeRef.get()
 //                .addOnCompleteListener(task -> {
 //                    if (task.isSuccessful()) {
@@ -338,9 +382,10 @@ public class RecipeDB {
 //                });
 
         // Decrement count of each ingredient.
-        for (Ingredient ingredient: recipe.getIngredients()) {
-            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {});
-        }
+        // TODO: race condition
+//        for (Ingredient ingredient: recipe.getIngredients()) {
+//            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {});
+//        }
 
         recipeRef.delete()
             .addOnSuccessListener(r->{
@@ -419,14 +464,15 @@ public class RecipeDB {
                                             );
                                         });
                             } else {
-                                // If no MealPlan references this Recipe, we can delete
-                                // it safely from the db.
-                                delRecipe(recipe, (deletedRecipe, success) -> {
-                                    listener.onUpdateReferenceCount(
-                                            recipe,
-                                            success
-                                    );
-                                });
+                                // Even if none of the meal plans reference this recipe,,
+                                // we still won't delete it. Only users can delete recipes.
+
+//                                delRecipe(recipe, (deletedRecipe, success) -> {
+//                                    listener.onUpdateReferenceCount(
+//                                            recipe,
+//                                            success
+//                                    );
+//                                });
                             }
                         } else {
                             listener.onUpdateReferenceCount(recipe, false);
