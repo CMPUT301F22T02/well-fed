@@ -310,6 +310,11 @@ public class StorageIngredientDB {
         return this.collection.orderBy(field);
     }
 
+    public Query getSearchQuery(String field) {
+        return this.collection.orderBy("search-field")
+                .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
+    }
+
     public interface OnAllIngredients {
         void onAllIngredients(ArrayList<StorageIngredient> ingredients, boolean success);
     }
