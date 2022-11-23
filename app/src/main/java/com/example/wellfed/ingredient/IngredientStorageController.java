@@ -15,7 +15,7 @@ public class IngredientStorageController {
 	/**
 	 * the adapter that is used to display the ingredients in the list view
 	 */
-	private StorageIngredientAdapter adapter;
+	private final StorageIngredientAdapter adapter;
 
 	public StorageIngredientDB getDb() {
 		return db;
@@ -34,14 +34,14 @@ public class IngredientStorageController {
 	/**
 	 * Creates ingredients list that represents an empty food storage.
 	 *
-	 * @param activity
+	 * @param activity the activity that is using this controller
 	 */
 	public IngredientStorageController(FragmentActivity activity) {
 		this.activity = (ActivityBase) activity;
 		DBConnection connection = new DBConnection(activity.getApplicationContext());
 		db = new StorageIngredientDB(connection);
 		adapter = new StorageIngredientAdapter(db);
-		getSortedResults(currentField, true);
+		getSortedResults(currentField);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Failed to add " + addIngredient.getDescription());
 			} else {
 				this.activity.makeSnackbar("Added " + addIngredient.getDescription());
-				getSortedResults(currentField, true);
+				getSortedResults(currentField);
 			}
 		});
 	}
@@ -98,7 +98,7 @@ public class IngredientStorageController {
 				this.activity.makeSnackbar("Failed to update " + updateIngredient.getDescription());
 			} else {
 				this.activity.makeSnackbar("Updated " + updateIngredient.getDescription());
-				getSortedResults(currentField, true);
+				getSortedResults(currentField);
 			}
 		});
 	}
@@ -106,13 +106,10 @@ public class IngredientStorageController {
 	/**
 	 * Gets the DB of ingredients sorted by field
 	 *
-	 * @param field     the field to sort by
-	 *                  description | category | expiration
-	 * @param ascending whether to sort ascending or descending
-	 *                  true = ascending)
-	 * @return the DB of ingredients
+	 * @param field the field to sort by
+	 *              description | category | expiration
 	 */
-	public void getSortedResults(String field, boolean ascending) {
+	public void getSortedResults(String field) {
 		this.currentField = field;
 		Query query = db.getSortedQuery(field);
 		adapter.sortString(query);
@@ -122,8 +119,6 @@ public class IngredientStorageController {
 	 * Get the search results from the DB
 	 *
 	 * @param query the query to search for
-	 *
-	 * @return The search results
 	 */
 	public void getSearchResults(String query) {
 		adapter.search(query);
