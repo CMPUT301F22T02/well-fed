@@ -38,11 +38,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import java.util.Date;
 import com.example.wellfed.R;
-import com.example.wellfed.common.AdapterDataObserver;
 import com.example.wellfed.common.Launcher;
-import com.example.wellfed.common.UTCDate;
 
 public class MealBookFragment extends Fragment implements Launcher<MealPlan>,
                                                           MealPlanAdapter.OnItemClickListener,
@@ -156,13 +154,13 @@ public class MealBookFragment extends Fragment implements Launcher<MealPlan>,
 
 
     @Override public void onItemLoad(MealPlan mealPlan) {
-        UTCDate today = new UTCDate();
-        UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
+        Date today = new Date();
+        Date eatDate = mealPlan.getEatDate();
         if (nextMealPlan == null) {
             nextMealPlan = mealPlan;
             this.updateCallToAction(mealPlan);
         } else {
-            UTCDate nextEatDate = UTCDate.from(nextMealPlan.getEatDate());
+            Date nextEatDate = nextMealPlan.getEatDate();
             if (eatDate.getTime() - today.getTime() <
                     nextEatDate.getTime() - today.getTime()) {
                 nextMealPlan = mealPlan;

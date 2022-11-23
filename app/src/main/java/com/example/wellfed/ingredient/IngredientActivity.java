@@ -10,8 +10,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DateUtil;
 import com.example.wellfed.common.DeleteButton;
-import com.example.wellfed.common.UTCDate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -68,8 +68,8 @@ public class IngredientActivity extends ActivityBase
         // Set ingredient best before with id=ingredient_best_before_date_value
         TextView ingredientBestBefore =
                 findViewById(R.id.ingredient_best_before_date_value);
-        UTCDate bestBefore = UTCDate.from(ingredient.getBestBefore());
-        ingredientBestBefore.setText(bestBefore.format("yyyy-MM-dd"));
+        DateUtil dateUtil = new DateUtil();
+        ingredientBestBefore.setText(dateUtil.format(ingredient.getBestBefore(), "yyyy-MM-dd"));
 
         // Set ingredient quantity with id=ingredient_quantity_value
         TextView ingredientQuantity =

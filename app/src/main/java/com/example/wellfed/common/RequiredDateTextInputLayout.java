@@ -40,7 +40,10 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
@@ -66,6 +69,10 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
      */
     private final DateFormat DATE_FORMAT;
     /**
+     * Holds the time zone offset
+     */
+    private final int timeZoneOffset;
+    /**
      * Holds the date currently selected
      */
     private Date date;
@@ -90,6 +97,9 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         super(context, attrs);
         this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         this.DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+        TimeZone tz = TimeZone.getDefault();
+        Calendar cal = GregorianCalendar.getInstance(tz);
+        this.timeZoneOffset = tz.getOffset(cal.getTimeInMillis());
     }
 
     /**
@@ -105,6 +115,9 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
         super(context, attrs, defStyleAttr);
         this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         this.DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
+        TimeZone tz = TimeZone.getDefault();
+        Calendar cal = GregorianCalendar.getInstance(tz);
+        this.timeZoneOffset = tz.getOffset(cal.getTimeInMillis());
     }
 
     /**
@@ -124,10 +137,11 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
      */
     private void showDatePickerDialog() {
         long selectedTime;
+
         if (this.date == null) {
             selectedTime = MaterialDatePicker.todayInUtcMilliseconds();
         } else {
-            selectedTime = this.date.getTime();
+            selectedTime = this.date.getTime() + this.timeZoneOffset;
         }
         MaterialDatePicker<Long> picker =
                 MaterialDatePicker.Builder.datePicker()
@@ -197,7 +211,7 @@ public class RequiredDateTextInputLayout extends RequiredTextInputLayout
      * @param selection the selected date in milliseconds since epoch
      */
     @Override public void onPositiveButtonClick(Long selection) {
-        Date date = new Date(selection);
+        Date date = new Date(selection - this.timeZoneOffset);
         this.setDate(date);
     }
 }
