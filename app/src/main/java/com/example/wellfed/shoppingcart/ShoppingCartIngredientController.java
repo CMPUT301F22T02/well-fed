@@ -105,19 +105,30 @@ public class ShoppingCartIngredientController {
 
                 // get all the items in the storage
                 db.getShoppingCart((cart, success2) -> {
-                    HashMap<String, Pair<String, Double>> inCart = new HashMap<>();
+                    HashMap<String, Integer> inCart = new HashMap<>();
 
-                    for (ShoppingCartIngredient cartItem : cart) {
+                    for (int i = 0; i < cart.size(); i++) {
+                        ShoppingCartIngredient cartItem = cart.get(i);
                         String uid = ingredientUid(cartItem);
-                        Pair<Double, String> val = bestUnitHelper(cartItem, unitHelper);
-                        needed.put(val.second, val.first);
+                        inCart.put(uid, i);
                     }
                     // if shopping cart has those items update them accordingly
                     for (String key : needed.keySet()) {
                         if (inCart.get(key) != null) {
-
+                            String [] details = key.split("####");
+                            String unit = details[2];
+                            // get items from the shopping cart
+                            ShoppingCartIngredient cartItem = cart.get(inCart.get(key));
+                            cartItem.setUnit(unit);
+                            cartItem.setAmount(needed.get(key));
+                            db.updateIngredient(cartItem, (a,s)->{});
                         } else { // else create those items
-
+                            String [] details = key.split("####");
+                            String unit = details[2];
+                            Ingredient ingredient = new Ingredient(details[0]);
+                            ingredient.setUnit(unit);
+                            ingredient.setCategory(details[1]);
+                            db.addIngredient(ingredient, (a,s)->{});
                         }
 
                     }

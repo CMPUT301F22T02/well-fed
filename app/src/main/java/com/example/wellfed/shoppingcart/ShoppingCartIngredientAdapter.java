@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
 import com.example.wellfed.ingredient.Ingredient;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
@@ -46,7 +47,6 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             description = itemView.findViewById(R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(R.id.shopping_cart_ingredient_subtext);
             checkBox = itemView.findViewById(R.id.checkBox);
@@ -78,7 +78,18 @@ public class ShoppingCartIngredientAdapter extends DBAdapter<ShoppingCartIngredi
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        getSnapshot(position);
+        DocumentSnapshot doc = getSnapshot(position);
+        holder.description.setText(doc.getString("description"));
+        holder.subtext.setText(doc.getString("category"));
+        holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));
+//                storageIngredientMap.put("id", ingredient.getId());
+//        storageIngredientMap.put("description", ingredient.getDescription());
+//        storageIngredientMap.put("amount", ingredient.getAmount());
+//        storageIngredientMap.put("unit", ingredient.getUnit());
+//        storageIngredientMap.put("category", ingredient.getCategory());
+//        storageIngredientMap.put("picked", false);
+//        storageIngredientMap.put("complete", false);
+//        storageIngredientMap.put("Ingredient", ingredientDB.getDocumentReference(ingredient));
     }
 
     /**
