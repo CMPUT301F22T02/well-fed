@@ -227,7 +227,10 @@ public class RecipeEditActivity extends EditActivityBase {
         if (!servings.isValid()) return false;
         if (!commentsTextInput.isValid()) return false;
         if (!recipeCategory.isValid()) return false;
-        if (!ingredientEditFragment.isValid()) return false;
+        if (recipeIngredients.size() <= 0) {
+            this.makeSnackbar("Please add at lease one ingredient");
+            return false;
+        }
         return true;
     }
 
