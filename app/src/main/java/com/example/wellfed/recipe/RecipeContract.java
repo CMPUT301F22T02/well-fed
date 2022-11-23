@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.wellfed.MainActivity;
 
 /**
  * Contract for launching new activities that return a Recipe
