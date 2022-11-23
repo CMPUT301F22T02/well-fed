@@ -169,8 +169,72 @@ public class MealPlanInstrumentedTest {
 
 
     @Test
-    public void testAddMealPlanWithRecipes(){
+    public void testAddMealPlanWithRecipes() throws InterruptedException {
+        addRecipe("Eggs and Bacon");
 
+        onView(withId(R.id.fab)).perform(click());
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("2"));
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        onView(withText("Eggs and Bacon")).perform(click());
+
+        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Toast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("Just Toast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.addButton)).perform(click());
+
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Bread"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Bread"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(click());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withText("Hearty Breakfast")).check(matches(isDisplayed()));
+
+        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpRecipe("Toast");
+        cleanUpRecipe("Eggs and Bacon");
     }
 
     @Test
