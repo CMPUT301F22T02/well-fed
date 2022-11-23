@@ -27,7 +27,7 @@ public class StorageIngredientDB {
     /**
      * Holds the instance of the Firebase Firestore DB.
      */
-    private FirebaseFirestore db;
+    private final FirebaseFirestore db;
     /**
      * Holds a reference to the IngredientDB
      */
@@ -39,7 +39,7 @@ public class StorageIngredientDB {
     /**
      * Holds the collection for the users StoredIngredient collection in DB
      */
-    private CollectionReference collection;
+    private final CollectionReference collection;
 
     /**
      * This interface is used to handle the result of
@@ -140,12 +140,12 @@ public class StorageIngredientDB {
     }
 
     /**
-     * todo
-     *
-     * @param storageIngredient
-     * @param ingredient
-     * @param listener
-     */
+     * Adds an ingredient in storage to the Firebase DB.
+	 *
+     * @param storageIngredient the ingredient to be added
+	 * @param ingredient        the ingredient to be added
+	 * @param listener          the listener to be called when the operation is
+	 */
     private void addStorageIngredient(StorageIngredient storageIngredient, Ingredient ingredient, OnAddStorageIngredientListener listener) {
         Log.d(TAG, "addStorageIngredient:");
         storageIngredient.setId(ingredient.getId());
@@ -172,52 +172,56 @@ public class StorageIngredientDB {
         });
     }
 
-    /**
-     * Updates a stored ingredient in the Firebase DB.
-     *
-     * @param storageIngredient the Ingredient containing the updated fields
-     * @param listener          the listener to handle the result
-     */
-    public void updateStorageIngredient(StorageIngredient storageIngredient, OnUpdateStorageIngredientListener listener) {
-        getStorageIngredient(storageIngredient.getStorageId(), (oldStorageIngredient, getSuccess1) -> {
-            if (!getSuccess1) {
-                listener.onUpdateStorageIngredient(storageIngredient, false);
-                return;
-            }
-            ingredientDB.getIngredient(storageIngredient, (getIngredient, getSuccess) -> {
-                if (getSuccess) {
-                    updateStorageIngredient(storageIngredient, oldStorageIngredient, getIngredient, listener);
-                    return;
-                }
-                ingredientDB.addIngredient(storageIngredient, (addedIngredient, addSuccess) -> {
-                    Log.d(TAG, "addIngredient:");
-                    if (!addSuccess) {
-                        listener.onUpdateStorageIngredient(storageIngredient, false);
-                        return;
-                    }
-                    updateStorageIngredient(storageIngredient, oldStorageIngredient, addedIngredient, listener);
-                });
-            });
+	/**
+	 * Updates a stored ingredient in the Firebase DB.
+	 *
+	 * @param storageIngredient the Ingredient containing the updated fields
+	 * @param listener          the listener to handle the result
+	 */
+	public void updateStorageIngredient(StorageIngredient storageIngredient,
+										OnUpdateStorageIngredientListener listener) {
+		getStorageIngredient(storageIngredient.getStorageId(), (oldStorageIngredient, getSuccess1) -> {
+			if (!getSuccess1) {
+				listener.onUpdateStorageIngredient(storageIngredient, false);
+				return;
+			}
+			ingredientDB.getIngredient(storageIngredient, (getIngredient, getSuccess) -> {
+				if (getSuccess) {
+					updateStorageIngredient(storageIngredient, oldStorageIngredient, getIngredient, listener);
+					return;
+				}
+				ingredientDB.addIngredient(storageIngredient, (addedIngredient, addSuccess) -> {
+					Log.d(TAG, "addIngredient:");
+					if (!addSuccess) {
+						listener.onUpdateStorageIngredient(storageIngredient, false);
+						return;
+					}
+					updateStorageIngredient(storageIngredient, oldStorageIngredient, addedIngredient, listener);
+				});
+			});
 
         });
     }
 
-    /**
-     * Updates a stored ingredient in the Firebase DB.
-     *
-     * @param storageIngredient the Ingredient containing the updated fields
-     * @param listener          the listener to handle the result
-     */
-    public void updateStorageIngredient(StorageIngredient storageIngredient, StorageIngredient oldStorageIngredient, Ingredient ingredient, OnUpdateStorageIngredientListener listener) {
-        WriteBatch batch = db.batch();
-        DocumentReference storageIngredientRef = this.collection.document(storageIngredient.getStorageId());
-        batch.update(storageIngredientRef, "category", storageIngredient.getCategory());
-        batch.update(storageIngredientRef, "description", storageIngredient.getDescription());
-        batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
-        batch.update(storageIngredientRef, "amount", storageIngredient.getAmount());
-        batch.update(storageIngredientRef, "location", storageIngredient.getLocation());
-        batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBefore());
-        batch.update(storageIngredientRef, "Ingredient", ingredientDB.getDocumentReference(ingredient));
+	/**
+	 * Updates a stored ingredient in the Firebase DB.
+	 *
+	 * @param storageIngredient the Ingredient containing the updated fields
+	 * @param listener          the listener to handle the result
+	 */
+	public void updateStorageIngredient(StorageIngredient storageIngredient,
+										StorageIngredient oldStorageIngredient,
+										Ingredient ingredient,
+										OnUpdateStorageIngredientListener listener) {
+		WriteBatch batch = db.batch();
+		DocumentReference storageIngredientRef = this.collection.document(storageIngredient.getStorageId());
+		batch.update(storageIngredientRef, "category", storageIngredient.getCategory());
+		batch.update(storageIngredientRef, "description", storageIngredient.getDescription());
+		batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
+		batch.update(storageIngredientRef, "amount", storageIngredient.getAmount());
+		batch.update(storageIngredientRef, "location", storageIngredient.getLocation());
+		batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBefore());
+		batch.update(storageIngredientRef, "Ingredient", ingredientDB.getDocumentReference(ingredient));
         batch.update(storageIngredientRef, "search-field", storageIngredient.getDescription().toLowerCase());
 
         batch.commit().addOnCompleteListener(task -> {

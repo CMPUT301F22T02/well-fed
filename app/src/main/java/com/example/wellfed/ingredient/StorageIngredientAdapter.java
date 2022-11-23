@@ -22,22 +22,49 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The adapter class for the storage ingredient list.
+ */
 public class StorageIngredientAdapter
 	extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
+	/**
+	 * The tag for the log.
+	 */
 	private static final String TAG = "SIAdapter";
+	/**
+	 * The storage ingredient DB.
+	 */
 	private final StorageIngredientDB db;
+	/**
+	 * The listener for the adapter.
+	 */
 	private OnItemClickListener listener;
 
+	/**
+	 * The constructor for the adapter.
+	 *
+	 * @param db the storage ingredient DB
+	 */
 	public StorageIngredientAdapter(StorageIngredientDB db) {
 		super(db.getQuery());
 		Log.d(TAG, "StorageIngredientAdapter:");
 		this.db = db;
 	}
 
+	/**
+	 * The on click listener interface for the adapter.
+	 */
 	public interface OnItemClickListener {
 		void onItemClick(StorageIngredient storageIngredient);
 	}
 
+	/**
+	 * onCreateViewHolder is called when the view holder is created.
+	 *
+	 * @param parent   the parent view group
+	 * @param viewType the view type
+	 * @return the view holder
+	 */
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
@@ -49,6 +76,12 @@ public class StorageIngredientAdapter
 		return new ViewHolder(view);
 	}
 
+	/**
+	 * onBindViewHolder is called when the view holder is bound.
+	 *
+	 * @param holder   the view holder
+	 * @param position the position of the storage ingredient in the list
+	 */
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 		Log.d(TAG, "onBindViewHolder:");
@@ -67,7 +100,9 @@ public class StorageIngredientAdapter
 		this.listener = listener;
 	}
 
-	// todo why is it static?
+	/**
+	 * The view holder class for the storage ingredient list.
+	 */
 	public static class ViewHolder extends RecyclerView.ViewHolder {
 		private static final String TAG = "ViewHolder";
 		private final TextView textView;
@@ -75,6 +110,11 @@ public class StorageIngredientAdapter
 		private final TextView bestBeforeTextView;
 		private final View view;
 
+		/**
+		 * The constructor for the view holder.
+		 *
+		 * @param view the view to hold the data
+		 */
 		public ViewHolder(View view) {
 			super(view);
 			this.view = view;
@@ -83,6 +123,12 @@ public class StorageIngredientAdapter
 			this.bestBeforeTextView = view.findViewById(R.id.dateTextView);
 		}
 
+		/**
+		 * Bind the storage ingredient to the view holder.
+		 *
+		 * @param storageIngredient the storage ingredient to bind
+		 * @param listener          the listener to set for the view holder
+		 */
 		public void bind(StorageIngredient storageIngredient,
 						 OnItemClickListener listener) {
 			Log.d(TAG, "bind:");
@@ -120,5 +166,4 @@ public class StorageIngredientAdapter
 			});
 		}
 	}
-
 }
