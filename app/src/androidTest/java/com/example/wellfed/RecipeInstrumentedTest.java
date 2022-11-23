@@ -20,10 +20,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static com.example.wellfed.MainActivityTest.childAtPosition;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
+
+import android.view.View;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.NoMatchingViewException;
@@ -44,6 +45,7 @@ import com.example.wellfed.recipe.RecipeIngredientEditActivity;
 
 import junit.framework.AssertionFailedError;
 
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -120,9 +122,9 @@ import org.junit.runner.RunWith;
     private void clickSortButton() {
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.image_filter_button),
-                        childAtPosition(
+                        ChildAtPositionMatcher.childAtPosition(
                                 allOf(withId(R.id.fragment_sort_container2),
-                                        childAtPosition(
+                                        ChildAtPositionMatcher.childAtPosition(
                                                 withId(R.id.fragment_recipe_book),
                                                 1)),
                                 1),
