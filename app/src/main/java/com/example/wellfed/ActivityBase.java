@@ -21,6 +21,7 @@ public abstract class ActivityBase extends AppCompatActivity {
 
     public void makeSnackbar(String text) {
         Snackbar.make(findViewById(android.R.id.content), text,
-                Snackbar.LENGTH_SHORT).show();
+                Snackbar.LENGTH_SHORT)
+                .show();
     }
 }

@@ -16,6 +16,7 @@ import com.example.wellfed.common.Launcher;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.example.wellfed.navigation.NavigationCollectionAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Stack;
 import java.util.UUID;
@@ -36,8 +37,7 @@ public class MainActivity extends ActivityBase {
         }
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (history.size() < 2) {
             super.onBackPressed();
         } else {
@@ -46,8 +46,7 @@ public class MainActivity extends ActivityBase {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -82,31 +81,29 @@ public class MainActivity extends ActivityBase {
         fab.setOnClickListener(view -> {
             int i = viewPager.getCurrentItem();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            Launcher launcher =
-                    (Launcher) fragmentManager.findFragmentByTag("f" + i);
+            Launcher<Object> launcher =
+                    (Launcher<Object>) fragmentManager.findFragmentByTag(
+                            "f" + i);
             if (launcher != null) {
-                launcher.launch();
+                launcher.launch(null);
             }
         });
 
         viewPager.registerOnPageChangeCallback(
                 new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageSelected(int position) {
+                    @Override public void onPageSelected(int position) {
                         super.onPageSelected(position);
                         bottomAppBar = findViewById(R.id.bottomAppBar);
 
                         Menu menu = bottomAppBar.getMenu();
 
-                for (int i = 0; i < menu.size(); ++i) {
-                    menu.getItem(i).getIcon().setTint(
-                            getResources().getColor(R.color.black)
-                    );
-                }
+                        for (int i = 0; i < menu.size(); ++i) {
+                            menu.getItem(i).getIcon().setTint(
+                                    getResources().getColor(R.color.black));
+                        }
 
                         menu.getItem(position).getIcon().setTint(
-                                getResources().getColor(R.color.purple_200)
-                        );
+                                getResources().getColor(R.color.purple_200));
                         if (history.size() == 0 || history.peek() != position) {
                             history.push(position);
                         }
@@ -114,5 +111,10 @@ public class MainActivity extends ActivityBase {
                 });
 
         viewPager.setCurrentItem(2, false);
+    }
+
+    @Override public void makeSnackbar(String text) {
+        Snackbar.make(findViewById(android.R.id.content), text,
+                Snackbar.LENGTH_SHORT).setAnchorView(bottomAppBar).show();
     }
 }

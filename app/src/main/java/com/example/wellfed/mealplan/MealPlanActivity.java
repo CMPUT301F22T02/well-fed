@@ -13,19 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DateUtil;
 import com.example.wellfed.common.DeleteButton;
 import com.example.wellfed.recipe.Recipe;
-import com.example.wellfed.recipe.RecipeAdapter;
+import com.example.wellfed.recipe.RecipeActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MealPlanActivity extends ActivityBase implements
-                                                   ConfirmDialog.OnConfirmListener {
+public class MealPlanActivity extends ActivityBase
+        implements ConfirmDialog.OnConfirmListener,
+                   MealPlanItemAdapter.OnItemClickListener<Recipe> {
     private static final String ARG_MEAL_PLAN = "mealPlan";
     private final ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanEditContract(), result -> {
@@ -42,9 +43,10 @@ public class MealPlanActivity extends ActivityBase implements
                         break;
                 }
             });
-    private DateFormat dateFormat;
+    private DateUtil dateUtil;
     private TextView mealPlanTitleTextView;
     private TextView mealPlanDateTextView;
+    private TextView mealPLanCategoryTextView;
     private TextView mealPlanNumberOfServingsTextView;
     private DeleteButton deleteButton;
     private FloatingActionButton fab;
@@ -57,27 +59,35 @@ public class MealPlanActivity extends ActivityBase implements
 
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
 
-        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
         mealPlanTitleTextView = findViewById(R.id.mealPlanTitleTextView);
+        mealPLanCategoryTextView = findViewById(R.id.mealPlanCategoryTextView);
         mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
         mealPlanNumberOfServingsTextView =
                 findViewById(R.id.mealPlanNumberOfServingsTextView);
 
         mealPlanTitleTextView.setText(mealPlan.getTitle());
-        if (mealPlan.getEatDate() != null) {
-            mealPlanDateTextView.setText(
-                    dateFormat.format(mealPlan.getEatDate()));
-        }
+        dateUtil = new DateUtil();
+        mealPlanDateTextView.setText(
+                "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd"));
+        mealPLanCategoryTextView.setText("Category: " + mealPlan.getCategory());
         mealPlanNumberOfServingsTextView.setText(
                 "Number of servings: " + mealPlan.getServings());
-        ArrayList<Recipe> recipes = mealPlan.getRecipes();
+
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
-        RecipeAdapter recipeAdapter = null;
+        MealPlanRecipeItemAdapter recipeAdapter =
+                new MealPlanRecipeItemAdapter();
+        recipeAdapter.setItems(mealPlan.getRecipes());
+        recipeAdapter.setOnItemClickListener(this);
         recipeRecyclerView.setAdapter(recipeAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recipeRecyclerView.setLayoutManager(linearLayoutManager);
+        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        RecyclerView ingredientRecyclerView =
+                findViewById(R.id.ingredientRecyclerView);
+        MealPlanIngredientItemAdapter ingredientAdapter =
+                new MealPlanIngredientItemAdapter();
+        ingredientAdapter.setItems(mealPlan.getIngredients());
+        ingredientRecyclerView.setAdapter(ingredientAdapter);
+        ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         deleteButton = new DeleteButton(this, findViewById(R.id.deleteButton),
                 "Delete Meal Plan", this);
@@ -90,6 +100,7 @@ public class MealPlanActivity extends ActivityBase implements
         Intent intent = new Intent();
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
+        intent.putExtra("mealPlan", mealPlan);
         finish();
     }
 
@@ -106,5 +117,12 @@ public class MealPlanActivity extends ActivityBase implements
         intent.putExtra("type", "launch");
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    @Override public void onItemClick(Recipe recipe) {
+        Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra("item", recipe);
+        intent.putExtra("viewonly", true);
+        startActivity(intent);
     }
 }

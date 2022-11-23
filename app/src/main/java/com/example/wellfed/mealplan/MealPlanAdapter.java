@@ -29,13 +29,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.Date;
 
 import com.example.wellfed.R;
-import com.example.wellfed.common.UTCDate;
-import com.google.android.material.color.MaterialColors;
-
-import java.util.ArrayList;
+import com.example.wellfed.common.DBAdapter;
+import com.example.wellfed.common.DateUtil;
 
 /**
  * The MealPlanAdapter class binds ArrayList to RecyclerView.
@@ -48,14 +46,58 @@ import java.util.ArrayList;
  * @author Steven Tang
  * @version v1.0.0 2022-10-24
  **/
-public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
-    private final MealBookFragment context;
-    private final ArrayList<MealPlan> mealPlans;
+public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
+    private final MealPlanDB db;
 
-    public MealPlanAdapter(MealBookFragment context,
-                           ArrayList<MealPlan> mealPlans) {
-        this.context = context;
-        this.mealPlans = mealPlans;
+    /**
+     * The listener for an item click in the RecyclerView
+     */
+    private OnItemClickListener listener;
+    /**
+     * The listener for an item click in the RecyclerView
+     */
+    private OnItemLoadListener itemLoadListener;
+    private DateUtil dateUtil;
+
+    // TODO: keep the context for now, try to remove it later
+    public MealPlanAdapter(MealPlanDB db) {
+        super(db.getQuery());
+        this.db = db;
+        dateUtil = new DateUtil();
+    }
+
+    /**
+     * The listener for an item click in the RecyclerView
+     */
+    public interface OnItemClickListener {
+        void onItemClick(MealPlan mealPlan);
+    }
+
+    /**
+     * The listener for an item load in the RecyclerView
+     */
+    public interface OnItemLoadListener {
+        void onItemLoad(MealPlan mealPlan);
+    }
+
+    /**
+     * Sets the listener for an item click in the Recyclerview
+     *
+     * @param listener the listener to set
+     */
+    // TODO: move this to superclass
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    /**
+     * Sets the listener for an item load in the Recyclerview
+     *
+     * @param listener the listener to set
+     */
+    // TODO: move this to superclass
+    public void setOnItemLoadListener(OnItemLoadListener listener) {
+        this.itemLoadListener = listener;
     }
 
     /*
@@ -79,57 +121,71 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanViewHolder> {
     @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
                                            int position) {
 
-        MealPlan mealPlan = this.mealPlans.get(position);
-        holder.getTitleTextView().setText(mealPlan.getTitle());
-        holder.getCategoryTextView().setText(mealPlan.getCategory());
-        holder.getMaterialCardView().setOnClickListener(
-                view -> context.launch(holder.getAdapterPosition()));
+        db.getMealPlan(getSnapshot(position), (mealPlan, success) -> {
+            if (success) {
+                holder.getTitleTextView().setText(mealPlan.getTitle());
+                holder.getCategoryTextView().setText(mealPlan.getCategory());
+                holder.getMaterialCardView().setOnClickListener(view -> {
+                    if (listener != null) {
+                        listener.onItemClick(mealPlan);
+                    }
+                });
 
-        UTCDate today = new UTCDate();
-        UTCDate eatDate = UTCDate.from(mealPlan.getEatDate());
+                Date eatDate = mealPlan.getEatDate();
+                Date eatDateFirstDayOfWeek = dateUtil.getFirstDayOfWeek(eatDate);
+                if (position > 0) {
+                    db.getMealPlan(getSnapshot(position - 1),
+                            (priorMealPlan, success2) -> {
+                                if (success2) {
+                                    Date priorEatDate = priorMealPlan.getEatDate();
+                                    if (dateUtil.equals(priorEatDate,eatDate)) {
+                                        return;
+                                    }
+                                    renderDates(eatDate, holder);
+                                    Date priorEatDateFirstDayOfWeek =
+                                            dateUtil.getFirstDayOfWeek(priorEatDate);
+                                    if (dateUtil.equals(eatDateFirstDayOfWeek,
+                                            priorEatDateFirstDayOfWeek)) {
+                                        return;
+                                    }
+                                    renderWeeks(eatDate, eatDateFirstDayOfWeek,
+                                            holder);
 
-        int colorPrimary = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorPrimary);
-        int colorOnPrimary = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorOnPrimary);
-        int colorSurface = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorSurface);
-        int colorOnSurface = MaterialColors.getColor(context.getView(),
-                com.google.android.material.R.attr.colorOnSurface);
-
-        UTCDate eatDateFirstDayOfWeek = eatDate.getFirstDayOfWeek();
-        if (position > 0) {
-            MealPlan priorMealPlan = this.mealPlans.get(position - 1);
-            UTCDate priorEatDate = UTCDate.from(priorMealPlan.getEatDate());
-            if (priorEatDate.equals(eatDate)) {
-                return;
+                                }
+                            });
+                } else {
+                    renderDates(eatDate, holder);
+                    renderWeeks(eatDate, eatDateFirstDayOfWeek, holder);
+                }
             }
-            UTCDate priorEatDateFirstDayOfWeek =
-                    priorEatDate.getFirstDayOfWeek();
-            if (eatDateFirstDayOfWeek.equals(priorEatDateFirstDayOfWeek)) {
-                return;
+            if (itemLoadListener != null) {
+                itemLoadListener.onItemLoad(mealPlan);
             }
-        }
-        UTCDate eatDateLastDayOfWeek = eatDate.getLastDayOfWeek();
-        String eatDateFirstDayOfWeekMonth = eatDateFirstDayOfWeek.format("MMMM ");
-        String eatDateFirstDayOfWeekDay = eatDateFirstDayOfWeek.format("d");
-        String weekLabel = eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
-        String eatDateLastDayOfWeekMonth = eatDateLastDayOfWeek.format("MMMM ");
+        });
+    }
+
+    private void renderDates(Date eatDate, @NonNull MealPlanViewHolder holder) {
+        Date today = new Date();
+        holder.setDateCircle(eatDate, today.equals(eatDate));
+    }
+
+    private void renderWeeks(Date eatDate, Date eatDateFirstDayOfWeek,
+                             @NonNull MealPlanViewHolder holder) {
+        dateUtil = new DateUtil();
+        Date eatDateLastDayOfWeek = dateUtil.getLastDayOfWeek(eatDate);
+        String eatDateFirstDayOfWeekMonth =
+                dateUtil.format(eatDateFirstDayOfWeek, "MMMM ");
+        String eatDateFirstDayOfWeekDay =
+                dateUtil.format(eatDateFirstDayOfWeek,"d");
+        String weekLabel =
+                eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
+        String eatDateLastDayOfWeekMonth =
+                dateUtil.format(eatDateLastDayOfWeek,"MMMM ");
         if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
             weekLabel += eatDateLastDayOfWeekMonth;
         }
-        weekLabel += eatDateLastDayOfWeek.format("d");
+        weekLabel += dateUtil.format(eatDateLastDayOfWeek, "d");
         holder.getWeekTextView().setText(weekLabel);
         holder.getWeekTextView().setVisibility(View.VISIBLE);
-        if (today.equals(eatDate)) {
-            holder.setDateCircle(eatDate, colorPrimary, colorOnPrimary);
-        } else {
-            holder.setDateCircle(eatDate, colorSurface, colorOnSurface);
-        }
     }
-
-    @Override public int getItemCount() {
-        return this.mealPlans.size();
-    }
-
 }

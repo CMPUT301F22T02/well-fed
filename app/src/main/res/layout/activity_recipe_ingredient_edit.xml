@@ -3,18 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
     <com.example.wellfed.common.RequiredTextInputLayout
         android:id="@+id/descriptionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="10dp">
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_descriptionInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/description"
@@ -28,16 +31,19 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionInput"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionInput">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/categoryInput"
+            android:id="@+id/edit_categoryInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/category"
-            />
+            android:labelFor="@+id/edit_categoryInput" />
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>
 
     <!-- Amount and Unit on the same line below categories half the width each -->
@@ -46,6 +52,7 @@
         android:id="@+id/amountInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/unitInput"
@@ -54,6 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryInput">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_amountInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/amount_hint"
@@ -67,17 +75,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/amountInput"
         app:layout_constraintTop_toBottomOf="@+id/categoryInput">
 
         <AutoCompleteTextView
-            android:labelFor="@+id/unitInput"
+            android:id="@+id/edit_unitInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/unit"
-            />
+            android:hint="@string/unit" />
     </com.example.wellfed.common.RequiredDropdownTextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

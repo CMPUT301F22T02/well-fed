@@ -10,13 +10,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DateUtil;
 import com.example.wellfed.common.DeleteButton;
-import com.example.wellfed.common.UTCDate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.Objects;
 
+/**
+ * Represents an Ingredient's information page.
+ */
 public class IngredientActivity extends ActivityBase
         implements ConfirmDialog.OnConfirmListener {
     /**
@@ -65,8 +68,8 @@ public class IngredientActivity extends ActivityBase
         // Set ingredient best before with id=ingredient_best_before_date_value
         TextView ingredientBestBefore =
                 findViewById(R.id.ingredient_best_before_date_value);
-        UTCDate bestBefore = UTCDate.from(ingredient.getBestBeforeDate());
-        ingredientBestBefore.setText(bestBefore.format("yyyy-MM-dd"));
+        DateUtil dateUtil = new DateUtil();
+        ingredientBestBefore.setText(dateUtil.format(ingredient.getBestBefore(), "yyyy-MM-dd"));
 
         // Set ingredient quantity with id=ingredient_quantity_value
         TextView ingredientQuantity =
@@ -99,9 +102,7 @@ public class IngredientActivity extends ActivityBase
         // Set edit button
         FloatingActionButton editButton =
                 findViewById(R.id.ingredient_edit_button);
-        editButton.setOnClickListener(v -> {
-            launcher.launch(ingredient);
-        });
+        editButton.setOnClickListener(v -> launcher.launch(ingredient));
     }
 
     /**
@@ -131,7 +132,7 @@ public class IngredientActivity extends ActivityBase
      * onEdit method for the activity. This method is called when the user
      * edits an ingredient.
      *
-     * @param ingredient
+     * @param ingredient The edited ingredient.
      */
     public void onEdit(StorageIngredient ingredient) {
         Intent intent = new Intent();

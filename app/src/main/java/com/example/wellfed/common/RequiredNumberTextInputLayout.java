@@ -151,7 +151,7 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
             this.setError(null);
             return true;
         } catch (NumberFormatException exception) {
-            this.setError(this.getHint() + " must be a double");
+            this.setError(this.getHint() + " must be a number");
             return false;
         }
     }

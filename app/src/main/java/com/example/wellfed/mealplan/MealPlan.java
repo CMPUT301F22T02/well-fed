@@ -11,6 +11,8 @@
 
 package com.example.wellfed.mealplan;
 
+import static org.junit.Assert.assertNotNull;
+
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -20,6 +22,7 @@ import com.example.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * This class represents a MealPlan, which contains recipes and ingredients
@@ -113,6 +116,14 @@ public class MealPlan implements Serializable {
     }
 
     /**
+     * Sets the entire ArrayList of Ingredients in the MealPlan object.
+     */
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients.clear();
+        this.ingredients.addAll(ingredients);
+    }
+
+    /**
      * Adds a Recipe to the MealPlan object.
      * @param recipe The Recipe to be added.
      */
@@ -143,6 +154,14 @@ public class MealPlan implements Serializable {
      */
     public ArrayList<Recipe> getRecipes() {
         return this.recipes;
+    }
+
+    /**
+     * Sets the entire ArrayList of Recipes in the MealPlan object.
+     */
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes.clear();
+        this.recipes.addAll(recipes);
     }
 
     /**
@@ -227,5 +246,58 @@ public class MealPlan implements Serializable {
      */
     public String getId(){
         return this.id;
+    }
+
+    /**
+     * Checks whether the meal plan is equal to another meal plan.
+     * Note: Any order of ingredients/recipes is accepted.
+     *
+     * @param o the object to check equality with
+     *
+     * @return true if the objects are equal, false otherwise
+     */
+    public boolean isEqual(Object o) {
+        if (o.getClass() != MealPlan.class) {
+            return false;
+        }
+
+        ArrayList<Boolean> flags = new ArrayList<Boolean>();
+        flags.add(Objects.equals(this.getId(), ((MealPlan) o).getId()));
+        flags.add(Objects.equals(this.getTitle(), ((MealPlan) o).getTitle()));
+        flags.add(Objects.equals(this.getCategory(), ((MealPlan) o).getCategory()));
+        flags.add(Objects.equals(this.getEatDate(), ((MealPlan) o).getEatDate()));
+        flags.add(Objects.equals(this.getServings(), ((MealPlan) o).getServings()));
+
+        // checking all ingredients in the MealPlan (in any order!)
+        flags.add(this.getIngredients().size() == ((MealPlan) o).getIngredients().size());
+
+        // searching for ingredient
+        for (int i = 0; i < this.getIngredients().size(); i++) {
+            // search for the needed Ingredient
+            boolean found = false;
+            for (int j = 0; j < ((MealPlan) o).getIngredients().size(); j++) {
+                if (this.getIngredient(i).isEqual(((MealPlan) o).getIngredient(j))) {
+                    found = true;
+                    break;
+                }
+            }
+            flags.add(found);
+        }
+
+        // checking all recipes by matching them up
+        flags.add(this.getRecipes().size() == ((MealPlan) o).getRecipes().size());
+        for (int i = 0; i < this.getRecipes().size(); i++) {
+            // search for the needed Recipe
+            boolean found = false;
+            for (int j = 0; j < ((MealPlan) o).getRecipes().size(); j++) {
+                if (this.getRecipe(i).isEqual(((MealPlan) o).getRecipe(j))) {
+                    found = true;
+                    break;
+                }
+            }
+            flags.add(found);
+        }
+
+        return !flags.contains(false);
     }
 }

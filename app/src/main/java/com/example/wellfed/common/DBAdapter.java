@@ -1,25 +1,26 @@
 package com.example.wellfed.common;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wellfed.R;
-import com.example.wellfed.ingredient.StorageIngredientAdapter;
-import com.example.wellfed.mealplan.MealPlanAdapter;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.crypto.interfaces.PBEKey;
 
 // TODO: Cite: firestore/quickstart
 
@@ -36,13 +37,31 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         implements EventListener<QuerySnapshot> {
     private static final String TAG = "DBAdapter";
     private final ArrayList<DocumentSnapshot> snapshots = new ArrayList<>();
+    private Query mQuery;
+    private ListenerRegistration mRegistration;
+
 
     public DBAdapter(Query query) {
-        query.addSnapshotListener(this);
+        this.mQuery = query;
+        startListening();
     }
 
-    @Override public void onEvent(@Nullable QuerySnapshot documentSnapshots,
-                                  @Nullable FirebaseFirestoreException error) {
+    public void changeQuery(Query query) {
+        // Stop listening
+        stopListening();
+
+        // Clear existing data
+        snapshots.clear();
+        notifyDataSetChanged();
+
+        // Listen to new query
+        mQuery = query;
+        startListening();
+    }
+
+    @Override
+    public void onEvent(@Nullable QuerySnapshot documentSnapshots,
+                        @Nullable FirebaseFirestoreException error) {
         if (error != null || documentSnapshots == null) {
             Log.w(TAG, "onEvent:error", error);
             // TODO: call onError handler
@@ -68,7 +87,7 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
                     }
                     break;
                 case REMOVED:
-                    snapshots.remove(oldIndex);
+                    snapshots.remove(change.getOldIndex());
                     notifyItemRemoved(change.getOldIndex());
                     break;
             }
@@ -80,7 +99,43 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         return snapshots.get(index);
     }
 
-    @Override public int getItemCount() {
+    @SuppressLint("NotifyDataSetChanged")
+    protected void setSnapshots(List<DocumentSnapshot> snapshots) {
+        this.snapshots.clear();
+        this.snapshots.addAll(snapshots);
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void clearSnapshots() {
+        this.snapshots.clear();
+        notifyDataSetChanged();
+    }
+
+
+    public void startListening() {
+        if (mQuery != null && mRegistration == null) {
+            mRegistration = mQuery.addSnapshotListener(this);
+        }
+    }
+
+    public void stopListening() {
+        if (mRegistration != null) {
+            mRegistration.remove();
+            mRegistration = null;
+        }
+
+        snapshots.clear();
+        notifyDataSetChanged();
+    }
+
+
+    protected ArrayList<DocumentSnapshot> getSnapshots() {
+        return snapshots;
+    }
+
+    @Override
+    public int getItemCount() {
         return snapshots.size();
     }
 }

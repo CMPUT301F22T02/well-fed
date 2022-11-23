@@ -38,21 +38,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import java.util.Date;
 import com.example.wellfed.R;
-import com.example.wellfed.common.AdapterDataObserver;
 import com.example.wellfed.common.Launcher;
 
-public class MealBookFragment extends Fragment
-        implements Launcher,
-                   AdapterDataObserver.OnAdapterDataChangedListener {
+public class MealBookFragment extends Fragment implements Launcher<MealPlan>,
+                                                          MealPlanAdapter.OnItemClickListener,
+                                                          MealPlanAdapter.OnItemLoadListener {
     private TextView userFirstNameTextView;
     private TextView callToActionTextView;
     private RecyclerView mealPlanRecyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private MealPlanAdapter mealPlanAdapter;
     private MealPlanController controller;
-    private int selected;
+    private MealPlan selectedMealPlan;
+    private MealPlan nextMealPlan;
 
     ActivityResultLauncher<MealPlan> launcher =
             registerForActivityResult(new MealPlanContract(), result -> {
@@ -63,13 +62,13 @@ public class MealBookFragment extends Fragment
                 MealPlan mealPlan = result.second;
                 switch (type) {
                     case "delete":
-                        controller.deleteMealPlan(this.selected);
+                        controller.deleteMealPlan(mealPlan);
                         break;
                     case "edit":
-                        controller.editMealPlan(selected, mealPlan);
+                        controller.updateMealPlan(mealPlan, this);
                         break;
                     case "launch":
-                        this.launch(this.selected);
+                        this.launch(selectedMealPlan);
                         break;
                     default:
                         throw new IllegalArgumentException();
@@ -109,47 +108,39 @@ public class MealBookFragment extends Fragment
                 view.findViewById(R.id.callToActionTextView);
         this.mealPlanRecyclerView =
                 view.findViewById(R.id.mealPlanRecyclerView);
-        this.linearLayoutManager =
-                new LinearLayoutManager(getContext());
+        this.linearLayoutManager = new LinearLayoutManager(getContext());
         this.mealPlanRecyclerView.setLayoutManager(linearLayoutManager);
 
-        controller = new MealPlanController();
+        controller = new MealPlanController(getActivity());
 
-        this.mealPlanAdapter =
-                new MealPlanAdapter(this, this.controller.getMealPlans());
-        this.mealPlanAdapter.registerAdapterDataObserver(
-                new AdapterDataObserver(this));
-        this.controller.setAdapter(this.mealPlanAdapter);
-        this.mealPlanRecyclerView.setAdapter(this.mealPlanAdapter);
-
-        this.mealPlanAdapter.notifyItemRangeChanged(0,
-                this.controller.getMealPlans().size());
+        this.controller.getAdapter().setOnItemClickListener(this);
+        this.controller.getAdapter().setOnItemLoadListener(this);
+        this.mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
         this.userFirstNameTextView.setText(
                 getString(R.string.greeting, "Akshat"));
+        this.updateCallToAction(null);
     }
 
-    @Override public void launch(int selected) {
-        this.selected = selected;
-        launcher.launch(this.controller.getMealPlans().get(selected));
+    @Override public void launch(MealPlan mealPlan) {
+        if (mealPlan == null) {
+            editLauncher.launch(null);
+        } else {
+            selectedMealPlan = mealPlan;
+            launcher.launch(mealPlan);
+        }
     }
 
-    @Override
-    public void launch() {
-        editLauncher.launch(null);
-    }
-
-    private void updateCallToAction() {
-        MealPlan nextMealPlan = this.controller.getNextMealPlan();
-        if (nextMealPlan != null) {
-            this.linearLayoutManager.scrollToPosition(
-                    this.controller.getMealPlans().indexOf(nextMealPlan));
+    private void updateCallToAction(MealPlan mealPlan) {
+        if (mealPlan != null) {
+            //            this.linearLayoutManager.scrollToPosition(
+            //                    this.controller.getMealPlans().indexOf
+            //                    (nextMealPlan));
             SpannableStringBuilder callToAction =
                     new SpannableStringBuilder().append(
                                     getString(R.string.call_to_action_make_meal_plan))
                             .append(" ").append(nextMealPlan.getTitle(),
-                                    new StyleSpan(Typeface.ITALIC), 0)
-                            .append("?");
+                                    new StyleSpan(Typeface.ITALIC), 0).append("?");
             this.callToActionTextView.setText(callToAction);
         } else {
             this.callToActionTextView.setText(
@@ -157,7 +148,24 @@ public class MealBookFragment extends Fragment
         }
     }
 
-    @Override public void onAdapterDataChanged() {
-        this.updateCallToAction();
+    @Override public void onItemClick(MealPlan mealPlan) {
+        this.launch(mealPlan);
+    }
+
+
+    @Override public void onItemLoad(MealPlan mealPlan) {
+        Date today = new Date();
+        Date eatDate = mealPlan.getEatDate();
+        if (nextMealPlan == null) {
+            nextMealPlan = mealPlan;
+            this.updateCallToAction(mealPlan);
+        } else {
+            Date nextEatDate = nextMealPlan.getEatDate();
+            if (eatDate.getTime() - today.getTime() <
+                    nextEatDate.getTime() - today.getTime()) {
+                nextMealPlan = mealPlan;
+                this.controller.deleteMealPlan(mealPlan);
+            }
+        }
     }
 }
