@@ -35,6 +35,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Creates a new Ingredient object that represents an Ingredient used for various meal purposes.
+	 *
 	 * @param description The description/title of an Ingredient
 	 */
 	public Ingredient(String description) {
@@ -50,6 +51,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Sets the category (aka tag) of an Ingredient object.
+	 *
 	 * @param category The category to add
 	 */
 	public void setCategory(String category) {
@@ -58,6 +60,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Gets the category.
+	 *
 	 * @return The String representing the category
 	 */
 	public String getCategory() {
@@ -66,6 +69,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Gets the description (aka title) of an Ingredient
+	 *
 	 * @return The String representing the description (aka title) of the Ingredient
 	 */
 	public String getDescription() {
@@ -74,6 +78,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Sets the description (aka title) of an Ingredient
+	 *
 	 * @param description The String representing the description (aka title) of the Ingredient
 	 */
 	public void setDescription(String description) {
@@ -82,6 +87,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Gets a String representing the unit of an amount
+	 *
 	 * @return A String representing the unit
 	 */
 	public String getUnit() {
@@ -90,6 +96,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Sets the unit of an amount
+	 *
 	 * @param unit A String representing the unit
 	 */
 	public void setUnit(String unit) {
@@ -98,6 +105,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Sets the amount of an ingredient
+	 *
 	 * @param amount the amount
 	 */
 	public void setAmount(Double amount) {
@@ -106,6 +114,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Gets the amount of an ingredient
+	 *
 	 * @return the amount
 	 */
 	public Double getAmount() {
@@ -114,6 +123,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Get the database ID of an ingredient. This returns null if the ingredient is not in DB.
+	 *
 	 * @return the ID of the ingredient
 	 */
 	public String getId() {
@@ -122,6 +132,7 @@ public class Ingredient implements Serializable {
 
 	/**
 	 * Sets the database ID of an ingredient.
+	 *
 	 * @param id the ID of the ingredient
 	 */
 	public void setId(String id) {
@@ -132,7 +143,6 @@ public class Ingredient implements Serializable {
 	 * Checks whether the ingredient is equal to another ingredient.
 	 *
 	 * @param o the object to check equality with
-	 *
 	 * @return true if the objects are equal, false otherwise
 	 */
 	public boolean isEqual(Object o) {
