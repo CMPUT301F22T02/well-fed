@@ -88,13 +88,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -137,8 +137,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">ShoppingCartIngredientAdapter</span>
 extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a>&gt;</pre>
-<div class="block">The ShoppingCartIngredientAdapter class binds ArrayList<ShoppingCartIngredient> to RecyclerView.
- <p></div>
 </li>
 </ul>
 </div>
@@ -162,30 +160,9 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCa
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>(package private) java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ingredients">ingredients</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">ViewHolder class for the ShoppingCartIngredientAdapter.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -205,8 +182,11 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCa
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.ArrayList)">ShoppingCartIngredientAdapter</a></span>&#8203;(java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;ingredients)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.ArrayList,com.example.wellfed.shoppingcart.ShoppingCartFragment)">ShoppingCartIngredientAdapter</a></span>&#8203;(java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;shoppingCartIngredients,
+                             <a href="ShoppingCartFragment.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartFragment</a>&nbsp;shoppingCartFragment)</code></th>
+<td class="colLast">
+<div class="block">Constructor for the IngredientAdapter.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -229,19 +209,25 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCa
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getItemCount()">getItemCount</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">getItemCount method for the ShoppingCartIngredientAdapter.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(com.example.wellfed.shoppingcart.ShoppingCartIngredientAdapter.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a>&nbsp;holder,
                 int&nbsp;position)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onBindViewHolder method for the ShoppingCartIngredientAdapter.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder</a></span>&#8203;(android.view.ViewGroup&nbsp;parent,
                   int&nbsp;viewType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onCreateViewHolder method for the ShoppingCartIngredientAdapter.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -267,25 +253,6 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCa
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="ingredients">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>ingredients</h4>
-<pre>java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt; ingredients</pre>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -293,13 +260,20 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCa
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.util.ArrayList)">
+<a id="&lt;init&gt;(java.util.ArrayList,com.example.wellfed.shoppingcart.ShoppingCartFragment)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ShoppingCartIngredientAdapter</h4>
-<pre>public&nbsp;ShoppingCartIngredientAdapter&#8203;(java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;ingredients)</pre>
+<pre>public&nbsp;ShoppingCartIngredientAdapter&#8203;(java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;shoppingCartIngredients,
+                                     <a href="ShoppingCartFragment.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartFragment</a>&nbsp;shoppingCartFragment)</pre>
+<div class="block">Constructor for the IngredientAdapter.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>shoppingCartIngredients</code> - ArrayList of ShoppingCartIngredient objects for the adapter.</dd>
+<dd><code>shoppingCartFragment</code> - ShoppingCartFragment object for the adapter.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -322,9 +296,15 @@ extends androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCa
 public&nbsp;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a>&nbsp;onCreateViewHolder&#8203;(@NonNull
                                                                    android.view.ViewGroup&nbsp;parent,
                                                                    int&nbsp;viewType)</pre>
+<div class="block">onCreateViewHolder method for the ShoppingCartIngredientAdapter.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onCreateViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>parent</code> - ViewGroup for the adapter.</dd>
+<dd><code>viewType</code> - int for the adapter.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>ViewHolder object for the adapter.</dd>
 </dl>
 </li>
 </ul>
@@ -337,9 +317,13 @@ public&nbsp;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class
 <pre class="methodSignature">public&nbsp;void&nbsp;onBindViewHolder&#8203;(@NonNull
                              <a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a>&nbsp;holder,
                              int&nbsp;position)</pre>
+<div class="block">onBindViewHolder method for the ShoppingCartIngredientAdapter.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onBindViewHolder</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>holder</code> - ViewHolder object for the adapter.</dd>
+<dd><code>position</code> - int for the adapter.</dd>
 </dl>
 </li>
 </ul>
@@ -350,9 +334,12 @@ public&nbsp;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class
 <li class="blockList">
 <h4>getItemCount</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;getItemCount()</pre>
+<div class="block">getItemCount method for the ShoppingCartIngredientAdapter.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getItemCount</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a>&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>int for the adapter.</dd>
 </dl>
 </li>
 </ul>
@@ -408,13 +395,13 @@ public&nbsp;<a href="ShoppingCartIngredientAdapter.ViewHolder.html" title="class
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

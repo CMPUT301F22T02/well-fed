@@ -142,6 +142,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">StorageIngredient</span>
 extends <a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>
 implements java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</pre>
+<div class="block">An Ingredient represented in a user's storage, with added amount, unit, location, and best before.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.example.wellfed.ingredient.StorageIngredient">Serialized Form</a></dd>
@@ -218,66 +219,66 @@ implements java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
-<td class="colLast">
-<div class="block">Checks if the ingredient is equal to another ingredient.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmount()">getAmount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the amount of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmountAndUnit()">getAmountAndUnit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Combines the amount and unit of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.Date</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBestBeforeDate()">getBestBeforeDate</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBestBefore()">getBestBefore</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the best before date of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategory()">getCategory</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Get categories of the ingredient.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDescription()">getDescription</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the description (aka title) of an Ingredient</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLocation()">getLocation</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the location of the ingredient in the storage.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStorageId()">getStorageId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Get the database ID of a storage ingredient.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUnit()">getUnit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the unit of the ingredient in the storage.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEqual(java.lang.Object)">isEqual</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
+<td class="colLast">
+<div class="block">Checks whether the ingredient is equal to another ingredient.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
@@ -342,7 +343,7 @@ implements java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -592,13 +593,13 @@ implements java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class
 <div class="block">Sets the best before date of the ingredient in the storage.</div>
 </li>
 </ul>
-<a id="getBestBeforeDate()">
+<a id="getBestBefore()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getBestBeforeDate</h4>
-<pre class="methodSignature">public&nbsp;java.util.Date&nbsp;getBestBeforeDate()</pre>
+<h4>getBestBefore</h4>
+<pre class="methodSignature">public&nbsp;java.util.Date&nbsp;getBestBefore()</pre>
 <div class="block">Gets the best before date of the ingredient in the storage.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -638,21 +639,21 @@ implements java.lang.Comparable&lt;<a href="StorageIngredient.html" title="class
 </dl>
 </li>
 </ul>
-<a id="equals(java.lang.Object)">
+<a id="isEqual(java.lang.Object)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>equals</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
-<div class="block">Checks if the ingredient is equal to another ingredient.</div>
+<h4>isEqual</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isEqual&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="block">Checks whether the ingredient is equal to another ingredient.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+<dd><code><a href="Ingredient.html#isEqual(java.lang.Object)">isEqual</a></code>&nbsp;in class&nbsp;<code><a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - The ingredient to compare to.</dd>
+<dd><code>o</code> - the object to check equality with</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the ingredients are equal, false otherwise.</dd>
+<dd>true if the objects are equal, false otherwise</dd>
 </dl>
 </li>
 </ul>

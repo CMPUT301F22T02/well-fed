@@ -199,13 +199,18 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Mea
 <td class="colFirst"><code>android.content.Intent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIntent(android.content.Context,com.example.wellfed.mealplan.MealPlan)">createIntent</a></span>&#8203;(android.content.Context&nbsp;context,
             <a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The createIntent method creates the intent to launch the meal plan
+ activity.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>android.util.Pair&lt;java.lang.String,&#8203;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseResult(int,android.content.Intent)">parseResult</a></span>&#8203;(int&nbsp;i,
            android.content.Intent&nbsp;intent)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The parseResult method parses the result from the meal plan activity.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -267,9 +272,16 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Mea
 public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
                                            android.content.Context&nbsp;context,
                                            <a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</pre>
+<div class="block">The createIntent method creates the intent to launch the meal plan
+ activity. It passes the meal plan to the activity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>createIntent</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - The context.</dd>
+<dd><code>mealPlan</code> - The meal plan.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The intent to launch the meal plan activity.</dd>
 </dl>
 </li>
 </ul>
@@ -282,9 +294,16 @@ public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
 <pre class="methodSignature">public&nbsp;android.util.Pair&lt;java.lang.String,&#8203;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;&nbsp;parseResult&#8203;(int&nbsp;i,
                                                                       @Nullable
                                                                       android.content.Intent&nbsp;intent)</pre>
+<div class="block">The parseResult method parses the result from the meal plan activity. It
+ returns the type of result and the meal plan.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>parseResult</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>i</code> - The result code.</dd>
+<dd><code>intent</code> - The intent.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The type of result and the meal plan.</dd>
 </dl>
 </li>
 </ul>

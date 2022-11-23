@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -136,12 +136,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code>, <code><a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient">StorageIngredientAdapter.OnItemClickListener</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code>, <code><a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></code>, <code><a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient">StorageIngredientAdapter.OnItemClickListener</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">IngredientStorageFragment</span>
 extends androidx.fragment.app.Fragment
-implements <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>, <a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient">StorageIngredientAdapter.OnItemClickListener</a></pre>
+implements <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;, <a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient">StorageIngredientAdapter.OnItemClickListener</a>, <a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></pre>
 </li>
 </ul>
 </div>
@@ -196,13 +196,6 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>(package private) int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#position">position</a></span></code></th>
-<td class="colLast">
-<div class="block">The text input for the search bar.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>(package private) androidx.recyclerview.widget.RecyclerView</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recyclerView">recyclerView</a></span></code></th>
 <td class="colLast">
@@ -249,28 +242,20 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>androidx.lifecycle.viewmodel.CreationExtras</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultViewModelCreationExtras()">getDefaultViewModelCreationExtras</a></span>()</code></th>
-<td class="colLast">
-<div class="block">getDefaultViewModelProviderFactory method for the
- IngredientStorageFragment.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch()">launch</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(com.example.wellfed.ingredient.StorageIngredient)">launch</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</code></th>
 <td class="colLast">
 <div class="block">Launches the IngredientAddActivity to add an ingredient.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(int)">launch</a></span>&#8203;(int&nbsp;pos)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(java.lang.String)">onClick</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
-<div class="block">Launches the IngredientEditActivity to edit an ingredient.</div>
+<div class="block">onClick method for the IngredientStorageFragment.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>android.view.View</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">onCreateView</a></span>&#8203;(android.view.LayoutInflater&nbsp;inflater,
             android.view.ViewGroup&nbsp;container,
@@ -279,14 +264,14 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 <div class="block">onCreate method for the IngredientStorageFragment.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onItemClick(com.example.wellfed.ingredient.StorageIngredient)">onItemClick</a></span>&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</code></th>
 <td class="colLast">
 <div class="block">Launches the IngredientActivity to view an StorageIngredient.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onViewCreated(android.view.View,android.os.Bundle)">onViewCreated</a></span>&#8203;(android.view.View&nbsp;view,
              android.os.Bundle&nbsp;savedInstanceState)</code></th>
@@ -308,6 +293,13 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.androidx.lifecycle.HasDefaultViewModelProviderFactory">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;androidx.lifecycle.HasDefaultViewModelProviderFactory</h3>
+<code>getDefaultViewModelCreationExtras</code></li>
 </ul>
 </li>
 </ul>
@@ -333,16 +325,6 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 <h4>recyclerView</h4>
 <pre>androidx.recyclerview.widget.RecyclerView recyclerView</pre>
 <div class="block">The recycler view for the ingredients.</div>
-</li>
-</ul>
-<a id="position">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>position</h4>
-<pre>int position</pre>
-<div class="block">The text input for the search bar.</div>
 </li>
 </ul>
 <a id="launcher">
@@ -452,58 +434,24 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 </dl>
 </li>
 </ul>
-<a id="launch(int)">
+<a id="launch(com.example.wellfed.ingredient.StorageIngredient)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>launch</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;launch&#8203;(int&nbsp;pos)</pre>
-<div class="block">Launches the IngredientEditActivity to edit an ingredient.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/Launcher.html#launch(int)">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pos</code> - The position of the ingredient in the list.</dd>
-</dl>
-</li>
-</ul>
-<a id="launch()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>launch</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;launch()</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;launch&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</pre>
 <div class="block">Launches the IngredientAddActivity to add an ingredient.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/Launcher.html#launch()">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="getDefaultViewModelCreationExtras()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDefaultViewModelCreationExtras</h4>
-<pre class="methodSignature">@NonNull
-public&nbsp;androidx.lifecycle.viewmodel.CreationExtras&nbsp;getDefaultViewModelCreationExtras()</pre>
-<div class="block">getDefaultViewModelProviderFactory method for the
- IngredientStorageFragment.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getDefaultViewModelCreationExtras</code>&nbsp;in interface&nbsp;<code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>A default ViewModelProviderFactory.</dd>
+<dd><code><a href="../common/Launcher.html#launch(Item)">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&lt;<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
 <a id="onItemClick(com.example.wellfed.ingredient.StorageIngredient)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>onItemClick</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onItemClick&#8203;(<a href="StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&nbsp;storageIngredient)</pre>
@@ -513,6 +461,22 @@ public&nbsp;androidx.lifecycle.viewmodel.CreationExtras&nbsp;getDefaultViewModel
 <dd><code><a href="StorageIngredientAdapter.OnItemClickListener.html#onItemClick(com.example.wellfed.ingredient.StorageIngredient)">onItemClick</a></code>&nbsp;in interface&nbsp;<code><a href="StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.ingredient">StorageIngredientAdapter.OnItemClickListener</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>storageIngredient</code> - The StorageIngredient to view.</dd>
+</dl>
+</li>
+</ul>
+<a id="onClick(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>onClick</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(java.lang.String&nbsp;field)</pre>
+<div class="block">onClick method for the IngredientStorageFragment.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../common/SortingFragment.OnSortClick.html#onClick(java.lang.String)">onClick</a></code>&nbsp;in interface&nbsp;<code><a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - The field to sort by.</dd>
 </dl>
 </li>
 </ul>

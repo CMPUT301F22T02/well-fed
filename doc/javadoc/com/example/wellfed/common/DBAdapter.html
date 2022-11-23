@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -140,7 +140,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../recipe/RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a></code>, <code><a href="../recipe/RecipeIngredientSearchAdapter.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter</a></code>, <code><a href="../ingredient/StorageIngredientAdapter.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter</a></code></dd>
+<dd><code><a href="../mealplan/MealPlanAdapter.html" title="class in com.example.wellfed.mealplan">MealPlanAdapter</a></code>, <code><a href="../recipe/RecipeAdapter.html" title="class in com.example.wellfed.recipe">RecipeAdapter</a></code>, <code><a href="../recipe/RecipeIngredientSearchAdapter.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter</a></code>, <code><a href="../ingredient/StorageIngredientAdapter.html" title="class in com.example.wellfed.ingredient">StorageIngredientAdapter</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">DBAdapter&lt;VH extends androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</span>
@@ -193,19 +193,49 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#changeQuery(com.google.firebase.firestore.Query)">changeQuery</a></span>&#8203;(com.google.firebase.firestore.Query&nbsp;query)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSnapshots()">clearSnapshots</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getItemCount()">getItemCount</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected com.google.firebase.firestore.DocumentSnapshot</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnapshot(int)">getSnapshot</a></span>&#8203;(int&nbsp;index)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>protected java.util.ArrayList&lt;com.google.firebase.firestore.DocumentSnapshot&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnapshots()">getSnapshots</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">onEvent</a></span>&#8203;(com.google.firebase.firestore.QuerySnapshot&nbsp;documentSnapshots,
        com.google.firebase.firestore.FirebaseFirestoreException&nbsp;error)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSnapshots(java.util.List)">setSnapshots</a></span>&#8203;(java.util.List&lt;com.google.firebase.firestore.DocumentSnapshot&gt;&nbsp;snapshots)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startListening()">startListening</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stopListening()">stopListening</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -258,6 +288,15 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="changeQuery(com.google.firebase.firestore.Query)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>changeQuery</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;changeQuery&#8203;(com.google.firebase.firestore.Query&nbsp;query)</pre>
+</li>
+</ul>
 <a id="onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">
 <!--   -->
 </a>
@@ -281,6 +320,51 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>getSnapshot</h4>
 <pre class="methodSignature">protected&nbsp;com.google.firebase.firestore.DocumentSnapshot&nbsp;getSnapshot&#8203;(int&nbsp;index)</pre>
+</li>
+</ul>
+<a id="setSnapshots(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setSnapshots</h4>
+<pre class="methodSignature">protected&nbsp;void&nbsp;setSnapshots&#8203;(java.util.List&lt;com.google.firebase.firestore.DocumentSnapshot&gt;&nbsp;snapshots)</pre>
+</li>
+</ul>
+<a id="clearSnapshots()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearSnapshots</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;clearSnapshots()</pre>
+</li>
+</ul>
+<a id="startListening()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>startListening</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;startListening()</pre>
+</li>
+</ul>
+<a id="stopListening()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>stopListening</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;stopListening()</pre>
+</li>
+</ul>
+<a id="getSnapshots()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSnapshots</h4>
+<pre class="methodSignature">protected&nbsp;java.util.ArrayList&lt;com.google.firebase.firestore.DocumentSnapshot&gt;&nbsp;getSnapshots()</pre>
 </li>
 </ul>
 <a id="getItemCount()">

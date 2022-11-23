@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -136,11 +136,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">ShoppingCartFragment</span>
-extends androidx.fragment.app.Fragment</pre>
+extends androidx.fragment.app.Fragment
+implements <a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></pre>
 </li>
 </ul>
 </div>
@@ -179,14 +180,24 @@ extends androidx.fragment.app.Fragment</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>(package private) <a href="ShoppingCartIngredientAdapter.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#adapter">adapter</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editIngredientLauncher">editIngredientLauncher</a></span></code></th>
+<td class="colLast">
+<div class="block">ActivityResultLauncher for the IngredientAddActivity to add an
+ ingredient.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>(package private) java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shoppingCartIngredients">shoppingCartIngredients</a></span></code></th>
+<td class="colFirst"><code>(package private) int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#position">position</a></span></code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>(package private) androidx.recyclerview.widget.RecyclerView</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recyclerView">recyclerView</a></span></code></th>
+<td class="colLast">
+<div class="block">Recycler view for the ingredients.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -229,20 +240,44 @@ extends androidx.fragment.app.Fragment</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addShoppingCartIngredient(android.view.View)">addShoppingCartIngredient</a></span>&#8203;(android.view.View&nbsp;view)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(com.example.wellfed.shoppingcart.ShoppingCartIngredient)">launch</a></span>&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>android.view.View</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">onCreateView</a></span>&#8203;(android.view.LayoutInflater&nbsp;inflater,
-            android.view.ViewGroup&nbsp;container,
-            android.os.Bundle&nbsp;savedInstanceState)</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mockData()">mockData</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(com.example.wellfed.shoppingcart.ShoppingCartIngredient)">onClick</a></span>&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(java.lang.String)">onClick</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>android.view.View</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">onCreateView</a></span>&#8203;(android.view.LayoutInflater&nbsp;inflater,
+            android.view.ViewGroup&nbsp;container,
+            android.os.Bundle&nbsp;savedInstanceState)</code></th>
+<td class="colLast">
+<div class="block">onCreate method for the hoppingCartFragment.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onViewCreated(android.view.View,android.os.Bundle)">onViewCreated</a></span>&#8203;(android.view.View&nbsp;view,
              android.os.Bundle&nbsp;savedInstanceState)</code></th>
+<td class="colLast">
+<div class="block">onViewCreated method for the ShoppingCartFragment.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecyclerView()">setRecyclerView</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -283,22 +318,36 @@ extends androidx.fragment.app.Fragment</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="shoppingCartIngredients">
+<a id="recyclerView">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>shoppingCartIngredients</h4>
-<pre>java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt; shoppingCartIngredients</pre>
+<h4>recyclerView</h4>
+<pre>androidx.recyclerview.widget.RecyclerView recyclerView</pre>
+<div class="block">Recycler view for the ingredients.</div>
 </li>
 </ul>
-<a id="adapter">
+<a id="position">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>position</h4>
+<pre>int position</pre>
+</li>
+</ul>
+<a id="editIngredientLauncher">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>adapter</h4>
-<pre><a href="ShoppingCartIngredientAdapter.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a> adapter</pre>
+<h4>editIngredientLauncher</h4>
+<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/StorageIngredient.html" title="class in com.example.wellfed.ingredient">StorageIngredient</a>&gt; editIngredientLauncher</pre>
+<div class="block">ActivityResultLauncher for the IngredientAddActivity to add an
+ ingredient.
+ The result is a StorageIngredient.
+ The result is null if the user cancels the add.</div>
 </li>
 </ul>
 </li>
@@ -343,9 +392,16 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
                                       android.view.ViewGroup&nbsp;container,
                                       @Nullable
                                       android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">onCreate method for the hoppingCartFragment.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onCreateView</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inflater</code> - The LayoutInflater object that can be used to inflate any views in the fragment.</dd>
+<dd><code>container</code> - If non-null, this is the parent view that the fragment's UI should be attached to.</dd>
+<dd><code>savedInstanceState</code> - If non-null, this fragment is being re-constructed from a previous saved state as given here.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Return the View for the fragment's UI, or null.</dd>
 </dl>
 </li>
 </ul>
@@ -359,19 +415,63 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
                           android.view.View&nbsp;view,
                           @Nullable
                           android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">onViewCreated method for the ShoppingCartFragment.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onViewCreated</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - The View returned by onCreateView.</dd>
+<dd><code>savedInstanceState</code> - If non-null, this fragment is being re-constructed from a previous saved state as given here.</dd>
 </dl>
 </li>
 </ul>
-<a id="addShoppingCartIngredient(android.view.View)">
+<a id="setRecyclerView()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRecyclerView</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRecyclerView()</pre>
+</li>
+</ul>
+<a id="mockData()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mockData</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;mockData()</pre>
+</li>
+</ul>
+<a id="onClick(com.example.wellfed.shoppingcart.ShoppingCartIngredient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>onClick</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient)</pre>
+</li>
+</ul>
+<a id="launch(com.example.wellfed.shoppingcart.ShoppingCartIngredient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>launch</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;launch&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient)</pre>
+</li>
+</ul>
+<a id="onClick(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>addShoppingCartIngredient</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addShoppingCartIngredient&#8203;(android.view.View&nbsp;view)</pre>
+<h4>onClick</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(java.lang.String&nbsp;field)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../common/SortingFragment.OnSortClick.html#onClick(java.lang.String)">onClick</a></code>&nbsp;in interface&nbsp;<code><a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a></code></dd>
+</dl>
 </li>
 </ul>
 </li>
