@@ -9,6 +9,8 @@ import com.google.gson.stream.JsonReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //TODO: cite https://en.wikibooks.org/wiki/Cookbook:Units_of_measurement
 //TODO: cite http://conversion.org/
@@ -34,19 +36,32 @@ public class UnitConverter {
                 to instanceof CountUnit) {
             return value;
         }
+        String foundMatch = "######";   // no key in our dictionary will match this
+        if (ingredientDensityMap.get(ingredient) == null) {
+            Pattern pattern = Pattern.compile(ingredient, Pattern.CASE_INSENSITIVE);
+            for (String key : ingredientDensityMap.keySet()) {
+                Matcher matcher = pattern.matcher(key);
+                if (matcher.find()) {
+                    foundMatch = key;
+                    break;
+                }
+            }
+        } else {
+            foundMatch = ingredient;
+        }
 
         if (from.getClass() != to.getClass()) {
-            if (ingredientDensityMap.get(ingredient) == null) {
+            if (ingredientDensityMap.get(foundMatch) == null) {
                 throw new IllegalArgumentException("Ingredient not found");
             }
             if (from instanceof VolumeUnit && to instanceof MassUnit) {
                 Double volume =
-                        convert(value, ingredient, from, build("mL"));
-                value = volume * ingredientDensityMap.get(ingredient);
+                        convert(value, foundMatch, from, build("mL"));
+                value = volume * ingredientDensityMap.get(foundMatch);
             } else if (from instanceof MassUnit && to instanceof VolumeUnit) {
                 Double mass =
-                        convert(value, ingredient, from, build("g"));
-                value = mass / ingredientDensityMap.get(ingredient);
+                        convert(value, foundMatch, from, build("g"));
+                value = mass / ingredientDensityMap.get(foundMatch);
             } else {
                 throw new IllegalArgumentException(
                         "Cannot convert " + ingredient + " from " +

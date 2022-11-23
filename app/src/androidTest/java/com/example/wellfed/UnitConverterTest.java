@@ -18,6 +18,7 @@ public class UnitConverterTest {
         Double result =
                 unitConverter.convert(2, "Sugar", unitConverter.build("kg"),
                         unitConverter.build("metric cup"));
+        unitConverter.convert(1,"Salt", unitConverter.build("kg"), unitConverter.build("tbsp"));
         assertEquals((Double) 8.421052631578949, result);
     }
 }
