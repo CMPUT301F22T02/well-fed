@@ -80,6 +80,7 @@ public class RecipeIngredientSearchAdapter extends DBAdapter<RecipeIngredientSea
 	public void setListener(OnItemClickListener listener) {
 		this.listener = listener;
 	}
+
 	/**
 	 * Holds the views for the ingredients in the search
 	 */
