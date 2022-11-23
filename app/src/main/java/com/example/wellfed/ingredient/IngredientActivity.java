@@ -81,15 +81,9 @@ public class IngredientActivity extends ActivityBase
                 findViewById(R.id.ingredient_location_value);
         ingredientLocation.setText(ingredient.getLocation());
 
-        // Set ingredient category with id=ingredient_categories_recycler_view
-        TextView ingredientCategories = findViewById(R.id.ingredient_category);
-        // Hide ingredient category if there is no category
-        if (ingredient.getCategory() == null) {
-            ingredientCategories.setVisibility(TextView.GONE);
-        } else {
-            ingredientCategories.setText(ingredient.getCategory());
-        }
-
+        // Set ingredient category with id=ingredient_category_value
+        TextView ingredientCategory = findViewById(R.id.ingredient_category_value);
+        ingredientCategory.setText(ingredient.getCategory());
 
         // Enable back button in action bar to go back to previous activity
         Objects.requireNonNull(getSupportActionBar())

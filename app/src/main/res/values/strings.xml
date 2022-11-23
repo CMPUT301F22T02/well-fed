@@ -53,4 +53,6 @@
     <string name="location_tag">Location</string>
     <string name="preparation_time_in_mins">Preparation time in mins</string>
     <string name="recipes">Recipes</string>
+    <string name="category_">Category:</string>
+    <string name="location_">Location:</string>
 </resources>
