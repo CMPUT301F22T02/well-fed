@@ -254,7 +254,7 @@ public class MealPlanDB {
                 mealPlanRecipes.add(recipeRef);
 
                 if (counter.get() == numOfIngredientsAndRecipes) {
-                    addMealPlanHelper(mealPlanMap, mealPlan, mealPlanIngredients,
+                    addMealPlanSync(mealPlanMap, mealPlan, mealPlanIngredients,
                             mealPlanRecipes, listener);
                 }
             } else {
@@ -273,11 +273,41 @@ public class MealPlanDB {
                             recipeDB.getDocumentReference(addedRecipe.getId()));
 
                     if (counter.get() == numOfIngredientsAndRecipes) {
-                        addMealPlanHelper(mealPlanMap, mealPlan, mealPlanIngredients,
+                        addMealPlanSync(mealPlanMap, mealPlan, mealPlanIngredients,
                                 mealPlanRecipes, listener);
                     }
                 });
             }
+        }
+    }
+
+    public void addMealPlanSync(HashMap<String, Object> mealPlanMap,
+                                MealPlan mealPlan,
+                                ArrayList<HashMap<String, Object>> mealPlanIngredients,
+                                ArrayList<DocumentReference> mealPlanRecipes,
+                                OnAddMealPlanListener listener) {
+        AtomicInteger counter = new AtomicInteger(0);
+        Integer numOfIngredientsAndRecipes = mealPlan.getIngredients().size() +
+                mealPlan.getRecipes().size();
+
+        for (Ingredient ingredient: mealPlan.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    addMealPlanHelper(mealPlanMap, mealPlan, mealPlanIngredients,
+                            mealPlanRecipes, listener);
+                }
+            });
+        }
+
+        for (Recipe recipe: mealPlan.getRecipes()) {
+            recipeDB.updateReferenceCount(recipe, 1, (i, success) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    addMealPlanHelper(mealPlanMap, mealPlan, mealPlanIngredients,
+                            mealPlanRecipes, listener);
+                }
+            });
         }
     }
 
@@ -299,16 +329,6 @@ public class MealPlanDB {
                                   ArrayList<HashMap<String, Object>> mealPlanIngredients,
                                   ArrayList<DocumentReference> mealPlanRecipes,
                                   OnAddMealPlanListener listener) {
-        // Increment count for all Ingredient objects and
-        // Recipe objects in the db.
-        // TODO: race condition
-//        for (Ingredient ingredient : mealPlan.getIngredients()) {
-//            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {});
-//        }
-//        for (Recipe recipe : mealPlan.getRecipes()) {
-//            recipeDB.updateReferenceCount(recipe, 1, (r, success) -> {});
-//        }
-
         // Fill the mealPlanMap with correct values.
         mealPlanMap.put("ingredients", mealPlanIngredients);
         mealPlanMap.put("recipes", mealPlanRecipes);
@@ -486,18 +506,55 @@ public class MealPlanDB {
      */
     public void delMealPlan(MealPlan mealPlan,
                             OnDeleteMealPlanListener listener) {
+        if (mealPlan == null) {
+            listener.onDeleteMealPlanResult(null,false);
+            return;
+        }
+
         DocumentReference mealPlanRef =
                 this.mealPlanCollection.document(mealPlan.getId());
 
-        // Decrement count of Ingredients & Recipes.
-        // TODO: race condition
-//        for (Ingredient ingredient: mealPlan.getIngredients()) {
-//            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {});
-//        }
-//        for (Recipe recipe: mealPlan.getRecipes()) {
-//            recipeDB.updateReferenceCount(recipe, -1, (r, success) -> {});
-//        }
+        mealPlanRef.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            delMealPlanAsync(mealPlan, mealPlanRef, listener);
+                        }
+                    }
+                });
+    }
 
+    public void delMealPlanAsync(MealPlan mealPlan,
+                                 DocumentReference mealPlanRef,
+                                 OnDeleteMealPlanListener listener) {
+        AtomicInteger counter = new AtomicInteger(0);
+        Integer numOfIngredientsAndRecipes =
+                mealPlan.getIngredients().size() + mealPlan.getRecipes().size();
+
+        // Decrement count for each ingredient & recipe in the MealPlan object.
+        for (Ingredient ingredient: mealPlan.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    delMealPlanHelper(mealPlan, mealPlanRef, listener);
+                }
+            });
+        }
+
+        for (Recipe recipe: mealPlan.getRecipes()) {
+            recipeDB.updateReferenceCount(recipe, -1, (r, success) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    delMealPlanHelper(mealPlan, mealPlanRef, listener);
+                }
+            });
+        }
+    }
+
+    public void delMealPlanHelper(MealPlan mealPlan,
+                                  DocumentReference mealPlanRef,
+                                  OnDeleteMealPlanListener listener) {
         mealPlanRef.delete().addOnSuccessListener(success -> {
             listener.onDeleteMealPlanResult(mealPlan, true);
         }).addOnFailureListener(failure -> {
@@ -542,6 +599,7 @@ public class MealPlanDB {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numOfIngredientsAndRecipes = mealPlan.getIngredients().size() +
                 mealPlan.getRecipes().size();
+
         if (numOfIngredientsAndRecipes == 0) {
             updateMealPlanHelper(mealPlan, listener,
                     mealPlanIngredients, mealPlanRecipes);
@@ -554,6 +612,8 @@ public class MealPlanDB {
             ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
                 // If the ingredient already exists in Ingredient collection.
                 if (foundIngredient != null) {
+                    ingredient.setId(foundIngredient.getId());
+
                     // Initializes HashMap for mapping.
                     HashMap<String, Object> ingredientMap = new HashMap<>();
 
@@ -570,7 +630,7 @@ public class MealPlanDB {
                     // Check if the counter has reached the number of
                     // ingredients and recipes.
                     if (counter.get() == numOfIngredientsAndRecipes) {
-                        updateMealPlanHelper(mealPlan, listener,
+                        updateMealPlanAsync(mealPlan, listener,
                                 mealPlanIngredients, mealPlanRecipes);
                     }
                 } else {
@@ -595,7 +655,7 @@ public class MealPlanDB {
                         mealPlanIngredients.add(ingredientMap);
 
                         if (counter.get() == numOfIngredientsAndRecipes) {
-                            updateMealPlanHelper(mealPlan, listener,
+                            updateMealPlanAsync(mealPlan, listener,
                                     mealPlanIngredients, mealPlanRecipes);
                         }
                     });
@@ -607,6 +667,8 @@ public class MealPlanDB {
         // increment counter for each recipe.
         for (Recipe recipe : mealPlan.getRecipes()) {
             if (recipe.getId() != null) {
+                recipe.setId(recipe.getId());
+
                 // If the recipe has an id, gets the recipe's reference from db.
                 DocumentReference recipeRef =
                         recipeDB.getDocumentReference(recipe.getId());
@@ -617,7 +679,7 @@ public class MealPlanDB {
                 mealPlanRecipes.add(recipeRef);
 
                 if (counter.get() == numOfIngredientsAndRecipes) {
-                    updateMealPlanHelper(mealPlan, listener,
+                    updateMealPlanAsync(mealPlan, listener,
                             mealPlanIngredients, mealPlanRecipes);
                 }
             } else {
@@ -636,11 +698,83 @@ public class MealPlanDB {
                             recipeDB.getDocumentReference(addedRecipe.getId()));
 
                     if (counter.get() == numOfIngredientsAndRecipes) {
-                        updateMealPlanHelper(mealPlan, listener,
+                        updateMealPlanAsync(mealPlan, listener,
                                 mealPlanIngredients, mealPlanRecipes);
                     }
                 });
             }
+        }
+    }
+
+    public void updateMealPlanAsync(MealPlan mealPlan,
+                                    OnUpdateMealPlanListener listener,
+                                    ArrayList<HashMap<String, Object>> mealPlanIngredients,
+                                    ArrayList<DocumentReference> mealPlanRecipes) {
+        getMealPlan(mealPlan.getId(), (foundMealPlan, success) -> {
+            if (foundMealPlan == null) {
+                listener.onUpdateMealPlanResult(null, false);
+                return;
+            } else {
+                updateMealPlanAsync1(mealPlan, foundMealPlan, listener, mealPlanIngredients, mealPlanRecipes);
+            }
+        });
+    }
+
+    public void updateMealPlanAsync1(MealPlan mealPlan,
+                                     MealPlan foundMealPlan,
+                                     OnUpdateMealPlanListener listener,
+                                     ArrayList<HashMap<String, Object>> mealPlanIngredients,
+                                     ArrayList<DocumentReference> mealPlanRecipes) {
+        AtomicInteger counter = new AtomicInteger(0);
+        Integer numOfIngredientsAndRecipes = mealPlan.getIngredients().size() +
+                mealPlan.getRecipes().size();
+
+        // Increment count for each ingredient & recipe in the updated MealPlan object.
+        for (Ingredient ingredient: mealPlan.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, 1, (i, s) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    updateMealPlanAsync2(mealPlan, foundMealPlan, listener, mealPlanIngredients, mealPlanRecipes);
+                }
+            });
+        }
+
+        for (Recipe recipe: mealPlan.getRecipes()) {
+            recipeDB.updateReferenceCount(recipe, 1, (i1, s1) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    updateMealPlanAsync2(mealPlan, foundMealPlan, listener, mealPlanIngredients, mealPlanRecipes);
+                }
+            });
+        }
+    }
+
+    public void updateMealPlanAsync2(MealPlan mealPlan,
+                                     MealPlan foundMealPlan,
+                                     OnUpdateMealPlanListener listener,
+                                     ArrayList<HashMap<String, Object>> mealPlanIngredients,
+                                     ArrayList<DocumentReference> mealPlanRecipes) {
+        AtomicInteger counter = new AtomicInteger(0);
+        Integer numOfIngredientsAndRecipes = foundMealPlan.getIngredients().size() +
+                foundMealPlan.getRecipes().size();
+
+        // Decrement count for each ingredient & recipe in the old MealPlan object.
+        for (Ingredient ingredient: foundMealPlan.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, -1, (i, s) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    updateMealPlanHelper(mealPlan, listener, mealPlanIngredients, mealPlanRecipes);
+                }
+            });
+        }
+
+        for (Recipe recipe: foundMealPlan.getRecipes()) {
+            recipeDB.updateReferenceCount(recipe, -1, (i1, s1) -> {
+                counter.addAndGet(1);
+                if (counter.get() == numOfIngredientsAndRecipes) {
+                    updateMealPlanHelper(mealPlan, listener, mealPlanIngredients, mealPlanRecipes);
+                }
+            });
         }
     }
 
@@ -660,9 +794,6 @@ public class MealPlanDB {
         // so that we can perform update() on it.
         DocumentReference mealPlanRef =
                 this.mealPlanCollection.document(mealPlan.getId());
-
-        // TODO: async update, beware of race condition
-        // TODO: see logic in recipe
 
         // Update the MealPlan document in the db.
         mealPlanRef.update(
@@ -701,39 +832,3 @@ public class MealPlanDB {
                 Query.Direction.ASCENDING);
     }
 }
-
-//for (int i = 0; i < recipe.getIngredients().size(); i++) {
-//        Ingredient ingredient = recipe.getIngredients().get(i);
-//        ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
-//        if (foundIngredient != null) {
-//        DocumentReference doc = ingredientDB.getDocumentReference(foundIngredient);
-//        Task<DocumentSnapshot> task = doc.get();
-//        HashMap<String, Object> ingredientMap = new HashMap<>();
-//        ingredient.setId(foundIngredient.getId());
-//        ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(ingredient));
-//        ingredientMap.put("amount", ingredient.getAmount());
-//        ingredientMap.put("unit", ingredient.getUnit());
-//        added.addAndGet(1);
-//        recipeIngredients.add(ingredientMap);
-//        if (added.get() == recipe.getIngredients().size()) {
-//        addRecipeAsync(recipeMap, recipeIngredients, recipe, listener);
-//        }
-//
-//        } else {
-//        ingredientDB.addIngredient(ingredient, (addedIngredient, success1) -> {
-//        if (addedIngredient == null) {
-//        listener.onAddRecipe(null, false);
-//        return;
-//        }
-//        ingredient.setId(addedIngredient.getId());
-//        HashMap<String, Object> ingredientMap = new HashMap<>();
-//        ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(addedIngredient));
-//        ingredientMap.put("amount", ingredient.getAmount());
-//        ingredientMap.put("unit", ingredient.getUnit());
-//        added.addAndGet(1);
-//        recipeIngredients.add(ingredientMap);
-//        if (added.get() == recipe.getIngredients().size()) {
-//        addRecipeAsync(recipeMap, recipeIngredients, recipe, listener);
-//        }
-//        });
-//        }
