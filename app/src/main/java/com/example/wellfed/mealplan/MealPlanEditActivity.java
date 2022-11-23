@@ -19,6 +19,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
+/**
+ * MealPlanEditActivity class. It is the activity that allows the user to edit
+ * the meal plan.
+ */
 public class MealPlanEditActivity extends EditActivityBase {
     /**
      * titleTextInput is the text input for the title.
