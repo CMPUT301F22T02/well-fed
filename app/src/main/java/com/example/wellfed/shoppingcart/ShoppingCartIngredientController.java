@@ -96,9 +96,9 @@ public class ShoppingCartIngredientController {
 
                 }
                 for (StorageIngredient stored : storedIngredients) {
-                    String uid = ingredientUid(stored);
+                    Pair<Double, String> val = bestUnitHelper(stored, unitHelper);
+                    String uid = val.second;
                     if (needed.get(uid) != null) {
-                        Pair<Double, String> val = bestUnitHelper(stored, unitHelper);
                         needed.put(val.second, needed.get(uid) - val.first);
                     }
                 }
