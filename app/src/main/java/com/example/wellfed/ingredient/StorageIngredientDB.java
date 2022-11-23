@@ -214,7 +214,7 @@ public class StorageIngredientDB {
         batch.update(storageIngredientRef, "unit", storageIngredient.getUnit());
         batch.update(storageIngredientRef, "amount", storageIngredient.getAmount());
         batch.update(storageIngredientRef, "location", storageIngredient.getLocation());
-        batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBeforeDate());
+        batch.update(storageIngredientRef, "best-before", storageIngredient.getBestBefore());
         batch.update(storageIngredientRef, "Ingredient", ingredientDB.getDocumentReference(ingredient));
 
         batch.commit().addOnCompleteListener(task -> {

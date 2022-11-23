@@ -68,7 +68,6 @@ public class ShoppingCartIngredientController {
     public void generateShoppingCart() {
         HashMap<String, Double> needed = new HashMap<>();
         mealPlanDB.getMealPlans((mealPlans, success) -> {
-            success = false;
             for (MealPlan mealPlan : mealPlans) {
                 for (Recipe r : mealPlan.getRecipes()) {
                     for (Ingredient ingredient : r.getIngredients()) {
@@ -103,23 +102,8 @@ public class ShoppingCartIngredientController {
                     // if shopping cart has those items update them accordingly
                     for (String key : needed.keySet()) {
                         if (inCart.get(key) != null) {
-                            Ingredient ingredient = new Ingredient();
-                            ingredient.setCategory("adfafasfdasfa");
-                            ingredient.setDescription(key);
-                            ingredient.setAmount(needed.get(key));
-                            ingredient.setUnit("lb");
-                            db.addIngredient(ingredient, (added, success3) -> {
 
-                            });
                         } else { // else create those items
-                            Ingredient ingredient = new Ingredient();
-                            ingredient.setCategory("adadfasdadasd");
-                            ingredient.setDescription(key);
-                            ingredient.setAmount(needed.get(key));
-                            ingredient.setUnit("lb");
-                            db.addIngredient(ingredient, (added, success3) -> {
-
-                            });
                         }
                     }
 
