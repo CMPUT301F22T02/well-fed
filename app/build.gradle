@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.wellfed'
+    namespace 'com.xffffff.wellfed'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.wellfed"
+        applicationId "com.xffffff.wellfed"
         minSdk 21
         targetSdk 33
         versionCode 1

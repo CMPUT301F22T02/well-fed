@@ -22,7 +22,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_sort_container2"
-        android:name="com.example.wellfed.common.SortingFragment"
+        android:name="com.xffffff.wellfed.common.SortingFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
