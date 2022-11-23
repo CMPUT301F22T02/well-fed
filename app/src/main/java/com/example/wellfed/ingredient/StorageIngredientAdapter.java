@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.R;
 import com.example.wellfed.common.DBAdapter;
 import com.example.wellfed.common.UTCDate;
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
@@ -97,11 +98,13 @@ public class StorageIngredientAdapter
 			UTCDate bestBefore =
 				UTCDate.from(storageIngredient.getBestBefore());
 			this.bestBeforeTextView.setText(bestBefore.format("yyyy-MM-dd"));
+			int colorError = MaterialColors.getColor(this.view,
+					com.google.android.material.R.attr.colorError);
 			if (storageIngredient.getBestBefore().before(
 				new Date(new Date().getTime() - (new Date().getTime() % 86400000)))) {
-				this.bestBeforeTextView.setTextColor(Color.RED);
-				this.subTextView.setTextColor(Color.RED);
-				this.textView.setTextColor(Color.RED);
+				this.bestBeforeTextView.setTextColor(colorError);
+				this.subTextView.setTextColor(colorError);
+				this.textView.setTextColor(colorError);
 			}
 			this.view.setOnClickListener(view -> {
 				if (listener != null) {
