@@ -21,22 +21,49 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * The adapter class for the storage ingredient list.
+ */
 public class StorageIngredientAdapter
 	extends DBAdapter<StorageIngredientAdapter.ViewHolder> {
+	/**
+	 * The tag for the log.
+	 */
 	private static final String TAG = "SIAdapter";
+	/**
+	 * The storage ingredient DB.
+	 */
 	private final StorageIngredientDB db;
+	/**
+	 * The listener for the adapter.
+	 */
 	private OnItemClickListener listener;
 
+	/**
+	 * The constructor for the adapter.
+	 *
+	 * @param db the storage ingredient DB
+	 */
 	public StorageIngredientAdapter(StorageIngredientDB db) {
 		super(db.getQuery());
 		Log.d(TAG, "StorageIngredientAdapter:");
 		this.db = db;
 	}
 
+	/**
+	 * The on click listener interface for the adapter.
+	 */
 	public interface OnItemClickListener {
 		void onItemClick(StorageIngredient storageIngredient);
 	}
 
+	/**
+	 * onCreateViewHolder is called when the view holder is created.
+	 *
+	 * @param parent   the parent view group
+	 * @param viewType the view type
+	 * @return the view holder
+	 */
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
@@ -48,6 +75,12 @@ public class StorageIngredientAdapter
 		return new ViewHolder(view);
 	}
 
+	/**
+	 * onBindViewHolder is called when the view holder is bound.
+	 *
+	 * @param holder   the view holder
+	 * @param position the position of the storage ingredient in the list
+	 */
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 		Log.d(TAG, "onBindViewHolder:");
@@ -62,6 +95,11 @@ public class StorageIngredientAdapter
 	}
 
 
+	/**
+	 * Sorts the list of storage ingredients by the given field.
+	 *
+	 * @param query the query to sort
+	 */
 	protected void sortString(Query query) {
 		changeQuery(query);
 	}
@@ -94,27 +132,62 @@ public class StorageIngredientAdapter
 		});
 	}
 
+	/**
+	 * Compare two storage ingredients by their description.
+	 *
+	 * @param o1 the first storage ingredient
+	 * @param o2 the second storage ingredient
+	 * @return the comparison result
+	 */
 	public int compareByDescription(StorageIngredient o1, StorageIngredient o2) {
 		return o1.getDescription().toLowerCase().compareTo(o2.getDescription().toLowerCase());
 	}
 
+	/**
+	 * Compare two storage ingredients by their category.
+	 *
+	 * @param o1 the first storage ingredient
+	 * @param o2 the second storage ingredient
+	 * @return the comparison result
+	 */
 	public int compareByCategory(StorageIngredient o1, StorageIngredient o2) {
 		return o1.getCategory().toLowerCase().compareTo(o2.getCategory().toLowerCase());
 	}
 
+	/**
+	 * Compare two storage ingredients by their expiration date.
+	 *
+	 * @param o1 the first storage ingredient
+	 * @param o2 the second storage ingredient
+	 * @return the comparison result
+	 */
 	public int compareByBestBefore(StorageIngredient o1, StorageIngredient o2) {
 		return o1.getBestBefore().compareTo(o2.getBestBefore());
 	}
 
+	/**
+	 * Compare two storage ingredients by their location.
+	 *
+	 * @param o1 the first storage ingredient
+	 * @param o2 the second storage ingredient
+	 * @return the comparison result
+	 */
 	public int compareByLocation(StorageIngredient o1, StorageIngredient o2) {
 		return o1.getLocation().toLowerCase().compareTo(o2.getLocation().toLowerCase());
 	}
 
+	/**
+	 * Set the on click listener for the adapter.
+	 *
+	 * @param listener the listener to set for the adapter
+	 */
 	public void setOnItemClickListener(OnItemClickListener listener) {
 		this.listener = listener;
 	}
 
-	// todo why is it static?
+	/**
+	 * The view holder class for the storage ingredient list.
+	 */
 	public static class ViewHolder extends RecyclerView.ViewHolder {
 		private static final String TAG = "ViewHolder";
 		private final TextView textView;
@@ -122,6 +195,11 @@ public class StorageIngredientAdapter
 		private final TextView bestBeforeTextView;
 		private final View view;
 
+		/**
+		 * The constructor for the view holder.
+		 *
+		 * @param view the view to hold the data
+		 */
 		public ViewHolder(View view) {
 			super(view);
 			this.view = view;
@@ -130,6 +208,12 @@ public class StorageIngredientAdapter
 			this.bestBeforeTextView = view.findViewById(R.id.dateTextView);
 		}
 
+		/**
+		 * Bind the storage ingredient to the view holder.
+		 *
+		 * @param storageIngredient the storage ingredient to bind
+		 * @param listener          the listener to set for the view holder
+		 */
 		public void bind(StorageIngredient storageIngredient,
 						 OnItemClickListener listener) {
 			Log.d(TAG, "bind:");
@@ -145,7 +229,7 @@ public class StorageIngredientAdapter
 			this.subTextView.setText(subText);
 			Date bestBefore = storageIngredient.getBestBefore();
 			this.bestBeforeTextView.setText(new SimpleDateFormat(
-					"yyyy-MM-dd", Locale.US).format(bestBefore));
+				"yyyy-MM-dd", Locale.US).format(bestBefore));
 			if (storageIngredient.getBestBefore().before(new Date())) {
 				this.bestBeforeTextView.setTextColor(Color.RED);
 				this.subTextView.setTextColor(Color.RED);
@@ -158,5 +242,4 @@ public class StorageIngredientAdapter
 			});
 		}
 	}
-
 }
