@@ -299,6 +299,14 @@ public class MealPlanDB {
                                   ArrayList<HashMap<String, Object>> mealPlanIngredients,
                                   ArrayList<DocumentReference> mealPlanRecipes,
                                   OnAddMealPlanListener listener) {
+        // Increment count for all Ingredient objects and
+        // Recipe objects in the db.
+        for (Ingredient ingredient : mealPlan.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, 1, (i, success) -> {});
+        }
+        for (Recipe recipe : mealPlan.getRecipes()) {
+            recipeDB.updateReferenceCount(recipe, 1, (r, success) -> {});
+        }
 
         // Fill the mealPlanMap with correct values.
         mealPlanMap.put("ingredients", mealPlanIngredients);
@@ -479,6 +487,15 @@ public class MealPlanDB {
                             OnDeleteMealPlanListener listener) {
         DocumentReference mealPlanRef =
                 this.mealPlanCollection.document(mealPlan.getId());
+
+        // Decrement count of Ingredients & Recipes.
+        for (Ingredient ingredient: mealPlan.getIngredients()) {
+            ingredientDB.updateReferenceCount(ingredient, -1, (i, success) -> {});
+        }
+        for (Recipe recipe: mealPlan.getRecipes()) {
+            recipeDB.updateReferenceCount(recipe, -1, (r, success) -> {});
+        }
+
         mealPlanRef.delete().addOnSuccessListener(success -> {
             listener.onDeleteMealPlanResult(mealPlan, true);
         }).addOnFailureListener(failure -> {
