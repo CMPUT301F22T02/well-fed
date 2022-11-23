@@ -238,8 +238,61 @@ public class MealPlanInstrumentedTest {
     }
 
     @Test
-    public void testAddMealPlanWithIngredients(){
+    public void testAddMealPlanWithIngredients() throws InterruptedException {
+        addIngredient("Muffin");
 
+        onView(withId(R.id.fab)).perform(click());
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Snack"));
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(typeText("Lunch"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+
+        onView(withText("Muffin")).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Apple"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Fruit"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(click());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withText("Snack")).check(matches(isDisplayed()));
+
+        cleanUpMealPlan("Snack");
+        cleanUpIngredient("Muffin");
     }
 
     @Test
