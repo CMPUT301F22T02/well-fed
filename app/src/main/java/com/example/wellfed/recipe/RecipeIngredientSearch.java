@@ -23,7 +23,9 @@ import java.util.Arrays;
  * to add to a recipe
  */
 public class RecipeIngredientSearch extends ActivityBase
-	implements RecipeIngredientSearchAdapter.OnItemClickListener, SortingFragment.OnSortClick {
+        implements RecipeIngredientSearchAdapter.OnItemClickListener, SortingFragment.OnSortClick {
+    private RecyclerView ingredientRecycleView;
+    private RecipeIngredientSearchAdapter adapter;
 
 	/**
 	 * The onCreate method for the ingredient search screen.
@@ -35,21 +37,21 @@ public class RecipeIngredientSearch extends ActivityBase
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_ingredient_storage);
 
-		SortingFragment sortingFragment = new SortingFragment();
-		sortingFragment.setListener(this);
-		sortingFragment.setOptions(Arrays.asList("description", "best-before"));
-		this.getSupportFragmentManager().beginTransaction()
-			.add(R.id.fragment_sort_container, sortingFragment)
-			.commit();
+        SortingFragment sortingFragment = new SortingFragment();
+        sortingFragment.setListener(this);
+        sortingFragment.setOptions(Arrays.asList(new String[]{"description", "category"}));
+        this.getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_sort_container, sortingFragment)
+                .commit();
 
 
-		DBConnection connection = new DBConnection(getApplicationContext());
-		IngredientDB db = new IngredientDB(connection);
-		RecipeIngredientSearchAdapter adapter = new RecipeIngredientSearchAdapter(db);
-		adapter.setListener(this);
-		RecyclerView ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
-		ingredientRecycleView.setAdapter(adapter);
-		ingredientRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        DBConnection connection = new DBConnection(getApplicationContext());
+        IngredientDB db = new IngredientDB(connection);
+        adapter = new RecipeIngredientSearchAdapter(db);
+        adapter.setListener(this);
+        ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
+        ingredientRecycleView.setAdapter(adapter);
+        ingredientRecycleView.setLayoutManager(new LinearLayoutManager(this));
 
 	}
 
@@ -67,8 +69,8 @@ public class RecipeIngredientSearch extends ActivityBase
 		finish();
 	}
 
-	@Override
-	public void onClick(String field) {
-
-	}
+    @Override
+    public void onClick(String field) {
+		adapter.changeQuery(field);
+    }
 }

@@ -112,15 +112,18 @@ public class IngredientStorageController {
 	public void getSortedResults(String field) {
 		this.currentField = field;
 		Query query = db.getSortedQuery(field);
-		adapter.sortString(query);
+		adapter.changeQuery(query);
 	}
 
 	/**
 	 * Get the search results from the DB
 	 *
 	 * @param query the query to search for
+	 *
+	 * @return The search results
 	 */
-	public void getSearchResults(String query) {
-		adapter.search(query);
+	public void getSearchResults(String field) {
+		Query query = db.getSearchQuery(field);
+		adapter.changeQuery(query);
 	}
 }

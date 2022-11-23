@@ -1,8 +1,6 @@
 package com.example.wellfed.ingredient;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wellfed.R;
 import com.example.wellfed.common.Launcher;
+import com.example.wellfed.common.SearchInput;
 import com.example.wellfed.common.SortingFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -130,35 +129,9 @@ public class IngredientStorageFragment extends Fragment implements Launcher<Stor
 			.commit();
 
 
-		// Search bar
-		TextInputEditText searchBar = view.findViewById(R.id.ingredient_storage_search);
-		// Clear search bar
-		crossIcon = view.findViewById(R.id.clear_search);
-		crossIcon.setOnClickListener(v -> searchBar.setText(""));
-
-		// On search bar text change show "Functionality not implemented yet"
-		// message
-		searchBar.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if (s.length() > 0) {
-					crossIcon.setVisibility(View.VISIBLE);
-				} else {
-					crossIcon.setVisibility(View.INVISIBLE);
-				}
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				controller.getSearchResults(s.toString());
-			}
-		});
-	}
+        SearchInput searchInput = view.findViewById(R.id.search_input);
+        searchInput.setOnTextChange(s->controller.getSearchResults(s));
+    }
 
 	/**
 	 * Launches the IngredientAddActivity to add an ingredient.

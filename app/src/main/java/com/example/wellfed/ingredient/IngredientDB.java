@@ -14,6 +14,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -118,13 +119,14 @@ public class IngredientDB {
 		// creating batch and return value
 		WriteBatch batch = db.batch();
 
-		// add ingredient info to batch
-		String ingredientId = collection.document().getId();
-		DocumentReference ingredientRef = collection.document(ingredientId);
-		Map<String, Object> item = new HashMap<>();
-		item.put("category", ingredient.getCategory());
-		item.put("description", ingredient.getDescription());
-		batch.set(ingredientRef, item);
+        // add ingredient info to batch
+        String ingredientId = collection.document().getId();
+        DocumentReference ingredientRef = collection.document(ingredientId);
+        Map<String, Object> item = new HashMap<>();
+        item.put("category", ingredient.getCategory());
+        item.put("description", ingredient.getDescription());
+        item.put("search-field", ingredient.getDescription().toLowerCase());
+        batch.set(ingredientRef, item);
 
 		batch.commit().addOnCompleteListener(task -> {
 			Log.d(TAG, "addIngredient:onComplete");
@@ -323,5 +325,9 @@ public class IngredientDB {
 	public Query getQuery() {
 		return collection;
 	}
+
+    public Query getSortQuery(String field, boolean ascending){
+        return collection.orderBy(field, ascending ? Query.Direction.ASCENDING : Query.Direction.DESCENDING);
+    }
 
 }
