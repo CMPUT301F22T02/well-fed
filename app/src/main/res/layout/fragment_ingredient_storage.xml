@@ -23,7 +23,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_sort_container"
-        android:name="com.example.wellfed.common.SortingFragment"
+        android:name="com.xffffff.wellfed.common.SortingFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -35,7 +35,7 @@
         app:layout_constraintVertical_bias="0.5"
         tools:layout="@layout/fragment_sort" />
 
-    <com.example.wellfed.common.SearchInput
+    <com.xffffff.wellfed.common.SearchInput
         android:id="@+id/search_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </com.example.wellfed.common.SearchInput>
+    </com.xffffff.wellfed.common.SearchInput>
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -28,7 +28,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.wellfed.common.RequiredTextInputLayout
+            <com.xffffff.wellfed.common.RequiredTextInputLayout
                 android:id="@+id/titleTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,9 +44,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-            </com.example.wellfed.common.RequiredTextInputLayout>
+            </com.xffffff.wellfed.common.RequiredTextInputLayout>
 
-            <com.example.wellfed.common.RequiredDateTextInputLayout
+            <com.xffffff.wellfed.common.RequiredDateTextInputLayout
                 android:id="@+id/dateTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,9 +67,9 @@
                     android:inputType="date"
                     android:longClickable="false" />
 
-            </com.example.wellfed.common.RequiredDateTextInputLayout>
+            </com.xffffff.wellfed.common.RequiredDateTextInputLayout>
 
-            <com.example.wellfed.common.RequiredDropdownTextInputLayout
+            <com.xffffff.wellfed.common.RequiredDropdownTextInputLayout
                 android:id="@+id/categoryTextInput"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
@@ -86,9 +86,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-            </com.example.wellfed.common.RequiredDropdownTextInputLayout>
+            </com.xffffff.wellfed.common.RequiredDropdownTextInputLayout>
 
-            <com.example.wellfed.common.RequiredNumberTextInputLayout
+            <com.xffffff.wellfed.common.RequiredNumberTextInputLayout
                 android:id="@+id/numberOfServingsTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number" />
 
-            </com.example.wellfed.common.RequiredNumberTextInputLayout>
+            </com.xffffff.wellfed.common.RequiredNumberTextInputLayout>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/recipeEditFragment"

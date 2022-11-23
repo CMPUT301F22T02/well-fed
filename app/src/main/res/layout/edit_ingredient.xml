@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.wellfed.common.RequiredTextInputLayout
+    <com.xffffff.wellfed.common.RequiredTextInputLayout
         android:id="@+id/descriptionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,9 +22,9 @@
             android:hint="@string/description"
             android:inputType="text" />
 
-    </com.example.wellfed.common.RequiredTextInputLayout>
+    </com.xffffff.wellfed.common.RequiredTextInputLayout>
 
-    <com.example.wellfed.common.RequiredDateTextInputLayout
+    <com.xffffff.wellfed.common.RequiredDateTextInputLayout
         android:id="@+id/bestBeforeInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/descriptionInput"
         app:startIconDrawable="@drawable/ic_baseline_calendar_today_24">
 
-    <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bestBeforeInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,9 +45,9 @@
             android:focusableInTouchMode="false"
             android:inputType="date"
             android:longClickable="false" />
-    </com.example.wellfed.common.RequiredDateTextInputLayout>
+    </com.xffffff.wellfed.common.RequiredDateTextInputLayout>
 
-    <com.example.wellfed.common.RequiredDropdownTextInputLayout
+    <com.xffffff.wellfed.common.RequiredDropdownTextInputLayout
         android:id="@+id/categoryInput"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
@@ -66,11 +65,11 @@
             android:layout_height="wrap_content"
             android:hint="@string/category"
             android:labelFor="@+id/categoryInput" />
-    </com.example.wellfed.common.RequiredDropdownTextInputLayout>
+    </com.xffffff.wellfed.common.RequiredDropdownTextInputLayout>
 
     <!-- Amount and Unit on the same line below categories half the width each -->
 
-    <com.example.wellfed.common.RequiredNumberTextInputLayout
+    <com.xffffff.wellfed.common.RequiredNumberTextInputLayout
         android:id="@+id/amountInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -88,10 +87,10 @@
             android:layout_height="match_parent"
             android:hint="@string/amount_hint"
             android:inputType="numberDecimal" />
-    </com.example.wellfed.common.RequiredNumberTextInputLayout>
+    </com.xffffff.wellfed.common.RequiredNumberTextInputLayout>
 
     <!-- Create a dropdown menu for the unit -->
-    <com.example.wellfed.common.RequiredDropdownTextInputLayout
+    <com.xffffff.wellfed.common.RequiredDropdownTextInputLayout
         android:id="@+id/unitInput"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
@@ -109,9 +108,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/unit"
             android:labelFor="@+id/unitInput" />
-    </com.example.wellfed.common.RequiredDropdownTextInputLayout>
+    </com.xffffff.wellfed.common.RequiredDropdownTextInputLayout>
 
-    <com.example.wellfed.common.RequiredDropdownTextInputLayout
+    <com.xffffff.wellfed.common.RequiredDropdownTextInputLayout
         android:id="@+id/locationInput"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
@@ -129,7 +128,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/location"
             android:labelFor="@+id/locationInput" />
-    </com.example.wellfed.common.RequiredDropdownTextInputLayout>
+    </com.xffffff.wellfed.common.RequiredDropdownTextInputLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/ingredient_save_button"
