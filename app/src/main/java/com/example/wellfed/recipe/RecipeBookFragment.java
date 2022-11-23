@@ -81,12 +81,12 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>, Re
 	 * recipeController {@link RecipeBookFragment#recipeController}
 	 *
 	 * @param inflater           the LayoutInflater object that can be used
-	 *                              to  inflate any views in the fragment
+	 *                           to  inflate any views in the fragment
 	 * @param container          if non-null, this is the parent view that
-	 *                              the  fragment's UI should be attached to.
-	 *                              The fragment should not add the view
-	 *                              itself,  but this can be used to generate
-	 *                              the LayoutParams of the view.
+	 *                           the  fragment's UI should be attached to.
+	 *                           The fragment should not add the view
+	 *                           itself,  but this can be used to generate
+	 *                           the LayoutParams of the view.
 	 * @param savedInstanceState if non-null, this fragment is being
 	 *                           re-constructed from a previous saved state
 	 *                           as given here.
@@ -104,11 +104,11 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>, Re
 	/**
 	 * method that is called when the view is created
 	 *
-	 * @param view 			 the View returned by onCreateView
-	 *                          (LayoutInflater,  ViewGroup, Bundle)
+	 * @param view               the View returned by onCreateView
+	 *                           (LayoutInflater,  ViewGroup, Bundle)
 	 * @param savedInstanceState if non-null, this fragment is being
-	 *                              re-constructed from a previous saved
-	 *                              state as given here.
+	 *                           re-constructed from a previous saved
+	 *                           state as given here.
 	 */
 	@Override
 	public void onViewCreated(@NonNull View view,
@@ -142,6 +142,7 @@ public class RecipeBookFragment extends Fragment implements Launcher<Recipe>, Re
 
 	/**
 	 * onClick method for the RecipeAdapter {@link RecipeAdapter}
+	 *
 	 * @param field the field that was clicked
 	 */
 	@Override
