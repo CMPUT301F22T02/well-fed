@@ -1,26 +1,17 @@
 package com.example.wellfed.recipe;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-
-import android.content.Context;
-import android.util.Log;
-
 import com.example.wellfed.common.DBConnection;
 import com.example.wellfed.ingredient.Ingredient;
 import com.example.wellfed.ingredient.IngredientDB;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.Transaction;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
+
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -29,35 +20,20 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RecipeDB {
     /**
-     * Holds an instance of the Firebase FireStore database
-     */
-    private final FirebaseFirestore db;
-    /**
      * Holds a collection to the Recipe Ingredients stored in the FireStore db database
      */
     private final IngredientDB ingredientDB;
-    /**
-     * Holds a connection to the DB.
-     */
-    private DBConnection recipesConnection;
 
     /**
      * Holds the CollectionReference for the users Recipe collection.
      */
-    private CollectionReference collection;
+    private final CollectionReference collection;
 
     /**
      * Interface for listeners with methods that are called upon adding a recipe is completed
      */
     public interface OnRecipeDone {
-        public void onAddRecipe(Recipe recipe, Boolean success);
-    }
-
-    /**
-     * Interface for listeners with methods that are called upon adding an ingredient to a recipe
-     */
-    public interface OnRecipeIngredientAdded {
-        public void onRecipeIngredientAdd(Ingredient ingredient, int totalAdded);
+        void onAddRecipe(Recipe recipe, Boolean success);
     }
 
     /**
@@ -66,9 +42,7 @@ public class RecipeDB {
      * @param connection the database connection for the RecipeDB
      */
     public RecipeDB(DBConnection connection) {
-        this.recipesConnection = connection;
-        db = this.recipesConnection.getDB();
-        collection = this.recipesConnection.getCollection("Recipes");
+        collection = connection.getCollection("Recipes");
         ingredientDB = new IngredientDB(connection);
     }
 
@@ -81,7 +55,6 @@ public class RecipeDB {
      * @param recipe A Recipe object we want to add to the collection of Recipes
      *               and whose id we want to set
      */
-    //todo it works but hacky
     public void addRecipe(Recipe recipe, OnRecipeDone listener){
 
         ArrayList<HashMap<String, Object>> recipeIngredients = new ArrayList<>();
@@ -93,8 +66,6 @@ public class RecipeDB {
             Ingredient ingredient = recipe.getIngredients().get(i);
             ingredientDB.getIngredient(ingredient, (foundIngredient, success) -> {
                 if (foundIngredient != null) {
-                    DocumentReference doc = ingredientDB.getDocumentReference(foundIngredient);
-                    Task<DocumentSnapshot> task = doc.get();
                     HashMap<String, Object> ingredientMap = new HashMap<>();
                     ingredient.setId(foundIngredient.getId());
                     ingredientMap.put("ingredientRef", ingredientDB.getDocumentReference(ingredient));
@@ -153,14 +124,8 @@ public class RecipeDB {
                 recipe.setId(addedSnapshot.getId());
                 listener.onAddRecipe(recipe, true);
             })
-            .addOnFailureListener(failure -> {
-                listener.onAddRecipe(null, false);
-            });
+            .addOnFailureListener(failure -> listener.onAddRecipe(null, false));
     }
-
-
-    // todo call the listener when results fail
-    // todo add db-tests for it
 
     /**
      * Retrieves a recipe from the Firebase Firestore database.
@@ -172,23 +137,24 @@ public class RecipeDB {
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get()
                 .addOnSuccessListener(doc -> {
-                    List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
                     Recipe recipe = new Recipe(doc.getString("title"));
                     recipe.setId(doc.getId());
                     recipe.setCategory(doc.getString("category"));
                     recipe.setComments(doc.getString("comments"));
                     recipe.setPhotograph(doc.getString("photograph"));
-                    Long prepTime = (Long) doc.getData().get("preparation-time");
+                    Long prepTime = (Long) Objects.requireNonNull(doc.getData()).get("preparation-time");
                     recipe.setPrepTimeMinutes(Integer.parseInt(Long.toString(prepTime)));
                     Long servings = (Long) doc.getData().get("servings");
                     recipe.setServings(Integer.parseInt(Long.toString(servings)));
                     ArrayList<HashMap<String,Object>> ingredients = (ArrayList<HashMap<String, Object>>)
                             doc.getData().get("ingredients");
+                    assert ingredients != null;
                     int toFetch = ingredients.size();
                     AtomicInteger fetched = new AtomicInteger();
                     for (int i = 0; i<toFetch; i++){
                         DocumentReference ingredientRef = (DocumentReference) ingredients.get(i).get("ingredientRef");
                         int finalI = i;
+                        assert ingredientRef != null;
                         ingredientDB.getIngredient(ingredientRef.getId(), (foundIngredient, success)->{
                             foundIngredient.setAmount((Double) ingredients.get(finalI).get("amount"));
                             foundIngredient.setUnit((String) ingredients.get(finalI).get("unit"));
@@ -200,9 +166,7 @@ public class RecipeDB {
                         });
                     }
                 })
-                .addOnFailureListener(failure -> {
-                    listener.onAddRecipe(null, false);
-                });
+                .addOnFailureListener(failure -> listener.onAddRecipe(null, false));
     }
 
     /**
@@ -219,9 +183,7 @@ public class RecipeDB {
                 return;
             }
 
-            delRecipe(id, (deletedRecipe, success1)->{
-                listener.onAddRecipe(addedRecipe, true);
-            });
+            delRecipe(id, (deletedRecipe, success1)-> listener.onAddRecipe(addedRecipe, true));
         });
     }
 
@@ -237,14 +199,11 @@ public class RecipeDB {
             listener.onAddRecipe(null, false);
         }
 
+        assert id != null;
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.delete()
-            .addOnSuccessListener(r->{
-                listener.onAddRecipe(new Recipe(id), true);
-            })
-            .addOnFailureListener(f->{
-                listener.onAddRecipe(null, false);
-            });
+            .addOnSuccessListener(r-> listener.onAddRecipe(new Recipe(id), true))
+            .addOnFailureListener(f-> listener.onAddRecipe(null, false));
     }
 
 
@@ -258,32 +217,6 @@ public class RecipeDB {
         return this.collection.document(id);
     }
 
-
-    /**
-     * Converts a database snapshot of a recipe into a Recipe object
-     *
-     * @param doc   the DocumentSnapshot of a recipe document to be converted
-     * @return the Recipe object created by the conversion
-     */
-    public Recipe snapshotToRecipe(DocumentSnapshot doc) {
-        Recipe recipe = new Recipe(doc.getString("title"));
-        recipe.setCategory(doc.getString("category"));
-        recipe.setComments(doc.getString("comments"));
-        recipe.setPhotograph(doc.getString("photograph"));
-
-        List<HashMap<String, Object>> ingredients = (List<HashMap<String, Object>>) doc.getData().get("ingredients");
-        for (HashMap<String, Object> ingredientMap : ingredients) {
-            DocumentReference ingredientRef = (DocumentReference) ingredientMap.get("ingredientRef");
-            ingredientDB.getIngredient(ingredientRef, (foundIngredient, success) -> {
-                if (foundIngredient != null) {
-                    foundIngredient.setUnit((String) ingredientMap.get("unit"));
-                    foundIngredient.setAmount((Double) ingredientMap.get("amount"));
-                    recipe.addIngredient(foundIngredient);
-                }
-            });
-        }
-        return recipe;
-    }
 
     /**
      * Gets the collection that the RecipeDB is associated with.
