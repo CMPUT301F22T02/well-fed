@@ -36,6 +36,7 @@ public class UnitConverter {
                 to instanceof CountUnit) {
             return value;
         }
+
         String foundMatch = "######";   // no key in our dictionary will match this
         if (ingredientDensityMap.get(ingredient) == null) {
             Pattern pattern = Pattern.compile(ingredient, Pattern.CASE_INSENSITIVE);
@@ -73,8 +74,16 @@ public class UnitConverter {
         return value / to.getConversionFactor();
     }
 
-    public Double convert(double value, Unit from, Unit to) {
-        return convert(value, null, from, to);
+    public Double convert (double value, Unit from, Unit to) {
+        if ((from instanceof MassUnit && to instanceof MassUnit)
+                || (from instanceof VolumeUnit && to instanceof VolumeUnit)
+                || (from instanceof CountUnit && to instanceof CountUnit)
+        ) {
+            return value * (from.getConversionFactor() / to.getConversionFactor());
+        } else {
+            throw new IllegalArgumentException("Cannot convert " + " from " +
+                    from.getUnit() + " to " + to.getUnit());
+        }
     }
 
     public String format(double value, String ingredient, Unit from, Unit to) {
