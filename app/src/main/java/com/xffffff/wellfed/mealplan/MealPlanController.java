@@ -75,9 +75,8 @@ public class MealPlanController {
      * plan in the database.
      *
      * @param mealPlan The meal plan to be updated in the database.
-     * @param launcher The launcher to be used to launch the activity.
      */
-    public void updateMealPlan(MealPlan mealPlan, Launcher<MealPlan> launcher) {
+    public void updateMealPlan(MealPlan mealPlan) {
         db.updateMealPlan(mealPlan, (updateMealPlan, updateSuccess) -> {
             if (!updateSuccess) {
                 this.activity.makeSnackbar(
@@ -85,7 +84,6 @@ public class MealPlanController {
             } else {
                 this.activity.makeSnackbar(
                         "Updated " + updateMealPlan.getTitle());
-                launcher.launch(updateMealPlan);
             }
         });
     }
