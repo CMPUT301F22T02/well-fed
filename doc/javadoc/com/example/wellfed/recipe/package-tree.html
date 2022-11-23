@@ -108,8 +108,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeContract.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeContract</span></a></li>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeEditContract.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeEditContract</span></a></li>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientEditContract.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientEditContract</span></a></li>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientSearchContract.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientSearchContract</span></a></li>
 </ul>
 </li>
 <li class="circle">android.content.Context
@@ -132,12 +130,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">com.example.wellfed.<a href="../EditActivityBase.html" title="class in com.example.wellfed"><span class="typeNameLink">EditActivityBase</span></a> (implements com.example.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>)
 <ul>
+<li class="circle">com.example.wellfed.recipe.<a href="RecipeEditActivity.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeEditActivity</span></a></li>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientEditActivity.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientEditActivity</span></a></li>
 </ul>
 </li>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeActivity.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeActivity</span></a> (implements com.example.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.example.wellfed.common">ConfirmDialog.OnConfirmListener</a>)</li>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeEditActivity.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeEditActivity</span></a> (implements com.example.wellfed.recipe.<a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe">RecipeIngredientAdapter.OnIngredientClick</a>)</li>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientSearch.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientSearch</span></a> (implements com.example.wellfed.recipe.<a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>)</li>
+<li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientSearch.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientSearch</span></a> (implements com.example.wellfed.recipe.<a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>, com.example.wellfed.common.<a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a>)</li>
+<li class="circle">com.example.wellfed.recipe.<a href="RecipesSearch.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipesSearch</span></a></li>
 </ul>
 </li>
 </ul>
@@ -158,7 +157,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="circle">androidx.fragment.app.Fragment (implements androidx.activity.result.ActivityResultCaller, android.content.ComponentCallbacks, androidx.lifecycle.HasDefaultViewModelProviderFactory, androidx.lifecycle.LifecycleOwner, androidx.savedstate.SavedStateRegistryOwner, android.view.View.OnCreateContextMenuListener, androidx.lifecycle.ViewModelStoreOwner)
 <ul>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeBookFragment.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeBookFragment</span></a> (implements com.example.wellfed.common.<a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>, com.example.wellfed.recipe.<a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe">RecipeAdapter.RecipeLauncher</a>)</li>
+<li class="circle">com.example.wellfed.common.<a href="../common/EditRecyclerViewFragment.html" title="class in com.example.wellfed.common"><span class="typeNameLink">EditRecyclerViewFragment</span></a>&lt;Item&gt; (implements com.example.wellfed.common.<a href="../common/EditItemAdapter.OnDeleteListener.html" title="interface in com.example.wellfed.common">EditItemAdapter.OnDeleteListener</a>&lt;Item&gt;, com.example.wellfed.common.<a href="../common/EditItemAdapter.OnEditListener.html" title="interface in com.example.wellfed.common">EditItemAdapter.OnEditListener</a>&lt;Item&gt;)
+<ul>
+<li class="circle">com.example.wellfed.recipe.<a href="EditRecipeIngredientsFragment.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">EditRecipeIngredientsFragment</span></a></li>
+<li class="circle">com.example.wellfed.recipe.<a href="EditRecipesFragment.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">EditRecipesFragment</span></a></li>
+</ul>
+</li>
+<li class="circle">com.example.wellfed.recipe.<a href="RecipeBookFragment.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeBookFragment</span></a> (implements com.example.wellfed.common.<a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>&lt;Item&gt;, com.example.wellfed.recipe.<a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe">RecipeAdapter.RecipeLauncher</a>, com.example.wellfed.common.<a href="../common/SortingFragment.OnSortClick.html" title="interface in com.example.wellfed.common">SortingFragment.OnSortClick</a>)
+<ul>
+<li class="circle">com.example.wellfed.recipe.<a href="RecipeBookSelectFragment.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeBookSelectFragment</span></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="circle">com.example.wellfed.recipe.<a href="Recipe.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">Recipe</span></a> (implements java.io.Serializable)</li>
@@ -173,14 +182,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientSearchAdapter.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientSearchAdapter</span></a></li>
 </ul>
 </li>
+<li class="circle">com.example.wellfed.common.<a href="../common/ItemAdapter.html" title="class in com.example.wellfed.common"><span class="typeNameLink">ItemAdapter</span></a>&lt;Item&gt;
+<ul>
+<li class="circle">com.example.wellfed.common.<a href="../common/EditItemAdapter.html" title="class in com.example.wellfed.common"><span class="typeNameLink">EditItemAdapter</span></a>&lt;Item&gt;
+<ul>
+<li class="circle">com.example.wellfed.recipe.<a href="EditRecipesAdapter.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">EditRecipesAdapter</span></a></li>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientAdapter.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientAdapter</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="circle">androidx.recyclerview.widget.RecyclerView.ViewHolder
 <ul>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeAdapter.ViewHolder</span></a></li>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientSearchAdapter.ViewHolder.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientSearchAdapter.ViewHolder</span></a></li>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientViewHolder.html" title="class in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientViewHolder</span></a></li>
 </ul>
 </li>
 </ul>
@@ -191,9 +208,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeAdapter.RecipeLauncher.html" title="interface in com.example.wellfed.recipe"><span class="typeNameLink">RecipeAdapter.RecipeLauncher</span></a></li>
+<li class="circle">com.example.wellfed.recipe.<a href="RecipeBookSelectFragment.OnSelectedListener.html" title="interface in com.example.wellfed.recipe"><span class="typeNameLink">RecipeBookSelectFragment.OnSelectedListener</span></a></li>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeDB.OnRecipeDone.html" title="interface in com.example.wellfed.recipe"><span class="typeNameLink">RecipeDB.OnRecipeDone</span></a></li>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeDB.OnRecipeIngredientAdded.html" title="interface in com.example.wellfed.recipe"><span class="typeNameLink">RecipeDB.OnRecipeIngredientAdded</span></a></li>
-<li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientAdapter.OnIngredientClick.html" title="interface in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientAdapter.OnIngredientClick</span></a></li>
 <li class="circle">com.example.wellfed.recipe.<a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe"><span class="typeNameLink">RecipeIngredientSearchAdapter.OnItemClickListener</span></a></li>
 </ul>
 </section>

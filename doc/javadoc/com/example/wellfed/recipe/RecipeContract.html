@@ -277,9 +277,10 @@ public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>createIntent</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>context</code> - </dd>
-<dd><code>recipe</code> - </dd>
+<dd><code>context</code> - context that launches the activity</dd>
+<dd><code>recipe</code> - recipe to include in the intent</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
+<dd>the Intent created which contains the recipe.</dd>
 </dl>
 </li>
 </ul>
@@ -297,8 +298,8 @@ public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>parseResult</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>i</code> - </dd>
-<dd><code>intent</code> - </dd>
+<dd><code>i</code> - a status code representing whether the activity succeeded or not</dd>
+<dd><code>intent</code> - the intent returned by the activity upon completion</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>null if activity was interrupted or failed to return anything</dd>
 </dl>
