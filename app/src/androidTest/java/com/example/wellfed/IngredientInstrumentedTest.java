@@ -723,8 +723,8 @@ public class IngredientInstrumentedTest {
         add5Ingredients();
 
         // search for something not there
-        onView(withId(R.id.ingredient_storage_search)).perform(click());
-        onView(withId(R.id.ingredient_storage_search)).perform(typeText("X"));
+        onView(withId(R.id.search_text)).perform(click());
+        onView(withId(R.id.search_text)).perform(typeText("X"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -735,7 +735,7 @@ public class IngredientInstrumentedTest {
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
 
-        onView(withId(R.id.clear_search)).perform(click());
+        onView(withId(R.id.search_text)).perform(clearText());
         delete5Ingredients();
     }
 
@@ -743,12 +743,12 @@ public class IngredientInstrumentedTest {
      * Tests searching and then clearing the search.
      */
     @Test
-    public void testSearchClearButton() throws Exception {
+    public void testClearText() throws Exception {
         add5Ingredients();
 
         // search for something not there
-        onView(withId(R.id.ingredient_storage_search)).perform(click());
-        onView(withId(R.id.ingredient_storage_search)).perform(typeText("X"));
+        onView(withId(R.id.search_text)).perform(click());
+        onView(withId(R.id.search_text)).perform(typeText("X"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -759,7 +759,7 @@ public class IngredientInstrumentedTest {
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
 
-        onView(withId(R.id.clear_search)).perform(click());
+        onView(withId(R.id.search_text)).perform(clearText());
 
         onView(withText("Apple")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -776,38 +776,14 @@ public class IngredientInstrumentedTest {
     }
 
     /**
-     * Tests searching for a substring in a description
-     */
-    @Test
-    public void testContainsSearch() throws Exception {
-        add5Ingredients();
-
-        onView(withId(R.id.ingredient_storage_search)).perform(click());
-        onView(withId(R.id.ingredient_storage_search)).perform(typeText("B"));
-        closeSoftKeyboard();
-        Thread.sleep(1000);
-
-        assertTextNotVisible("Apple");
-        assertTextNotVisible("Milk");
-        assertTextNotVisible("Cheese");
-        onView(withText("Banana")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Ground Beef")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-
-        onView(withId(R.id.clear_search)).perform(click());
-        delete5Ingredients();
-    }
-
-    /**
      * Tests searching for the whole string in the description
      */
     @Test
     public void testWholeSearch() throws Exception {
         add5Ingredients();
 
-        onView(withId(R.id.ingredient_storage_search)).perform(click());
-        onView(withId(R.id.ingredient_storage_search)).perform(typeText("banana"));
+        onView(withId(R.id.search_text)).perform(click());
+        onView(withId(R.id.search_text)).perform(typeText("banana"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -818,7 +794,7 @@ public class IngredientInstrumentedTest {
         onView(withText("Banana")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(withId(R.id.clear_search)).perform(click());
+        onView(withId(R.id.search_text)).perform(clearText());
         delete5Ingredients();
     }
 
@@ -829,8 +805,8 @@ public class IngredientInstrumentedTest {
     public void testCaseInsensitivity() throws Exception {
         add5Ingredients();
 
-        onView(withId(R.id.ingredient_storage_search)).perform(click());
-        onView(withId(R.id.ingredient_storage_search)).perform(typeText("b"));
+        onView(withId(R.id.search_text)).perform(click());
+        onView(withId(R.id.search_text)).perform(typeText("b"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -839,10 +815,9 @@ public class IngredientInstrumentedTest {
         assertTextNotVisible("Cheese");
         onView(withText("Banana")).check(ViewAssertions
                 .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Ground Beef")).check(ViewAssertions
-                .matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        assertTextNotVisible("Ground Beef");
 
-        onView(withId(R.id.clear_search)).perform(click());
+        onView(withId(R.id.search_text)).perform(clearText());
         delete5Ingredients();
     }
 }
