@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,15 +63,15 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                     finish();
                 }
 
-                return;
-            }
+        }
     );
 
     /**
      * method that is called when the activity is created
      *
-     * @param savedInstanceState
+     * @param savedInstanceState the saved instance state
      */
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,14 +81,11 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         ingredientList = new ArrayList<>();
         adapter = new ItemDetailAdapter();
         adapter.setItems(ingredientList);
-        /**
-         * Stores the intent the activity was created with
-         */
         Intent intent = getIntent();
 
 
         recipe = (Recipe) intent.getSerializableExtra("item");
-        Boolean viewonly = intent.getBooleanExtra("viewonly", false);
+        boolean viewonly = intent.getBooleanExtra("viewonly", false);
 
         // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
@@ -104,8 +102,10 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
         recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
             recipe = foundRecipe;
             title.setText(recipe.getTitle());
-            prepTime.setText(Integer.toString(recipe.getPrepTimeMinutes()) + " mins");
-            servings.setText("Servings: " + Integer.toString(recipe.getServings()));
+            String recipePrepTime = recipe.getPrepTimeMinutes() + " mins";
+            prepTime.setText(recipePrepTime);
+            String servingsText = "Servings: " + recipe.getServings();
+            servings.setText(servingsText);
             category.setText(recipe.getCategory());
             description.setText(recipe.getComments());
 
@@ -113,11 +113,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                     .load(recipe.getPhotograph())
                     .rotate(90)
                     .into(img);
-            // add ingredients to the recipe
-            for (Ingredient ingredient : recipe.getIngredients()) {
-                ingredientList.add(ingredient);
-//                recipeIngredientAdapter.notifyItemInserted(ingredientList.size());
-            }
+            ingredientList.addAll(recipe.getIngredients());
             adapter.notifyDataSetChanged();
         });
 
@@ -125,11 +121,8 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
 
 
 
-//        // ingredient recycle view
-        RecyclerView ingredientRv = (RecyclerView) findViewById(R.id.recipe_ingredient_recycleViewer);
+        RecyclerView ingredientRv = findViewById(R.id.recipe_ingredient_recycleViewer);
         ingredientRv.setAdapter(adapter);
-//                R.layout.recipe_ingredient);
-//        ingredientRv.setAdapter(recipeIngredientAdapter);
         ingredientRv.setLayoutManager(new LinearLayoutManager(RecipeActivity.this));
 
 
@@ -137,9 +130,6 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
             fab.setVisibility(ImageView.GONE);
             deleteButton.setVisibility(ImageView.GONE);
         } else {
-            /**
-             * DeleteBtn to create a dialog asking for delete confirmation
-             */
             new DeleteButton(
                     this,
                     deleteButton,
@@ -147,9 +137,7 @@ public class RecipeActivity extends ActivityBase implements ConfirmDialog.OnConf
                     this);
         }
 
-        fab.setOnClickListener(view->{
-            recipeEditLauncher.launch(recipe);
-        });
+        fab.setOnClickListener(view-> recipeEditLauncher.launch(recipe));
     }
 
     /**
