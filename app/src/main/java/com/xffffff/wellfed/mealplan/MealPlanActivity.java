@@ -30,6 +30,10 @@ public class MealPlanActivity extends ActivityBase
      */
     private static final String ARG_MEAL_PLAN = "mealPlan";
     /**
+     * The MealPlanController
+     */
+    private MealPlanController controller;
+    /**
      * The ActivityResultLauncher for the recipe activity to launch the
      * recipe so that the user can edit the recipes in the meal plan.
      */
@@ -63,6 +67,8 @@ public class MealPlanActivity extends ActivityBase
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
         Intent intent = getIntent();
+
+        controller = new MealPlanController(this);
 
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
 
@@ -155,7 +161,9 @@ public class MealPlanActivity extends ActivityBase
      */
     @Override public void onItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeActivity.class);
-        intent.putExtra("item", recipe);
+        Recipe scaledRecipe = controller.scaleRecipe(recipe,
+                mealPlan.getServings());
+        intent.putExtra("item", scaledRecipe);
         intent.putExtra("viewonly", true);
         startActivity(intent);
     }

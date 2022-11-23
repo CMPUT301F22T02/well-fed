@@ -1,10 +1,15 @@
 package com.xffffff.wellfed.mealplan;
 
 import android.app.Activity;
+import android.util.Pair;
 
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.Launcher;
+import com.xffffff.wellfed.ingredient.Ingredient;
+import com.xffffff.wellfed.recipe.Recipe;
+import com.xffffff.wellfed.unit.Unit;
+import com.xffffff.wellfed.unit.UnitConverter;
 
 public class MealPlanController {
     private final ActivityBase activity;
@@ -101,5 +106,30 @@ public class MealPlanController {
                         "Deleted " + deleteMealPlan.getTitle());
             }
         }));
+    }
+
+    /**
+     * The scaleRecipe method for the MealPlanController. Scales a recipe
+     * to the desired number of servings.
+     *
+     * @param recipe           The recipe to be scaled.
+     * @param mealPlanServings The number of servings to scale the recipe to.
+     * @return The scaled recipe.
+     */
+    public Recipe scaleRecipe(Recipe recipe, int mealPlanServings) {
+        Recipe scaledRecipe = new Recipe(recipe);
+        UnitConverter unitConverter = new UnitConverter(this.activity);
+        int recipeServings = scaledRecipe.getServings();
+        double scalingFactor = (double) mealPlanServings / recipeServings;
+        for (Ingredient ingredient : scaledRecipe.getIngredients()) {
+            ingredient.setAmount(ingredient.getAmount() * scalingFactor);
+            Pair<Double, Unit> pair =
+                    unitConverter.scaleUnit(ingredient.getAmount(),
+                            unitConverter.build(ingredient.getUnit()));
+            ingredient.setAmount(pair.first);
+            ingredient.setUnit(pair.second.getUnit());
+        }
+        scaledRecipe.setServings(mealPlanServings);
+        return scaledRecipe;
     }
 }
