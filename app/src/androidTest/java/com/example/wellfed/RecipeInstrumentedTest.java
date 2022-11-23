@@ -1,7 +1,9 @@
 package com.example.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -9,25 +11,38 @@ import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static com.example.wellfed.MainActivityTest.childAtPosition;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.RootMatchers;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.wellfed.recipe.RecipeActivity;
 import com.example.wellfed.recipe.RecipeEditActivity;
 import com.example.wellfed.recipe.RecipeIngredientEditActivity;
+
+import junit.framework.AssertionFailedError;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -100,6 +115,22 @@ import org.junit.runner.RunWith;
     }
 
     /**
+     * Clicks on the sort button (for recipes.
+     */
+    private void clickSortButton() {
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.image_filter_button),
+                        childAtPosition(
+                                allOf(withId(R.id.fragment_sort_container2),
+                                        childAtPosition(
+                                                withId(R.id.fragment_recipe_book),
+                                                1)),
+                                1),
+                        isDisplayed()));
+        materialButton.perform(click());
+    }
+
+    /**
      * Types out a mock recipe.
      * @throws InterruptedException
      */
@@ -119,7 +150,7 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
 
         onView(withText("Breakfast"))
-                .inRoot(RootMatchers.isPlatformPopup())
+                .inRoot(isPlatformPopup())
                 .perform(click());
         closeSoftKeyboard();
 
@@ -138,7 +169,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.categoryInput)).perform(click());
         onView(withText("Protein"))
-                .inRoot(RootMatchers.isPlatformPopup())
+                .inRoot(isPlatformPopup())
                 .perform(click());
         closeSoftKeyboard();
 
@@ -150,6 +181,148 @@ import org.junit.runner.RunWith;
 
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
+    }
+
+    /**
+     * Adds 5 recipes to the recipe list.
+     * Clean them up after with {@link #cleanup5Recipes()}
+     */
+    private void add5Recipes() {
+        // adding a ton of recipes
+        onView(withId(R.id.fab)).perform(click());
+
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Apple pie"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("45"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("5"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Dessert"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("Basic apple pie."));
+        closeSoftKeyboard();
+
+        addMockIngredient("Apple");
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // adding recipe 2
+        onView(withId(R.id.fab)).perform(click());
+
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Apple puree"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("10"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("3"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Side"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("Puree as a side dish."));
+        closeSoftKeyboard();
+
+        addMockIngredient("Apple");
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // adding recipe 3
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Bananas foster"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("30"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("4"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Dessert"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("Delicious dessert."));
+        closeSoftKeyboard();
+
+        addMockIngredient("Banana");
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // adding recipe 4
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Ice cream"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("120"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("3"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Small dessert"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("Cold dessert."));
+        closeSoftKeyboard();
+
+        addMockIngredient("Milk");
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        // adding recipe 5
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Cereal"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("5"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("Quick and easy."));
+        closeSoftKeyboard();
+
+        addMockIngredient("Milk");
+
+        onView(withId(R.id.save_fab)).perform(click());
+    }
+
+    /**
+     * Cleans up the 5 recipes made in {@link #add5Recipes()}
+     */
+    private void cleanup5Recipes() throws InterruptedException {
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_delete_btn)).perform(click());
+        onView(withText("Delete")).perform(click());
     }
 
     /**
@@ -209,7 +382,7 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
         onView(withId(R.id.unitInput)).perform(click());
         onView(withText("lb"))
-                .inRoot(RootMatchers.isPlatformPopup())
+                .inRoot(isPlatformPopup())
                 .perform(click());
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -294,7 +467,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.categoryInput)).perform(click());
         onView(withText("Protein"))
-                .inRoot(RootMatchers.isPlatformPopup())
+                .inRoot(isPlatformPopup())
                 .perform(click());
         closeSoftKeyboard();
 
@@ -555,5 +728,182 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_title_textView)).check(matches(withText("Greek Salad")));
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
+    }
+
+    /**
+     * Tests adding a handful of Recipes, and sorting them by title.
+     * The titles should be in alphabetical order.
+     */
+    @Test
+    public void testSortByTitle() throws InterruptedException {
+        add5Recipes();
+        // sort by title
+        clickSortButton();
+        onView(withText("title")).inRoot(isPlatformPopup()).perform(click());
+
+        // check order of items
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple pie")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple puree")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Bananas foster")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Cereal")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        Thread.sleep(1000);
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Ice cream")));
+        pressBack();
+
+        cleanup5Recipes();
+    }
+
+    /**
+     * Tests adding a handful of Recipes, and sorting them by prep time.
+     * The recipes should be by least to most prep time.
+     */
+    @Test
+    public void testSortByPrepTime() throws InterruptedException {
+        add5Recipes();
+        // sort by title
+        clickSortButton();
+        onView(withText("preparation-time")).inRoot(isPlatformPopup()).perform(click());
+
+        // check order of items
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Cereal")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple puree")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Bananas foster")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple pie")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Ice cream")));
+        pressBack();
+
+        cleanup5Recipes();
+    }
+
+    /**
+     * Tests adding a handful of Recipes, and sorting them by servings.
+     * The recipes should be by least to most servings.
+     */
+    @Test
+    public void testSortByServings() throws InterruptedException {
+        add5Recipes();
+        // sort by title
+        clickSortButton();
+        onView(withText("servings")).inRoot(isPlatformPopup()).perform(click());
+
+        // check order of items
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Cereal")));
+        pressBack();
+
+        // ice cream OR apple puree can be shown here!
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        try {
+            onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple puree")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.recipe_title_textView)).check(matches(withText("Ice cream")));
+        } finally {
+            pressBack();
+        }
+
+        // ice cream OR apple puree can be shown here!
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        try {
+            onView(withId(R.id.recipe_title_textView)).check(matches(withText("Ice cream")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple puree")));
+        } finally {
+            pressBack();
+        }
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Bananas foster")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple pie")));
+        pressBack();
+
+        cleanup5Recipes();
+    }
+
+    /**
+     * Tests adding a handful of Recipes, and sorting them by servings.
+     * The recipes should be by least to most servings.
+     */
+    @Test
+    public void testSortByCategory() throws InterruptedException {
+        add5Recipes();
+        // sort by title
+        clickSortButton();
+        onView(withText("category")).inRoot(isPlatformPopup()).perform(click());
+
+        // check order of items
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Cereal")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple pie")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Bananas foster")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Apple puree")));
+        pressBack();
+
+        onView(withId(R.id.recipe_rv)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        onView(withId(R.id.recipe_title_textView)).check(matches(withText("Ice cream")));
+        pressBack();
+
+        cleanup5Recipes();
     }
 }
