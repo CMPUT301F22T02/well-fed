@@ -13,16 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wellfed.ActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DateUtil;
 import com.example.wellfed.common.DeleteButton;
-import com.example.wellfed.common.UTCDate;
 import com.example.wellfed.recipe.Recipe;
 import com.example.wellfed.recipe.RecipeActivity;
-import com.example.wellfed.recipe.RecipeContract;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -45,7 +43,7 @@ public class MealPlanActivity extends ActivityBase
                         break;
                 }
             });
-    private DateFormat dateFormat;
+    private DateUtil dateUtil;
     private TextView mealPlanTitleTextView;
     private TextView mealPlanDateTextView;
     private TextView mealPLanCategoryTextView;
@@ -61,9 +59,6 @@ public class MealPlanActivity extends ActivityBase
 
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
 
-        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        this.dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
         mealPlanTitleTextView = findViewById(R.id.mealPlanTitleTextView);
         mealPLanCategoryTextView = findViewById(R.id.mealPlanCategoryTextView);
         mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
@@ -71,8 +66,9 @@ public class MealPlanActivity extends ActivityBase
                 findViewById(R.id.mealPlanNumberOfServingsTextView);
 
         mealPlanTitleTextView.setText(mealPlan.getTitle());
+        dateUtil = new DateUtil();
         mealPlanDateTextView.setText(
-                "Date: " + dateFormat.format(mealPlan.getEatDate()));
+                "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd"));
         mealPLanCategoryTextView.setText("Category: " + mealPlan.getCategory());
         mealPlanNumberOfServingsTextView.setText(
                 "Number of servings: " + mealPlan.getServings());

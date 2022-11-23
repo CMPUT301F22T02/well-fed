@@ -1,9 +1,9 @@
 /*
- * UTCDate
+ * DateUtil
  *
- * Version: v1.0.0
+ * Version: v1.1.0
  *
- * Date: 2022-11-03
+ * Date: 2022-11-22
  *
  * Copyright notice:
  * This file is part of well-fed.
@@ -28,13 +28,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.TimeZone;
 
 /**
- * The UTCDate class provides extends the Date class with methods for managing
- * dates in UTC time.
+ * The DateUtil class contains utility methods for dates.
  */
-public class UTCDate extends Date {
+public class DateUtil {
     /**
      * Holds the number of milliseconds in a day
      */
@@ -47,63 +45,37 @@ public class UTCDate extends Date {
      * Holds the day name in week date format
      */
     private final SimpleDateFormat dayNameInWeekFormat;
-    /**
-     * Holds the UTC time zone
-     */
-    private final TimeZone utc;
 
     /**
-     * Constructs a UTCDate object with the current date and time.
+     * Constructs a DateUtil object
      */
-    public UTCDate() {
-        this(System.currentTimeMillis());
+    public DateUtil() {
+        this.hashFormat = getSimpleDateFormat("yyyy-MM-dd");
+        this.dayNameInWeekFormat =  getSimpleDateFormat("E");
+
     }
 
     /**
-     * Constructs a UTCDate object with the specified date
+     * Returns true if two dates are equal
      *
-     * @param date the date in milliseconds since epoch
+     * @param date1 the first date
+     * @param date2 the second date
+     * @return true if two dates are equal
      */
-    public UTCDate(long date) {
-        super(date);
-        utc = TimeZone.getTimeZone("UTC");
-        hashFormat = this.getSimpleDateFormat("yyyy-MM-dd");
-        dayNameInWeekFormat = this.getSimpleDateFormat("E");
-    }
-
-    /**
-     * Constructs a UTCDate object from a Date object
-     *
-     * @param date the date object
-     */
-    public static UTCDate from(Date date) {
-        return new UTCDate(date.getTime());
-    }
-
-    /**
-     * Returns true if the object is a UTCDate object with the same date
-     *
-     * @param o the object to compare
-     * @return true if the object is a UTCDate object with the same date
-     */
-    @Override public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Date date1, Date date2) {
+        if (date1 == date2) {
             return true;
         }
-        if (!(o instanceof UTCDate)) {
-            return false;
-        }
-        UTCDate utcDate = (UTCDate) o;
-        return Objects.equals(this.hashCode(), utcDate.hashCode());
+        return Objects.equals(hashCode(date1), hashCode(date2));
     }
 
     /**
-     * Returns the hash code of the UTCDate object
+     * Returns the hash code of the Date object
      *
-     * @return the hash code of the UTCDate object
+     * @return the hash code of the Date object
      */
-    @Override public int hashCode() {
-        return Objects.hash(this.hashFormat.format(this));
+    private int hashCode(Date date) {
+        return Objects.hash(this.hashFormat.format(date));
     }
 
     /**
@@ -111,8 +83,8 @@ public class UTCDate extends Date {
      *
      * @return the day number of the week
      */
-    private int getDayNumberOfWeek() {
-        String dayNameInWeek = this.dayNameInWeekFormat.format(this);
+    private int getDayNumberOfWeek(Date date) {
+        String dayNameInWeek = dayNameInWeekFormat.format(date);
         switch (dayNameInWeek) {
             case "Sun":
                 return 0;
@@ -138,9 +110,9 @@ public class UTCDate extends Date {
      *
      * @return the date of the first day of the week
      */
-    public UTCDate getFirstDayOfWeek() {
-        int dayNumberOfWeek = this.getDayNumberOfWeek();
-        return new UTCDate(this.getTime() - dayNumberOfWeek * DAY);
+    public Date getFirstDayOfWeek(Date date) {
+        int dayNumberOfWeek = getDayNumberOfWeek(date);
+        return new Date(date.getTime() - dayNumberOfWeek * DAY);
     }
 
     /**
@@ -148,9 +120,9 @@ public class UTCDate extends Date {
      *
      * @return the date of the last day of the week
      */
-    public UTCDate getLastDayOfWeek() {
-        int dayNumberOfWeek = this.getDayNumberOfWeek();
-        return new UTCDate(this.getTime() + (6 - dayNumberOfWeek) * DAY);
+    public Date getLastDayOfWeek(Date date) {
+        int dayNumberOfWeek = getDayNumberOfWeek(date);
+        return new Date(date.getTime() + (6 - dayNumberOfWeek) * DAY);
     }
 
     /**
@@ -160,10 +132,7 @@ public class UTCDate extends Date {
      * @return a simple date format object with the specified pattern
      */
     private SimpleDateFormat getSimpleDateFormat(String pattern) {
-        SimpleDateFormat simpleDateFormat =
-                new SimpleDateFormat(pattern, Locale.US);
-        simpleDateFormat.setTimeZone(this.utc);
-        return simpleDateFormat;
+        return new SimpleDateFormat(pattern, Locale.US);
     }
 
     /**
@@ -172,8 +141,8 @@ public class UTCDate extends Date {
      * @param pattern the pattern {@link SimpleDateFormat}
      * @return the date as a string in the format specified by the pattern
      */
-    public String format(String pattern) {
+    public String format(Date date, String pattern) {
         SimpleDateFormat simpleDateFormat = getSimpleDateFormat(pattern);
-        return simpleDateFormat.format(this);
+        return simpleDateFormat.format(date);
     }
 }

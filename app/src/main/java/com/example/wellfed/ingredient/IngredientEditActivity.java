@@ -7,15 +7,15 @@ import android.os.Bundle;
 import com.example.wellfed.EditActivityBase;
 import com.example.wellfed.R;
 import com.example.wellfed.common.ConfirmDialog;
+import com.example.wellfed.common.DateUtil;
 import com.example.wellfed.common.RequiredDateTextInputLayout;
 import com.example.wellfed.common.RequiredDropdownTextInputLayout;
 import com.example.wellfed.common.RequiredNumberTextInputLayout;
 import com.example.wellfed.common.RequiredTextInputLayout;
-import com.example.wellfed.common.UTCDate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Date;
 import java.util.Objects;
+import java.util.Date;
 
 /**
  * The activity that represents editing an Ingredient.
@@ -90,12 +90,12 @@ public class IngredientEditActivity extends EditActivityBase
             if (ingredient.getCategory() != null) {
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
-            // Set date in yyyy-MM-dd format
             if (ingredient.getBestBefore() != null) {
-                // Get date in UTC
-                UTCDate date = UTCDate.from(ingredient.getBestBefore());
+                Date date = ingredient.getBestBefore();
+                DateUtil dateUtil = new DateUtil();
                 bestBeforeInput.setDate(date);
-                bestBeforeInput.setPlaceholderText(date.format("yyyy-MM-dd"));
+                bestBeforeInput.setPlaceholderText(dateUtil.format(date,"yyyy" +
+                        "-MM-dd"));
             }
         }
 
