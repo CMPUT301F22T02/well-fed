@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/unit"
-            android:editable="false"
+            android:inputType="none"
             android:labelFor="@+id/unitInput" />
     </com.xffffff.wellfed.common.RequiredDropdownTextInputLayout>
 
