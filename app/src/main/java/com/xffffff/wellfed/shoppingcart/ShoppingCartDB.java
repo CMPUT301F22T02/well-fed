@@ -123,21 +123,6 @@ public class ShoppingCartDB {
     }
 
     /**
-     * Delete an ingredient from the shopping cart.
-     */
-    public void deleteIngredient(ShoppingCartIngredient ingredient,
-                                 OnRemoveShoppingCart listener) {
-        if (ingredient == null || ingredient.getId() == null) {
-            listener.onRemoveShoppingCart(null, false);
-            return;
-        }
-
-        collection.document(ingredient.getId()).delete().addOnCompleteListener(
-                task -> listener.onRemoveShoppingCart(ingredient,
-                        task.isSuccessful()));
-    }
-
-    /**
      * Update an ingredient in the shopping cart.
      */
     public void updateIngredient(ShoppingCartIngredient ingredient,

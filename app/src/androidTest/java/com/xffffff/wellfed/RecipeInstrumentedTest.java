@@ -306,30 +306,14 @@ import org.junit.runner.RunWith;
      * Cleans up the 5 recipes made in {@link #add5Recipes()}
      */
     private void cleanup5Recipes() throws InterruptedException {
-        onView(withId(R.id.recipe_rv)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.recipe_delete_btn)).perform(click());
-        onView(withText("Delete")).perform(click());
 
-        onView(withId(R.id.recipe_rv)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.recipe_delete_btn)).perform(click());
-        onView(withText("Delete")).perform(click());
-
-        onView(withId(R.id.recipe_rv)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.recipe_delete_btn)).perform(click());
-        onView(withText("Delete")).perform(click());
-
-        onView(withId(R.id.recipe_rv)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.recipe_delete_btn)).perform(click());
-        onView(withText("Delete")).perform(click());
-
-        onView(withId(R.id.recipe_rv)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.recipe_delete_btn)).perform(click());
-        onView(withText("Delete")).perform(click());
+        for (int i = 0; i < 5; i++) {
+            Thread.sleep(timeout);
+            onView(withId(R.id.recipe_rv)).perform(
+                    RecyclerViewActions.actionOnItemAtPosition(0, click()));
+            onView(withId(R.id.recipe_delete_btn)).perform(click());
+            onView(withText("Delete")).perform(click());
+        }
     }
 
     /**
@@ -342,7 +326,9 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.searchButton)).perform(click());
         //pick an ingredient check if recycler view is non empty
-        onView(withText("Tortilla")).perform(click());
+        Thread.sleep(timeout);
+        onView(withId(R.id.ingredient_storage_list)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
@@ -868,30 +854,35 @@ import org.junit.runner.RunWith;
         // check order of items
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Cereal")));
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Apple puree")));
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Bananas foster")));
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Apple pie")));
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Ice cream")));
         pressBack();
@@ -912,6 +903,7 @@ import org.junit.runner.RunWith;
         // check order of items
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Cereal")));
         pressBack();
@@ -919,6 +911,7 @@ import org.junit.runner.RunWith;
         // ice cream OR apple puree can be shown here!
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(1, click()));
+        Thread.sleep(timeout);
         try {
             onView(withId(R.id.recipe_title_textView)).check(
                     matches(withText("Apple puree")));
@@ -932,6 +925,7 @@ import org.junit.runner.RunWith;
         // ice cream OR apple puree can be shown here!
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(2, click()));
+        Thread.sleep(timeout);
         try {
             onView(withId(R.id.recipe_title_textView)).check(
                     matches(withText("Ice cream")));
@@ -944,12 +938,14 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Bananas foster")));
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Apple pie")));
         pressBack();
@@ -968,32 +964,48 @@ import org.junit.runner.RunWith;
         onView(withText("category")).inRoot(isPlatformPopup()).perform(click());
 
         // check order of items
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Cereal")));
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(1, click()));
-        onView(withId(R.id.recipe_title_textView)).check(
-                matches(withText("Apple pie")));
+        Thread.sleep(timeout);
+        try {
+            onView(withId(R.id.recipe_title_textView)).check(
+                    matches(withText("Apple pie")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.recipe_title_textView)).check(
+                    matches(withText("Bananas foster")));
+        }
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(2, click()));
-        onView(withId(R.id.recipe_title_textView)).check(
-                matches(withText("Bananas foster")));
+        Thread.sleep(timeout);
+        try {
+            onView(withId(R.id.recipe_title_textView)).check(
+                    matches(withText("Apple pie")));
+        } catch (AssertionFailedError e) {
+            onView(withId(R.id.recipe_title_textView)).check(
+                    matches(withText("Bananas foster")));
+        }
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Apple puree")));
         pressBack();
 
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(4, click()));
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Ice cream")));
         pressBack();
@@ -1039,7 +1051,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.recipe_rv)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Breakfast sandwich")));
 
