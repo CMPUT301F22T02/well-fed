@@ -197,24 +197,6 @@ public class ShoppingCartIngredientController {
     }
 
     /**
-     * Deletes the ingredient from the shopping cart.
-     *
-     * @param ingredient the ingredient to delete
-     */
-    public void deleteIngredientFromShoppingCart(
-            ShoppingCartIngredient ingredient) {
-        db.deleteIngredient(ingredient, (delIngredient, delSuccess) -> {
-            if (!delSuccess) {
-                this.activity.makeSnackbar(
-                        "Failed to delete " + delIngredient.getDescription());
-            } else {
-                this.activity.makeSnackbar(
-                        "Deleted " + delIngredient.getDescription());
-            }
-        });
-    }
-
-    /**
      * Updates the ingredient in the shopping cart.
      *
      * @param ingredient the ingredient to update

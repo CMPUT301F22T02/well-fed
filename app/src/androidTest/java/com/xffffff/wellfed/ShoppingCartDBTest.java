@@ -212,58 +212,6 @@ public class ShoppingCartDBTest {
     }
 
     /**
-     * Test deleting ingredient from shopping cart.
-     */
-    @Test public void deleteIngredientTest() throws InterruptedException {
-        // Create a CountDownLatch to wait for the async calls to finish
-        CountDownLatch latch = new CountDownLatch(1);
-        // Get one of the ingredients
-        Ingredient ingredient = mockIngredients().get(0);
-        // Add the ingredient to the shopping cart
-        shoppingCartDB.addIngredient(ingredient, (addedIngredient, success) -> {
-            assertNotNull(addedIngredient);
-            assertTrue(success);
-            assertEquals(ingredient.getDescription(),
-                    addedIngredient.getDescription());
-            assertFalse(addedIngredient.isPickedUp());
-            assertFalse(addedIngredient.isComplete());
-            // Delete the ingredient from the shopping cart
-            shoppingCartDB.deleteIngredient(addedIngredient,
-                    (deletedIngredient, success2) -> {
-                        assertNotNull(deletedIngredient);
-                        assertTrue(success2);
-                        assertEquals(addedIngredient.getDescription(),
-                                deletedIngredient.getDescription());
-                        latch.countDown();
-                    });
-        });
-        // Wait for the async calls to finish
-        if (!latch.await(TIMEOUT, TimeUnit.SECONDS)) {
-            throw new InterruptedException();
-        }
-    }
-
-    /**
-     * Test deleting null ingredient from shopping cart.
-     */
-    @Test public void deleteNullIngredientTest() throws InterruptedException {
-        // Create a CountDownLatch to wait for the async calls to finish
-        CountDownLatch latch = new CountDownLatch(1);
-        // Create a shopping cart
-        ShoppingCart shoppingCart = mockShoppingCart();
-        // Delete null ingredient from the shopping cart
-        shoppingCartDB.deleteIngredient(null, (deletedIngredient, success) -> {
-            assertNull(deletedIngredient);
-            assertFalse(success);
-            latch.countDown();
-        });
-        // Wait for the async calls to finish
-        if (!latch.await(TIMEOUT, TimeUnit.SECONDS)) {
-            throw new InterruptedException();
-        }
-    }
-
-    /**
      * Test getting ingredients from shopping cart after adding 1 ingredient.
      */
     @Test public void getIngredientsTest() throws InterruptedException {
