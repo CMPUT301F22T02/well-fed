@@ -380,26 +380,21 @@ public class RecipeDB {
      * @param recipe The recipe to delete.
      */
     public void delRecipe(Recipe recipe, OnRecipeDone listener) {
-        if (recipe == null) {
-            listener.onAddRecipe(null, false);
-        }
-
         DocumentReference recipeRef = this.collection.document(recipe.getId());
-
 
         // Check if the Recipe exists in the Recipe collection.
         recipeRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    Long count = document.getLong("count");
-                    if (count != null && count > 0) {
-                        // Do not allow user to delete recipe if count is > 0.
-                        listener.onAddRecipe(null, false);
-                        return;
-                    } else {
-                        delRecipeAsync(recipe, recipeRef, listener);
-                    }
+            if (!task.isSuccessful()) {
+                listener.onAddRecipe(recipe, false);
+            }
+            DocumentSnapshot document = task.getResult();
+            if (document.exists()) {
+                Long count = document.getLong("count");
+                if (count != null && count > 0) {
+                    // Do not allow user to delete recipe if count is > 0.
+                    listener.onAddRecipe(null, null);
+                } else {
+                    delRecipeAsync(recipe, recipeRef, listener);
                 }
             }
         });
