@@ -574,7 +574,83 @@ public class MealPlanInstrumentedTest {
     }
 
     @Test
-    public void testUpdateMealPlanByUpdatingRecipes(){
+    public void testUpdateMealPlan() throws InterruptedException {
+        addRecipe("Quinoa");
+        addIngredient("Celery sticks");
+        addMealPlan("Hearty Breakfast");
 
+        String mealPlan = "Healthy Lunch";
+        String recipe = "Quinoa";
+        String ingredient = "Celery sticks";
+
+        Thread.sleep(1000);
+
+        onView(withText("Hearty Breakfast")).perform(click());
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(clearText(), typeText(mealPlan));
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(clearText(), typeText("Lunch"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(clearText(), typeText("2"));
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.recipeEditFragment))))
+                .perform(click());
+
+        onView(withText("Delete")).perform(click());
+
+        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment))))
+                .perform(click());
+
+        onView(withText("Delete")).perform(click());
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        onView(withText(recipe)).perform(click());
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+
+        onView(withText(ingredient)).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("5"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withText(mealPlan)).check(matches(isDisplayed()));
+        onView(withText(mealPlan)).perform(click());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        String date = dateFormat.format(new Date());
+
+        onView(withId(R.id.mealPlanTitleTextView)).check(matches(withText(mealPlan)));
+        onView(withId(R.id.mealPlanDateTextView)).check(matches(withText(containsString(date))));
+        onView(withId(R.id.mealPlanCategoryTextView)).check(matches(withText(containsString("Lunch"))));
+        onView(withId(R.id.mealPlanNumberOfServingsTextView)).check(matches(withText(containsString("2"))));
+        onView(withText(ingredient)).check(matches(isDisplayed()));
+        onView(withText(recipe)).check(matches(isDisplayed()));
+
+        pressBack();
+
+        cleanUpMealPlan(mealPlan);
+        cleanUpRecipe(recipe);
+        cleanUpRecipe("Eggs and Bacon");
+        cleanUpIngredient(ingredient);
+        cleanUpIngredient("Sliced Bread");
     }
 }
