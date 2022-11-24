@@ -119,6 +119,18 @@ public class ShoppingCartIngredientController {
                                 String uid = ingredientUid(cartItem);
                                 inCart.put(uid, i);
                             }
+
+                            // if shopping cart has something meal plan does not, remove it
+                            for (String key : inCart.keySet()) {
+                                if (needed.get(key) == null) {
+                                    ShoppingCartIngredient cartItem =
+                                            cart.get(inCart.get(key));
+                                    db.deleteIngredient(cartItem, (a, s) -> {
+                                        s = false;
+                                    });
+                                }
+                            }
+
                             // if shopping cart has those items update them
                             // accordingly
                             for (String key : needed.keySet()) {
