@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -150,5 +152,18 @@ public class UnitConverter {
             throw new IllegalArgumentException("Unit not found");
         }
         return units;
+    }
+
+    /**
+     * Gets all of the units being used, out of count/mass/volume
+     *
+     * @return an arraylist of all units
+     */
+    public ArrayList<String> getStringUnits() {
+        Set<String> keys = new HashSet<>(CountUnit.CONVERSION_FACTORS.keySet());
+        keys.addAll(MassUnit.CONVERSION_FACTORS.keySet());
+        keys.addAll(VolumeUnit.CONVERSION_FACTORS.keySet());
+
+        return new ArrayList<>(keys);
     }
 }

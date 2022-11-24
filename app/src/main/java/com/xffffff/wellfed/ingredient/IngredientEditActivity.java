@@ -13,6 +13,7 @@ import com.xffffff.wellfed.common.RequiredDateTextInputLayout;
 import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
 import com.xffffff.wellfed.common.RequiredNumberTextInputLayout;
 import com.xffffff.wellfed.common.RequiredTextInputLayout;
+import com.xffffff.wellfed.unit.UnitConverter;
 
 import java.util.Date;
 import java.util.Objects;
@@ -68,13 +69,14 @@ public class IngredientEditActivity extends EditActivityBase
         bestBeforeInput = findViewById(R.id.bestBeforeInput);
         categoryInput = findViewById(R.id.categoryInput);
 
+        UnitConverter converter = new UnitConverter(getApplicationContext());
+
         this.categoryInput.setSimpleItems(
                 new String[]{"Fruit", "Dairy", "Protein"});
         this.locationInput.setSimpleItems(
                 new String[]{"Fridge", "Freezer", "Pantry"});
         this.unitInput.setSimpleItems(
-                new String[]{"oz", "lb", "g", "kg", "tsp", "tbsp", "cup", "qt",
-                        "gal", "ml", "l", "pt", "fl oz", "count"});
+                converter.getStringUnits().toArray(new String[0]));
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra(
