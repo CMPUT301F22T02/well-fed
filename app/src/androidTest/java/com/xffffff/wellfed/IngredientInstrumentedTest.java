@@ -1,6 +1,7 @@
 package com.xffffff.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.clearText;
@@ -17,8 +18,10 @@ import static org.hamcrest.Matchers.allOf;
 
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -78,9 +81,10 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
 
         // typing unit input
-        onView(withId(R.id.unitInputEditText)).perform(clearText());
-        onView(withId(R.id.unitInputEditText)).perform(typeText("lb"));
-        closeSoftKeyboard();
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("g"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(ViewActions.click());
 
         // typing location input
         onView(withId(R.id.locationInputEditText)).perform(clearText());
@@ -101,7 +105,7 @@ import org.junit.runner.RunWith;
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Meat")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("5.0 lb")).check(ViewAssertions.matches(
+        onView(withText("5.0 g")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Freezer")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -130,7 +134,7 @@ import org.junit.runner.RunWith;
      * Adds mock ingredient w/ specified fields.
      */
     private void addMockIngredient(String description, String category,
-                                   String amount, String count,
+                                   String amount,
                                    String location) {
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.descriptionInputEditText)).perform(click());
@@ -150,9 +154,10 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.amountInputEditText)).perform(typeText(amount));
         closeSoftKeyboard();
 
-        onView(withId(R.id.unitInputEditText)).perform(click());
-        onView(withId(R.id.unitInputEditText)).perform(typeText(count));
-        closeSoftKeyboard();
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("count"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
 
         onView(withId(R.id.locationInputEditText)).perform(click());
         onView(withId(R.id.locationInputEditText)).perform(typeText(location));
@@ -167,15 +172,15 @@ import org.junit.runner.RunWith;
      */
     private void add5Ingredients() {
         // adding apple
-        addMockIngredient("Apple", "Fruit", "5", "count", "Fruit bowl");
+        addMockIngredient("Apple", "Fruit", "5", "Fruit bowl");
 
-        addMockIngredient("Banana", "Fruit", "4", "count", "Fruit bowl");
+        addMockIngredient("Banana", "Fruit", "4", "Fruit bowl");
 
-        addMockIngredient("Ground Beef", "Meat", "5", "lb", "Freezer");
+        addMockIngredient("Ground Beef", "Meat", "5", "Freezer");
 
-        addMockIngredient("Milk", "Dairy", "4", "litre", "Fridge");
+        addMockIngredient("Milk", "Dairy", "4", "Fridge");
 
-        addMockIngredient("Cheese", "Dairy", "10", "packages", "Pantry");
+        addMockIngredient("Cheese", "Dairy", "10", "Pantry");
     }
 
     /**
@@ -373,9 +378,10 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
 
         // typing unit input
-        onView(withId(R.id.unitInputEditText)).perform(clearText());
-        onView(withId(R.id.unitInputEditText)).perform(typeText("kg"));
-        closeSoftKeyboard();
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("g"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
 
         // typing location input
         onView(withId(R.id.locationInputEditText)).perform(clearText());
@@ -395,7 +401,7 @@ import org.junit.runner.RunWith;
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Poultry")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("6.0 kg")).check(ViewAssertions.matches(
+        onView(withText("6.0 g")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Fridge")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -541,7 +547,7 @@ import org.junit.runner.RunWith;
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Meat")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("5.0 lb")).check(ViewAssertions.matches(
+        onView(withText("5.0 g")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Freezer")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
