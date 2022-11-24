@@ -6,6 +6,7 @@ import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -571,6 +572,15 @@ public class MealPlanInstrumentedTest {
         onView(withText("Hearty Breakfast")).check(doesNotExist());
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient("Sliced Bread");
+    }
+
+    @Test
+    public void testDeleteRecipeAndIngredientBeforeMealPlan() throws InterruptedException {
+        addMealPlan("Hearty Breakfast");
+
+        cleanUpRecipe("Eggs and Bacon");
+        cleanUpIngredient("Sliced Bread");
+        cleanUpMealPlan("Hearty Breakfast");
     }
 
     @Test
