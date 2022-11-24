@@ -10,6 +10,7 @@ import com.xffffff.wellfed.R;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class UnitConverter {
      * density_DB_v2_0_final-1__1_.xlsx
      */
     HashMap<String, Double> ingredientDensityMap;
+    ArrayList<String> units;
 
 
     public UnitConverter(Context context) {
@@ -159,11 +161,17 @@ public class UnitConverter {
      *
      * @return an arraylist of all units
      */
-    public ArrayList<String> getStringUnits() {
-        Set<String> keys = new HashSet<>(CountUnit.CONVERSION_FACTORS.keySet());
+    public ArrayList<String> getUnits() {
+        if (this.units != null) {
+            return this.units;
+        }
+        Set<String> keys = new HashSet<>();
+        keys.addAll(CountUnit.CONVERSION_FACTORS.keySet());
         keys.addAll(MassUnit.CONVERSION_FACTORS.keySet());
         keys.addAll(VolumeUnit.CONVERSION_FACTORS.keySet());
-
-        return new ArrayList<>(keys);
+        ArrayList<String> units = new ArrayList<>(keys);
+        Collections.sort(units, String.CASE_INSENSITIVE_ORDER);
+        this.units = units;
+        return units;
     }
 }

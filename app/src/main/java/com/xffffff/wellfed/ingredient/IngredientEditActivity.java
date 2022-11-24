@@ -76,7 +76,7 @@ public class IngredientEditActivity extends EditActivityBase
         this.locationInput.setSimpleItems(
                 new String[]{"Fridge", "Freezer", "Pantry"});
         this.unitInput.setSimpleItems(
-                converter.getStringUnits().toArray(new String[0]));
+                converter.getUnits().toArray(new String[0]));
 
         // Get ingredient from intent
         ingredient = (StorageIngredient) getIntent().getSerializableExtra(

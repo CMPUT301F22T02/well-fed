@@ -61,7 +61,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
 
         this.categoryInput.setSimpleItems(
                 new String[]{"Fruit", "Dairy", "Protein"});
-        this.unitInput.setSimpleItems(converter.getStringUnits().toArray(new String[0]));
+        this.unitInput.setSimpleItems(converter.getUnits().toArray(new String[0]));
 
         // Get ingredient from intent
         ingredient = (Ingredient) getIntent().getSerializableExtra("item");
