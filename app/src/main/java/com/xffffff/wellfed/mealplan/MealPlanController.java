@@ -19,6 +19,16 @@ public class MealPlanController {
     private final MealPlanDB db;
     private MealPlanAdapter adapter;
 
+    public void setOnDataChanged(OnDataChanged onDataChanged) {
+        this.onDataChanged = onDataChanged;
+    }
+
+    private OnDataChanged onDataChanged;
+
+    public interface OnDataChanged {
+        public void onDataChanged(MealPlan mealPlan);
+    }
+
     /**
      * The MealPlanController constructor. Creates a new MealPlanController
      * object.
@@ -31,6 +41,15 @@ public class MealPlanController {
                 new DBConnection(activity.getApplicationContext());
         db = new MealPlanDB(connection);
         adapter = new MealPlanAdapter(db);
+    }
+
+    public void startListening(String id) {
+        db.getMealPlanDocumentReference(id)
+                .addSnapshotListener((doc, err) -> {
+                    db.getMealPlan(doc, (foundMealPlan, success) -> {
+                        onDataChanged.onDataChanged(foundMealPlan);
+                    });
+                });
     }
 
     /**

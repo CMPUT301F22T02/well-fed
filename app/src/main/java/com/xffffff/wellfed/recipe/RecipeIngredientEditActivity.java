@@ -11,6 +11,7 @@ import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
 import com.xffffff.wellfed.common.RequiredNumberTextInputLayout;
 import com.xffffff.wellfed.common.RequiredTextInputLayout;
 import com.xffffff.wellfed.ingredient.Ingredient;
+import com.xffffff.wellfed.unit.UnitConverter;
 
 import java.util.Objects;
 
@@ -56,11 +57,11 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         unitInput = findViewById(R.id.unitInput);
         categoryInput = findViewById(R.id.categoryInput);
 
+        UnitConverter converter = new UnitConverter(getApplicationContext());
+
         this.categoryInput.setSimpleItems(
                 new String[]{"Fruit", "Dairy", "Protein"});
-        this.unitInput.setSimpleItems(
-                new String[]{"oz", "lb", "g", "kg", "tsp", "tbsp", "cup", "qt",
-                        "gal", "ml", "l", "pt", "fl oz", "count"});
+        this.unitInput.setSimpleItems(converter.getUnits().toArray(new String[0]));
 
         // Get ingredient from intent
         ingredient = (Ingredient) getIntent().getSerializableExtra("item");

@@ -14,6 +14,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
 
+import java.util.Locale;
+
 // This class is used to display the list of ingredients in the shopping cart
 public class ShoppingCartIngredientAdapter
         extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
@@ -54,7 +56,7 @@ public class ShoppingCartIngredientAdapter
                                            int position) {
         DocumentSnapshot doc = getSnapshot(position);
         holder.description.setText(doc.getString("description"));
-        String amount = Double.toString((Double) doc.getData().get("amount"));
+        String amount = String.format(Locale.CANADA,"%.2f", ((Double) doc.getData().get("amount")));
         holder.subtext.setText(amount + " " + doc.getString("unit") + " | " +
                 doc.getString("category"));
         holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));

@@ -257,7 +257,7 @@ import java.util.concurrent.atomic.AtomicReference;
      */
     @Test @Ignore("TODO: Manpreet implement this")
     public void testUpdateOnNonExistentRecipe() throws InterruptedException {
-        Recipe testRecipe = new Recipe(null);
+        Recipe testRecipe = new Recipe((String)null);
         testRecipe.setId("-1");
 
         CountDownLatch updateLatch = new CountDownLatch(1);

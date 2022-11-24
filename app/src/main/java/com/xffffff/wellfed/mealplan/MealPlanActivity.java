@@ -24,7 +24,7 @@ import com.xffffff.wellfed.recipe.RecipeActivity;
  */
 public class MealPlanActivity extends ActivityBase
         implements ConfirmDialog.OnConfirmListener,
-                   MealPlanItemAdapter.OnItemClickListener<Recipe> {
+        MealPlanItemAdapter.OnItemClickListener<Recipe> {
     /**
      * The ARG_MEAL_PLAN constant is the key for the meal plan extra.
      */
@@ -33,6 +33,16 @@ public class MealPlanActivity extends ActivityBase
      * The MealPlanController
      */
     private MealPlanController controller;
+
+    private TextView titleTextView;
+    private TextView categoryTextView;
+    private TextView dateTextView;
+    private TextView servingsTextView;
+    private DateUtil dateUtil;
+    private MealPlanRecipeItemAdapter recipeAdapter;
+    private MealPlanIngredientItemAdapter ingredientAdapter;
+
+
     /**
      * The ActivityResultLauncher for the recipe activity to launch the
      * recipe so that the user can edit the recipes in the meal plan.
@@ -63,7 +73,8 @@ public class MealPlanActivity extends ActivityBase
      *
      * @param savedInstanceState The saved instance state.
      */
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
         Intent intent = getIntent();
@@ -71,28 +82,14 @@ public class MealPlanActivity extends ActivityBase
         controller = new MealPlanController(this);
 
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
-
-        TextView mealPlanTitleTextView =
-                findViewById(R.id.mealPlanTitleTextView);
-        TextView mealPLanCategoryTextView =
-                findViewById(R.id.mealPlanCategoryTextView);
-        TextView mealPlanDateTextView = findViewById(R.id.mealPlanDateTextView);
-        TextView mealPlanNumberOfServingsTextView =
-                findViewById(R.id.mealPlanNumberOfServingsTextView);
-
-        mealPlanTitleTextView.setText(mealPlan.getTitle());
-        DateUtil dateUtil = new DateUtil();
-        String mealPlanDateText =
-                "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd");
-        mealPlanDateTextView.setText(mealPlanDateText);
-        String mealPlanCategoryText = "Category: " + mealPlan.getCategory();
-        mealPLanCategoryTextView.setText(mealPlanCategoryText);
-        String mealPlanNumberOfServingsText =
-                "Number of servings: " + mealPlan.getServings();
-        mealPlanNumberOfServingsTextView.setText(mealPlanNumberOfServingsText);
+        controller.startListening(mealPlan.getId());
+        controller.setOnDataChanged(updatedMealPlan -> {
+            mealPlan = updatedMealPlan;
+            updateUI();
+        });
 
         RecyclerView recipeRecyclerView = findViewById(R.id.recipeRecyclerView);
-        MealPlanRecipeItemAdapter recipeAdapter =
+        recipeAdapter =
                 new MealPlanRecipeItemAdapter();
         recipeAdapter.setItems(mealPlan.getRecipes());
         recipeAdapter.setOnItemClickListener(this);
@@ -101,12 +98,11 @@ public class MealPlanActivity extends ActivityBase
 
         RecyclerView ingredientRecyclerView =
                 findViewById(R.id.ingredientRecyclerView);
-        MealPlanIngredientItemAdapter ingredientAdapter =
-                new MealPlanIngredientItemAdapter();
+        ingredientAdapter = new MealPlanIngredientItemAdapter();
         ingredientAdapter.setItems(mealPlan.getIngredients());
         ingredientRecyclerView.setAdapter(ingredientAdapter);
         ingredientRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        updateUI();
         DeleteButton deleteButton =
                 new DeleteButton(this, findViewById(R.id.deleteButton),
                         "Delete Meal Plan", this);
@@ -159,7 +155,8 @@ public class MealPlanActivity extends ActivityBase
      *
      * @param recipe The recipe that was clicked.
      */
-    @Override public void onItemClick(Recipe recipe) {
+    @Override
+    public void onItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeActivity.class);
         Recipe scaledRecipe = controller.scaleRecipe(recipe,
                 mealPlan.getServings());
@@ -167,4 +164,32 @@ public class MealPlanActivity extends ActivityBase
         intent.putExtra("viewonly", true);
         startActivity(intent);
     }
+
+
+    public void updateUI() {
+        titleTextView =
+                findViewById(R.id.mealPlanTitleTextView);
+        categoryTextView =
+                findViewById(R.id.mealPlanCategoryTextView);
+        dateTextView = findViewById(R.id.mealPlanDateTextView);
+        servingsTextView =
+                findViewById(R.id.mealPlanNumberOfServingsTextView);
+
+        titleTextView.setText(mealPlan.getTitle());
+        dateUtil = new DateUtil();
+        String mealPlanDateText =
+                "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd");
+        dateTextView.setText(mealPlanDateText);
+        String mealPlanCategoryText = "Category: " + mealPlan.getCategory();
+        categoryTextView.setText(mealPlanCategoryText);
+        String mealPlanNumberOfServingsText =
+                "Number of servings: " + mealPlan.getServings();
+        servingsTextView.setText(mealPlanNumberOfServingsText);
+
+        recipeAdapter.setItems(mealPlan.getRecipes());
+        recipeAdapter.notifyDataSetChanged();
+        ingredientAdapter.setItems(mealPlan.getIngredients());
+        ingredientAdapter.notifyDataSetChanged();
+    }
+
 }

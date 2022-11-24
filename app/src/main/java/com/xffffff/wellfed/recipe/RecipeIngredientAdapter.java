@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xffffff.wellfed.common.EditItemAdapter;
 import com.xffffff.wellfed.ingredient.Ingredient;
 
+import java.util.Locale;
+
 /**
  * Adapter for a recipe ingredient, in the recyclerview for recipe ingredients
  */
@@ -23,7 +25,7 @@ public class RecipeIngredientAdapter extends EditItemAdapter<Ingredient> {
         ItemViewHolder holder = (ItemViewHolder) holder1;
         Ingredient ingredient = items.get(position);
         String leadingText =
-                ingredient.getAmount() + " " + ingredient.getUnit();
+                String.format(Locale.CANADA, "%.2f", ingredient.getAmount()) + " " + ingredient.getUnit();
         holder.getLeadingTextView().setText(leadingText);
         holder.getHeadlineTextView().setText(ingredient.getDescription());
     }
