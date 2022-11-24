@@ -1,10 +1,11 @@
-package com.example.wellfed;
+package com.xffffff.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -37,7 +39,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-import com.example.wellfed.mealplan.MealPlanEditActivity;
+import com.xffffff.wellfed.mealplan.MealPlanEditActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,7 +81,9 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.amountInputEditText)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.unitInputEditText)).perform(typeText("count"));
+        onView(withId(R.id.unitInputEditText)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.locationInputEditText)).perform(typeText("Pantry"));
@@ -121,7 +125,9 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -139,7 +145,9 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.edit_amountInput)).perform(typeText("75"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("g"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("g")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -174,16 +182,22 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withText(recipe)).perform(click());
 
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(ingredient)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -251,6 +265,8 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withText(recipe1)).perform(click());
 
         onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
@@ -282,7 +298,9 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -321,20 +339,24 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(ingredient1)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
         closeSoftKeyboard();
 
-        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         onView(withId(R.id.edit_descriptionInput)).perform(typeText(ingredient2));
         closeSoftKeyboard();
@@ -346,11 +368,17 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
+
+        Thread.sleep(1000);
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
         closeSoftKeyboard();
+
+        Thread.sleep(1000);
 
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(2000);
@@ -385,20 +413,27 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withText(recipe)).perform(click());
 
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(ingredient)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
-        closeSoftKeyboard();
+
+        Thread.sleep(1000);
 
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(2000);
@@ -434,23 +469,29 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withText(recipe)).perform(click());
 
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(ingredient)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
         onView(withText(mealPlan)).perform(click());
@@ -506,16 +547,22 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withText(recipe)).perform(click());
 
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(ingredient)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -542,7 +589,7 @@ public class MealPlanInstrumentedTest {
 
         onView(withText("Delete")).perform(click());
 
-        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment))))
+        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.ingredientEditFragment))))
                 .perform(click());
 
         onView(withText("Delete")).perform(click());
@@ -616,30 +663,36 @@ public class MealPlanInstrumentedTest {
 
         onView(withText("Delete")).perform(click());
 
-        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment))))
+        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.ingredientEditFragment))))
                 .perform(click());
 
         onView(withText("Delete")).perform(click());
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withText(recipe)).perform(click());
 
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(ingredient)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("5"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
         onView(withText(mealPlan)).perform(click());

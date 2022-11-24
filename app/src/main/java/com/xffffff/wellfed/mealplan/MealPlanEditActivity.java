@@ -97,7 +97,7 @@ public class MealPlanEditActivity extends EditActivityBase {
         ingredientEditFragment.setAdapter(this.ingredientEditAdapter);
         ingredientEditFragment.setTitle("Ingredients");
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.MealPlan_IngredientEditFragment, this.ingredientEditFragment)
+                .add(R.id.ingredientEditFragment, ingredientEditFragment)
                 .commit();
 
 

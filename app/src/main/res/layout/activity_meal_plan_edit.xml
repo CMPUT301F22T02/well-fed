@@ -41,6 +41,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/titleTextView">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/MealPlan_TitleEditInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -83,6 +84,7 @@
                 app:layout_constraintTop_toBottomOf="@id/dateTextInput">
 
                 <AutoCompleteTextView
+                    android:id="@+id/MealPlan_CategoryEditInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -101,6 +103,7 @@
                 app:layout_constraintTop_toBottomOf="@id/categoryTextInput">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/MealPlan_NumberOfServingsEditInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
