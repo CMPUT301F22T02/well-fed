@@ -21,6 +21,7 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -92,9 +93,10 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
 
         // typing unit input
-        onView(withId(R.id.unitInputEditText)).perform(clearText());
-        onView(withId(R.id.unitInputEditText)).perform(typeText("count"));
-        closeSoftKeyboard();
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("count"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
 
         // typing location input
         onView(withId(R.id.locationInputEditText)).perform(clearText());
@@ -168,8 +170,10 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("count"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
 
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -332,9 +336,11 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
-        closeSoftKeyboard();
+
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("count"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
@@ -351,9 +357,10 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
 
-        Thread.sleep(timeout);
+
 
         // checking deleted recipe does not exist
+        Thread.sleep(timeout);
         onView(withText("Egg Wrap")).check(doesNotExist());
     }
 
@@ -376,7 +383,9 @@ import org.junit.runner.RunWith;
 
         closeSoftKeyboard();
         onView(withId(R.id.unitInput)).perform(click());
-        onView(withText("lb")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("g"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
@@ -479,8 +488,10 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("cups"));
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("g"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
 
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -498,7 +509,7 @@ import org.junit.runner.RunWith;
         onView(allOf(isDisplayed(), withId(R.id.recyclerView))).check(
                 matches(hasDescendant(withText("Chicken Breast"))));
         onView(allOf(isDisplayed(), withId(R.id.recyclerView))).check(
-                matches(hasDescendant(withText("2.0 cups"))));
+                matches(hasDescendant(withText("2.0 g"))));
 
         // asserting that egg is NOT there
         Thread.sleep(timeout);
@@ -713,8 +724,10 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.edit_amountInput)).perform(typeText("3"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.edit_unitInput)).perform(clearText());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("eggs"));
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("count"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
 
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -722,7 +735,7 @@ import org.junit.runner.RunWith;
         // check the ingredient is changed
         Thread.sleep(timeout);
         onView(withId(R.id.recyclerView)).check(
-                matches(hasDescendant(withText("3.0 eggs"))));
+                matches(hasDescendant(withText("3.0 count"))));
         onView(withId(R.id.recyclerView)).check(
                 matches(hasDescendant(withText("Duck Egg"))));
 
