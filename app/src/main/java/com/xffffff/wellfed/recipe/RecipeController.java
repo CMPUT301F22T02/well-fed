@@ -57,7 +57,10 @@ public class RecipeController {
      */
     public void deleteRecipe(Recipe recipe) {
         recipeDB.delRecipe(recipe, (deleted, success) -> {
-            if (!success) {
+            if (success == null) {
+                this.activity.makeSnackbar("Cannot delete recipe that is " +
+                        "referenced by a meal.");
+            } else if (!success) {
                 this.activity.makeSnackbar("Failed to delete recipe");
             }
         });
