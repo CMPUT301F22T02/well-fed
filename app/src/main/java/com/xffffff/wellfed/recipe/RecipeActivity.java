@@ -83,7 +83,6 @@ public class RecipeActivity extends ActivityBase
         recipe = (Recipe) intent.getSerializableExtra("item");
         boolean viewonly = intent.getBooleanExtra("viewonly", false);
 
-
         FloatingActionButton fab = findViewById(R.id.save_fab);
         Button deleteButton = findViewById(R.id.recipe_delete_btn);
 
@@ -92,7 +91,6 @@ public class RecipeActivity extends ActivityBase
             RecipeDB recipeDB = new RecipeDB(connection);
             recipeDB.getRecipe(recipe.getId(),
                     (foundRecipe, success) -> updateView(foundRecipe));
-
         } else {
             updateView(recipe);
         }
@@ -130,10 +128,7 @@ public class RecipeActivity extends ActivityBase
         servings.setText(servingsText);
         category.setText(recipe.getCategory());
         description.setText(recipe.getComments());
-
-        Picasso.get().load(recipe.getPhotograph()).rotate(90).into(img);
-        ingredientList.addAll(recipe.getIngredients());
-        adapter.notifyDataSetChanged();
+        updateImageView(recipe.getPhotograph());
     }
 
     /**
@@ -146,5 +141,20 @@ public class RecipeActivity extends ActivityBase
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    /**
+     * Update image view with image
+     *
+     * @param url url of image to display
+     */
+    public void updateImageView(String url) {
+        if (url == null) {
+            return;
+        }
+        ImageView recipeImg = findViewById(R.id.recipe_img);
+        Picasso.get().load(url).rotate(90).into(recipeImg);
+        recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        recipeImg.setImageTintList(null);
     }
 }
