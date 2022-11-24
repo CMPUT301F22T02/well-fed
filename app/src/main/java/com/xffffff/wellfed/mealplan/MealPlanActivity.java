@@ -192,4 +192,9 @@ public class MealPlanActivity extends ActivityBase
         ingredientAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        controller.stopListening();
+    }
 }
