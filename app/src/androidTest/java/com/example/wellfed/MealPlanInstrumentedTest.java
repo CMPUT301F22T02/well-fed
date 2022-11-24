@@ -2,6 +2,7 @@ package com.example.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -14,6 +15,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Context;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
@@ -27,8 +29,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 @RunWith(AndroidJUnit4.class)
 public class MealPlanInstrumentedTest {
@@ -336,14 +343,73 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(1000);
 
+        onView(withText("Hearty Breakfast")).check(matches(isDisplayed()));
+
         cleanUpMealPlan("Hearty Breakfast");
         cleanUpRecipe(recipe);
         cleanUpIngredient(ingredient);
     }
 
     @Test
-    public void testViewMealPlan(){
+    public void testViewMealPlan() throws InterruptedException {
+        String recipe = "Eggs and Bacon";
+        String ingredient = "Sliced Bread";
+        addRecipe(recipe);
+        addIngredient(ingredient);
 
+        onView(withId(R.id.fab)).perform(click());
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        onView(withText(recipe)).perform(click());
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+
+        onView(withText(ingredient)).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withText("Hearty Breakfast")).check(matches(isDisplayed()));
+        onView(withText("Hearty Breakfast")).perform(click());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        String date = dateFormat.format(new Date());
+
+        onView(withId(R.id.mealPlanTitleTextView)).check(matches(withText("Hearty Breakfast")));
+        onView(withId(R.id.mealPlanDateTextView)).check(matches(withText(containsString(date))));
+        onView(withId(R.id.mealPlanCategoryTextView)).check(matches(withText(containsString("Breakfast"))));
+        onView(withId(R.id.mealPlanNumberOfServingsTextView)).check(matches(withText(containsString("1"))));
+        onView(withText(ingredient)).check(matches(isDisplayed()));
+        onView(withText(recipe)).check(matches(isDisplayed()));
+
+        pressBack();
+
+        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpRecipe(recipe);
+        cleanUpIngredient(ingredient);
     }
 
     @Test
