@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
+import com.xffffff.wellfed.common.SearchInput;
 
 public class ShoppingCartFragment extends Fragment
         implements ShoppingCartIngredientAdapter.OnItemClickListener {
@@ -68,6 +69,8 @@ public class ShoppingCartFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         controller.generateShoppingCart();
         recyclerView = view.findViewById(R.id.shopping_cart_list);
+        SearchInput searchInput = view.findViewById(R.id.search_input);
+        searchInput.setOnTextChange(s->controller.getSearchResults(s));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }

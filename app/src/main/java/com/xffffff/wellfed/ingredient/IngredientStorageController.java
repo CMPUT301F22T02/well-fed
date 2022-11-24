@@ -124,8 +124,7 @@ public class IngredientStorageController {
 
     /**
      * Get the search results from the DB
-     *
-     * @param query the query to search for
+     * @param field
      * @return The search results
      */
     public void getSearchResults(String field) {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.Launcher;
+import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
 
 import java.util.ArrayList;
@@ -127,6 +128,8 @@ public class RecipeBookFragment extends Fragment
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container2, sortingFragment).commit();
 
+        SearchInput searchInput = view.findViewById(R.id.search_input);
+        searchInput.setOnTextChange(s-> recipeController.search(s));
 
     }
 

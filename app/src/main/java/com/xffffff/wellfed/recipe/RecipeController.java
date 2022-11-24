@@ -2,6 +2,7 @@ package com.xffffff.wellfed.recipe;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.firebase.firestore.Query;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 
@@ -98,6 +99,11 @@ public class RecipeController {
      */
     public RecipeAdapter getRecipeAdapter() {
         return recipeAdapter;
+    }
+
+    public void search(String field){
+        Query query = recipeDB.getSearchQuery(field);
+        recipeAdapter.changeQuery(query);
     }
 
 }

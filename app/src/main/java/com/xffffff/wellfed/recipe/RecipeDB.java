@@ -573,4 +573,9 @@ public class RecipeDB {
     public interface OnUpdateRecipeListener {
         void onUpdateRecipe(Recipe recipe, Boolean success);
     }
+
+    public Query getSearchQuery(String field) {
+        return this.collection.orderBy("search-field")
+                .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
+    }
 }

@@ -267,12 +267,12 @@ public class ShoppingCartDB {
     /**
      * Search the shopping cart by the given query string.
      *
-     * @param query The query string.
+     * @param field The query string.
      * @return The query of the shopping cart.
      */
-    public Query searchQuery(String query) {
-        return collection.whereGreaterThanOrEqualTo("description", query)
-                .whereLessThanOrEqualTo("description", query + "\uf8ff");
+    public Query getSearchQuery(String field) {
+        return this.collection.orderBy("search-field")
+                .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
     }
 
     public Query getQueryByPickedUp(boolean pickedUp) {
