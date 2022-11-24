@@ -3,6 +3,7 @@ package com.xffffff.wellfed.mealplan;
 import android.app.Activity;
 import android.util.Pair;
 
+import com.google.firebase.firestore.ListenerRegistration;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.Launcher;
@@ -13,11 +14,22 @@ import com.xffffff.wellfed.unit.UnitConverter;
 
 public class MealPlanController {
     private final ActivityBase activity;
+    private ListenerRegistration listenerRegistration;
     /**
      * The DB of stored ingredients
      */
     private final MealPlanDB db;
     private MealPlanAdapter adapter;
+
+    public void setOnDataChanged(OnDataChanged onDataChanged) {
+        this.onDataChanged = onDataChanged;
+    }
+
+    private OnDataChanged onDataChanged;
+
+    public interface OnDataChanged {
+        public void onDataChanged(MealPlan mealPlan);
+    }
 
     /**
      * The MealPlanController constructor. Creates a new MealPlanController
@@ -31,6 +43,24 @@ public class MealPlanController {
                 new DBConnection(activity.getApplicationContext());
         db = new MealPlanDB(connection);
         adapter = new MealPlanAdapter(db);
+    }
+
+    public void startListening(String id) {
+        if (listenerRegistration == null) {
+            listenerRegistration = db.getMealPlanDocumentReference(id)
+                    .addSnapshotListener((doc, err) -> {
+                        db.getMealPlan(doc, (foundMealPlan, success) -> {
+                            onDataChanged.onDataChanged(foundMealPlan);
+                        });
+                    });
+        }
+    }
+
+    public void stopListening() {
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+            listenerRegistration = null;
+        }
     }
 
     /**

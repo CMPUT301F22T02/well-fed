@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.ingredient.Ingredient;
 
+import java.util.Locale;
+
 public class ItemDetailAdapter extends ItemAdapter {
     @NonNull @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
@@ -31,7 +33,8 @@ public class ItemDetailAdapter extends ItemAdapter {
         ViewHolder holder1 = (ViewHolder) holder;
         Ingredient ingredient = (Ingredient) getItems().get(position);
         holder1.title.setText(
-                ingredient.getAmount() + " " + ingredient.getUnit());
+                String.format(Locale.CANADA, "%.2f", ingredient.getAmount()) + " "
+                        + ingredient.getUnit());
         holder1.headline.setText(ingredient.getDescription());
         holder1.moreInfo.setOnClickListener(view -> {
         });
