@@ -121,6 +121,8 @@ public class RecipeActivity extends ActivityBase
         TextView description = findViewById(R.id.recipe_description_textView);
         ImageView img = findViewById(R.id.recipe_img);
 
+        ingredientList.addAll(recipe.getIngredients());
+        adapter.notifyDataSetChanged();
         title.setText(recipe.getTitle());
         String recipePrepTime = recipe.getPrepTimeMinutes() + " mins";
         prepTime.setText(recipePrepTime);
