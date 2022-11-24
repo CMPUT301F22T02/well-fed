@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -114,7 +114,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.example.wellfed.ingredient</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.xffffff.wellfed.ingredient</a></div>
 <h2 title="Class IngredientDB" class="title">Class IngredientDB</h2>
 </div>
 <div class="contentContainer">
@@ -122,7 +122,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>com.example.wellfed.ingredient.IngredientDB</li>
+<li>com.xffffff.wellfed.ingredient.IngredientDB</li>
 </ul>
 </li>
 </ul>
@@ -156,7 +156,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnAddIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnAddIngredientListener</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnAddIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnAddIngredientListener</a></span></code></th>
 <td class="colLast">
 <div class="block">The OnAddIngredientListener interface is used to handle the result of the
  addIngredient method.</div>
@@ -164,7 +164,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnDeleteIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnDeleteIngredientListener</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnDeleteIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnDeleteIngredientListener</a></span></code></th>
 <td class="colLast">
 <div class="block">The OnDeleteIngredientListener interface is used to handle the result
  of the
@@ -173,7 +173,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a></span></code></th>
 <td class="colLast">
 <div class="block">The OnGetIngredientListener interface is used to handle the result of the
  getIngredient method.</div>
@@ -181,7 +181,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a></span></code></th>
 <td class="colLast">
 <div class="block">The OnUpdateIngredientReferenceCountListener interface is used to
  handle the result
@@ -206,7 +206,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.example.wellfed.common.DBConnection)">IngredientDB</a></span>&#8203;(<a href="../common/DBConnection.html" title="class in com.example.wellfed.common">DBConnection</a>&nbsp;connection)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.xffffff.wellfed.common.DBConnection)">IngredientDB</a></span>&#8203;(<a href="../common/DBConnection.html" title="class in com.xffffff.wellfed.common">DBConnection</a>&nbsp;connection)</code></th>
 <td class="colLast">
 <div class="block">Constructs an IngredientDB object</div>
 </td>
@@ -231,45 +231,47 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnAddIngredientListener)">addIngredient</a></span>&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-             <a href="IngredientDB.OnAddIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnAddIngredientListener</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.ingredient.IngredientDB.OnAddIngredientListener)">addIngredient</a></span>&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+             <a href="IngredientDB.OnAddIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnAddIngredientListener</a>&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Adds an ingredient in storage to the Firebase DB.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnDeleteIngredientListener)">deleteIngredient</a></span>&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                <a href="IngredientDB.OnDeleteIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnDeleteIngredientListener</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.ingredient.IngredientDB.OnDeleteIngredientListener)">deleteIngredient</a></span>&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+                <a href="IngredientDB.OnDeleteIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnDeleteIngredientListener</a>&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Deletes an ingredient from the Firebase DB.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>com.google.firebase.firestore.DocumentReference</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocumentReference(com.example.wellfed.ingredient.Ingredient)">getDocumentReference</a></span>&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDocumentReference(com.xffffff.wellfed.ingredient.Ingredient)">getDocumentReference</a></span>&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</code></th>
 <td class="colLast">
 <div class="block">Get document reference of an ingredient</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">getIngredient</a></span>&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-             <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">getIngredient</a></span>&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+             <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Gets an ingredient from Firebase DB</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredient(com.google.firebase.firestore.DocumentReference,com.example.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">getIngredient</a></span>&#8203;(com.google.firebase.firestore.DocumentReference&nbsp;ingredientRef,
-             <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredient(com.google.firebase.firestore.DocumentReference,com.xffffff.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">getIngredient</a></span>&#8203;(com.google.firebase.firestore.DocumentReference&nbsp;ingredientRef,
+             <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Gets an ingredient from Firebase DB</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredient(java.lang.String,com.example.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">getIngredient</a></span>&#8203;(java.lang.String&nbsp;id,
-             <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIngredient(java.lang.String,com.xffffff.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">getIngredient</a></span>&#8203;(java.lang.String&nbsp;id,
+             <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Gets an ingredient from Firebase DB</div>
 </td>
@@ -277,22 +279,30 @@ extends java.lang.Object</pre>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuery()">getQuery</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#snapshotToIngredient(com.google.firebase.firestore.DocumentSnapshot)">snapshotToIngredient</a></span>&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;document)</code></th>
 <td class="colLast">
-<div class="block">Converts a DocumentSnapshot of an ingredient to an ingredient object</div>
+<div class="block">Gets the CollectionReference that Ingredients are stored in</div>
 </td>
 </tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSortQuery(java.lang.String,boolean)">getSortQuery</a></span>&#8203;(java.lang.String&nbsp;field,
+            boolean&nbsp;ascending)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateReferenceCount(com.example.wellfed.ingredient.Ingredient,int,com.example.wellfed.ingredient.IngredientDB.OnUpdateIngredientReferenceCountListener)">updateReferenceCount</a></span>&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                    int&nbsp;delta,
-                    <a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a>&nbsp;listener)</code></th>
+<td class="colFirst"><code><a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#snapshotToIngredient(com.google.firebase.firestore.DocumentSnapshot)">snapshotToIngredient</a></span>&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;document)</code></th>
 <td class="colLast">
-<div class="block">TODO</div>
+<div class="block">Converts a DocumentSnapshot of an ingredient to an Ingredient object</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateReferenceCount(com.xffffff.wellfed.ingredient.Ingredient,int,com.xffffff.wellfed.ingredient.IngredientDB.OnUpdateIngredientReferenceCountListener)">updateReferenceCount</a></span>&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+                    int&nbsp;delta,
+                    <a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a>&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Updates the reference count of an ingredient in the Firebase DB.</div>
 </td>
 </tr>
 </table>
@@ -319,13 +329,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(com.example.wellfed.common.DBConnection)">
+<a id="&lt;init&gt;(com.xffffff.wellfed.common.DBConnection)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>IngredientDB</h4>
-<pre>public&nbsp;IngredientDB&#8203;(<a href="../common/DBConnection.html" title="class in com.example.wellfed.common">DBConnection</a>&nbsp;connection)</pre>
+<pre>public&nbsp;IngredientDB&#8203;(<a href="../common/DBConnection.html" title="class in com.xffffff.wellfed.common">DBConnection</a>&nbsp;connection)</pre>
 <div class="block">Constructs an IngredientDB object</div>
 </li>
 </ul>
@@ -339,15 +349,15 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnAddIngredientListener)">
+<a id="addIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.ingredient.IngredientDB.OnAddIngredientListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addIngredient&#8203;(@NonNull
-                          <a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                          <a href="IngredientDB.OnAddIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnAddIngredientListener</a>&nbsp;listener)</pre>
+                          <a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+                          <a href="IngredientDB.OnAddIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnAddIngredientListener</a>&nbsp;listener)</pre>
 <div class="block">Adds an ingredient in storage to the Firebase DB.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -356,14 +366,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getIngredient(java.lang.String,com.example.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">
+<a id="getIngredient(java.lang.String,com.xffffff.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;getIngredient&#8203;(java.lang.String&nbsp;id,
-                          <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</pre>
+                          <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</pre>
 <div class="block">Gets an ingredient from Firebase DB</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -373,14 +383,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getIngredient(com.google.firebase.firestore.DocumentReference,com.example.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">
+<a id="getIngredient(com.google.firebase.firestore.DocumentReference,com.xffffff.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;getIngredient&#8203;(com.google.firebase.firestore.DocumentReference&nbsp;ingredientRef,
-                          <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</pre>
+                          <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</pre>
 <div class="block">Gets an ingredient from Firebase DB</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -391,25 +401,33 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">
+<a id="getIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.ingredient.IngredientDB.OnGetIngredientListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIngredient</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;getIngredient&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                          <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;getIngredient&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+                          <a href="IngredientDB.OnGetIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnGetIngredientListener</a>&nbsp;listener)</pre>
+<div class="block">Gets an ingredient from Firebase DB</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredient</code> - the ingredient to be
+                   retrieved</dd>
+<dd><code>listener</code> - the listener to be called when the ingredient is
+                   retrieved</dd>
+</dl>
 </li>
 </ul>
-<a id="deleteIngredient(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.ingredient.IngredientDB.OnDeleteIngredientListener)">
+<a id="deleteIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.ingredient.IngredientDB.OnDeleteIngredientListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>deleteIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;deleteIngredient&#8203;(@NonNull
-                             <a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                             <a href="IngredientDB.OnDeleteIngredientListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnDeleteIngredientListener</a>&nbsp;listener)</pre>
+                             <a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+                             <a href="IngredientDB.OnDeleteIngredientListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnDeleteIngredientListener</a>&nbsp;listener)</pre>
 <div class="block">Deletes an ingredient from the Firebase DB.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -418,21 +436,23 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="updateReferenceCount(com.example.wellfed.ingredient.Ingredient,int,com.example.wellfed.ingredient.IngredientDB.OnUpdateIngredientReferenceCountListener)">
+<a id="updateReferenceCount(com.xffffff.wellfed.ingredient.Ingredient,int,com.xffffff.wellfed.ingredient.IngredientDB.OnUpdateIngredientReferenceCountListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateReferenceCount</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateReferenceCount&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+<pre class="methodSignature">public&nbsp;void&nbsp;updateReferenceCount&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
                                  int&nbsp;delta,
-                                 <a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.example.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a>&nbsp;listener)</pre>
-<div class="block">TODO</div>
+                                 <a href="IngredientDB.OnUpdateIngredientReferenceCountListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientDB.OnUpdateIngredientReferenceCountListener</a>&nbsp;listener)</pre>
+<div class="block">Updates the reference count of an ingredient in the Firebase DB. The reference count keeps
+ track of how many references exist to an object - if the object has 0 references, it is
+ safely deleted.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ingredient</code> - </dd>
-<dd><code>delta</code> - </dd>
-<dd><code>listener</code> - </dd>
+<dd><code>ingredient</code> - the ingredient to update the reference count of</dd>
+<dd><code>delta</code> - how much to shift the reference count by</dd>
+<dd><code>listener</code> - the listener to be called when the reference count is updated</dd>
 </dl>
 </li>
 </ul>
@@ -442,8 +462,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>snapshotToIngredient</h4>
-<pre class="methodSignature">public&nbsp;<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;snapshotToIngredient&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;document)</pre>
-<div class="block">Converts a DocumentSnapshot of an ingredient to an ingredient object</div>
+<pre class="methodSignature">public&nbsp;<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;snapshotToIngredient&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;document)</pre>
+<div class="block">Converts a DocumentSnapshot of an ingredient to an Ingredient object</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>document</code> - the DocumentSnapshot to convert</dd>
@@ -452,13 +472,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getDocumentReference(com.example.wellfed.ingredient.Ingredient)">
+<a id="getDocumentReference(com.xffffff.wellfed.ingredient.Ingredient)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDocumentReference</h4>
-<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.DocumentReference&nbsp;getDocumentReference&#8203;(<a href="Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</pre>
+<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.DocumentReference&nbsp;getDocumentReference&#8203;(<a href="Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</pre>
 <div class="block">Get document reference of an ingredient</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -471,10 +491,25 @@ extends java.lang.Object</pre>
 <a id="getQuery()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getQuery</h4>
 <pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getQuery()</pre>
+<div class="block">Gets the CollectionReference that Ingredients are stored in</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the CollectionReference</dd>
+</dl>
+</li>
+</ul>
+<a id="getSortQuery(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getSortQuery</h4>
+<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getSortQuery&#8203;(java.lang.String&nbsp;field,
+                                                        boolean&nbsp;ascending)</pre>
 </li>
 </ul>
 </li>

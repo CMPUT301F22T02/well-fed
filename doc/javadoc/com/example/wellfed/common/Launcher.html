@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6};
+var data = {"i0":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -114,8 +114,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.example.wellfed.common</a></div>
-<h2 title="Interface Launcher" class="title">Interface Launcher</h2>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.xffffff.wellfed.common</a></div>
+<h2 title="Interface Launcher" class="title">Interface Launcher&lt;Item&gt;</h2>
 </div>
 <div class="contentContainer">
 <div class="description">
@@ -123,10 +123,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../ingredient/IngredientStorageFragment.html" title="class in com.example.wellfed.ingredient">IngredientStorageFragment</a></code>, <code><a href="../mealplan/MealBookFragment.html" title="class in com.example.wellfed.mealplan">MealBookFragment</a></code>, <code><a href="../recipe/RecipeBookFragment.html" title="class in com.example.wellfed.recipe">RecipeBookFragment</a></code></dd>
+<dd><code><a href="../ingredient/IngredientStorageFragment.html" title="class in com.xffffff.wellfed.ingredient">IngredientStorageFragment</a></code>, <code><a href="../mealplan/MealBookFragment.html" title="class in com.xffffff.wellfed.mealplan">MealBookFragment</a></code>, <code><a href="../recipe/RecipeBookFragment.html" title="class in com.xffffff.wellfed.recipe">RecipeBookFragment</a></code>, <code><a href="../recipe/RecipeBookSelectFragment.html" title="class in com.xffffff.wellfed.recipe">RecipeBookSelectFragment</a></code></dd>
 </dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">Launcher</span></pre>
+<pre>public interface <span class="typeNameLabel">Launcher&lt;Item&gt;</span></pre>
 <div class="block">The Launcher class provides a method for launching an activity.</div>
 </li>
 </ul>
@@ -150,12 +150,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch()">launch</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(int)">launch</a></span>&#8203;(int&nbsp;pos)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(Item)">launch</a></span>&#8203;(<a href="Launcher.html" title="type parameter in Launcher">Item</a>&nbsp;item)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -175,22 +170,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="launch()">
+<a id="launch(java.lang.Object)">
 <!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>launch</h4>
-<pre class="methodSignature">void&nbsp;launch()</pre>
-</li>
-</ul>
-<a id="launch(int)">
+</a><a id="launch(Item)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>launch</h4>
-<pre class="methodSignature">void&nbsp;launch&#8203;(int&nbsp;pos)</pre>
+<pre class="methodSignature">void&nbsp;launch&#8203;(<a href="Launcher.html" title="type parameter in Launcher">Item</a>&nbsp;item)</pre>
 </li>
 </ul>
 </li>

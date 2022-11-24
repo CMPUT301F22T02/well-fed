@@ -114,7 +114,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.example.wellfed.recipe</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.xffffff.wellfed.recipe</a></div>
 <h2 title="Class RecipeIngredientSearchAdapter.ViewHolder" class="title">Class RecipeIngredientSearchAdapter.ViewHolder</h2>
 </div>
 <div class="contentContainer">
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>androidx.recyclerview.widget.RecyclerView.ViewHolder</li>
 <li>
 <ul class="inheritance">
-<li>com.example.wellfed.recipe.RecipeIngredientSearchAdapter.ViewHolder</li>
+<li>com.xffffff.wellfed.recipe.RecipeIngredientSearchAdapter.ViewHolder</li>
 </ul>
 </li>
 </ul>
@@ -136,11 +136,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>Enclosing class:</dt>
-<dd><a href="RecipeIngredientSearchAdapter.html" title="class in com.example.wellfed.recipe">RecipeIngredientSearchAdapter</a></dd>
+<dd><a href="RecipeIngredientSearchAdapter.html" title="class in com.xffffff.wellfed.recipe">RecipeIngredientSearchAdapter</a></dd>
 </dl>
 <hr>
-<pre>public class <span class="typeNameLabel">RecipeIngredientSearchAdapter.ViewHolder</span>
+<pre>public static class <span class="typeNameLabel">RecipeIngredientSearchAdapter.ViewHolder</span>
 extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
+<div class="block">Holds the views for the ingredients in the search</div>
 </li>
 </ul>
 </div>
@@ -179,7 +180,9 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(android.view.View)">ViewHolder</a></span>&#8203;(android.view.View&nbsp;view)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Creates a ViewHolder for an ingredient</div>
+</td>
 </tr>
 </table>
 </li>
@@ -201,9 +204,11 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bind(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.recipe.RecipeIngredientSearchAdapter.OnItemClickListener)">bind</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-    <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bind(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.recipe.RecipeIngredientSearchAdapter.OnItemClickListener)">bind</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+    <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Binds an ingredient to a ViewHolder, to properly display the data</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -244,6 +249,11 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 <h4>ViewHolder</h4>
 <pre>public&nbsp;ViewHolder&#8203;(@NonNull
                   android.view.View&nbsp;view)</pre>
+<div class="block">Creates a ViewHolder for an ingredient</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - the view to use</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -256,14 +266,20 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="bind(com.example.wellfed.ingredient.Ingredient,com.example.wellfed.recipe.RecipeIngredientSearchAdapter.OnItemClickListener)">
+<a id="bind(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.recipe.RecipeIngredientSearchAdapter.OnItemClickListener)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>bind</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;bind&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.example.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                 <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.example.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>&nbsp;listener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;bind&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+                 <a href="RecipeIngredientSearchAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeIngredientSearchAdapter.OnItemClickListener</a>&nbsp;listener)</pre>
+<div class="block">Binds an ingredient to a ViewHolder, to properly display the data</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredient</code> - the Ingredient to bind to the ViewHolder</dd>
+<dd><code>listener</code> - the ingredient click listener to bind to the ViewHolder</dd>
+</dl>
 </li>
 </ul>
 </li>

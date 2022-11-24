@@ -114,7 +114,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.example.wellfed.recipe</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.xffffff.wellfed.recipe</a></div>
 <h2 title="Class RecipeEditContract" class="title">Class RecipeEditContract</h2>
 </div>
 <div class="contentContainer">
@@ -122,10 +122,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&gt;</li>
+<li>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&gt;</li>
 <li>
 <ul class="inheritance">
-<li>com.example.wellfed.recipe.RecipeEditContract</li>
+<li>com.xffffff.wellfed.recipe.RecipeEditContract</li>
 </ul>
 </li>
 </ul>
@@ -136,8 +136,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeEditContract</span>
-extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&gt;</pre>
-<div class="block">Contract that launches a RecipeEditActivity</div>
+extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&gt;</pre>
+<div class="block">Contract for launching a RecipeEditActivity</div>
 </li>
 </ul>
 </div>
@@ -198,18 +198,18 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Rec
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>android.content.Intent</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIntent(android.content.Context,com.example.wellfed.recipe.Recipe)">createIntent</a></span>&#8203;(android.content.Context&nbsp;context,
-            <a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIntent(android.content.Context,com.xffffff.wellfed.recipe.Recipe)">createIntent</a></span>&#8203;(android.content.Context&nbsp;context,
+            <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe)</code></th>
 <td class="colLast">
-<div class="block">creates an intent for the recipe</div>
+<div class="block">Creates an intent for the recipe edit activity to be launched</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;</code></td>
+<td class="colFirst"><code>android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseResult(int,android.content.Intent)">parseResult</a></span>&#8203;(int&nbsp;i,
            android.content.Intent&nbsp;intent)</code></th>
 <td class="colLast">
-<div class="block">parses the result from the activity</div>
+<div class="block">Parses the result from the recipe edit activity</div>
 </td>
 </tr>
 </table>
@@ -262,7 +262,7 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Rec
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="createIntent(android.content.Context,com.example.wellfed.recipe.Recipe)">
+<a id="createIntent(android.content.Context,com.xffffff.wellfed.recipe.Recipe)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -271,15 +271,16 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;<a href="Rec
 <pre class="methodSignature">@NonNull
 public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
                                            android.content.Context&nbsp;context,
-                                           <a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&nbsp;recipe)</pre>
-<div class="block">creates an intent for the recipe</div>
+                                           <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe)</pre>
+<div class="block">Creates an intent for the recipe edit activity to be launched</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>createIntent</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&gt;</code></dd>
+<dd><code>createIntent</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>context</code> - context that launches the activity</dd>
 <dd><code>recipe</code> - recipe to include in the intent</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
+<dd>the Intent created for the recipe</dd>
 </dl>
 </li>
 </ul>
@@ -289,17 +290,19 @@ public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
 <ul class="blockListLast">
 <li class="blockList">
 <h4>parseResult</h4>
-<pre class="methodSignature">public&nbsp;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&nbsp;parseResult&#8203;(int&nbsp;i,
+<pre class="methodSignature">public&nbsp;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;parseResult&#8203;(int&nbsp;i,
                                                                     @Nullable
                                                                     android.content.Intent&nbsp;intent)</pre>
-<div class="block">parses the result from the activity</div>
+<div class="block">Parses the result from the recipe edit activity</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>parseResult</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.example.wellfed.recipe">Recipe</a>&gt;&gt;</code></dd>
+<dd><code>parseResult</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>i</code> - result code of the activity</dd>
 <dd><code>intent</code> - intent returned in the result</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
+<dd>a pair identifying that it is a recipe related activity
+                  and the recipe created by the edit activity</dd>
 </dl>
 </li>
 </ul>

@@ -114,7 +114,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.example.wellfed.mealplan</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.xffffff.wellfed.mealplan</a></div>
 <h2 title="Class MealBookFragment" class="title">Class MealBookFragment</h2>
 </div>
 <div class="contentContainer">
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>androidx.fragment.app.Fragment</li>
 <li>
 <ul class="inheritance">
-<li>com.example.wellfed.mealplan.MealBookFragment</li>
+<li>com.xffffff.wellfed.mealplan.MealBookFragment</li>
 </ul>
 </li>
 </ul>
@@ -136,12 +136,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/AdapterDataObserver.OnAdapterDataChangedListener.html" title="interface in com.example.wellfed.common">AdapterDataObserver.OnAdapterDataChangedListener</a></code>, <code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="../common/Launcher.html" title="interface in com.xffffff.wellfed.common">Launcher</a>&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&gt;</code>, <code><a href="MealPlanAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemClickListener</a></code>, <code><a href="MealPlanAdapter.OnItemLoadListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemLoadListener</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">MealBookFragment</span>
 extends androidx.fragment.app.Fragment
-implements <a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a>, <a href="../common/AdapterDataObserver.OnAdapterDataChangedListener.html" title="interface in com.example.wellfed.common">AdapterDataObserver.OnAdapterDataChangedListener</a></pre>
+implements <a href="../common/Launcher.html" title="interface in com.xffffff.wellfed.common">Launcher</a>&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&gt;, <a href="MealPlanAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemClickListener</a>, <a href="MealPlanAdapter.OnItemLoadListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemLoadListener</a></pre>
+<div class="block">The fragment for the meal book. This fragment shows the meals in the meal
+ book. The user can add meals to the meal book by clicking on the add button.</div>
 </li>
 </ul>
 </div>
@@ -180,14 +182,20 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;</code></td>
+<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editLauncher">editLauncher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">ActivityResultLauncher for the meal plan activity to launch an
+ activity to add a meal plan.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt;</code></td>
+<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launcher">launcher</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">ActivityResultLauncher for the meal plan activity to launch, edit or
+ delete the meal plan.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -230,33 +238,41 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch()">launch</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(int)">launch</a></span>&#8203;(int&nbsp;selected)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onAdapterDataChanged()">onAdapterDataChanged</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(com.xffffff.wellfed.mealplan.MealPlan)">launch</a></span>&#8203;(<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</code></th>
 <td class="colLast">
-<div class="block">Handler for changes in RecyclerView.Adapter data.</div>
+<div class="block">launch launches the meal plan activity.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>android.view.View</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">onCreateView</a></span>&#8203;(android.view.LayoutInflater&nbsp;inflater,
             android.view.ViewGroup&nbsp;container,
             android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onCreateView is called when the fragment is created.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onItemClick(com.xffffff.wellfed.mealplan.MealPlan)">onItemClick</a></span>&#8203;(<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</code></th>
+<td class="colLast">
+<div class="block">onItemClick is called when the user clicks on a meal plan.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onItemLoad(com.xffffff.wellfed.mealplan.MealPlan)">onItemLoad</a></span>&#8203;(<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</code></th>
+<td class="colLast">
+<div class="block">onItemLoad is called when the meal plan is loaded.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onViewCreated(android.view.View,android.os.Bundle)">onViewCreated</a></span>&#8203;(android.view.View&nbsp;view,
              android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onViewCreated is called when the view is created.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -302,7 +318,9 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 <ul class="blockList">
 <li class="blockList">
 <h4>launcher</h4>
-<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt; launcher</pre>
+<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&gt; launcher</pre>
+<div class="block">ActivityResultLauncher for the meal plan activity to launch, edit or
+ delete the meal plan.</div>
 </li>
 </ul>
 <a id="editLauncher">
@@ -311,7 +329,9 @@ implements <a href="../common/Launcher.html" title="interface in com.example.wel
 <ul class="blockListLast">
 <li class="blockList">
 <h4>editLauncher</h4>
-<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.example.wellfed.mealplan">MealPlan</a>&gt; editLauncher</pre>
+<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&gt; editLauncher</pre>
+<div class="block">ActivityResultLauncher for the meal plan activity to launch an
+ activity to add a meal plan.</div>
 </li>
 </ul>
 </li>
@@ -356,9 +376,17 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
                                       android.view.ViewGroup&nbsp;container,
                                       @Nullable
                                       android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">onCreateView is called when the fragment is created. It inflates the
+ layout.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onCreateView</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inflater</code> - The layout inflater.</dd>
+<dd><code>container</code> - The view group container.</dd>
+<dd><code>savedInstanceState</code> - The saved instance state.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view.</dd>
 </dl>
 </li>
 </ul>
@@ -372,50 +400,64 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
                           android.view.View&nbsp;view,
                           @Nullable
                           android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">onViewCreated is called when the view is created. It sets up the
+ recycler view and the call to action text view.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onViewCreated</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>view</code> - The view.</dd>
+<dd><code>savedInstanceState</code> - The saved instance state.</dd>
 </dl>
 </li>
 </ul>
-<a id="launch(int)">
+<a id="launch(com.xffffff.wellfed.mealplan.MealPlan)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>launch</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;launch&#8203;(int&nbsp;selected)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;launch&#8203;(<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</pre>
+<div class="block">launch launches the meal plan activity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/Launcher.html#launch(int)">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
+<dd><code><a href="../common/Launcher.html#launch(Item)">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.xffffff.wellfed.common">Launcher</a>&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mealPlan</code> - The meal plan to launch.</dd>
 </dl>
 </li>
 </ul>
-<a id="launch()">
+<a id="onItemClick(com.xffffff.wellfed.mealplan.MealPlan)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>launch</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;launch()</pre>
+<h4>onItemClick</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onItemClick&#8203;(<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</pre>
+<div class="block">onItemClick is called when the user clicks on a meal plan. It launches
+ the meal plan activity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/Launcher.html#launch()">launch</a></code>&nbsp;in interface&nbsp;<code><a href="../common/Launcher.html" title="interface in com.example.wellfed.common">Launcher</a></code></dd>
+<dd><code><a href="MealPlanAdapter.OnItemClickListener.html#onItemClick(com.xffffff.wellfed.mealplan.MealPlan)">onItemClick</a></code>&nbsp;in interface&nbsp;<code><a href="MealPlanAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemClickListener</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mealPlan</code> - The meal plan to launch.</dd>
 </dl>
 </li>
 </ul>
-<a id="onAdapterDataChanged()">
+<a id="onItemLoad(com.xffffff.wellfed.mealplan.MealPlan)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>onAdapterDataChanged</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;onAdapterDataChanged()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../common/AdapterDataObserver.OnAdapterDataChangedListener.html#onAdapterDataChanged()">AdapterDataObserver.OnAdapterDataChangedListener</a></code></span></div>
-<div class="block">Handler for changes in RecyclerView.Adapter data.</div>
+<h4>onItemLoad</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;onItemLoad&#8203;(<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</pre>
+<div class="block">onItemLoad is called when the meal plan is loaded. It updates the
+ nextMealPlan and updates the call to action text view.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../common/AdapterDataObserver.OnAdapterDataChangedListener.html#onAdapterDataChanged()">onAdapterDataChanged</a></code>&nbsp;in interface&nbsp;<code><a href="../common/AdapterDataObserver.OnAdapterDataChangedListener.html" title="interface in com.example.wellfed.common">AdapterDataObserver.OnAdapterDataChangedListener</a></code></dd>
+<dd><code><a href="MealPlanAdapter.OnItemLoadListener.html#onItemLoad(com.xffffff.wellfed.mealplan.MealPlan)">onItemLoad</a></code>&nbsp;in interface&nbsp;<code><a href="MealPlanAdapter.OnItemLoadListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemLoadListener</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>mealPlan</code> - The meal plan to update the call to action text view.</dd>
 </dl>
 </li>
 </ul>

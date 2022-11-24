@@ -4,73 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:orientation="vertical"
-    tools:context=".recipe.RecipeActivity"
-    android:layout_marginTop="10dp">
+    tools:context=".recipe.RecipeActivity">
 
     <ImageView
         android:id="@+id/recipe_ImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="16dp"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/ic_baseline_edit_24"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/recipe_title_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="20sp"
         android:layout_marginStart="16dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@id/recipe_ImageView"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/prep_time_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBaseline_toBaselineOf="@id/recipe_title_TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textStyle="italic"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/gray_secondary"
         android:textSize="15sp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"/>
+        android:textStyle="italic"
+        app:layout_constraintBaseline_toBaselineOf="@id/recipe_title_TextView"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/recipe_category_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/recipe_title_TextView"
         android:textColor="@color/gray_secondary"
         app:layout_constraintStart_toStartOf="@id/recipe_title_TextView"
-        />
+        app:layout_constraintTop_toBottomOf="@id/recipe_title_TextView" />
 
     <TextView
         android:id="@+id/recipe_servings_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_category_TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/gray_secondary"
         android:layout_marginEnd="16dp"
-        />
+        android:textColor="@color/gray_secondary"
+        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_category_TextView"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/recipe_description_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/recipe_category_TextView"
         app:layout_constraintTop_toBottomOf="@id/recipe_servings_TextView"
         app:layout_constraintWidth_max="wrap" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

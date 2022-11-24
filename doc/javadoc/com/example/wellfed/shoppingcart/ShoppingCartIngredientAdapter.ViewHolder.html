@@ -108,7 +108,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.example.wellfed.shoppingcart</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">com.xffffff.wellfed.shoppingcart</a></div>
 <h2 title="Class ShoppingCartIngredientAdapter.ViewHolder" class="title">Class ShoppingCartIngredientAdapter.ViewHolder</h2>
 </div>
 <div class="contentContainer">
@@ -119,7 +119,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>androidx.recyclerview.widget.RecyclerView.ViewHolder</li>
 <li>
 <ul class="inheritance">
-<li>com.example.wellfed.shoppingcart.ShoppingCartIngredientAdapter.ViewHolder</li>
+<li>com.xffffff.wellfed.shoppingcart.ShoppingCartIngredientAdapter.ViewHolder</li>
 </ul>
 </li>
 </ul>
@@ -130,11 +130,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>Enclosing class:</dt>
-<dd><a href="ShoppingCartIngredientAdapter.html" title="class in com.example.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></dd>
+<dd><a href="ShoppingCartIngredientAdapter.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">ShoppingCartIngredientAdapter.ViewHolder</span>
 extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
+<div class="block">ViewHolder class for the ShoppingCartIngredientAdapter.
+ It contains the TextViews for the description, amount,
+ unit and category of the ingredient.</div>
 </li>
 </ul>
 </div>
@@ -156,13 +159,18 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>android.widget.TextView</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ingredientAttributeTextView">ingredientAttributeTextView</a></span></code></th>
+<td class="colFirst"><code>android.widget.CheckBox</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#checkBox">checkBox</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>android.widget.TextView</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ingredientNameTextView">ingredientNameTextView</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description">description</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>android.widget.TextView</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#subtext">subtext</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -234,22 +242,31 @@ extends androidx.recyclerview.widget.RecyclerView.ViewHolder</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="ingredientNameTextView">
+<a id="description">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>ingredientNameTextView</h4>
-<pre>public&nbsp;android.widget.TextView ingredientNameTextView</pre>
+<h4>description</h4>
+<pre>public&nbsp;android.widget.TextView description</pre>
 </li>
 </ul>
-<a id="ingredientAttributeTextView">
+<a id="subtext">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subtext</h4>
+<pre>public&nbsp;android.widget.TextView subtext</pre>
+</li>
+</ul>
+<a id="checkBox">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>ingredientAttributeTextView</h4>
-<pre>public&nbsp;android.widget.TextView ingredientAttributeTextView</pre>
+<h4>checkBox</h4>
+<pre>public&nbsp;android.widget.CheckBox checkBox</pre>
 </li>
 </ul>
 </li>
