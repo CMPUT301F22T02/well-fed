@@ -149,6 +149,48 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
+    private void addMealPlan(String mealPlan) throws InterruptedException {
+        String recipe = "Eggs and Bacon";
+        String ingredient = "Sliced Bread";
+        addRecipe(recipe);
+        addIngredient(ingredient);
+
+        onView(withId(R.id.fab)).perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        onView(withText(recipe)).perform(click());
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+
+        onView(withText(ingredient)).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+    }
+
     private void cleanUpIngredient(String description) throws InterruptedException {
         Thread.sleep(500);
         onView(withId(R.id.ingredient_storage_item)).perform(click());
@@ -515,22 +557,24 @@ public class MealPlanInstrumentedTest {
     }
 
     @Test
-    public void testDeleteMealPlan(){
+    public void testDeleteMealPlan() throws InterruptedException {
+        addMealPlan("Hearty Breakfast");
 
+        Thread.sleep(1000);
+
+        onView(withText("Hearty Breakfast")).perform(click());
+
+        onView(withText("Delete")).perform(click());
+        onView(withText("Delete")).perform(click());
+        Thread.sleep(1000);
+
+        onView(withText("Hearty Breakfast")).check(doesNotExist());
+        cleanUpRecipe("Eggs and Bacon");
+        cleanUpIngredient("Sliced Bread");
     }
 
     @Test
     public void testUpdateMealPlanByUpdatingRecipes(){
-
-    }
-
-    @Test
-    public void testUpdateMealPlanByUpdatingIngredients(){
-
-    }
-
-    @Test
-    public void testUpdateMealPlanInvalid(){
 
     }
 }
