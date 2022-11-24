@@ -165,8 +165,7 @@ public class RecipeEditActivity extends EditActivityBase {
             servings.setPlaceholderText(recipe.getServings().toString());
             commentsTextInput.setPlaceholderText(recipe.getComments());
             recipeCategory.setPlaceholderText(recipe.getCategory());
-            Picasso.get().load(recipe.getPhotograph()).rotate(90)
-                    .into(recipeImg);
+            updateImageView(recipe.getPhotograph());
             fab.setOnClickListener(view -> {
                 if (areValidFields()) {
                     new Intent();
@@ -318,8 +317,22 @@ public class RecipeEditActivity extends EditActivityBase {
                 if (recipe != null) {
                     recipe.setPhotograph(downloadUrl);
                 }
-                Picasso.get().load(downloadUrl).rotate(90).into(recipeImg);
+                updateImageView(downloadUrl);
             });
         });
+    }
+
+    /**
+     * Update image view with image
+     *
+     * @param url url of image to display
+     */
+    public void updateImageView(String url) {
+        if (url == null) {
+            return;
+        }
+        Picasso.get().load(url).rotate(90).into(recipeImg);
+        recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        recipeImg.setImageTintList(null);
     }
 }
