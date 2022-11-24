@@ -89,11 +89,11 @@ public class RequiredDropdownTextInputLayout extends RequiredTextInputLayout {
     /**
      * Set the placeholder text of the MaterialAutoCompleteTextView
      *
-     * @param placeholderText the placeholder text
+     * @param placeholder the placeholder text
      */
-    @Override public void setPlaceholderText(String placeholderText) {
-        super.setPlaceholderText(placeholderText);
-        this.autoCompleteTextView.setText(placeholderText, false);
+    @Override public void setPlaceholderText(String placeholder) {
+        super.setPlaceholder(placeholder);
+        this.autoCompleteTextView.setText(placeholder, false);
     }
 
     /**

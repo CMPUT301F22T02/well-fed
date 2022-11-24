@@ -48,7 +48,7 @@ import java.util.Objects;
  * from https://developer.android.com/reference/android/text/TextWatcher/
  *
  * @author Steven Tang
- * @version v1.1.0 2022-10-29
+ * @version v1.2.0 2022-11-23
  **/
 public class RequiredTextInputLayout extends TextInputLayout
         implements TextInputLayout.OnEditTextAttachedListener, TextWatcher {
@@ -58,9 +58,9 @@ public class RequiredTextInputLayout extends TextInputLayout
     private EditText editText;
 
     /**
-     * Holds the placeholder text
+     * Holds the placeholder
      */
-    private String placeholderText;
+    private String placeholder;
 
     /**
      * Constructs a RequiredTextInputLayout object
@@ -106,7 +106,7 @@ public class RequiredTextInputLayout extends TextInputLayout
             @NonNull TextInputLayout textInputLayout) {
         this.editText = Objects.requireNonNull(textInputLayout.getEditText());
         this.editText.addTextChangedListener(this);
-        this.placeholderText = this.editText.getText().toString();
+        this.placeholder = this.editText.getText().toString();
     }
 
     /**
@@ -128,13 +128,22 @@ public class RequiredTextInputLayout extends TextInputLayout
     }
 
     /**
+     * Setter for placeholder
+     *
+     * @param placeholder the placeholder text
+     */
+    public void setPlaceholder(String placeholder) {
+        this.placeholder = placeholder;
+    }
+
+    /**
      * Set the placeholder text of the EditText
      *
-     * @param placeholderText the placeholder text
+     * @param placeholder the placeholder text
      */
-    public void setPlaceholderText(String placeholderText) {
-        this.placeholderText = placeholderText;
-        this.editText.setText(placeholderText);
+    public void setPlaceholderText(String placeholder) {
+        this.setPlaceholder(placeholder);
+        this.editText.setText(placeholder);
     }
 
     /**
@@ -144,7 +153,7 @@ public class RequiredTextInputLayout extends TextInputLayout
      * @return true if the EditText has changes
      */
     public Boolean hasChanges() {
-        return !this.placeholderText.equals(this.getText());
+        return !this.placeholder.equals(this.getText());
     }
 
     /*
