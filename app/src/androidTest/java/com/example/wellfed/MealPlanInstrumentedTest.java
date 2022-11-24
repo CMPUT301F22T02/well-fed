@@ -291,7 +291,7 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
 
@@ -353,7 +353,7 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
 
@@ -401,7 +401,7 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
 
@@ -561,7 +561,7 @@ public class MealPlanInstrumentedTest {
     public void testDeleteMealPlan() throws InterruptedException {
         addMealPlan("Hearty Breakfast");
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText("Hearty Breakfast")).perform(click());
 
@@ -593,7 +593,7 @@ public class MealPlanInstrumentedTest {
         String recipe = "Quinoa";
         String ingredient = "Celery sticks";
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText("Hearty Breakfast")).perform(click());
 
