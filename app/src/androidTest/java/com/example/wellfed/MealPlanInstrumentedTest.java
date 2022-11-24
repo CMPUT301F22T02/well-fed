@@ -3,9 +3,12 @@ package com.example.wellfed;
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -32,6 +35,8 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
+
+import com.example.wellfed.mealplan.MealPlanEditActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -177,11 +182,14 @@ public class MealPlanInstrumentedTest {
 
     @Test
     public void testAddMealPlanWithRecipes() throws InterruptedException {
-        addRecipe("Eggs and Bacon");
+        String mealPlan = "Hearty Breakfast";
+        String recipe1 = "Eggs and Bacon";
+        String recipe2 = "Toast";
+        addRecipe(recipe1);
 
         onView(withId(R.id.fab)).perform(click());
 
-        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
 
         onView(withId(R.id.dateTextInput)).perform(click());
         onView(withText("OK")).perform(click());
@@ -195,11 +203,11 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
-        onView(withText("Eggs and Bacon")).perform(click());
+        onView(withText(recipe1)).perform(click());
 
         onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
-        onView(withId(R.id.edit_recipe_title)).perform(typeText("Toast"));
+        onView(withId(R.id.edit_recipe_title)).perform(typeText(recipe2));
         closeSoftKeyboard();
 
         onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("1"));
@@ -237,20 +245,23 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(1000);
 
-        onView(withText("Hearty Breakfast")).check(matches(isDisplayed()));
+        onView(withText(mealPlan)).check(matches(isDisplayed()));
 
-        cleanUpMealPlan("Hearty Breakfast");
-        cleanUpRecipe("Toast");
-        cleanUpRecipe("Eggs and Bacon");
+        cleanUpMealPlan(mealPlan);
+        cleanUpRecipe(recipe2);
+        cleanUpRecipe(recipe1);
     }
 
     @Test
     public void testAddMealPlanWithIngredients() throws InterruptedException {
-        addIngredient("Muffin");
+        String mealPlan = "Snack";
+        String ingredient1 = "Muffin";
+        String ingredient2 = "Apple";
+        addIngredient(ingredient1);
 
         onView(withId(R.id.fab)).perform(click());
 
-        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Snack"));
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
 
         onView(withId(R.id.dateTextInput)).perform(click());
         onView(withText("OK")).perform(click());
@@ -264,7 +275,7 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
 
-        onView(withText("Muffin")).perform(click());
+        onView(withText(ingredient1)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
@@ -277,7 +288,7 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
 
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Apple"));
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText(ingredient2));
         closeSoftKeyboard();
 
         onView(withId(R.id.edit_categoryInput)).perform(typeText("Fruit"));
@@ -296,14 +307,15 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(1000);
 
-        onView(withText("Snack")).check(matches(isDisplayed()));
+        onView(withText(mealPlan)).check(matches(isDisplayed()));
 
-        cleanUpMealPlan("Snack");
-        cleanUpIngredient("Muffin");
+        cleanUpMealPlan(mealPlan);
+        cleanUpIngredient(ingredient1);
     }
 
     @Test
     public void testAddMealPlanWithRecipeAndIngredient() throws InterruptedException {
+        String mealPlan = "Hearty Breakfast";
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
         addRecipe(recipe);
@@ -311,7 +323,7 @@ public class MealPlanInstrumentedTest {
 
         onView(withId(R.id.fab)).perform(click());
 
-        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
 
         onView(withId(R.id.dateTextInput)).perform(click());
         onView(withText("OK")).perform(click());
@@ -343,15 +355,16 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(1000);
 
-        onView(withText("Hearty Breakfast")).check(matches(isDisplayed()));
+        onView(withText(mealPlan)).check(matches(isDisplayed()));
 
-        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpMealPlan(mealPlan);
         cleanUpRecipe(recipe);
         cleanUpIngredient(ingredient);
     }
 
     @Test
     public void testViewMealPlan() throws InterruptedException {
+        String mealPlan = "Hearty Breakfast";
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
         addRecipe(recipe);
@@ -359,7 +372,7 @@ public class MealPlanInstrumentedTest {
 
         onView(withId(R.id.fab)).perform(click());
 
-        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
 
         onView(withId(R.id.dateTextInput)).perform(click());
         onView(withText("OK")).perform(click());
@@ -391,14 +404,14 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(1000);
 
-        onView(withText("Hearty Breakfast")).check(matches(isDisplayed()));
-        onView(withText("Hearty Breakfast")).perform(click());
+        onView(withText(mealPlan)).check(matches(isDisplayed()));
+        onView(withText(mealPlan)).perform(click());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         String date = dateFormat.format(new Date());
 
-        onView(withId(R.id.mealPlanTitleTextView)).check(matches(withText("Hearty Breakfast")));
+        onView(withId(R.id.mealPlanTitleTextView)).check(matches(withText(mealPlan)));
         onView(withId(R.id.mealPlanDateTextView)).check(matches(withText(containsString(date))));
         onView(withId(R.id.mealPlanCategoryTextView)).check(matches(withText(containsString("Breakfast"))));
         onView(withId(R.id.mealPlanNumberOfServingsTextView)).check(matches(withText(containsString("1"))));
@@ -407,7 +420,7 @@ public class MealPlanInstrumentedTest {
 
         pressBack();
 
-        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpMealPlan(mealPlan);
         cleanUpRecipe(recipe);
         cleanUpIngredient(ingredient);
     }
