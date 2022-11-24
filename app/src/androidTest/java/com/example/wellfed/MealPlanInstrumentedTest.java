@@ -56,6 +56,11 @@ public class MealPlanInstrumentedTest {
         Intents.init();
     }
 
+    private void testSaveMealPlan(){
+        onView(withId(R.id.save_fab)).perform(click());
+        intended(hasComponent(MealPlanEditActivity.class.getName()));
+    }
+
     private void addIngredient(String description){
         onView(withId(R.id.ingredient_storage_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
@@ -426,8 +431,87 @@ public class MealPlanInstrumentedTest {
     }
 
     @Test
-    public void testAddInvalidMealPlan(){
+    public void testAddInvalidMealPlan() throws InterruptedException {
+        String recipe = "Eggs and Bacon";
+        String ingredient = "Sliced Bread";
+        addRecipe(recipe);
+        addIngredient(ingredient);
 
+        onView(withId(R.id.fab)).perform(click());
+
+        testSaveMealPlan();
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
+
+        testSaveMealPlan();
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        testSaveMealPlan();
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        testSaveMealPlan();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        testSaveMealPlan();
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        onView(withText(recipe)).perform(click());
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment)))).perform(click());
+
+        onView(withText(ingredient)).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(clearText());
+
+        testSaveMealPlan();
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(clearText());
+        closeSoftKeyboard();
+
+        testSaveMealPlan();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(clearText());
+        closeSoftKeyboard();
+
+        testSaveMealPlan();
+
+        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.recipeEditFragment))))
+                .perform(click());
+
+        onView(withText("Delete")).perform(click());
+
+        onView(allOf(withId(R.id.deleteButton), isDescendantOfA(withId(R.id.MealPlan_IngredientEditFragment))))
+                .perform(click());
+
+        onView(withText("Delete")).perform(click());
+
+        testSaveMealPlan();
+
+        pressBack();
+
+        onView(withText("Quit")).perform(click());
+
+        cleanUpRecipe(recipe);
+        cleanUpIngredient(ingredient);
     }
 
     @Test
