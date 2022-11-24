@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ItemAdapter;
 
@@ -52,7 +53,7 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
             @NonNull RecyclerView.ViewHolder holder, int position) {
         Item item = items.get(position);
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-        itemViewHolder.getItemView().setOnClickListener(v -> {
+        itemViewHolder.getCardView().setOnClickListener(v -> {
             if (listener != null) {
                 listener.onItemClick(item);
             }
@@ -83,21 +84,21 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
      * ItemViewHolder class holds the view for the item.
      */
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final View itemView;
+        private final MaterialCardView cardView;
         private final TextView primaryTextView;
         private final TextView secondaryTextView;
         private final ImageView imageView;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.itemView = itemView;
+            cardView = itemView.findViewById(R.id.materialCardView);
             primaryTextView = itemView.findViewById(R.id.primaryTextView);
             secondaryTextView = itemView.findViewById(R.id.secondaryTextView);
             imageView = itemView.findViewById(R.id.imageView);
         }
 
-        public View getItemView() {
-            return itemView;
+        public MaterialCardView getCardView() {
+            return cardView;
         }
 
         public TextView getPrimaryTextView() {
