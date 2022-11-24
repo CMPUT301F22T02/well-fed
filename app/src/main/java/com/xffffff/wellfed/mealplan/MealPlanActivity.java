@@ -116,6 +116,7 @@ public class MealPlanActivity extends ActivityBase
      * the meal plan.
      */
     public void onConfirm() {
+        controller.stopListening();
         Intent intent = new Intent();
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
@@ -192,4 +193,9 @@ public class MealPlanActivity extends ActivityBase
         ingredientAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        controller.stopListening();
+    }
 }
