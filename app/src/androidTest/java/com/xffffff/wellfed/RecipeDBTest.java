@@ -168,8 +168,7 @@ import java.util.concurrent.atomic.AtomicReference;
         }
 
         // deleted recipe returns a new recipe with empty fields
-        assertTrue(
-                deletedRecipeRef.get().isEqual(new Recipe(testRecipe.getId())));
+        assertTrue(deletedRecipeRef.get().equals(testRecipe));
 
         CountDownLatch deleteIngredients = new CountDownLatch(2);
         AtomicReference<Ingredient> deletedIngredientRef1 =
@@ -194,23 +193,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
         assertNotNull(deletedIngredientRef1.get());
         assertNotNull(deletedIngredientRef2.get());
-    }
-
-
-    /**
-     * Deletes a nonexistent document from firebase, should not throw any error
-     *
-     * @throws InterruptedException If the transaction in delRecipe could not
-     * be completed
-     */
-    @Test public void testDeleteOnNonExistentRecipe()
-            throws InterruptedException {
-        recipeDB.delRecipe(new Recipe("-1"), (deletedRecipe, success) -> {
-            // assert the ID of the deleted recipe is -1 and everything is null
-            Recipe emptyRecipe = new Recipe(null);
-            emptyRecipe.setId("-1");
-            assertTrue(emptyRecipe.isEqual(deletedRecipe));
-        });
     }
 
     /**

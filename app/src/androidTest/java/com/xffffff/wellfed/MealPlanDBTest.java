@@ -123,11 +123,11 @@ public class MealPlanDBTest {
     }
 
     /**
-     * Testing adding a MealPlan
+     * Testing adding a MealPlan with Recipe
      */
     @Test public void testAddMealPlan() throws InterruptedException {
         MealPlan mealPlan = mockMealPlan();
-
+        mealPlan.addRecipe(mockRecipe());
         // Add the meal plan to DB
         CountDownLatch addLatch = new CountDownLatch(1);
         AtomicReference<MealPlan> mealPlanReference = new AtomicReference<>();
@@ -141,23 +141,21 @@ public class MealPlanDBTest {
             throw new InterruptedException();
         }
 
-        assertTrue(mealPlan.isEqual(mealPlanReference.get()));
+        // Check that the meal plan was added by getting it from DB
+        CountDownLatch getMealPlanLatch = new CountDownLatch(1);
+        AtomicReference<MealPlan> getMealPlanRef = new AtomicReference<>();
+        mealPlanDB.getMealPlan(mealPlan.getId(),
+                (retrievedMealPlan, success) -> {
+                    assertTrue(success);
+                    getMealPlanRef.set(retrievedMealPlan);
+                    getMealPlanLatch.countDown();
+                });
 
-        // get the MealPlan from the DB and check it
-        CountDownLatch getLatch = new CountDownLatch(1);
-        AtomicReference<MealPlan> obtainedMealPlanReference =
-                new AtomicReference<>();
-        mealPlanDB.addMealPlan(mealPlan, (retrievedMealPlan, success) -> {
-            assertTrue(success);
-            obtainedMealPlanReference.set(retrievedMealPlan);
-            getLatch.countDown();
-        });
-
-        if (!getLatch.await(TIMEOUT, SECONDS)) {
+        if (!getMealPlanLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 
-        assertTrue(mealPlan.isEqual(obtainedMealPlanReference.get()));
+        assertTrue(mealPlan.isEqual(getMealPlanRef.get()));
     }
 
     /**
@@ -199,20 +197,21 @@ public class MealPlanDBTest {
 
         assertTrue(mealPlan.isEqual(mealPlanAddReference.get()));
 
-        CountDownLatch getLatch = new CountDownLatch(1);
-        AtomicReference<MealPlan> mealPlanGetReference =
-                new AtomicReference<>();
-        mealPlanDB.addMealPlan(mealPlan, (retrievedMealPlan, success) -> {
-            assertTrue(success);
-            mealPlanGetReference.set(retrievedMealPlan);
-            getLatch.countDown();
-        });
+        // Check that the meal plan was added by getting it from DB
+        CountDownLatch getMealPlanLatch = new CountDownLatch(1);
+        AtomicReference<MealPlan> getMealPlanRef = new AtomicReference<>();
+        mealPlanDB.getMealPlan(mealPlan.getId(),
+                (retrievedMealPlan, success) -> {
+                    assertTrue(success);
+                    getMealPlanRef.set(retrievedMealPlan);
+                    getMealPlanLatch.countDown();
+                });
 
-        if (!getLatch.await(TIMEOUT, SECONDS)) {
+        if (!getMealPlanLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();
         }
 
-        assertTrue(mealPlan.isEqual(mealPlanGetReference.get()));
+        assertTrue(mealPlan.isEqual(getMealPlanRef.get()));
     }
 
     /**
@@ -224,6 +223,7 @@ public class MealPlanDBTest {
         Recipe recipe = mockRecipe();
         // Create a mock meal plan
         MealPlan mealPlan = mockMealPlan();
+        mealPlan.addIngredient(mockIngredient());
 
         // add mealPlan to db
         CountDownLatch addMealPlanLatch = new CountDownLatch(1);
@@ -271,6 +271,22 @@ public class MealPlanDBTest {
         }
 
         assertTrue(mealPlan.isEqual(updatedMealPlanRef.get()));
+
+        // Check that the meal plan was added by getting it from DB
+        CountDownLatch getMealPlanLatch = new CountDownLatch(1);
+        AtomicReference<MealPlan> getMealPlanRef = new AtomicReference<>();
+        mealPlanDB.getMealPlan(mealPlan.getId(),
+                (retrievedMealPlan, success) -> {
+                    assertTrue(success);
+                    getMealPlanRef.set(retrievedMealPlan);
+                    getMealPlanLatch.countDown();
+                });
+
+        if (!getMealPlanLatch.await(TIMEOUT, SECONDS)) {
+            throw new InterruptedException();
+        }
+
+        assertTrue(mealPlan.isEqual(getMealPlanRef.get()));
     }
 
     /**
@@ -340,6 +356,7 @@ public class MealPlanDBTest {
         Ingredient ingredient = mockIngredient();
         // Create a mock meal plan
         MealPlan mealPlan = mockMealPlan();
+        mealPlan.addRecipe(mockRecipe());
         // CountDownLatch to wait for the meal plan to be added
         CountDownLatch addMealPlanLatch = new CountDownLatch(1);
         AtomicReference<MealPlan> addMealPlanRef = new AtomicReference<>();
@@ -517,7 +534,11 @@ public class MealPlanDBTest {
             throws InterruptedException {
         // Create a meal plan
         MealPlan mealPlan = mockMealPlan();
+        Recipe mockRecipe = mockRecipe();
+        mealPlan.addRecipe(mockRecipe);
         MealPlan mealPlan2 = mockMealPlan();
+        Recipe mockRecipe2 = mockRecipe();
+        mealPlan2.addRecipe(mockRecipe2);
 
         // Add the meal plan to the database
         CountDownLatch addMealPlanLatch = new CountDownLatch(1);
@@ -600,6 +621,7 @@ public class MealPlanDBTest {
      */
     @Test public void testUpdateMealPlan() throws InterruptedException {
         MealPlan mealPlan = mockMealPlan();
+        mealPlan.addRecipe(mockRecipe());
         // Add the meal plan to the database
         CountDownLatch addMealPlanLatch = new CountDownLatch(1);
         AtomicReference<MealPlan> addMealPlanRef = new AtomicReference<>();
@@ -885,59 +907,5 @@ public class MealPlanDBTest {
         }
 
         assertTrue(mealPlan.isEqual(getMealPlanRef.get()));
-
-        //		// Add the meal plan to the database
-        //		mealPlanDB.addMealPlan(mealPlan, (addedMealPlan, success) -> {
-        //			if (success) {
-        //				// Retrieve the meal plan
-        //				mealPlanDB.getMealPlan(addedMealPlan.getId(), (retrievedMealPlan, success2) -> {
-        //					if (success2) {
-        //						// Compare using the getters
-        //						assertEquals(addedMealPlan.getId(), retrievedMealPlan.getId());
-        //						assertEquals(addedMealPlan.getTitle(), retrievedMealPlan.getTitle());
-        //						assertEquals(addedMealPlan.getCategory(), retrievedMealPlan.getCategory());
-        //						assertEquals(addedMealPlan.getEatDate(), retrievedMealPlan.getEatDate());
-        //						assertEquals(addedMealPlan.getServings(), retrievedMealPlan.getServings());
-        //						// Check if the recipes are the same size
-        //						assertEquals(addedMealPlan.getRecipes().size(),
-        //							retrievedMealPlan.getRecipes().size());
-        //						// Check if the recipes exist in the retrieved meal plan using the getters id
-        //						for (Recipe currentRecipe : addedMealPlan.getRecipes()) {
-        //							boolean found = false;
-        //							for (Recipe retrievedRecipe : retrievedMealPlan.getRecipes()) {
-        //								if (currentRecipe.getId().equals(retrievedRecipe.getId())) {
-        //									found = true;
-        //									break;
-        //								}
-        //							}
-        //							assertTrue(found);
-        //						}
-        //						// Check if the ingredients are the same size
-        //						assertEquals(addedMealPlan.getIngredients().size(),
-        //							retrievedMealPlan.getIngredients().size());
-        //						// Check if the ingredients exist in the retrieved meal plan using the getters id
-        //						for (Ingredient currentIngredient : addedMealPlan.getIngredients()) {
-        //							boolean found = false;
-        //							for (Ingredient retrievedIngredient : retrievedMealPlan.getIngredients()) {
-        //								if (currentIngredient.getId().equals(retrievedIngredient.getId())) {
-        //									found = true;
-        //									break;
-        //								}
-        //							}
-        //							assertTrue(found);
-        //						}
-        //						// Count down the latch
-        //						mealPlanLatch.countDown();
-        //					} else {
-        //						Log.e(TAG, "Failed to retrieve meal plan");
-        //					}
-        //				});
-        //			} else {
-        //				Log.e(TAG, "Failed to add meal plan");
-        //			}
-        //		});
-        //		if (!mealPlanLatch.await(TIMEOUT, TimeUnit.SECONDS)) {
-        //			throw new InterruptedException();
-        //		}
     }
 }

@@ -77,6 +77,25 @@ public class Recipe implements Serializable {
     }
 
     /**
+     * Copy constructor for Recipe
+     *
+     * @param recipe Recipe to copy
+     */
+    public Recipe(Recipe recipe) {
+        this.title = recipe.title;
+        this.category = recipe.category;
+        this.comments = recipe.comments;
+        this.servings = recipe.servings;
+        this.prepTimeMinutes = recipe.prepTimeMinutes;
+        this.photograph = recipe.photograph;
+        this.ingredients = new ArrayList<>();
+        for (Ingredient ingredient : recipe.ingredients) {
+            this.ingredients.add(new Ingredient(ingredient));
+        }
+        this.id = recipe.id;
+    }
+
+    /**
      * Adds an Ingredient as part of a Recipe
      *
      * @param ingredient An Ingredient object to be added to the Recipe

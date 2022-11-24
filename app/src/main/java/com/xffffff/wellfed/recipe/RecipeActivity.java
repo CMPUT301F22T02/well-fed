@@ -83,31 +83,17 @@ public class RecipeActivity extends ActivityBase
         recipe = (Recipe) intent.getSerializableExtra("item");
         boolean viewonly = intent.getBooleanExtra("viewonly", false);
 
-        // initialize the views
-        TextView title = findViewById(R.id.recipe_title_textView);
-        TextView prepTime = findViewById(R.id.recipe_prep_time_textView);
-        TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
-        TextView category = findViewById(R.id.recipe_category);
-        TextView description = findViewById(R.id.recipe_description_textView);
         FloatingActionButton fab = findViewById(R.id.save_fab);
         Button deleteButton = findViewById(R.id.recipe_delete_btn);
 
-        DBConnection connection = new DBConnection(getApplicationContext());
-        RecipeDB recipeDB = new RecipeDB(connection);
-        recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
-            recipe = foundRecipe;
-            title.setText(recipe.getTitle());
-            String recipePrepTime = recipe.getPrepTimeMinutes() + " mins";
-            prepTime.setText(recipePrepTime);
-            String servingsText = "Servings: " + recipe.getServings();
-            servings.setText(servingsText);
-            category.setText(recipe.getCategory());
-            description.setText(recipe.getComments());
-            updateImageView(recipe.getPhotograph());
-            ingredientList.addAll(recipe.getIngredients());
-            adapter.notifyDataSetChanged();
-        });
-
+        if (recipe.getServings() == null) {
+            DBConnection connection = new DBConnection(getApplicationContext());
+            RecipeDB recipeDB = new RecipeDB(connection);
+            recipeDB.getRecipe(recipe.getId(),
+                    (foundRecipe, success) -> updateView(foundRecipe));
+        } else {
+            updateView(recipe);
+        }
 
         RecyclerView ingredientRv =
                 findViewById(R.id.recipe_ingredient_recycleViewer);
@@ -124,6 +110,25 @@ public class RecipeActivity extends ActivityBase
         }
 
         fab.setOnClickListener(view -> recipeEditLauncher.launch(recipe));
+    }
+
+    public void updateView(Recipe recipe) {
+        // initialize the views
+        TextView title = findViewById(R.id.recipe_title_textView);
+        TextView prepTime = findViewById(R.id.recipe_prep_time_textView);
+        TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
+        TextView category = findViewById(R.id.recipe_category);
+        TextView description = findViewById(R.id.recipe_description_textView);
+        ImageView img = findViewById(R.id.recipe_img);
+
+        title.setText(recipe.getTitle());
+        String recipePrepTime = recipe.getPrepTimeMinutes() + " mins";
+        prepTime.setText(recipePrepTime);
+        String servingsText = "Servings: " + recipe.getServings();
+        servings.setText(servingsText);
+        category.setText(recipe.getCategory());
+        description.setText(recipe.getComments());
+        updateImageView(recipe.getPhotograph());
     }
 
     /**
