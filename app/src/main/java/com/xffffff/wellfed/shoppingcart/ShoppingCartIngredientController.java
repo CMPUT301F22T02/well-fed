@@ -3,6 +3,7 @@ package com.xffffff.wellfed.shoppingcart;
 import android.app.Activity;
 import android.util.Pair;
 
+import com.google.android.gms.common.util.ArrayUtils;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.ingredient.Ingredient;
@@ -125,9 +126,11 @@ public class ShoppingCartIngredientController {
                                 if (needed.get(key) == null) {
                                     ShoppingCartIngredient cartItem =
                                             cart.get(inCart.get(key));
-                                    db.deleteIngredient(cartItem, (a, s) -> {
-                                        s = false;
-                                    });
+                                    if (!cartItem.isPickedUp) {
+                                        db.deleteIngredient(cartItem, (a, s) -> {
+                                            s = false;
+                                        });
+                                    }
                                 }
                             }
 
