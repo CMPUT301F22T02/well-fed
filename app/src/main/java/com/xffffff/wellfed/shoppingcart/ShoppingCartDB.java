@@ -113,6 +113,7 @@ public class ShoppingCartDB {
         storageIngredientMap.put("complete", false);
         storageIngredientMap.put("Ingredient",
                 ingredientDB.getDocumentReference(ingredient));
+        storageIngredientMap.put("search-field", ingredient.getDescription().toLowerCase());
 
         collection.add(storageIngredientMap).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -144,7 +145,8 @@ public class ShoppingCartDB {
                         ingredient.getCategory(), "Ingredient",
                         ingredientDB.getDocumentReference(ingredient), "picked",
                         ingredient.isPickedUp, "complete",
-                        ingredient.isComplete)
+                        ingredient.isComplete,
+                        "search-field", ingredient.getDescription().toLowerCase())
                 .addOnSuccessListener(success -> {
                     listener.onAddShoppingCart(ingredient, true);
                 }).addOnFailureListener(failure -> {
