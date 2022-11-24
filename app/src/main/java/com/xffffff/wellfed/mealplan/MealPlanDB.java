@@ -738,6 +738,11 @@ public class MealPlanDB {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numRecipes = mealPlan.getRecipes().size();
 
+        if (numRecipes == 0){
+            updateMealPlanHelper(mealPlan, listener,
+                            mealPlanIngredients, mealPlanRecipes);
+        }
+
         for (Recipe recipe : mealPlan.getRecipes()) {
             recipeDB.updateRecipe(recipe, (i1, s1) -> {
                 counter.addAndGet(1);
