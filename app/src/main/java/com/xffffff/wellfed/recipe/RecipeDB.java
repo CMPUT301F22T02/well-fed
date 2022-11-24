@@ -394,19 +394,28 @@ public class RecipeDB {
                     // Do not allow user to delete recipe if count is > 0.
                     listener.onAddRecipe(null, null);
                 } else {
-                    delRecipeAsync(recipe, recipeRef, listener);
+                    delRecipeAsync(recipe, recipeRef, document, listener);
                 }
             }
         });
     }
 
     public void delRecipeAsync(Recipe recipe, DocumentReference recipeRef,
+                               DocumentSnapshot recipeDoc,
                                OnRecipeDone listener) {
         AtomicInteger counter = new AtomicInteger(0);
-        Integer numOfIngredients = recipe.getIngredients().size();
+//        get ingredients from recipedoc
+        ArrayList<HashMap<String, Object>> ingredientMap =
+                (ArrayList<HashMap<String, Object>>) recipeDoc.get("ingredients");
+        int numOfIngredients = ingredientMap.size();
 
         // Decrement count for each ingredient in the Recipe object.
-        for (Ingredient ingredient : recipe.getIngredients()) {
+        for (int j = 0; j < numOfIngredients; j++) {
+            DocumentReference ingredientRef =
+                    (DocumentReference) ingredientMap.get(j).get(
+                            "ingredientRef");
+            Ingredient ingredient = new Ingredient();
+            ingredient.setId(ingredientRef.getId());
             ingredientDB.updateReferenceCount(ingredient, -1, (i, s) -> {
                 counter.addAndGet(1);
                 if (counter.get() == numOfIngredients) {
