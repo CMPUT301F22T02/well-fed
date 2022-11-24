@@ -47,6 +47,19 @@ public class Ingredient implements Serializable {
     }
 
     /**
+     * Copy constructor for an Ingredient object.
+     *
+     * @param ingredient The Ingredient object to be copied.
+     */
+    public Ingredient(Ingredient ingredient) {
+        this.description = ingredient.description;
+        this.category = ingredient.category;
+        this.unit = ingredient.unit;
+        this.amount = ingredient.amount;
+        this.id = ingredient.id;
+    }
+
+    /**
      * Creates a new Ingredient object that represents an Ingredient used for
      * various meal purposes.
      */

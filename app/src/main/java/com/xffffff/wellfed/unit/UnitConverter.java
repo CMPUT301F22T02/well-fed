@@ -1,6 +1,7 @@
 package com.xffffff.wellfed.unit;
 
 import android.content.Context;
+import android.util.Pair;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -8,6 +9,7 @@ import com.xffffff.wellfed.R;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -93,6 +95,22 @@ public class UnitConverter {
                 to.getUnit());
     }
 
+    public Pair<Double, Unit> scaleUnit(double value, Unit unit) {
+        Unit bestUnit = unit;
+        double bestValue = Double.MAX_VALUE;
+        for (Unit u : getUnitsLike(unit)) {
+            double scaledValue = convert(value, unit, u);
+            if (scaledValue > 1 && scaledValue < bestValue) {
+                bestUnit = u;
+                bestValue = scaledValue;
+            }
+        }
+        if (bestValue == Double.MAX_VALUE) {
+            bestValue = value;
+        }
+        return new Pair<>(bestValue, bestUnit);
+    }
+
     public Unit build(String unit) {
         if (CountUnit.CONVERSION_FACTORS.containsKey(unit)) {
             return new CountUnit(unit);
@@ -103,5 +121,34 @@ public class UnitConverter {
         } else {
             throw new IllegalArgumentException("Unit not found");
         }
+    }
+
+    public ArrayList<Unit> getUnitsLike(Unit unit) {
+        ArrayList<Unit> units = new ArrayList<>();
+        if (unit instanceof CountUnit) {
+            for (String key : CountUnit.CONVERSION_FACTORS.keySet()) {
+                Unit u = new CountUnit(key);
+                if (u.getSystems().equals(unit.getSystems())) {
+                    units.add(u);
+                }
+            }
+        } else if (unit instanceof MassUnit) {
+            for (String key : MassUnit.CONVERSION_FACTORS.keySet()) {
+                Unit u = new MassUnit(key);
+                if (u.getSystems().equals(unit.getSystems())) {
+                    units.add(u);
+                }
+            }
+        } else if (unit instanceof VolumeUnit) {
+            for (String key : VolumeUnit.CONVERSION_FACTORS.keySet()) {
+                Unit u = new VolumeUnit(key);
+                if (u.getSystems().equals(unit.getSystems())) {
+                    units.add(u);
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Unit not found");
+        }
+        return units;
     }
 }
