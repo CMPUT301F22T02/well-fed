@@ -89,7 +89,6 @@ public class RecipeActivity extends ActivityBase
         TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
         TextView category = findViewById(R.id.recipe_category);
         TextView description = findViewById(R.id.recipe_description_textView);
-        ImageView img = findViewById(R.id.recipe_img);
         FloatingActionButton fab = findViewById(R.id.save_fab);
         Button deleteButton = findViewById(R.id.recipe_delete_btn);
 
@@ -104,8 +103,7 @@ public class RecipeActivity extends ActivityBase
             servings.setText(servingsText);
             category.setText(recipe.getCategory());
             description.setText(recipe.getComments());
-
-            Picasso.get().load(recipe.getPhotograph()).rotate(90).into(img);
+            updateImageView(recipe.getPhotograph());
             ingredientList.addAll(recipe.getIngredients());
             adapter.notifyDataSetChanged();
         });
@@ -138,5 +136,20 @@ public class RecipeActivity extends ActivityBase
         intent.putExtra("type", "delete");
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    /**
+     * Update image view with image
+     *
+     * @param url url of image to display
+     */
+    public void updateImageView(String url) {
+        if (url == null) {
+            return;
+        }
+        ImageView recipeImg = findViewById(R.id.recipe_img);
+        Picasso.get().load(url).rotate(90).into(recipeImg);
+        recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        recipeImg.setImageTintList(null);
     }
 }
