@@ -60,7 +60,7 @@ public class ShoppingCartIngredientAdapter
         holder.subtext.setText(amount + " " + doc.getString("unit") + " | " +
                 doc.getString("category"));
         holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));
-        
+
     }
 
     /**
