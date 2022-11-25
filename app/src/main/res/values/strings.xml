@@ -36,4 +36,5 @@
     <string name="recipes">Recipes</string>
     <string name="category_">Category:</string>
     <string name="location_">Location:</string>
+    <string name="default_call_to_action">Plan a meal for today!</string>
 </resources>
