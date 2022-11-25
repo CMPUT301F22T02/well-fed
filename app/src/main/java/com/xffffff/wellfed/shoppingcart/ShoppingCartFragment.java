@@ -18,7 +18,7 @@ import com.xffffff.wellfed.common.SortingFragment;
 import java.util.Arrays;
 
 public class ShoppingCartFragment extends Fragment
-        implements ShoppingCartIngredientAdapter.OnItemClickListener, SortingFragment.OnSortClick {
+        implements SortingFragment.OnSortClick {
 
     /**
      * Recycler view for the ingredients.
@@ -32,11 +32,6 @@ public class ShoppingCartFragment extends Fragment
      * Controller for the ingredients.
      */
     private ShoppingCartIngredientController controller;
-
-    @Override
-    public void onItemClick(ShoppingCartIngredient ingredient) {
-
-    }
 
     /**
      * onCreate method for the hoppingCartFragment.
@@ -87,6 +82,11 @@ public class ShoppingCartFragment extends Fragment
 
         SearchInput searchInput = view.findViewById(R.id.search_input);
         searchInput.setOnTextChange(s -> controller.getSearchResults(s));
+        adapter.setOnCheckedChangeListener(shoppingCartIngredient -> {
+            controller.updateIngredientInShoppingCart(
+                    shoppingCartIngredient
+            );
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
