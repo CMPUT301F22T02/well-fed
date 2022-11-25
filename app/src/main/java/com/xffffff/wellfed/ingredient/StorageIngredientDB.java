@@ -100,6 +100,7 @@ public class StorageIngredientDB {
         storageIngredientMap.put("location", storageIngredient.getLocation());
         storageIngredientMap.put("amount", storageIngredient.getAmount());
         storageIngredientMap.put("unit", storageIngredient.getUnit());
+        storageIngredientMap.put("search-field", storageIngredient.getDescription().toLowerCase());
         storageIngredientMap.put("Ingredient",
                 ingredientDB.getDocumentReference(ingredient));
         this.collection.add(storageIngredientMap)
@@ -186,6 +187,7 @@ public class StorageIngredientDB {
                 storageIngredient.getBestBefore());
         batch.update(storageIngredientRef, "Ingredient",
                 ingredientDB.getDocumentReference(ingredient));
+        batch.update(storageIngredientRef, "search-field", storageIngredient.getDescription().toLowerCase());
 
         batch.commit().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

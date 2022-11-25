@@ -3,7 +3,7 @@ package com.xffffff.wellfed.mealplan;
 import android.app.Activity;
 import android.util.Pair;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.Launcher;
@@ -16,6 +16,7 @@ import java.util.Date;
 
 public class MealPlanController {
     private final ActivityBase activity;
+    private ListenerRegistration listenerRegistration;
     /**
      * The DB of stored ingredients
      */
@@ -47,12 +48,21 @@ public class MealPlanController {
     }
 
     public void startListening(String id) {
-        db.getMealPlanDocumentReference(id)
-                .addSnapshotListener((doc, err) -> {
-                    db.getMealPlan(doc, (foundMealPlan, success) -> {
-                        onDataChanged.onDataChanged(foundMealPlan);
+        if (listenerRegistration == null) {
+            listenerRegistration = db.getMealPlanDocumentReference(id)
+                    .addSnapshotListener((doc, err) -> {
+                        db.getMealPlan(doc, (foundMealPlan, success) -> {
+                            onDataChanged.onDataChanged(foundMealPlan);
+                        });
                     });
-                });
+        }
+    }
+
+    public void stopListening() {
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+            listenerRegistration = null;
+        }
     }
 
     /**
