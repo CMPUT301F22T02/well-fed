@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.SearchInput;
+import com.xffffff.wellfed.common.SortingFragment;
+
+import java.util.Arrays;
 
 public class ShoppingCartFragment extends Fragment
-        implements ShoppingCartIngredientAdapter.OnItemClickListener {
+        implements ShoppingCartIngredientAdapter.OnItemClickListener, SortingFragment.OnSortClick {
 
     /**
      * Recycler view for the ingredients.
@@ -30,7 +33,8 @@ public class ShoppingCartFragment extends Fragment
      */
     private ShoppingCartIngredientController controller;
 
-    @Override public void onItemClick(ShoppingCartIngredient ingredient) {
+    @Override
+    public void onItemClick(ShoppingCartIngredient ingredient) {
 
     }
 
@@ -46,7 +50,9 @@ public class ShoppingCartFragment extends Fragment
      *                           as given here.
      * @return Return the View for the fragment's UI, or null.
      */
-    @Nullable @Override public View onCreateView(
+    @Nullable
+    @Override
+    public View onCreateView(
             @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         controller = new ShoppingCartIngredientController(requireActivity());
@@ -64,19 +70,35 @@ public class ShoppingCartFragment extends Fragment
      *                           re-constructed from a previous saved state
      *                           as given here.
      */
-    @Override public void onViewCreated(@NonNull View view,
-                                        @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         controller.generateShoppingCart();
         recyclerView = view.findViewById(R.id.shopping_cart_list);
+
+        SortingFragment sortingFragment = new SortingFragment();
+        sortingFragment.setOptions(
+                Arrays.asList("description",
+                        "category"));
+        sortingFragment.setListener(this);
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_sort_container3, sortingFragment).commit();
+
         SearchInput searchInput = view.findViewById(R.id.search_input);
-        searchInput.setOnTextChange(s->controller.getSearchResults(s));
+        searchInput.setOnTextChange(s -> controller.getSearchResults(s));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         super.onResume();
         controller.generateShoppingCart();
+    }
+
+    @Override
+    public void onClick(String field) {
+        controller.sortByField(field);
     }
 }

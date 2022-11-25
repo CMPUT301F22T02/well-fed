@@ -88,7 +88,6 @@ public class RecipeController {
      * @param field the field to sort by
      */
     public void sort(String field) {
-        recipeAdapter.clearSnapshots();
         recipeAdapter.changeQuery(recipeDB.getSortQuery(field));
     }
 

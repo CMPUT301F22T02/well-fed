@@ -55,6 +55,11 @@ public class ShoppingCartIngredientController {
         adapter.changeQuery(query);
     }
 
+    public void sortByField(String field){
+        Query query = db.getSortedQuery(field);
+        adapter.changeQuery(query);
+    }
+
     /**
      * Gets the adapter.
      *

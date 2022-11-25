@@ -257,11 +257,11 @@ public class ShoppingCartDB {
     /**
      * Sort the shopping cart by the given field.
      *
-     * @param category The category to sort by.
+     * @param field The category to sort by.
      * @return The query of the shopping cart.
      */
-    public Query getQuery(String category) {
-        return collection.whereEqualTo("category", category);
+    public Query getSortedQuery(String field) {
+        return collection.orderBy(field);
     }
 
     /**
