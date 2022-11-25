@@ -206,7 +206,8 @@ public class IngredientDB {
                 collection.document(ingredient.getId());
 
         db.runTransaction(new Transaction.Function<Void>() {
-            @Override public Void apply(Transaction transaction)
+            @Override
+            public Void apply(Transaction transaction)
                     throws FirebaseFirestoreException {
                 DocumentSnapshot snapshot = transaction.get(ingredientRef);
 
@@ -217,12 +218,14 @@ public class IngredientDB {
                 return null;
             }
         }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override public void onSuccess(Void aVoid) {
+            @Override
+            public void onSuccess(Void aVoid) {
                 listener.onUpdateReferenceCount(ingredient, true);
                 Log.d(TAG, "Transaction success!");
             }
         }).addOnFailureListener(new OnFailureListener() {
-            @Override public void onFailure(@NonNull Exception e) {
+            @Override
+            public void onFailure(@NonNull Exception e) {
                 listener.onUpdateReferenceCount(ingredient, false);
                 Log.w(TAG, "Transaction failure.", e);
             }
@@ -298,6 +301,11 @@ public class IngredientDB {
     public Query getSortQuery(String field, boolean ascending) {
         return collection.orderBy(field, ascending ? Query.Direction.ASCENDING :
                 Query.Direction.DESCENDING);
+    }
+
+    public Query getSearchQuery(String field) {
+        return this.collection.orderBy("search-field")
+                .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
     }
 
     /**

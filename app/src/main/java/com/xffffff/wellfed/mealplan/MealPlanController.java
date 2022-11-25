@@ -3,6 +3,7 @@ package com.xffffff.wellfed.mealplan;
 import android.app.Activity;
 import android.util.Pair;
 
+import com.google.firebase.firestore.ListenerRegistration;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.Launcher;
@@ -11,8 +12,11 @@ import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.unit.Unit;
 import com.xffffff.wellfed.unit.UnitConverter;
 
+import java.util.Date;
+
 public class MealPlanController {
     private final ActivityBase activity;
+    private ListenerRegistration listenerRegistration;
     /**
      * The DB of stored ingredients
      */
@@ -44,12 +48,21 @@ public class MealPlanController {
     }
 
     public void startListening(String id) {
-        db.getMealPlanDocumentReference(id)
-                .addSnapshotListener((doc, err) -> {
-                    db.getMealPlan(doc, (foundMealPlan, success) -> {
-                        onDataChanged.onDataChanged(foundMealPlan);
+        if (listenerRegistration == null) {
+            listenerRegistration = db.getMealPlanDocumentReference(id)
+                    .addSnapshotListener((doc, err) -> {
+                        db.getMealPlan(doc, (foundMealPlan, success) -> {
+                            onDataChanged.onDataChanged(foundMealPlan);
+                        });
                     });
-                });
+        }
+    }
+
+    public void stopListening() {
+        if (listenerRegistration != null) {
+            listenerRegistration.remove();
+            listenerRegistration = null;
+        }
     }
 
     /**
@@ -110,19 +123,38 @@ public class MealPlanController {
     /**
      * The deleteMealPlan method for the MealPlanController. Deletes a meal
      * plan from the database.
-     *
      * @param mealPlan The meal plan to be deleted from the database.
+     * @param surpressSnackbar A boolean indicating whether to surpress the snackbar or not.
      */
-    public void deleteMealPlan(MealPlan mealPlan) {
+    public void deleteMealPlan(MealPlan mealPlan, boolean surpressSnackbar) {
         this.db.delMealPlan(mealPlan, ((deleteMealPlan, deleteSuccess) -> {
             if (!deleteSuccess) {
-                this.activity.makeSnackbar(
-                        "Failed to delete" + deleteMealPlan.getTitle());
+                if (!surpressSnackbar) {
+                    this.activity.makeSnackbar(
+                            "Failed to delete" + deleteMealPlan.getTitle());
+                }
             } else {
-                this.activity.makeSnackbar(
-                        "Deleted " + deleteMealPlan.getTitle());
+                if (!surpressSnackbar) {
+                    this.activity.makeSnackbar(
+                            "Deleted " + deleteMealPlan.getTitle());
+                }
             }
         }));
+    }
+
+    /**
+     * Checks if an item is in the past - if it is, delete it and display snackbar.
+     * @param mealPlan the mealplan to check
+     */
+    public void checkMealInPast(MealPlan mealPlan) {
+        Date today = new Date(System.currentTimeMillis()-24*60*60*1000);
+        Date eatDate = mealPlan.getEatDate();
+
+        assert eatDate != null;
+        if (eatDate.getTime() < today.getTime()) {
+            deleteMealPlan(mealPlan, true);
+            this.activity.makeSnackbar("Cannot make a MealPlan in the past.");
+        }
     }
 
     /**

@@ -17,6 +17,7 @@ import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.recipe.RecipeDB;
 import com.xffffff.wellfed.shoppingcart.ShoppingCart;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartDB;
+import com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -204,6 +205,39 @@ public class ShoppingCartDBTest {
             assertNull(addedIngredient);
             assertFalse(success);
             latch.countDown();
+        });
+        // Wait for the async calls to finish
+        if (!latch.await(TIMEOUT, TimeUnit.SECONDS)) {
+            throw new InterruptedException();
+        }
+    }
+
+    /**
+     * Test deleting ingredient from shopping cart.
+     */
+    @Test public void deleteIngredientTest() throws InterruptedException {
+        // Create a CountDownLatch to wait for the async calls to finish
+        CountDownLatch latch = new CountDownLatch(1);
+        // Get one of the ingredients
+        ShoppingCartIngredient ingredient = new ShoppingCartIngredient("Pizza");
+        ingredient.setPickedUp(false);
+        // Add the ingredient to the shopping cart
+        shoppingCartDB.addIngredient(ingredient, (addedIngredient, success) -> {
+            assertNotNull(addedIngredient);
+            assertTrue(success);
+            assertEquals(ingredient.getDescription(),
+                    addedIngredient.getDescription());
+            assertFalse(addedIngredient.isPickedUp());
+            assertFalse(addedIngredient.isComplete());
+            // Delete the ingredient from the shopping cart
+            shoppingCartDB.deleteIngredient(ingredient,
+                    (deletedIngredient, success2) -> {
+                        assertNotNull(deletedIngredient);
+                        assertTrue(success2);
+                        assertEquals(addedIngredient.getDescription(),
+                                deletedIngredient.getDescription());
+                        latch.countDown();
+                    });
         });
         // Wait for the async calls to finish
         if (!latch.await(TIMEOUT, TimeUnit.SECONDS)) {

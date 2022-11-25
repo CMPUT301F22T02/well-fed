@@ -39,6 +39,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.Launcher;
 
@@ -101,7 +102,7 @@ public class MealBookFragment extends Fragment
                 MealPlan mealPlan = result.second;
                 switch (type) {
                     case "delete":
-                        controller.deleteMealPlan(mealPlan);
+                        controller.deleteMealPlan(mealPlan, false);
                         break;
                     case "edit":
                         controller.updateMealPlan(mealPlan);
@@ -154,7 +155,7 @@ public class MealBookFragment extends Fragment
         this.controller.getAdapter().setOnItemLoadListener(this);
         mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
-        userFirstNameTextView.setText(getString(R.string.greeting, "Akshat"));
+        userFirstNameTextView.setText(getString(R.string.greeting));
         this.updateCallToAction(null);
     }
 
@@ -217,11 +218,15 @@ public class MealBookFragment extends Fragment
             Date nextEatDate = nextMealPlan.getEatDate();
             assert eatDate != null;
             assert nextEatDate != null;
-            if (eatDate.getTime() - today.getTime() <
+            if (eatDate.getTime() - today.getTime() <=
                     nextEatDate.getTime() - today.getTime()) {
                 nextMealPlan = mealPlan;
-                this.controller.deleteMealPlan(mealPlan);
+
+            } else if (eatDate.getTime() - today.getTime() == nextEatDate.getTime() - today.getTime()) {
+                nextMealPlan = mealPlan;
             }
+
+            this.controller.checkMealInPast(mealPlan);
         }
     }
 
