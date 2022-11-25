@@ -162,9 +162,10 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(2000);
 
         onView(withId(R.id.meal_book_item)).perform(click());
     }
@@ -172,6 +173,8 @@ public class MealPlanInstrumentedTest {
     private void addMealPlan(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
+
+        onView(withId(R.id.meal_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
 
         Thread.sleep(1000);
@@ -217,6 +220,9 @@ public class MealPlanInstrumentedTest {
     private void addMealPlanAndIngredients(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
+
+        onView(withId(R.id.meal_book_item)).perform(click());
+
         addRecipe(recipe);
         addIngredient(ingredient);
 
@@ -271,6 +277,8 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
@@ -284,6 +292,8 @@ public class MealPlanInstrumentedTest {
 
         onView(withText("Delete")).perform(click());
 
+        Thread.sleep(1000);
+
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
@@ -295,6 +305,8 @@ public class MealPlanInstrumentedTest {
 
         onView(withText("Delete")).perform(click());
         onView(withText("Delete")).perform(click());
+
+        Thread.sleep(1000);
     }
 
     /**
@@ -692,7 +704,7 @@ public class MealPlanInstrumentedTest {
      */
     @Test
     public void testDeleteMealPlan() throws InterruptedException {
-        addMealPlan("Hearty Breakfast");
+        addMealPlanAndIngredients("Hearty Breakfast");
 
         Thread.sleep(2000);
 
@@ -716,6 +728,8 @@ public class MealPlanInstrumentedTest {
     @Test
     public void testDeleteRecipeAndIngredientBeforeMealPlan() throws InterruptedException {
         addMealPlanAndIngredients("Hearty Breakfast");
+
+        Thread.sleep(5000);
 
         cleanUpRecipe("Eggs and Bacon");
 
@@ -833,9 +847,9 @@ public class MealPlanInstrumentedTest {
     @Test
     public void testAddMultipleMealPlans() throws InterruptedException {
         addMealPlanAndIngredients("First Hearty Breakfast");
-        addMealPlan("Second Hearty breakfast");
-        addMealPlan("Third Hearty breakfast");
-        addMealPlan("Fourth Hearty breakfast");
+        addMealPlan("Second Hearty Breakfast");
+        addMealPlan("Third Hearty Breakfast");
+        addMealPlan("Fourth Hearty Breakfast");
 
 
         onView(withText("First Hearty Breakfast")).check(matches(isDisplayed()));
@@ -844,9 +858,9 @@ public class MealPlanInstrumentedTest {
         onView(withText("Fourth Hearty Breakfast")).check(matches(isDisplayed()));
 
         cleanUpMealPlan("First Hearty Breakfast");
-        cleanUpMealPlan("Second Hearty breakfast");
-        cleanUpMealPlan("Third Hearty breakfast");
-        cleanUpMealPlan("Fourth Hearty breakfast");
+        cleanUpMealPlan("Second Hearty Breakfast");
+        cleanUpMealPlan("Third Hearty Breakfast");
+        cleanUpMealPlan("Fourth Hearty Breakfast");
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient("Sliced Bread");
     }
