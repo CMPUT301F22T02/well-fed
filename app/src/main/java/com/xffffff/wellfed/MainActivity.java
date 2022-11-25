@@ -97,7 +97,7 @@ public class MainActivity extends ActivityBase {
                             history.push(position);
                         }
 
-                        // Hide the FAB if the current page is the shopping
+                        // Hide the fab if the current page is the shopping
                         // cart page
                         if (position == 3) {
                             fab.hide();
