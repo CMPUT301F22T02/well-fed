@@ -5,6 +5,7 @@ import android.util.Pair;
 
 import com.google.firebase.firestore.ListenerRegistration;
 import com.xffffff.wellfed.ActivityBase;
+import com.xffffff.wellfed.common.AdapterDataObserver;
 import com.xffffff.wellfed.common.DBAdapter;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.DateUtil;
@@ -24,13 +25,22 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     private final MealPlanDB db;
     private MealPlanAdapter adapter;
     private OnDataChanged onDataChanged;
+    private OnAdapterDataChangedListener onAdapterDataChangedListener;
 
     public interface OnDataChanged {
         void onDataChanged(MealPlan mealPlan);
     }
 
+    public interface OnAdapterDataChangedListener {
+        void onAdapterDataChanged(MealPlan mealPlan);
+    }
+
     public void setOnDataChanged(OnDataChanged onDataChanged) {
         this.onDataChanged = onDataChanged;
+    }
+
+    public void setOnAdapterChangedListener(OnAdapterDataChangedListener listener) {
+        this.onAdapterDataChangedListener = listener;
     }
 
     /**
@@ -188,9 +198,9 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      * If data is changed
      */
     @Override public void onDataChanged() {
-        if (onDataChanged != null) {
+        if (onAdapterDataChangedListener != null) {
             MealPlan currentMealPlan = getCurrentMealPlan();
-            onDataChanged.onDataChanged(currentMealPlan);
+            onAdapterDataChangedListener.onAdapterDataChanged(currentMealPlan);
         }
     }
 

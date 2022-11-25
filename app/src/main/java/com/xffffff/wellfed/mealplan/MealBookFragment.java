@@ -148,7 +148,7 @@ public class MealBookFragment extends Fragment
         controller = new MealPlanController(requireActivity());
 
         this.controller.getAdapter().setOnItemClickListener(this);
-        this.controller.setOnDataChanged(this::updateCallToAction);
+        this.controller.setOnAdapterChangedListener(this::updateCallToAction);
         mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
         userFirstNameTextView.setText(getString(R.string.greeting));
