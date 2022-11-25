@@ -761,6 +761,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.search_text)).perform(clearText());
 
+        Thread.sleep(1000);
         onView(withText("Apple")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Banana")).check(ViewAssertions.matches(
