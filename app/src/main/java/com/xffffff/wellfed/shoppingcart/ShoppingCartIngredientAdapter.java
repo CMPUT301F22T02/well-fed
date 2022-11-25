@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
+import com.xffffff.wellfed.ingredient.StorageIngredient;
 
 import java.util.Locale;
 
@@ -87,15 +88,14 @@ public class ShoppingCartIngredientAdapter
         }
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (onCheckedListener == null) return;
-
-            if (isChecked) {
-                shoppingCartIngredient.setPickedUp(true);
-            } else {
-                shoppingCartIngredient.setPickedUp(false);
-            }
-            onCheckedListener.onItemClick(shoppingCartIngredient);
-
+            onCheckedListener.onCheckBoxClick(id,isChecked);
         });
+
+        holder.view.setOnClickListener(v -> {
+            if (onItemClickListener == null | !holder.checkBox.isChecked()) return;
+            onItemClickListener.onItemClick(shoppingCartIngredient);
+        });
+
 
     }
 
@@ -110,9 +110,18 @@ public class ShoppingCartIngredientAdapter
     }
 
     public interface OnCheckedListener {
+        void onCheckBoxClick(String id, boolean isChecked);
+    }
+
+    public interface OnItemClickListener {
         void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
     }
 
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     /**
      * ViewHolder class for the ShoppingCartIngredientAdapter.
@@ -123,9 +132,11 @@ public class ShoppingCartIngredientAdapter
         public TextView description;
         public TextView subtext;
         public CheckBox checkBox;
+        public View view;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            view = itemView;
             description = itemView.findViewById(
                     R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(

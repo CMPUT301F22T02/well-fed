@@ -36,6 +36,10 @@ public class ShoppingCartIngredientController {
 
     private MealPlanDB mealPlanDB;
 
+    private UnitHelper unitHelper;
+
+    private UnitConverter unitConverter;
+
     /**
      * The constructor for the controller.
      *
@@ -49,6 +53,9 @@ public class ShoppingCartIngredientController {
         adapter = new ShoppingCartIngredientAdapter(db);
         storageIngredientDB = new StorageIngredientDB(connection);
         mealPlanDB = new MealPlanDB(connection);
+        UnitConverter unitConverter =
+                new UnitConverter(activity.getApplicationContext());
+        unitHelper = new UnitHelper(unitConverter);
     }
 
     public void getSearchResults(String field) {
@@ -80,9 +87,9 @@ public class ShoppingCartIngredientController {
     }
 
     public void generateShoppingCart() {
-        UnitConverter unitConverter =
+        unitConverter =
                 new UnitConverter(activity.getApplicationContext());
-        UnitHelper unitHelper = new UnitHelper(unitConverter);
+        unitHelper = new UnitHelper(unitConverter);
         HashMap<String, Double> needed = new HashMap<>();
         mealPlanDB.getMealPlans((mealPlans, success) -> {
             for (MealPlan mealPlan : mealPlans) {
@@ -140,7 +147,7 @@ public class ShoppingCartIngredientController {
                                         cart.get(inCart.get(key));
                                 Pair<Double, Unit> bestVal = unitConverter.scaleUnit(cartItem.getAmount(),
                                         unitConverter.build(cartItem.getUnit()));
-                                if (bestVal.first <= 0.0 | needed.get(key) == null) {
+                                if (bestVal.first <= 0.0 | needed.get(key) == null | needed.get(key) <= 0.0) {
                                     if (!cartItem.isPickedUp) {
                                         db.deleteIngredient(cartItem, (a, s) -> {
                                             s = false;
@@ -234,6 +241,12 @@ public class ShoppingCartIngredientController {
         });
     }
 
+    public void updateCheckedStatus(String id, boolean isChecked){
+        db.updateIngredient(id, isChecked, (success -> {
+            success = false;
+        }));
+    }
+
     /**
      * Updates the ingredient in the shopping cart.
      *
@@ -243,12 +256,44 @@ public class ShoppingCartIngredientController {
             ShoppingCartIngredient ingredient) {
         db.updateIngredient(ingredient, (updateIngredient, updateSuccess) -> {
             if (!updateSuccess) {
-                this.activity.makeSnackbar("Failed to update " +
-                        updateIngredient.getDescription());
+                this.activity.makeSnackbar("Failed to update ");
             } else {
                 this.activity.makeSnackbar(
                         "Updated " + updateIngredient.getDescription());
             }
+        });
+    }
+
+    public void addIngredientToStorage(ShoppingCartIngredient shoppingCartIngredient,
+                                       StorageIngredient storageIngredient) {
+        Pair<Double, String> smallestShoppingIngredient =
+                unitHelper.convertToSmallest(shoppingCartIngredient.getUnit(),
+                        shoppingCartIngredient.getAmount());
+
+        Pair<Double, String> smallestStorageIngredient =
+                unitHelper.convertToSmallest(storageIngredient.getUnit(),
+                        storageIngredient.getAmount());
+
+        boolean isIngredientNeeded = smallestShoppingIngredient.first -
+                smallestStorageIngredient.first >= 0.0;
+
+        storageIngredientDB.addStorageIngredient(storageIngredient, (added, success) -> {
+            if (!success) {
+                // todo failure msg
+                return;
+            }
+            // todo success msg
+            if (isIngredientNeeded) {
+                shoppingCartIngredient.setPickedUp(false);
+                db.updateIngredient(shoppingCartIngredient.getId(), isIngredientNeeded, (
+                        success1 -> {}
+                        ));
+            } else{
+                db.deleteIngredient(shoppingCartIngredient.getId(), (deleteSuccess -> {
+
+                }));
+            }
+
         });
     }
 }
