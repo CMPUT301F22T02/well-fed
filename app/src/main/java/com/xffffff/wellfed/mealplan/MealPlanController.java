@@ -24,22 +24,13 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     private final MealPlanDB db;
     private MealPlanAdapter adapter;
     private OnDataChanged onDataChanged;
-    private OnAdapterDataChangedListener onAdapterDataChangedListener;
 
     public interface OnDataChanged {
-        public void onDataChanged(MealPlan mealPlan);
-    }
-
-    public interface OnAdapterDataChangedListener {
-        public void onAdapterDataChanged(MealPlan mealPlan);
+        void onDataChanged(MealPlan mealPlan);
     }
 
     public void setOnDataChanged(OnDataChanged onDataChanged) {
         this.onDataChanged = onDataChanged;
-    }
-
-    public void setOnAdapterChangedListener(OnAdapterDataChangedListener listener) {
-        this.onAdapterDataChangedListener = listener;
     }
 
     /**
@@ -197,9 +188,9 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      * If data is changed
      */
     @Override public void onDataChanged() {
-        if (onAdapterDataChangedListener != null) {
+        if (onDataChanged != null) {
             MealPlan currentMealPlan = getCurrentMealPlan();
-            onAdapterDataChangedListener.onAdapterDataChanged(currentMealPlan);
+            onDataChanged.onDataChanged(currentMealPlan);
         }
     }
 

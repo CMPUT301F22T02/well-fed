@@ -50,8 +50,7 @@ import java.util.Date;
  * book. The user can add meals to the meal book by clicking on the add button.
  */
 public class MealBookFragment extends Fragment
-        implements Launcher<MealPlan>, MealPlanAdapter.OnItemClickListener,
-                   MealPlanController.OnAdapterDataChangedListener {
+        implements Launcher<MealPlan>, MealPlanAdapter.OnItemClickListener {
     /**
      * CallToActionTextView displays if the meal book is empty and if it is
      * it displays info to add meals to the meal book.
@@ -149,7 +148,7 @@ public class MealBookFragment extends Fragment
         controller = new MealPlanController(requireActivity());
 
         this.controller.getAdapter().setOnItemClickListener(this);
-        this.controller.setOnAdapterChangedListener(this);
+        this.controller.setOnDataChanged(this::updateCallToAction);
         mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
         userFirstNameTextView.setText(getString(R.string.greeting));
@@ -196,9 +195,5 @@ public class MealBookFragment extends Fragment
      */
     @Override public void onItemClick(MealPlan mealPlan) {
         this.launch(mealPlan);
-    }
-
-    @Override public void onAdapterDataChanged(MealPlan mealPlan) {
-        this.updateCallToAction(mealPlan);
     }
 }
