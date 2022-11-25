@@ -60,17 +60,7 @@ public class ShoppingCartIngredientAdapter
         holder.subtext.setText(amount + " " + doc.getString("unit") + " | " +
                 doc.getString("category"));
         holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));
-        //                storageIngredientMap.put("id", ingredient.getId());
-        //        storageIngredientMap.put("description", ingredient
-        //        .getDescription());
-        //        storageIngredientMap.put("amount", ingredient.getAmount());
-        //        storageIngredientMap.put("unit", ingredient.getUnit());
-        //        storageIngredientMap.put("category", ingredient.getCategory
-        //        ());
-        //        storageIngredientMap.put("picked", false);
-        //        storageIngredientMap.put("complete", false);
-        //        storageIngredientMap.put("Ingredient", ingredientDB
-        //        .getDocumentReference(ingredient));
+
     }
 
     /**
