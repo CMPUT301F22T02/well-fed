@@ -50,8 +50,7 @@ import java.util.Date;
  * book. The user can add meals to the meal book by clicking on the add button.
  */
 public class MealBookFragment extends Fragment
-        implements Launcher<MealPlan>, MealPlanAdapter.OnItemClickListener,
-                   MealPlanAdapter.OnItemLoadListener {
+        implements Launcher<MealPlan>, MealPlanAdapter.OnItemClickListener {
     /**
      * CallToActionTextView displays if the meal book is empty and if it is
      * it displays info to add meals to the meal book.
@@ -87,9 +86,6 @@ public class MealBookFragment extends Fragment
      */
     private MealPlan selectedMealPlan;
     /**
-     * The upcoming meal plan in the meal book.
-     */
-    private MealPlan nextMealPlan;    /**
      * ActivityResultLauncher for the meal plan activity to launch, edit or
      * delete the meal plan.
      */
@@ -152,7 +148,7 @@ public class MealBookFragment extends Fragment
         controller = new MealPlanController(requireActivity());
 
         this.controller.getAdapter().setOnItemClickListener(this);
-        this.controller.getAdapter().setOnItemLoadListener(this);
+        this.controller.setOnAdapterChangedListener(this::updateCallToAction);
         mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
 
         userFirstNameTextView.setText(getString(R.string.greeting));
@@ -183,12 +179,11 @@ public class MealBookFragment extends Fragment
             SpannableStringBuilder callToAction =
                     new SpannableStringBuilder().append(
                                     getString(R.string.call_to_action_make_meal_plan))
-                            .append(" ").append(nextMealPlan.getTitle(),
+                            .append(" ").append(mealPlan.getTitle(),
                                     new StyleSpan(Typeface.ITALIC), 0).append("?");
             this.callToActionTextView.setText(callToAction);
         } else {
-            this.callToActionTextView.setText(
-                    R.string.call_to_action_add_meal_plan);
+            this.callToActionTextView.setText(getString(R.string.default_call_to_action));
         }
     }
 
@@ -201,35 +196,4 @@ public class MealBookFragment extends Fragment
     @Override public void onItemClick(MealPlan mealPlan) {
         this.launch(mealPlan);
     }
-
-    /**
-     * onItemLoad is called when the meal plan is loaded. It updates the
-     * nextMealPlan and updates the call to action text view.
-     *
-     * @param mealPlan The meal plan to update the call to action text view.
-     */
-    @Override public void onItemLoad(MealPlan mealPlan) {
-        Date today = new Date();
-        Date eatDate = mealPlan.getEatDate();
-        if (nextMealPlan == null) {
-            nextMealPlan = mealPlan;
-            this.updateCallToAction(mealPlan);
-        } else {
-            Date nextEatDate = nextMealPlan.getEatDate();
-            assert eatDate != null;
-            assert nextEatDate != null;
-            if (eatDate.getTime() - today.getTime() <=
-                    nextEatDate.getTime() - today.getTime()) {
-                nextMealPlan = mealPlan;
-
-            } else if (eatDate.getTime() - today.getTime() == nextEatDate.getTime() - today.getTime()) {
-                nextMealPlan = mealPlan;
-            }
-
-            this.controller.checkMealInPast(mealPlan);
-        }
-    }
-
-
-
 }

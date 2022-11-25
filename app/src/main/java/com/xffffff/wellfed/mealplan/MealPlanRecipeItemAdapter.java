@@ -22,6 +22,9 @@ public class MealPlanRecipeItemAdapter extends MealPlanItemAdapter<Recipe> {
         super.onBindViewHolder(holder1, position);
         ItemViewHolder holder = (ItemViewHolder) holder1;
         Recipe recipe = items.get(position);
+        if (recipe == null) {
+            return;
+        }
         holder.getPrimaryTextView().setText(recipe.getTitle());
         String text = "All ingredients available";
         holder.getSecondaryTextView().setText(text);

@@ -34,14 +34,26 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
     private final ArrayList<DocumentSnapshot> snapshots = new ArrayList<>();
     private Query mQuery;
     private ListenerRegistration mRegistration;
+    private OnDataChangedListener onDataChangedListener;
 
+    /**
+     * The listener for data changes
+     */
+    public interface OnDataChangedListener {
+        void onDataChanged();
+    }
 
     public DBAdapter(Query query) {
         this.mQuery = query;
         startListening();
     }
 
-    public void changeQuery(Query query) {
+    public void setOnDataChangedListener(
+            OnDataChangedListener onDataChangedListener) {
+        this.onDataChangedListener = onDataChangedListener;
+    }
+
+    public void setQuery(Query query) {
         // Stop listening
         stopListening();
 
@@ -63,30 +75,36 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
         }
 
         for (DocumentChange change : documentSnapshots.getDocumentChanges()) {
-            int oldIndex = change.getOldIndex();
-            int newIndex = change.getNewIndex();
-            switch (change.getType()) {
-                case ADDED:
-                    snapshots.add(newIndex, change.getDocument());
-                    notifyItemInserted(newIndex);
-                    break;
-                case MODIFIED:
-                    if (oldIndex == newIndex) {
-                        snapshots.set(oldIndex, change.getDocument());
-                        notifyItemChanged(oldIndex);
-                    } else {
-                        snapshots.remove(oldIndex);
-                        snapshots.add(newIndex, change.getDocument());
-                        notifyItemMoved(oldIndex, newIndex);
-                    }
-                    break;
-                case REMOVED:
-                    snapshots.remove(change.getOldIndex());
-                    notifyItemRemoved(change.getOldIndex());
-                    break;
-            }
+            onDataChanged(change);
         }
-        //        TODO: call onDataChanged handler
+    }
+
+    protected void onDataChanged(DocumentChange change) {
+        int oldIndex = change.getOldIndex();
+        int newIndex = change.getNewIndex();
+        switch (change.getType()) {
+            case ADDED:
+                snapshots.add(newIndex, change.getDocument());
+                notifyItemInserted(newIndex);
+                break;
+            case MODIFIED:
+                if (oldIndex == newIndex) {
+                    snapshots.set(oldIndex, change.getDocument());
+                    notifyItemChanged(oldIndex);
+                } else {
+                    snapshots.remove(oldIndex);
+                    snapshots.add(newIndex, change.getDocument());
+                    notifyItemMoved(oldIndex, newIndex);
+                }
+                break;
+            case REMOVED:
+                snapshots.remove(change.getOldIndex());
+                notifyItemRemoved(change.getOldIndex());
+                break;
+        }
+        if (onDataChangedListener != null) {
+            onDataChangedListener.onDataChanged();
+        }
     }
 
     protected DocumentSnapshot getSnapshot(int index) {
