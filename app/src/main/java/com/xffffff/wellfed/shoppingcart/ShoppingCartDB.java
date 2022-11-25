@@ -113,6 +113,7 @@ public class ShoppingCartDB {
         storageIngredientMap.put("complete", false);
         storageIngredientMap.put("Ingredient",
                 ingredientDB.getDocumentReference(ingredient));
+        storageIngredientMap.put("search-field", ingredient.getDescription().toLowerCase());
 
         collection.add(storageIngredientMap).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -144,7 +145,8 @@ public class ShoppingCartDB {
                         ingredient.getCategory(), "Ingredient",
                         ingredientDB.getDocumentReference(ingredient), "picked",
                         ingredient.isPickedUp, "complete",
-                        ingredient.isComplete)
+                        ingredient.isComplete,
+                        "search-field", ingredient.getDescription().toLowerCase())
                 .addOnSuccessListener(success -> {
                     listener.onAddShoppingCart(ingredient, true);
                 }).addOnFailureListener(failure -> {
@@ -178,6 +180,21 @@ public class ShoppingCartDB {
             }
             listener.onGetShoppingCart(shoppingCart, true);
         });
+    }
+
+    /**
+     * Delete an ingredient from the shopping cart.
+     */
+    public void deleteIngredient(ShoppingCartIngredient ingredient,
+                                 OnRemoveShoppingCart listener) {
+        if (ingredient == null || ingredient.getId() == null) {
+            listener.onRemoveShoppingCart(null, false);
+            return;
+        }
+
+        collection.document(ingredient.getId()).delete().addOnCompleteListener(
+                task -> listener.onRemoveShoppingCart(ingredient,
+                        task.isSuccessful()));
     }
 
     /**
@@ -255,22 +272,22 @@ public class ShoppingCartDB {
     /**
      * Sort the shopping cart by the given field.
      *
-     * @param category The category to sort by.
+     * @param field The category to sort by.
      * @return The query of the shopping cart.
      */
-    public Query getQuery(String category) {
-        return collection.whereEqualTo("category", category);
+    public Query getSortedQuery(String field) {
+        return collection.orderBy(field);
     }
 
     /**
      * Search the shopping cart by the given query string.
      *
-     * @param query The query string.
+     * @param field The query string.
      * @return The query of the shopping cart.
      */
-    public Query searchQuery(String query) {
-        return collection.whereGreaterThanOrEqualTo("description", query)
-                .whereLessThanOrEqualTo("description", query + "\uf8ff");
+    public Query getSearchQuery(String field) {
+        return this.collection.orderBy("search-field")
+                .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
     }
 
     public Query getQueryByPickedUp(boolean pickedUp) {

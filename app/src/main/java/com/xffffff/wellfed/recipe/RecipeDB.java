@@ -156,6 +156,7 @@ public class RecipeDB {
         recipeMap.put("photograph", recipe.getPhotograph());
         recipeMap.put("preparation-time", recipe.getPrepTimeMinutes());
         recipeMap.put("count", 0);
+        recipeMap.put("search-field", recipe.getTitle().toLowerCase());
 
         this.collection.add(recipeMap).addOnSuccessListener(addedSnapshot -> {
             recipe.setId(addedSnapshot.getId());
@@ -365,7 +366,8 @@ public class RecipeDB {
                                 "-time",
                         recipe.getPrepTimeMinutes(), "servings",
                         recipe.getServings(),
-                        "ingredients", recipeIngredients)
+                        "ingredients", recipeIngredients,
+                        "search-field", recipe.getTitle().toLowerCase())
                 .addOnSuccessListener(success -> {
                     listener.onUpdateRecipe(recipe, true);
                 }).addOnFailureListener(failure -> {
@@ -485,7 +487,8 @@ public class RecipeDB {
                 this.collection.document(recipe.getId());
 
         db.runTransaction(new Transaction.Function<Void>() {
-            @Override public Void apply(Transaction transaction)
+            @Override
+            public Void apply(Transaction transaction)
                     throws FirebaseFirestoreException {
                 DocumentSnapshot snapshot = transaction.get(recipeRef);
 
@@ -496,12 +499,14 @@ public class RecipeDB {
                 return null;
             }
         }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override public void onSuccess(Void unused) {
+            @Override
+            public void onSuccess(Void unused) {
                 listener.onUpdateReferenceCount(recipe, true);
                 Log.d(TAG, "Transaction success!");
             }
         }).addOnFailureListener(new OnFailureListener() {
-            @Override public void onFailure(@NonNull Exception e) {
+            @Override
+            public void onFailure(@NonNull Exception e) {
                 listener.onUpdateReferenceCount(recipe, false);
                 Log.w(TAG, "Transaction failure.", e);
             }
@@ -567,5 +572,10 @@ public class RecipeDB {
 
     public interface OnUpdateRecipeListener {
         void onUpdateRecipe(Recipe recipe, Boolean success);
+    }
+
+    public Query getSearchQuery(String field) {
+        return this.collection.orderBy("search-field")
+                .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
     }
 }
