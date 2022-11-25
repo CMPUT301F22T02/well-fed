@@ -97,8 +97,16 @@ public class MainActivity extends ActivityBase {
                             history.push(position);
                         }
 
-                        // show/hide fab
-                        // todo: AP
+                        // Hide the FAB if the current page is the shopping
+                        // cart page
+                        if (position == 3) {
+                            fab.hide();
+                        } else {
+                            fab.show();
+                        }
+
+
+
                     }
                 });
 
