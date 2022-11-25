@@ -865,21 +865,27 @@ public class MealPlanInstrumentedTest {
      */
     @Test
     public void testAddMultipleMealPlans() throws InterruptedException {
-        addMealPlanAndIngredients("First Hearty Breakfast");
-        addMealPlan("Second Hearty Breakfast");
-        addMealPlan("Third Hearty Breakfast");
-        addMealPlan("Fourth Hearty Breakfast");
+        String firstMeal = "First Hearty Breakfast";
+        String secondMeal = "Second Hearty Breakfast";
+        String thirdMeal = "Third Hearty Breakfast";
+        String fourthMeal = "Fourth Hearty Breakfast";
 
+        addMealPlanAndIngredients(firstMeal);
+        addMealPlan(secondMeal);
+        addMealPlan(thirdMeal);
+        addMealPlan(fourthMeal);
 
-        onView(withText("First Hearty Breakfast")).check(matches(isDisplayed()));
-        onView(withText("Second Hearty Breakfast")).check(matches(isDisplayed()));
-        onView(withText("Third Hearty Breakfast")).check(matches(isDisplayed()));
-        onView(withText("Fourth Hearty Breakfast")).check(matches(isDisplayed()));
+        closeSoftKeyboard();
+        Thread.sleep(timeout);
+        onView(withText(firstMeal)).check(matches(isDisplayed()));
+        onView(withText(secondMeal)).check(matches(isDisplayed()));
+        onView(withText(thirdMeal)).check(matches(isDisplayed()));
+        onView(withText(fourthMeal)).check(matches(isDisplayed()));
 
-        cleanUpMealPlan("First Hearty Breakfast");
-        cleanUpMealPlan("Second Hearty Breakfast");
-        cleanUpMealPlan("Third Hearty Breakfast");
-        cleanUpMealPlan("Fourth Hearty Breakfast");
+        cleanUpMealPlan(firstMeal);
+        cleanUpMealPlan(secondMeal);
+        cleanUpMealPlan(thirdMeal);
+        cleanUpMealPlan(fourthMeal);
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient("Sliced Bread");
     }
