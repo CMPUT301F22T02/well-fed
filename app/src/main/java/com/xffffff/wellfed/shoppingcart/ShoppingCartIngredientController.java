@@ -12,6 +12,7 @@ import com.xffffff.wellfed.ingredient.StorageIngredientDB;
 import com.xffffff.wellfed.mealplan.MealPlan;
 import com.xffffff.wellfed.mealplan.MealPlanDB;
 import com.xffffff.wellfed.recipe.Recipe;
+import com.xffffff.wellfed.unit.Unit;
 import com.xffffff.wellfed.unit.UnitConverter;
 import com.xffffff.wellfed.unit.UnitHelper;
 
@@ -50,12 +51,12 @@ public class ShoppingCartIngredientController {
         mealPlanDB = new MealPlanDB(connection);
     }
 
-    public void getSearchResults(String field){
+    public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);
         adapter.changeQuery(query);
     }
 
-    public void sortByField(String field){
+    public void sortByField(String field) {
         Query query = db.getSortedQuery(field);
         adapter.changeQuery(query);
     }
@@ -127,15 +128,19 @@ public class ShoppingCartIngredientController {
 
                             for (int i = 0; i < cart.size(); i++) {
                                 ShoppingCartIngredient cartItem = cart.get(i);
-                                String uid = ingredientUid(cartItem);
-                                inCart.put(uid, i);
+                                Pair<Double, String> val =
+                                        bestUnitHelper(cartItem, unitHelper);
+
+                                inCart.put(val.second, i);
                             }
 
                             // if shopping cart has something meal plan does not, remove it
                             for (String key : inCart.keySet()) {
-                                if (needed.get(key) == null) {
-                                    ShoppingCartIngredient cartItem =
-                                            cart.get(inCart.get(key));
+                                ShoppingCartIngredient cartItem =
+                                        cart.get(inCart.get(key));
+                                Pair<Double, Unit> bestVal = unitConverter.scaleUnit(cartItem.getAmount(),
+                                        unitConverter.build(cartItem.getUnit()));
+                                if (bestVal.first <= 0.0 | needed.get(key) == null) {
                                     if (!cartItem.isPickedUp) {
                                         db.deleteIngredient(cartItem, (a, s) -> {
                                             s = false;
@@ -153,22 +158,30 @@ public class ShoppingCartIngredientController {
                                     // get items from the shopping cart
                                     ShoppingCartIngredient cartItem =
                                             cart.get(inCart.get(key));
-                                    cartItem.setUnit(unit);
-                                    cartItem.setAmount(needed.get(key));
-                                    db.updateIngredient(cartItem, (a, s) -> {
-                                        s = false;
-                                    });
+                                    Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
+                                            unitConverter.build(unit));
+                                    if (bestVal.first > 0.0) {
+                                        cartItem.setUnit(bestVal.second.getUnit());
+                                        cartItem.setAmount(bestVal.first);
+                                        db.updateIngredient(cartItem, (a, s) -> {
+                                            s = false;
+                                        });
+                                    }
                                 } else { // else create those items
                                     String[] details = key.split("####");
                                     String unit = details[2];
                                     Ingredient ingredient =
                                             new Ingredient(details[0]);
-                                    ingredient.setUnit(unit);
                                     ingredient.setCategory(details[1]);
-                                    ingredient.setAmount(needed.get(key));
-                                    db.addIngredient(ingredient, (a, s) -> {
-                                        s = false;
-                                    });
+                                    Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
+                                            unitConverter.build(unit));
+                                    if (bestVal.first > 0.0) {
+                                        ingredient.setUnit(bestVal.second.getUnit());
+                                        ingredient.setAmount(bestVal.first);
+                                        db.addIngredient(ingredient, (a, s) -> {
+                                            s = false;
+                                        });
+                                    }
                                 }
 
                             }
