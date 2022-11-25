@@ -45,13 +45,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Instrumented test for MealPlan, which will execute on an Android device.
+ *
+ * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ */
 @RunWith(AndroidJUnit4.class)
 public class MealPlanInstrumentedTest {
 
+    /**
+     * Holds the ActivityScenarioRule
+     */
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
+    /**
+     * Setup Recipe test by navigating to MealBookFragment
+     */
     @Before
     public void before(){
         onView(withId(R.id.meal_book_item)).perform(click());
@@ -286,7 +297,11 @@ public class MealPlanInstrumentedTest {
         onView(withText("Delete")).perform(click());
     }
 
-
+    /**
+     * Add a MealPlan that only contains Recipes and then delete the MealPlan and Recipe
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testAddMealPlanWithRecipes() throws InterruptedException {
         String mealPlan = "Hearty Breakfast";
@@ -363,6 +378,11 @@ public class MealPlanInstrumentedTest {
         cleanUpRecipe(recipe1);
     }
 
+    /**
+     * Add a MealPlan that only contains Ingredients and then delete the MealPlan and Recipe
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testAddMealPlanWithIngredients() throws InterruptedException {
         String mealPlan = "Snack";
@@ -434,6 +454,11 @@ public class MealPlanInstrumentedTest {
         cleanUpIngredient(ingredient1);
     }
 
+    /**
+     * Add a MealPlan with Recipe and Ingredients and then delete the MealPlan, Recipe, and Ingredients
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testAddMealPlanWithRecipeAndIngredient() throws InterruptedException {
         String mealPlan = "Hearty Breakfast";
@@ -490,6 +515,12 @@ public class MealPlanInstrumentedTest {
         cleanUpIngredient(ingredient);
     }
 
+    /**
+     * Add a MealPlan and then view the MealPlan making sure that everything a MealPlan should have
+     * is there.
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testViewMealPlan() throws InterruptedException {
         String mealPlan = "Hearty Breakfast";
@@ -559,6 +590,11 @@ public class MealPlanInstrumentedTest {
         cleanUpIngredient(ingredient);
     }
 
+    /**
+     * Attempt to add an invalid MealPlan and verify that an invalid MealPlan is never added.
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testAddInvalidMealPlan() throws InterruptedException {
         String recipe = "Eggs and Bacon";
@@ -649,6 +685,11 @@ public class MealPlanInstrumentedTest {
         cleanUpIngredient(ingredient);
     }
 
+    /**
+     * Add a MealPlan and then delete the MealPlan.
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testDeleteMealPlan() throws InterruptedException {
         addMealPlan("Hearty Breakfast");
@@ -666,17 +707,36 @@ public class MealPlanInstrumentedTest {
         cleanUpIngredient("Sliced Bread");
     }
 
+    /**
+     * Add a Mealplan containing an Ingredient and a Recipe and attempt to delete the Ingredient and
+     * Recipe first.
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testDeleteRecipeAndIngredientBeforeMealPlan() throws InterruptedException {
         addMealPlanAndIngredients("Hearty Breakfast");
 
         cleanUpRecipe("Eggs and Bacon");
+
+        onView(withId(R.id.recipe_book_item)).perform(click());
+        onView(withText("Eggs and Bacon")).check(matches(isDisplayed()));
+
         cleanUpIngredient("Sliced Bread");
+
+        onView(withId(R.id.fragment_ingredient_storage)).perform(click());
+        onView(withText("Sliced Bread")).check(matches(isDisplayed()));
+
         cleanUpMealPlan("Hearty Breakfast");
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient("Sliced Bread");
     }
 
+    /**
+     * Test updating every field of the MealPlan after it is added.
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testUpdateMealPlan() throws InterruptedException {
         addRecipe("Quinoa");
@@ -765,6 +825,11 @@ public class MealPlanInstrumentedTest {
         cleanUpIngredient("Sliced Bread");
     }
 
+    /**
+     * Add multiple MealPlans and check to make sure all of them are displayed.
+     * @throws InterruptedException Thrown if an interrupt from any thread is thrown while
+     * Thread.sleep() is executing
+     */
     @Test
     public void testAddMultipleMealPlans() throws InterruptedException {
         addMealPlanAndIngredients("First Hearty Breakfast");
