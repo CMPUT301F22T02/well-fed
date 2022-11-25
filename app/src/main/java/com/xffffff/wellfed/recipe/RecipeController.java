@@ -88,7 +88,7 @@ public class RecipeController {
      * @param field the field to sort by
      */
     public void sort(String field) {
-        recipeAdapter.changeQuery(recipeDB.getSortQuery(field));
+        recipeAdapter.setQuery(recipeDB.getSortQuery(field));
     }
 
     /**
@@ -102,7 +102,7 @@ public class RecipeController {
 
     public void search(String field){
         Query query = recipeDB.getSearchQuery(field);
-        recipeAdapter.changeQuery(query);
+        recipeAdapter.setQuery(query);
     }
 
 }

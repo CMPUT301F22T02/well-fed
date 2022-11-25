@@ -40,7 +40,7 @@ public class RecipeIngredientSearchAdapter
     }
 
     public void changeQuery(String field) {
-        changeQuery(db.getSortQuery(field, true));
+        setQuery(db.getSortQuery(field, true));
     }
 
     /**
