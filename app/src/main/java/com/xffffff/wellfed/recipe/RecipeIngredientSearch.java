@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBConnection;
+import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
 import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.ingredient.IngredientDB;
@@ -24,7 +25,7 @@ import java.util.Arrays;
  */
 public class RecipeIngredientSearch extends ActivityBase
         implements RecipeIngredientSearchAdapter.OnItemClickListener,
-                   SortingFragment.OnSortClick {
+        SortingFragment.OnSortClick {
     private RecyclerView ingredientRecycleView;
     private RecipeIngredientSearchAdapter adapter;
 
@@ -33,9 +34,13 @@ public class RecipeIngredientSearch extends ActivityBase
      *
      * @param savedInstanceState Bundle object for the activity.
      */
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_ingredient_storage);
+
+        DBConnection connection = new DBConnection(getApplicationContext());
+        IngredientDB db = new IngredientDB(connection);
 
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setListener(this);
@@ -44,9 +49,10 @@ public class RecipeIngredientSearch extends ActivityBase
         this.getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container, sortingFragment).commit();
 
+        SearchInput searchInput = findViewById(R.id.search_input);
+        searchInput.setOnTextChange(s -> adapter.changeQuery(db.getSearchQuery(s)));
 
-        DBConnection connection = new DBConnection(getApplicationContext());
-        IngredientDB db = new IngredientDB(connection);
+
         adapter = new RecipeIngredientSearchAdapter(db);
         adapter.setListener(this);
         ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
@@ -61,7 +67,8 @@ public class RecipeIngredientSearch extends ActivityBase
      *
      * @param recipeIngredient The item that was clicked on
      */
-    @Override public void onItemClick(Ingredient recipeIngredient) {
+    @Override
+    public void onItemClick(Ingredient recipeIngredient) {
         Intent intent = new Intent();
         intent.putExtra("type", "add");
         intent.putExtra("item", recipeIngredient);
@@ -69,7 +76,8 @@ public class RecipeIngredientSearch extends ActivityBase
         finish();
     }
 
-    @Override public void onClick(String field) {
+    @Override
+    public void onClick(String field) {
         adapter.changeQuery(field);
     }
 }

@@ -3,6 +3,7 @@ package com.xffffff.wellfed.shoppingcart;
 import android.app.Activity;
 import android.util.Pair;
 
+import com.google.firebase.firestore.Query;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.ingredient.Ingredient;
@@ -47,6 +48,16 @@ public class ShoppingCartIngredientController {
         adapter = new ShoppingCartIngredientAdapter(db);
         storageIngredientDB = new StorageIngredientDB(connection);
         mealPlanDB = new MealPlanDB(connection);
+    }
+
+    public void getSearchResults(String field){
+        Query query = db.getSearchQuery(field);
+        adapter.changeQuery(query);
+    }
+
+    public void sortByField(String field){
+        Query query = db.getSortedQuery(field);
+        adapter.changeQuery(query);
     }
 
     /**

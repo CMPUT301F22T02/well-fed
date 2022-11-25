@@ -30,6 +30,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout="@layout/fragment_sort" />
 
+
+    <com.xffffff.wellfed.common.SearchInput
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text1"
+        app:startIconDrawable="@drawable/ic_baseline_search_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.xffffff.wellfed.common.SearchInput>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipe_rv"
         android:layout_width="match_parent"
@@ -38,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text1"
+        app:layout_constraintTop_toBottomOf="@id/search_input"
         app:layout_constraintVertical_weight="1" />
 
 
