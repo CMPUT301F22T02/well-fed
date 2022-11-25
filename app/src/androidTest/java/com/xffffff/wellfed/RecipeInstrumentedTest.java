@@ -457,7 +457,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_description_textView)).check(
                 matches(withText("This breakfast is great for on the go.")));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("1.0 count"))));
+                matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("Egg"))));
 
@@ -509,12 +509,12 @@ import org.junit.runner.RunWith;
         onView(allOf(isDisplayed(), withId(R.id.recyclerView))).check(
                 matches(hasDescendant(withText("Chicken Breast"))));
         onView(allOf(isDisplayed(), withId(R.id.recyclerView))).check(
-                matches(hasDescendant(withText("2.0 g"))));
+                matches(hasDescendant(withText("2.00 g"))));
 
         // asserting that egg is NOT there
         Thread.sleep(timeout);
         onView(withText("Egg")).check(ViewAssertions.doesNotExist());
-        onView(withText("1.0 count")).check(ViewAssertions.doesNotExist());
+        onView(withText("1.00 count")).check(ViewAssertions.doesNotExist());
     }
 
     /**
@@ -560,7 +560,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_description_textView)).check(
                 matches(withText("This breakfast is great for on the go.")));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("1.0 count"))));
+                matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("Egg"))));
 
@@ -591,7 +591,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_description_textView)).check(
                 matches(withText("This breakfast is great for on the go.")));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("1.0 count"))));
+                matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("Egg"))));
 
@@ -624,7 +624,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_description_textView)).check(
                 matches(withText("This breakfast is great for on the go.")));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("1.0 count"))));
+                matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("Egg"))));
 
@@ -655,7 +655,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_description_textView)).check(
                 matches(withText("This breakfast is great for on the go.")));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("1.0 count"))));
+                matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("Egg"))));
 
@@ -686,7 +686,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_description_textView)).check(
                 matches(withText("This lunch is filling and delicious.")));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("1.0 count"))));
+                matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("Egg"))));
 
@@ -735,7 +735,7 @@ import org.junit.runner.RunWith;
         // check the ingredient is changed
         Thread.sleep(timeout);
         onView(withId(R.id.recyclerView)).check(
-                matches(hasDescendant(withText("3.0 count"))));
+                matches(hasDescendant(withText("3.00 count"))));
         onView(withId(R.id.recyclerView)).check(
                 matches(hasDescendant(withText("Duck Egg"))));
 
@@ -1048,8 +1048,10 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
 
         closeSoftKeyboard();
-        onView(withId(R.id.edit_unitInput)).perform(clearText());
-        onView(withId(R.id.edit_unitInput)).perform(typeText("count"));
+        onView(withId(R.id.unitInput)).perform(click());
+        onView(withText("count"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
         closeSoftKeyboard();
         onView(withId(R.id.ingredient_save_button)).perform(click());
         onView(withId(R.id.save_fab)).perform(click());
@@ -1070,7 +1072,7 @@ import org.junit.runner.RunWith;
 
         // checking the ingredient is still there
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("1.0 count"))));
+                matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("English muffin"))));
     }

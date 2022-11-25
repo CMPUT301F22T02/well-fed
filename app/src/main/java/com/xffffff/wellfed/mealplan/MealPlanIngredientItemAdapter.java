@@ -15,11 +15,14 @@ public class MealPlanIngredientItemAdapter
                                  int position) {
         super.onBindViewHolder(holder1, position);
         ItemViewHolder holder = (ItemViewHolder) holder1;
-        Ingredient recipe = items.get(position);
-        holder.getPrimaryTextView().setText(recipe.getDescription());
+        Ingredient ingredient = items.get(position);
+        if (ingredient == null) {
+            return;
+        }
+        holder.getPrimaryTextView().setText(ingredient.getDescription());
         String secondaryText =
-                String.format(Locale.CANADA, "%.2f", recipe.getAmount()) + " "
-                        + recipe.getUnit() + " | " + recipe.getCategory();
+                String.format(Locale.CANADA, "%.2f", ingredient.getAmount()) + " "
+                        + ingredient.getUnit() + " | " + ingredient.getCategory();
         holder.getSecondaryTextView().setText(secondaryText);
     }
 }

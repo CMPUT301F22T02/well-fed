@@ -12,6 +12,7 @@ import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.recipe.RecipeDB;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -308,6 +309,34 @@ public class MealPlanDB {
     }
 
     /**
+     * Gets the MealPlan proxy object with the given snapshot from the db.
+     *
+     * @param snapshot the snapshot of the MealPlan proxy object to be
+     *                 retrieved.
+     */
+    public MealPlan getMealPlanProxy(DocumentSnapshot snapshot) {
+        MealPlan mealPlan = new MealPlan(snapshot.getString("title"));
+        mealPlan.setId(snapshot.getId());
+        mealPlan.setCategory(snapshot.getString("category"));
+        mealPlan.setEatDate(snapshot.getDate("eat date"));
+        // TODO: refactor mealPlan to use Long instead of Integer
+        mealPlan.setServings(
+                Objects.requireNonNull(snapshot.getLong("servings"))
+                        .intValue());
+        ArrayList<HashMap<String, Object>> ingredients =
+                (ArrayList<HashMap<String, Object>>) snapshot.get(
+                        "ingredients");
+        ArrayList<HashMap<String, Object>> recipes =
+                (ArrayList<HashMap<String, Object>>) snapshot.get(
+                        "recipes");
+        mealPlan.setIngredients(new ArrayList<>(Collections.nCopies(ingredients.size(),
+            null)));
+        mealPlan.setRecipes(new ArrayList<>(Collections.nCopies(recipes.size(),
+                null)));
+        return mealPlan;
+    }
+
+    /**
      * Gets the MealPlan object with the given id from the db.
      *
      * @param snapshot the snapshot of the MealPlan object to be retrieved.
@@ -317,19 +346,14 @@ public class MealPlanDB {
     public void getMealPlan(DocumentSnapshot snapshot,
                             OnGetMealPlanListener listener) {
         // Initializes a new MealPlan object and sets its fields.
-        MealPlan mealPlan = new MealPlan(snapshot.getString("title"));
-        mealPlan.setId(snapshot.getId());
-        mealPlan.setCategory(snapshot.getString("category"));
-        mealPlan.setEatDate(snapshot.getDate("eat date"));
-        //                    TODO: refactor mealPlan to use Long instead
-        //                     of Integer
-        mealPlan.setServings(
-                Objects.requireNonNull(snapshot.getLong("servings"))
-                        .intValue());
+        MealPlan mealPlan = getMealPlanProxy(snapshot);
 
         // Initializes ArrayLists for ingredients & recipes.
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         ArrayList<Recipe> recipes = new ArrayList<>();
+
+        mealPlan.setIngredients(ingredients);
+        mealPlan.setRecipes(recipes);
 
         // Get the list of MealPlan ingredients from the MealPlan document.
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
