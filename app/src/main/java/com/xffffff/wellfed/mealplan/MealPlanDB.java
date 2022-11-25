@@ -12,6 +12,7 @@ import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.recipe.RecipeDB;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -322,6 +323,16 @@ public class MealPlanDB {
         mealPlan.setServings(
                 Objects.requireNonNull(snapshot.getLong("servings"))
                         .intValue());
+        ArrayList<HashMap<String, Object>> ingredients =
+                (ArrayList<HashMap<String, Object>>) snapshot.get(
+                        "ingredients");
+        ArrayList<HashMap<String, Object>> recipes =
+                (ArrayList<HashMap<String, Object>>) snapshot.get(
+                        "recipes");
+        mealPlan.setIngredients(new ArrayList<>(Collections.nCopies(ingredients.size(),
+            null)));
+        mealPlan.setRecipes(new ArrayList<>(Collections.nCopies(recipes.size(),
+                null)));
         return mealPlan;
     }
 
@@ -340,6 +351,9 @@ public class MealPlanDB {
         // Initializes ArrayLists for ingredients & recipes.
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         ArrayList<Recipe> recipes = new ArrayList<>();
+
+        mealPlan.setIngredients(ingredients);
+        mealPlan.setRecipes(recipes);
 
         // Get the list of MealPlan ingredients from the MealPlan document.
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
