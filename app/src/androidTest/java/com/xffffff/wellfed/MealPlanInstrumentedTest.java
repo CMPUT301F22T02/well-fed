@@ -161,6 +161,51 @@ public class MealPlanInstrumentedTest {
     private void addMealPlan(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
+        onView(withId(R.id.fab)).perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withText(recipe)).perform(click());
+
+        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withText(ingredient)).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+    }
+
+    private void addMealPlanAndIngredients(String mealPlan) throws InterruptedException {
+        String recipe = "Eggs and Bacon";
+        String ingredient = "Sliced Bread";
         addRecipe(recipe);
         addIngredient(ingredient);
 
@@ -188,7 +233,7 @@ public class MealPlanInstrumentedTest {
 
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText(ingredient)).perform(click());
 
@@ -623,18 +668,20 @@ public class MealPlanInstrumentedTest {
 
     @Test
     public void testDeleteRecipeAndIngredientBeforeMealPlan() throws InterruptedException {
-        addMealPlan("Hearty Breakfast");
+        addMealPlanAndIngredients("Hearty Breakfast");
 
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient("Sliced Bread");
         cleanUpMealPlan("Hearty Breakfast");
+        cleanUpRecipe("Eggs and Bacon");
+        cleanUpIngredient("Sliced Bread");
     }
 
     @Test
     public void testUpdateMealPlan() throws InterruptedException {
         addRecipe("Quinoa");
         addIngredient("Celery sticks");
-        addMealPlan("Hearty Breakfast");
+        addMealPlanAndIngredients("Hearty Breakfast");
 
         String mealPlan = "Healthy Lunch";
         String recipe = "Quinoa";
@@ -647,6 +694,7 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
 
         onView(withId(R.id.MealPlan_TitleEditInput)).perform(clearText(), typeText(mealPlan));
+
 
         onView(withId(R.id.dateTextInput)).perform(click());
         onView(withText("OK")).perform(click());
@@ -692,7 +740,7 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(2000);
+        Thread.sleep(5000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
         onView(withText(mealPlan)).perform(click());
@@ -714,6 +762,27 @@ public class MealPlanInstrumentedTest {
         cleanUpRecipe(recipe);
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient(ingredient);
+        cleanUpIngredient("Sliced Bread");
+    }
+
+    @Test
+    public void testAddMultipleMealPlans() throws InterruptedException {
+        addMealPlanAndIngredients("First Hearty Breakfast");
+        addMealPlan("Second Hearty breakfast");
+        addMealPlan("Third Hearty breakfast");
+        addMealPlan("Fourth Hearty breakfast");
+
+
+        onView(withText("First Hearty Breakfast")).check(matches(isDisplayed()));
+        onView(withText("Second Hearty Breakfast")).check(matches(isDisplayed()));
+        onView(withText("Third Hearty Breakfast")).check(matches(isDisplayed()));
+        onView(withText("Fourth Hearty Breakfast")).check(matches(isDisplayed()));
+
+        cleanUpMealPlan("First Hearty Breakfast");
+        cleanUpMealPlan("Second Hearty breakfast");
+        cleanUpMealPlan("Third Hearty breakfast");
+        cleanUpMealPlan("Fourth Hearty breakfast");
+        cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient("Sliced Bread");
     }
 }
