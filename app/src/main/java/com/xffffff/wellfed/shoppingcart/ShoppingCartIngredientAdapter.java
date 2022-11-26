@@ -19,11 +19,11 @@ import java.util.Locale;
 /**
  * This class is the adapter for the ingredients in the shopping cart list
  * <p>
- *     It is used to display the ingredients in the shopping cart list
+ * It is used to display the ingredients in the shopping cart list
  * </p>
  */
 public class ShoppingCartIngredientAdapter
-        extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
+    extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
 
     /**
      * Constructor for the adapter
@@ -39,14 +39,16 @@ public class ShoppingCartIngredientAdapter
      * @param viewType int for the adapter.
      * @return ViewHolder object for the adapter.
      */
-    @NonNull @Override public ViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(
+        @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View shoppingCartIngredientView =
-                inflater.inflate(R.layout.shopping_cart_ingredient, parent,
-                        false);
+            inflater.inflate(R.layout.shopping_cart_ingredient, parent,
+                false);
 
         return new ViewHolder(shoppingCartIngredientView);
     }
@@ -57,13 +59,14 @@ public class ShoppingCartIngredientAdapter
      * @param holder   ViewHolder object for the adapter.
      * @param position int for the adapter.
      */
-    @Override public void onBindViewHolder(@NonNull ViewHolder holder,
-                                           int position) {
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder,
+                                 int position) {
         DocumentSnapshot doc = getSnapshot(position);
         holder.description.setText(doc.getString("description"));
-        String amount = String.format(Locale.CANADA,"%.2f", ((Double) doc.getData().get("amount")));
+        String amount = String.format(Locale.CANADA, "%.2f", ((Double) doc.getData().get("amount")));
         holder.subtext.setText(amount + " " + doc.getString("unit") + " | " +
-                doc.getString("category"));
+            doc.getString("category"));
         holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));
 
     }
@@ -73,7 +76,8 @@ public class ShoppingCartIngredientAdapter
      *
      * @return int for the adapter.
      */
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return super.getItemCount();
     }
 
@@ -94,9 +98,9 @@ public class ShoppingCartIngredientAdapter
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             description = itemView.findViewById(
-                    R.id.shopping_cart_ingredient_description);
+                R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(
-                    R.id.shopping_cart_ingredient_subtext);
+                R.id.shopping_cart_ingredient_subtext);
             checkBox = itemView.findViewById(R.id.checkBox);
         }
     }
