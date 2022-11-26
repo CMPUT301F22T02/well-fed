@@ -16,7 +16,12 @@ import com.xffffff.wellfed.common.DBAdapter;
 
 import java.util.Locale;
 
-// This class is used to display the list of ingredients in the shopping cart
+/**
+ * This class is the adapter for the ingredients in the shopping cart list
+ * <p>
+ *     It is used to display the ingredients in the shopping cart list
+ * </p>
+ */
 public class ShoppingCartIngredientAdapter
         extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
 
