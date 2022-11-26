@@ -22,21 +22,22 @@ public class VolumeUnit extends Unit {
 
 
     public static final HashMap<String, Double> CONVERSION_FACTORS =
-            new HashMap<>(
-                    Map.of("mL", 1d, "tsp", 5d, "tbsp", 15d, "metric cup", 250d,
-                            "L", 1000d, "oz", 29.5735295625, "cup", 236.5882365,
-                            "pint", 473.176473, "quart", 946.352946, "gal",
-                            3785.411784));
+        new HashMap<>(
+            Map.of("mL", 1d, "tsp", 5d, "tbsp", 15d, "metric cup", 250d,
+                "L", 1000d, "oz", 29.5735295625, "cup", 236.5882365,
+                "pint", 473.176473, "quart", 946.352946, "gal",
+                3785.411784));
     public static final HashMap<String, Set<String>> UNIT_SYSTEMS =
-            new HashMap<>(Map.of("mL", Set.of("metric"), "L", Set.of("metric"),
-                    "metric cup", Set.of("metric"), "tsp",
-                    Set.of("metric", "imperial"), "tbsp",
-                    Set.of("metric", "imperial"), "oz", Set.of("imperial"),
-                    "cup", Set.of("imperial"), "pint", Set.of("imperial"),
-                    "quart", Set.of("imperial"), "gal", Set.of("imperial")));
+        new HashMap<>(Map.of("mL", Set.of("metric"), "L", Set.of("metric"),
+            "metric cup", Set.of("metric"), "tsp",
+            Set.of("metric", "imperial"), "tbsp",
+            Set.of("metric", "imperial"), "oz", Set.of("imperial"),
+            "cup", Set.of("imperial"), "pint", Set.of("imperial"),
+            "quart", Set.of("imperial"), "gal", Set.of("imperial")));
 
     /**
      * Constructor for the VolumeUnit class
+     *
      * @param unit the unit to convert
      * @throws IllegalArgumentException if the unit is not supported by the app
      */
