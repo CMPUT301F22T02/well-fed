@@ -21,6 +21,7 @@ public abstract class Unit {
 
     /**
      * The constructor for the Unit class that initializes the unit
+     *
      * @param unit the unit string
      */
     public Unit(String unit) {
@@ -29,6 +30,7 @@ public abstract class Unit {
 
     /**
      * The getter for the unit string
+     *
      * @return the unit string
      */
     public String getUnit() {
@@ -37,6 +39,7 @@ public abstract class Unit {
 
     /**
      * The getter for the conversion factor
+     *
      * @return the conversion factor
      */
     public double getConversionFactor() {
@@ -45,6 +48,7 @@ public abstract class Unit {
 
     /**
      * The getter for the unit systems
+     *
      * @return the unit systems
      */
     public Set<String> getSystems() {
