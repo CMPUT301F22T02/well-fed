@@ -594,6 +594,7 @@ public class MealPlanInstrumentedTest {
 
         String date = dateFormat.format(new Date());
 
+        Thread.sleep(2000);
         onView(withId(R.id.mealPlanTitleTextView)).check(matches(withText(mealPlan)));
         onView(withId(R.id.mealPlanDateTextView)).check(matches(withText(containsString(date))));
         onView(withId(R.id.mealPlanCategoryTextView)).check(matches(withText(containsString("Breakfast"))));
@@ -770,10 +771,11 @@ public class MealPlanInstrumentedTest {
         String recipe = "Quinoa";
         String ingredient = "Celery sticks";
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
         onView(withText("Hearty Breakfast")).perform(click());
 
+        Thread.sleep(5000);
         onView(withId(R.id.save_fab)).perform(click());
 
         onView(withId(R.id.MealPlan_TitleEditInput)).perform(clearText(), typeText(mealPlan));
@@ -824,7 +826,7 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(5000);
+        Thread.sleep(15000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
         onView(withText(mealPlan)).perform(click());
