@@ -35,24 +35,19 @@ public class ItemDetailAdapter extends ItemAdapter {
         holder1.title.setText(
                 String.format(Locale.CANADA, "%.2f", ingredient.getAmount()) + " "
                         + ingredient.getUnit());
-        holder1.headline.setText(ingredient.getDescription());
-        holder1.moreInfo.setOnClickListener(view -> {
-        });
-
+        holder1.headline.setText(ingredient.getDescription() + " | " + ingredient
+                .getCategory());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView title;
         public TextView headline;
-        public ImageView moreInfo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.titleTextView);
             headline = itemView.findViewById(R.id.headlineTextView);
-            moreInfo = itemView.findViewById(R.id.more_info_ImageView);
-
         }
     }
 
