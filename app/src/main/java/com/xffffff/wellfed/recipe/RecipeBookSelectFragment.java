@@ -12,6 +12,8 @@ public class RecipeBookSelectFragment extends RecipeBookFragment {
      */
     private OnSelectedListener listener;
 
+    private RecipeDB recipeDB;
+
     /**
      * Sets the recipe selected listener
      *
@@ -24,9 +26,14 @@ public class RecipeBookSelectFragment extends RecipeBookFragment {
     /**
      * Calls the recipe selected listener
      */
-    @Override public void launch(Recipe recipe) {
+    @Override
+    public void launch(Recipe recipe) {
         if (listener != null) {
-            listener.onSelected(recipe);
+            RecipeController recipeController = new RecipeController(requireActivity());
+            recipeDB = recipeController.getRecipeDB();
+            recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
+                listener.onSelected(foundRecipe);
+            });
         }
     }
 
