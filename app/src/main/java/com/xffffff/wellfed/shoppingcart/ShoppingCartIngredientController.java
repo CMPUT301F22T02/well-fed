@@ -327,17 +327,7 @@ public class ShoppingCartIngredientController {
                                              HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         recipe = mealPlanController.scaleRecipe(recipe, mealPlan.getServings());
         for (Ingredient ingredient : recipe.getIngredients()) {
-            Pair<Double, String> val =
-                    bestUnitHelper(ingredient, unitHelper);
-            if (required.get(val.second) == null) {
-                ArrayList<Pair<Integer, Double>> listNeeded = new ArrayList<>();
-                listNeeded
-                        .add(new Pair<Integer, Double>(dateUtil.format(mealPlan.getEatDate()), val.first));
-                required.put(val.second, listNeeded);
-            } else {
-                required.get(val.second)
-                        .add(new Pair<Integer, Double>(dateUtil.format(mealPlan.getEatDate()), val.first));
-            }
+            generateRequiredFromIngredients(ingredient, mealPlan, required);
         }
     }
 

@@ -147,13 +147,8 @@ public class DateUtil {
     }
 
     public int format(Date date){
-        String formatted = hashFormat.format(date);
-        String[] helper =  formatted.split("-");
-        StringBuilder needed = new StringBuilder();
-        for (String s: helper){
-            needed.append(s);
-        }
-        return Integer.parseInt(needed.toString());
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        return Integer.parseInt(format.format(date));
     }
 
 }
