@@ -26,7 +26,6 @@ public class MealPlanRecipeItemAdapter extends MealPlanItemAdapter<Recipe> {
             return;
         }
         holder.getPrimaryTextView().setText(recipe.getTitle());
-//        String text = "All ingredients available";
         holder.getSecondaryTextView().setText(recipe.getPrepTimeMinutes() +
                 " minutes | " + recipe.getCategory());
         Picasso.get().load(recipe.getPhotograph()).rotate(90)
