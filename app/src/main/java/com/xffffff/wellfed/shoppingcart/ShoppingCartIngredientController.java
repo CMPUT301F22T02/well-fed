@@ -10,6 +10,7 @@ import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.ingredient.StorageIngredient;
 import com.xffffff.wellfed.ingredient.StorageIngredientDB;
 import com.xffffff.wellfed.mealplan.MealPlan;
+import com.xffffff.wellfed.mealplan.MealPlanController;
 import com.xffffff.wellfed.mealplan.MealPlanDB;
 import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.unit.Unit;
@@ -40,6 +41,8 @@ public class ShoppingCartIngredientController {
 
     private UnitConverter unitConverter;
 
+    private MealPlanController mealPlanController;
+
     /**
      * The constructor for the controller.
      *
@@ -56,6 +59,7 @@ public class ShoppingCartIngredientController {
         UnitConverter unitConverter =
                 new UnitConverter(activity.getApplicationContext());
         unitHelper = new UnitHelper(unitConverter);
+        mealPlanController = new MealPlanController(activity);
     }
 
     public void getSearchResults(String field) {
@@ -94,6 +98,7 @@ public class ShoppingCartIngredientController {
         mealPlanDB.getMealPlans((mealPlans, success) -> {
             for (MealPlan mealPlan : mealPlans) {
                 for (Recipe r : mealPlan.getRecipes()) {
+                    r = mealPlanController.scaleRecipe(r, mealPlan.getServings());
                     for (Ingredient ingredient : r.getIngredients()) {
                         Pair<Double, String> val =
                                 bestUnitHelper(ingredient, unitHelper);
