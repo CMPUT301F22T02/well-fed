@@ -47,7 +47,6 @@ public class IngredientEditContract extends
                                 "ingredient");
                 ShoppingCartIngredient ingredient =
                         new ShoppingCartIngredient(storageIngredient);
-                ingredient.setId(storageIngredient.getId());
                 ingredient.setCategory(storageIngredient.getCategory());
                 ingredient.setUnit(storageIngredient.getUnit());
                 ingredient.setAmount(storageIngredient.getAmount());
