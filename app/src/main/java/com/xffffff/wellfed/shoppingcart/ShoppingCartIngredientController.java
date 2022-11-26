@@ -118,82 +118,83 @@ public class ShoppingCartIngredientController {
                             return;
                         }
                         updateRequiredFromStorage(storedIngredients, required);
+
+
+                        // get all the items in the storage
+                        HashMap<String, Double> needed = new HashMap<>();
+                        for (String key : required.keySet()) {
+                            if (needed.get(key) == null) {
+                                Double amountNeeded = 0.0;
+                                for (int i = 0; i < required.get(key).size(); i++) {
+                                    amountNeeded += required.get(key).get(i).second;
+                                }
+                                needed.put(key, amountNeeded);
+                            }
+                        }
+                        db.getShoppingCart((cart, success2) -> {
+                            HashMap<String, Integer> inCart = new HashMap<>();
+
+                            for (int i = 0; i < cart.size(); i++) {
+                                ShoppingCartIngredient cartItem = cart.get(i);
+                                Pair<Double, String> val =
+                                        bestUnitHelper(cartItem, unitHelper);
+
+                                inCart.put(val.second, i);
+                            }
+
+                            // if shopping cart has something meal plan does not, remove it
+                            for (String key : inCart.keySet()) {
+                                ShoppingCartIngredient cartItem =
+                                        cart.get(inCart.get(key));
+                                Pair<Double, Unit> bestVal = unitConverter.scaleUnit(cartItem.getAmount(),
+                                        unitConverter.build(cartItem.getUnit()));
+                                if (bestVal.first <= 0.0 || needed.get(key) == null || needed.get(key) <= 0.0) {
+                                    if (!cartItem.isPickedUp) {
+                                        db.deleteIngredient(cartItem, (a, s) -> {
+                                        });
+                                    }
+                                }
+                            }
+
+                            // if shopping cart has those items update them
+                            // accordingly
+                            for (String key : needed.keySet()) {
+                                if (inCart.get(key) != null) {
+                                    String[] details = key.split("####");
+                                    String unit = details[2];
+                                    // get items from the shopping cart
+                                    ShoppingCartIngredient cartItem =
+                                            cart.get(inCart.get(key));
+                                    Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
+                                            unitConverter.build(unit));
+                                    if (bestVal.first > 0.0) {
+                                        cartItem.setUnit(bestVal.second.getUnit());
+                                        cartItem.setAmount(bestVal.first);
+                                        db.updateIngredient(cartItem, (a, s) -> {
+                                            s = false;
+                                        });
+                                    }
+                                } else { // else create those items
+                                    String[] details = key.split("####");
+                                    String unit = details[2];
+                                    Ingredient ingredient =
+                                            new Ingredient(details[0]);
+                                    ingredient.setCategory(details[1]);
+                                    Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
+                                            unitConverter.build(unit));
+                                    if (bestVal.first > 0.0) {
+                                        ingredient.setUnit(bestVal.second.getUnit());
+                                        ingredient.setAmount(bestVal.first);
+                                        db.addIngredient(ingredient, (a, s) -> {
+                                            s = false;
+                                        });
+                                    }
+                                }
+
+                            }
+
+                        });
                     });
-
-            // get all the items in the storage
-            HashMap<String, Double> needed = new HashMap<>();
-            for (String key : required.keySet()) {
-                if (needed.get(key) == null) {
-                    Double amountNeeded = 0.0;
-                    for (int i = 0; i < required.get(key).size(); i++) {
-                        amountNeeded += required.get(key).get(i).second;
-                    }
-                    needed.put(key, amountNeeded);
-                }
-            }
-            db.getShoppingCart((cart, success2) -> {
-                HashMap<String, Integer> inCart = new HashMap<>();
-
-                for (int i = 0; i < cart.size(); i++) {
-                    ShoppingCartIngredient cartItem = cart.get(i);
-                    Pair<Double, String> val =
-                            bestUnitHelper(cartItem, unitHelper);
-
-                    inCart.put(val.second, i);
-                }
-
-                // if shopping cart has something meal plan does not, remove it
-                for (String key : inCart.keySet()) {
-                    ShoppingCartIngredient cartItem =
-                            cart.get(inCart.get(key));
-                    Pair<Double, Unit> bestVal = unitConverter.scaleUnit(cartItem.getAmount(),
-                            unitConverter.build(cartItem.getUnit()));
-                    if (bestVal.first <= 0.0 || needed.get(key) == null || needed.get(key) <= 0.0) {
-                        if (!cartItem.isPickedUp) {
-                            db.deleteIngredient(cartItem, (a, s) -> {
-                            });
-                        }
-                    }
-                }
-
-                // if shopping cart has those items update them
-                // accordingly
-                for (String key : needed.keySet()) {
-                    if (inCart.get(key) != null) {
-                        String[] details = key.split("####");
-                        String unit = details[2];
-                        // get items from the shopping cart
-                        ShoppingCartIngredient cartItem =
-                                cart.get(inCart.get(key));
-                        Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
-                                unitConverter.build(unit));
-                        if (bestVal.first > 0.0) {
-                            cartItem.setUnit(bestVal.second.getUnit());
-                            cartItem.setAmount(bestVal.first);
-                            db.updateIngredient(cartItem, (a, s) -> {
-                                s = false;
-                            });
-                        }
-                    } else { // else create those items
-                        String[] details = key.split("####");
-                        String unit = details[2];
-                        Ingredient ingredient =
-                                new Ingredient(details[0]);
-                        ingredient.setCategory(details[1]);
-                        Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
-                                unitConverter.build(unit));
-                        if (bestVal.first > 0.0) {
-                            ingredient.setUnit(bestVal.second.getUnit());
-                            ingredient.setAmount(bestVal.first);
-                            db.addIngredient(ingredient, (a, s) -> {
-                                s = false;
-                            });
-                        }
-                    }
-
-                }
-
-            });
         });
     }
 
