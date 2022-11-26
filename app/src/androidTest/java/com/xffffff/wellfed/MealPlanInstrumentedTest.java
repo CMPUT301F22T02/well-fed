@@ -744,7 +744,7 @@ public class MealPlanInstrumentedTest {
         cleanUpRecipe("Eggs and Bacon");
 
         onView(withId(R.id.recipe_book_item)).perform(click());
-        onView(withText("Eggs and Bacon")).check(matches(isDisplayed()));]
+        onView(withText("Eggs and Bacon")).check(matches(isDisplayed()));
 
         cleanUpMealPlan("Hearty Breakfast");
         cleanUpRecipe("Eggs and Bacon");
