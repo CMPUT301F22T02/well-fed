@@ -69,9 +69,10 @@ public class MealPlanInstrumentedTest {
         intended(hasComponent(MealPlanEditActivity.class.getName()));
     }
 
-    private void addIngredient(String description){
+    private void addIngredient(String description) throws InterruptedException {
         onView(withId(R.id.ingredient_storage_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
         closeSoftKeyboard();
@@ -102,6 +103,7 @@ public class MealPlanInstrumentedTest {
     private void addRecipe(String title) throws InterruptedException {
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText(title));
         closeSoftKeyboard();
