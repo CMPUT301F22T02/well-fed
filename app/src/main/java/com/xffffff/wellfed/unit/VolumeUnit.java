@@ -4,10 +4,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * VolumeUnit is an enum that contains all the volume units
+ * that are supported by the app
+ *
+ * @version 1.0.0
+ */
 public class VolumeUnit extends Unit {
-
+    /**
+     * The smallest unit for metric volume
+     */
     public static final String smallestMetricUnit = "mL";
+    /**
+     * The smallest unit for imperial volume
+     */
     public static final String smallestImperialUnit = "oz";
+
 
     public static final HashMap<String, Double> CONVERSION_FACTORS =
             new HashMap<>(
@@ -23,6 +35,11 @@ public class VolumeUnit extends Unit {
                     "cup", Set.of("imperial"), "pint", Set.of("imperial"),
                     "quart", Set.of("imperial"), "gal", Set.of("imperial")));
 
+    /**
+     * Constructor for the VolumeUnit class
+     * @param unit the unit to convert
+     * @throws IllegalArgumentException if the unit is not supported by the app
+     */
     public VolumeUnit(String unit) throws IllegalArgumentException {
         super(unit);
         if (!CONVERSION_FACTORS.containsKey(unit)) {
