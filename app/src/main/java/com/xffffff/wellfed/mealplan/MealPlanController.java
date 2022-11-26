@@ -59,6 +59,7 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
         onDataChanged();
     }
 
+
     public void startListening(String id) {
         if (listenerRegistration == null) {
             listenerRegistration = db.getMealPlanDocumentReference(id)

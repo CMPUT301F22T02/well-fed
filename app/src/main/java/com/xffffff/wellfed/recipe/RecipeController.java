@@ -27,6 +27,14 @@ public class RecipeController {
     private final RecipeDB recipeDB;
 
     /**
+     *
+     * @return recipeDB connection
+     */
+    public RecipeDB getRecipeDB(){
+        return recipeDB;
+    }
+
+    /**
      * Constructor that initializes the db connection and the adapter for the
      * recipes
      */
