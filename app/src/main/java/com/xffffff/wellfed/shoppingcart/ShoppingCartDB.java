@@ -15,6 +15,7 @@ import com.xffffff.wellfed.mealplan.MealPlanDB;
 import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.recipe.RecipeDB;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -92,6 +93,7 @@ public class ShoppingCartDB {
 
     }
 
+
     public void addShoppingHelper(Ingredient ingredient,
                                   OnAddShoppingCart listener) {
         ShoppingCartIngredient shoppingCartIngredient =
@@ -155,6 +157,33 @@ public class ShoppingCartDB {
 
     }
 
+
+    /**
+     * Update an ingredient in the shopping cart.
+     */
+    public void updateIngredient(String id, boolean isPickedUp,
+                                 OnPickedUpChange listener) {
+        if (id == null) {
+            listener.onPickedUpChange(false);
+            return;
+        }
+
+        DocumentReference doc = collection.document(id);
+        doc.update("picked",
+                        isPickedUp
+                )
+                .addOnSuccessListener(success -> {
+                    listener.onPickedUpChange(true);
+                }).addOnFailureListener(failure -> {
+                    listener.onPickedUpChange(false);
+                });
+
+    }
+
+    public interface OnPickedUpChange {
+        public void onPickedUpChange(boolean success);
+    }
+
     /**
      * Get the shopping cart.
      */
@@ -195,6 +224,22 @@ public class ShoppingCartDB {
         collection.document(ingredient.getId()).delete().addOnCompleteListener(
                 task -> listener.onRemoveShoppingCart(ingredient,
                         task.isSuccessful()));
+    }
+
+    public void deleteIngredient(String id, OnDelete listener) {
+        if (id == null) {
+            listener.onDelete(false);
+            return;
+        }
+
+        collection.document(id).delete().addOnCompleteListener(
+                task -> listener.onDelete(task.isSuccessful()));
+    }
+
+    ;
+
+    public interface OnDelete {
+        public void onDelete(boolean succeess);
     }
 
     /**
