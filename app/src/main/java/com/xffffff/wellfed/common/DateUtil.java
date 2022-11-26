@@ -145,4 +145,10 @@ public class DateUtil {
         SimpleDateFormat simpleDateFormat = getSimpleDateFormat(pattern);
         return simpleDateFormat.format(date);
     }
+
+    public int format(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        return Integer.parseInt(format.format(date));
+    }
+
 }
