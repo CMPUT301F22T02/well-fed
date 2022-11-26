@@ -150,7 +150,6 @@ public class ShoppingCartIngredientController {
                                 if (bestVal.first <= 0.0 | needed.get(key) == null | needed.get(key) <= 0.0) {
                                     if (!cartItem.isPickedUp) {
                                         db.deleteIngredient(cartItem, (a, s) -> {
-                                            s = false;
                                         });
                                     }
                                 }
@@ -274,8 +273,9 @@ public class ShoppingCartIngredientController {
                 unitHelper.convertToSmallest(storageIngredient.getUnit(),
                         storageIngredient.getAmount());
 
-        boolean isIngredientNeeded = smallestShoppingIngredient.first -
-                smallestStorageIngredient.first >= 0.0;
+        boolean isIngredientNeeded = (smallestShoppingIngredient.first -
+                smallestStorageIngredient.first >= 0.0) && smallestShoppingIngredient.second.equals(
+                smallestStorageIngredient.second);
 
         storageIngredientDB.addStorageIngredient(storageIngredient, (added, success) -> {
             if (!success) {
@@ -284,8 +284,7 @@ public class ShoppingCartIngredientController {
             }
             // todo success msg
             if (isIngredientNeeded) {
-                shoppingCartIngredient.setPickedUp(false);
-                db.updateIngredient(shoppingCartIngredient.getId(), isIngredientNeeded, (
+                db.updateIngredient(shoppingCartIngredient.getId(), !isIngredientNeeded, (
                         success1 -> {}
                         ));
             } else{
