@@ -79,7 +79,8 @@ public class ShoppingCartIngredientAdapter
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (onCheckedListener == null) return;
-            onCheckedListener.onCheckBoxClick(shoppingCartIngredient.getId(),isChecked);
+            onCheckedListener.onCheckBoxClick(getSnapshot(holder
+                    .getAdapterPosition()).getString("id"), isChecked);
         });
 
         holder.view.setOnClickListener(v -> {
