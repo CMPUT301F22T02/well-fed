@@ -115,6 +115,8 @@ public class MealPlanDB {
                             HashMap<String, Object> ingredientMap =
                                     new HashMap<>();
 
+                            ingredient.setId(foundIngredient.getId());
+
                             // Sets fields.
                             ingredientMap.put("ingredientRef",
                                     ingredientDB.getDocumentReference(
@@ -129,7 +131,7 @@ public class MealPlanDB {
                             // Check if the counter has reached the number of
                             // ingredients and recipes.
                             if (counter.get() == numOfIngredientsAndRecipes) {
-                                addMealPlanHelper(mealPlanMap, mealPlan,
+                                addMealPlanSync(mealPlanMap, mealPlan,
                                         mealPlanIngredients, mealPlanRecipes,
                                         listener);
                             }
@@ -165,7 +167,7 @@ public class MealPlanDB {
 
                                         if (counter.get() ==
                                                 numOfIngredientsAndRecipes) {
-                                            addMealPlanHelper(mealPlanMap,
+                                            addMealPlanSync(mealPlanMap,
                                                     mealPlan,
                                                     mealPlanIngredients,
                                                     mealPlanRecipes, listener);
