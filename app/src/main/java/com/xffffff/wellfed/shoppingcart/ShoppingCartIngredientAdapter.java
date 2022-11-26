@@ -21,11 +21,14 @@ import java.util.Locale;
 public class ShoppingCartIngredientAdapter
         extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
 
+    private ShoppingCartDB db;
+
     /**
      * Constructor for the adapter
      */
     public ShoppingCartIngredientAdapter(ShoppingCartDB db) {
         super(db.getQuery());
+        this.db = db;
     }
 
     private OnCheckedListener onCheckedListener;
@@ -65,30 +68,19 @@ public class ShoppingCartIngredientAdapter
     public void onBindViewHolder(@NonNull ViewHolder holder,
                                  int position) {
         DocumentSnapshot doc = getSnapshot(position);
-        String description = doc.getString("description");
-        String category = doc.getString("category");
-        String unit = doc.getString("unit");
-        String id = doc.getId();
-        boolean isPickedUp = (Boolean) doc.getData().get("picked");
-        Double amount = ((Double) doc.getData().get("amount"));
+        ShoppingCartIngredient shoppingCartIngredient =
+                db.snapshotToShoppingCartIngredient(doc);
 
-        ShoppingCartIngredient shoppingCartIngredient = new ShoppingCartIngredient(description);
-        shoppingCartIngredient.setId(id);
-        shoppingCartIngredient.setCategory(category);
-        shoppingCartIngredient.setUnit(unit);
-        shoppingCartIngredient.setPickedUp(isPickedUp);
-        shoppingCartIngredient.setAmount(amount);
+        holder.description.setText(shoppingCartIngredient.getDescription());
+        String amountText = String.format(Locale.CANADA, "%.2f", shoppingCartIngredient.getAmount());
+        holder.subtext.setText(amountText + " " + shoppingCartIngredient.getUnit() + " | "
+                + shoppingCartIngredient.getCategory());
+        holder.checkBox.setChecked(shoppingCartIngredient.isPickedUp);
 
-        holder.description.setText(description);
-        String amountText = String.format(Locale.CANADA, "%.2f", amount);
-        holder.subtext.setText(amountText + " " + unit + " | " + category);
-        holder.checkBox.setChecked(isPickedUp);
-        if (holder.checkBox.isChecked()) {
-
-        }
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (onCheckedListener == null) return;
-            onCheckedListener.onCheckBoxClick(id,isChecked);
+            onCheckedListener.onCheckBoxClick(getSnapshot(holder
+                    .getAdapterPosition()).getString("id"), isChecked);
         });
 
         holder.view.setOnClickListener(v -> {

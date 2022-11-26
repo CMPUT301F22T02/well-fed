@@ -104,7 +104,6 @@ public class ShoppingCartFragment extends Fragment
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        controller.generateShoppingCart();
         recyclerView = view.findViewById(R.id.shopping_cart_list);
 
         SortingFragment sortingFragment = new SortingFragment();

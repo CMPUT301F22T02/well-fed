@@ -2,6 +2,7 @@ package com.xffffff.wellfed.shoppingcart;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -392,6 +393,24 @@ public class ShoppingCartDB {
          */
         void onUpdateShoppingCart(ShoppingCart shoppingCart, boolean success);
 
+    }
+
+    public ShoppingCartIngredient snapshotToShoppingCartIngredient(DocumentSnapshot doc) {
+        String description = doc.getString("description");
+        String category = doc.getString("category");
+        String unit = doc.getString("unit");
+        String id = doc.getId();
+        boolean isPickedUp = (Boolean) doc.getData().get("picked");
+        Double amount = ((Double) doc.getData().get("amount"));
+
+        ShoppingCartIngredient shoppingCartIngredient = new ShoppingCartIngredient(description);
+        shoppingCartIngredient.setId(id);
+        shoppingCartIngredient.setCategory(category);
+        shoppingCartIngredient.setUnit(unit);
+        shoppingCartIngredient.setPickedUp(isPickedUp);
+        shoppingCartIngredient.setAmount(amount);
+
+        return shoppingCartIngredient;
     }
 
 }

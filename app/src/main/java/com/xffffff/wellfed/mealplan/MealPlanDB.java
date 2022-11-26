@@ -115,6 +115,8 @@ public class MealPlanDB {
                             HashMap<String, Object> ingredientMap =
                                     new HashMap<>();
 
+                            ingredient.setId(foundIngredient.getId());
+
                             // Sets fields.
                             ingredientMap.put("ingredientRef",
                                     ingredientDB.getDocumentReference(
@@ -129,7 +131,7 @@ public class MealPlanDB {
                             // Check if the counter has reached the number of
                             // ingredients and recipes.
                             if (counter.get() == numOfIngredientsAndRecipes) {
-                                addMealPlanHelper(mealPlanMap, mealPlan,
+                                addMealPlanSync(mealPlanMap, mealPlan,
                                         mealPlanIngredients, mealPlanRecipes,
                                         listener);
                             }
@@ -165,7 +167,7 @@ public class MealPlanDB {
 
                                         if (counter.get() ==
                                                 numOfIngredientsAndRecipes) {
-                                            addMealPlanHelper(mealPlanMap,
+                                            addMealPlanSync(mealPlanMap,
                                                     mealPlan,
                                                     mealPlanIngredients,
                                                     mealPlanRecipes, listener);
@@ -314,8 +316,8 @@ public class MealPlanDB {
      * @param snapshot the snapshot of the MealPlan proxy object to be
      *                 retrieved.
      */
-    public MealPlan getMealPlanProxy(DocumentSnapshot snapshot) {
-        MealPlan mealPlan = new MealPlan(snapshot.getString("title"));
+    public MealPlanProxy getMealPlanProxy(DocumentSnapshot snapshot) {
+        MealPlanProxy mealPlan = new MealPlanProxy(snapshot.getString("title"));
         mealPlan.setId(snapshot.getId());
         mealPlan.setCategory(snapshot.getString("category"));
         mealPlan.setEatDate(snapshot.getDate("eat date"));
@@ -346,14 +348,11 @@ public class MealPlanDB {
     public void getMealPlan(DocumentSnapshot snapshot,
                             OnGetMealPlanListener listener) {
         // Initializes a new MealPlan object and sets its fields.
-        MealPlan mealPlan = getMealPlanProxy(snapshot);
+        MealPlan mealPlan = getMealPlanProxy(snapshot).getMealPlan();
 
         // Initializes ArrayLists for ingredients & recipes.
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         ArrayList<Recipe> recipes = new ArrayList<>();
-
-        mealPlan.setIngredients(ingredients);
-        mealPlan.setRecipes(recipes);
 
         // Get the list of MealPlan ingredients from the MealPlan document.
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
