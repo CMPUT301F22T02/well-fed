@@ -341,6 +341,8 @@ public class MealPlanInstrumentedTest {
         Thread.sleep(1000);
         onView(withText(recipe1)).perform(click());
 
+        Thread.sleep(1000);
+
         onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText(recipe2));
@@ -474,9 +476,13 @@ public class MealPlanInstrumentedTest {
      */
     @Test
     public void testAddMealPlanWithRecipeAndIngredient() throws InterruptedException {
+
         String mealPlan = "Hearty Breakfast";
         String recipe = "Eggs and Bacon";
+        String recipe2 = "Pancakes";
         String ingredient = "Sliced Bread";
+        String ingredient2 = "Orange Juice";
+
         addRecipe(recipe);
         addIngredient(ingredient);
 
@@ -502,6 +508,46 @@ public class MealPlanInstrumentedTest {
         onView(withText(recipe)).perform(click());
 
         Thread.sleep(1000);
+        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        onView(withId(R.id.edit_recipe_title)).perform(typeText(recipe2));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("Pancakes Are delicious to eat"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.addButton)).perform(click());
+
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Pancake Mix"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Bread"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(click());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("250"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("g")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        Thread.sleep(1000);
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
@@ -518,6 +564,27 @@ public class MealPlanInstrumentedTest {
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
+        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText(ingredient2));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Fruit"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(click());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
+        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
         Thread.sleep(1000);
 
         onView(withId(R.id.save_fab)).perform(click());
@@ -527,6 +594,8 @@ public class MealPlanInstrumentedTest {
 
         cleanUpMealPlan(mealPlan);
         cleanUpRecipe(recipe);
+
+        cleanUpRecipe(recipe2);
         cleanUpIngredient(ingredient);
     }
 
@@ -739,17 +808,12 @@ public class MealPlanInstrumentedTest {
     public void testDeleteRecipeAndIngredientBeforeMealPlan() throws InterruptedException {
         addMealPlanAndIngredients("Hearty Breakfast");
 
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
         cleanUpRecipe("Eggs and Bacon");
 
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withText("Eggs and Bacon")).check(matches(isDisplayed()));
-
-        cleanUpIngredient("Sliced Bread");
-
-        onView(withId(R.id.fragment_ingredient_storage)).perform(click());
-        onView(withText("Sliced Bread")).check(matches(isDisplayed()));
 
         cleanUpMealPlan("Hearty Breakfast");
         cleanUpRecipe("Eggs and Bacon");
