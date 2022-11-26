@@ -156,21 +156,6 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     }
 
     /**
-     * Checks if an item is in the past - if it is, delete it and display snackbar.
-     * @param mealPlan the mealplan to check
-     */
-    public void checkMealInPast(MealPlan mealPlan) {
-        Date today = new Date(System.currentTimeMillis()-24*60*60*1000);
-        Date eatDate = mealPlan.getEatDate();
-
-        assert eatDate != null;
-        if (eatDate.getTime() < today.getTime()) {
-            deleteMealPlan(mealPlan, true);
-            this.activity.makeSnackbar("Cannot make a MealPlan in the past.");
-        }
-    }
-
-    /**
      * The scaleRecipe method for the MealPlanController. Scales a recipe
      * to the desired number of servings.
      *
