@@ -47,6 +47,7 @@ public class MealPlanController {
         adapter = new MealPlanAdapter(db);
     }
 
+
     public void startListening(String id) {
         if (listenerRegistration == null) {
             listenerRegistration = db.getMealPlanDocumentReference(id)
