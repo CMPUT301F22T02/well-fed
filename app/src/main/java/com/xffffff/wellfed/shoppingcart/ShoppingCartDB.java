@@ -2,6 +2,7 @@ package com.xffffff.wellfed.shoppingcart;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -15,6 +16,7 @@ import com.xffffff.wellfed.mealplan.MealPlanDB;
 import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.recipe.RecipeDB;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -92,6 +94,7 @@ public class ShoppingCartDB {
 
     }
 
+
     public void addShoppingHelper(Ingredient ingredient,
                                   OnAddShoppingCart listener) {
         ShoppingCartIngredient shoppingCartIngredient =
@@ -155,6 +158,33 @@ public class ShoppingCartDB {
 
     }
 
+
+    /**
+     * Update an ingredient in the shopping cart.
+     */
+    public void updateIngredient(String id, boolean isPickedUp,
+                                 OnPickedUpChange listener) {
+        if (id == null) {
+            listener.onPickedUpChange(false);
+            return;
+        }
+
+        DocumentReference doc = collection.document(id);
+        doc.update("picked",
+                        isPickedUp
+                )
+                .addOnSuccessListener(success -> {
+                    listener.onPickedUpChange(true);
+                }).addOnFailureListener(failure -> {
+                    listener.onPickedUpChange(false);
+                });
+
+    }
+
+    public interface OnPickedUpChange {
+        public void onPickedUpChange(boolean success);
+    }
+
     /**
      * Get the shopping cart.
      */
@@ -195,6 +225,22 @@ public class ShoppingCartDB {
         collection.document(ingredient.getId()).delete().addOnCompleteListener(
                 task -> listener.onRemoveShoppingCart(ingredient,
                         task.isSuccessful()));
+    }
+
+    public void deleteIngredient(String id, OnDelete listener) {
+        if (id == null) {
+            listener.onDelete(false);
+            return;
+        }
+
+        collection.document(id).delete().addOnCompleteListener(
+                task -> listener.onDelete(task.isSuccessful()));
+    }
+
+    ;
+
+    public interface OnDelete {
+        public void onDelete(boolean succeess);
     }
 
     /**
@@ -347,6 +393,24 @@ public class ShoppingCartDB {
          */
         void onUpdateShoppingCart(ShoppingCart shoppingCart, boolean success);
 
+    }
+
+    public ShoppingCartIngredient snapshotToShoppingCartIngredient(DocumentSnapshot doc) {
+        String description = doc.getString("description");
+        String category = doc.getString("category");
+        String unit = doc.getString("unit");
+        String id = doc.getId();
+        boolean isPickedUp = (Boolean) doc.getData().get("picked");
+        Double amount = ((Double) doc.getData().get("amount"));
+
+        ShoppingCartIngredient shoppingCartIngredient = new ShoppingCartIngredient(description);
+        shoppingCartIngredient.setId(id);
+        shoppingCartIngredient.setCategory(category);
+        shoppingCartIngredient.setUnit(unit);
+        shoppingCartIngredient.setPickedUp(isPickedUp);
+        shoppingCartIngredient.setAmount(amount);
+
+        return shoppingCartIngredient;
     }
 
 }

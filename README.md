@@ -30,6 +30,7 @@ Our app is a detailed but simple-to-use meal-planning application, with ways to 
 - Adding/updating/removing meals from meal plan
 - Sorting/searching for ingredients and recipes
 - Automatic updating of the shopping list based on meal plans and current storage
+- Ingredients that expire by the time a meal plan is to be made are placed in the shopping cart 
 - Automatic unit conversion for items in the shopping list
 - Sleek and effective UI design
 
