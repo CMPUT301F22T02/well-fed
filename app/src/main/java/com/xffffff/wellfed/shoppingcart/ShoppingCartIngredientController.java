@@ -69,12 +69,12 @@ public class ShoppingCartIngredientController {
 
     public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);
-        adapter.changeQuery(query);
+        adapter.setQuery(query);
     }
 
     public void sortByField(String field) {
         Query query = db.getSortedQuery(field);
-        adapter.changeQuery(query);
+        adapter.setQuery(query);
     }
 
     /**

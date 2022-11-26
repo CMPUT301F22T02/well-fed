@@ -119,7 +119,7 @@ public class IngredientStorageController {
     public void getSortedResults(String field) {
         this.currentField = field;
         Query query = db.getSortedQuery(field);
-        adapter.changeQuery(query);
+        adapter.setQuery(query);
     }
 
     /**
@@ -129,6 +129,6 @@ public class IngredientStorageController {
      */
     public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);
-        adapter.changeQuery(query);
+        adapter.setQuery(query);
     }
 }

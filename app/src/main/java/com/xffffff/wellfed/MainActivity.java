@@ -15,6 +15,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.xffffff.wellfed.common.Launcher;
 import com.xffffff.wellfed.navigation.NavigationCollectionAdapter;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 public class MainActivity extends ActivityBase {
@@ -52,25 +54,13 @@ public class MainActivity extends ActivityBase {
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(navigationCollectionAdapter);
         bottomAppBar = findViewById(R.id.bottomAppBar);
+        List<Integer> itemPageList = Arrays.asList(R.id.ingredient_storage_item,
+                R.id.recipe_book_item, R.id.meal_book_item,
+                R.id.shopping_cart_item);
+
         bottomAppBar.setOnMenuItemClickListener(menuItem -> {
-            int j;
-            switch (menuItem.getItemId()) {
-                case R.id.ingredient_storage_item:
-                    j = 0;
-                    break;
-                case R.id.recipe_book_item:
-                    j = 1;
-                    break;
-                case R.id.meal_book_item:
-                    j = 2;
-                    break;
-                case R.id.shopping_cart_item:
-                    j = 3;
-                    break;
-                default:
-                    return false;
-            }
-            viewPager.setCurrentItem(j);
+            int page = itemPageList.indexOf(menuItem.getItemId());
+            viewPager.setCurrentItem(page);
             return true;
         });
         fab = findViewById(R.id.fab);
@@ -93,18 +83,30 @@ public class MainActivity extends ActivityBase {
                 new ViewPager2.OnPageChangeCallback() {
                     @Override public void onPageSelected(int position) {
                         super.onPageSelected(position);
+                        // update the bottom app bar selected icon
                         bottomAppBar = findViewById(R.id.bottomAppBar);
 
                         Menu menu = bottomAppBar.getMenu();
-
                         for (int i = 0; i < menu.size(); ++i) {
                             menu.getItem(i).getIcon().setTint(colorOutline);
                         }
-
                         menu.getItem(position).getIcon().setTint(colorPrimary);
+
+                        // update history stack
                         if (history.size() == 0 || history.peek() != position) {
                             history.push(position);
                         }
+
+                        // Hide the fab if the current page is the shopping
+                        // cart page
+                        if (position == 3) {
+                            fab.hide();
+                        } else {
+                            fab.show();
+                        }
+
+
+
                     }
                 });
 

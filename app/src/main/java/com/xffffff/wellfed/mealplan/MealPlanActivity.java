@@ -66,6 +66,7 @@ public class MealPlanActivity extends ActivityBase
      * The meal plan object.
      */
     private MealPlan mealPlan;
+    private FloatingActionButton fab;
 
     /**
      * OnCreate method. It is called when the activity is created. It sets up
@@ -77,11 +78,22 @@ public class MealPlanActivity extends ActivityBase
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
-        Intent intent = getIntent();
+
+        fab = findViewById(R.id.save_fab);
+        titleTextView =
+                findViewById(R.id.mealPlanTitleTextView);
+        categoryTextView =
+                findViewById(R.id.mealPlanCategoryTextView);
+        dateTextView = findViewById(R.id.mealPlanDateTextView);
+        servingsTextView =
+                findViewById(R.id.mealPlanNumberOfServingsTextView);
+        dateUtil = new DateUtil();
 
         controller = new MealPlanController(this);
 
+        Intent intent = getIntent();
         mealPlan = (MealPlan) intent.getSerializableExtra(ARG_MEAL_PLAN);
+
         controller.startListening(mealPlan.getId());
         controller.setOnDataChanged(updatedMealPlan -> {
             mealPlan = updatedMealPlan;
@@ -107,7 +119,7 @@ public class MealPlanActivity extends ActivityBase
                 new DeleteButton(this, findViewById(R.id.deleteButton),
                         "Delete Meal Plan", this);
 
-        FloatingActionButton fab = findViewById(R.id.save_fab);
+
         fab.setOnClickListener(view -> launcher.launch(mealPlan));
     }
 
@@ -168,16 +180,7 @@ public class MealPlanActivity extends ActivityBase
 
 
     public void updateUI() {
-        titleTextView =
-                findViewById(R.id.mealPlanTitleTextView);
-        categoryTextView =
-                findViewById(R.id.mealPlanCategoryTextView);
-        dateTextView = findViewById(R.id.mealPlanDateTextView);
-        servingsTextView =
-                findViewById(R.id.mealPlanNumberOfServingsTextView);
-
         titleTextView.setText(mealPlan.getTitle());
-        dateUtil = new DateUtil();
         String mealPlanDateText =
                 "Date: " + dateUtil.format(mealPlan.getEatDate(), "yyyy-MM-dd");
         dateTextView.setText(mealPlanDateText);
@@ -191,6 +194,12 @@ public class MealPlanActivity extends ActivityBase
         recipeAdapter.notifyDataSetChanged();
         ingredientAdapter.setItems(mealPlan.getIngredients());
         ingredientAdapter.notifyDataSetChanged();
+
+        if (mealPlan instanceof MealPlanProxy) {
+            fab.hide();
+        } else {
+            fab.show();
+        }
     }
 
     @Override

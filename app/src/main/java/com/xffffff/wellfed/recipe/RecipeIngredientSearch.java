@@ -50,7 +50,7 @@ public class RecipeIngredientSearch extends ActivityBase
                 .add(R.id.fragment_sort_container, sortingFragment).commit();
 
         SearchInput searchInput = findViewById(R.id.search_input);
-        searchInput.setOnTextChange(s -> adapter.changeQuery(db.getSearchQuery(s)));
+        searchInput.setOnTextChange(s -> adapter.setQuery(db.getSearchQuery(s)));
 
 
         adapter = new RecipeIngredientSearchAdapter(db);

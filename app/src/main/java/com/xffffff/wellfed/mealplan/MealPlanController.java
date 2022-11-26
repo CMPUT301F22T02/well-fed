@@ -5,8 +5,10 @@ import android.util.Pair;
 
 import com.google.firebase.firestore.ListenerRegistration;
 import com.xffffff.wellfed.ActivityBase;
+import com.xffffff.wellfed.common.AdapterDataObserver;
+import com.xffffff.wellfed.common.DBAdapter;
 import com.xffffff.wellfed.common.DBConnection;
-import com.xffffff.wellfed.common.Launcher;
+import com.xffffff.wellfed.common.DateUtil;
 import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.unit.Unit;
@@ -14,7 +16,7 @@ import com.xffffff.wellfed.unit.UnitConverter;
 
 import java.util.Date;
 
-public class MealPlanController {
+public class MealPlanController implements DBAdapter.OnDataChangedListener {
     private final ActivityBase activity;
     private ListenerRegistration listenerRegistration;
     /**
@@ -22,15 +24,23 @@ public class MealPlanController {
      */
     private final MealPlanDB db;
     private MealPlanAdapter adapter;
+    private OnDataChanged onDataChanged;
+    private OnAdapterDataChangedListener onAdapterDataChangedListener;
+
+    public interface OnDataChanged {
+        void onDataChanged(MealPlan mealPlan);
+    }
+
+    public interface OnAdapterDataChangedListener {
+        void onAdapterDataChanged(MealPlan mealPlan);
+    }
 
     public void setOnDataChanged(OnDataChanged onDataChanged) {
         this.onDataChanged = onDataChanged;
     }
 
-    private OnDataChanged onDataChanged;
-
-    public interface OnDataChanged {
-        public void onDataChanged(MealPlan mealPlan);
+    public void setOnAdapterChangedListener(OnAdapterDataChangedListener listener) {
+        this.onAdapterDataChangedListener = listener;
     }
 
     /**
@@ -45,6 +55,8 @@ public class MealPlanController {
                 new DBConnection(activity.getApplicationContext());
         db = new MealPlanDB(connection);
         adapter = new MealPlanAdapter(db);
+        adapter.setOnDataChangedListener(this);
+        onDataChanged();
     }
 
 
@@ -181,5 +193,30 @@ public class MealPlanController {
         }
         scaledRecipe.setServings(mealPlanServings);
         return scaledRecipe;
+    }
+
+    /**
+     * If data is changed
+     */
+    @Override public void onDataChanged() {
+        if (onAdapterDataChangedListener != null) {
+            MealPlan currentMealPlan = getCurrentMealPlan();
+            onAdapterDataChangedListener.onAdapterDataChanged(currentMealPlan);
+        }
+    }
+
+    /**
+     * Get today's meal plan
+     */
+    public MealPlan getCurrentMealPlan() {
+        Date today = new Date();
+        DateUtil dateUtil = new DateUtil();
+        for (MealPlan mealPlan : adapter.getMealPlans()) {
+            Date eatDate = mealPlan.getEatDate();
+            if (dateUtil.equals(eatDate, today)) {
+                return mealPlan;
+            }
+        }
+        return null;
     }
 }
