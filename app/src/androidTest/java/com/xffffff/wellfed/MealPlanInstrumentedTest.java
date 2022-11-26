@@ -510,6 +510,9 @@ public class MealPlanInstrumentedTest {
         Thread.sleep(1000);
         onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
+        Thread.sleep(1000);
+        closeSoftKeyboard();
+
         onView(withId(R.id.edit_recipe_title)).perform(typeText(recipe2));
         closeSoftKeyboard();
 
@@ -526,6 +529,7 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.addButton)).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.edit_descriptionInput)).perform(typeText("Pancake Mix"));
         closeSoftKeyboard();
@@ -552,7 +556,11 @@ public class MealPlanInstrumentedTest {
 
         closeSoftKeyboard();
         Thread.sleep(1000);
+
         onView(withText(ingredient)).perform(click());
+
+        Thread.sleep(1000);
+        closeSoftKeyboard();
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
         closeSoftKeyboard();
@@ -565,6 +573,7 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.edit_descriptionInput)).perform(typeText(ingredient2));
         closeSoftKeyboard();
@@ -890,10 +899,11 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(15000);
+        Thread.sleep(5000);
 
         onView(withText(mealPlan)).check(matches(isDisplayed()));
         onView(withText(mealPlan)).perform(click());
+        Thread.sleep(1000);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
