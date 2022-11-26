@@ -1,7 +1,6 @@
 package com.xffffff.wellfed.unit;
 
 import android.content.Context;
-import android.util.JsonReader;
 import android.util.Pair;
 
 import com.google.gson.Gson;
@@ -17,9 +16,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-//TODO: cite https://en.wikibooks.org/wiki/Cookbook:Units_of_measurement
-//TODO: cite http://conversion.org/
 
 /**
  * UnitConverter is a class that converts units to other units
@@ -39,13 +35,11 @@ public class UnitConverter {
      * densities in g/mL
      */
     HashMap<String, Double> ingredientDensityMap;
-
     /**
      * The units ArrayList is an ArrayList of all the units that are
      * supported by the app
      */
     ArrayList<String> units;
-
 
     /**
      * The UnitConverter constructor initializes the ingredientDensityMap and
