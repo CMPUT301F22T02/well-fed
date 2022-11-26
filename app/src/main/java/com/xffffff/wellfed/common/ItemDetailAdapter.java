@@ -32,10 +32,10 @@ public class ItemDetailAdapter extends ItemAdapter {
                                  int position) {
         ViewHolder holder1 = (ViewHolder) holder;
         Ingredient ingredient = (Ingredient) getItems().get(position);
-        holder1.title.setText(
+        holder1.headline.setText(
                 String.format(Locale.CANADA, "%.2f", ingredient.getAmount()) + " "
                         + ingredient.getUnit());
-        holder1.headline.setText(ingredient.getDescription() + " | " + ingredient
+        holder1.title.setText(ingredient.getDescription() + " | " + ingredient
                 .getCategory());
     }
 
