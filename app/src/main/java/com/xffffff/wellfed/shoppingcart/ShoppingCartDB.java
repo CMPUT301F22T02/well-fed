@@ -18,7 +18,14 @@ import com.xffffff.wellfed.recipe.RecipeDB;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// TODO: create DB connection between shopping cart and Firestore.
+/**
+ * This class is the database for the shopping cart list
+ * <p>
+ * It is used to store the ingredients in the shopping cart list
+ * and to retrieve them
+ * It also contains methods to add and remove ingredients from the list
+ * </p>
+ */
 public class ShoppingCartDB {
     /**
      * Holds the tag for the logging purposes.
@@ -76,13 +83,13 @@ public class ShoppingCartDB {
         ingredientDB.getIngredient(ingredient, (foundIngredient, success1) -> {
             if (foundIngredient == null) {
                 ingredientDB.addIngredient(ingredient,
-                        (addedIngredient, success) -> {
-                            if (!success) {
-                                listener.onAddShoppingCart(null, false);
-                            }
-                            ingredient.setId(addedIngredient.getId());
-                            addShoppingHelper(ingredient, listener);
-                        });
+                    (addedIngredient, success) -> {
+                        if (!success) {
+                            listener.onAddShoppingCart(null, false);
+                        }
+                        ingredient.setId(addedIngredient.getId());
+                        addShoppingHelper(ingredient, listener);
+                    });
             } else {
                 ingredient.setId(foundIngredient.getId());
                 addShoppingHelper(ingredient, listener);
@@ -92,10 +99,16 @@ public class ShoppingCartDB {
 
     }
 
+    /**
+     * addShoppingHelper is a helper method for addIngredient.
+     *
+     * @param ingredient The ingredient to add to the shopping cart.
+     * @param listener   The listener to call when the ingredient is added.
+     */
     public void addShoppingHelper(Ingredient ingredient,
                                   OnAddShoppingCart listener) {
         ShoppingCartIngredient shoppingCartIngredient =
-                new ShoppingCartIngredient(ingredient.getDescription());
+            new ShoppingCartIngredient(ingredient.getDescription());
         shoppingCartIngredient.setCategory(ingredient.getCategory());
         shoppingCartIngredient.setAmount(ingredient.getAmount());
         shoppingCartIngredient.setUnit(ingredient.getUnit());
@@ -112,7 +125,7 @@ public class ShoppingCartDB {
         storageIngredientMap.put("picked", false);
         storageIngredientMap.put("complete", false);
         storageIngredientMap.put("Ingredient",
-                ingredientDB.getDocumentReference(ingredient));
+            ingredientDB.getDocumentReference(ingredient));
         storageIngredientMap.put("search-field", ingredient.getDescription().toLowerCase());
 
         collection.add(storageIngredientMap).addOnCompleteListener(task -> {
@@ -139,19 +152,19 @@ public class ShoppingCartDB {
 
         DocumentReference doc = collection.document(ingredient.getId());
         doc.update("id", ingredient.getId(), "description",
-                        ingredient.getDescription(), "amount",
-                        ingredient.getAmount(),
-                        "unit", ingredient.getUnit(), "category",
-                        ingredient.getCategory(), "Ingredient",
-                        ingredientDB.getDocumentReference(ingredient), "picked",
-                        ingredient.isPickedUp, "complete",
-                        ingredient.isComplete,
-                        "search-field", ingredient.getDescription().toLowerCase())
-                .addOnSuccessListener(success -> {
-                    listener.onAddShoppingCart(ingredient, true);
-                }).addOnFailureListener(failure -> {
-                    listener.onAddShoppingCart(null, false);
-                });
+                ingredient.getDescription(), "amount",
+                ingredient.getAmount(),
+                "unit", ingredient.getUnit(), "category",
+                ingredient.getCategory(), "Ingredient",
+                ingredientDB.getDocumentReference(ingredient), "picked",
+                ingredient.isPickedUp, "complete",
+                ingredient.isComplete,
+                "search-field", ingredient.getDescription().toLowerCase())
+            .addOnSuccessListener(success -> {
+                listener.onAddShoppingCart(ingredient, true);
+            }).addOnFailureListener(failure -> {
+                listener.onAddShoppingCart(null, false);
+            });
 
     }
 
@@ -167,15 +180,15 @@ public class ShoppingCartDB {
             ArrayList<ShoppingCartIngredient> shoppingCart = new ArrayList<>();
             for (QueryDocumentSnapshot document : task.getResult()) {
                 ShoppingCartIngredient ingredient = new ShoppingCartIngredient(
-                        document.getString("description"));
+                    document.getString("description"));
                 ingredient.setId(document.getId());
                 ingredient.setAmount(document.getDouble("amount"));
                 ingredient.setUnit(document.getString("unit"));
                 ingredient.setCategory(document.getString("category"));
                 ingredient.setPickedUp(
-                        Boolean.TRUE.equals(document.getBoolean("picked")));
+                    Boolean.TRUE.equals(document.getBoolean("picked")));
                 ingredient.setComplete(
-                        Boolean.TRUE.equals(document.getBoolean("complete")));
+                    Boolean.TRUE.equals(document.getBoolean("complete")));
                 shoppingCart.add(ingredient);
             }
             listener.onGetShoppingCart(shoppingCart, true);
@@ -193,8 +206,8 @@ public class ShoppingCartDB {
         }
 
         collection.document(ingredient.getId()).delete().addOnCompleteListener(
-                task -> listener.onRemoveShoppingCart(ingredient,
-                        task.isSuccessful()));
+            task -> listener.onRemoveShoppingCart(ingredient,
+                task.isSuccessful()));
     }
 
     /**
@@ -205,57 +218,57 @@ public class ShoppingCartDB {
         mealPlanDB.getMealPlans((mealPlan, success) -> {
             if (success) {
                 storageIngredientDB.getAllStorageIngredients(
-                        (storageIngredients, success2) -> {
-                            if (success2) {
-                                ShoppingCart shoppingCart = new ShoppingCart();
-                                for (MealPlan meal : mealPlan) {
+                    (storageIngredients, success2) -> {
+                        if (success2) {
+                            ShoppingCart shoppingCart = new ShoppingCart();
+                            for (MealPlan meal : mealPlan) {
+                                for (Ingredient ingredient :
+                                    meal.getIngredients()) {
+                                    // Check if the ingredient is in the
+                                    // storage
+                                    // using getDescription
+                                    boolean inStorage = false;
+                                    for (StorageIngredient storageIngredient : storageIngredients) {
+                                        if (storageIngredient.getDescription()
+                                            .equals(ingredient.getDescription())) {
+                                            inStorage = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!inStorage) {
+                                        shoppingCart.addIngredient(
+                                            new ShoppingCartIngredient(
+                                                ingredient));
+                                    }
+                                }
+
+                                for (Recipe recipe : meal.getRecipes()) {
                                     for (Ingredient ingredient :
-                                            meal.getIngredients()) {
-                                        // Check if the ingredient is in the
-                                        // storage
+                                        recipe.getIngredients()) {
+                                        // Check if the ingredient is in
+                                        // the storage
                                         // using getDescription
                                         boolean inStorage = false;
                                         for (StorageIngredient storageIngredient : storageIngredients) {
                                             if (storageIngredient.getDescription()
-                                                    .equals(ingredient.getDescription())) {
+                                                .equals(ingredient.getDescription())) {
                                                 inStorage = true;
                                                 break;
                                             }
                                         }
                                         if (!inStorage) {
                                             shoppingCart.addIngredient(
-                                                    new ShoppingCartIngredient(
-                                                            ingredient));
-                                        }
-                                    }
-
-                                    for (Recipe recipe : meal.getRecipes()) {
-                                        for (Ingredient ingredient :
-                                                recipe.getIngredients()) {
-                                            // Check if the ingredient is in
-                                            // the storage
-                                            // using getDescription
-                                            boolean inStorage = false;
-                                            for (StorageIngredient storageIngredient : storageIngredients) {
-                                                if (storageIngredient.getDescription()
-                                                        .equals(ingredient.getDescription())) {
-                                                    inStorage = true;
-                                                    break;
-                                                }
-                                            }
-                                            if (!inStorage) {
-                                                shoppingCart.addIngredient(
-                                                        new ShoppingCartIngredient(
-                                                                ingredient));
-                                            }
+                                                new ShoppingCartIngredient(
+                                                    ingredient));
                                         }
                                     }
                                 }
-                                updateShoppingCart(listener);
-                            } else {
-                                listener.onUpdateShoppingCart(null, false);
                             }
-                        });
+                            updateShoppingCart(listener);
+                        } else {
+                            listener.onUpdateShoppingCart(null, false);
+                        }
+                    });
             }
         });
     }
@@ -287,7 +300,7 @@ public class ShoppingCartDB {
      */
     public Query getSearchQuery(String field) {
         return this.collection.orderBy("search-field")
-                .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
+            .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
     }
 
     public Query getQueryByPickedUp(boolean pickedUp) {
