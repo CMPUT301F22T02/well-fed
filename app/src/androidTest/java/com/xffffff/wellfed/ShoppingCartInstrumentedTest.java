@@ -9,6 +9,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -23,5 +24,55 @@ public class ShoppingCartInstrumentedTest {
     public void Before(){
         closeSoftKeyboard();
         onView(withId(R.id.shopping_cart_item)).perform(click());
+    }
+
+    @Test
+    public void testAddingMealPlan(){
+
+    }
+
+    @Test
+    public void testClickingOnShoppingCartItem(){
+
+    }
+
+    @Test
+    public void testDeletingMealPlan(){
+
+    }
+
+    @Test
+    public void testSortingWithItems(){
+
+    }
+
+    @Test
+    public void testSortingNoItems(){
+
+    }
+
+    @Test
+    public void testEditingMealPlanRecipe(){
+
+    }
+
+    @Test
+    public void testEditingMealPlanIngredient(){
+
+    }
+
+    @Test
+    public void testEditingMealPlanRecipeAndIngredient(){
+
+    }
+
+    @Test
+    public void testEditingStoredIngredient(){
+
+    }
+
+    @Test
+    public void testEditingRecipe(){
+
     }
 }
