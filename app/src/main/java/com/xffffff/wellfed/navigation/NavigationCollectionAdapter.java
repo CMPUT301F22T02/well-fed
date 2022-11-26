@@ -52,8 +52,6 @@ public class NavigationCollectionAdapter extends FragmentStateAdapter {
                 throw new IllegalStateException(
                     "Unexpected position: " + position);
         }
-        // Bundle args = new Bundle();
-        // fragment.setArguments(args);
         return fragment;
     }
 
