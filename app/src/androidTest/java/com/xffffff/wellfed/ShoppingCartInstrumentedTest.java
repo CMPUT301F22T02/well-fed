@@ -489,8 +489,18 @@ public class ShoppingCartInstrumentedTest {
     }
 
     @Test
-    public void testSortingNoItems(){
+    public void testSortingNoItems() throws InterruptedException {
+        onView(withId(R.id.fragment_sort_container3)).perform(click());
+        Thread.sleep(500);
+        onView(withText("description")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        Thread.sleep(500);
 
+        onView(withId(R.id.fragment_sort_container3)).perform(click());
+        Thread.sleep(500);
+        onView(withText("category")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        Thread.sleep(500);
     }
 
     @Test
