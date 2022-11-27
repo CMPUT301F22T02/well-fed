@@ -60,7 +60,10 @@ public class RecipeEditActivity extends EditActivityBase {
      * The download URL for the image associated with a recipe
      */
     private String downloadUrl;
-
+    /**
+     * A boolean for whether a photograph upload is in progress
+     */
+    private boolean uploadInProgress;
     /**
      * The image of the recipe to be displayed
      */
@@ -136,6 +139,7 @@ public class RecipeEditActivity extends EditActivityBase {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainerView, ingredientEditFragment)
                 .commit();
+        uploadInProgress = false;
 
         // activity started to add data a recipe
         if (recipe == null) {
@@ -151,6 +155,11 @@ public class RecipeEditActivity extends EditActivityBase {
                             Integer.parseInt(prepTime.getText()));
                     for (Ingredient ingredient : recipeIngredients) {
                         recipe.addIngredient(ingredient);
+                    }
+                    if (uploadInProgress) {
+                        this.makeSnackbar("Please wait for photograph to " +
+                                "finish uploading");
+                        return;
                     }
                     recipe.setPhotograph(downloadUrl);
                     onSave();
@@ -173,12 +182,17 @@ public class RecipeEditActivity extends EditActivityBase {
                     String photoUrl = recipe.getPhotograph();
                     recipe = new Recipe(title.getText());
                     recipe.setId(id);
-                    recipe.setPhotograph(photoUrl);
                     recipe.setComments(commentsTextInput.getText());
                     recipe.setServings(servings.getInteger());
                     recipe.setCategory(recipeCategory.getText());
                     recipe.addIngredients(recipeIngredients);
                     recipe.setPrepTimeMinutes(prepTime.getInteger());
+                    if (uploadInProgress) {
+                        this.makeSnackbar("Please wait for photograph to " +
+                                "finish uploading");
+                        return;
+                    }
+                    recipe.setPhotograph(photoUrl);
                     intent.putExtra("type", "edit");
                     intent.putExtra("item", recipe);
                     setResult(RESULT_OK, intent);
@@ -281,6 +295,7 @@ public class RecipeEditActivity extends EditActivityBase {
      * that is associated with the recipe being edited.
      */
     public void uploadImg() {
+        uploadInProgress = true;
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference recipesRef =
                 storage.getReference("recipe_imgs" + (new Date()));
@@ -308,7 +323,8 @@ public class RecipeEditActivity extends EditActivityBase {
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
-
+            uploadInProgress = false;
+            this.makeSnackbar("Failed to upload image");
         }).addOnSuccessListener(taskSnapshot -> {
             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
             // ...
@@ -318,6 +334,7 @@ public class RecipeEditActivity extends EditActivityBase {
                     recipe.setPhotograph(downloadUrl);
                 }
                 updateImageView(downloadUrl);
+                uploadInProgress = false;
             });
         });
     }
