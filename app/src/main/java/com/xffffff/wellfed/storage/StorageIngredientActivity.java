@@ -75,7 +75,8 @@ public class StorageIngredientActivity extends ActivityBase
         // Set ingredient quantity with id=ingredient_quantity_value
         TextView ingredientQuantity =
                 findViewById(R.id.ingredient_quantity_value);
-        ingredientQuantity.setText(ingredient.getAmountAndUnit());
+        ingredientQuantity.setText(ingredient.getAmount() + " " +
+                                   ingredient.getUnit());
 
         // Set ingredient location with id=ingredient_location_value
         TextView ingredientLocation =

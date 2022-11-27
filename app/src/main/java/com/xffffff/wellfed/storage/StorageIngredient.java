@@ -14,27 +14,13 @@ import java.util.Objects;
 public class StorageIngredient extends Ingredient
         implements Comparable<StorageIngredient> {
     /**
-     * The amount of the ingredient in the storage.
-     */
-    private Double amount;
-    /**
-     * The unit of the ingredient in the storage.
-     */
-    private String unit;
-
-    /**
      * The location of the ingredient in the storage.
      */
     private String location;
-
     /**
      * The best before date of the ingredient in the storage.
      */
     private Date bestBefore;
-    /**
-     * The category of the ingredient.
-     */
-    private String category;
     /**
      * The id of the storage ingredient.
      */
@@ -60,8 +46,8 @@ public class StorageIngredient extends Ingredient
     public StorageIngredient(String description, Double amount, String unit,
                              String location, Date bestBefore) {
         super(description);
-        this.amount = amount;
-        this.unit = unit;
+        this.setAmount(amount);
+        this.setUnit(unit);
         this.location = location;
         this.bestBefore = bestBefore;
     }
@@ -81,59 +67,11 @@ public class StorageIngredient extends Ingredient
                              String location, Date bestBefore,
                              String category) {
         super(description);
-        this.amount = amount;
-        this.unit = unit;
+        this.setAmount(amount);
+        this.setUnit(unit);
         this.location = location;
         this.bestBefore = bestBefore;
-        this.category = category;
-    }
-
-    /**
-     * Get categories of the ingredient.
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * Set categories of the ingredient.
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    /**
-     * Gets the amount of the ingredient in the storage.
-     *
-     * @return The amount of the ingredient in the storage
-     */
-    public Double getAmount() {
-        return amount;
-    }
-
-    /**
-     * Sets the amount of the ingredient in the storage.
-     *
-     * @param amount The amount of the ingredient in the storage
-     */
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    /**
-     * Gets the unit of the ingredient in the storage.
-     *
-     * @return The unit of the ingredient in the storage
-     */
-    public String getUnit() {
-        return unit;
-    }
-
-    /**
-     * Sets the unit of the ingredient in the storage.
-     */
-    public void setUnit(String unit) {
-        this.unit = unit;
+        this.setCategory(category);
     }
 
     /**
@@ -191,15 +129,6 @@ public class StorageIngredient extends Ingredient
     }
 
     /**
-     * Combines the amount and unit of the ingredient in the storage.
-     *
-     * @return The amount and unit of the ingredient in the storage
-     */
-    public String getAmountAndUnit() {
-        return amount + " " + unit;
-    }
-
-    /**
      * Checks if the ingredient is equal to another ingredient.
      *
      * @param o The ingredient to compare to.
@@ -235,8 +164,6 @@ public class StorageIngredient extends Ingredient
                 ((StorageIngredient) o).getBestBefore()));
         flags.add(Objects.equals(this.getStorageId(),
                 ((StorageIngredient) o).getStorageId()));
-        flags.add(Objects.equals(this.getAmountAndUnit(),
-                ((StorageIngredient) o).getAmountAndUnit()));
 
         return !flags.contains(false);
     }
