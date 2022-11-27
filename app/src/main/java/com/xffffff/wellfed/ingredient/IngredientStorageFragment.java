@@ -126,7 +126,10 @@ public class IngredientStorageFragment extends Fragment
         sortingFragment.setListener(this);
         sortingFragment.setOptions(
                 Arrays.asList("description", "best-before", "category",
-                        "location"));
+                        "location"),
+                Arrays.asList("Description", "Best Before Date", "Category",
+                        "Location")
+                );
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container, sortingFragment).commit();
 
