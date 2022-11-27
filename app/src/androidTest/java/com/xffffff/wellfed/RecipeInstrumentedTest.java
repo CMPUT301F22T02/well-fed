@@ -1095,13 +1095,26 @@ import org.junit.runner.RunWith;
     }
 
     /**
-     * Tests searching for a nonexistent Recipe.
+     * Tests searching for recipes.
+     * Searches done:
+     *      - tests searching for something not there, and asserts nothing is seen
+     *      - tests that after we clear a search, all of the stuff is visible
+     *      - tests the whole search functionality (if we search "Apple pie" can we see it?)
+     *      - tests the prefix search functionality (if we search "Apple" do we get "Apple pie" and
+     *          "Apple puree"?)
+     *      - tests case insensitivity for search
+     *
+     * Note: This test was refactored from multiple separate tests into one.
+     * The reason for this was because when each test stood on its own, the process of adding
+     * and deleting extended the length each test took to run.
      */
-    @Test public void testSearchNonexistent() throws Exception {
+    @Test public void testSearch() throws Exception {
         // add Apple pie, Apple puree, Bananas foster, Ice cream
         add5Recipes();
 
-        // search for something not there
+        /*
+        Searches for something not there.
+         */
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
         closeSoftKeyboard();
@@ -1116,55 +1129,26 @@ import org.junit.runner.RunWith;
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
         closeSoftKeyboard();
-        cleanup5Recipes();
-    }
 
-    /**
-     * Tests searching for a Recipe and then clearing the search box
-     */
-    @Test public void testClearSearch() throws Exception {
-        // add Apple pie, Apple puree, Bananas foster, Ice cream
-        add5Recipes();
-
-        // search for something not there
-        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
-        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
-        closeSoftKeyboard();
+        // assert all of the recipes are now visible after clearing the box
         Thread.sleep(1000);
 
-        // assert none of the recipes are visible
-        assertTextNotVisible("Apple pie");
-        assertTextNotVisible("Apple puree");
-        assertTextNotVisible("Bananas foster");
-        assertTextNotVisible("Ice cream");
-        assertTextNotVisible("Cereal");
+        onView(withText("Apple pie"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Bananas foster"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ice cream"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cereal"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
-
-        // assert all of the recipes are now visible
-        Thread.sleep(1000);
-        onView(withText("Apple pie")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Apple puree")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Bananas foster")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Ice cream")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Cereal")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-
-        cleanup5Recipes();
-    }
-
-    /**
-     * Tests searching for a Recipe's entire title
-     */
-    @Test public void testWholeSearch() throws Exception {
-        add5Recipes();
-
+        /*
+        Searches for the whole text of a Recipe.
+         */
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
-        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("Bananas foster"));
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("bananas foster"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -1172,19 +1156,14 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Apple puree");
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
-        onView(withText("Bananas foster")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Bananas foster"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
-        cleanup5Recipes();
-    }
 
-    /**
-     * Tests the prefix search
-     */
-    @Test public void testPrefixSearch() throws Exception {
-        add5Recipes();
-
+        /*
+        Tests the prefix search of a Recipe. (eg. if you enter "Apple", will it get "Apple pie"?
+         */
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("Apple"));
         closeSoftKeyboard();
@@ -1193,21 +1172,16 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Bananas foster");
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
-        onView(withText("Apple pie")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Apple puree")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple pie"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
-        cleanup5Recipes();
-    }
 
-    /**
-     * Tests searching for a Recipe's partial title (case insensitive)
-     */
-    @Test public void testCaseInsensitivity() {
-        add5Recipes();
-
+        /*
+        Tests the case insensitivity of searching for a Recipe.
+         */
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("apple"));
         closeSoftKeyboard();
@@ -1216,12 +1190,13 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Bananas foster");
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
-        onView(withText("Apple pie")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Apple puree")).check(ViewAssertions.matches(
-                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple pie"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+
         cleanup5Recipes();
     }
 }
