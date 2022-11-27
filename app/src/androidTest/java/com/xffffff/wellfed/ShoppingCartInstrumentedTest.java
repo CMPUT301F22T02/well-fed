@@ -448,8 +448,39 @@ public class ShoppingCartInstrumentedTest {
     }
 
     @Test
-    public void testDeletingMealPlan(){
+    public void testDeletingMealPlan() throws InterruptedException {
+        String mealPlan1 = "Hearty Breakfast",
+                mealPlan2 = "Another Hearty Breakfast";
+        addMealPlanAndIngredientAndRecipe(mealPlan1);
+        addMealPlan(mealPlan2);
 
+        Thread.sleep(1000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(5000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("4.00 count | Protein")).check(matches(isDisplayed()));
+        onView(withText("Bacon")).check(matches(isDisplayed()));
+        onView(withText("150.00 g | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("2.00 count | Bread")).check(matches(isDisplayed()));
+
+        Thread.sleep(3000);
+
+        cleanUpMealPlan(mealPlan1);
+
+        Thread.sleep(5000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
+        onView(withText("Bacon")).check(matches(isDisplayed()));
+        onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
+
+        cleanUpMealPlan(mealPlan2);
+        cleanUpRecipe("Eggs and Bacon");
+        cleanUpIngredient("Sliced Bread");
     }
 
     @Test
