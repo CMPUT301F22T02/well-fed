@@ -28,8 +28,8 @@ public class StorageIngredient extends Ingredient {
     /**
      * Creates a new StorageIngredient object without data.
      */
-    public StorageIngredient(String name) {
-        super(name);
+    public StorageIngredient(String description) {
+        super(description);
     }
 
     /**
