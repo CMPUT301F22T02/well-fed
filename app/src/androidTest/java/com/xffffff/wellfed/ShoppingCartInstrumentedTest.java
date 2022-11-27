@@ -374,8 +374,8 @@ public class ShoppingCartInstrumentedTest {
 
     @Before
     public void Before(){
-        closeSoftKeyboard();
         onView(withId(R.id.shopping_cart_item)).perform(click());
+        Intents.init();
     }
 
     @Test
