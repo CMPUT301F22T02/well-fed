@@ -558,12 +558,17 @@ import org.junit.runner.RunWith;
     }
 
     /**
-     * Tests sorting Ingredients by description.
+     * Tests sorting recipes by description, category, location,
+     * Note: These were refactored into one test, instead of many tests, one for each category.
+     * The reason for this was because adding and deleting the data took a very long time.
      */
-    @Test public void testSortByDescription() {
+    @Test public void testSort() {
         // should be Apple, Banana, Cheese, Ground Beef, Milk
         add5Ingredients();
-        // sort by description
+
+        /*
+        Tests sorting by description.
+         */
         clickSortButton();
         onView(withText("description")).inRoot(isPlatformPopup())
                 .perform(click());
@@ -595,16 +600,9 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_name)).check(matches(withText("Milk")));
         pressBack();
 
-        delete5Ingredients();
-    }
-
-    /**
-     * Tests sorting Ingredients by category.
-     */
-    @Test public void testSortByCategory() {
-        // should be Apple, Banana, Cheese, Ground Beef, Milk
-        add5Ingredients();
-        // sort by description
+        /*
+        Tests sorting by category.
+         */
         clickSortButton();
         onView(withText("category")).inRoot(isPlatformPopup()).perform(click());
 
@@ -661,16 +659,9 @@ import org.junit.runner.RunWith;
                 matches(withText("Ground Beef")));
         pressBack();
 
-        delete5Ingredients();
-    }
-
-    /**
-     * Tests sorting Ingredients by location.
-     */
-    @Test public void testSortByLocation() throws InterruptedException {
-        // should be Apple, Banana, Cheese, Ground Beef, Milk
-        add5Ingredients();
-        // sort by description
+        /*
+        Tests sorting by location.
+         */
         clickSortButton();
         onView(withText("location")).inRoot(isPlatformPopup()).perform(click());
 
@@ -718,12 +709,23 @@ import org.junit.runner.RunWith;
     }
 
     /**
-     * Tests searching for a nonexisting Ingredient.
+     * Tests searching for ingredients.
+     * Searches done:
+     *      - tests searching for something not there, and asserts nothing is seen
+     *      - tests that after we clear a search, all of the stuff is visible
+     *      - tests the whole search functionality (if we search "apple" can we see it?)
+     *      - tests case insensitivity for search
+     *
+     * Note: This test was refactored from multiple separate tests into one.
+     * The reason for this was because when each test stood on its own, the process of adding
+     * and deleting extended the length each test took to run.
      */
-    @Test public void testSearchNonexistent() throws Exception {
+    @Test public void testSearch() throws Exception {
         add5Ingredients();
 
-        // search for something not there
+        /*
+        Tests searching for something nonexistent.
+         */
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
         closeSoftKeyboard();
@@ -737,30 +739,8 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Cheese");
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
-        delete5Ingredients();
-    }
 
-    /**
-     * Tests searching and then clearing the search.
-     */
-    @Test public void testClearSearch() throws Exception {
-        add5Ingredients();
-
-        // search for something not there
-        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
-        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
-        closeSoftKeyboard();
-        Thread.sleep(1000);
-
-        // assert none of the ingredients are visible
-        assertTextNotVisible("Apple");
-        assertTextNotVisible("Banana");
-        assertTextNotVisible("Ground Beef");
-        assertTextNotVisible("Milk");
-        assertTextNotVisible("Cheese");
-
-        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
-
+        // check all of the ingredients are visible after clearing the search field
         Thread.sleep(1000);
         onView(withText("Apple")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -773,15 +753,9 @@ import org.junit.runner.RunWith;
         onView(withText("Cheese")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        delete5Ingredients();
-    }
-
-    /**
-     * Tests searching for the whole string in the description
-     */
-    @Test public void testWholeSearch() throws Exception {
-        add5Ingredients();
-
+        /*
+         * Tests case-insensitive whole search.
+         */
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("banana"));
         closeSoftKeyboard();
@@ -795,15 +769,10 @@ import org.junit.runner.RunWith;
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
-        delete5Ingredients();
-    }
 
-    /**
-     * Tests whether search is case-insensitive
-     */
-    @Test public void testCaseInsensitivity() throws Exception {
-        add5Ingredients();
-
+        /*
+        Tests case-insensitive partial search
+         */
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("b"));
         closeSoftKeyboard();
@@ -817,6 +786,9 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Ground Beef");
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+
         delete5Ingredients();
     }
+
+
 }

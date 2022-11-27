@@ -64,11 +64,19 @@ public class MealPlanInstrumentedTest {
         Intents.init();
     }
 
+    /**
+     * Saves a meal plan, with an assertion.
+     */
     private void testSaveMealPlan(){
         onView(withId(R.id.save_fab)).perform(click());
         intended(hasComponent(MealPlanEditActivity.class.getName()));
     }
 
+    /**
+     * Adds an ingredient to ingredient storage.
+     * @param description the description of the ingredient to add
+     * @throws InterruptedException when the thread sleeps are interrupted.
+     */
     private void addIngredient(String description) throws InterruptedException {
         onView(withId(R.id.ingredient_storage_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
@@ -100,6 +108,11 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
+    /**
+     * Adds a recipe to the recipe book.
+     * @param title the title of the recipe to add
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
     private void addRecipe(String title) throws InterruptedException {
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
@@ -166,6 +179,11 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
+    /**
+     * Adds a meal plan to the meal planner.
+     * @param mealPlan the name of the meal plan to add to the planner
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
     private void addMealPlan(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";

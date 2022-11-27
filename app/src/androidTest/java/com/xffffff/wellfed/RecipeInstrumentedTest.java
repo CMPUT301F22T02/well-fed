@@ -713,7 +713,6 @@ import org.junit.runner.RunWith;
 
     /**
      * Test editing the details of an ingredient in a Recipe
-     * TODO: add more to this test after view recipe ingredient functionality
      * is added
      */
     @Test public void testEditingIngredientOfARecipe()
