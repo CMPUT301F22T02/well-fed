@@ -342,6 +342,7 @@ import org.junit.runner.RunWith;
             onView(withId(R.id.recipe_rv)).perform(
                     RecyclerViewActions.actionOnItemAtPosition(0, click()));
             onView(withId(R.id.recipe_delete_btn)).perform(click());
+            Thread.sleep(timeout);
             onView(withText("Delete")).perform(click());
         }
     }
@@ -381,6 +382,7 @@ import org.junit.runner.RunWith;
         onView(withText("Egg Wrap")).perform(click());
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
 
@@ -489,6 +491,7 @@ import org.junit.runner.RunWith;
                 matches(hasDescendant(withText("Egg | Protein"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
     }
@@ -530,6 +533,7 @@ import org.junit.runner.RunWith;
                         RecyclerViewClickViewAction.clickChildViewWithId(
                                 R.id.deleteButton)));
 
+        Thread.sleep(timeout);
         // confirming delete
         onView(withText("Delete")).perform(click());
 
@@ -723,6 +727,7 @@ import org.junit.runner.RunWith;
                 matches(hasDescendant(withText("Egg | Protein"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
     }
 
@@ -800,6 +805,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Egg Wrap")));
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv)).perform(RecyclerViewActions.actionOnItem(
@@ -808,6 +814,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Egg Salad")));
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv)).perform(RecyclerViewActions.actionOnItem(
@@ -816,6 +823,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Tacos")));
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv)).perform(RecyclerViewActions.actionOnItem(
@@ -824,6 +832,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Chicken pot pie")));
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         onView(withId(R.id.recipe_rv)).perform(RecyclerViewActions.actionOnItem(
@@ -832,6 +841,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_title_textView)).check(
                 matches(withText("Greek Salad")));
         onView(withId(R.id.recipe_delete_btn)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
     }
 
@@ -1074,6 +1084,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_storage_item)).perform(click());
         onView(withText("English muffin")).perform(click());
         onView(withId(R.id.ingredient_delete_button)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         // returning to the recipe
