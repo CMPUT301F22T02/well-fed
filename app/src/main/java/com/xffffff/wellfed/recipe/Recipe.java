@@ -52,12 +52,12 @@ public class Recipe implements Serializable {
     /**
      * Holds the number of servings that a Recipe makes.
      */
-    private Integer servings;
+    private Long servings;
 
     /**
      * Holds the prep time in minutes for a Recipe.
      */
-    private Integer prepTimeMinutes;
+    private Long prepTimeMinutes;
 
     /**
      * Holds a photograph of the result of a Recipe.
@@ -193,37 +193,37 @@ public class Recipe implements Serializable {
     /**
      * Gets the number of servings that a Recipe makes
      *
-     * @return An integer representing the number of servings a Recipe makes
+     * @return A long representing the number of servings a Recipe makes
      */
-    public Integer getServings() {
+    public Long getServings() {
         return servings;
     }
 
     /**
      * Sets the number of servings that a Recipe makes
      *
-     * @param servings An integer representing the number of servings a
+     * @param servings A long representing the number of servings a
      *                 Recipe makes
      */
-    public void setServings(Integer servings) {
+    public void setServings(Long servings) {
         this.servings = servings;
     }
 
     /**
      * Gets the time in minutes that it takes a Recipe to be prepared
      *
-     * @return An integer representing the preparation time in minutes
+     * @return A long representing the preparation time in minutes
      */
-    public Integer getPrepTimeMinutes() {
+    public Long getPrepTimeMinutes() {
         return prepTimeMinutes;
     }
 
     /**
      * Sets the prep time in minutes that it takes a Recipe to be prepared
      *
-     * @param prepTimeMinutes An integer representing the prep time in minutes.
+     * @param prepTimeMinutes A long representing the prep time in minutes.
      */
-    public void setPrepTimeMinutes(Integer prepTimeMinutes) {
+    public void setPrepTimeMinutes(Long prepTimeMinutes) {
         this.prepTimeMinutes = prepTimeMinutes;
     }
 

@@ -63,7 +63,6 @@ import java.util.Stack;
 
     @Test public void testBottomAppBarNavigation() {
         Map<Integer, Integer> menuItemsToFragmentIds = new HashMap<>();
-        Stack<Integer> history = new Stack<>();
         menuItemsToFragmentIds.put(R.id.ingredient_storage_item,
                 R.id.fragment_ingredient_storage);
         menuItemsToFragmentIds.put(R.id.meal_book_item,
