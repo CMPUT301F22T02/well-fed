@@ -34,9 +34,13 @@ public class ShoppingCartIngredientController {
      * This is the db of the shopping cart.
      */
     private ShoppingCartDB db;
-
+    /**
+     * This is the db of the storage ingredients.
+     */
     private StorageIngredientDB storageIngredientDB;
-
+    /**
+     * This is the db of the meal plans.
+     */
     private MealPlanDB mealPlanDB;
 
     /**
@@ -56,7 +60,7 @@ public class ShoppingCartIngredientController {
     /**
      * getSearchResults returns the search results for the given query.
      *
-     * @param field
+     * @param field The field to search.
      */
     public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);
@@ -66,7 +70,7 @@ public class ShoppingCartIngredientController {
     /**
      * sortByField sorts the shopping cart by the given field.
      *
-     * @param field
+     * @param field The field to sort by.
      */
     public void sortByField(String field) {
         Query query = db.getSortedQuery(field);
