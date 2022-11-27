@@ -724,8 +724,8 @@ import org.junit.runner.RunWith;
         add5Ingredients();
 
         // search for something not there
-        onView(withId(R.id.search_text)).perform(click());
-        onView(withId(R.id.search_text)).perform(typeText("X"));
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -736,7 +736,7 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
 
-        onView(withId(R.id.search_text)).perform(clearText());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
         delete5Ingredients();
     }
 
@@ -747,8 +747,8 @@ import org.junit.runner.RunWith;
         add5Ingredients();
 
         // search for something not there
-        onView(withId(R.id.search_text)).perform(click());
-        onView(withId(R.id.search_text)).perform(typeText("X"));
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -759,7 +759,7 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
 
-        onView(withId(R.id.search_text)).perform(clearText());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
 
         Thread.sleep(1000);
         onView(withText("Apple")).check(ViewAssertions.matches(
@@ -782,8 +782,8 @@ import org.junit.runner.RunWith;
     @Test public void testWholeSearch() throws Exception {
         add5Ingredients();
 
-        onView(withId(R.id.search_text)).perform(click());
-        onView(withId(R.id.search_text)).perform(typeText("banana"));
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("banana"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -794,7 +794,7 @@ import org.junit.runner.RunWith;
         onView(withText("Banana")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
-        onView(withId(R.id.search_text)).perform(clearText());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
         delete5Ingredients();
     }
 
@@ -804,8 +804,8 @@ import org.junit.runner.RunWith;
     @Test public void testCaseInsensitivity() throws Exception {
         add5Ingredients();
 
-        onView(withId(R.id.search_text)).perform(click());
-        onView(withId(R.id.search_text)).perform(typeText("b"));
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("b"));
         closeSoftKeyboard();
         Thread.sleep(1000);
 
@@ -816,7 +816,7 @@ import org.junit.runner.RunWith;
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         assertTextNotVisible("Ground Beef");
 
-        onView(withId(R.id.search_text)).perform(clearText());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
         delete5Ingredients();
     }
 }

@@ -120,6 +120,23 @@ public class IngredientTest {
     }
 
     /**
+     * Tests the set and get functionality of the ID.
+     */
+    @Test public void testID() {
+        Ingredient mock = mockIngredient();
+        assertNull(mock.getId());
+
+        // does it work with String objects?
+        String testID = "14567342-123";
+        mock.setId(testID);
+        assertEquals(testID, mock.getId());
+
+        // does it work with string literals?
+        mock.setId("14567342-123");
+        assertEquals("14567342-123", mock.getId());
+    }
+
+    /**
      * Tests that a ingredient is always equals if all of the fields are
      * identical.
      * This is done by changing each field individually, and then invoking
