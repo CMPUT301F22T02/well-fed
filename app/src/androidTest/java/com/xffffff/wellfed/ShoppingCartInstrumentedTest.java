@@ -401,8 +401,21 @@ public class ShoppingCartInstrumentedTest {
     }
 
     @Test
-    public void testAddingMultipleMealPlan(){
+    public void testAddingMultipleMealPlan() throws InterruptedException {
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
+        addMealPlan("Another Hearty Breakfast");
+        addMealPlan("Another Another Hearty Breakfast");
 
+        Thread.sleep(1000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(10000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("6.00 count | Protein")).check(matches(isDisplayed()));
+        onView(withText("Bacon")).check(matches(isDisplayed()));
+        onView(withText("225.00 g | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("3.00 count | Bread")).check(matches(isDisplayed()));
     }
 
     @Test
