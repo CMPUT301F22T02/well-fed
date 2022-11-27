@@ -15,11 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
-import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.ingredient.IngredientEditContract;
 import com.xffffff.wellfed.ingredient.StorageIngredient;
-
-import org.junit.Ignore;
 
 import java.util.Arrays;
 
