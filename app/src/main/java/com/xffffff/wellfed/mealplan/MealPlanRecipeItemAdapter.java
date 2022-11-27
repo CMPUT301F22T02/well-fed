@@ -28,7 +28,6 @@ public class MealPlanRecipeItemAdapter extends MealPlanItemAdapter<Recipe> {
         holder.getPrimaryTextView().setText(recipe.getTitle());
         holder.getSecondaryTextView().setText(recipe.getPrepTimeMinutes() +
                 " minutes | " + recipe.getCategory());
-        Picasso.get().load(recipe.getPhotograph()).rotate(90)
-                .into(holder.getImageView());
+        Picasso.get().load(recipe.getPhotograph()).into(holder.getImageView());
     }
 }
