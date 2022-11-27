@@ -21,6 +21,8 @@ Welcome to well-fed, a meal planning Android application!
 ## Compatibility
 Our app is best experienced on Android API 28 or higher, but can run on APIs as low as 22. We support both dark mode and light mode, so try out both!
 
+Please note: Even though our tests have attempted to achieve compatibility on many devices, it is very difficult to support all of them. So, the intended device used for testing is the Pixel 6 Pro API 22. On this device, all of the instrumented tests and unit tests pass. Slower devices may struggle with passing the tests, as the act of loading in elements may cause the test cases to click on them before they are available.
+
 ## Overview
 Our app is a detailed but simple-to-use meal-planning application, with ways to keep track of your ingredients, recipes, planned meals, and shopping list. You can record the ingredients you currently have in storage, and keep track of all of your favourite recipes. You can also manage what meals you plan to eat for the next week, and keep track of an automatically-generated shopping list based off of your meal plans and current storage. 
 
