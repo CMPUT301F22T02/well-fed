@@ -29,7 +29,7 @@ public class ShoppingCartIngredientController {
     /**
      * The Activity that the controller is attached to.
      */
-    private ActivityBase activity;
+    private final ActivityBase activity;
     /**
      * ShoppingCart adapter. This is used to update the recycler view.
      */
@@ -37,19 +37,37 @@ public class ShoppingCartIngredientController {
     /**
      * This is the db of the shopping cart.
      */
-    private ShoppingCartDB db;
+    private final ShoppingCartDB db;
 
-    private StorageIngredientDB storageIngredientDB;
+    /**
+     * This is the db for the storage ingredients.
+     */
+    private final StorageIngredientDB storageIngredientDB;
 
-    private MealPlanDB mealPlanDB;
+    /**
+     * This is the db for the meal plans.
+     */
+    private final MealPlanDB mealPlanDB;
 
+    /**
+     * This is the unit helper class for the controller.
+     */
     private UnitHelper unitHelper;
 
+    /**
+     * This is the unit converter class for the controller.
+     */
     private UnitConverter unitConverter;
 
-    private MealPlanController mealPlanController;
+    /**
+     * This is the constroller for the meal plans.
+     */
+    private final MealPlanController mealPlanController;
 
-    private DateUtil dateUtil;
+    /**
+     * This is the date util class for the controller.
+     */
+    private final DateUtil dateUtil;
 
     /**
      * The constructor for the controller.
@@ -73,7 +91,7 @@ public class ShoppingCartIngredientController {
     /**
      * getSearchResults returns the search results for the given query.
      *
-     * @param field
+     * @param field The field to search.
      */
     public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);
@@ -83,7 +101,7 @@ public class ShoppingCartIngredientController {
     /**
      * sortByField sorts the shopping cart by the given field.
      *
-     * @param field
+     * @param field The field to sort by.
      */
     public void sortByField(String field) {
         Query query = db.getSortedQuery(field);
@@ -172,8 +190,6 @@ public class ShoppingCartIngredientController {
                                     }
                                 }
                             }
-                        }
-                    }
 
                             // if shopping cart has those items update them
                             // accordingly
@@ -286,6 +302,12 @@ public class ShoppingCartIngredientController {
         });
     }
 
+    /**
+     * updateRequiredIngredients updates the required ingredients for the
+     * given meal plan.
+     * @param storedIngredients the ingredients to update.
+     * @param required the required ingredients.
+     */
     private void updateRequiredFromStorage(ArrayList<StorageIngredient> storedIngredients,
                                            HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         for (StorageIngredient stored : storedIngredients) {
@@ -318,6 +340,12 @@ public class ShoppingCartIngredientController {
         }
     }
 
+    /**
+     * updateRequiredIngredients updates the required ingredients for the
+     * @param ingredient the ingredient to update.
+     * @param mealPlan the meal plan to update.
+     * @param required the required ingredients.
+     */
     private void generateRequiredFromIngredients(Ingredient ingredient, MealPlan mealPlan,
                                                  HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         String uid = ingredientUid(ingredient);
@@ -348,6 +376,13 @@ public class ShoppingCartIngredientController {
         }
     }
 
+    /***
+     * generateRequiredFromRecipe generates the required ingredients for the
+     * given recipe.
+     * @param recipe the recipe to generate the required ingredients for.
+     * @param mealPlan the meal plan to generate the required ingredients for.
+     * @param required the required ingredients.
+     */
     private void generateRequiredFromRecipes(Recipe recipe, MealPlan mealPlan,
                                              HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         recipe = mealPlanController.scaleRecipe(recipe, mealPlan.getServings());
@@ -356,6 +391,11 @@ public class ShoppingCartIngredientController {
         }
     }
 
+    /**
+     * addIngredientToStorage adds the given ingredient to the storage.
+     * @param shoppingCartIngredient the ingredient to add.
+     * @param storageIngredient the storage ingredient to add.
+     */
     public void addIngredientToStorage(ShoppingCartIngredient shoppingCartIngredient,
                                        StorageIngredient storageIngredient) {
         Pair<Double, String> smallestShoppingIngredient =
