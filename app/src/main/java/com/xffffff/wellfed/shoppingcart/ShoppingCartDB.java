@@ -407,6 +407,11 @@ public class ShoppingCartDB {
 
     }
 
+    /**
+     * snapshot to shopping cart ingredient converter
+     * @param doc snapshot
+     * @return shopping cart ingredient
+     */
     public ShoppingCartIngredient snapshotToShoppingCartIngredient(DocumentSnapshot doc) {
         String description = doc.getString("description");
         String category = doc.getString("category");
