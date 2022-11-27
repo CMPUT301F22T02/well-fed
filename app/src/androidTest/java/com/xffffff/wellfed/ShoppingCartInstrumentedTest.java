@@ -419,8 +419,32 @@ public class ShoppingCartInstrumentedTest {
     }
 
     @Test
-    public void testClickingOnShoppingCartItem(){
+    public void testClickingOnShoppingCartItem() throws InterruptedException {
+        String ingredient1 = "Bacon",
+                ingredient2 = "Eggs",
+                ingredient3 = "Sliced Bread" ;
 
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
+
+        Thread.sleep(5000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(5000);
+
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient1))))).perform(click());
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient1))))).check(matches(isChecked()));
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient1))))).perform(click());
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient1))))).check(matches(not(isChecked())));
+
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient2))))).perform(click());
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient2))))).check(matches(isChecked()));
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient2))))).perform(click());
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient2))))).check(matches(not(isChecked())));
+
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).perform(click());
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).check(matches(isChecked()));
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).perform(click());
+        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).check(matches(not(isChecked())));
+        Thread.sleep(5000);
     }
 
     @Test
