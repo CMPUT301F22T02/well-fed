@@ -2,6 +2,7 @@ package com.xffffff.wellfed.recipe;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -9,14 +10,17 @@ import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 import com.xffffff.wellfed.EditActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
@@ -26,9 +30,7 @@ import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,7 +60,10 @@ public class RecipeEditActivity extends EditActivityBase {
      * The download URL for the image associated with a recipe
      */
     private String downloadUrl;
-
+    /**
+     * A boolean for whether a photograph upload is in progress
+     */
+    private boolean uploadInProgress;
     /**
      * The image of the recipe to be displayed
      */
@@ -70,7 +75,7 @@ public class RecipeEditActivity extends EditActivityBase {
             registerForActivityResult(new ActivityResultContracts.TakePicture(),
                     result -> {
                         if (result) {
-                            uploadImg();
+                            loadImage();
                         }
                     });
     /**
@@ -138,6 +143,7 @@ public class RecipeEditActivity extends EditActivityBase {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainerView, ingredientEditFragment)
                 .commit();
+        uploadInProgress = false;
 
         // activity started to add data a recipe
         if (recipe == null) {
@@ -150,6 +156,11 @@ public class RecipeEditActivity extends EditActivityBase {
                     recipe.setPrepTimeMinutes(prepTime.getLong());
                     for (Ingredient ingredient : recipeIngredients) {
                         recipe.addIngredient(ingredient);
+                    }
+                    if (uploadInProgress) {
+                        this.makeSnackbar("Please wait for photograph to " +
+                                "finish uploading");
+                        return;
                     }
                     recipe.setPhotograph(downloadUrl);
                     onSave();
@@ -172,12 +183,17 @@ public class RecipeEditActivity extends EditActivityBase {
                     String photoUrl = recipe.getPhotograph();
                     recipe = new Recipe(title.getText());
                     recipe.setId(id);
-                    recipe.setPhotograph(photoUrl);
                     recipe.setComments(commentsTextInput.getText());
                     recipe.setServings(servings.getLong());
                     recipe.setCategory(recipeCategory.getText());
                     recipe.addIngredients(recipeIngredients);
                     recipe.setPrepTimeMinutes(prepTime.getLong());
+                    if (uploadInProgress) {
+                        this.makeSnackbar("Please wait for photograph to " +
+                                "finish uploading");
+                        return;
+                    }
+                    recipe.setPhotograph(photoUrl);
                     intent.putExtra("type", "edit");
                     intent.putExtra("item", recipe);
                     setResult(RESULT_OK, intent);
@@ -185,9 +201,10 @@ public class RecipeEditActivity extends EditActivityBase {
                 }
             });
         }
-
-        uri = initTempUri();
-        recipeImg.setOnClickListener(view -> cameraLauncher.launch(uri));
+        recipeImg.setOnClickListener(view -> {
+            uri = initTempUri();
+            cameraLauncher.launch(uri);
+        });
     }
 
     /**
@@ -269,54 +286,62 @@ public class RecipeEditActivity extends EditActivityBase {
                 getString(R.string.temp_images_dir));
         tempImgDir.mkdir();
 
-        File tempImg = new File(tempImgDir, getString(R.string.temp_image));
+        File tempImg = new File(tempImgDir, UUID.randomUUID().toString());
         return FileProvider.getUriForFile(this, getString(R.string.authorities),
                 tempImg);
     }
 
     /**
-     * Uploads the image taken for a recipe to an external image hoster.
-     * Also stores a reference to this image in the Firebase Firestore document
-     * that is associated with the recipe being edited.
+     * Loads the image taken with camera
      */
-    public void uploadImg() {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference recipesRef =
-                storage.getReference("recipe_imgs" + (new Date()));
+    public void loadImage() {
+        uploadInProgress = true;
+        Glide.with(this).asBitmap().load(uri).into(new CustomTarget<Bitmap>() {
+            @Override public void onResourceReady(@NonNull Bitmap resource,
+                                                  @Nullable
+                                                          Transition<?
+                                                                  super Bitmap> transition) {
+                recipeImg.setImageBitmap(resource);
+                uploadImage(resource);
+            }
 
-        Bitmap bitmap = null;
-        try {
-            bitmap =
-                    MediaStore.Images.Media.getBitmap(this.getContentResolver(),
-                            uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+            }
+        });
+    }
 
-        if (bitmap == null) {
-
-            return;
-        }
+    /**
+     * Uploads the image taken for a recipe to Firestore
+     *
+     * @param bitmap the image to be uploaded
+     */
+    public void uploadImage(Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
         String path = MediaStore.Images.Media.insertImage(
                 RecipeEditActivity.this.getContentResolver(), bitmap,
                 UUID.randomUUID().toString(), null);
         Uri uri = Uri.parse(path);
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference recipesRef = storage.getReference(
+                "recipe_photographs/" + UUID.randomUUID().toString());
         UploadTask uploadTask = recipesRef.putFile(uri);
-        // Register observers to listen for when the download is done or if it fails
+        // Register observers to listen for when the download is done or if
+        // it fails
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
-
+            uploadInProgress = false;
+            this.makeSnackbar("Failed to upload image");
         }).addOnSuccessListener(taskSnapshot -> {
-            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-            // ...
             recipesRef.getDownloadUrl().addOnSuccessListener(uri1 -> {
                 downloadUrl = uri1.toString();
                 if (recipe != null) {
                     recipe.setPhotograph(downloadUrl);
                 }
                 updateImageView(downloadUrl);
+                uploadInProgress = false;
             });
         });
     }
@@ -330,7 +355,7 @@ public class RecipeEditActivity extends EditActivityBase {
         if (url == null) {
             return;
         }
-        Picasso.get().load(url).rotate(90).into(recipeImg);
+        Glide.with(this).load(url).into(recipeImg);
         recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         recipeImg.setImageTintList(null);
     }

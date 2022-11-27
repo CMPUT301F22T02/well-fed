@@ -13,8 +13,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ConfirmDialog;
@@ -170,7 +170,7 @@ public class RecipeActivity extends ActivityBase
             return;
         }
         ImageView recipeImg = findViewById(R.id.recipe_img);
-        Picasso.get().load(url).rotate(90).into(recipeImg);
+        Glide.with(this).load(url).into(recipeImg);
         recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         recipeImg.setImageTintList(null);
     }

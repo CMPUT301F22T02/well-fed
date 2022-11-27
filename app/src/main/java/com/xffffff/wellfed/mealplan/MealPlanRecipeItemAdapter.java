@@ -3,7 +3,7 @@ package com.xffffff.wellfed.mealplan;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import com.xffffff.wellfed.recipe.Recipe;
 
 /**
@@ -26,9 +26,10 @@ public class MealPlanRecipeItemAdapter extends MealPlanItemAdapter<Recipe> {
             return;
         }
         holder.getPrimaryTextView().setText(recipe.getTitle());
-        holder.getSecondaryTextView().setText(recipe.getPrepTimeMinutes() +
-                " minutes | " + recipe.getCategory());
-        Picasso.get().load(recipe.getPhotograph()).rotate(90)
+        holder.getSecondaryTextView().setText(
+                recipe.getPrepTimeMinutes() + " minutes | " +
+                        recipe.getCategory());
+        Glide.with(holder.getImageView()).load(recipe.getPhotograph())
                 .into(holder.getImageView());
     }
 }
