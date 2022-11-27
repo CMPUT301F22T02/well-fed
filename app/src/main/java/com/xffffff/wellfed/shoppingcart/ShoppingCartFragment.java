@@ -108,8 +108,8 @@ public class ShoppingCartFragment extends Fragment
 
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setOptions(
-            Arrays.asList("description",
-                "category"));
+            Arrays.asList("description", "category"),
+            Arrays.asList("Description", "Category"));
         sortingFragment.setListener(this);
         requireActivity().getSupportFragmentManager().beginTransaction()
             .add(R.id.fragment_sort_container3, sortingFragment).commit();
