@@ -8,7 +8,7 @@ import androidx.test.espresso.ViewAction;
 import org.hamcrest.Matcher;
 
 /**
- * Used to click on a button inside of a Recyclerview item.
+ * Used to click on a button inside of a Recyclerview item for testing purposes.
  * <p>
  * Citation:
  * URL: https://stackoverflow.com/questions/28476507/using-espresso-to-click
@@ -19,6 +19,11 @@ import org.hamcrest.Matcher;
  */
 public class RecyclerViewClickViewAction {
 
+    /**
+     * The child view to click inside of.
+     * @param id the ID of the child view
+     * @return the ViewAction to execute
+     */
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
             @Override public Matcher<View> getConstraints() {

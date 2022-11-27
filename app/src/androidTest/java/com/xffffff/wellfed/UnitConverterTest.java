@@ -8,9 +8,15 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.xffffff.wellfed.unit.UnitConverter;
 
+/**
+ * Tests unit conversion.
+ */
 public class UnitConverterTest {
     private static final String TAG = "UnitConverterTest";
 
+    /**
+     * Tests converting kg to cup
+     */
     @org.junit.Test public void testConvert() {
         Context context =
                 InstrumentationRegistry.getInstrumentation().getTargetContext();

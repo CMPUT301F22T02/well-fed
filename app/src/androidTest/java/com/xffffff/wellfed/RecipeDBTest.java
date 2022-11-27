@@ -19,9 +19,21 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Tests for the RecipeDB.
+ */
 @RunWith(AndroidJUnit4.class) public class RecipeDBTest {
+    /**
+     * The timeout for DB operations.
+     */
     private static final long TIMEOUT = 5;
+    /**
+     * The recipeDB to test.
+     */
     RecipeDB recipeDB;
+    /**
+     * The ingredientDB to test. (needed for recipeDB)
+     */
     IngredientDB ingredientDB;
 
     /**
@@ -60,8 +72,8 @@ import java.util.concurrent.atomic.AtomicReference;
         Recipe testRecipe = new Recipe("Omelet");
         testRecipe.setComments(
                 "This delicious omelette uses duck eggs and chicken eggs");
-        testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(5);
+        testRecipe.setServings(1L);
+        testRecipe.setPrepTimeMinutes(5L);
         testRecipe.addIngredient(mockIngredient1);
         testRecipe.addIngredient(mockIngredient2);
         testRecipe.setCategory("Breakfast");
@@ -226,8 +238,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
         testRecipe.setTitle("Egg Salad");
         testRecipe.setComments("This egg salad is great for picnics.");
-        testRecipe.setServings(3);
-        testRecipe.setPrepTimeMinutes(20);
+        testRecipe.setServings(3L);
+        testRecipe.setPrepTimeMinutes(20L);
         testRecipe.removeIngredient(testIngredient);
         testRecipe.addIngredient(newTestIngredient);
         testRecipe.setCategory("Lunch");
@@ -246,32 +258,6 @@ import java.util.concurrent.atomic.AtomicReference;
         assertTrue(testRecipe.isEqual(updatedRecipeRef.get()));
 
         cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
-    }
-
-    /**
-     * Test updateRecipe functionality by updating a nonexistent document
-     * which won't add to the collection
-     *
-     * @throws InterruptedException If updateRecipe transactions cannot
-     * complete successfully
-     */
-    @Test @Ignore("TODO: Manpreet implement this")
-    public void testUpdateOnNonExistentRecipe() throws InterruptedException {
-        Recipe testRecipe = new Recipe((String)null);
-        testRecipe.setId("-1");
-
-        CountDownLatch updateLatch = new CountDownLatch(1);
-        AtomicReference<Recipe> updatedRecipeRef =
-                new AtomicReference<Recipe>();
-        recipeDB.updateRecipe(testRecipe, (updatedRecipe, success) -> {
-            updatedRecipeRef.set(updatedRecipe);
-            updateLatch.countDown();
-        });
-
-        if (!updateLatch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException();
-        }
-        assertTrue(testRecipe.isEqual(updatedRecipeRef.get()));
     }
 
     /**
@@ -344,8 +330,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
         testRecipe.setTitle("Egg Salad");
         testRecipe.setComments("This egg salad is great for picnics.");
-        testRecipe.setServings(3);
-        testRecipe.setPrepTimeMinutes(20);
+        testRecipe.setServings(3L);
+        testRecipe.setPrepTimeMinutes(20L);
         testRecipe.removeIngredient(testIngredient2);
         testRecipe.addIngredient(newTestIngredient);
         testRecipe.setCategory("Lunch");
@@ -371,47 +357,6 @@ import java.util.concurrent.atomic.AtomicReference;
                     resultRecipeRef.set(resultRecipe);
                     getLatch.countDown();
                 });
-
-        if (!getLatch.await(TIMEOUT, SECONDS)) {
-            throw new InterruptedException();
-        }
-
-        assertTrue(testRecipe.isEqual(resultRecipeRef.get()));
-
-        cleanUpRecipe(testRecipe, testIngredient, testIngredient2);
-    }
-
-    /**
-     * Tests getting a non-existent recipe.
-     */
-    @Test @Ignore("TODO: Manpreet implement this")
-    public void testGetNonExistentRecipe() throws InterruptedException {
-        // add the recipe
-        Ingredient testIngredient = mockIngredient("Egg");
-        Ingredient testIngredient2 = mockIngredient("Duck Egg");
-
-        Recipe testRecipe = mockRecipe(testIngredient, testIngredient2);
-
-        // changing each field of the recipe
-        Ingredient newTestIngredient = mockIngredient("Mayonnaise");
-        newTestIngredient.setCategory("Condiment");
-
-        testRecipe.setId("-1");
-        testRecipe.setTitle("Egg Salad");
-        testRecipe.setComments("This egg salad is great for picnics.");
-        testRecipe.setServings(3);
-        testRecipe.setPrepTimeMinutes(20);
-        testRecipe.removeIngredient(testIngredient);
-        testRecipe.addIngredient(newTestIngredient);
-        testRecipe.setCategory("Lunch");
-
-        // now, get the non-existing recipe
-        CountDownLatch getLatch = new CountDownLatch(1);
-        AtomicReference<Recipe> resultRecipeRef = new AtomicReference<Recipe>();
-        recipeDB.getRecipe(testRecipe.getId(), (resultRecipe, success) -> {
-            resultRecipeRef.set(resultRecipe);
-            getLatch.countDown();
-        });
 
         if (!getLatch.await(TIMEOUT, SECONDS)) {
             throw new InterruptedException();

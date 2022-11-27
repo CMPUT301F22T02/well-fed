@@ -44,33 +44,13 @@ public class ShoppingCartDBTest {
      * The database to test
      */
     private ShoppingCartDB shoppingCartDB;
-    /**
-     * The recipe database to test with
-     */
-    private RecipeDB recipeDB;
-    /**
-     * The meal plan database to test with
-     */
-    private MealPlanDB mealPlanDB;
-    /**
-     * The storage ingredient database to test with
-     */
-    private StorageIngredientDB storageIngredientDB;
-    /**
-     * The firestore database to test with
-     */
-    private FirebaseFirestore db;
 
     /**
      * Setup DBs
      */
     @Before public void setUpDB() {
-        db = FirebaseFirestore.getInstance();
         DBConnection connection = new MockDBConnection();
         shoppingCartDB = new ShoppingCartDB(connection);
-        recipeDB = new RecipeDB(connection);
-        mealPlanDB = new MealPlanDB(connection);
-        storageIngredientDB = new StorageIngredientDB(connection);
     }
 
     /**
@@ -117,22 +97,22 @@ public class ShoppingCartDBTest {
         Recipe recipe1 = new Recipe("Chicken Soup");
         recipe1.addIngredient(new Ingredient("Chicken"));
         recipe1.setCategory("Main");
-        recipe1.setServings(1);
-        recipe1.setPrepTimeMinutes(10);
+        recipe1.setServings(1L);
+        recipe1.setPrepTimeMinutes(10L);
         recipe1.setComments("Test");
         recipes.add(recipe1);
         Recipe recipe2 = new Recipe("Beef Stew");
         recipe2.addIngredient(new Ingredient("Beef"));
         recipe2.setCategory("Main");
-        recipe2.setServings(1);
-        recipe2.setPrepTimeMinutes(10);
+        recipe2.setServings(1L);
+        recipe2.setPrepTimeMinutes(10L);
         recipe2.setComments("Test");
         recipes.add(recipe2);
         Recipe recipe3 = new Recipe("Pork Chops");
         recipe3.addIngredient(new Ingredient("Pork"));
         recipe3.setCategory("Main");
-        recipe3.setServings(1);
-        recipe3.setPrepTimeMinutes(10);
+        recipe3.setServings(1L);
+        recipe3.setPrepTimeMinutes(10L);
         recipe3.setComments("Test");
         recipes.add(recipe3);
         return recipes;
@@ -146,17 +126,17 @@ public class ShoppingCartDBTest {
         MealPlan mealPlan1 = new MealPlan("Chicken Soup");
         mealPlan1.addRecipe(new Recipe("Chicken Soup"));
         mealPlan1.setCategory("Main");
-        mealPlan1.setServings(1);
+        mealPlan1.setServings(1L);
         mealPlans.add(mealPlan1);
         MealPlan mealPlan2 = new MealPlan("Beef Stew");
         mealPlan2.addRecipe(new Recipe("Beef Stew"));
         mealPlan2.setCategory("Main");
-        mealPlan2.setServings(1);
+        mealPlan2.setServings(1L);
         mealPlans.add(mealPlan2);
         MealPlan mealPlan3 = new MealPlan("Pork Chops");
         mealPlan3.addRecipe(new Recipe("Pork Chops"));
         mealPlan3.setCategory("Main");
-        mealPlan3.setServings(1);
+        mealPlan3.setServings(1L);
         mealPlans.add(mealPlan3);
         return mealPlans;
     }

@@ -71,6 +71,7 @@ public class IngredientEditActivity extends EditActivityBase
 
         UnitConverter converter = new UnitConverter(getApplicationContext());
 
+        this.amountInput.setRequirePositiveNumber(true);
         this.categoryInput.setSimpleItems(
                 new String[]{"Fruit", "Dairy", "Protein"});
         this.locationInput.setSimpleItems(

@@ -139,12 +139,12 @@ public class ShoppingCartDialog {
                               String confirmButtonText,
                               ShoppingCartDialog.OnConfirmListener onConfirmListener) {
         this.dialog = new MaterialAlertDialogBuilder(context,
-                style.ThemeOverlay_Material3_MaterialAlertDialog_Centered).setIcon(
-                        R.drawable.ic_baseline_cancel_24).setTitle(title)
-                .setMessage(message).setNeutralButton("Cancel", null)
-                .setPositiveButton(confirmButtonText,
-                        (dialog, which) -> onConfirmListener.onConfirm())
-                .setView(R.layout.dialog_shopping_cart).create();
+            style.ThemeOverlay_Material3_MaterialAlertDialog_Centered).setIcon(
+                R.drawable.ic_baseline_cancel_24).setTitle(title)
+            .setMessage(message).setNeutralButton("Cancel", null)
+            .setPositiveButton(confirmButtonText,
+                (dialog, which) -> onConfirmListener.onConfirm())
+            .setView(R.layout.dialog_shopping_cart).create();
     }
 
     /**

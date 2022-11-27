@@ -53,10 +53,9 @@ public class MealPlan implements Serializable {
     private Date eatDate;
     /**
      * Holds the number of servings that a MealPlan serves. Any recipes
-     * should be scaled up to fit
-     * this number.
+     * should be scaled up to fit this number.
      */
-    private Integer servings;
+    private Long servings;
     /**
      * Holds the Database id of a Recipe
      */
@@ -224,7 +223,7 @@ public class MealPlan implements Serializable {
      *
      * @return an int representing the number of servings in a MealPlan
      */
-    public Integer getServings() {
+    public Long getServings() {
         return servings;
     }
 
@@ -233,7 +232,7 @@ public class MealPlan implements Serializable {
      *
      * @param servings an int representing the number of servings in a MealPlan
      */
-    public void setServings(Integer servings) {
+    public void setServings(Long servings) {
         this.servings = servings;
     }
 

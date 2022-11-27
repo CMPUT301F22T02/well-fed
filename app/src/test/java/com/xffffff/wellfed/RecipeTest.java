@@ -37,7 +37,7 @@ public class RecipeTest {
     }
 
     /**
-     * Tests whether a new Ingredient has the correctly initialized fields.
+     * Tests whether a new Recipe has the correctly initialized fields.
      */
     @Test public void testNullFields() {
         Recipe mock = mockRecipe();
@@ -46,6 +46,35 @@ public class RecipeTest {
         assertNull(mock.getPhotograph());
         assertNull(mock.getPrepTimeMinutes());
         assertNull(mock.getServings());
+    }
+
+    /**
+     * Tests first constructor of a Recipe
+     */
+    @Test public void testRecipeConstructor1() {
+        Recipe recipe = new Recipe("Cereal");
+        assertEquals("Cereal", recipe.getTitle());
+        assertNull(recipe.getCategory());
+        assertNull(recipe.getComments());
+        assertNull(recipe.getPhotograph());
+        assertNull(recipe.getPrepTimeMinutes());
+        assertNull(recipe.getServings());
+        assertTrue(recipe.getIngredients().isEmpty());
+    }
+
+    /**
+     * Tests the copy constructor of a Recipe
+     */
+    @Test public void testRecipeConstructor2() {
+        Recipe mock = mockRecipe();
+        Recipe recipe = new Recipe(mock);
+        assertEquals(mock.getCategory(), recipe.getCategory());
+        assertEquals(mock.getComments(), recipe.getComments());
+        assertEquals(mock.getTitle(), recipe.getTitle());
+        assertEquals(mock.getPhotograph(), recipe.getPhotograph());
+        assertEquals(mock.getPrepTimeMinutes(), recipe.getPrepTimeMinutes());
+        assertEquals(mock.getServings(), recipe.getServings());
+        assertTrue(recipe.getIngredients().isEmpty() && mock.getIngredients().isEmpty());
     }
 
     /**
@@ -182,8 +211,8 @@ public class RecipeTest {
     @Test public void testServings() {
         Recipe recipe = mockRecipe();
 
-        // test with integer
-        Integer servings = 6;
+        // test with long
+        Long servings = 6L;
         recipe.setServings(servings);
         assertEquals(servings, recipe.getServings());
     }
@@ -194,8 +223,8 @@ public class RecipeTest {
     @Test public void testPrepTime() {
         Recipe recipe = mockRecipe();
 
-        // test with integer
-        Integer minutes = 6;
+        // test with long
+        Long minutes = 6L;
         recipe.setPrepTimeMinutes(minutes);
         assertEquals(minutes, recipe.getPrepTimeMinutes());
     }
@@ -249,8 +278,8 @@ public class RecipeTest {
         assertTrue(mockRecipe.isEqual(mockRecipe2));
         assertTrue(mockRecipe2.isEqual(mockRecipe));
 
-        mockRecipe.setServings(5);
-        mockRecipe2.setServings(5);
+        mockRecipe.setServings(5L);
+        mockRecipe2.setServings(5L);
         assertTrue(mockRecipe.isEqual(mockRecipe2));
         assertTrue(mockRecipe2.isEqual(mockRecipe));
 
@@ -259,8 +288,8 @@ public class RecipeTest {
         assertTrue(mockRecipe.isEqual(mockRecipe2));
         assertTrue(mockRecipe2.isEqual(mockRecipe));
 
-        mockRecipe.setPrepTimeMinutes(5);
-        mockRecipe2.setPrepTimeMinutes(5);
+        mockRecipe.setPrepTimeMinutes(5L);
+        mockRecipe2.setPrepTimeMinutes(5L);
         assertTrue(mockRecipe.isEqual(mockRecipe2));
         assertTrue(mockRecipe2.isEqual(mockRecipe));
 
@@ -309,25 +338,25 @@ public class RecipeTest {
         assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.setCategory("Breakfast");
-        mockRecipe.setServings(5);
-        mockRecipe2.setServings(6);
+        mockRecipe.setServings(5L);
+        mockRecipe2.setServings(6L);
         assertFalse(mockRecipe.isEqual(mockRecipe2));
         assertFalse(mockRecipe2.isEqual(mockRecipe));
 
-        mockRecipe2.setServings(5);
+        mockRecipe2.setServings(5L);
         mockRecipe.setComments("This is a great breakfast.");
         mockRecipe2.setComments("This is a good breakfast.");
         assertFalse(mockRecipe.isEqual(mockRecipe2));
         assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         mockRecipe2.setComments("This is a great breakfast.");
-        mockRecipe.setPrepTimeMinutes(5);
-        mockRecipe2.setPrepTimeMinutes(6);
+        mockRecipe.setPrepTimeMinutes(5L);
+        mockRecipe2.setPrepTimeMinutes(6L);
         assertFalse(mockRecipe.isEqual(mockRecipe2));
         assertFalse(mockRecipe2.isEqual(mockRecipe));
 
         // adding ingredients out of order
-        mockRecipe2.setPrepTimeMinutes(5);
+        mockRecipe2.setPrepTimeMinutes(5L);
         mockRecipe.addIngredient(mockIngredient);
         assertFalse(mockRecipe.isEqual(mockRecipe2));
         assertFalse(mockRecipe2.isEqual(mockRecipe));

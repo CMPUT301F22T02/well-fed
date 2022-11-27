@@ -57,6 +57,8 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         unitInput = findViewById(R.id.unitInput);
         categoryInput = findViewById(R.id.categoryInput);
 
+        this.amountInput.setRequirePositiveNumber(true);
+
         UnitConverter converter = new UnitConverter(getApplicationContext());
 
         this.categoryInput.setSimpleItems(

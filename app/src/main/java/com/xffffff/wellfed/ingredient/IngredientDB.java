@@ -230,38 +230,6 @@ public class IngredientDB {
                 Log.w(TAG, "Transaction failure.", e);
             }
         });
-
-        //		String id = getDocumentReference(ingredient).getId();
-        //		collection.document(id).get()
-        //			.addOnCompleteListener(task -> {
-        //				if (task.isSuccessful()) {
-        //					DocumentSnapshot document = task.getResult();
-        //					if (document.exists()) {
-        //						Long count = document.getLong("count");
-        ////						if (count == null) {
-        ////							count = 0L;
-        ////						}
-        //						count += delta;
-        //						if (count > 0) {
-        //							collection.document(id)
-        //								.update("count", count)
-        //								.addOnCompleteListener(task1 ->
-        //								listener.onUpdateReferenceCount(
-        //									ingredient,
-        //									task1.isSuccessful()));
-        //						} else {
-        //							// can safely remove unused ingredients from db
-        //							deleteIngredient(ingredient,
-        //								(deleteIngredient, success) -> listener.onUpdateReferenceCount(
-        //									ingredient, success));
-        //						}
-        //					} else {
-        //						listener.onUpdateReferenceCount(ingredient, false);
-        //					}
-        //				} else {
-        //					listener.onUpdateReferenceCount(ingredient, false);
-        //				}
-        //			});
     }
 
     /**

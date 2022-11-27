@@ -17,8 +17,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//TODO: cite https://en.wikibooks.org/wiki/Cookbook:Units_of_measurement
-//TODO: cite http://conversion.org/
+/**
+ * UnitConverter is a class that converts units to other units
+ * It is used to convert units in the Ingredients and Recipe ingredients
+ */
 public class UnitConverter {
     /**
      * Citation:
@@ -27,28 +29,51 @@ public class UnitConverter {
      * from https://www.fao.org/fileadmin/templates/food_composition/documents/
      * density_DB_v2_0_final-1__1_.xlsx
      */
+
+    /**
+     * The ingredient density map is a map of ingredient names to their
+     * densities in g/mL
+     */
     HashMap<String, Double> ingredientDensityMap;
+    /**
+     * The units ArrayList is an ArrayList of all the units that are
+     * supported by the app
+     */
     ArrayList<String> units;
 
-
+    /**
+     * The UnitConverter constructor initializes the ingredientDensityMap and
+     * units ArrayList
+     *
+     * @param context the context of the app
+     */
     public UnitConverter(Context context) {
         InputStream is =
-                context.getResources().openRawResource(R.raw.densities);
+            context.getResources().openRawResource(R.raw.densities);
         JsonReader reader = new JsonReader(new InputStreamReader(is));
         ingredientDensityMap = new Gson().fromJson(reader, HashMap.class);
     }
 
+    /**
+     * The convert method converts a quantity from one unit to another unit
+     *
+     * @param value      the quantity to convert
+     * @param ingredient the ingredient to convert
+     * @param from       the unit to convert from
+     * @param to         the unit to convert to
+     * @return the converted quantity
+     */
     public Double convert(double value, String ingredient, Unit from, Unit to) {
         if (from == to || from instanceof CountUnit ||
-                to instanceof CountUnit) {
+            to instanceof CountUnit) {
             return value;
         }
 
         String foundMatch =
-                "######";   // no key in our dictionary will match this
+            "######";   // no key in our dictionary will match this
         if (ingredientDensityMap.get(ingredient) == null) {
             Pattern pattern =
-                    Pattern.compile(ingredient, Pattern.CASE_INSENSITIVE);
+                Pattern.compile(ingredient, Pattern.CASE_INSENSITIVE);
             for (String key : ingredientDensityMap.keySet()) {
                 Matcher matcher = pattern.matcher(key);
                 if (matcher.find()) {
@@ -72,8 +97,8 @@ public class UnitConverter {
                 value = mass / ingredientDensityMap.get(foundMatch);
             } else {
                 throw new IllegalArgumentException(
-                        "Cannot convert " + ingredient + " from " +
-                                from.getUnit() + " to " + to.getUnit());
+                    "Cannot convert " + ingredient + " from " +
+                        from.getUnit() + " to " + to.getUnit());
             }
         } else {
             value *= from.getConversionFactor();
@@ -81,24 +106,48 @@ public class UnitConverter {
         return value / to.getConversionFactor();
     }
 
+    /**
+     * The convert method converts a quantity from one unit to another unit
+     *
+     * @param value the quantity to convert
+     * @param from  the unit to convert from
+     * @param to    the unit to convert to
+     * @return the converted quantity
+     */
     public Double convert(double value, Unit from, Unit to) {
         if ((from instanceof MassUnit && to instanceof MassUnit) ||
-                (from instanceof VolumeUnit && to instanceof VolumeUnit) ||
-                (from instanceof CountUnit && to instanceof CountUnit)) {
+            (from instanceof VolumeUnit && to instanceof VolumeUnit) ||
+            (from instanceof CountUnit && to instanceof CountUnit)) {
             return value *
-                    (from.getConversionFactor() / to.getConversionFactor());
+                (from.getConversionFactor() / to.getConversionFactor());
         } else {
             throw new IllegalArgumentException(
-                    "Cannot convert " + " from " + from.getUnit() + " to " +
-                            to.getUnit());
+                "Cannot convert " + " from " + from.getUnit() + " to " +
+                    to.getUnit());
         }
     }
 
+    /**
+     * The format method formats a quantity to a specified unit
+     *
+     * @param value      the quantity to format
+     * @param ingredient the ingredient to format
+     * @param from       the unit to format from
+     * @param to         the unit to format to
+     * @return the formatted quantity
+     */
     public String format(double value, String ingredient, Unit from, Unit to) {
         return String.format("%.2f %s", convert(value, ingredient, from, to),
-                to.getUnit());
+            to.getUnit());
     }
 
+    /**
+     * the scaleUnit method scales a unit to a specified unit
+     *
+     * @param value the quantity to scale
+     * @param unit  the unit to scale
+     * @return the scaled unit
+     */
     public Pair<Double, Unit> scaleUnit(double value, Unit unit) {
         Unit bestUnit = unit;
         double bestValue = Double.MAX_VALUE;
@@ -115,6 +164,12 @@ public class UnitConverter {
         return new Pair<>(bestValue, bestUnit);
     }
 
+    /**
+     * build method builds a unit from a string
+     *
+     * @param unit the string to build the unit from
+     * @return the built unit
+     */
     public Unit build(String unit) {
         if (CountUnit.CONVERSION_FACTORS.containsKey(unit)) {
             return new CountUnit(unit);
@@ -127,6 +182,12 @@ public class UnitConverter {
         }
     }
 
+    /**
+     * getUnitsLike method gets all the units that are like the specified unit
+     *
+     * @param unit the unit to get units like
+     * @return the units that are like the specified unit
+     */
     public ArrayList<Unit> getUnitsLike(Unit unit) {
         ArrayList<Unit> units = new ArrayList<>();
         if (unit instanceof CountUnit) {

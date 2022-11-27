@@ -113,10 +113,27 @@ public class IngredientTest {
         Ingredient mock = mockIngredient();
         assertNull(mock.getAmount());
 
-        // does it work with Float objects?
-        Double testFloat = 5.0;
-        mock.setAmount(testFloat);
-        assertEquals(testFloat, mock.getAmount());
+        // does it work with Double objects?
+        Double amount = 5.0;
+        mock.setAmount(amount);
+        assertEquals(amount, mock.getAmount());
+    }
+
+    /**
+     * Tests the set and get functionality of the ID.
+     */
+    @Test public void testID() {
+        Ingredient mock = mockIngredient();
+        assertNull(mock.getId());
+
+        // does it work with String objects?
+        String testID = "14567342-123";
+        mock.setId(testID);
+        assertEquals(testID, mock.getId());
+
+        // does it work with string literals?
+        mock.setId("14567342-123");
+        assertEquals("14567342-123", mock.getId());
     }
 
     /**

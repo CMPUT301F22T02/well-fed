@@ -38,6 +38,7 @@ public class ShoppingCart {
 
     /**
      * Adds a ShoppingCartIngredient to the ShoppingCart.
+     *
      * @param ingredient The ShoppingCartIngredient to be added to the
      *                   ShoppingCart.
      */
@@ -47,6 +48,7 @@ public class ShoppingCart {
 
     /**
      * Removes a ShoppingCartIngredient from the ShoppingCart.
+     *
      * @param ingredient The ShoppingCartIngredient to be removed from the
      *                   ShoppingCart.
      */
@@ -57,6 +59,7 @@ public class ShoppingCart {
     /**
      * Gets a ShoppingCartIngredient from the ShoppingCart at the specified
      * index.
+     *
      * @param index The index to get the ShoppingCartIngredient at.
      * @return A ShoppingCartIngredient that was indexed.
      */
@@ -66,6 +69,7 @@ public class ShoppingCart {
 
     /**
      * Gets the entire list of ShoppingCartIngredients in a ShoppingCart.
+     *
      * @return The entire ArrayList of ShoppingCartIngredients in the
      * ShoppingCart.
      */
