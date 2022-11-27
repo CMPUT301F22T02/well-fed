@@ -145,15 +145,6 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     /**
-     * clearSnapshots - clears the snapshots
-     */
-    @SuppressLint("NotifyDataSetChanged")
-    public void clearSnapshots() {
-        this.snapshots.clear();
-        notifyDataSetChanged();
-    }
-
-    /**
      * startListening - starts listening to the query
      */
     public void startListening() {
@@ -181,17 +172,6 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
      */
     protected ArrayList<DocumentSnapshot> getSnapshots() {
         return snapshots;
-    }
-
-    /**
-     * setSnapshots - sets the snapshots
-     * @param snapshots the snapshots
-     */
-    @SuppressLint("NotifyDataSetChanged")
-    protected void setSnapshots(List<DocumentSnapshot> snapshots) {
-        this.snapshots.clear();
-        this.snapshots.addAll(snapshots);
-        notifyDataSetChanged();
     }
 
     /**

@@ -42,10 +42,6 @@ public class IngredientStorageController {
         getSortedResults(currentField);
     }
 
-    public StorageIngredientDB getDb() {
-        return db;
-    }
-
     /**
      * Gets the adapter that is used to display the ingredients in the list
      * view.

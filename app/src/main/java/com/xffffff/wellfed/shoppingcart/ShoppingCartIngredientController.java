@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.util.Pair;
 
 import com.google.firebase.firestore.Query;
-import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.DateUtil;
 import com.xffffff.wellfed.ingredient.Ingredient;
@@ -26,10 +25,6 @@ import java.util.HashMap;
  * interacting with the shopping cart
  */
 public class ShoppingCartIngredientController {
-    /**
-     * The Activity that the controller is attached to.
-     */
-    private final ActivityBase activity;
     /**
      * ShoppingCart adapter. This is used to update the recycler view.
      */
@@ -75,7 +70,6 @@ public class ShoppingCartIngredientController {
      * @param activity The activity that the controller is attached to.
      */
     public ShoppingCartIngredientController(Activity activity) {
-        this.activity = (ActivityBase) activity;
         DBConnection connection = new DBConnection(activity.getApplicationContext());
         db = new ShoppingCartDB(connection);
         adapter = new ShoppingCartIngredientAdapter(db);
@@ -144,88 +138,88 @@ public class ShoppingCartIngredientController {
             }
             // get all the items in the list
             storageIngredientDB.getAllStorageIngredients(
-                    (storedIngredients, success1) -> {
-                        if (!success1) {
-                            // todo add error msg
-                            return;
+                (storedIngredients, success1) -> {
+                    if (!success1) {
+                        // todo add error msg
+                        return;
+                    }
+                    updateRequiredFromStorage(storedIngredients, required);
+
+
+                    // get all the items in the storage
+                    HashMap<String, Double> needed = new HashMap<>();
+                    for (String key : required.keySet()) {
+                        if (needed.get(key) == null) {
+                            Double amountNeeded = 0.0;
+                            for (int i = 0; i < required.get(key).size(); i++) {
+                                amountNeeded += required.get(key).get(i).second;
+                            }
+                            needed.put(key, amountNeeded);
                         }
-                        updateRequiredFromStorage(storedIngredients, required);
+                    }
+                    db.getShoppingCart((cart, success2) -> {
+                        HashMap<String, Integer> inCart = new HashMap<>();
 
+                        for (int i = 0; i < cart.size(); i++) {
+                            ShoppingCartIngredient cartItem = cart.get(i);
+                            Pair<Double, String> val =
+                                    bestUnitHelper(cartItem, unitHelper);
 
-                        // get all the items in the storage
-                        HashMap<String, Double> needed = new HashMap<>();
-                        for (String key : required.keySet()) {
-                            if (needed.get(key) == null) {
-                                Double amountNeeded = 0.0;
-                                for (int i = 0; i < required.get(key).size(); i++) {
-                                    amountNeeded += required.get(key).get(i).second;
+                            inCart.put(val.second, i);
+                        }
+
+                        // if shopping cart has something meal plan does not, remove it
+                        for (String key : inCart.keySet()) {
+                            ShoppingCartIngredient cartItem =
+                                    cart.get(inCart.get(key));
+                            Pair<Double, Unit> bestVal = unitConverter.scaleUnit(cartItem.getAmount(),
+                                    unitConverter.build(cartItem.getUnit()));
+                            if (bestVal.first <= 0.0 || needed.get(key) == null || needed.get(key) <= 0.0) {
+                                if (!cartItem.isPickedUp) {
+                                    db.deleteIngredient(cartItem, (a, s) -> {
+                                    });
                                 }
-                                needed.put(key, amountNeeded);
                             }
                         }
-                        db.getShoppingCart((cart, success2) -> {
-                            HashMap<String, Integer> inCart = new HashMap<>();
 
-                            for (int i = 0; i < cart.size(); i++) {
-                                ShoppingCartIngredient cartItem = cart.get(i);
-                                Pair<Double, String> val =
-                                        bestUnitHelper(cartItem, unitHelper);
-
-                                inCart.put(val.second, i);
-                            }
-
-                            // if shopping cart has something meal plan does not, remove it
-                            for (String key : inCart.keySet()) {
+                        // if shopping cart has those items update them
+                        // accordingly
+                        for (String key : needed.keySet()) {
+                            if (inCart.get(key) != null) {
+                                String[] details = key.split("####");
+                                String unit = details[2];
+                                // get items from the shopping cart
                                 ShoppingCartIngredient cartItem =
                                         cart.get(inCart.get(key));
-                                Pair<Double, Unit> bestVal = unitConverter.scaleUnit(cartItem.getAmount(),
-                                        unitConverter.build(cartItem.getUnit()));
-                                if (bestVal.first <= 0.0 || needed.get(key) == null || needed.get(key) <= 0.0) {
-                                    if (!cartItem.isPickedUp) {
-                                        db.deleteIngredient(cartItem, (a, s) -> {
-                                        });
-                                    }
+                                Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
+                                        unitConverter.build(unit));
+                                if (bestVal.first > 0.0) {
+                                    cartItem.setUnit(bestVal.second.getUnit());
+                                    cartItem.setAmount(bestVal.first);
+                                    db.updateIngredient(cartItem, (a, s) -> {
+                                        s = false;
+                                    });
+                                }
+                            } else { // else create those items
+                                String[] details = key.split("####");
+                                String unit = details[2];
+                                Ingredient ingredient =
+                                        new Ingredient(details[0]);
+                                ingredient.setCategory(details[1]);
+                                Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
+                                        unitConverter.build(unit));
+                                if (bestVal.first > 0.0) {
+                                    ingredient.setUnit(bestVal.second.getUnit());
+                                    ingredient.setAmount(bestVal.first);
+                                    db.addIngredient(ingredient, (a, s) -> {
+                                        s = false;
+                                    });
                                 }
                             }
 
-                            // if shopping cart has those items update them
-                            // accordingly
-                            for (String key : needed.keySet()) {
-                                if (inCart.get(key) != null) {
-                                    String[] details = key.split("####");
-                                    String unit = details[2];
-                                    // get items from the shopping cart
-                                    ShoppingCartIngredient cartItem =
-                                            cart.get(inCart.get(key));
-                                    Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
-                                            unitConverter.build(unit));
-                                    if (bestVal.first > 0.0) {
-                                        cartItem.setUnit(bestVal.second.getUnit());
-                                        cartItem.setAmount(bestVal.first);
-                                        db.updateIngredient(cartItem, (a, s) -> {
-                                            s = false;
-                                        });
-                                    }
-                                } else { // else create those items
-                                    String[] details = key.split("####");
-                                    String unit = details[2];
-                                    Ingredient ingredient =
-                                            new Ingredient(details[0]);
-                                    ingredient.setCategory(details[1]);
-                                    Pair<Double, Unit> bestVal = unitConverter.scaleUnit(needed.get(key),
-                                            unitConverter.build(unit));
-                                    if (bestVal.first > 0.0) {
-                                        ingredient.setUnit(bestVal.second.getUnit());
-                                        ingredient.setAmount(bestVal.first);
-                                        db.addIngredient(ingredient, (a, s) -> {
-                                            s = false;
-                                        });
-                                    }
-                                }
+                        }
 
-                    }
-
-                });
+                    });
             });
         });
     }
@@ -263,40 +257,10 @@ public class ShoppingCartIngredientController {
         return uid;
     }
 
-    /**
-     * Adds the ingredient to the shopping cart.
-     *
-     * @param ingredient the ingredient to add
-     */
-    public void addIngredientToShoppingCart(ShoppingCartIngredient ingredient) {
-        db.addIngredient(ingredient, (addIngredient, addSuccess) -> {
-            if (!addSuccess) {
-                this.activity.makeSnackbar("Failed to add " + addIngredient.getDescription());
-            } else {
-                this.activity.makeSnackbar("Added " + addIngredient.getDescription());
-            }
-        });
-    }
-
     public void updateCheckedStatus(String id, boolean isChecked) {
         db.updateIngredient(id, isChecked, (success -> {
             success = false;
         }));
-    }
-
-    /**
-     * Updates the ingredient in the shopping cart.
-     *
-     * @param ingredient the ingredient to update
-     */
-    public void updateIngredientInShoppingCart(ShoppingCartIngredient ingredient) {
-        db.updateIngredient(ingredient, (updateIngredient, updateSuccess) -> {
-            if (!updateSuccess) {
-                this.activity.makeSnackbar("Failed to update ");
-            } else {
-                this.activity.makeSnackbar("Updated " + updateIngredient.getDescription());
-            }
-        });
     }
 
     /**

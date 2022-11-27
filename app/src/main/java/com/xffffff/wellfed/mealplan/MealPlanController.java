@@ -133,16 +133,6 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     }
 
     /**
-     * The setAdapter method for the ingredient search screen. Sets the
-     * adapter for the RecyclerView of meal plans.
-     *
-     * @param adapter The adapter for the RecyclerView of meal plans.
-     */
-    public void setAdapter(MealPlanAdapter adapter) {
-        this.adapter = adapter;
-    }
-
-    /**
      * The addMealPlan method for the MealPlanController. Adds a new meal plan
      * to the database.
      *

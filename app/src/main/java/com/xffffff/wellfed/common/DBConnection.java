@@ -26,12 +26,6 @@ public class DBConnection {
 
 
     /**
-     * Holds a reference to the User's collection (with specific
-     * subcollection) in the Firebase DB.
-     */
-    private CollectionReference collection;
-
-    /**
      * Holds the UUID for a user.
      */
     private String uuid;

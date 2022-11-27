@@ -133,7 +133,6 @@ public class RecipeActivity extends ActivityBase
         TextView servings = findViewById(R.id.recipe_no_of_servings_textView);
         TextView category = findViewById(R.id.recipe_category);
         TextView description = findViewById(R.id.recipe_description_textView);
-        ImageView img = findViewById(R.id.recipe_img);
 
         ingredientList.addAll(recipe.getIngredients());
         adapter.notifyDataSetChanged();

@@ -28,11 +28,6 @@ public class MealPlanDB {
     private final static String TAG = "MealPlanDB";
 
     /**
-     * Holds the instance of the Firebase FireStore DB.
-     */
-    private FirebaseFirestore db;
-
-    /**
      * Holds the instance of the RecipeDB.
      */
     private RecipeDB recipeDB;
@@ -57,10 +52,6 @@ public class MealPlanDB {
         // based on current user connection.
         recipeDB = new RecipeDB(connection);
         ingredientDB = new IngredientDB(connection);
-
-        // Gets the instance of the Firebase FireStore DB based
-        // on current user connection.
-        this.db = connection.getDB();
 
         // Gets the current user's MealPlan collection from db,
         // create one if the collection DNE.

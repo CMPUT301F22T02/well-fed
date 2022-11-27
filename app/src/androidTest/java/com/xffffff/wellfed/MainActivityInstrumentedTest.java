@@ -33,6 +33,7 @@ import java.util.Stack;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class) public class MainActivityInstrumentedTest {
+    int timeout = 2000;
 
     /**
      * The activity rule for the device.
@@ -54,7 +55,7 @@ import java.util.Stack;
     /**
      * Tests whether swipe navigation is working as intended.
      */
-    @Test public void testSwipeNavigation() {
+    @Test public void testSwipeNavigation() throws InterruptedException {
         ViewAction[] swipes =
                 {swipeLeft(), swipeLeft(), swipeRight(), swipeRight(),
                         swipeRight(), swipeRight(),};
@@ -66,6 +67,7 @@ import java.util.Stack;
         onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
         for (int i = 0; i < swipes.length; i++) {
             onView(withId(R.id.pager)).perform(swipes[i]);
+            Thread.sleep(timeout);
             onView(withId(fragmentsIds[i])).check(matches(isDisplayed()));
             // TODO: test menu item tinting
         }
@@ -78,7 +80,7 @@ import java.util.Stack;
         onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
 
         onView(withId(R.id.ingredient_storage_item)).perform(click());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_ingredient_storage)).check(matches(isDisplayed()));
         onView(withId(R.id.fragment_meal_book)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_shopping_cart)).check(matches(not(isDisplayed())));
@@ -86,21 +88,21 @@ import java.util.Stack;
 
 
         onView(withId(R.id.meal_book_item)).perform(click());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
         onView(withId(R.id.fragment_ingredient_storage)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_recipe_book)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_shopping_cart)).check(matches(not(isDisplayed())));
 
         onView(withId(R.id.recipe_book_item)).perform(click());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_recipe_book)).check(matches(isDisplayed()));
         onView(withId(R.id.fragment_ingredient_storage)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_meal_book)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_shopping_cart)).check(matches(not(isDisplayed())));
 
         onView(withId(R.id.shopping_cart_item)).perform(click());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_shopping_cart)).check(matches(isDisplayed()));
         onView(withId(R.id.fragment_ingredient_storage)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_recipe_book)).check(matches(not(isDisplayed())));
@@ -112,26 +114,26 @@ import java.util.Stack;
      */
     @Test public void testBackButtonNavigation() throws InterruptedException {
         onView(withId(R.id.meal_book_item)).perform(click());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.shopping_cart_item)).perform(click());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.pager)).perform(swipeLeft());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.ingredient_storage_item)).perform(click());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.pager)).perform(swipeLeft());
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_recipe_book)).check(matches(isDisplayed()));
         pressBack();
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_ingredient_storage)).check(
                 matches(isDisplayed()));
         pressBack();
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_shopping_cart)).check(
                 matches(isDisplayed()));
         pressBack();
-        Thread.sleep(1000); // animation
+        Thread.sleep(timeout); // animation
         onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
     }
 }

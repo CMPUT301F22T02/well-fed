@@ -29,17 +29,9 @@ import java.util.HashMap;
  */
 public class ShoppingCartDB {
     /**
-     * Holds the tag for the logging purposes.
-     */
-    private static final String TAG = "ShoppingCartDB";
-    /**
      * Holds a reference to StorageIngredientDB.
      */
     private final StorageIngredientDB storageIngredientDB;
-    /**
-     * Holds a reference to the recipeDB.
-     */
-    private final RecipeDB recipeDB;
     /**
      * Holds a reference to MealPlanDB.
      */
@@ -48,10 +40,6 @@ public class ShoppingCartDB {
      * Holds the collection for the users
      */
     private final CollectionReference collection;
-    /**
-     * Holds the instance of the Firebase Firestore database.
-     */
-    private FirebaseFirestore db;
     /**
      * Holds a reference to the IngredientDB.
      */
@@ -63,9 +51,7 @@ public class ShoppingCartDB {
     public ShoppingCartDB(DBConnection connection) {
         this.ingredientDB = new IngredientDB(connection);
         this.storageIngredientDB = new StorageIngredientDB(connection);
-        this.recipeDB = new RecipeDB(connection);
         this.mealPlanDB = new MealPlanDB(connection);
-        this.db = connection.getDB();
         this.collection = connection.getCollection("ShoppingCart");
     }
 
@@ -345,10 +331,6 @@ public class ShoppingCartDB {
     public Query getSearchQuery(String field) {
         return this.collection.orderBy("search-field")
             .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
-    }
-
-    public Query getQueryByPickedUp(boolean pickedUp) {
-        return collection.whereEqualTo("picked", pickedUp);
     }
 
     /**

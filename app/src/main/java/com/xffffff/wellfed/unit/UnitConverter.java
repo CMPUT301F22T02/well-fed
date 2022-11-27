@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * It is used to convert units in the Ingredients and Recipe ingredients
  */
 public class UnitConverter {
-    /**
+    /*
      * Citation:
      * Charrondiere, U. R., Haytowitz, D., &amp; Stadlmayr, B. (2012).
      * FAO/INFOODS Density Database Version 2.0. Retrieved November 22, 2022,

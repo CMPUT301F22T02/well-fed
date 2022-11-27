@@ -39,10 +39,6 @@ public class RecipeDB {
      * db database
      */
     private final IngredientDB ingredientDB;
-    /**
-     * Holds a connection to the DB.
-     */
-    private DBConnection recipesConnection;
 
     /**
      * Holds the CollectionReference for the users Recipe collection.
@@ -53,9 +49,11 @@ public class RecipeDB {
      * Create a RecipeDB object
      */
     public RecipeDB(DBConnection connection) {
-        this.recipesConnection = connection;
-        db = this.recipesConnection.getDB();
-        collection = this.recipesConnection.getCollection("Recipes");
+        /**
+         * Holds a connection to the DB.
+         */
+        db = connection.getDB();
+        collection = connection.getCollection("Recipes");
         ingredientDB = new IngredientDB(connection);
     }
 
@@ -85,7 +83,6 @@ public class RecipeDB {
                             DocumentReference doc =
                                     ingredientDB.getDocumentReference(
                                             foundIngredient);
-                            Task<DocumentSnapshot> task = doc.get();
                             HashMap<String, Object> ingredientMap =
                                     new HashMap<>();
                             ingredient.setId(foundIngredient.getId());
@@ -175,7 +172,6 @@ public class RecipeDB {
     public void getRecipe(String id, OnRecipeDone listener) {
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get().addOnSuccessListener(doc -> {
-            List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
             Recipe recipe = new Recipe(doc.getString("title"));
             recipe.setId(doc.getId());
             recipe.setCategory(doc.getString("category"));
@@ -447,32 +443,6 @@ public class RecipeDB {
         return this.collection.document(id);
     }
 
-    public Recipe snapshotToRecipe(DocumentSnapshot doc) {
-        Recipe recipe = new Recipe(doc.getString("title"));
-        recipe.setCategory(doc.getString("category"));
-        recipe.setComments(doc.getString("comments"));
-        recipe.setPhotograph(doc.getString("photograph"));
-
-        List<HashMap<String, Object>> ingredients =
-                (List<HashMap<String, Object>>) doc.getData()
-                        .get("ingredients");
-        for (HashMap<String, Object> ingredientMap : ingredients) {
-            DocumentReference ingredientRef =
-                    (DocumentReference) ingredientMap.get("ingredientRef");
-            ingredientDB.getIngredient(ingredientRef,
-                    (foundIngredient, success) -> {
-                        if (foundIngredient != null) {
-                            foundIngredient.setUnit(
-                                    (String) ingredientMap.get("unit"));
-                            foundIngredient.setAmount(
-                                    (Double) ingredientMap.get("amount"));
-                            recipe.addIngredient(foundIngredient);
-                        }
-                    });
-        }
-        return recipe;
-    }
-
     public Query getQuery() {
         return this.collection;
     }
@@ -512,49 +482,6 @@ public class RecipeDB {
                 Log.w(TAG, "Transaction failure.", e);
             }
         });
-
-        //        // Get reference of the recipe document.
-        //        String id = getDocumentReference(recipe.getId()).getId();
-        //
-        //        // Get recipe document snapshot from db.
-        //        collection.document(id).get()
-        //                .addOnCompleteListener(task -> {
-        //                    if (task.isSuccessful()) {
-        //                        DocumentSnapshot document = task.getResult();
-        //                        if (document.exists()) {
-        //                            Long count = document.getLong("count");
-        ////                            if (count == null) {
-        ////                                count = 0L;
-        ////                            }
-        //
-        //                            count += delta;
-        //                            if (count > 0) {
-        //                                collection.document(id)
-        //                                        .update("count", count)
-        //                                        .addOnCompleteListener(task1 -> {
-        //                                            listener.onUpdateReferenceCount(
-        //                                                    recipe,
-        //                                                    task1.isSuccessful()
-        //                                            );
-        //                                        });
-        //                            } else {
-        //                                // Even if none of the meal plans reference this recipe,,
-        //                                // we still won't delete it. Only users can delete recipes.
-        //
-        ////                                delRecipe(recipe, (deletedRecipe, success) -> {
-        ////                                    listener.onUpdateReferenceCount(
-        ////                                            recipe,
-        ////                                            success
-        ////                                    );
-        ////                                });
-        //                            }
-        //                        } else {
-        //                            listener.onUpdateReferenceCount(recipe, false);
-        //                        }
-        //                    } else {
-        //                        listener.onUpdateReferenceCount(recipe, false);
-        //                    }
-        //                });
     }
 
 

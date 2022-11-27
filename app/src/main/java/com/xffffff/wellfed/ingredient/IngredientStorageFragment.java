@@ -58,9 +58,6 @@ public class IngredientStorageFragment extends Fragment
      */
     private StorageIngredient selectedStorageIngredient;
     /**
-     * The cross icon that clears the search bar.
-     */
-    private ImageView crossIcon;    /**
      * ActivityResultLauncher for the IngredientEditActivity to edit an
      * ingredient.
      * The result is a StorageIngredient.
