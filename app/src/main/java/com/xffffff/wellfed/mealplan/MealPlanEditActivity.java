@@ -74,7 +74,7 @@ public class MealPlanEditActivity extends EditActivityBase {
         this.categoryTextInput = findViewById(R.id.categoryTextInput);
         this.numberOfServingsTextInput =
                 findViewById(R.id.numberOfServingsTextInput);
-        this.numberOfServingsTextInput.setRequireInteger();
+        this.numberOfServingsTextInput.setRequireLong();
         this.numberOfServingsTextInput.setRequirePositiveNumber(true);
         FloatingActionButton fab = findViewById(R.id.save_fab);
         fab.setOnClickListener(view -> onSave());
@@ -168,7 +168,7 @@ public class MealPlanEditActivity extends EditActivityBase {
         this.mealPlan.setTitle(title);
         this.mealPlan.setCategory(this.categoryTextInput.getText());
         this.mealPlan.setEatDate(this.dateTextInput.getDate());
-        this.mealPlan.setServings(this.numberOfServingsTextInput.getInteger());
+        this.mealPlan.setServings(this.numberOfServingsTextInput.getLong());
         Intent intent = new Intent();
         intent.putExtra("type", this.type);
         intent.putExtra("mealPlan", this.mealPlan);

@@ -122,6 +122,7 @@ public class RecipeEditActivity extends EditActivityBase {
         title = findViewById(R.id.recipe_title);
         prepTime = findViewById(R.id.recipe_prep_time_textView);
         servings = findViewById(R.id.recipe_no_of_servings_textView);
+        servings.setRequireLong();
         commentsTextInput = findViewById(R.id.commentsTextInput);
         recipeCategory = findViewById(R.id.recipe_category);
         recipeCategory.setSimpleItems(
@@ -139,16 +140,13 @@ public class RecipeEditActivity extends EditActivityBase {
 
         // activity started to add data a recipe
         if (recipe == null) {
-            fab.setImageDrawable(getDrawable(
-                    R.drawable.ic_baseline_save_24)); // fab is save button
             fab.setOnClickListener(view -> {
                 if (areValidFields()) {
                     recipe = new Recipe(title.getText());
                     recipe.setCategory(recipeCategory.getText());
                     recipe.setComments(commentsTextInput.getText());
-                    recipe.setServings(Integer.parseInt(servings.getText()));
-                    recipe.setPrepTimeMinutes(
-                            Integer.parseInt(prepTime.getText()));
+                    recipe.setServings(servings.getLong());
+                    recipe.setPrepTimeMinutes(prepTime.getLong());
                     for (Ingredient ingredient : recipeIngredients) {
                         recipe.addIngredient(ingredient);
                     }
@@ -175,10 +173,10 @@ public class RecipeEditActivity extends EditActivityBase {
                     recipe.setId(id);
                     recipe.setPhotograph(photoUrl);
                     recipe.setComments(commentsTextInput.getText());
-                    recipe.setServings(servings.getInteger());
+                    recipe.setServings(servings.getLong());
                     recipe.setCategory(recipeCategory.getText());
                     recipe.addIngredients(recipeIngredients);
-                    recipe.setPrepTimeMinutes(prepTime.getInteger());
+                    recipe.setPrepTimeMinutes(prepTime.getLong());
                     intent.putExtra("type", "edit");
                     intent.putExtra("item", recipe);
                     setResult(RESULT_OK, intent);

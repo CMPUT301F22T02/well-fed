@@ -321,10 +321,7 @@ public class MealPlanDB {
         mealPlan.setId(snapshot.getId());
         mealPlan.setCategory(snapshot.getString("category"));
         mealPlan.setEatDate(snapshot.getDate("eat date"));
-        // TODO: refactor mealPlan to use Long instead of Integer
-        mealPlan.setServings(
-                Objects.requireNonNull(snapshot.getLong("servings"))
-                        .intValue());
+        mealPlan.setServings(snapshot.getLong("servings"));
         ArrayList<HashMap<String, Object>> ingredients =
                 (ArrayList<HashMap<String, Object>>) snapshot.get(
                         "ingredients");
