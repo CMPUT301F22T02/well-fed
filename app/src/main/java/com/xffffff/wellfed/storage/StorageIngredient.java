@@ -93,26 +93,6 @@ public class StorageIngredient extends Ingredient
     }
 
     /**
-     * Gets the description (aka title) of an Ingredient
-     *
-     * @return The String representing the description (aka title) of the
-     * Ingredient
-     */
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    /**
-     * Sets the description (aka title) of an Ingredient
-     *
-     * @param description The String representing the description (aka title)
-     *                   of the Ingredient
-     */
-    public void setDescription(String description) {
-        super.setDescription(description);
-    }
-
-    /**
      * Gets the best before date of the ingredient in the storage.
      *
      * @return The best before date of the ingredient in the storage
