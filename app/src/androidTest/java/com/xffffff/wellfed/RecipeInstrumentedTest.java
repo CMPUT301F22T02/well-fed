@@ -476,7 +476,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
@@ -579,7 +579,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -610,7 +610,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -643,7 +643,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -674,7 +674,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -705,7 +705,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
@@ -1040,6 +1040,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.searchButton)).perform(click());
         //pick an ingredient check if recycler view is non empty
+        Thread.sleep(timeout);
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("English muffin")), click()));
@@ -1073,7 +1074,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("English muffin"))));
+                matches(hasDescendant(withText("English muffin | Bread"))));
     }
 
     /**
