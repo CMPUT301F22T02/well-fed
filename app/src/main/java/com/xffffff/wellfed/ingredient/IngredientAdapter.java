@@ -1,17 +1,16 @@
-package com.xffffff.wellfed.recipe;
+package com.xffffff.wellfed.ingredient;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.common.EditItemAdapter;
-import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.util.Locale;
 
 /**
  * Adapter for a recipe ingredient, in the recyclerview for recipe ingredients
  */
-public class RecipeIngredientAdapter extends EditItemAdapter<Ingredient> {
+public class IngredientAdapter extends EditItemAdapter<Ingredient> {
 
     /**
      * Binds a viewholder to an ingredient

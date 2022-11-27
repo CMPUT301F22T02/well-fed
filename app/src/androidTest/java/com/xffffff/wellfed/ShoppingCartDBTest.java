@@ -6,15 +6,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.ingredient.Ingredient;
-import com.xffffff.wellfed.ingredient.StorageIngredient;
-import com.xffffff.wellfed.ingredient.StorageIngredientDB;
+import com.xffffff.wellfed.storage.StorageIngredient;
 import com.xffffff.wellfed.mealplan.MealPlan;
-import com.xffffff.wellfed.mealplan.MealPlanDB;
 import com.xffffff.wellfed.recipe.Recipe;
-import com.xffffff.wellfed.recipe.RecipeDB;
 import com.xffffff.wellfed.shoppingcart.ShoppingCart;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartDB;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient;

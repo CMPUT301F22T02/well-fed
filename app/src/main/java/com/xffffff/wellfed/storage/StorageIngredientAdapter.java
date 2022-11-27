@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.ingredient;
+package com.xffffff.wellfed.storage;
 
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -1,5 +1,7 @@
-package com.xffffff.wellfed.ingredient;
+package com.xffffff.wellfed.storage;
 
+
+import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Date;

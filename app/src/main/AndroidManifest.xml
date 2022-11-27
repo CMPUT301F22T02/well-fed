@@ -39,14 +39,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ingredient.IngredientEditActivity"
+            android:name=".storage.StorageIngredientEditActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ingredient.IngredientActivity"
+            android:name=".storage.StorageIngredientActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -72,7 +72,7 @@
         </activity>
 
         <activity
-            android:name=".recipe.RecipeIngredientEditActivity"
+            android:name=".ingredient.IngredientEditActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -81,9 +81,9 @@
         </activity>
 
         <activity
-            android:name=".recipe.RecipeIngredientSearch"
+            android:name=".ingredient.IngredientSearch"
             android:exported="false"
-            android:parentActivityName=".recipe.RecipeIngredientEditActivity">
+            android:parentActivityName=".ingredient.IngredientEditActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -12,10 +12,10 @@ import com.xffffff.wellfed.common.RequiredDateTextInputLayout;
 import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
 import com.xffffff.wellfed.common.RequiredNumberTextInputLayout;
 import com.xffffff.wellfed.common.RequiredTextInputLayout;
-import com.xffffff.wellfed.recipe.EditRecipeIngredientsFragment;
+import com.xffffff.wellfed.ingredient.EditIngredientsFragment;
+import com.xffffff.wellfed.ingredient.IngredientAdapter;
 import com.xffffff.wellfed.recipe.EditRecipesAdapter;
 import com.xffffff.wellfed.recipe.EditRecipesFragment;
-import com.xffffff.wellfed.recipe.RecipeIngredientAdapter;
 
 import java.util.Locale;
 
@@ -43,7 +43,7 @@ public class MealPlanEditActivity extends EditActivityBase {
     /**
      * ingredientEditAdapter is the adapter to edit the ingredients.
      */
-    private RecipeIngredientAdapter ingredientEditAdapter;
+    private IngredientAdapter ingredientEditAdapter;
     /**
      * recipesEditAdapter is the adapter to edit the recipes.
      */
@@ -91,9 +91,9 @@ public class MealPlanEditActivity extends EditActivityBase {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.recipeEditFragment, recipesEditFragment).commit();
 
-        EditRecipeIngredientsFragment ingredientEditFragment =
-                new EditRecipeIngredientsFragment();
-        this.ingredientEditAdapter = new RecipeIngredientAdapter();
+        EditIngredientsFragment ingredientEditFragment =
+                new EditIngredientsFragment();
+        this.ingredientEditAdapter = new IngredientAdapter();
         ingredientEditFragment.setAdapter(this.ingredientEditAdapter);
         ingredientEditFragment.setTitle("Ingredients");
         getSupportFragmentManager().beginTransaction()

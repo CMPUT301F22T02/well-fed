@@ -28,9 +28,9 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.xffffff.wellfed.ingredient.IngredientEditActivity;
 import com.xffffff.wellfed.recipe.RecipeActivity;
 import com.xffffff.wellfed.recipe.RecipeEditActivity;
-import com.xffffff.wellfed.recipe.RecipeIngredientEditActivity;
 
 import junit.framework.AssertionFailedError;
 
@@ -407,7 +407,7 @@ import org.junit.runner.RunWith;
         //pick an ingredient check if recycler view is non empty
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
+        intended(hasComponent(IngredientEditActivity.class.getName()));
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
 
         closeSoftKeyboard();
@@ -1068,7 +1068,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("English muffin")), click()));
-        intended(hasComponent(RecipeIngredientEditActivity.class.getName()));
+        intended(hasComponent(IngredientEditActivity.class.getName()));
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
 
         closeSoftKeyboard();

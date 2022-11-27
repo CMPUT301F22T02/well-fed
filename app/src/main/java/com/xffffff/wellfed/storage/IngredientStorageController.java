@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.ingredient;
+package com.xffffff.wellfed.storage;
 
 
 import androidx.fragment.app.FragmentActivity;
@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.firebase.firestore.Query;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
+import com.xffffff.wellfed.ingredient.StorageIngredient;
+import com.xffffff.wellfed.ingredient.StorageIngredientAdapter;
+import com.xffffff.wellfed.ingredient.StorageIngredientDB;
 
 /**
  * The IngredientStorageController class is a controller for the

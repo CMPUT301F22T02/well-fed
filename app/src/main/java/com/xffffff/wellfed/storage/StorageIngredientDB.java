@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.ingredient;
+package com.xffffff.wellfed.storage;
 
 import android.util.Log;
 
@@ -13,6 +13,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.xffffff.wellfed.common.DBConnection;
+import com.xffffff.wellfed.ingredient.Ingredient;
+import com.xffffff.wellfed.ingredient.IngredientDB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
