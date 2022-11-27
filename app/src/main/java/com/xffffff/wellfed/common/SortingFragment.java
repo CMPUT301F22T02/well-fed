@@ -1,6 +1,7 @@
 package com.xffffff.wellfed.common;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,14 +30,20 @@ public class SortingFragment extends Fragment {
      * the onSortClick listener for the fragment
      */
     private OnSortClick listener;
-
+    /**
+     * The list of readable sorting options
+     */
+    private List<String> readableSortOptions;
+    
     /**
      * setOptions sets the list of sorting options
      *
      * @param sortingOptions the list of sorting options
+     * @param readableSortOptions the list of readable sorting options
      */
-    public void setOptions(List<String> sortingOptions) {
+    public void setOptions(List<String> sortingOptions, List<String> readableSortOptions) {
         this.sortOptions = sortingOptions;
+        this.readableSortOptions = readableSortOptions;
     }
 
     /**
@@ -80,7 +87,7 @@ public class SortingFragment extends Fragment {
                 androidx.appcompat.R.attr.listPopupWindowStyle);
         popupWindow.setAnchorView(imageFilterButton);
         ArrayAdapter<String> sortAdapter = new ArrayAdapter(requireContext(),
-            R.layout.list_popup_window_item, sortOptions);
+                R.layout.list_popup_window_item, readableSortOptions);
         popupWindow.setWidth(400);
         popupWindow.setAdapter(sortAdapter);
 

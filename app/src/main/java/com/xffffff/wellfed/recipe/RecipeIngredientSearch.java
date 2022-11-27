@@ -45,7 +45,9 @@ public class RecipeIngredientSearch extends ActivityBase
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setListener(this);
         sortingFragment.setOptions(
-                Arrays.asList(new String[]{"description", "category"}));
+                Arrays.asList("description", "category"),
+                Arrays.asList("Description", "Category")
+                );
         this.getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container, sortingFragment).commit();
 
