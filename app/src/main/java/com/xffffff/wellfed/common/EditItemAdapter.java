@@ -23,23 +23,55 @@ import java.util.List;
  * @version 1.0.0
  */
 public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
+    /**
+     * editListener - the listener for editing an item
+     */
     protected OnEditListener<Item> editListener;
+    /**
+     * deleteListener - the listener for deleting an item
+     */
     protected OnDeleteListener<Item> deleteListener;
+    /**
+     * placeholderItems - the placeholder items
+     */
     private List<Item> placeholderItems;
+    /**
+     * changed - whether the items have changed (True) or not (False)
+     */
     private Boolean changed = false;
 
+    /**
+     * getChanged - gets whether the items have changed
+     *
+     * @return whether the items have changed (True) or not (False)
+     */
     public Boolean getChanged() {
         return changed;
     }
 
+    /**
+     * setChanged - sets whether the items have changed
+     *
+     * @param changed whether the items have changed (True) or not (False)
+     */
     public void setChanged(Boolean changed) {
         this.changed = changed;
     }
 
+    /**
+     * setEditListener - sets the listener for editing an item
+     *
+     * @param editListener the listener for editing an item
+     */
     public void setEditListener(OnEditListener<Item> editListener) {
         this.editListener = editListener;
     }
 
+    /**
+     * setDeleteListener - sets the listener for deleting an item
+     *
+     * @param deleteListener the listener for deleting an item
+     */
     public void setDeleteListener(OnDeleteListener<Item> deleteListener) {
         this.deleteListener = deleteListener;
     }
@@ -48,8 +80,8 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
      * inflates the view
      *
      * @param parent   activity that handles the ingredients
-     * @param viewType
-     * @return
+     * @param viewType the type of view
+     * @return the view
      */
     @NonNull
     @Override
@@ -63,6 +95,12 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
         return new ItemViewHolder(itemView);
     }
 
+    /**
+     * onBindViewHolder - binds the view to the data
+     *
+     * @param holder   the view holder
+     * @param position the position of the item
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
                                  int position) {
@@ -81,6 +119,11 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
         });
     }
 
+    /**
+     * setItems - sets the items
+     *
+     * @param items the items
+     */
     @Override
     public void setItems(List<Item> items) {
         super.setItems(items);
@@ -90,7 +133,7 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
     /**
      * hasChanged checks if the items have changed
      *
-     * @return
+     * @return true if the items have changed
      */
     public Boolean hasChanges() {
         return !placeholderItems.equals(items);
@@ -152,18 +195,38 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }
 
+        /**
+         * getLeadingTextView - gets the leading text view
+         *
+         * @return the leading text view
+         */
         public TextView getLeadingTextView() {
             return leadingTextView;
         }
 
+        /**
+         * getHeadlineTextView - gets the headline text view
+         *
+         * @return the headline text view
+         */
         public TextView getHeadlineTextView() {
             return headlineTextView;
         }
 
+        /**
+         * getEditButton - gets the edit button
+         *
+         * @return the edit button
+         */
         public Button getEditButton() {
             return editButton;
         }
 
+        /**
+         * getDeleteButton - gets the delete button
+         *
+         * @return the delete button
+         */
         public Button getDeleteButton() {
             return deleteButton;
         }
