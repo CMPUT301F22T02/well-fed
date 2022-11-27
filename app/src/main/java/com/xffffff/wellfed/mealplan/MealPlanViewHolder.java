@@ -25,6 +25,7 @@
 package com.xffffff.wellfed.mealplan;
 
 import android.content.res.ColorStateList;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
@@ -98,9 +99,17 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
      */
     private final int colorSurface;
     /**
+     * colorSuface is the variant surface color of the app
+     */
+    private final int colorSurfaceVariant;
+    /**
      * colorOnSurface is the on surface color of the app
      */
     private final int colorOnSurface;
+    /**
+     * colorOutline is the outline color of the app
+     */
+    private final int colorOutline;
 
     /**
      * MealPlanViewHolder is the constructor for the MealPlanViewHolder
@@ -125,8 +134,12 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
                 com.google.android.material.R.attr.colorOnPrimary);
         this.colorSurface = MaterialColors.getColor(itemView,
                 com.google.android.material.R.attr.colorSurface);
+        this.colorSurfaceVariant = MaterialColors.getColor(itemView,
+                com.google.android.material.R.attr.colorSurfaceVariant);
         this.colorOnSurface = MaterialColors.getColor(itemView,
                 com.google.android.material.R.attr.colorOnSurface);
+        this.colorOutline = MaterialColors.getColor(itemView,
+                com.google.android.material.R.attr.colorOutline);
     }
 
     /**
@@ -184,4 +197,23 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
             dayTextView.setTextColor(colorOnSurface);
         }
     }
+
+    /**
+     * Set card style method sets the card style for filled and outlined
+     * variants
+     *
+     * @param variant "filled" or "outlined"
+     */
+    public void setCardStyle(String variant) {
+        if (variant.equals("filled")) {
+            materialCardView.setCardBackgroundColor(colorSurfaceVariant);
+            materialCardView.setStrokeWidth(0);
+        } else if (variant.equals("outlined")) {
+            materialCardView.setCardBackgroundColor(colorSurface);
+            float densityDPI =
+                    this.itemView.getContext().getResources().getDisplayMetrics().densityDpi;
+            materialCardView.setStrokeWidth((int) densityDPI / DisplayMetrics.DENSITY_DEFAULT);
+        }
+    }
+
 }

@@ -32,7 +32,7 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     }
 
     public interface OnAdapterDataChangedListener {
-        void onAdapterDataChanged(MealPlan mealPlan);
+        void onAdapterDataChanged(MealPlan mealPlan, int position);
     }
 
     public void setOnDataChanged(OnDataChanged onDataChanged) {
@@ -156,21 +156,6 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     }
 
     /**
-     * Checks if an item is in the past - if it is, delete it and display snackbar.
-     * @param mealPlan the mealplan to check
-     */
-    public void checkMealInPast(MealPlan mealPlan) {
-        Date today = new Date(System.currentTimeMillis()-24*60*60*1000);
-        Date eatDate = mealPlan.getEatDate();
-
-        assert eatDate != null;
-        if (eatDate.getTime() < today.getTime()) {
-            deleteMealPlan(mealPlan, true);
-            this.activity.makeSnackbar("Cannot make a MealPlan in the past.");
-        }
-    }
-
-    /**
      * The scaleRecipe method for the MealPlanController. Scales a recipe
      * to the desired number of servings.
      *
@@ -200,23 +185,26 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      */
     @Override public void onDataChanged() {
         if (onAdapterDataChangedListener != null) {
-            MealPlan currentMealPlan = getCurrentMealPlan();
-            onAdapterDataChangedListener.onAdapterDataChanged(currentMealPlan);
+            Pair<MealPlan, Integer> pair = getCurrentMealPlan();
+            onAdapterDataChangedListener.onAdapterDataChanged(pair.first,
+                    pair.second);
         }
     }
 
     /**
      * Get today's meal plan
      */
-    public MealPlan getCurrentMealPlan() {
+    public Pair<MealPlan, Integer> getCurrentMealPlan() {
         Date today = new Date();
         DateUtil dateUtil = new DateUtil();
+        int position = 0;
         for (MealPlan mealPlan : adapter.getMealPlans()) {
             Date eatDate = mealPlan.getEatDate();
             if (dateUtil.equals(eatDate, today)) {
-                return mealPlan;
+                return new Pair<>(mealPlan, position);
             }
+            position++;
         }
-        return null;
+        return new Pair<>(null, -1);
     }
 }

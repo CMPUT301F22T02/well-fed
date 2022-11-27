@@ -151,4 +151,12 @@ public class DateUtil {
         return Integer.parseInt(format.format(date));
     }
 
+    /**
+     * Returns true if the date is before today
+     * @return true if the date is before today
+     */
+    public Boolean beforeToday(Date date) {
+        Date today = new Date();
+        return date.getTime() <= (today.getTime() - DAY);
+    }
 }
