@@ -57,9 +57,11 @@ import org.junit.runner.RunWith;
     /**
      * Performs all of the actions needed to type a complete ingredient.
      */
-    private void typeMockIngredient(String description) {
+    private void typeMockIngredient(String description) throws InterruptedException {
         // typing description input
         onView(withId(R.id.fab)).perform(click());
+
+        Thread.sleep(2000);
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(
                 typeText(description));
@@ -289,7 +291,7 @@ import org.junit.runner.RunWith;
     /**
      * Tests adding an incomplete Ingredient.
      */
-    @Test public void testIncompleteMessages() {
+    @Test public void testIncompleteMessages() throws InterruptedException {
         typeMockIngredient("Ground Beef");
 
         // testing the description error message
@@ -416,7 +418,7 @@ import org.junit.runner.RunWith;
     /**
      * Tests that the cancel confirmation message shows up when adding
      */
-    @Test public void testCancelConfirmationMessageAdd() {
+    @Test public void testCancelConfirmationMessageAdd() throws InterruptedException {
         // testing adding and then exiting
         typeMockIngredient("Ground Beef");
         pressBack();

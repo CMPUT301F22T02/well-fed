@@ -69,12 +69,13 @@ import org.junit.runner.RunWith;
      * Adds an ingredient to the ingredient storage.
      * This is used to test adding existing ingredients to recipe.
      */
-    public void addPreexistingIngredient(String description) {
+    public void addPreexistingIngredient(String description) throws InterruptedException {
         // pre-add storage ingredient
         onView(withId(R.id.ingredient_storage_item)).perform(click());
 
         // typing description input
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(timeout);
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(
                 typeText(description));
@@ -145,8 +146,9 @@ import org.junit.runner.RunWith;
      *
      * @throws InterruptedException
      */
-    public void typeMockRecipe(String description) {
+    public void typeMockRecipe(String description) throws InterruptedException {
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(timeout);
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText(description));
         closeSoftKeyboard();
@@ -173,9 +175,11 @@ import org.junit.runner.RunWith;
     /**
      * Adds a mock ingredient to a recipe.
      */
-    public void addMockIngredient(String description) {
+    public void addMockIngredient(String description) throws InterruptedException {
         //add an ingredient
         onView(withId(R.id.addButton)).perform(click());
+        Thread.sleep(timeout);
+
         onView(withId(R.id.edit_descriptionInput)).perform(
                 typeText(description));
         closeSoftKeyboard();
@@ -200,10 +204,10 @@ import org.junit.runner.RunWith;
      * Adds 5 recipes to the recipe list.
      * Clean them up after with {@link #cleanup5Recipes()}
      */
-    private void add5Recipes() {
+    private void add5Recipes() throws InterruptedException {
         // adding a ton of recipes
         onView(withId(R.id.fab)).perform(click());
-
+        Thread.sleep(timeout);
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Apple pie"));
         closeSoftKeyboard();
 
@@ -227,7 +231,7 @@ import org.junit.runner.RunWith;
 
         // adding recipe 2
         onView(withId(R.id.fab)).perform(click());
-
+        Thread.sleep(timeout);
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Apple puree"));
         closeSoftKeyboard();
 
@@ -251,6 +255,7 @@ import org.junit.runner.RunWith;
 
         // adding recipe 3
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(timeout);
         onView(withId(R.id.edit_recipe_title)).perform(
                 typeText("Bananas foster"));
         closeSoftKeyboard();
@@ -276,6 +281,7 @@ import org.junit.runner.RunWith;
 
         // adding recipe 4
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(timeout);
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Ice cream"));
         closeSoftKeyboard();
 
@@ -300,6 +306,7 @@ import org.junit.runner.RunWith;
 
         // adding recipe 5
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(timeout);
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Cereal"));
         closeSoftKeyboard();
 
@@ -382,7 +389,7 @@ import org.junit.runner.RunWith;
     }
 
 
-    @Test public void testAddOnInvalidRecipe() {
+    @Test public void testAddOnInvalidRecipe() throws InterruptedException {
         addPreexistingIngredient("Tortilla");
 
         typeMockRecipe("Egg Wrap");
@@ -392,6 +399,7 @@ import org.junit.runner.RunWith;
         intended(hasComponent(RecipeEditActivity.class.getName()));
 
         onView(withId(R.id.searchButton)).perform(click());
+        Thread.sleep(timeout);
         //pick an ingredient check if recycler view is non empty
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -420,7 +428,7 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-
+        Thread.sleep(timeout);
         intended(hasComponent(RecipeEditActivity.class.getName()));
 
         onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(
@@ -430,7 +438,7 @@ import org.junit.runner.RunWith;
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-
+        Thread.sleep(timeout);
         intended(hasComponent(RecipeEditActivity.class.getName()));
 
         onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(
@@ -494,6 +502,7 @@ import org.junit.runner.RunWith;
 
         //add separate ingredient
         onView(withId(R.id.addButton)).perform(click());
+        Thread.sleep(timeout);
         onView(withId(R.id.edit_descriptionInput)).perform(
                 typeText("Chicken Breast"));
         closeSoftKeyboard();
@@ -551,7 +560,7 @@ import org.junit.runner.RunWith;
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
-
+        Thread.sleep(timeout);
         // test editing each field individually
         onView(withId(R.id.edit_recipe_title)).perform(clearText());
         onView(withId(R.id.edit_recipe_title)).perform(
@@ -583,6 +592,7 @@ import org.junit.runner.RunWith;
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(timeout);
 
         // test editing each field individually
         onView(withId(R.id.recipe_prep_time_textEdit)).perform(clearText());
@@ -614,6 +624,7 @@ import org.junit.runner.RunWith;
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(timeout);
 
         // test editing each field individually
         onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(
@@ -647,6 +658,7 @@ import org.junit.runner.RunWith;
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(timeout);
 
         // test editing each field individually
         onView(withId(R.id.recipe_category_textEdit)).perform(clearText());
@@ -678,6 +690,7 @@ import org.junit.runner.RunWith;
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(timeout);
 
         // test editing each field individually
         onView(withId(R.id.commentsEditText)).perform(clearText());
