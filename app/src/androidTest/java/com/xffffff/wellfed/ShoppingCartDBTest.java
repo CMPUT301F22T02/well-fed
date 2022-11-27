@@ -44,33 +44,13 @@ public class ShoppingCartDBTest {
      * The database to test
      */
     private ShoppingCartDB shoppingCartDB;
-    /**
-     * The recipe database to test with
-     */
-    private RecipeDB recipeDB;
-    /**
-     * The meal plan database to test with
-     */
-    private MealPlanDB mealPlanDB;
-    /**
-     * The storage ingredient database to test with
-     */
-    private StorageIngredientDB storageIngredientDB;
-    /**
-     * The firestore database to test with
-     */
-    private FirebaseFirestore db;
 
     /**
      * Setup DBs
      */
     @Before public void setUpDB() {
-        db = FirebaseFirestore.getInstance();
         DBConnection connection = new MockDBConnection();
         shoppingCartDB = new ShoppingCartDB(connection);
-        recipeDB = new RecipeDB(connection);
-        mealPlanDB = new MealPlanDB(connection);
-        storageIngredientDB = new StorageIngredientDB(connection);
     }
 
     /**

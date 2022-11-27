@@ -19,9 +19,21 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Tests for the RecipeDB.
+ */
 @RunWith(AndroidJUnit4.class) public class RecipeDBTest {
+    /**
+     * The timeout for DB operations.
+     */
     private static final long TIMEOUT = 5;
+    /**
+     * The recipeDB to test.
+     */
     RecipeDB recipeDB;
+    /**
+     * The ingredientDB to test. (needed for recipeDB)
+     */
     IngredientDB ingredientDB;
 
     /**
