@@ -825,7 +825,7 @@ import org.junit.runner.RunWith;
      * Note: These were refactored into one test, instead of many tests, one for each category.
      * The reason for this was because adding and deleting the data took a very long time.
      */
-    @Test public void testSortByTitle() throws InterruptedException {
+    @Test public void testSort() throws InterruptedException {
         add5Recipes();
         /*
         Sort by title.
@@ -971,7 +971,6 @@ import org.junit.runner.RunWith;
         /*
         Sort by category.
          */
-        // sort by title
         clickSortButton();
         onView(withText("Category")).inRoot(isPlatformPopup()).perform(click());
 
