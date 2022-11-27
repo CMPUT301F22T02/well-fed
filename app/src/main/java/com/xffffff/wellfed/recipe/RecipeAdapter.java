@@ -104,7 +104,7 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
         String servingsText = "Serves: " + (Objects.requireNonNull(
                 recipeSnapshot.getData().get("servings")));
         servings.setText(servingsText);
-        Picasso.get().load(recipe.getPhotograph()).rotate(90).into(img);
+        Picasso.get().load(recipe.getPhotograph()).into(img);
         holder.view.setOnClickListener(v -> {
 
             if (recipeLauncher != null) {

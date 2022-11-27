@@ -2,6 +2,7 @@ package com.xffffff.wellfed.recipe;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +18,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.xffffff.wellfed.EditActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
@@ -26,7 +28,6 @@ import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +40,7 @@ import java.util.UUID;
  *
  * @version 1.0.0
  */
-public class RecipeEditActivity extends EditActivityBase {
+public class RecipeEditActivity extends EditActivityBase implements Target {
     /**
      * The list of ingredients included in a recipe.
      */
@@ -75,7 +76,7 @@ public class RecipeEditActivity extends EditActivityBase {
             registerForActivityResult(new ActivityResultContracts.TakePicture(),
                     result -> {
                         if (result) {
-                            uploadImg();
+                            loadImage();
                         }
                     });
     /**
@@ -294,31 +295,27 @@ public class RecipeEditActivity extends EditActivityBase {
      * Also stores a reference to this image in the Firebase Firestore document
      * that is associated with the recipe being edited.
      */
-    public void uploadImg() {
+    public void loadImage() {
         uploadInProgress = true;
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference recipesRef =
-                storage.getReference("recipe_imgs" + (new Date()));
+        Picasso.get().load(uri).into(this);
+    }
 
-        Bitmap bitmap = null;
-        try {
-            bitmap =
-                    MediaStore.Images.Media.getBitmap(this.getContentResolver(),
-                            uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (bitmap == null) {
-
-            return;
-        }
+    /**
+     * Uploads the image taken for a recipe to Firestore
+     *
+     * @param bitmap the image to be uploaded
+     */
+    public void uploadImage(Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
         String path = MediaStore.Images.Media.insertImage(
                 RecipeEditActivity.this.getContentResolver(), bitmap,
                 UUID.randomUUID().toString(), null);
         Uri uri = Uri.parse(path);
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference recipesRef =
+                storage.getReference("recipe_imgs" + (new Date()));
         UploadTask uploadTask = recipesRef.putFile(uri);
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(exception -> {
@@ -326,8 +323,6 @@ public class RecipeEditActivity extends EditActivityBase {
             uploadInProgress = false;
             this.makeSnackbar("Failed to upload image");
         }).addOnSuccessListener(taskSnapshot -> {
-            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-            // ...
             recipesRef.getDownloadUrl().addOnSuccessListener(uri1 -> {
                 downloadUrl = uri1.toString();
                 if (recipe != null) {
@@ -348,8 +343,39 @@ public class RecipeEditActivity extends EditActivityBase {
         if (url == null) {
             return;
         }
-        Picasso.get().load(url).rotate(90).into(recipeImg);
+        Picasso.get().load(url).into(recipeImg);
         recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         recipeImg.setImageTintList(null);
+    }
+
+    /**
+     * Callback for when the image has been successfully loaded by Picasso
+     *
+     * @param bitmap the bitmap of the image
+     * @param from  the source of the image
+     */
+    @Override public void onBitmapLoaded(Bitmap bitmap,
+                                         Picasso.LoadedFrom from) {
+        uploadImage(bitmap);
+    }
+
+    /**
+     * Callback for when the image has failed to load
+     *
+     * @param e the exception that was thrown
+     */
+    @Override public void onBitmapFailed(Exception e,
+                                         Drawable errorDrawable) {
+        uploadInProgress = false;
+        RecipeEditActivity.this.makeSnackbar("Failed to " +
+                "upload image");
+    }
+
+    /**
+     * Callback for when the image is being prepared to be loaded
+     *
+     * @param placeHolderDrawable the placeholder drawable
+     */
+    @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
     }
 }

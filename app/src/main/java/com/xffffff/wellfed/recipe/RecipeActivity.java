@@ -163,7 +163,7 @@ public class RecipeActivity extends ActivityBase
             return;
         }
         ImageView recipeImg = findViewById(R.id.recipe_img);
-        Picasso.get().load(url).rotate(90).into(recipeImg);
+        Picasso.get().load(url).into(recipeImg);
         recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         recipeImg.setImageTintList(null);
     }
