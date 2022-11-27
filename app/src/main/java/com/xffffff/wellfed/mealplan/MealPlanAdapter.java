@@ -116,6 +116,8 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         MealPlan mealPlan = db.getMealPlanProxy(snapshot);
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
+        holder.getWeekTextView().setText("");
+        holder.getWeekTextView().setVisibility(View.GONE);
         holder.getMaterialCardView().setOnClickListener(view -> {
             if (listener != null) {
                 listener.onItemClick(mealPlan);
