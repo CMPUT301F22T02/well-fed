@@ -233,6 +233,11 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
     }
 
+    /**
+     * Adds a meal plan with ingredients to the meal planner.
+     * @param mealPlan the name of the meal plan to add
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
     private void addMealPlanAndIngredients(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
@@ -287,6 +292,11 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
     }
 
+    /**
+     * Cleans up an ingredient from the ingredient storage.
+     * @param description the title of the ingredient to clean up
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
     private void cleanUpIngredient(String description) throws InterruptedException {
         Thread.sleep(timeout);
         onView(withId(R.id.ingredient_storage_item)).perform(click());
@@ -301,6 +311,11 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
+    /**
+     * Cleans up a recipe from the recipe book.
+     * @param title the title of the recipe to clean up
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
     private void cleanUpRecipe(String title) throws InterruptedException {
         Thread.sleep(timeout);
         onView(withId(R.id.recipe_book_item)).perform(click());
@@ -316,6 +331,11 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
+    /**
+     * Cleans up a meal plan from the meal planner.
+     * @param title the title of the meal plan to clean up
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
     private void cleanUpMealPlan(String title) throws InterruptedException {
         Thread.sleep(timeout);
         onView(withId(R.id.meal_book_item)).perform(click());
