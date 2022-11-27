@@ -51,13 +51,15 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
      * @param viewType
      * @return
      */
-    @NonNull @Override public ItemViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
+    @NonNull
+    @Override
+    public ItemViewHolder onCreateViewHolder(
+        @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View itemView =
-                layoutInflater.inflate(R.layout.view_holder_item_edit, parent,
-                        false);
+            layoutInflater.inflate(R.layout.view_holder_item_edit, parent,
+                false);
         return new ItemViewHolder(itemView);
     }
 
@@ -72,26 +74,42 @@ public abstract class EditItemAdapter<Item> extends ItemAdapter<Item> {
             }
         });
         new DeleteButton(((ItemViewHolder) holder).deleteButton.getContext(),
-                itemViewHolder.getDeleteButton(), "Delete item?", () -> {
+            itemViewHolder.getDeleteButton(), "Delete item?", () -> {
             if (deleteListener != null) {
                 deleteListener.onDelete(item);
             }
         });
     }
 
-    @Override public void setItems(List<Item> items) {
+    @Override
+    public void setItems(List<Item> items) {
         super.setItems(items);
         placeholderItems = new ArrayList<>(items);
     }
 
+    /**
+     * hasChanged checks if the items have changed
+     *
+     * @return
+     */
     public Boolean hasChanges() {
         return !placeholderItems.equals(items);
     }
 
+    /**
+     * onEditListener is the interface that handles the edit button
+     *
+     * @param <Item> the item that is being edited
+     */
     public interface OnEditListener<Item> {
         void onEdit(Item item);
     }
 
+    /**
+     * onDeleteListener is the interface that handles the delete button
+     *
+     * @param <Item> the item that is being deleted
+     */
     public interface OnDeleteListener<Item> {
         void onDelete(Item item);
     }
