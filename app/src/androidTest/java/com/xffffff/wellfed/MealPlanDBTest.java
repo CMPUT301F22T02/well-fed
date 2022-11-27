@@ -54,10 +54,6 @@ public class MealPlanDBTest {
      * The ingredient database to test with.
      */
     private IngredientDB ingredientDB;
-    /**
-     * The Firestore database to test with.
-     */
-    private FirebaseFirestore db;
 
     /**
      * Creates a new mock meal plan to test with.
@@ -115,7 +111,6 @@ public class MealPlanDBTest {
      * Sets up the database to test with.
      */
     @Before public void setUpDB() {
-        db = FirebaseFirestore.getInstance();
         MockDBConnection connection = new MockDBConnection();
         mealPlanDB = new MealPlanDB(connection);
         recipeDB = new RecipeDB(connection);

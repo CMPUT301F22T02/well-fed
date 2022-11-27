@@ -37,7 +37,7 @@ public class RecipeTest {
     }
 
     /**
-     * Tests whether a new Ingredient has the correctly initialized fields.
+     * Tests whether a new Recipe has the correctly initialized fields.
      */
     @Test public void testNullFields() {
         Recipe mock = mockRecipe();
@@ -46,6 +46,35 @@ public class RecipeTest {
         assertNull(mock.getPhotograph());
         assertNull(mock.getPrepTimeMinutes());
         assertNull(mock.getServings());
+    }
+
+    /**
+     * Tests first constructor of a Recipe
+     */
+    @Test public void testRecipeConstructor1() {
+        Recipe recipe = new Recipe("Cereal");
+        assertEquals("Cereal", recipe.getTitle());
+        assertNull(recipe.getCategory());
+        assertNull(recipe.getComments());
+        assertNull(recipe.getPhotograph());
+        assertNull(recipe.getPrepTimeMinutes());
+        assertNull(recipe.getServings());
+        assertTrue(recipe.getIngredients().isEmpty());
+    }
+
+    /**
+     * Tests the copy constructor of a Recipe
+     */
+    @Test public void testRecipeConstructor2() {
+        Recipe mock = mockRecipe();
+        Recipe recipe = new Recipe(mock);
+        assertEquals(mock.getCategory(), recipe.getCategory());
+        assertEquals(mock.getComments(), recipe.getComments());
+        assertEquals(mock.getTitle(), recipe.getTitle());
+        assertEquals(mock.getPhotograph(), recipe.getPhotograph());
+        assertEquals(mock.getPrepTimeMinutes(), recipe.getPrepTimeMinutes());
+        assertEquals(mock.getServings(), recipe.getServings());
+        assertTrue(recipe.getIngredients().isEmpty() && mock.getIngredients().isEmpty());
     }
 
     /**

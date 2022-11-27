@@ -8,6 +8,7 @@ import static androidx.test.espresso.action.ViewActions.swipeRight;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
@@ -33,10 +34,16 @@ import java.util.Stack;
  */
 @RunWith(AndroidJUnit4.class) public class MainActivityInstrumentedTest {
 
+    /**
+     * The activity rule for the device.
+     */
     @Rule public ActivityScenarioRule<com.xffffff.wellfed.MainActivity>
             activityRule =
             new ActivityScenarioRule<>(com.xffffff.wellfed.MainActivity.class);
 
+    /**
+     * Tests the context of the application under the test.
+     */
     @Test public void useAppContext() {
         // Context of the app under test.
         Context appContext =
@@ -44,6 +51,9 @@ import java.util.Stack;
         assertEquals("com.xffffff.wellfed", appContext.getPackageName());
     }
 
+    /**
+     * Tests whether swipe navigation is working as intended.
+     */
     @Test public void testSwipeNavigation() {
         ViewAction[] swipes =
                 {swipeLeft(), swipeLeft(), swipeRight(), swipeRight(),
@@ -61,45 +71,67 @@ import java.util.Stack;
         }
     }
 
-    @Test public void testBottomAppBarNavigation() {
-        Map<Integer, Integer> menuItemsToFragmentIds = new HashMap<>();
-        menuItemsToFragmentIds.put(R.id.ingredient_storage_item,
-                R.id.fragment_ingredient_storage);
-        menuItemsToFragmentIds.put(R.id.meal_book_item,
-                R.id.fragment_meal_book);
-        menuItemsToFragmentIds.put(R.id.recipe_book_item,
-                R.id.fragment_recipe_book);
-        menuItemsToFragmentIds.put(R.id.shopping_cart_item,
-                R.id.fragment_shopping_cart);
+    /**
+     * Tests whether bottom app bar navigation is working as intended.
+     */
+    @Test public void testBottomAppBarNavigation() throws InterruptedException {
         onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
-        for (Map.Entry<Integer, Integer> entry1 :
-                menuItemsToFragmentIds.entrySet()) {
-            onView(withId(entry1.getKey())).perform(click());
-            onView(withId(entry1.getValue())).check(matches(isDisplayed()));
-            for (Map.Entry<Integer, Integer> entry2 :
-                    menuItemsToFragmentIds.entrySet()) {
-                onView(withId(entry2.getKey())).perform(click());
-                onView(withId(entry2.getValue())).check(matches(isDisplayed()));
-            }
-        }
-        // TODO: test menu item tinting
+
+        onView(withId(R.id.ingredient_storage_item)).perform(click());
+        Thread.sleep(1000); // animation
+        onView(withId(R.id.fragment_ingredient_storage)).check(matches(isDisplayed()));
+        onView(withId(R.id.fragment_meal_book)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_shopping_cart)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_recipe_book)).check(matches(not(isDisplayed())));
+
+
+        onView(withId(R.id.meal_book_item)).perform(click());
+        Thread.sleep(1000); // animation
+        onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
+        onView(withId(R.id.fragment_ingredient_storage)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_recipe_book)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_shopping_cart)).check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.recipe_book_item)).perform(click());
+        Thread.sleep(1000); // animation
+        onView(withId(R.id.fragment_recipe_book)).check(matches(isDisplayed()));
+        onView(withId(R.id.fragment_ingredient_storage)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_meal_book)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_shopping_cart)).check(matches(not(isDisplayed())));
+
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(1000); // animation
+        onView(withId(R.id.fragment_shopping_cart)).check(matches(isDisplayed()));
+        onView(withId(R.id.fragment_ingredient_storage)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_recipe_book)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.fragment_meal_book)).check(matches(not(isDisplayed())));
     }
 
-    @Test @Ignore public void testBackButtonNavigation() {
+    /**
+     * Tests whether the back button is working as intended.
+     */
+    @Test public void testBackButtonNavigation() throws InterruptedException {
         onView(withId(R.id.meal_book_item)).perform(click());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.pager)).perform(swipeLeft());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.ingredient_storage_item)).perform(click());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.pager)).perform(swipeLeft());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.fragment_recipe_book)).check(matches(isDisplayed()));
         pressBack();
+        Thread.sleep(1000); // animation
         onView(withId(R.id.fragment_ingredient_storage)).check(
                 matches(isDisplayed()));
         pressBack();
+        Thread.sleep(1000); // animation
         onView(withId(R.id.fragment_shopping_cart)).check(
                 matches(isDisplayed()));
         pressBack();
+        Thread.sleep(1000); // animation
         onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
     }
-    // TODO: test menu item tinting
 }

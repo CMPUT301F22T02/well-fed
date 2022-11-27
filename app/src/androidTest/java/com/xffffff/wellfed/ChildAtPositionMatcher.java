@@ -13,6 +13,12 @@ import org.hamcrest.TypeSafeMatcher;
  * Citation: I let the Espresso test recorder create this method for me.
  */
 public class ChildAtPositionMatcher {
+    /**
+     * Matches a child at a position.
+     * @param parentMatcher the parent of the child
+     * @param position the position of the child to match
+     * @return the matcher for the child at a position
+     */
     public static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 

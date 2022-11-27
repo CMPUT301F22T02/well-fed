@@ -19,7 +19,9 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-// TODO: javadoc
+/**
+ * DB test for StorageIngredients. Connects to the database and performs test queries.
+ */
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
     /**
      * Dictates how long until a database function timeout and throws an error
