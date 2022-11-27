@@ -516,7 +516,6 @@ public class MealPlanInstrumentedTest {
      */
     @Test
     public void testAddMealPlanWithRecipeAndIngredient() throws InterruptedException {
-
         String mealPlan = "Hearty Breakfast";
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
@@ -538,67 +537,22 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        Thread.sleep(timeout); // for some reason closing soft keyboard has an animation.
+        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(timeout);
+        Thread.sleep(1000);
         onView(withText(recipe)).perform(click());
 
-        Thread.sleep(timeout);
-        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
-
-        Thread.sleep(timeout);
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_recipe_title)).perform(typeText(recipe2));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.commentsEditText)).perform(typeText("Pancakes Are delicious to eat"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.addButton)).perform(click());
-        Thread.sleep(timeout);
-
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Pancake Mix"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_categoryInput)).perform(typeText("Bread"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_amountInput)).perform(click());
-        onView(withId(R.id.edit_amountInput)).perform(typeText("250"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withText("g")).inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        onView(withId(R.id.ingredient_save_button)).perform(click());
-        Thread.sleep(timeout);
-
-        onView(withId(R.id.save_fab)).perform(click());
-
-        Thread.sleep(timeout);
-
+        Thread.sleep(1000);
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(timeout);
+        Thread.sleep(1000);
 
         onView(withText(ingredient)).perform(click());
 
-        Thread.sleep(timeout);
+        Thread.sleep(1000);
         closeSoftKeyboard();
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
@@ -611,29 +565,7 @@ public class MealPlanInstrumentedTest {
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
-        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
-        Thread.sleep(timeout);
-
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText(ingredient2));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_categoryInput)).perform(typeText("Fruit"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_amountInput)).perform(click());
-        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        Thread.sleep(timeout); // for some reason closing soft keyboard has an animation.
-        onView(withId(R.id.ingredient_save_button)).perform(click());
-        closeSoftKeyboard();
-
-        Thread.sleep(timeout);
+        Thread.sleep(1000);
 
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(2000);
