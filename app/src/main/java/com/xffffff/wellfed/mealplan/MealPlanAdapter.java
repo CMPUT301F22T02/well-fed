@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
@@ -115,6 +116,8 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         MealPlan mealPlan = db.getMealPlanProxy(snapshot);
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
+        holder.getWeekTextView().setText("");
+        holder.getWeekTextView().setVisibility(View.GONE);
         holder.getMaterialCardView().setOnClickListener(view -> {
             if (listener != null) {
                 listener.onItemClick(mealPlan);
@@ -123,6 +126,13 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
 
         Date eatDate = mealPlan.getEatDate();
         Date eatDateFirstDayOfWeek = dateUtil.getFirstDayOfWeek(eatDate);
+
+        if (dateUtil.beforeToday(eatDate)) {
+            holder.setCardStyle("outlined");
+        } else {
+            holder.setCardStyle("filled");
+        }
+
         if (position > 0) {
             DocumentSnapshot priorSnapshot = getSnapshot(position - 1);
             MealPlan priorMealPlan = db.getMealPlanProxy(priorSnapshot);

@@ -57,6 +57,10 @@ public class MealBookFragment extends Fragment
      */
     private TextView callToActionTextView;
     /**
+     * LinearLayoutManager for the RecyclerView
+     */
+    private MealPlanLinearLayoutManager layoutManager;
+    /**
      * The meal plan controller.
      */
     private MealPlanController controller;
@@ -141,18 +145,20 @@ public class MealBookFragment extends Fragment
                 view.findViewById(R.id.callToActionTextView);
         RecyclerView mealPlanRecyclerView =
                 view.findViewById(R.id.mealPlanRecyclerView);
-        LinearLayoutManager linearLayoutManager =
-                new LinearLayoutManager(getContext());
-        mealPlanRecyclerView.setLayoutManager(linearLayoutManager);
+        this.layoutManager =
+                new MealPlanLinearLayoutManager(getContext());
+        mealPlanRecyclerView.setLayoutManager(layoutManager);
 
         controller = new MealPlanController(requireActivity());
 
         this.controller.getAdapter().setOnItemClickListener(this);
         this.controller.setOnAdapterChangedListener(this::updateCallToAction);
         mealPlanRecyclerView.setAdapter(this.controller.getAdapter());
+        mealPlanRecyclerView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+        mealPlanRecyclerView.setNestedScrollingEnabled(false);
 
         userFirstNameTextView.setText(getString(R.string.greeting));
-        this.updateCallToAction(null);
+        this.updateCallToAction(null, -1);
     }
 
     /**
@@ -174,7 +180,7 @@ public class MealBookFragment extends Fragment
      *
      * @param mealPlan The meal plan to update the call to action text view.
      */
-    private void updateCallToAction(MealPlan mealPlan) {
+    private void updateCallToAction(MealPlan mealPlan, int position) {
         if (mealPlan != null) {
             SpannableStringBuilder callToAction =
                     new SpannableStringBuilder().append(
@@ -182,6 +188,7 @@ public class MealBookFragment extends Fragment
                             .append(" ").append(mealPlan.getTitle(),
                                     new StyleSpan(Typeface.ITALIC), 0).append("?");
             this.callToActionTextView.setText(callToAction);
+            this.layoutManager.scrollToPosition(position);
         } else {
             this.callToActionTextView.setText(getString(R.string.default_call_to_action));
         }
