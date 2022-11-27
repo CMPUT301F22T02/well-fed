@@ -80,6 +80,7 @@ public class ShoppingCartIngredientController {
      * @param field The field to search.
      */
     public void getSearchResults(String field) {
+    public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);
         adapter.setQuery(query);
     }
@@ -89,6 +90,7 @@ public class ShoppingCartIngredientController {
      *
      * @param field The field to sort by.
      */
+    public void sortByField(String field) {
     public void sortByField(String field) {
         Query query = db.getSortedQuery(field);
         adapter.setQuery(query);
