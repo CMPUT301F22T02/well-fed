@@ -1,23 +1,57 @@
 package com.xffffff.wellfed;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.swipeDown;
+import static androidx.test.espresso.action.ViewActions.swipeUp;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.supportsInputMethods;
+import static androidx.test.espresso.matcher.ViewMatchers.withChild;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withHint;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withInputType;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withParentIndex;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.not;
 
+import android.widget.DatePicker;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.contrib.PickerActions;
+import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 @RunWith(JUnit4.class)
 public class ShoppingCartInstrumentedTest {
@@ -346,9 +380,24 @@ public class ShoppingCartInstrumentedTest {
 
     @Test
     public void testAddingMealPlan() throws InterruptedException {
-        addMealPlanAndIngredients("Hearty Breakfast");
-        Thread.sleep(5000);
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
+        Thread.sleep(1000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(10000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
+        onView(withText("Bacon")).check(matches(isDisplayed()));
+        onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
+
+        Thread.sleep(3000);
+
+        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpRecipe("Eggs and Bacon");
+        cleanUpIngredient("Sliced Bread");
     }
 
     @Test
