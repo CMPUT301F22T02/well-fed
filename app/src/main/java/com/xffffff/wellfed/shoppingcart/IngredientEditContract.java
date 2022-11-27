@@ -52,8 +52,7 @@ public class IngredientEditContract extends
                     (StorageIngredient) intent.getSerializableExtra(
                         "ingredient");
                 ShoppingCartIngredient ingredient =
-                    new ShoppingCartIngredient(storageIngredient);
-                ingredient.setId(storageIngredient.getId());
+                        new ShoppingCartIngredient(storageIngredient);
                 ingredient.setCategory(storageIngredient.getCategory());
                 ingredient.setUnit(storageIngredient.getUnit());
                 ingredient.setAmount(storageIngredient.getAmount());

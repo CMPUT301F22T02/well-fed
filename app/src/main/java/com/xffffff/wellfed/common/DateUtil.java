@@ -145,4 +145,18 @@ public class DateUtil {
         SimpleDateFormat simpleDateFormat = getSimpleDateFormat(pattern);
         return simpleDateFormat.format(date);
     }
+
+    public int format(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        return Integer.parseInt(format.format(date));
+    }
+
+    /**
+     * Returns true if the date is before today
+     * @return true if the date is before today
+     */
+    public Boolean beforeToday(Date date) {
+        Date today = new Date();
+        return date.getTime() <= (today.getTime() - DAY);
+    }
 }

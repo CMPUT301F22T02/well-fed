@@ -118,6 +118,9 @@ public class MainActivity extends ActivityBase {
             }
         });
 
+        // fixes crashes related to nested fragments
+        viewPager.setOffscreenPageLimit(3);
+
         int colorPrimary = MaterialColors.getColor(bottomAppBar,
             com.google.android.material.R.attr.colorPrimary);
         int colorOutline = MaterialColors.getColor(bottomAppBar,
