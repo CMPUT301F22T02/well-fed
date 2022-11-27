@@ -743,7 +743,7 @@ import org.junit.runner.RunWith;
     /**
      * Tests searching and then clearing the search.
      */
-    @Test public void testClearText() throws Exception {
+    @Test public void testClearSearch() throws Exception {
         add5Ingredients();
 
         // search for something not there

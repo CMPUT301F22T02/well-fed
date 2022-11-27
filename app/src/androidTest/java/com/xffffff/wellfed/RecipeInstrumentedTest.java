@@ -13,15 +13,18 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.RootMatchers;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -121,6 +124,20 @@ import org.junit.runner.RunWith;
                                                 withId(R.id.fragment_recipe_book),
                                                 1)), 1), isDisplayed()));
         materialButton.perform(click());
+    }
+
+    /**
+     * Asserts that a view is not visible.
+     */
+    private void assertTextNotVisible(String text) throws Exception {
+        try {
+            onView(withText(text)).check(ViewAssertions.matches(
+                    withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+            throw new Exception("The view with text " + text +
+                    " was present when it shouldn't be.");
+        } catch (NoMatchingViewException e) {
+            return;
+        }
     }
 
     /**
@@ -1075,5 +1092,136 @@ import org.junit.runner.RunWith;
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("English muffin"))));
+    }
+
+    /**
+     * Tests searching for a nonexistent Recipe.
+     */
+    @Test public void testSearchNonexistent() throws Exception {
+        // add Apple pie, Apple puree, Bananas foster, Ice cream
+        add5Recipes();
+
+        // search for something not there
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        // assert none of the recipes are visible
+        assertTextNotVisible("Apple pie");
+        assertTextNotVisible("Apple puree");
+        assertTextNotVisible("Bananas foster");
+        assertTextNotVisible("Ice cream");
+        assertTextNotVisible("Cereal");
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+        closeSoftKeyboard();
+        cleanup5Recipes();
+    }
+
+    /**
+     * Tests searching for a Recipe and then clearing the search box
+     */
+    @Test public void testClearSearch() throws Exception {
+        // add Apple pie, Apple puree, Bananas foster, Ice cream
+        add5Recipes();
+
+        // search for something not there
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        // assert none of the recipes are visible
+        assertTextNotVisible("Apple pie");
+        assertTextNotVisible("Apple puree");
+        assertTextNotVisible("Bananas foster");
+        assertTextNotVisible("Ice cream");
+        assertTextNotVisible("Cereal");
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+
+        // assert all of the recipes are now visible
+        Thread.sleep(1000);
+        onView(withText("Apple pie")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Bananas foster")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ice cream")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cereal")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        cleanup5Recipes();
+    }
+
+    /**
+     * Tests searching for a Recipe's entire title
+     */
+    @Test public void testWholeSearch() throws Exception {
+        add5Recipes();
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("Bananas foster"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Apple pie");
+        assertTextNotVisible("Apple puree");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Bananas foster")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+        cleanup5Recipes();
+    }
+
+    /**
+     * Tests the prefix search
+     */
+    @Test public void testPrefixSearch() throws Exception {
+        add5Recipes();
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("Apple"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Bananas foster");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Apple pie")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+        cleanup5Recipes();
+    }
+
+    /**
+     * Tests searching for a Recipe's partial title (case insensitive)
+     */
+    @Test public void testCaseInsensitivity() {
+        add5Recipes();
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("apple"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Bananas foster");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Apple pie")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree")).check(ViewAssertions.matches(
+                withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+        cleanup5Recipes();
     }
 }
