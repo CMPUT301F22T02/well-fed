@@ -2,6 +2,7 @@ package com.xffffff.wellfed.recipe;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -110,7 +111,8 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
      * @param savedInstanceState Bundle object for the activity, to restore
      *                           to earlier state.
      */
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_edit);
 
@@ -242,7 +244,8 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
      *
      * @return true if there are unsaved changes, false otherwise
      */
-    @Override public Boolean hasUnsavedChanges() {
+    @Override
+    public Boolean hasUnsavedChanges() {
         if (title.hasChanges()) {
             return true;
         }
@@ -308,6 +311,9 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
     public void uploadImage(Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        bitmap =  Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         String path = MediaStore.Images.Media.insertImage(
                 RecipeEditActivity.this.getContentResolver(), bitmap,
                 UUID.randomUUID().toString(), null);
@@ -352,10 +358,11 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
      * Callback for when the image has been successfully loaded by Picasso
      *
      * @param bitmap the bitmap of the image
-     * @param from  the source of the image
+     * @param from   the source of the image
      */
-    @Override public void onBitmapLoaded(Bitmap bitmap,
-                                         Picasso.LoadedFrom from) {
+    @Override
+    public void onBitmapLoaded(Bitmap bitmap,
+                               Picasso.LoadedFrom from) {
         uploadImage(bitmap);
     }
 
@@ -364,8 +371,9 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
      *
      * @param e the exception that was thrown
      */
-    @Override public void onBitmapFailed(Exception e,
-                                         Drawable errorDrawable) {
+    @Override
+    public void onBitmapFailed(Exception e,
+                               Drawable errorDrawable) {
         uploadInProgress = false;
         RecipeEditActivity.this.makeSnackbar("Failed to " +
                 "upload image");
@@ -376,6 +384,7 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
      *
      * @param placeHolderDrawable the placeholder drawable
      */
-    @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
+    @Override
+    public void onPrepareLoad(Drawable placeHolderDrawable) {
     }
 }
