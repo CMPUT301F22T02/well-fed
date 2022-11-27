@@ -46,9 +46,9 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
     private Boolean requireDouble = true;
 
     /**
-     * Holds the Boolean for whether to require an integer, defaults to false
+     * Holds the Boolean for whether to require a long, defaults to false
      */
-    private Boolean requireInteger = false;
+    private Boolean requireLong = false;
 
     /**
      * Holds the Boolean for whether to require a positive number, defaults to
@@ -94,14 +94,14 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
      */
     public void setRequireDouble() {
         this.requireDouble = true;
-        this.requireInteger = false;
+        this.requireLong = false;
     }
 
     /**
-     * Validate data to require a integer
+     * Validate data to require a long
      */
-    public void setRequireInteger() {
-        this.requireInteger = true;
+    public void setRequireLong() {
+        this.requireLong = true;
         this.requireDouble = false;
     }
 
@@ -128,14 +128,14 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
     }
 
     /**
-     * Returns the integer value of the text
+     * Returns the long value of the text
      *
      * @return double value of the text
-     * @throws NumberFormatException if the text is not an integer
+     * @throws NumberFormatException if the text is not a long
      */
-    public Integer getInteger() throws NumberFormatException {
+    public Long getLong() throws NumberFormatException {
         String text = this.getText();
-        return Integer.parseInt(text);
+        return Long.parseLong(text);
     }
 
     /**
@@ -156,18 +156,18 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
     }
 
     /**
-     * Validates that the EditText is a valid integer. If it is not a
-     * integer, it displays an error message.
+     * Validates that the EditText is a valid long. If it is not a
+     * long, it displays an error message.
      *
-     * @return true if the EditText is a valid integer, false otherwise
+     * @return true if the EditText is a valid long, false otherwise
      */
-    private Boolean isValidInteger() {
+    private Boolean isValidLong() {
         try {
-            this.getInteger();
+            this.getLong();
             this.setError(null);
             return true;
         } catch (NumberFormatException exception) {
-            this.setError(this.getHint() + " must be an integer");
+            this.setError(this.getHint() + " must be an long");
             return false;
         }
     }
@@ -210,8 +210,8 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
                 return false;
             }
         }
-        if (this.requireInteger) {
-            if (!this.isValidInteger()) {
+        if (this.requireLong) {
+            if (!this.isValidLong()) {
                 return false;
             }
         }

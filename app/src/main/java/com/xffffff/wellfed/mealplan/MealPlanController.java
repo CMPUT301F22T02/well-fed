@@ -16,29 +16,67 @@ import com.xffffff.wellfed.unit.UnitConverter;
 
 import java.util.Date;
 
+/**
+ * The MealPlanController class controls the MealPlanActivity.
+ **/
 public class MealPlanController implements DBAdapter.OnDataChangedListener {
+    /**
+     * The MealPlanActivity that the controller controls.
+     */
     private final ActivityBase activity;
+    /**
+     * listenerRegistration is the ListenerRegistration object for the
+     * controller.
+     */
     private ListenerRegistration listenerRegistration;
     /**
      * The DB of stored ingredients
      */
     private final MealPlanDB db;
+    /**
+     * The MealPlan adapter for the RecyclerView
+     */
     private MealPlanAdapter adapter;
+    /**
+     * onDataChanged is the AdapterDataObserver that is called when the data
+     */
     private OnDataChanged onDataChanged;
+    /**
+     * onAdapterDataChangedListener is the AdapterDataObserver that is called
+     * when the data in the adapter changes.
+     */
     private OnAdapterDataChangedListener onAdapterDataChangedListener;
 
+    /**
+     * onDataChanged is the interface that is called when the data in the
+     * controller changes.
+     */
     public interface OnDataChanged {
         void onDataChanged(MealPlan mealPlan);
     }
 
+    /**
+     * onAdapterDataChangedListener is the interface that is called when the
+     * data in the adapter changes.
+     */
     public interface OnAdapterDataChangedListener {
-        void onAdapterDataChanged(MealPlan mealPlan);
+        void onAdapterDataChanged(MealPlan mealPlan, int position);
     }
 
+    /**
+     * setOnDataChanged sets the OnDataChanged listener.
+     * @param onDataChanged the OnDataChanged listener
+     */
     public void setOnDataChanged(OnDataChanged onDataChanged) {
         this.onDataChanged = onDataChanged;
     }
 
+    /**
+     * setOnAdapterDataChangedListener sets the OnAdapterDataChangedListener
+     * listener.
+     * @param listener the OnAdapterDataChangedListener
+     * listener
+     */
     public void setOnAdapterChangedListener(OnAdapterDataChangedListener listener) {
         this.onAdapterDataChangedListener = listener;
     }
@@ -59,7 +97,11 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
         onDataChanged();
     }
 
-
+    /**
+     * startListening starts listening for changes in the database for the
+     * specified meal plan.
+     * @param id the id of the meal plan
+     */
     public void startListening(String id) {
         if (listenerRegistration == null) {
             listenerRegistration = db.getMealPlanDocumentReference(id)
@@ -71,6 +113,9 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
         }
     }
 
+    /**
+     * stopListening stops listening for changes in the database.
+     */
     public void stopListening() {
         if (listenerRegistration != null) {
             listenerRegistration.remove();
@@ -156,21 +201,6 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     }
 
     /**
-     * Checks if an item is in the past - if it is, delete it and display snackbar.
-     * @param mealPlan the mealplan to check
-     */
-    public void checkMealInPast(MealPlan mealPlan) {
-        Date today = new Date(System.currentTimeMillis()-24*60*60*1000);
-        Date eatDate = mealPlan.getEatDate();
-
-        assert eatDate != null;
-        if (eatDate.getTime() < today.getTime()) {
-            deleteMealPlan(mealPlan, true);
-            this.activity.makeSnackbar("Cannot make a MealPlan in the past.");
-        }
-    }
-
-    /**
      * The scaleRecipe method for the MealPlanController. Scales a recipe
      * to the desired number of servings.
      *
@@ -178,10 +208,10 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      * @param mealPlanServings The number of servings to scale the recipe to.
      * @return The scaled recipe.
      */
-    public Recipe scaleRecipe(Recipe recipe, int mealPlanServings) {
+    public Recipe scaleRecipe(Recipe recipe, Long mealPlanServings) {
         Recipe scaledRecipe = new Recipe(recipe);
         UnitConverter unitConverter = new UnitConverter(this.activity);
-        int recipeServings = scaledRecipe.getServings();
+        Long recipeServings = scaledRecipe.getServings();
         double scalingFactor = (double) mealPlanServings / recipeServings;
         for (Ingredient ingredient : scaledRecipe.getIngredients()) {
             ingredient.setAmount(ingredient.getAmount() * scalingFactor);
@@ -200,23 +230,26 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      */
     @Override public void onDataChanged() {
         if (onAdapterDataChangedListener != null) {
-            MealPlan currentMealPlan = getCurrentMealPlan();
-            onAdapterDataChangedListener.onAdapterDataChanged(currentMealPlan);
+            Pair<MealPlan, Integer> pair = getCurrentMealPlan();
+            onAdapterDataChangedListener.onAdapterDataChanged(pair.first,
+                    pair.second);
         }
     }
 
     /**
      * Get today's meal plan
      */
-    public MealPlan getCurrentMealPlan() {
+    public Pair<MealPlan, Integer> getCurrentMealPlan() {
         Date today = new Date();
         DateUtil dateUtil = new DateUtil();
+        int position = 0;
         for (MealPlan mealPlan : adapter.getMealPlans()) {
             Date eatDate = mealPlan.getEatDate();
             if (dateUtil.equals(eatDate, today)) {
-                return mealPlan;
+                return new Pair<>(mealPlan, position);
             }
+            position++;
         }
-        return null;
+        return new Pair<>(null, -1);
     }
 }

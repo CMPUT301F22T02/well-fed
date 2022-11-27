@@ -62,7 +62,7 @@ public class MealPlanDBTest {
         MealPlan mealPlan = new MealPlan("Thanksgiving Dinner");
         mealPlan.setCategory("Supper");
         mealPlan.setEatDate(new Date());
-        mealPlan.setServings(10);
+        mealPlan.setServings(10L);
         return mealPlan;
     }
 
@@ -72,8 +72,8 @@ public class MealPlanDBTest {
     private Recipe mockRecipe() {
         Recipe recipe = new Recipe("Stuffing");
         recipe.setCategory("Side Dish");
-        recipe.setServings(3);
-        recipe.setPrepTimeMinutes(120);
+        recipe.setServings(3L);
+        recipe.setPrepTimeMinutes(120L);
         recipe.setComments("This hearty side is the original comfort food.");
         Ingredient ingredient = new Ingredient("White bread");
         ingredient.setCategory("Carbs");
@@ -635,7 +635,7 @@ public class MealPlanDBTest {
         mealPlan.setTitle("Christmas Dinner");
         mealPlan.setCategory("Holiday");
         mealPlan.setEatDate(new Date());
-        mealPlan.setServings(5);
+        mealPlan.setServings(5L);
         mealPlan.addRecipe(mockRecipe());
         mealPlan.addRecipe(mockRecipe());
         mealPlan.addIngredient(mockIngredient());
@@ -835,40 +835,40 @@ public class MealPlanDBTest {
         Ingredient ingredient1 = new Ingredient("Chicken");
         recipe1.addIngredient(ingredient1);
         recipe1.setCategory("Main");
-        recipe1.setServings(1);
-        recipe1.setPrepTimeMinutes(30);
+        recipe1.setServings(1L);
+        recipe1.setPrepTimeMinutes(30L);
         recipe1.setComments("Poultry to eat for a burst of protein.");
         mealPlan.addRecipe(recipe1);
         Recipe recipe2 = new Recipe("Beef");
         Ingredient ingredient2 = new Ingredient("Beef");
         recipe2.addIngredient(ingredient2);
         recipe2.setCategory("Main");
-        recipe2.setServings(5);
-        recipe2.setPrepTimeMinutes(30);
+        recipe2.setServings(5L);
+        recipe2.setPrepTimeMinutes(30L);
         recipe2.setComments("Beefy goodness?");
         mealPlan.addRecipe(recipe2);
         Recipe recipe3 = new Recipe("Pork");
         Ingredient ingredient3 = new Ingredient("Pork");
         recipe3.addIngredient(ingredient3);
         recipe3.setCategory("Main");
-        recipe3.setServings(3);
-        recipe3.setPrepTimeMinutes(40);
+        recipe3.setServings(3L);
+        recipe3.setPrepTimeMinutes(40L);
         recipe3.setComments("Tasty pork");
         mealPlan.addRecipe(recipe3);
         Recipe recipe4 = new Recipe("Fish");
         Ingredient ingredient4 = new Ingredient("Fish");
         recipe4.addIngredient(ingredient4);
         recipe4.setCategory("Main");
-        recipe4.setServings(2);
-        recipe4.setPrepTimeMinutes(30);
+        recipe4.setServings(2L);
+        recipe4.setPrepTimeMinutes(30L);
         recipe4.setComments("Hopefully it's not still swimming!");
         mealPlan.addRecipe(recipe4);
         Recipe recipe5 = new Recipe("Lamb");
         Ingredient ingredient5 = new Ingredient("Lamb");
         recipe5.addIngredient(ingredient5);
         recipe5.setCategory("Main");
-        recipe5.setServings(1);
-        recipe5.setPrepTimeMinutes(25);
+        recipe5.setServings(1L);
+        recipe5.setPrepTimeMinutes(25L);
         recipe5.setComments("Yummy lamb");
         mealPlan.addRecipe(recipe5);
 

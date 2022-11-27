@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The StorageIngredientDB class is a database for the storage ingredients.
+ */
 public class StorageIngredientDB {
     /**
      * Holds the tag for logging purposes

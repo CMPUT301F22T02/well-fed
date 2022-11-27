@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
@@ -57,14 +58,27 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      * The listener for an item click in the RecyclerView
      */
     private OnItemClickListener listener;
+    /**
+     * The dateUtil for the adapter
+     */
     private DateUtil dateUtil;
 
+    /**
+     * The constructor for the MealPlanAdapter
+     *
+     * @param db the MealPlanDB
+     */
     public MealPlanAdapter(MealPlanDB db) {
         super(db.getQuery());
         this.db = db;
         dateUtil = new DateUtil();
     }
 
+    /**
+     * getMealPlans returns the meal plans in the adapter
+     *
+     * @return the meal plans in the adapter
+     */
     public ArrayList<MealPlan> getMealPlans() {
         ArrayList<MealPlan> mealPlans = new ArrayList<>();
         for (DocumentSnapshot snapshot : getSnapshots()) {
@@ -73,7 +87,13 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         return mealPlans;
     }
 
-    @Override protected void onDataChanged(DocumentChange change) {
+    /**
+     * onDataChanged is called when the data in the adapter changes
+     *
+     * @param change the document change
+     */
+    @Override
+    protected void onDataChanged(DocumentChange change) {
         super.onDataChanged(change);
         notifyDataSetChanged();
     }
@@ -83,20 +103,20 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      *
      * @param listener the listener to set
      */
-    // TODO: move this to superclass
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    /*
+    /**
      * The onCreateViewHolder method returns a new MealPlanViewHolder object
-     * using
-     * the viewholder_MealPlan.xml view.
+     * using the viewholder_MealPlan.xml view.
      */
-    @NonNull @Override public MealPlanViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
+    @NonNull
+    @Override
+    public MealPlanViewHolder onCreateViewHolder(
+        @NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_holder_meal_plan, parent, false);
+            .inflate(R.layout.view_holder_meal_plan, parent, false);
         return new MealPlanViewHolder(view);
     }
 
@@ -109,12 +129,15 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      * @param holder   The MealPlanViewHolder object.
      * @param position The position of the MealPlan object in the ArrayList.
      */
-    @Override public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
-                                           int position) {
+    @Override
+    public void onBindViewHolder(@NonNull MealPlanViewHolder holder,
+                                 int position) {
         DocumentSnapshot snapshot = getSnapshot(position);
         MealPlan mealPlan = db.getMealPlanProxy(snapshot);
         holder.getTitleTextView().setText(mealPlan.getTitle());
         holder.getCategoryTextView().setText(mealPlan.getCategory());
+        holder.getWeekTextView().setText("");
+        holder.getWeekTextView().setVisibility(View.GONE);
         holder.getMaterialCardView().setOnClickListener(view -> {
             if (listener != null) {
                 listener.onItemClick(mealPlan);
@@ -123,6 +146,13 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
 
         Date eatDate = mealPlan.getEatDate();
         Date eatDateFirstDayOfWeek = dateUtil.getFirstDayOfWeek(eatDate);
+
+        if (dateUtil.beforeToday(eatDate)) {
+            holder.setCardStyle("outlined");
+        } else {
+            holder.setCardStyle("filled");
+        }
+
         if (position > 0) {
             DocumentSnapshot priorSnapshot = getSnapshot(position - 1);
             MealPlan priorMealPlan = db.getMealPlanProxy(priorSnapshot);
@@ -132,9 +162,9 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
             }
             renderDates(eatDate, holder);
             Date priorEatDateFirstDayOfWeek =
-                    dateUtil.getFirstDayOfWeek(priorEatDate);
+                dateUtil.getFirstDayOfWeek(priorEatDate);
             if (dateUtil.equals(eatDateFirstDayOfWeek,
-                    priorEatDateFirstDayOfWeek)) {
+                priorEatDateFirstDayOfWeek)) {
                 return;
             }
             renderWeeks(eatDate, eatDateFirstDayOfWeek, holder);
@@ -167,13 +197,13 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
                              @NonNull MealPlanViewHolder holder) {
         Date eatDateLastDayOfWeek = dateUtil.getLastDayOfWeek(eatDate);
         String eatDateFirstDayOfWeekMonth =
-                dateUtil.format(eatDateFirstDayOfWeek, "MMMM ");
+            dateUtil.format(eatDateFirstDayOfWeek, "MMMM ");
         String eatDateFirstDayOfWeekDay =
-                dateUtil.format(eatDateFirstDayOfWeek, "d");
+            dateUtil.format(eatDateFirstDayOfWeek, "d");
         String weekLabel =
-                eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
+            eatDateFirstDayOfWeekMonth + eatDateFirstDayOfWeekDay + " - ";
         String eatDateLastDayOfWeekMonth =
-                dateUtil.format(eatDateLastDayOfWeek, "MMMM ");
+            dateUtil.format(eatDateLastDayOfWeek, "MMMM ");
         if (!eatDateLastDayOfWeekMonth.equals(eatDateFirstDayOfWeekMonth)) {
             weekLabel += eatDateLastDayOfWeekMonth;
         }

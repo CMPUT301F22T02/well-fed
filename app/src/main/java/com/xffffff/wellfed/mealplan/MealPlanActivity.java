@@ -34,12 +34,37 @@ public class MealPlanActivity extends ActivityBase
      */
     private MealPlanController controller;
 
+    /**
+     * The titleTextView is the TextView that displays the title of the meal
+     */
     private TextView titleTextView;
+    /**
+     * The categoryTextView is the TextView that displays the category of the
+     * meal
+     */
     private TextView categoryTextView;
+    /**
+     * The dateTextView is the TextView that displays the date of the meal
+     */
     private TextView dateTextView;
+    /**
+     * The servingsTextView is the TextView that displays the number of
+     * servings of the meal
+     */
     private TextView servingsTextView;
+    /**
+     * dateUtil is the DateUtil object for the activity.
+     */
     private DateUtil dateUtil;
+    /**
+     * recipeAdapter is the adapter for the RecyclerView that displays the
+     * recipes.
+     */
     private MealPlanRecipeItemAdapter recipeAdapter;
+    /**
+     * ingredientAdapter is the adapter for the RecyclerView that displays the
+     * ingredients.
+     */
     private MealPlanIngredientItemAdapter ingredientAdapter;
 
 
@@ -66,6 +91,10 @@ public class MealPlanActivity extends ActivityBase
      * The meal plan object.
      */
     private MealPlan mealPlan;
+    /**
+     * The floating action button for the activity that allows the user to
+     * edit the meal plan.
+     */
     private FloatingActionButton fab;
 
     /**
@@ -179,6 +208,9 @@ public class MealPlanActivity extends ActivityBase
     }
 
 
+    /**
+     * updateUI method. It updates the UI with the meal plan information.
+     */
     public void updateUI() {
         titleTextView.setText(mealPlan.getTitle());
         String mealPlanDateText =
@@ -202,6 +234,10 @@ public class MealPlanActivity extends ActivityBase
         }
     }
 
+    /**
+     * onPause method. It is called when the activity is paused. It stops
+     * listening to the meal plan.
+     */
     @Override
     protected void onPause() {
         super.onPause();

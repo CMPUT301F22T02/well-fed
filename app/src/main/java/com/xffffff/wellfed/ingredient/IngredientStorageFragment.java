@@ -20,7 +20,10 @@ import com.xffffff.wellfed.common.SortingFragment;
 
 import java.util.Arrays;
 
-
+/**
+ * The IngredientStorageFragment class is a fragment that displays a list of
+ * ingredients in the user's storage.
+ */
 public class IngredientStorageFragment extends Fragment
         implements Launcher<StorageIngredient>,
                    StorageIngredientAdapter.OnItemClickListener,
@@ -126,7 +129,10 @@ public class IngredientStorageFragment extends Fragment
         sortingFragment.setListener(this);
         sortingFragment.setOptions(
                 Arrays.asList("description", "best-before", "category",
-                        "location"));
+                        "location"),
+                Arrays.asList("Description", "Best Before Date", "Category",
+                        "Location")
+                );
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container, sortingFragment).commit();
 

@@ -238,7 +238,7 @@ public class MealPlanInstrumentedTest {
      * @param mealPlan the name of the meal plan to add
      * @throws InterruptedException when the thread.sleeps are interrupted
      */
-    private void addMealPlanAndIngredients(String mealPlan) throws InterruptedException {
+    private void addMealPlanAndIngredientAndRecipe(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
 
@@ -519,9 +519,7 @@ public class MealPlanInstrumentedTest {
 
         String mealPlan = "Hearty Breakfast";
         String recipe = "Eggs and Bacon";
-        String recipe2 = "Pancakes";
         String ingredient = "Sliced Bread";
-        String ingredient2 = "Orange Juice";
 
         addRecipe(recipe);
         addIngredient(ingredient);
@@ -592,6 +590,7 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
 
         Thread.sleep(timeout);
+
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
@@ -643,8 +642,6 @@ public class MealPlanInstrumentedTest {
 
         cleanUpMealPlan(mealPlan);
         cleanUpRecipe(recipe);
-
-        cleanUpRecipe(recipe2);
         cleanUpIngredient(ingredient);
     }
 
@@ -832,7 +829,7 @@ public class MealPlanInstrumentedTest {
      */
     @Test
     public void testDeleteMealPlan() throws InterruptedException {
-        addMealPlanAndIngredients("Hearty Breakfast");
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
         Thread.sleep(2000);
 
@@ -855,7 +852,7 @@ public class MealPlanInstrumentedTest {
      */
     @Test
     public void testDeleteRecipeAndIngredientBeforeMealPlan() throws InterruptedException {
-        addMealPlanAndIngredients("Hearty Breakfast");
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
         Thread.sleep(3000);
 
@@ -878,7 +875,7 @@ public class MealPlanInstrumentedTest {
     public void testUpdateMealPlan() throws InterruptedException {
         addRecipe("Quinoa");
         addIngredient("Celery sticks");
-        addMealPlanAndIngredients("Hearty Breakfast");
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
         String mealPlan = "Healthy Lunch";
         String recipe = "Quinoa";
@@ -977,7 +974,7 @@ public class MealPlanInstrumentedTest {
         String thirdMeal = "Third Hearty Breakfast";
         String fourthMeal = "Fourth Hearty Breakfast";
 
-        addMealPlanAndIngredients(firstMeal);
+        addMealPlanAndIngredientAndRecipe(firstMeal);
         addMealPlan(secondMeal);
         addMealPlan(thirdMeal);
         addMealPlan(fourthMeal);

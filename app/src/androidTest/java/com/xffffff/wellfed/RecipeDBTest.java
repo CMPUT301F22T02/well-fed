@@ -72,8 +72,8 @@ import java.util.concurrent.atomic.AtomicReference;
         Recipe testRecipe = new Recipe("Omelet");
         testRecipe.setComments(
                 "This delicious omelette uses duck eggs and chicken eggs");
-        testRecipe.setServings(1);
-        testRecipe.setPrepTimeMinutes(5);
+        testRecipe.setServings(1L);
+        testRecipe.setPrepTimeMinutes(5L);
         testRecipe.addIngredient(mockIngredient1);
         testRecipe.addIngredient(mockIngredient2);
         testRecipe.setCategory("Breakfast");
@@ -238,8 +238,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
         testRecipe.setTitle("Egg Salad");
         testRecipe.setComments("This egg salad is great for picnics.");
-        testRecipe.setServings(3);
-        testRecipe.setPrepTimeMinutes(20);
+        testRecipe.setServings(3L);
+        testRecipe.setPrepTimeMinutes(20L);
         testRecipe.removeIngredient(testIngredient);
         testRecipe.addIngredient(newTestIngredient);
         testRecipe.setCategory("Lunch");
@@ -330,8 +330,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
         testRecipe.setTitle("Egg Salad");
         testRecipe.setComments("This egg salad is great for picnics.");
-        testRecipe.setServings(3);
-        testRecipe.setPrepTimeMinutes(20);
+        testRecipe.setServings(3L);
+        testRecipe.setPrepTimeMinutes(20L);
         testRecipe.removeIngredient(testIngredient2);
         testRecipe.addIngredient(newTestIngredient);
         testRecipe.setCategory("Lunch");

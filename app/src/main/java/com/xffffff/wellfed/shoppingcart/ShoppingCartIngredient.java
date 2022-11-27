@@ -35,6 +35,7 @@ public class ShoppingCartIngredient extends Ingredient {
      * Creates a ShoppingCartIngredient which represents an Ingredient which
      * can be added to a
      * ShoppingCart.
+     *
      * @param description A String representing the description of a
      *                    ShoppingCartIngredient.
      */
@@ -57,6 +58,7 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Gets whether the ShoppingCartIngredient has been picked up.
+     *
      * @return A boolean representing whether the ShoppingCartIngredient has
      * been picked up.
      */
@@ -66,6 +68,7 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Sets whether a ShoppingCartIngredient has been picked up.
+     *
      * @param pickedUp A boolean representing whether the
      *                 ShoppingCartIngredient has been picked up.
      */
@@ -75,6 +78,7 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Gets whether a ShoppingCartIngredient has its fields completed.
+     *
      * @return A boolean representing whether the ShoppingCartIngredient has
      * completed fields.
      */
@@ -84,6 +88,7 @@ public class ShoppingCartIngredient extends Ingredient {
 
     /**
      * Sets whether a ShoppingCartIngredient has its fields completed.
+     *
      * @param complete A boolean representing whether the
      *                 ShoppingCartIngredient has
      *                 completed fields.

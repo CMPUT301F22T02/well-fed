@@ -313,8 +313,8 @@ public class MealPlanTest {
     @Test public void testServings() {
         MealPlan mealPlan = mockMealPlan();
 
-        // test with integer
-        Integer servings = 6;
+        // test with long
+        Long servings = 6L;
         mealPlan.setServings(servings);
         assertEquals(servings, mealPlan.getServings());
     }
@@ -371,8 +371,8 @@ public class MealPlanTest {
         assertTrue(mockMealPlan.isEqual(mockMealPlan2));
         assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
-        mockMealPlan.setServings(5);
-        mockMealPlan2.setServings(5);
+        mockMealPlan.setServings(5L);
+        mockMealPlan2.setServings(5L);
         assertTrue(mockMealPlan.isEqual(mockMealPlan2));
         assertTrue(mockMealPlan2.isEqual(mockMealPlan));
 
@@ -445,12 +445,12 @@ public class MealPlanTest {
         assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
         mockMealPlan2.setCategory("Breakfast");
-        mockMealPlan.setServings(5);
-        mockMealPlan2.setServings(6);
+        mockMealPlan.setServings(5L);
+        mockMealPlan2.setServings(6L);
         assertFalse(mockMealPlan.isEqual(mockMealPlan2));
         assertFalse(mockMealPlan2.isEqual(mockMealPlan));
 
-        mockMealPlan2.setServings(5);
+        mockMealPlan2.setServings(5L);
         mockMealPlan.setEatDate(new Date(11, 12, 2022));
         mockMealPlan2.setEatDate(new Date(11, 12, 2023));
         assertFalse(mockMealPlan.isEqual(mockMealPlan2));

@@ -9,6 +9,9 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * The MealPlanContract class is the contract for the MealPlanActivity.
+ */
 public class MealPlanContract
         extends ActivityResultContract<MealPlan, Pair<String, MealPlan>> {
     /**
