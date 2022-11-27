@@ -147,6 +147,22 @@ public class RequiredTextInputLayout extends TextInputLayout
     }
 
     /**
+     * Fixes setError to reset layout spacing properly
+     *
+     * @param errorText the error message
+     */
+    @Override
+    public void setError(@Nullable CharSequence errorText) {
+        if (errorText == null) {
+            super.setError(null);
+            setErrorEnabled(false);
+        } else {
+            setErrorEnabled(true);
+            super.setError(errorText);
+        }
+    }
+
+    /**
      * Check for whether the EditText has changes, i.e. the EditText's
      * current text differs from the placeholder text
      *
@@ -163,10 +179,12 @@ public class RequiredTextInputLayout extends TextInputLayout
      */
     private Boolean isNonEmpty() {
         if (this.editText.getText().toString().isEmpty()) {
+            this.setErrorEnabled(true);
             this.setError(this.getHint() + " is required");
             return false;
         } else {
             this.setError(null);
+            this.setErrorEnabled(false);
             return true;
         }
     }
