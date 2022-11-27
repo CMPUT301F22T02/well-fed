@@ -48,6 +48,7 @@ android.applicationVariants.all { variant ->
             classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
             options.addStringOption "-show-members", "package"
         }
+        exclude '**/BuildConfig.java'
     }
 }
 
