@@ -123,7 +123,9 @@ public class RecipeBookFragment extends Fragment
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setOptions(
                 Arrays.asList("title", "preparation-time", "servings",
-                        "category"));
+                        "category"),
+                Arrays.asList("Title", "Preparation Time", "Servings",
+                        "Category"));
         sortingFragment.setListener(this);
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container2, sortingFragment).commit();

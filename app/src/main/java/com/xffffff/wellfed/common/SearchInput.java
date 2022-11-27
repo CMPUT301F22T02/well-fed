@@ -51,7 +51,7 @@ import java.util.Objects;
  * @version v1.1.0 2022-10-29
  **/
 public class SearchInput extends TextInputLayout
-        implements TextInputLayout.OnEditTextAttachedListener, TextWatcher {
+    implements TextInputLayout.OnEditTextAttachedListener, TextWatcher {
     /**
      * Holds the EditText associated with the TextInputLayout
      */
@@ -96,15 +96,17 @@ public class SearchInput extends TextInputLayout
      *
      * @param textInputLayout the TextInputLayout
      */
-    @Override public void onEditTextAttached(
-            @NonNull TextInputLayout textInputLayout) {
+    @Override
+    public void onEditTextAttached(
+        @NonNull TextInputLayout textInputLayout) {
         this.editText = Objects.requireNonNull(textInputLayout.getEditText());
         this.editText.addTextChangedListener(this);
     }
 
-    /*
+    /**
      * Validates that the EditText is non-empty.
      * If it is empty, it displays an error message.
+     *
      * @return true if the EditText is non-empty
      */
     private Boolean isNonEmpty() {
@@ -127,8 +129,9 @@ public class SearchInput extends TextInputLayout
      * @param count count of characters about to be replaced
      * @param after length of new text
      */
-    @Override public void beforeTextChanged(CharSequence s, int start,
-                                            int count, int after) {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start,
+                                  int count, int after) {
     }
 
     /**
@@ -140,8 +143,9 @@ public class SearchInput extends TextInputLayout
      * @param before length of old text
      * @param count  count of characters about to be replaced
      */
-    @Override public void onTextChanged(CharSequence s, int start, int before,
-                                        int count) {
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before,
+                              int count) {
     }
 
     /**
@@ -151,14 +155,24 @@ public class SearchInput extends TextInputLayout
      *
      * @param s the Editable text
      */
-    @Override public void afterTextChanged(Editable s) {
+    @Override
+    public void afterTextChanged(Editable s) {
         onTextChange.onTextChange(s.toString());
     }
 
+    /**
+     * setOnTextChange sets the onTextChange handler to the given handler
+     *
+     * @param listener the onTextChange handler
+     */
     public void setOnTextChange(OnTextChange listener) {
         this.onTextChange = listener;
     }
 
+    /**
+     * The OnTextChange interface defines the onTextChange handler
+     * for the RequiredTextInputLayout class.
+     */
     public interface OnTextChange {
         void onTextChange(String newText);
     }

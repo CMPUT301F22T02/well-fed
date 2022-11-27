@@ -25,7 +25,9 @@ import java.util.Locale;
  */
 public class ShoppingCartIngredientAdapter
     extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
-
+    /**
+     * The shopping cart db to get the ingredients from.
+     */
     private ShoppingCartDB db;
 
     /**
@@ -106,16 +108,30 @@ public class ShoppingCartIngredientAdapter
         return super.getItemCount();
     }
 
+    /**
+     * onCheckedListener interface for the ShoppingCartIngredientAdapter.
+     */
     public interface OnCheckedListener {
         void onCheckBoxClick(String id, boolean isChecked);
     }
 
+    /**
+     * onItemClickListner interface for the ShoppingCartIngredientAdapter.
+     */
     public interface OnItemClickListener {
         void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
     }
 
+    /**
+     * onItemClickListener object for the ShoppingCartIngredientAdapter.
+     */
     private OnItemClickListener onItemClickListener;
 
+    /**
+     * setOnItemClickListener method for the ShoppingCartIngredientAdapter.
+     *
+     * @param onItemClickListener OnItemClickListener object for the adapter.
+     */
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }

@@ -16,29 +16,67 @@ import com.xffffff.wellfed.unit.UnitConverter;
 
 import java.util.Date;
 
+/**
+ * The MealPlanController class controls the MealPlanActivity.
+ **/
 public class MealPlanController implements DBAdapter.OnDataChangedListener {
+    /**
+     * The MealPlanActivity that the controller controls.
+     */
     private final ActivityBase activity;
+    /**
+     * listenerRegistration is the ListenerRegistration object for the
+     * controller.
+     */
     private ListenerRegistration listenerRegistration;
     /**
      * The DB of stored ingredients
      */
     private final MealPlanDB db;
+    /**
+     * The MealPlan adapter for the RecyclerView
+     */
     private MealPlanAdapter adapter;
+    /**
+     * onDataChanged is the AdapterDataObserver that is called when the data
+     */
     private OnDataChanged onDataChanged;
+    /**
+     * onAdapterDataChangedListener is the AdapterDataObserver that is called
+     * when the data in the adapter changes.
+     */
     private OnAdapterDataChangedListener onAdapterDataChangedListener;
 
+    /**
+     * onDataChanged is the interface that is called when the data in the
+     * controller changes.
+     */
     public interface OnDataChanged {
         void onDataChanged(MealPlan mealPlan);
     }
 
+    /**
+     * onAdapterDataChangedListener is the interface that is called when the
+     * data in the adapter changes.
+     */
     public interface OnAdapterDataChangedListener {
         void onAdapterDataChanged(MealPlan mealPlan, int position);
     }
 
+    /**
+     * setOnDataChanged sets the OnDataChanged listener.
+     * @param onDataChanged the OnDataChanged listener
+     */
     public void setOnDataChanged(OnDataChanged onDataChanged) {
         this.onDataChanged = onDataChanged;
     }
 
+    /**
+     * setOnAdapterDataChangedListener sets the OnAdapterDataChangedListener
+     * listener.
+     * @param listener the OnAdapterDataChangedListener
+     * listener
+     */
     public void setOnAdapterChangedListener(OnAdapterDataChangedListener listener) {
         this.onAdapterDataChangedListener = listener;
     }
@@ -59,7 +97,11 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
         onDataChanged();
     }
 
-
+    /**
+     * startListening starts listening for changes in the database for the
+     * specified meal plan.
+     * @param id the id of the meal plan
+     */
     public void startListening(String id) {
         if (listenerRegistration == null) {
             listenerRegistration = db.getMealPlanDocumentReference(id)
@@ -71,6 +113,9 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
         }
     }
 
+    /**
+     * stopListening stops listening for changes in the database.
+     */
     public void stopListening() {
         if (listenerRegistration != null) {
             listenerRegistration.remove();
@@ -163,10 +208,10 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      * @param mealPlanServings The number of servings to scale the recipe to.
      * @return The scaled recipe.
      */
-    public Recipe scaleRecipe(Recipe recipe, int mealPlanServings) {
+    public Recipe scaleRecipe(Recipe recipe, Long mealPlanServings) {
         Recipe scaledRecipe = new Recipe(recipe);
         UnitConverter unitConverter = new UnitConverter(this.activity);
-        int recipeServings = scaledRecipe.getServings();
+        Long recipeServings = scaledRecipe.getServings();
         double scalingFactor = (double) mealPlanServings / recipeServings;
         for (Ingredient ingredient : scaledRecipe.getIngredients()) {
             ingredient.setAmount(ingredient.getAmount() * scalingFactor);

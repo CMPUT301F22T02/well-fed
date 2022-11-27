@@ -812,7 +812,7 @@ import org.junit.runner.RunWith;
         add5Recipes();
         // sort by title
         clickSortButton();
-        onView(withText("title")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("Title")).inRoot(isPlatformPopup()).perform(click());
 
         // check order of items
         onView(withId(R.id.recipe_rv)).perform(
@@ -861,7 +861,7 @@ import org.junit.runner.RunWith;
         add5Recipes();
         // sort by title
         clickSortButton();
-        onView(withText("preparation-time")).inRoot(isPlatformPopup())
+        onView(withText("Preparation Time")).inRoot(isPlatformPopup())
                 .perform(click());
 
         // check order of items
@@ -911,7 +911,7 @@ import org.junit.runner.RunWith;
         add5Recipes();
         // sort by title
         clickSortButton();
-        onView(withText("servings")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("Servings")).inRoot(isPlatformPopup()).perform(click());
 
         // check order of items
         onView(withId(R.id.recipe_rv)).perform(
@@ -974,7 +974,7 @@ import org.junit.runner.RunWith;
         add5Recipes();
         // sort by title
         clickSortButton();
-        onView(withText("category")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("Category")).inRoot(isPlatformPopup()).perform(click());
 
         // check order of items
         Thread.sleep(timeout);
