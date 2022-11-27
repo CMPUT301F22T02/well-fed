@@ -32,7 +32,7 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
     }
 
     public interface OnAdapterDataChangedListener {
-        void onAdapterDataChanged(MealPlan mealPlan);
+        void onAdapterDataChanged(MealPlan mealPlan, int position);
     }
 
     public void setOnDataChanged(OnDataChanged onDataChanged) {
@@ -185,23 +185,26 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      */
     @Override public void onDataChanged() {
         if (onAdapterDataChangedListener != null) {
-            MealPlan currentMealPlan = getCurrentMealPlan();
-            onAdapterDataChangedListener.onAdapterDataChanged(currentMealPlan);
+            Pair<MealPlan, Integer> pair = getCurrentMealPlan();
+            onAdapterDataChangedListener.onAdapterDataChanged(pair.first,
+                    pair.second);
         }
     }
 
     /**
      * Get today's meal plan
      */
-    public MealPlan getCurrentMealPlan() {
+    public Pair<MealPlan, Integer> getCurrentMealPlan() {
         Date today = new Date();
         DateUtil dateUtil = new DateUtil();
+        int position = 0;
         for (MealPlan mealPlan : adapter.getMealPlans()) {
             Date eatDate = mealPlan.getEatDate();
             if (dateUtil.equals(eatDate, today)) {
-                return mealPlan;
+                return new Pair<>(mealPlan, position);
             }
+            position++;
         }
-        return null;
+        return new Pair<>(null, -1);
     }
 }
