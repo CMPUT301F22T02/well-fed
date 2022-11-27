@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,7 +69,9 @@ public class RecipeActivity extends ActivityBase
      *
      * @param savedInstanceState the saved instance state
      */
-    @SuppressLint("NotifyDataSetChanged") @Override protected void onCreate(
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    protected void onCreate(
             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
@@ -87,10 +90,14 @@ public class RecipeActivity extends ActivityBase
         Button deleteButton = findViewById(R.id.recipe_delete_btn);
 
         if (recipe.getServings() == null) {
+            fab.setVisibility(View.GONE);
             DBConnection connection = new DBConnection(getApplicationContext());
             RecipeDB recipeDB = new RecipeDB(connection);
-            recipeDB.getRecipe(recipe.getId(),
-                    (foundRecipe, success) -> updateView(foundRecipe));
+            recipeDB.getRecipe(recipe.getId(), (foundRecipe, success) -> {
+                recipe = foundRecipe;
+                updateView(foundRecipe);
+                fab.setVisibility(View.VISIBLE);
+            });
         } else {
             updateView(recipe);
         }
@@ -137,7 +144,8 @@ public class RecipeActivity extends ActivityBase
      * method that stops the activity with a result
      * when delete confirmation is complete
      */
-    @Override public void onConfirm() {
+    @Override
+    public void onConfirm() {
         Intent intent = new Intent();
         intent.putExtra("item", recipe);
         intent.putExtra("type", "delete");

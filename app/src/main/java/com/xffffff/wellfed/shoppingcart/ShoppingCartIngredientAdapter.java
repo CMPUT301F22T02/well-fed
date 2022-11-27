@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
+import com.xffffff.wellfed.ingredient.StorageIngredient;
 
 import java.util.Locale;
 
@@ -25,11 +26,20 @@ import java.util.Locale;
 public class ShoppingCartIngredientAdapter
     extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
 
+    private ShoppingCartDB db;
+
     /**
      * Constructor for the adapter
      */
     public ShoppingCartIngredientAdapter(ShoppingCartDB db) {
         super(db.getQuery());
+        this.db = db;
+    }
+
+    private OnCheckedListener onCheckedListener;
+
+    public void setOnCheckedChangeListener(OnCheckedListener onCheckedListener) {
+        this.onCheckedListener = onCheckedListener;
     }
 
     /**
@@ -63,11 +73,26 @@ public class ShoppingCartIngredientAdapter
     public void onBindViewHolder(@NonNull ViewHolder holder,
                                  int position) {
         DocumentSnapshot doc = getSnapshot(position);
-        holder.description.setText(doc.getString("description"));
-        String amount = String.format(Locale.CANADA, "%.2f", ((Double) doc.getData().get("amount")));
-        holder.subtext.setText(amount + " " + doc.getString("unit") + " | " +
-            doc.getString("category"));
-        holder.checkBox.setChecked((Boolean) doc.getData().get("picked"));
+        ShoppingCartIngredient shoppingCartIngredient =
+                db.snapshotToShoppingCartIngredient(doc);
+
+        holder.description.setText(shoppingCartIngredient.getDescription());
+        String amountText = String.format(Locale.CANADA, "%.2f", shoppingCartIngredient.getAmount());
+        holder.subtext.setText(amountText + " " + shoppingCartIngredient.getUnit() + " | "
+                + shoppingCartIngredient.getCategory());
+        holder.checkBox.setChecked(shoppingCartIngredient.isPickedUp);
+
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (onCheckedListener == null) return;
+            onCheckedListener.onCheckBoxClick(getSnapshot(holder
+                    .getAdapterPosition()).getString("id"), isChecked);
+        });
+
+        holder.view.setOnClickListener(v -> {
+            if (onItemClickListener == null | !holder.checkBox.isChecked()) return;
+            onItemClickListener.onItemClick(shoppingCartIngredient);
+        });
+
 
     }
 
@@ -81,8 +106,18 @@ public class ShoppingCartIngredientAdapter
         return super.getItemCount();
     }
 
+    public interface OnCheckedListener {
+        void onCheckBoxClick(String id, boolean isChecked);
+    }
+
     public interface OnItemClickListener {
         void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     /**
@@ -94,9 +129,11 @@ public class ShoppingCartIngredientAdapter
         public TextView description;
         public TextView subtext;
         public CheckBox checkBox;
+        public View view;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            view = itemView;
             description = itemView.findViewById(
                 R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(
