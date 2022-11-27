@@ -11,15 +11,17 @@ import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.xffffff.wellfed.EditActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
@@ -41,7 +43,7 @@ import java.util.UUID;
  *
  * @version 1.0.0
  */
-public class RecipeEditActivity extends EditActivityBase implements Target {
+public class RecipeEditActivity extends EditActivityBase {
     /**
      * The list of ingredients included in a recipe.
      */
@@ -294,13 +296,23 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
     }
 
     /**
-     * Uploads the image taken for a recipe to an external image hoster.
-     * Also stores a reference to this image in the Firebase Firestore document
-     * that is associated with the recipe being edited.
+     * Loads the image taken with camera
      */
     public void loadImage() {
         uploadInProgress = true;
-        Picasso.get().load(uri).into(this);
+        Glide.with(this).asBitmap().load(uri).into(new CustomTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource,
+                                        @Nullable
+                                                Transition<? super Bitmap> transition) {
+                recipeImg.setImageBitmap(resource);
+                uploadImage(resource);
+            }
+
+            @Override
+            public void onLoadCleared(@Nullable Drawable placeholder) {
+            }
+        });
     }
 
     /**
@@ -311,9 +323,6 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
     public void uploadImage(Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        bitmap =  Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         String path = MediaStore.Images.Media.insertImage(
                 RecipeEditActivity.this.getContentResolver(), bitmap,
                 UUID.randomUUID().toString(), null);
@@ -349,42 +358,8 @@ public class RecipeEditActivity extends EditActivityBase implements Target {
         if (url == null) {
             return;
         }
-        Picasso.get().load(url).into(recipeImg);
+        Glide.with(this).load(url).into(recipeImg);
         recipeImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         recipeImg.setImageTintList(null);
-    }
-
-    /**
-     * Callback for when the image has been successfully loaded by Picasso
-     *
-     * @param bitmap the bitmap of the image
-     * @param from   the source of the image
-     */
-    @Override
-    public void onBitmapLoaded(Bitmap bitmap,
-                               Picasso.LoadedFrom from) {
-        uploadImage(bitmap);
-    }
-
-    /**
-     * Callback for when the image has failed to load
-     *
-     * @param e the exception that was thrown
-     */
-    @Override
-    public void onBitmapFailed(Exception e,
-                               Drawable errorDrawable) {
-        uploadInProgress = false;
-        RecipeEditActivity.this.makeSnackbar("Failed to " +
-                "upload image");
-    }
-
-    /**
-     * Callback for when the image is being prepared to be loaded
-     *
-     * @param placeHolderDrawable the placeholder drawable
-     */
-    @Override
-    public void onPrepareLoad(Drawable placeHolderDrawable) {
     }
 }

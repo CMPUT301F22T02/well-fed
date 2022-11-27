@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.squareup.picasso.Picasso;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
 
@@ -104,7 +104,7 @@ public class RecipeAdapter extends DBAdapter<RecipeAdapter.ViewHolder> {
         String servingsText = "Serves: " + (Objects.requireNonNull(
                 recipeSnapshot.getData().get("servings")));
         servings.setText(servingsText);
-        Picasso.get().load(recipe.getPhotograph()).into(img);
+        Glide.with(holder.view).load(recipe.getPhotograph()).into(img);
         holder.view.setOnClickListener(v -> {
 
             if (recipeLauncher != null) {
