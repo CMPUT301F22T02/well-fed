@@ -682,7 +682,151 @@ public class ShoppingCartInstrumentedTest {
     }
 
     @Test
-    public void testEditingRecipe(){
+    public void testEditingRecipe() throws InterruptedException {
+        addIngredient("Sliced Bread");
 
+
+        onView(withId(R.id.recipe_book_item)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withId(R.id.edit_recipe_title)).perform(typeText("Eggs Over Easy"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("10"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.commentsEditText)).perform(typeText("A hearty breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.addButton)).perform(click());
+
+        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Eggs"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_categoryInput)).perform(typeText("Protein"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_amountInput)).perform(click());
+        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        Thread.sleep(1000);
+
+        onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(2000);
+
+        onView(withId(R.id.meal_book_item)).perform(click());
+
+
+
+        String recipe = "Eggs Over Easy";
+        String ingredient = "Sliced Bread";
+
+        onView(withId(R.id.meal_book_item)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
+
+        onView(withId(R.id.dateTextInput)).perform(click());
+        onView(withText("OK")).perform(click());
+
+        onView(withId(R.id.MealPlan_CategoryEditInput)).perform(typeText("Breakfast"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
+        onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+        onView(withText(recipe)).perform(click());
+
+        Thread.sleep(1000);
+        onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+        onView(withText(ingredient)).perform(click());
+
+        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.edit_unitInput)).perform(click());
+        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+        closeSoftKeyboard();
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+
+
+        Thread.sleep(2000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(10000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
+
+        onView(withId(R.id.recipe_book_item)).perform(click());
+        Thread.sleep(2000);
+        onView(withText("Eggs Over Easy")).perform(click());
+        Thread.sleep(2000);
+
+        onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(5000);
+
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(clearText(), typeText("1"));
+        closeSoftKeyboard();
+
+        onView(allOf(withId(R.id.editButton), withParent(withChild(withText("Eggs"))))).perform(click());
+
+        Thread.sleep(2000);
+
+        onView(withId(R.id.edit_amountInput)).perform(clearText(), typeText("5"));
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        Thread.sleep(2000);
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        Thread.sleep(2000);
+
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+
+        Thread.sleep(5000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("5.00 count | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
+
+        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpRecipe("Eggs Over Easy");
+        cleanUpIngredient("Sliced Bread");
     }
 }
