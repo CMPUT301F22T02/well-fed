@@ -112,9 +112,13 @@ import java.util.Stack;
      */
     @Test public void testBackButtonNavigation() throws InterruptedException {
         onView(withId(R.id.meal_book_item)).perform(click());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.pager)).perform(swipeLeft());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.ingredient_storage_item)).perform(click());
+        Thread.sleep(1000); // animation
         onView(withId(R.id.pager)).perform(swipeLeft());
         Thread.sleep(1000); // animation
         onView(withId(R.id.fragment_recipe_book)).check(matches(isDisplayed()));
