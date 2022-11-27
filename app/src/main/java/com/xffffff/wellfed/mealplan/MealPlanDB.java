@@ -3,9 +3,9 @@ package com.xffffff.wellfed.mealplan;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.xffffff.wellfed.common.DBConnection;
+import com.xffffff.wellfed.common.OnCompleteListener;
 import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.ingredient.IngredientDB;
 import com.xffffff.wellfed.recipe.Recipe;
@@ -64,7 +64,7 @@ public class MealPlanDB {
      * @param mealPlan the MealPlan object to be added to the db.
      * @param listener the OnAddMealPlanListener object to handle the result.
      */
-    public void addMealPlan(MealPlan mealPlan, OnAddMealPlanListener listener) {
+    public void addMealPlan(MealPlan mealPlan, OnCompleteListener<MealPlan> listener) {
         // Stores each ingredient as a HashMap with fields:
         // ingredientRef, amount & unit.
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
@@ -112,20 +112,20 @@ public class MealPlanDB {
                             // Check if the counter has reached the number of
                             // ingredients and recipes.
                             if (counter.get() == numOfIngredientsAndRecipes) {
-                                addMealPlanIncrementCounter(mealPlanMap, mealPlan,
-                                        mealPlanIngredients, mealPlanRecipes,
-                                        listener);
+                                addMealPlanIncrementCounter(mealPlanMap,
+                                        mealPlan, mealPlanIngredients,
+                                        mealPlanRecipes, listener);
                             }
                         } else {
-                            // If the ingredient does not exist in our Ingredient collection,
+                            // If the ingredient does not exist in our
+                            // Ingredient collection,
                             // we will create a new ingredient for it.
                             ingredientDB.addIngredient(ingredient,
                                     (addedIngredient, success1) -> {
                                         // Checks if adding a new Ingredient
                                         // was successful.
                                         if (addedIngredient == null) {
-                                            listener.onAddMealPlanResult(null,
-                                                    false);
+                                            listener.onComplete(null, false);
                                             return;
                                         }
                                         ingredient.setId(
@@ -147,8 +147,8 @@ public class MealPlanDB {
 
                                         if (counter.get() ==
                                                 numOfIngredientsAndRecipes) {
-                                            addMealPlanIncrementCounter(mealPlanMap,
-                                                    mealPlan,
+                                            addMealPlanIncrementCounter(
+                                                    mealPlanMap, mealPlan,
                                                     mealPlanIngredients,
                                                     mealPlanRecipes, listener);
                                         }
@@ -171,15 +171,15 @@ public class MealPlanDB {
                 mealPlanRecipes.add(recipeRef);
 
                 if (counter.get() == numOfIngredientsAndRecipes) {
-                    addMealPlanIncrementCounter(mealPlanMap, mealPlan, mealPlanIngredients,
-                            mealPlanRecipes, listener);
+                    addMealPlanIncrementCounter(mealPlanMap, mealPlan,
+                            mealPlanIngredients, mealPlanRecipes, listener);
                 }
             } else {
                 // If the recipe does not exist, we add it to the db.
                 recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
                     if (addedRecipe == null) {
                         // Checks if adding a new Recipe was successful.
-                        listener.onAddMealPlanResult(null, false);
+                        listener.onComplete(null, false);
                         return;
                     }
                     recipe.setId(addedRecipe.getId());
@@ -202,17 +202,20 @@ public class MealPlanDB {
      * addMealPlanIncrementCounter is a helper method for addMealPlan that
      * increment counter for each recipe and ingredient in the MealPlan object.
      *
-     * @param mealPlanMap the HashMap to be used to map the MealPlan object.
-     * @param mealPlan the MealPlan object to be added to the db.
+     * @param mealPlanMap         the HashMap to be used to map the MealPlan
+     *                            object.
+     * @param mealPlan            the MealPlan object to be added to the db.
      * @param mealPlanIngredients the ArrayList of HashMaps to be used to map
-     * @param mealPlanRecipes the ArrayList of DocumentReferences to be used to
-     * @param listener the OnAddMealPlanListener object to handle the result.
+     * @param mealPlanRecipes     the ArrayList of DocumentReferences to be
+     *                            used to
+     * @param listener            the OnAddMealPlanListener object to handle
+     *                            the result.
      */
     public void addMealPlanIncrementCounter(HashMap<String, Object> mealPlanMap,
-                                MealPlan mealPlan,
-                                ArrayList<HashMap<String, Object>> mealPlanIngredients,
-                                ArrayList<DocumentReference> mealPlanRecipes,
-                                OnAddMealPlanListener listener) {
+                                            MealPlan mealPlan,
+                                            ArrayList<HashMap<String, Object>> mealPlanIngredients,
+                                            ArrayList<DocumentReference> mealPlanRecipes,
+                                            OnCompleteListener<MealPlan> listener) {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numOfIngredientsAndRecipes =
                 mealPlan.getIngredients().size() + mealPlan.getRecipes().size();
@@ -255,7 +258,7 @@ public class MealPlanDB {
                                   MealPlan mealPlan,
                                   ArrayList<HashMap<String, Object>> mealPlanIngredients,
                                   ArrayList<DocumentReference> mealPlanRecipes,
-                                  OnAddMealPlanListener listener) {
+                                  OnCompleteListener<MealPlan> listener) {
         // Fill the mealPlanMap with correct values.
         mealPlanMap.put("ingredients", mealPlanIngredients);
         mealPlanMap.put("recipes", mealPlanRecipes);
@@ -271,9 +274,9 @@ public class MealPlanDB {
                     mealPlan.setId(addedMealPlanDoc.getId());
 
                     // Calls the listener's onAddMealPlanResult method.
-                    listener.onAddMealPlanResult(mealPlan, true);
+                    listener.onComplete(mealPlan, true);
                 }).addOnFailureListener(failure -> {
-                    listener.onAddMealPlanResult(null, false);
+                    listener.onComplete(null, false);
                 });
     }
 
@@ -283,9 +286,9 @@ public class MealPlanDB {
      * @param id       the id of the MealPlan object to be retrieved.
      * @param listener the OnGetMealPlanListener object to handle the result.
      */
-    public void getMealPlan(String id, OnGetMealPlanListener listener) {
+    public void getMealPlan(String id, OnCompleteListener<MealPlan> listener) {
         if (id == null) {
-            listener.onGetMealPlanResult(null, false);
+            listener.onComplete(null, false);
             return;
         }
 
@@ -296,7 +299,7 @@ public class MealPlanDB {
                 })
                 // If the MealPlan document is not found, return null.
                 .addOnFailureListener(failure -> {
-                    listener.onGetMealPlanResult(null, false);
+                    listener.onComplete(null, false);
                 });
     }
 
@@ -316,12 +319,11 @@ public class MealPlanDB {
                 (ArrayList<HashMap<String, Object>>) snapshot.get(
                         "ingredients");
         ArrayList<HashMap<String, Object>> recipes =
-                (ArrayList<HashMap<String, Object>>) snapshot.get(
-                        "recipes");
-        mealPlan.setIngredients(new ArrayList<>(Collections.nCopies(ingredients.size(),
-            null)));
-        mealPlan.setRecipes(new ArrayList<>(Collections.nCopies(recipes.size(),
-                null)));
+                (ArrayList<HashMap<String, Object>>) snapshot.get("recipes");
+        mealPlan.setIngredients(
+                new ArrayList<>(Collections.nCopies(ingredients.size(), null)));
+        mealPlan.setRecipes(
+                new ArrayList<>(Collections.nCopies(recipes.size(), null)));
         return mealPlan;
     }
 
@@ -332,7 +334,7 @@ public class MealPlanDB {
      * @param listener the OnGetMealPlanListener object to handle the result.
      */
     public void getMealPlan(DocumentSnapshot snapshot,
-                            OnGetMealPlanListener listener) {
+                            OnCompleteListener<MealPlan> listener) {
         // Initializes a new MealPlan object and sets its fields.
         MealPlan mealPlan = getMealPlanProxy(snapshot).getMealPlan();
 
@@ -354,7 +356,8 @@ public class MealPlanDB {
         Integer numOfIngredientsAndRecipes = mealPlanIngredients.size() +
                 ((ArrayList<DocumentReference>) snapshot.get("recipes")).size();
 
-        // Iterate over the ArrayList of HashMaps and produce Ingredient objects.
+        // Iterate over the ArrayList of HashMaps and produce Ingredient
+        // objects.
         for (HashMap<String, Object> ingredientMap : mealPlanIngredients) {
             DocumentReference ingredientRef =
                     (DocumentReference) ingredientMap.get("ingredientRef");
@@ -411,7 +414,7 @@ public class MealPlanDB {
     public void getMealPlanHelper(MealPlan mealPlan,
                                   ArrayList<Ingredient> ingredients,
                                   ArrayList<Recipe> recipes,
-                                  OnGetMealPlanListener listener) {
+                                  OnCompleteListener<MealPlan> listener) {
         // Add ingredients and recipes to the MealPlan object.
         for (Ingredient ingredient : ingredients) {
             mealPlan.addIngredient(ingredient);
@@ -422,7 +425,7 @@ public class MealPlanDB {
         }
 
         // Returns the MealPlan object.
-        listener.onGetMealPlanResult(mealPlan, true);
+        listener.onComplete(mealPlan, true);
     }
 
     /**
@@ -432,9 +435,9 @@ public class MealPlanDB {
      * @param listener the OnDeleteMealPlanListener object to handle the result.
      */
     public void delMealPlan(MealPlan mealPlan,
-                            OnDeleteMealPlanListener listener) {
+                            OnCompleteListener<MealPlan> listener) {
         if (mealPlan == null) {
-            listener.onDeleteMealPlanResult(null, false);
+            listener.onComplete(null, false);
             return;
         }
 
@@ -445,23 +448,27 @@ public class MealPlanDB {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    delMealPlanDecrementCounter(mealPlan, mealPlanRef, listener);
+                    delMealPlanDecrementCounter(mealPlan, mealPlanRef,
+                            listener);
                 }
             }
         });
     }
 
     /**
-     * delMealPlanDecrementCounter is an asynchronous helper function for delMealPlan
-     * that decrements the counter of the ingredients and recipes in the MealPlan.
+     * delMealPlanDecrementCounter is an asynchronous helper function for
+     * delMealPlan
+     * that decrements the counter of the ingredients and recipes in the
+     * MealPlan.
      *
-     * @param mealPlan the MealPlan object to be deleted.
+     * @param mealPlan    the MealPlan object to be deleted.
      * @param mealPlanRef the DocumentReference of the MealPlan object to be
-     * @param listener the OnDeleteMealPlanListener object to handle the result.
+     * @param listener    the OnDeleteMealPlanListener object to handle the
+     *                    result.
      */
     public void delMealPlanDecrementCounter(MealPlan mealPlan,
-                                 DocumentReference mealPlanRef,
-                                 OnDeleteMealPlanListener listener) {
+                                            DocumentReference mealPlanRef,
+                                            OnCompleteListener<MealPlan> listener) {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numOfIngredientsAndRecipes =
                 mealPlan.getIngredients().size() + mealPlan.getRecipes().size();
@@ -489,18 +496,19 @@ public class MealPlanDB {
     /**
      * delMealPlanHelper is a helper function for delMealPlanAsync.
      *
-     * @param mealPlan the MealPlan object to be deleted.
+     * @param mealPlan    the MealPlan object to be deleted.
      * @param mealPlanRef the DocumentReference of the MealPlan object to be
      *                    deleted.
-     * @param listener the OnDeleteMealPlanListener object to handle the result.
+     * @param listener    the OnDeleteMealPlanListener object to handle the
+     *                    result.
      */
     public void delMealPlanHelper(MealPlan mealPlan,
                                   DocumentReference mealPlanRef,
-                                  OnDeleteMealPlanListener listener) {
+                                  OnCompleteListener<MealPlan> listener) {
         mealPlanRef.delete().addOnSuccessListener(success -> {
-            listener.onDeleteMealPlanResult(mealPlan, true);
+            listener.onComplete(mealPlan, true);
         }).addOnFailureListener(failure -> {
-            listener.onDeleteMealPlanResult(mealPlan, false);
+            listener.onComplete(mealPlan, false);
         });
     }
 
@@ -509,23 +517,23 @@ public class MealPlanDB {
      *
      * @param listener the OnGetMealPlansListener object to handle the result.
      */
-    public void getMealPlans(OnGetMealPlansListener listener) {
+    public void getMealPlans(OnCompleteListener<ArrayList<MealPlan>> listener) {
         this.mealPlanCollection.get().addOnSuccessListener(mealPlans -> {
             ArrayList<MealPlan> mealPlanList = new ArrayList<>();
             if (mealPlans.size() == 0) {
-                listener.onGetMealPlansResult(mealPlanList, true);
+                listener.onComplete(mealPlanList, true);
                 return;
             }
             for (DocumentSnapshot mealPlanDoc : mealPlans) {
                 getMealPlan(mealPlanDoc, (foundMealPlan, success) -> {
                     mealPlanList.add(foundMealPlan);
                     if (mealPlanList.size() == mealPlans.size()) {
-                        listener.onGetMealPlansResult(mealPlanList, true);
+                        listener.onComplete(mealPlanList, true);
                     }
                 });
             }
         }).addOnFailureListener(failure -> {
-            listener.onGetMealPlansResult(null, false);
+            listener.onComplete(null, false);
         });
     }
 
@@ -535,8 +543,7 @@ public class MealPlanDB {
      * @param mealPlan the MealPlan object to be updated.
      * @param listener the OnUpdateMealPlanListener object to handle the result.
      */
-    public void updateMealPlan(MealPlan mealPlan,
-                               OnUpdateMealPlanListener listener) {
+    public void updateMealPlan(MealPlan mealPlan, OnCompleteListener<MealPlan> listener) {
 
         ArrayList<HashMap<String, Object>> mealPlanIngredients =
                 new ArrayList<>();
@@ -573,8 +580,9 @@ public class MealPlanDB {
                             // Check if the counter has reached the number of
                             // ingredients and recipes.
                             if (counter.get() == numOfIngredientsAndRecipes) {
-                                updateMealPlanFindOldMealPlan(mealPlan, listener,
-                                        mealPlanIngredients, mealPlanRecipes);
+                                updateMealPlanFindOldMealPlan(mealPlan,
+                                        listener, mealPlanIngredients,
+                                        mealPlanRecipes);
                             }
                         } else {
                             // If the ingredient does not exist in our
@@ -585,8 +593,7 @@ public class MealPlanDB {
                                         // Checks if adding a new Ingredient
                                         // was successful.
                                         if (addedIngredient == null) {
-                                            listener.onUpdateMealPlanResult(
-                                                    null, false);
+                                            listener.onComplete(null, false);
                                             return;
                                         }
                                         ingredient.setId(
@@ -608,8 +615,8 @@ public class MealPlanDB {
 
                                         if (counter.get() ==
                                                 numOfIngredientsAndRecipes) {
-                                            updateMealPlanFindOldMealPlan(mealPlan,
-                                                    listener,
+                                            updateMealPlanFindOldMealPlan(
+                                                    mealPlan, listener,
                                                     mealPlanIngredients,
                                                     mealPlanRecipes);
                                         }
@@ -634,15 +641,15 @@ public class MealPlanDB {
                 mealPlanRecipes.add(recipeRef);
 
                 if (counter.get() == numOfIngredientsAndRecipes) {
-                    updateMealPlanFindOldMealPlan(mealPlan, listener, mealPlanIngredients,
-                            mealPlanRecipes);
+                    updateMealPlanFindOldMealPlan(mealPlan, listener,
+                            mealPlanIngredients, mealPlanRecipes);
                 }
             } else {
                 // If the recipe does not exist, we add it to the db.
                 recipeDB.addRecipe(recipe, (addedRecipe, success) -> {
                     if (addedRecipe == null) {
                         // Checks if adding a new Recipe was successful.
-                        listener.onUpdateMealPlanResult(null, false);
+                        listener.onComplete(null, false);
                         return;
                     }
                     recipe.setId(addedRecipe.getId());
@@ -664,40 +671,48 @@ public class MealPlanDB {
     /**
      * updateMealPlanFindOldMealPlan is a helper method for updateMealPlan.
      *
-     * @param mealPlan the MealPlan object to be updated.
-     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlan            the MealPlan object to be updated.
+     * @param listener            the OnUpdateMealPlanListener object to
+     *                            handle the result.
      * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
-     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     * @param mealPlanRecipes     the ArrayList of DocumentReferences of
+     *                            recipes.
      */
     public void updateMealPlanFindOldMealPlan(MealPlan mealPlan,
-                                    OnUpdateMealPlanListener listener,
-                                    ArrayList<HashMap<String, Object>> mealPlanIngredients,
-                                    ArrayList<DocumentReference> mealPlanRecipes) {
+                                              OnCompleteListener<MealPlan> listener,
+                                              ArrayList<HashMap<String,
+                                                      Object>> mealPlanIngredients,
+                                              ArrayList<DocumentReference> mealPlanRecipes) {
         getMealPlan(mealPlan.getId(), (foundMealPlan, success) -> {
             if (foundMealPlan == null) {
-                listener.onUpdateMealPlanResult(null, false);
+                listener.onComplete(null, false);
                 return;
             } else {
-                updateMealPlanIncrementCounter(mealPlan, foundMealPlan, listener,
-                        mealPlanIngredients, mealPlanRecipes);
+                updateMealPlanIncrementCounter(mealPlan, foundMealPlan,
+                        listener, mealPlanIngredients, mealPlanRecipes);
             }
         });
     }
 
     /**
      * updateMealPlanIncrementCounter is a helper method for updateMealPlanAsync
-     * that increments the counter for recipes and ingredients in the MealPlan object.
+     * that increments the counter for recipes and ingredients in the
+     * MealPlan object.
      *
-     * @param mealPlan the MealPlan object to be updated.
-     * @param foundMealPlan the MealPlan object found in the db.
-     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlan            the MealPlan object to be updated.
+     * @param foundMealPlan       the MealPlan object found in the db.
+     * @param listener            the OnUpdateMealPlanListener object to
+     *                            handle the result.
      * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
-     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     * @param mealPlanRecipes     the ArrayList of DocumentReferences of
+     *                            recipes.
      */
-    public void updateMealPlanIncrementCounter(MealPlan mealPlan, MealPlan foundMealPlan,
-                                     OnUpdateMealPlanListener listener,
-                                     ArrayList<HashMap<String, Object>> mealPlanIngredients,
-                                     ArrayList<DocumentReference> mealPlanRecipes) {
+    public void updateMealPlanIncrementCounter(MealPlan mealPlan,
+                                               MealPlan foundMealPlan,
+                                               OnCompleteListener<MealPlan> listener,
+                                               ArrayList<HashMap<String,
+                                                       Object>> mealPlanIngredients,
+                                               ArrayList<DocumentReference> mealPlanRecipes) {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numOfIngredientsAndRecipes =
                 mealPlan.getIngredients().size() + mealPlan.getRecipes().size();
@@ -708,8 +723,8 @@ public class MealPlanDB {
             ingredientDB.updateReferenceCount(ingredient, 1, (i, s) -> {
                 counter.addAndGet(1);
                 if (counter.get() == numOfIngredientsAndRecipes) {
-                    updateMealPlanDecrementCounter(mealPlan, foundMealPlan, listener,
-                            mealPlanIngredients, mealPlanRecipes);
+                    updateMealPlanDecrementCounter(mealPlan, foundMealPlan,
+                            listener, mealPlanIngredients, mealPlanRecipes);
                 }
             });
         }
@@ -718,8 +733,8 @@ public class MealPlanDB {
             recipeDB.updateReferenceCount(recipe, 1, (i1, s1) -> {
                 counter.addAndGet(1);
                 if (counter.get() == numOfIngredientsAndRecipes) {
-                    updateMealPlanDecrementCounter(mealPlan, foundMealPlan, listener,
-                            mealPlanIngredients, mealPlanRecipes);
+                    updateMealPlanDecrementCounter(mealPlan, foundMealPlan,
+                            listener, mealPlanIngredients, mealPlanRecipes);
                 }
             });
         }
@@ -727,24 +742,30 @@ public class MealPlanDB {
 
     /**
      * updateMealPlanDecrementCounter is a helper method for updateMealPlanAsync
-     * that decrements counter for recipes and ingredients in the MealPlan object.
+     * that decrements counter for recipes and ingredients in the MealPlan
+     * object.
      *
-     * @param mealPlan the MealPlan object to be updated.
-     * @param foundMealPlan the MealPlan object found in the db.
-     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlan            the MealPlan object to be updated.
+     * @param foundMealPlan       the MealPlan object found in the db.
+     * @param listener            the OnUpdateMealPlanListener object to
+     *                            handle the result.
      * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
-     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     * @param mealPlanRecipes     the ArrayList of DocumentReferences of
+     *                            recipes.
      */
-    public void updateMealPlanDecrementCounter(MealPlan mealPlan, MealPlan foundMealPlan,
-                                     OnUpdateMealPlanListener listener,
-                                     ArrayList<HashMap<String, Object>> mealPlanIngredients,
-                                     ArrayList<DocumentReference> mealPlanRecipes) {
+    public void updateMealPlanDecrementCounter(MealPlan mealPlan,
+                                               MealPlan foundMealPlan,
+                                               OnCompleteListener<MealPlan> listener,
+                                               ArrayList<HashMap<String,
+                                                       Object>> mealPlanIngredients,
+                                               ArrayList<DocumentReference> mealPlanRecipes) {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numOfIngredientsAndRecipes =
                 foundMealPlan.getIngredients().size() +
                         foundMealPlan.getRecipes().size();
 
-        // Decrement count for each ingredient & recipe in the old MealPlan object.
+        // Decrement count for each ingredient & recipe in the old MealPlan
+        // object.
         for (Ingredient ingredient : foundMealPlan.getIngredients()) {
             ingredientDB.updateReferenceCount(ingredient, -1, (i, s) -> {
                 counter.addAndGet(1);
@@ -770,21 +791,23 @@ public class MealPlanDB {
      * updateMealPlanUpdateRecipes is a helper method for updateMealPlanAsync
      * that updates the recipes in the MealPlan object.
      *
-     * @param mealPlan the MealPlan object to be updated.
-     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlan            the MealPlan object to be updated.
+     * @param listener            the OnUpdateMealPlanListener object to
+     *                            handle the result.
      * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
-     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     * @param mealPlanRecipes     the ArrayList of DocumentReferences of
+     *                            recipes.
      */
     public void updateMealPlanUpdateRecipes(MealPlan mealPlan,
-                                     OnUpdateMealPlanListener listener,
-                                     ArrayList<HashMap<String, Object>> mealPlanIngredients,
-                                     ArrayList<DocumentReference> mealPlanRecipes) {
+                                            OnCompleteListener<MealPlan> listener,
+                                            ArrayList<HashMap<String, Object>> mealPlanIngredients,
+                                            ArrayList<DocumentReference> mealPlanRecipes) {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numRecipes = mealPlan.getRecipes().size();
 
-        if (numRecipes == 0){
-            updateMealPlanHelper(mealPlan, listener,
-                            mealPlanIngredients, mealPlanRecipes);
+        if (numRecipes == 0) {
+            updateMealPlanHelper(mealPlan, listener, mealPlanIngredients,
+                    mealPlanRecipes);
         }
 
         for (Recipe recipe : mealPlan.getRecipes()) {
@@ -802,12 +825,14 @@ public class MealPlanDB {
      * Given the MealPlan object, updates it in the db.
      *
      * @param mealPlan            the MealPlan object to be updated.
-     * @param listener            the OnUpdateMealPlanListener object to handle the result.
-     * @param mealPlanIngredients the ArrayList of Ingredient objects to be updated.
+     * @param listener            the OnUpdateMealPlanListener object to
+     *                            handle the result.
+     * @param mealPlanIngredients the ArrayList of Ingredient objects to be
+     *                            updated.
      * @param mealPlanRecipes     the ArrayList of Recipe objects to be updated.
      */
     public void updateMealPlanHelper(MealPlan mealPlan,
-                                     OnUpdateMealPlanListener listener,
+                                     OnCompleteListener<MealPlan> listener,
                                      ArrayList<HashMap<String, Object>> mealPlanIngredients,
                                      ArrayList<DocumentReference> mealPlanRecipes) {
         // Get reference to the MealPlan document with the given id
@@ -817,13 +842,14 @@ public class MealPlanDB {
 
         // Update the MealPlan document in the db.
         mealPlanRef.update("title", mealPlan.getTitle(), "category",
-                        mealPlan.getCategory(), "eat date", mealPlan.getEatDate(),
+                        mealPlan.getCategory(), "eat date",
+                        mealPlan.getEatDate(),
                         "servings", mealPlan.getServings(), "ingredients",
                         mealPlanIngredients, "recipes", mealPlanRecipes)
                 .addOnSuccessListener(success -> {
-                    listener.onUpdateMealPlanResult(mealPlan, true);
+                    listener.onComplete(mealPlan, true);
                 }).addOnFailureListener(failure -> {
-                    listener.onUpdateMealPlanResult(mealPlan, false);
+                    listener.onComplete(mealPlan, false);
                 });
     }
 
@@ -846,88 +872,5 @@ public class MealPlanDB {
     public Query getQuery() {
         return this.mealPlanCollection.orderBy("eat date",
                 Query.Direction.ASCENDING);
-    }
-
-    /**
-     * This interface is used to handle the result of
-     * adding MealPlan to the db.
-     */
-    public interface OnAddMealPlanListener {
-        /**
-         * Called when addMealPlan returns a result.
-         *
-         * @param mealPlan the MealPlan object added to the db,
-         *                 null if the add operation failed.
-         * @param success  true if the add operation was successful,
-         *                 false otherwise.
-         */
-        void onAddMealPlanResult(MealPlan mealPlan, boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of
-     * deleting the chosen MealPlan object from the db.
-     */
-    public interface OnDeleteMealPlanListener {
-        /**
-         * Called when deleteMealPlan returns a result.
-         *
-         * @param mealPlan the MealPlan object deleted from the db,
-         *                 null if the delete operation failed.
-         * @param success  true if the delete operation was successful,
-         *                 false otherwise.
-         */
-        void onDeleteMealPlanResult(MealPlan mealPlan, boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of
-     * getting all the MealPlan objects from the db.
-     */
-    public interface OnGetMealPlansListener {
-        /**
-         * Called when getMealPlans returns a result.
-         *
-         * @param mealPlans the ArrayList of MealPlan objects
-         *                  retrieved from the db,
-         *                  null if the get operation failed.
-         * @param success   true if the get operation was successful,
-         *                  false otherwise.
-         */
-        void onGetMealPlansResult(ArrayList<MealPlan> mealPlans,
-                                  boolean success);
-    }
-
-
-    /**
-     * This interface is used to handle the result of
-     * finding the MealPlan object in the db.
-     */
-    public interface OnGetMealPlanListener {
-        /**
-         * Called when getMealPlan returns a result.
-         *
-         * @param mealPlan the MealPlan object found in the db,
-         *                 null if the get operation failed.
-         * @param success  true if the get operation was successful,
-         *                 false otherwise.
-         */
-        void onGetMealPlanResult(MealPlan mealPlan, boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of
-     * updating the chosen MealPlan object in the db.
-     */
-    public interface OnUpdateMealPlanListener {
-        /**
-         * Called when updateMealPlan returns a result.
-         *
-         * @param mealPlan the MealPlan object updated in the db,
-         *                 null if the update operation failed.
-         * @param success  true if the update operation was successful,
-         *                 false otherwise.
-         */
-        void onUpdateMealPlanResult(MealPlan mealPlan, boolean success);
     }
 }
