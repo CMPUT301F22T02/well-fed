@@ -20,7 +20,10 @@ import com.xffffff.wellfed.common.SortingFragment;
 
 import java.util.Arrays;
 
-
+/**
+ * The IngredientStorageFragment class is a fragment that displays a list of
+ * ingredients in the user's storage.
+ */
 public class IngredientStorageFragment extends Fragment
         implements Launcher<StorageIngredient>,
                    StorageIngredientAdapter.OnItemClickListener,
