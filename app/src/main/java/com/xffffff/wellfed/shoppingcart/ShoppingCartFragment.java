@@ -38,7 +38,9 @@ public class ShoppingCartFragment extends Fragment
      * Controller for the ingredients.
      */
     private ShoppingCartIngredientController controller;
-
+    /**
+     * Selected shopping cart ingredient.
+     */
     private ShoppingCartIngredient selectedShoppingCartIngredient;
 
 
@@ -108,8 +110,8 @@ public class ShoppingCartFragment extends Fragment
 
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setOptions(
-            Arrays.asList("description",
-                "category"));
+            Arrays.asList("description", "category"),
+            Arrays.asList("Description", "Category"));
         sortingFragment.setListener(this);
         requireActivity().getSupportFragmentManager().beginTransaction()
             .add(R.id.fragment_sort_container3, sortingFragment).commit();
@@ -134,12 +136,19 @@ public class ShoppingCartFragment extends Fragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
+    /**
+     * onResume method for the ShoppingCartFragment.
+     */
     @Override
     public void onResume() {
         super.onResume();
         controller.generateShoppingCart();
     }
 
+    /**
+     * onClick method for the sorting fragment.
+     * @param field The field to sort by.
+     */
     @Override
     public void onClick(String field) {
         controller.sortByField(field);

@@ -7,6 +7,10 @@ import com.google.firebase.firestore.Query;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.common.DBConnection;
 
+/**
+ * The IngredientStorageController class is a controller for the
+ * IngredientStorageActivity.
+ */
 public class IngredientStorageController {
     /**
      * the activity
@@ -124,7 +128,7 @@ public class IngredientStorageController {
 
     /**
      * Get the search results from the DB
-     * @param field
+     * @param field the field to search by
      * @return The search results
      */
     public void getSearchResults(String field) {

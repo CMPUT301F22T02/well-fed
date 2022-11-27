@@ -565,7 +565,7 @@ import org.junit.runner.RunWith;
         add5Ingredients();
         // sort by description
         clickSortButton();
-        onView(withText("description")).inRoot(isPlatformPopup())
+        onView(withText("Description")).inRoot(isPlatformPopup())
                 .perform(click());
 
         // check that stuff is sorted
@@ -606,7 +606,7 @@ import org.junit.runner.RunWith;
         add5Ingredients();
         // sort by description
         clickSortButton();
-        onView(withText("category")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("Category")).inRoot(isPlatformPopup()).perform(click());
 
         // check that stuff is sorted
         onView(withId(R.id.ingredient_storage_list)).perform(
@@ -672,7 +672,7 @@ import org.junit.runner.RunWith;
         add5Ingredients();
         // sort by description
         clickSortButton();
-        onView(withText("location")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("Location")).inRoot(isPlatformPopup()).perform(click());
 
         // check that stuff is sorted
         onView(withId(R.id.ingredient_storage_list)).perform(
