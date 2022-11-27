@@ -208,10 +208,10 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      * @param mealPlanServings The number of servings to scale the recipe to.
      * @return The scaled recipe.
      */
-    public Recipe scaleRecipe(Recipe recipe, int mealPlanServings) {
+    public Recipe scaleRecipe(Recipe recipe, Long mealPlanServings) {
         Recipe scaledRecipe = new Recipe(recipe);
         UnitConverter unitConverter = new UnitConverter(this.activity);
-        int recipeServings = scaledRecipe.getServings();
+        Long recipeServings = scaledRecipe.getServings();
         double scalingFactor = (double) mealPlanServings / recipeServings;
         for (Ingredient ingredient : scaledRecipe.getIngredients()) {
             ingredient.setAmount(ingredient.getAmount() * scalingFactor);

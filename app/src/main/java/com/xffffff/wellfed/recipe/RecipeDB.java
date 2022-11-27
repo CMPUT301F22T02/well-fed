@@ -181,11 +181,8 @@ public class RecipeDB {
             recipe.setCategory(doc.getString("category"));
             recipe.setComments(doc.getString("comments"));
             recipe.setPhotograph(doc.getString("photograph"));
-            Long prepTime = (Long) doc.getData().get("preparation-time");
-            recipe.setPrepTimeMinutes(
-                    Integer.parseInt(Long.toString(prepTime)));
-            Long servings = (Long) doc.getData().get("servings");
-            recipe.setServings(Integer.parseInt(Long.toString(servings)));
+            recipe.setPrepTimeMinutes(doc.getLong("preparation-time"));
+            recipe.setServings(doc.getLong("servings"));
             ArrayList<HashMap<String, Object>> ingredients =
                     (ArrayList<HashMap<String, Object>>) doc.getData()
                             .get("ingredients");
