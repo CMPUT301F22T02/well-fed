@@ -68,7 +68,6 @@ public class RecipeDB {
      *               and whose id we want to set
      * @return Returns the id of the Recipe document
      */
-    //todo it works but hacky
     public void addRecipe(Recipe recipe, OnRecipeDone listener) {
 
         ArrayList<HashMap<String, Object>> recipeIngredients =
@@ -97,7 +96,7 @@ public class RecipeDB {
                             added.addAndGet(1);
                             recipeIngredients.add(ingredientMap);
                             if (added.get() == recipe.getIngredients().size()) {
-                                addRecipeAsync(recipeMap, recipeIngredients,
+                                addRecipeIncrementCount(recipeMap, recipeIngredients,
                                         recipe, listener);
                             }
 
@@ -124,7 +123,7 @@ public class RecipeDB {
                                         if (added.get() ==
                                                 recipe.getIngredients()
                                                         .size()) {
-                                            addRecipeAsync(recipeMap,
+                                            addRecipeIncrementCount(recipeMap,
                                                     recipeIngredients, recipe,
                                                     listener);
                                         }
@@ -134,7 +133,16 @@ public class RecipeDB {
         }
     }
 
-    public void addRecipeAsync(HashMap<String, Object> recipeMap,
+    /**
+     * addRecipeIncrementCount is a helper method for addRecipe. It increments the
+     * count of ingredients in the database.
+     *
+     * @param recipeMap A HashMap of the recipe to be added.
+     * @param ingredients A list of ingredients to be added.
+     * @param recipe The recipe to be added.
+     * @param listener The listener to be called when the recipe is added.
+     */
+    public void addRecipeIncrementCount(HashMap<String, Object> recipeMap,
                                ArrayList<HashMap<String, Object>> ingredients,
                                Recipe recipe, OnRecipeDone listener) {
         // Update count of each ingredient.
@@ -149,6 +157,15 @@ public class RecipeDB {
         }
     }
 
+    /**
+     * Helper function that adds the Recipe document to db
+     * once all transactions are finished.
+     *
+     * @param recipeMap A HashMap of the recipe to be added.
+     * @param ingredients A list of ingredients to be added.
+     * @param recipe The recipe to be added.
+     * @param listener The listener to be called when the recipe is added.
+     */
     public void addRecipeHelper(HashMap<String, Object> recipeMap,
                                 ArrayList<HashMap<String, Object>> ingredients,
                                 Recipe recipe, OnRecipeDone listener) {
@@ -170,8 +187,12 @@ public class RecipeDB {
         });
     }
 
-    // todo call the listener when results fail
-    // todo add db-tests for it
+    /**
+     * Gets the Recipe object with the given id from the db.
+     *
+     * @param id The id of the Recipe to be retrieved.
+     * @param listener The listener to be called when the recipe is retrieved.
+     */
     public void getRecipe(String id, OnRecipeDone listener) {
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get().addOnSuccessListener(doc -> {
@@ -255,12 +276,11 @@ public class RecipeDB {
                             // Check if the counter has reached the number of
                             // ingredients and recipes.
                             if (counter.get() == numOfIngredients) {
-                                updateRecipeAsync(recipe, recipeIngredients,
+                                updateRecipeFindOldRecipe(recipe, recipeIngredients,
                                         listener);
                             }
                         } else {
-                            // If the ingredient does not exist in our
-                            // Ingredient collection,
+                            // If the ingredient does not exist in our Ingredient collection,
                             // we will create a new ingredient for it.
                             ingredientDB.addIngredient(ingredient,
                                     (addedIngredient, success1) -> {
@@ -289,7 +309,7 @@ public class RecipeDB {
                                         recipeIngredients.add(ingredientMap);
 
                                         if (counter.get() == numOfIngredients) {
-                                            updateRecipeAsync(recipe,
+                                            updateRecipeFindOldRecipe(recipe,
                                                     recipeIngredients,
                                                     listener);
                                         }
@@ -299,7 +319,14 @@ public class RecipeDB {
         }
     }
 
-    public void updateRecipeAsync(Recipe recipe,
+    /**
+     * A helper method for updateRecipe() that finds the old recipe in the db.
+     *
+     * @param recipe The new recipe to be updated.
+     * @param recipeIngredients The ingredients of the new recipe.
+     * @param listener The listener to be called when the recipe is updated.
+     */
+    public void updateRecipeFindOldRecipe(Recipe recipe,
                                   ArrayList<HashMap<String, Object>> recipeIngredients,
                                   OnUpdateRecipeListener listener) {
         getRecipe(recipe.getId(), (foundRecipe, success) -> {
@@ -307,13 +334,22 @@ public class RecipeDB {
                 listener.onUpdateRecipe(null, false);
                 return;
             } else {
-                updateRecipeAsync1(recipe, foundRecipe, recipeIngredients,
+                updateRecipeIncrementCounter(recipe, foundRecipe, recipeIngredients,
                         listener);
             }
         });
     }
 
-    public void updateRecipeAsync1(Recipe recipe, Recipe foundRecipe,
+    /**
+     * Helper method that increments counter for each ingredient in the
+     * updated Recipe.
+     *
+     * @param recipe The new recipe to be updated.
+     * @param foundRecipe The old recipe to be updated.
+     * @param recipeIngredients The ingredients of the new recipe.
+     * @param listener The listener to be called when the recipe is updated.
+     */
+    public void updateRecipeIncrementCounter(Recipe recipe, Recipe foundRecipe,
                                    ArrayList<HashMap<String, Object>> recipeIngredients,
                                    OnUpdateRecipeListener listener) {
         AtomicInteger counter = new AtomicInteger(0);
@@ -324,14 +360,23 @@ public class RecipeDB {
             ingredientDB.updateReferenceCount(ingredient, 1, (i, s) -> {
                 counter.addAndGet(1);
                 if (counter.get() == numOfIngredients) {
-                    updateRecipeAsync2(recipe, foundRecipe, recipeIngredients,
+                    updateRecipeDecrementCounter(recipe, foundRecipe, recipeIngredients,
                             listener);
                 }
             });
         }
     }
 
-    public void updateRecipeAsync2(Recipe recipe, Recipe foundRecipe,
+    /**
+     * Helper method that decrements counter for each ingredient in the
+     * old Recipe.
+     *
+     * @param recipe The new recipe to be updated.
+     * @param foundRecipe The old recipe to be updated.
+     * @param recipeIngredients The ingredients of the new recipe.
+     * @param listener The listener to be called when the recipe is updated.
+     */
+    public void updateRecipeDecrementCounter(Recipe recipe, Recipe foundRecipe,
                                    ArrayList<HashMap<String, Object>> recipeIngredients,
                                    OnUpdateRecipeListener listener) {
         AtomicInteger counter = new AtomicInteger(0);
@@ -397,17 +442,26 @@ public class RecipeDB {
                     // Do not allow user to delete recipe if count is > 0.
                     listener.onAddRecipe(null, null);
                 } else {
-                    delRecipeAsync(recipe, recipeRef, document, listener);
+                    delRecipeDecrementCounter(recipe, recipeRef, document, listener);
                 }
             }
         });
     }
 
-    public void delRecipeAsync(Recipe recipe, DocumentReference recipeRef,
+    /**
+     * Helper function for decrementing counter of every ingredient in the
+     * deleted Recipe object.
+     *
+     * @param recipe The recipe to delete.
+     * @param recipeRef The reference to the recipe to delete.
+     * @param recipeDoc The document of the recipe to delete.
+     * @param listener The listener to be called when the recipe is deleted.
+     */
+    public void delRecipeDecrementCounter(Recipe recipe, DocumentReference recipeRef,
                                DocumentSnapshot recipeDoc,
                                OnRecipeDone listener) {
         AtomicInteger counter = new AtomicInteger(0);
-//        get ingredients from recipedoc
+        // Get ingredients from recipe document.
         ArrayList<HashMap<String, Object>> ingredientMap =
                 (ArrayList<HashMap<String, Object>>) recipeDoc.get("ingredients");
         int numOfIngredients = ingredientMap.size();
@@ -428,6 +482,13 @@ public class RecipeDB {
         }
     }
 
+    /**
+     * Helper function for deleting the recipe document.
+     *
+     * @param recipe The recipe to delete.
+     * @param recipeRef The reference to the recipe document.
+     * @param listener The listener to be called when the recipe is deleted.
+     */
     public void delRecipeHelper(Recipe recipe, DocumentReference recipeRef,
                                 OnRecipeDone listener) {
         recipeRef.delete().addOnSuccessListener(r -> {
@@ -447,41 +508,33 @@ public class RecipeDB {
         return this.collection.document(id);
     }
 
-    public Recipe snapshotToRecipe(DocumentSnapshot doc) {
-        Recipe recipe = new Recipe(doc.getString("title"));
-        recipe.setCategory(doc.getString("category"));
-        recipe.setComments(doc.getString("comments"));
-        recipe.setPhotograph(doc.getString("photograph"));
 
-        List<HashMap<String, Object>> ingredients =
-                (List<HashMap<String, Object>>) doc.getData()
-                        .get("ingredients");
-        for (HashMap<String, Object> ingredientMap : ingredients) {
-            DocumentReference ingredientRef =
-                    (DocumentReference) ingredientMap.get("ingredientRef");
-            ingredientDB.getIngredient(ingredientRef,
-                    (foundIngredient, success) -> {
-                        if (foundIngredient != null) {
-                            foundIngredient.setUnit(
-                                    (String) ingredientMap.get("unit"));
-                            foundIngredient.setAmount(
-                                    (Double) ingredientMap.get("amount"));
-                            recipe.addIngredient(foundIngredient);
-                        }
-                    });
-        }
-        return recipe;
-    }
-
+    /**
+     * Gets a query for Recipes in the db.
+     *
+     * @return the query for Recipes in the db.
+     */
     public Query getQuery() {
         return this.collection;
     }
 
+    /**
+     * Gets query from the db with Recipes sorted by given field.
+     *
+     * @param field
+     * @return
+     */
     public Query getSortQuery(String field) {
         return this.collection.orderBy(field);
     }
 
-    // TODO: updateReferenceCount(), see IngredientDB
+    /**
+     * Updates the counter for a Recipe object in the db.
+     *
+     * @param recipe
+     * @param delta
+     * @param listener
+     */
     public void updateReferenceCount(Recipe recipe, int delta,
                                      OnUpdateRecipeReferenceCountListener listener) {
         final DocumentReference recipeRef =
@@ -512,69 +565,55 @@ public class RecipeDB {
                 Log.w(TAG, "Transaction failure.", e);
             }
         });
-
-        //        // Get reference of the recipe document.
-        //        String id = getDocumentReference(recipe.getId()).getId();
-        //
-        //        // Get recipe document snapshot from db.
-        //        collection.document(id).get()
-        //                .addOnCompleteListener(task -> {
-        //                    if (task.isSuccessful()) {
-        //                        DocumentSnapshot document = task.getResult();
-        //                        if (document.exists()) {
-        //                            Long count = document.getLong("count");
-        ////                            if (count == null) {
-        ////                                count = 0L;
-        ////                            }
-        //
-        //                            count += delta;
-        //                            if (count > 0) {
-        //                                collection.document(id)
-        //                                        .update("count", count)
-        //                                        .addOnCompleteListener(task1 -> {
-        //                                            listener.onUpdateReferenceCount(
-        //                                                    recipe,
-        //                                                    task1.isSuccessful()
-        //                                            );
-        //                                        });
-        //                            } else {
-        //                                // Even if none of the meal plans reference this recipe,,
-        //                                // we still won't delete it. Only users can delete recipes.
-        //
-        ////                                delRecipe(recipe, (deletedRecipe, success) -> {
-        ////                                    listener.onUpdateReferenceCount(
-        ////                                            recipe,
-        ////                                            success
-        ////                                    );
-        ////                                });
-        //                            }
-        //                        } else {
-        //                            listener.onUpdateReferenceCount(recipe, false);
-        //                        }
-        //                    } else {
-        //                        listener.onUpdateReferenceCount(recipe, false);
-        //                    }
-        //                });
     }
 
 
+    /**
+     * This interface is used to handle the result of the addRecipe method.
+     */
     public interface OnRecipeDone {
+        /**
+         * Called when addRecipe returns a result.
+         *
+         * @param recipe The recipe that was added.
+         * @param success Whether the recipe was added successfully.
+         */
         public void onAddRecipe(Recipe recipe, Boolean success);
     }
 
-    public interface OnRecipeIngredientAdded {
-        public void onRecipeIngredientAdd(Ingredient ingredient,
-                                          int totalAdded);
-    }
-
+    /**
+     * This interface is used to handle the result of updating
+     * counter for Ingredients in the Recipe object.
+     */
     public interface OnUpdateRecipeReferenceCountListener {
+        /**
+         * Called when updateReferenceCount returns a result.
+         *
+         * @param recipe The recipe that was updated.
+         * @param success Whether the recipe was updated successfully.
+         */
         void onUpdateReferenceCount(Recipe recipe, Boolean success);
     }
 
+    /**
+     * This interface is used to handle the result of the updateRecipe method.
+     */
     public interface OnUpdateRecipeListener {
+        /**
+         * Called when updateRecipe returns a result.
+         *
+         * @param recipe The recipe that was updated.
+         * @param success Whether the recipe was updated successfully.
+         */
         void onUpdateRecipe(Recipe recipe, Boolean success);
     }
 
+    /**
+     * Query for the search functionality.
+     *
+     * @param field The keyword to search for.
+     * @return Results matching the keyword.
+     */
     public Query getSearchQuery(String field) {
         return this.collection.orderBy("search-field")
                 .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');

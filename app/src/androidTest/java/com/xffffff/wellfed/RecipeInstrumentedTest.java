@@ -13,15 +13,18 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.RootMatchers;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -121,6 +124,20 @@ import org.junit.runner.RunWith;
                                                 withId(R.id.fragment_recipe_book),
                                                 1)), 1), isDisplayed()));
         materialButton.perform(click());
+    }
+
+    /**
+     * Asserts that a view is not visible.
+     */
+    private void assertTextNotVisible(String text) throws Exception {
+        try {
+            onView(withText(text)).check(ViewAssertions.matches(
+                    withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+            throw new Exception("The view with text " + text +
+                    " was present when it shouldn't be.");
+        } catch (NoMatchingViewException e) {
+            return;
+        }
     }
 
     /**
@@ -459,7 +476,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
@@ -562,7 +579,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -593,7 +610,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -626,7 +643,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -657,7 +674,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
         onView(withId(R.id.save_fab)).perform(click());
@@ -688,7 +705,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("Egg"))));
+                matches(hasDescendant(withText("Egg | Protein"))));
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
         onView(withText("Delete")).perform(click());
@@ -696,7 +713,6 @@ import org.junit.runner.RunWith;
 
     /**
      * Test editing the details of an ingredient in a Recipe
-     * TODO: add more to this test after view recipe ingredient functionality
      * is added
      */
     @Test public void testEditingIngredientOfARecipe()
@@ -805,12 +821,15 @@ import org.junit.runner.RunWith;
     }
 
     /**
-     * Tests adding a handful of Recipes, and sorting them by title.
-     * The titles should be in alphabetical order.
+     * Tests sorting recipes by title, prep time, category, and servings.
+     * Note: These were refactored into one test, instead of many tests, one for each category.
+     * The reason for this was because adding and deleting the data took a very long time.
      */
-    @Test public void testSortByTitle() throws InterruptedException {
+    @Test public void testSort() throws InterruptedException {
         add5Recipes();
-        // sort by title
+        /*
+        Sort by title.
+         */
         clickSortButton();
         onView(withText("Title")).inRoot(isPlatformPopup()).perform(click());
 
@@ -850,16 +869,9 @@ import org.junit.runner.RunWith;
                 matches(withText("Ice cream")));
         pressBack();
 
-        cleanup5Recipes();
-    }
-
-    /**
-     * Tests adding a handful of Recipes, and sorting them by prep time.
-     * The recipes should be by least to most prep time.
-     */
-    @Test public void testSortByPrepTime() throws InterruptedException {
-        add5Recipes();
-        // sort by title
+        /*
+        Sort by prep time.
+         */
         clickSortButton();
         onView(withText("Preparation Time")).inRoot(isPlatformPopup())
                 .perform(click());
@@ -900,16 +912,9 @@ import org.junit.runner.RunWith;
                 matches(withText("Ice cream")));
         pressBack();
 
-        cleanup5Recipes();
-    }
-
-    /**
-     * Tests adding a handful of Recipes, and sorting them by servings.
-     * The recipes should be by least to most servings.
-     */
-    @Test public void testSortByServings() throws InterruptedException {
-        add5Recipes();
-        // sort by title
+        /*
+        Sort by servings.
+         */
         clickSortButton();
         onView(withText("Servings")).inRoot(isPlatformPopup()).perform(click());
 
@@ -963,16 +968,9 @@ import org.junit.runner.RunWith;
                 matches(withText("Apple pie")));
         pressBack();
 
-        cleanup5Recipes();
-    }
-
-    /**
-     * Tests adding a handful of Recipes, and sorting them by servings.
-     * The recipes should be by least to most servings.
-     */
-    @Test public void testSortByCategory() throws InterruptedException {
-        add5Recipes();
-        // sort by title
+        /*
+        Sort by category.
+         */
         clickSortButton();
         onView(withText("Category")).inRoot(isPlatformPopup()).perform(click());
 
@@ -1041,6 +1039,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.searchButton)).perform(click());
         //pick an ingredient check if recycler view is non empty
+        Thread.sleep(timeout);
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItem(
                         hasDescendant(withText("English muffin")), click()));
@@ -1074,6 +1073,112 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
                 matches(hasDescendant(withText("1.00 count"))));
         onView(withId(R.id.recipe_ingredient_recycleViewer)).check(
-                matches(hasDescendant(withText("English muffin"))));
+                matches(hasDescendant(withText("English muffin | Bread"))));
+    }
+
+    /**
+     * Tests searching for recipes.
+     * Searches done:
+     *      - tests searching for something not there, and asserts nothing is seen
+     *      - tests that after we clear a search, all of the stuff is visible
+     *      - tests the whole search functionality (if we search "Apple pie" can we see it?)
+     *      - tests the prefix search functionality (if we search "Apple" do we get "Apple pie" and
+     *          "Apple puree"?)
+     *      - tests case insensitivity for search
+     *
+     * Note: This test was refactored from multiple separate tests into one.
+     * The reason for this was because when each test stood on its own, the process of adding
+     * and deleting extended the length each test took to run.
+     */
+    @Test public void testSearch() throws Exception {
+        // add Apple pie, Apple puree, Bananas foster, Ice cream
+        add5Recipes();
+
+        /*
+        Searches for something not there.
+         */
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("X"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        // assert none of the recipes are visible
+        assertTextNotVisible("Apple pie");
+        assertTextNotVisible("Apple puree");
+        assertTextNotVisible("Bananas foster");
+        assertTextNotVisible("Ice cream");
+        assertTextNotVisible("Cereal");
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+        closeSoftKeyboard();
+
+        // assert all of the recipes are now visible after clearing the box
+        Thread.sleep(1000);
+
+        onView(withText("Apple pie"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Bananas foster"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Ice cream"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Cereal"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        /*
+        Searches for the whole text of a Recipe.
+         */
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("bananas foster"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Apple pie");
+        assertTextNotVisible("Apple puree");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Bananas foster"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+
+        /*
+        Tests the prefix search of a Recipe. (eg. if you enter "Apple", will it get "Apple pie"?
+         */
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("Apple"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Bananas foster");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Apple pie"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+
+        /*
+        Tests the case insensitivity of searching for a Recipe.
+         */
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(click());
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(typeText("apple"));
+        closeSoftKeyboard();
+        Thread.sleep(1000);
+
+        assertTextNotVisible("Bananas foster");
+        assertTextNotVisible("Milk");
+        assertTextNotVisible("Cheese");
+        onView(withText("Apple pie"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(withText("Apple puree"))
+                .check(ViewAssertions.matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+
+        onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
+
+        cleanup5Recipes();
     }
 }

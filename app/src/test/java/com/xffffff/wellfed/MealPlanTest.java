@@ -2,6 +2,7 @@ package com.xffffff.wellfed;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -11,6 +12,7 @@ import com.xffffff.wellfed.recipe.Recipe;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +46,49 @@ public class MealPlanTest {
     private Recipe mockMealRecipe() {
         Recipe recipe = new Recipe("Stuffing");
         return recipe;
+    }
+
+    /**
+     * Tests the constructor of a MealPlan.
+     */
+    @Test
+    public void testMealPlanConstructor() {
+        MealPlan mealPlan = new MealPlan("Cereal and Banana");
+        assertEquals("Cereal and Banana", mealPlan.getTitle());
+        assertTrue(mealPlan.getIngredients().isEmpty());
+        assertTrue(mealPlan.getRecipes().isEmpty());
+        assertNull(mealPlan.getCategory());
+        assertNull(mealPlan.getEatDate());
+        assertNull(mealPlan.getId());
+        assertNull(mealPlan.getServings());
+    }
+
+    /**
+     * Tests setting an arraylist of Ingredients
+     */
+    @Test
+    public void testSetIngredients() {
+        MealPlan mealPlan = mockMealPlan();
+
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        Ingredient mealIngredient1 = mockMealIngredient();
+        mealIngredient1.setDescription("Beef");
+        ingredients.add(mealIngredient1);
+
+        Ingredient mealIngredient2 = mockMealIngredient();
+        mealIngredient2.setDescription("Lettuce");
+        ingredients.add(mealIngredient2);
+
+        Ingredient mealIngredient3 = mockMealIngredient();
+        mealIngredient3.setDescription("Tomatoes");
+        ingredients.add(mealIngredient3);
+
+        mealPlan.setIngredients(ingredients);
+        ArrayList<Ingredient> results = mealPlan.getIngredients();
+
+        for(Ingredient i : ingredients) {
+            assertTrue(results.contains(i));
+        }
     }
 
     /**
@@ -200,6 +245,34 @@ public class MealPlanTest {
 
         assertEquals(recipe, recipeList.get(0));
         assertEquals(recipe2, recipeList.get(1));
+    }
+
+    /**
+     * Tests setting an arraylist of Recipes
+     */
+    @Test
+    public void testSetRecipes() {
+        MealPlan mealPlan = mockMealPlan();
+
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        Recipe mealRecipe1 = mockMealRecipe();
+        mealRecipe1.setTitle("Tacos");
+        recipes.add(mealRecipe1);
+
+        Recipe mealRecipe2 = mockMealRecipe();
+        mealRecipe2.setTitle("Pizza");
+        recipes.add(mealRecipe2);
+
+        Recipe mealRecipe3 = mockMealRecipe();
+        mealRecipe3.setTitle("Cereal");
+        recipes.add(mealRecipe3);
+
+        mealPlan.setRecipes(recipes);
+        ArrayList<Recipe> results = mealPlan.getRecipes();
+
+        for(Recipe i : recipes) {
+            assertTrue(results.contains(i));
+        }
     }
 
     /**
