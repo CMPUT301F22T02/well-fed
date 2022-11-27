@@ -2,7 +2,6 @@ package com.xffffff.wellfed.recipe;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,7 +31,6 @@ import com.xffffff.wellfed.ingredient.Ingredient;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -111,8 +109,7 @@ public class RecipeEditActivity extends EditActivityBase {
      * @param savedInstanceState Bundle object for the activity, to restore
      *                           to earlier state.
      */
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_edit);
 
@@ -201,9 +198,10 @@ public class RecipeEditActivity extends EditActivityBase {
                 }
             });
         }
-
-        uri = initTempUri();
-        recipeImg.setOnClickListener(view -> cameraLauncher.launch(uri));
+        recipeImg.setOnClickListener(view -> {
+            uri = initTempUri();
+            cameraLauncher.launch(uri);
+        });
     }
 
     /**
@@ -242,8 +240,7 @@ public class RecipeEditActivity extends EditActivityBase {
      *
      * @return true if there are unsaved changes, false otherwise
      */
-    @Override
-    public Boolean hasUnsavedChanges() {
+    @Override public Boolean hasUnsavedChanges() {
         if (title.hasChanges()) {
             return true;
         }
@@ -286,7 +283,7 @@ public class RecipeEditActivity extends EditActivityBase {
                 getString(R.string.temp_images_dir));
         tempImgDir.mkdir();
 
-        File tempImg = new File(tempImgDir, getString(R.string.temp_image));
+        File tempImg = new File(tempImgDir, UUID.randomUUID().toString());
         return FileProvider.getUriForFile(this, getString(R.string.authorities),
                 tempImg);
     }
@@ -297,10 +294,10 @@ public class RecipeEditActivity extends EditActivityBase {
     public void loadImage() {
         uploadInProgress = true;
         Glide.with(this).asBitmap().load(uri).into(new CustomTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(@NonNull Bitmap resource,
-                                        @Nullable
-                                                Transition<? super Bitmap> transition) {
+            @Override public void onResourceReady(@NonNull Bitmap resource,
+                                                  @Nullable
+                                                          Transition<?
+                                                                  super Bitmap> transition) {
                 recipeImg.setImageBitmap(resource);
                 uploadImage(resource);
             }
@@ -325,10 +322,11 @@ public class RecipeEditActivity extends EditActivityBase {
         Uri uri = Uri.parse(path);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference recipesRef =
-                storage.getReference("recipe_imgs" + (new Date()));
+        StorageReference recipesRef = storage.getReference(
+                "recipe_photographs/" + UUID.randomUUID().toString());
         UploadTask uploadTask = recipesRef.putFile(uri);
-        // Register observers to listen for when the download is done or if it fails
+        // Register observers to listen for when the download is done or if
+        // it fails
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
             uploadInProgress = false;
