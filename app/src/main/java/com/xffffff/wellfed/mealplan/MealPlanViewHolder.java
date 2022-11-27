@@ -106,10 +106,6 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
      * colorOnSurface is the on surface color of the app
      */
     private final int colorOnSurface;
-    /**
-     * colorOutline is the outline color of the app
-     */
-    private final int colorOutline;
 
     /**
      * MealPlanViewHolder is the constructor for the MealPlanViewHolder
@@ -138,8 +134,6 @@ public class MealPlanViewHolder extends RecyclerView.ViewHolder {
                 com.google.android.material.R.attr.colorSurfaceVariant);
         this.colorOnSurface = MaterialColors.getColor(itemView,
                 com.google.android.material.R.attr.colorOnSurface);
-        this.colorOutline = MaterialColors.getColor(itemView,
-                com.google.android.material.R.attr.colorOutline);
     }
 
     /**

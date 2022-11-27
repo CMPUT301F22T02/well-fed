@@ -37,10 +37,6 @@ public class IngredientStorageController {
         adapter = new StorageIngredientAdapter(db);
     }
 
-    public StorageIngredientDB getDb() {
-        return db;
-    }
-
     /**
      * Gets the adapter that is used to display the ingredients in the list
      * view.

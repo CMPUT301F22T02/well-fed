@@ -30,6 +30,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Tests for the ShoppingCartDB class. Please note: These tests require
  * functional StorageIngredientDB, RecipeDB and MealPlanDB.
+ *
+ * Intended device: Pixel 6 Pro API 22
  */
 public class ShoppingCartDBTest {
     /**

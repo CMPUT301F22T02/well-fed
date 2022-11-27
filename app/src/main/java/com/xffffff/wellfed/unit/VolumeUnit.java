@@ -15,10 +15,6 @@ public class VolumeUnit extends Unit {
      * The smallest unit for metric volume
      */
     public static final String smallestMetricUnit = "mL";
-    /**
-     * The smallest unit for imperial volume
-     */
-    public static final String smallestImperialUnit = "oz";
 
 
     public static final HashMap<String, Double> CONVERSION_FACTORS =

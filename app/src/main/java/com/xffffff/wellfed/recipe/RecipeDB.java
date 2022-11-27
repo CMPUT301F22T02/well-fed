@@ -39,10 +39,6 @@ public class RecipeDB {
      * db database
      */
     private final IngredientDB ingredientDB;
-    /**
-     * Holds a connection to the DB.
-     */
-    private DBConnection recipesConnection;
 
     /**
      * Holds the CollectionReference for the users Recipe collection.
@@ -53,9 +49,11 @@ public class RecipeDB {
      * Create a RecipeDB object
      */
     public RecipeDB(DBConnection connection) {
-        this.recipesConnection = connection;
-        db = this.recipesConnection.getDB();
-        collection = this.recipesConnection.getCollection("Recipes");
+        /**
+         * Holds a connection to the DB.
+         */
+        db = connection.getDB();
+        collection = connection.getCollection("Recipes");
         ingredientDB = new IngredientDB(connection);
     }
 
@@ -84,7 +82,6 @@ public class RecipeDB {
                             DocumentReference doc =
                                     ingredientDB.getDocumentReference(
                                             foundIngredient);
-                            Task<DocumentSnapshot> task = doc.get();
                             HashMap<String, Object> ingredientMap =
                                     new HashMap<>();
                             ingredient.setId(foundIngredient.getId());
@@ -196,7 +193,6 @@ public class RecipeDB {
     public void getRecipe(String id, OnRecipeDone listener) {
         DocumentReference recipeRef = this.collection.document(id);
         recipeRef.get().addOnSuccessListener(doc -> {
-            List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
             Recipe recipe = new Recipe(doc.getString("title"));
             recipe.setId(doc.getId());
             recipe.setCategory(doc.getString("category"));
@@ -507,7 +503,6 @@ public class RecipeDB {
     public DocumentReference getDocumentReference(String id) {
         return this.collection.document(id);
     }
-
 
     /**
      * Gets a query for Recipes in the db.

@@ -23,9 +23,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class MealPlanDB {
     /**
-     * Holds the instance of the Firebase FireStore DB.
+     * Declares tag for logging purposes.
      */
-    private FirebaseFirestore db;
+    private final static String TAG = "MealPlanDB";
 
     /**
      * Holds the instance of the RecipeDB.
@@ -52,10 +52,6 @@ public class MealPlanDB {
         // based on current user connection.
         recipeDB = new RecipeDB(connection);
         ingredientDB = new IngredientDB(connection);
-
-        // Gets the instance of the Firebase FireStore DB based
-        // on current user connection.
-        this.db = connection.getDB();
 
         // Gets the current user's MealPlan collection from db,
         // create one if the collection DNE.

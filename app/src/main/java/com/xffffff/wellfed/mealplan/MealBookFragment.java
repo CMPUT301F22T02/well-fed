@@ -36,14 +36,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.Launcher;
-
-import java.util.Date;
 
 /**
  * The fragment for the meal book. This fragment shows the meals in the meal
