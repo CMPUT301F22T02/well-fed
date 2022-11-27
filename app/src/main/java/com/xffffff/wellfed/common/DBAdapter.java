@@ -49,8 +49,7 @@ public abstract class DBAdapter<VH extends RecyclerView.ViewHolder>
      * @param query the query
      */
     public DBAdapter(Query query) {
-        this.mQuery = query;
-        startListening();
+        this.setQuery(query);
     }
 
     /**

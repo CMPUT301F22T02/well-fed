@@ -287,15 +287,10 @@ public class StorageIngredientDB {
     }
 
     /**
-     * Gets a query for StorageIngredients in Firestore
+     * Gets a sorted query for StorageIngredients in Firestore
      *
      * @return the query
      */
-    public Query getQuery() {
-        return this.collection.orderBy("best-before",
-                Query.Direction.DESCENDING);
-    }
-
     public Query getSortedQuery(String field) {
         return this.collection.orderBy(field);
     }

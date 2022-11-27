@@ -25,10 +25,6 @@ public class IngredientStorageController {
      */
     private final StorageIngredientDB db;
     /**
-     * The Field that is currently being sorted by
-     */
-    private String currentField = "description";
-    /**
      * Creates ingredients list that represents an empty food storage.
      *
      * @param activity the activity that is using this controller
@@ -39,7 +35,6 @@ public class IngredientStorageController {
                 new DBConnection(activity.getApplicationContext());
         db = new StorageIngredientDB(connection);
         adapter = new StorageIngredientAdapter(db);
-        getSortedResults(currentField);
     }
 
     /**
@@ -85,7 +80,6 @@ public class IngredientStorageController {
                     } else {
                         this.activity.makeSnackbar(
                                 "Added " + addIngredient.getDescription());
-                        getSortedResults(currentField);
                     }
                 });
     }
@@ -105,7 +99,6 @@ public class IngredientStorageController {
                     } else {
                         this.activity.makeSnackbar(
                                 "Updated " + updateIngredient.getDescription());
-                        getSortedResults(currentField);
                     }
                 });
     }
@@ -117,7 +110,6 @@ public class IngredientStorageController {
      *              description | category | expiration
      */
     public void getSortedResults(String field) {
-        this.currentField = field;
         Query query = db.getSortedQuery(field);
         adapter.setQuery(query);
     }
