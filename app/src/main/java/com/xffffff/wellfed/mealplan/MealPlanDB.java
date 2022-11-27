@@ -218,6 +218,14 @@ public class MealPlanDB {
         }
     }
 
+    /**
+     * addMealPlanSync is a helper method for addMealPlan.
+     * @param mealPlanMap the HashMap to be used to map the MealPlan object.
+     * @param mealPlan the MealPlan object to be added to the db.
+     * @param mealPlanIngredients the ArrayList of HashMaps to be used to map
+     * @param mealPlanRecipes the ArrayList of DocumentReferences to be used to
+     * @param listener the OnAddMealPlanListener object to handle the result.
+     */
     public void addMealPlanSync(HashMap<String, Object> mealPlanMap,
                                 MealPlan mealPlan,
                                 ArrayList<HashMap<String, Object>> mealPlanIngredients,
@@ -321,10 +329,7 @@ public class MealPlanDB {
         mealPlan.setId(snapshot.getId());
         mealPlan.setCategory(snapshot.getString("category"));
         mealPlan.setEatDate(snapshot.getDate("eat date"));
-        // TODO: refactor mealPlan to use Long instead of Integer
-        mealPlan.setServings(
-                Objects.requireNonNull(snapshot.getLong("servings"))
-                        .intValue());
+        mealPlan.setServings(snapshot.getLong("servings"));
         ArrayList<HashMap<String, Object>> ingredients =
                 (ArrayList<HashMap<String, Object>>) snapshot.get(
                         "ingredients");
@@ -476,6 +481,12 @@ public class MealPlanDB {
         });
     }
 
+    /**
+     * delMealPlanAsync is an asynchronous helper function for delMealPlan.
+     * @param mealPlan the MealPlan object to be deleted.
+     * @param mealPlanRef the DocumentReference of the MealPlan object to be
+     * @param listener the OnDeleteMealPlanListener object to handle the result.
+     */
     public void delMealPlanAsync(MealPlan mealPlan,
                                  DocumentReference mealPlanRef,
                                  OnDeleteMealPlanListener listener) {
@@ -503,6 +514,13 @@ public class MealPlanDB {
         }
     }
 
+    /**
+     * delMealPlanHelper is a helper function for delMealPlanAsync.
+     * @param mealPlan the MealPlan object to be deleted.
+     * @param mealPlanRef the DocumentReference of the MealPlan object to be
+     *                    deleted.
+     * @param listener the OnDeleteMealPlanListener object to handle the result.
+     */
     public void delMealPlanHelper(MealPlan mealPlan,
                                   DocumentReference mealPlanRef,
                                   OnDeleteMealPlanListener listener) {
@@ -676,6 +694,13 @@ public class MealPlanDB {
         }
     }
 
+    /**
+     * updateMealPlanAsync is a helper method for updateMealPlan.
+     * @param mealPlan the MealPlan object to be updated.
+     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
+     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     */
     public void updateMealPlanAsync(MealPlan mealPlan,
                                     OnUpdateMealPlanListener listener,
                                     ArrayList<HashMap<String, Object>> mealPlanIngredients,
@@ -691,6 +716,14 @@ public class MealPlanDB {
         });
     }
 
+    /**
+     * updateMealPlanAsync1 is a helper method for updateMealPlanAsync.
+     * @param mealPlan the MealPlan object to be updated.
+     * @param foundMealPlan the MealPlan object found in the db.
+     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
+     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     */
     public void updateMealPlanAsync1(MealPlan mealPlan, MealPlan foundMealPlan,
                                      OnUpdateMealPlanListener listener,
                                      ArrayList<HashMap<String, Object>> mealPlanIngredients,
@@ -722,6 +755,14 @@ public class MealPlanDB {
         }
     }
 
+    /**
+     * updateMealPlanAsync2 is a helper method for updateMealPlanAsync.
+     * @param mealPlan the MealPlan object to be updated.
+     * @param foundMealPlan the MealPlan object found in the db.
+     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
+     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     */
     public void updateMealPlanAsync2(MealPlan mealPlan, MealPlan foundMealPlan,
                                      OnUpdateMealPlanListener listener,
                                      ArrayList<HashMap<String, Object>> mealPlanIngredients,
@@ -754,6 +795,13 @@ public class MealPlanDB {
         }
     }
 
+    /**
+     * updateMealPlanAsync3 is a helper method for updateMealPlanAsync.
+     * @param mealPlan the MealPlan object to be updated.
+     * @param listener the OnUpdateMealPlanListener object to handle the result.
+     * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
+     * @param mealPlanRecipes the ArrayList of DocumentReferences of recipes.
+     */
     public void updateMealPlanAsync3(MealPlan mealPlan,
                                      OnUpdateMealPlanListener listener,
                                      ArrayList<HashMap<String, Object>> mealPlanIngredients,

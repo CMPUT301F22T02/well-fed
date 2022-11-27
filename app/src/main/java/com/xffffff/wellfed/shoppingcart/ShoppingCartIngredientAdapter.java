@@ -17,10 +17,17 @@ import com.xffffff.wellfed.ingredient.StorageIngredient;
 
 import java.util.Locale;
 
-// This class is used to display the list of ingredients in the shopping cart
+/**
+ * This class is the adapter for the ingredients in the shopping cart list
+ * <p>
+ * It is used to display the ingredients in the shopping cart list
+ * </p>
+ */
 public class ShoppingCartIngredientAdapter
-        extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
-
+    extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
+    /**
+     * The shopping cart db to get the ingredients from.
+     */
     private ShoppingCartDB db;
 
     /**
@@ -47,13 +54,13 @@ public class ShoppingCartIngredientAdapter
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
+        @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View shoppingCartIngredientView =
-                inflater.inflate(R.layout.shopping_cart_ingredient, parent,
-                        false);
+            inflater.inflate(R.layout.shopping_cart_ingredient, parent,
+                false);
 
         return new ViewHolder(shoppingCartIngredientView);
     }
@@ -101,16 +108,30 @@ public class ShoppingCartIngredientAdapter
         return super.getItemCount();
     }
 
+    /**
+     * onCheckedListener interface for the ShoppingCartIngredientAdapter.
+     */
     public interface OnCheckedListener {
         void onCheckBoxClick(String id, boolean isChecked);
     }
 
+    /**
+     * onItemClickListner interface for the ShoppingCartIngredientAdapter.
+     */
     public interface OnItemClickListener {
         void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
     }
 
+    /**
+     * onItemClickListener object for the ShoppingCartIngredientAdapter.
+     */
     private OnItemClickListener onItemClickListener;
 
+    /**
+     * setOnItemClickListener method for the ShoppingCartIngredientAdapter.
+     *
+     * @param onItemClickListener OnItemClickListener object for the adapter.
+     */
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -130,9 +151,9 @@ public class ShoppingCartIngredientAdapter
             super(itemView);
             view = itemView;
             description = itemView.findViewById(
-                    R.id.shopping_cart_ingredient_description);
+                R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(
-                    R.id.shopping_cart_ingredient_subtext);
+                R.id.shopping_cart_ingredient_subtext);
             checkBox = itemView.findViewById(R.id.checkBox);
         }
     }

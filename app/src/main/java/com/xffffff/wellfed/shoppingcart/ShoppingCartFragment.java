@@ -38,7 +38,9 @@ public class ShoppingCartFragment extends Fragment
      * Controller for the ingredients.
      */
     private ShoppingCartIngredientController controller;
-
+    /**
+     * Selected shopping cart ingredient.
+     */
     private ShoppingCartIngredient selectedShoppingCartIngredient;
 
 
@@ -83,13 +85,13 @@ public class ShoppingCartFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(
-            @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+        @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+        @Nullable Bundle savedInstanceState) {
         controller = new ShoppingCartIngredientController(requireActivity());
 
         adapter = controller.getAdapter();
         return inflater.inflate(R.layout.fragment_shopping_cart, container,
-                false);
+            false);
     }
 
     /**
@@ -108,11 +110,11 @@ public class ShoppingCartFragment extends Fragment
 
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setOptions(
-                Arrays.asList("description",
-                        "category"));
+            Arrays.asList("description", "category"),
+            Arrays.asList("Description", "Category"));
         sortingFragment.setListener(this);
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_sort_container3, sortingFragment).commit();
+            .add(R.id.fragment_sort_container3, sortingFragment).commit();
 
         SearchInput searchInput = view.findViewById(R.id.search_input);
         searchInput.setOnTextChange(s -> controller.getSearchResults(s));
@@ -134,12 +136,19 @@ public class ShoppingCartFragment extends Fragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
+    /**
+     * onResume method for the ShoppingCartFragment.
+     */
     @Override
     public void onResume() {
         super.onResume();
         controller.generateShoppingCart();
     }
 
+    /**
+     * onClick method for the sorting fragment.
+     * @param field The field to sort by.
+     */
     @Override
     public void onClick(String field) {
         controller.sortByField(field);

@@ -11,10 +11,17 @@ import androidx.annotation.Nullable;
 
 import com.xffffff.wellfed.ingredient.IngredientActivity;
 
+/**
+ * This class is the contract for the ingredient activity
+ * <p>
+ * It is used to start the ingredient activity
+ * and return the result of the activity
+ * </p>
+ */
 public class IngredientContract extends
-                                ActivityResultContract<ShoppingCartIngredient
-                                        , Pair<String,
-                                        ShoppingCartIngredient>> {
+    ActivityResultContract<ShoppingCartIngredient
+        , Pair<String,
+        ShoppingCartIngredient>> {
     /**
      * Creates an Intent for the IngredientEditActivity.
      *
@@ -23,8 +30,10 @@ public class IngredientContract extends
      *                               ingredient.
      * @return Intent object for the IngredientEditActivity.
      */
-    @NonNull @Override public Intent createIntent(@NonNull Context context,
-                                                  ShoppingCartIngredient shoppingCartIngredient) {
+    @NonNull
+    @Override
+    public Intent createIntent(@NonNull Context context,
+                               ShoppingCartIngredient shoppingCartIngredient) {
         Intent intent = new Intent(context, IngredientActivity.class);
         intent.putExtra("ingredient", shoppingCartIngredient);
         return intent;
@@ -37,16 +46,17 @@ public class IngredientContract extends
      * @param intent Intent object for the IngredientEditActivity.
      * @return Pair object for the result of the IngredientEditActivity.
      */
-    @Override public Pair<String, ShoppingCartIngredient> parseResult(int i,
-                                                                      @Nullable
-                                                                              Intent intent) {
+    @Override
+    public Pair<String, ShoppingCartIngredient> parseResult(int i,
+                                                            @Nullable
+                                                                Intent intent) {
         if (i != Activity.RESULT_OK || intent == null) {
             return null;
         }
         String type = intent.getStringExtra("type");
         ShoppingCartIngredient ingredient =
-                (ShoppingCartIngredient) intent.getSerializableExtra(
-                        "ingredient");
+            (ShoppingCartIngredient) intent.getSerializableExtra(
+                "ingredient");
         return new Pair<>(type, ingredient);
     }
 }

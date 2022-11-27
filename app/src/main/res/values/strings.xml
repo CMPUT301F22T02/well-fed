@@ -7,13 +7,13 @@
     <string name="shopping_cart">Shopping Cart</string>
     <string name="greeting">Hello!</string>
     <string name="call_to_action_make_meal_plan">Ready to make </string>
-    <string name="call_to_action_add_meal_plan">Add a meal plan to get started!</string>
+    <string name="call_to_action_add_meal_plan">Plan a meal to get started!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
-    <string name="edit_meal_plan">Edit Meal Plan</string>
-    <string name="add_meal_plan">Add Meal Plan</string>
+    <string name="edit_meal_plan">Edit Meal</string>
+    <string name="add_meal_plan">Add Meal</string>
     <string name="title">Title</string>
     <string name="date">Date</string>
     <string name="category">Category</string>

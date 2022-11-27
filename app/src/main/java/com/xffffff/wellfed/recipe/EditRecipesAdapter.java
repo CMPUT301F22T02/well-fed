@@ -5,7 +5,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.common.EditItemAdapter;
 
-
+/**
+ * EditRecipesAdapter is the adapter for the RecyclerView in the
+ * EditRecipesActivity. It holds a list of recipes and displays them in a list.
+ */
 public class EditRecipesAdapter extends EditItemAdapter<Recipe> {
     /**
      * OnBindViewHolder binds the view holder to the data. It sets the text
@@ -14,8 +17,9 @@ public class EditRecipesAdapter extends EditItemAdapter<Recipe> {
      * @param holder1  The view holder to bind.
      * @param position The position of the Recipe in the list.
      */
-    @Override public void onBindViewHolder(
-            @NonNull RecyclerView.ViewHolder holder1, int position) {
+    @Override
+    public void onBindViewHolder(
+        @NonNull RecyclerView.ViewHolder holder1, int position) {
         //        TODO: this holder type causes strange spaghetti code
         super.onBindViewHolder(holder1, position);
         ItemViewHolder holder = (ItemViewHolder) holder1;

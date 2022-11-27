@@ -7,9 +7,18 @@ import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.util.Locale;
 
-
+/**
+ * MealPlanIngredientItemAdapter is the adapter for the RecyclerView in the
+ * MealPlanIngredientItemActivity. It holds a list of ingredients and displays
+ * them in a list.
+ */
 public class MealPlanIngredientItemAdapter
         extends MealPlanItemAdapter<Ingredient> {
+    /**
+     * onBindViewHolders binds the data to the view holder.
+     * @param holder1 the view holder
+     * @param position the position of the item in the ArrayList
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder1,
                                  int position) {
