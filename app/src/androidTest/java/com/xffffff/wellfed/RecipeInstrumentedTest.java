@@ -822,12 +822,15 @@ import org.junit.runner.RunWith;
     }
 
     /**
-     * Tests adding a handful of Recipes, and sorting them by title.
-     * The titles should be in alphabetical order.
+     * Tests sorting recipes by title, prep time, category, and servings.
+     * Note: These were refactored into one test, instead of many tests, one for each category.
+     * The reason for this was because adding and deleting the data took a very long time.
      */
     @Test public void testSortByTitle() throws InterruptedException {
         add5Recipes();
-        // sort by title
+        /*
+        Sort by title.
+         */
         clickSortButton();
         onView(withText("title")).inRoot(isPlatformPopup()).perform(click());
 
@@ -867,16 +870,9 @@ import org.junit.runner.RunWith;
                 matches(withText("Ice cream")));
         pressBack();
 
-        cleanup5Recipes();
-    }
-
-    /**
-     * Tests adding a handful of Recipes, and sorting them by prep time.
-     * The recipes should be by least to most prep time.
-     */
-    @Test public void testSortByPrepTime() throws InterruptedException {
-        add5Recipes();
-        // sort by title
+        /*
+        Sort by prep time.
+         */
         clickSortButton();
         onView(withText("preparation-time")).inRoot(isPlatformPopup())
                 .perform(click());
@@ -917,16 +913,9 @@ import org.junit.runner.RunWith;
                 matches(withText("Ice cream")));
         pressBack();
 
-        cleanup5Recipes();
-    }
-
-    /**
-     * Tests adding a handful of Recipes, and sorting them by servings.
-     * The recipes should be by least to most servings.
-     */
-    @Test public void testSortByServings() throws InterruptedException {
-        add5Recipes();
-        // sort by title
+        /*
+        Sort by servings.
+         */
         clickSortButton();
         onView(withText("servings")).inRoot(isPlatformPopup()).perform(click());
 
@@ -980,15 +969,9 @@ import org.junit.runner.RunWith;
                 matches(withText("Apple pie")));
         pressBack();
 
-        cleanup5Recipes();
-    }
-
-    /**
-     * Tests adding a handful of Recipes, and sorting them by servings.
-     * The recipes should be by least to most servings.
-     */
-    @Test public void testSortByCategory() throws InterruptedException {
-        add5Recipes();
+        /*
+        Sort by category.
+         */
         // sort by title
         clickSortButton();
         onView(withText("category")).inRoot(isPlatformPopup()).perform(click());
