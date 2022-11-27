@@ -5,6 +5,10 @@ import android.util.Pair;
 
 import com.xffffff.wellfed.common.EditRecyclerViewFragment;
 
+/**
+ * EditRecipesFragment class. It is the fragment that allows the user to edit
+ * the recipes.
+ */
 public class EditRecipesFragment extends EditRecyclerViewFragment<Recipe> {
 
     /**

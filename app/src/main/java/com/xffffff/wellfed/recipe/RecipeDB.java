@@ -25,6 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * RecipeDB is a class that handles all the database operations for Recipe
+ * objects.
+ */
 public class RecipeDB {
     /**
      * Holds an instance of the Firebase FireStore database

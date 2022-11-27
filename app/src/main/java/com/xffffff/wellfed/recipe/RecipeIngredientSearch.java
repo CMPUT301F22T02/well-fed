@@ -76,6 +76,10 @@ public class RecipeIngredientSearch extends ActivityBase
         finish();
     }
 
+    /**
+     * onClick method for the sort button
+     * @param field The field to sort by
+     */
     @Override
     public void onClick(String field) {
         adapter.changeQuery(field);
