@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-// todo create an xml file for this class
-
 
 /**
  * Activity which allows user to edit an existing recipe

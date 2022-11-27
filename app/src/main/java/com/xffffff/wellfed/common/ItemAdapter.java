@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class ItemAdapter is used to display items in a RecyclerView
+ */
 public abstract class ItemAdapter<Item>
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
