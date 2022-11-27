@@ -121,8 +121,7 @@ public class MealPlanDB {
                                         listener);
                             }
                         } else {
-                            // If the ingredient does not exist in our
-                            // Ingredient collection,
+                            // If the ingredient does not exist in our Ingredient collection,
                             // we will create a new ingredient for it.
                             ingredientDB.addIngredient(ingredient,
                                     (addedIngredient, success1) -> {
@@ -204,7 +203,9 @@ public class MealPlanDB {
     }
 
     /**
-     * addMealPlanIncrementCounter is a helper method for addMealPlan.
+     * addMealPlanIncrementCounter is a helper method for addMealPlan that
+     * increment counter for each recipe and ingredient in the MealPlan object.
+     *
      * @param mealPlanMap the HashMap to be used to map the MealPlan object.
      * @param mealPlan the MealPlan object to be added to the db.
      * @param mealPlanIngredients the ArrayList of HashMaps to be used to map
@@ -357,17 +358,7 @@ public class MealPlanDB {
         Integer numOfIngredientsAndRecipes = mealPlanIngredients.size() +
                 ((ArrayList<DocumentReference>) snapshot.get("recipes")).size();
 
-        // If the "ingredients" and "recipes" fields are empty, ie.,
-        // numOfIngredientsAndRecipes is 0, then we can call
-        // helper function directly. Ideally there should be sth in
-        // these fields.
-        if (numOfIngredientsAndRecipes == 0) {
-            getMealPlanHelper(mealPlan, ingredients, recipes, listener);
-        }
-
-
-        // Iterate over the ArrayList of HashMaps and produce Ingredient
-        // objects.
+        // Iterate over the ArrayList of HashMaps and produce Ingredient objects.
         for (HashMap<String, Object> ingredientMap : mealPlanIngredients) {
             DocumentReference ingredientRef =
                     (DocumentReference) ingredientMap.get("ingredientRef");
@@ -382,8 +373,7 @@ public class MealPlanDB {
                                 (String) ingredientMap.get("unit"));
 
                         // Increment counter inside query on ingredientDB so
-                        // that
-                        // the processes won't run in parallel.
+                        // that the processes won't run in parallel.
                         counter.addAndGet(1);
 
                         // Adds the ingredient to the ArrayList.
@@ -459,19 +449,21 @@ public class MealPlanDB {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    delMealPlanDecrementCount(mealPlan, mealPlanRef, listener);
+                    delMealPlanDecrementCounter(mealPlan, mealPlanRef, listener);
                 }
             }
         });
     }
 
     /**
-     * delMealPlanAsync is an asynchronous helper function for delMealPlan.
+     * delMealPlanDecrementCounter is an asynchronous helper function for delMealPlan
+     * that decrements the counter of the ingredients and recipes in the MealPlan.
+     *
      * @param mealPlan the MealPlan object to be deleted.
      * @param mealPlanRef the DocumentReference of the MealPlan object to be
      * @param listener the OnDeleteMealPlanListener object to handle the result.
      */
-    public void delMealPlanDecrementCount(MealPlan mealPlan,
+    public void delMealPlanDecrementCounter(MealPlan mealPlan,
                                  DocumentReference mealPlanRef,
                                  OnDeleteMealPlanListener listener) {
         AtomicInteger counter = new AtomicInteger(0);
@@ -500,6 +492,7 @@ public class MealPlanDB {
 
     /**
      * delMealPlanHelper is a helper function for delMealPlanAsync.
+     *
      * @param mealPlan the MealPlan object to be deleted.
      * @param mealPlanRef the DocumentReference of the MealPlan object to be
      *                    deleted.
@@ -555,12 +548,6 @@ public class MealPlanDB {
         AtomicInteger counter = new AtomicInteger(0);
         Integer numOfIngredientsAndRecipes =
                 mealPlan.getIngredients().size() + mealPlan.getRecipes().size();
-
-        if (numOfIngredientsAndRecipes == 0) {
-            updateMealPlanHelper(mealPlan, listener, mealPlanIngredients,
-                    mealPlanRecipes);
-            // listener.onAddMealPlanResult(null, false);
-        }
 
         // Iterate over each ingredient in the MealPlan object and
         // increment counter for each ingredient.
@@ -680,6 +667,7 @@ public class MealPlanDB {
 
     /**
      * updateMealPlanFindOldMealPlan is a helper method for updateMealPlan.
+     *
      * @param mealPlan the MealPlan object to be updated.
      * @param listener the OnUpdateMealPlanListener object to handle the result.
      * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
@@ -701,7 +689,9 @@ public class MealPlanDB {
     }
 
     /**
-     * updateMealPlanIncrementCounter is a helper method for updateMealPlanAsync.
+     * updateMealPlanIncrementCounter is a helper method for updateMealPlanAsync
+     * that increments the counter for recipes and ingredients in the MealPlan object.
+     *
      * @param mealPlan the MealPlan object to be updated.
      * @param foundMealPlan the MealPlan object found in the db.
      * @param listener the OnUpdateMealPlanListener object to handle the result.
@@ -740,7 +730,9 @@ public class MealPlanDB {
     }
 
     /**
-     * updateMealPlanDecrementCounter is a helper method for updateMealPlanAsync.
+     * updateMealPlanDecrementCounter is a helper method for updateMealPlanAsync
+     * that decrements counter for recipes and ingredients in the MealPlan object.
+     *
      * @param mealPlan the MealPlan object to be updated.
      * @param foundMealPlan the MealPlan object found in the db.
      * @param listener the OnUpdateMealPlanListener object to handle the result.
@@ -756,8 +748,7 @@ public class MealPlanDB {
                 foundMealPlan.getIngredients().size() +
                         foundMealPlan.getRecipes().size();
 
-        // Decrement count for each ingredient & recipe in the old MealPlan
-        // object.
+        // Decrement count for each ingredient & recipe in the old MealPlan object.
         for (Ingredient ingredient : foundMealPlan.getIngredients()) {
             ingredientDB.updateReferenceCount(ingredient, -1, (i, s) -> {
                 counter.addAndGet(1);
@@ -780,7 +771,9 @@ public class MealPlanDB {
     }
 
     /**
-     * updateMealPlanUpdateRecipes is a helper method for updateMealPlanAsync.
+     * updateMealPlanUpdateRecipes is a helper method for updateMealPlanAsync
+     * that updates the recipes in the MealPlan object.
+     *
      * @param mealPlan the MealPlan object to be updated.
      * @param listener the OnUpdateMealPlanListener object to handle the result.
      * @param mealPlanIngredients the ArrayList of HashMaps of ingredients.
