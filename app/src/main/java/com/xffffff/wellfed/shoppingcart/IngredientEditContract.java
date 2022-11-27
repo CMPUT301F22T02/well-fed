@@ -11,8 +11,11 @@ import androidx.annotation.NonNull;
 import com.xffffff.wellfed.ingredient.IngredientEditActivity;
 import com.xffffff.wellfed.ingredient.StorageIngredient;
 
+/**
+ * This class is the contract for the ingredient edit activity
+ */
 public class IngredientEditContract extends
-                                    ActivityResultContract<ShoppingCartIngredient, Pair<String, ShoppingCartIngredient>> {
+    ActivityResultContract<ShoppingCartIngredient, Pair<String, ShoppingCartIngredient>> {
     /**
      * Creates an Intent for the IngredientEditActivity.
      *
@@ -21,8 +24,10 @@ public class IngredientEditContract extends
      *                               ingredient.
      * @return
      */
-    @NonNull @Override public Intent createIntent(@NonNull Context context,
-                                                  ShoppingCartIngredient shoppingCartIngredient) {
+    @NonNull
+    @Override
+    public Intent createIntent(@NonNull Context context,
+                               ShoppingCartIngredient shoppingCartIngredient) {
         Intent intent = new Intent(context, IngredientEditActivity.class);
         intent.putExtra("ingredient", shoppingCartIngredient);
         return intent;
@@ -35,16 +40,17 @@ public class IngredientEditContract extends
      * @param intent Intent object for the IngredientEditActivity.
      * @return Pair object for the result of the IngredientEditActivity.
      */
-    @Override public Pair<String, ShoppingCartIngredient> parseResult(int i,
-                                                                      Intent intent) {
+    @Override
+    public Pair<String, ShoppingCartIngredient> parseResult(int i,
+                                                            Intent intent) {
         switch (i) {
             case Activity.RESULT_OK:
                 if (intent == null) {
                     return null;
                 }
                 StorageIngredient storageIngredient =
-                        (StorageIngredient) intent.getSerializableExtra(
-                                "ingredient");
+                    (StorageIngredient) intent.getSerializableExtra(
+                        "ingredient");
                 ShoppingCartIngredient ingredient =
                         new ShoppingCartIngredient(storageIngredient);
                 ingredient.setCategory(storageIngredient.getCategory());

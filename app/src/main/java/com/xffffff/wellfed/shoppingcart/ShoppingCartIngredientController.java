@@ -21,11 +21,15 @@ import com.xffffff.wellfed.unit.UnitHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * ShoppingCartIngredientController is a class that contains methods for
+ * interacting with the shopping cart
+ */
 public class ShoppingCartIngredientController {
     /**
      * The Activity that the controller is attached to.
      */
-    private ActivityBase activity;
+    private final ActivityBase activity;
     /**
      * ShoppingCart adapter. This is used to update the recycler view.
      */
@@ -33,19 +37,37 @@ public class ShoppingCartIngredientController {
     /**
      * This is the db of the shopping cart.
      */
-    private ShoppingCartDB db;
+    private final ShoppingCartDB db;
 
-    private StorageIngredientDB storageIngredientDB;
+    /**
+     * This is the db for the storage ingredients.
+     */
+    private final StorageIngredientDB storageIngredientDB;
 
-    private MealPlanDB mealPlanDB;
+    /**
+     * This is the db for the meal plans.
+     */
+    private final MealPlanDB mealPlanDB;
 
+    /**
+     * This is the unit helper class for the controller.
+     */
     private UnitHelper unitHelper;
 
+    /**
+     * This is the unit converter class for the controller.
+     */
     private UnitConverter unitConverter;
 
-    private MealPlanController mealPlanController;
+    /**
+     * This is the constroller for the meal plans.
+     */
+    private final MealPlanController mealPlanController;
 
-    private DateUtil dateUtil;
+    /**
+     * This is the date util class for the controller.
+     */
+    private final DateUtil dateUtil;
 
     /**
      * The constructor for the controller.
@@ -54,8 +76,7 @@ public class ShoppingCartIngredientController {
      */
     public ShoppingCartIngredientController(Activity activity) {
         this.activity = (ActivityBase) activity;
-        DBConnection connection =
-                new DBConnection(activity.getApplicationContext());
+        DBConnection connection = new DBConnection(activity.getApplicationContext());
         db = new ShoppingCartDB(connection);
         adapter = new ShoppingCartIngredientAdapter(db);
         storageIngredientDB = new StorageIngredientDB(connection);
@@ -67,11 +88,21 @@ public class ShoppingCartIngredientController {
         dateUtil = new DateUtil();
     }
 
+    /**
+     * getSearchResults returns the search results for the given query.
+     *
+     * @param field The field to search.
+     */
     public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);
         adapter.setQuery(query);
     }
 
+    /**
+     * sortByField sorts the shopping cart by the given field.
+     *
+     * @param field The field to sort by.
+     */
     public void sortByField(String field) {
         Query query = db.getSortedQuery(field);
         adapter.setQuery(query);
@@ -95,6 +126,10 @@ public class ShoppingCartIngredientController {
         this.adapter = adapter;
     }
 
+    /**
+     * generateShoppingCart generates the shopping cart from the given meal
+     * plan and storage ingredients.
+     */
     public void generateShoppingCart() {
         unitConverter =
                 new UnitConverter(activity.getApplicationContext());
@@ -191,19 +226,23 @@ public class ShoppingCartIngredientController {
                                     }
                                 }
 
-                            }
+                    }
 
-                        });
-                    });
+                });
+            });
         });
     }
 
-    private Pair<Double, String> bestUnitHelper(Ingredient ingredient,
-                                                UnitHelper unitHelper) {
+    /**
+     * bestUnitHelper returns the best unit for the given ingredient.
+     *
+     * @param ingredient the ingredient to get the best unit for.
+     * @param unitHelper the unit helper to use.
+     * @return the best unit for the given ingredient.
+     */
+    private Pair<Double, String> bestUnitHelper(Ingredient ingredient, UnitHelper unitHelper) {
         // reduce to smallest
-        Pair<Double, String> smallest =
-                unitHelper.convertToSmallest(ingredient.getUnit(),
-                        ingredient.getAmount());
+        Pair<Double, String> smallest = unitHelper.convertToSmallest(ingredient.getUnit(), ingredient.getAmount());
         ingredient.setUnit(smallest.second);
         ingredient.setAmount(smallest.first);
 
@@ -215,10 +254,15 @@ public class ShoppingCartIngredientController {
 
     }
 
+    /**
+     * ingredientUid returns the uid for the given ingredient.
+     *
+     * @param ingredient the ingredient to get the uid for.
+     * @return the uid for the given ingredient.
+     */
     private String ingredientUid(Ingredient ingredient) {
         String seperator = "####";
-        String uid = ingredient.getDescription() + seperator +
-                ingredient.getCategory() + seperator + ingredient.getUnit();
+        String uid = ingredient.getDescription() + seperator + ingredient.getCategory() + seperator + ingredient.getUnit();
         return uid;
     }
 
@@ -230,11 +274,9 @@ public class ShoppingCartIngredientController {
     public void addIngredientToShoppingCart(ShoppingCartIngredient ingredient) {
         db.addIngredient(ingredient, (addIngredient, addSuccess) -> {
             if (!addSuccess) {
-                this.activity.makeSnackbar(
-                        "Failed to add " + addIngredient.getDescription());
+                this.activity.makeSnackbar("Failed to add " + addIngredient.getDescription());
             } else {
-                this.activity.makeSnackbar(
-                        "Added " + addIngredient.getDescription());
+                this.activity.makeSnackbar("Added " + addIngredient.getDescription());
             }
         });
     }
@@ -250,18 +292,22 @@ public class ShoppingCartIngredientController {
      *
      * @param ingredient the ingredient to update
      */
-    public void updateIngredientInShoppingCart(
-            ShoppingCartIngredient ingredient) {
+    public void updateIngredientInShoppingCart(ShoppingCartIngredient ingredient) {
         db.updateIngredient(ingredient, (updateIngredient, updateSuccess) -> {
             if (!updateSuccess) {
                 this.activity.makeSnackbar("Failed to update ");
             } else {
-                this.activity.makeSnackbar(
-                        "Updated " + updateIngredient.getDescription());
+                this.activity.makeSnackbar("Updated " + updateIngredient.getDescription());
             }
         });
     }
 
+    /**
+     * updateRequiredIngredients updates the required ingredients for the
+     * given meal plan.
+     * @param storedIngredients the ingredients to update.
+     * @param required the required ingredients.
+     */
     private void updateRequiredFromStorage(ArrayList<StorageIngredient> storedIngredients,
                                            HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         for (StorageIngredient stored : storedIngredients) {
@@ -294,6 +340,12 @@ public class ShoppingCartIngredientController {
         }
     }
 
+    /**
+     * updateRequiredIngredients updates the required ingredients for the
+     * @param ingredient the ingredient to update.
+     * @param mealPlan the meal plan to update.
+     * @param required the required ingredients.
+     */
     private void generateRequiredFromIngredients(Ingredient ingredient, MealPlan mealPlan,
                                                  HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         String uid = ingredientUid(ingredient);
@@ -324,6 +376,13 @@ public class ShoppingCartIngredientController {
         }
     }
 
+    /***
+     * generateRequiredFromRecipe generates the required ingredients for the
+     * given recipe.
+     * @param recipe the recipe to generate the required ingredients for.
+     * @param mealPlan the meal plan to generate the required ingredients for.
+     * @param required the required ingredients.
+     */
     private void generateRequiredFromRecipes(Recipe recipe, MealPlan mealPlan,
                                              HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         recipe = mealPlanController.scaleRecipe(recipe, mealPlan.getServings());
@@ -332,6 +391,11 @@ public class ShoppingCartIngredientController {
         }
     }
 
+    /**
+     * addIngredientToStorage adds the given ingredient to the storage.
+     * @param shoppingCartIngredient the ingredient to add.
+     * @param storageIngredient the storage ingredient to add.
+     */
     public void addIngredientToStorage(ShoppingCartIngredient shoppingCartIngredient,
                                        StorageIngredient storageIngredient) {
         Pair<Double, String> smallestShoppingIngredient =
