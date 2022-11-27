@@ -11,8 +11,7 @@ import java.util.Objects;
  * An Ingredient represented in a user's storage, with added amount, unit,
  * location, and best before.
  */
-public class StorageIngredient extends Ingredient
-        implements Comparable<StorageIngredient> {
+public class StorageIngredient extends Ingredient {
     /**
      * The location of the ingredient in the storage.
      */
@@ -106,16 +105,6 @@ public class StorageIngredient extends Ingredient
      */
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
-    }
-
-    /**
-     * Checks if the ingredient is equal to another ingredient.
-     *
-     * @param o The ingredient to compare to.
-     * @return True if the ingredients are equal, false otherwise.
-     */
-    @Override public int compareTo(StorageIngredient o) {
-        return this.getDescription().compareTo(o.getDescription());
     }
 
     /**

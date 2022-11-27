@@ -18,8 +18,6 @@ import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
 import com.xffffff.wellfed.ingredient.IngredientContract;
 import com.xffffff.wellfed.ingredient.IngredientEditContract;
-import com.xffffff.wellfed.ingredient.StorageIngredient;
-import com.xffffff.wellfed.ingredient.StorageIngredientAdapter;
 
 import java.util.Arrays;
 
