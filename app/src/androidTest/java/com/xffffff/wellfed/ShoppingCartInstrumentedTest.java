@@ -571,8 +571,57 @@ public class ShoppingCartInstrumentedTest {
     }
 
     @Test
-    public void testEditingMealPlanIngredient(){
+    public void testEditingMealPlanIngredient() throws InterruptedException {
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
+        Thread.sleep(2000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(10000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
+        onView(withText("Bacon")).check(matches(isDisplayed()));
+        onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
+
+        onView(withId(R.id.meal_book_item)).perform(click());
+        Thread.sleep(1000);
+        onView(withText("Hearty Breakfast")).perform(click());
+        Thread.sleep(1000);
+
+        onView(withId(R.id.save_fab)).perform(click());
+        Thread.sleep(1000);
+
+        onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Sliced Bread")))))
+                .perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withId(R.id.edit_amountInput)).perform(clearText(), typeText("3"));
+        Thread.sleep(2000);
+        closeSoftKeyboard();
+
+        onView(withId(R.id.ingredient_save_button)).perform(click());
+
+        onView(withId(R.id.save_fab)).perform(click());
+
+        Thread.sleep(5000);
+
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+
+        Thread.sleep(5000);
+
+        onView(withText("Eggs")).check(matches(isDisplayed()));
+        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
+        onView(withText("Bacon")).check(matches(isDisplayed()));
+        onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
+        onView(Matchers.allOf(withText("Sliced Bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
+        onView(withText("3.00 count | Bread")).check(matches(isDisplayed()));
+
+        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpRecipe("Eggs and Bacon");
+        cleanUpIngredient("Sliced Bread");
     }
 
     @Test
