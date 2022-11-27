@@ -10,6 +10,8 @@ import com.xffffff.wellfed.unit.UnitConverter;
 
 /**
  * Tests unit conversion.
+ *
+ * Intended device: Pixel 6 Pro API 22
  */
 public class UnitConverterTest {
     private static final String TAG = "UnitConverterTest";

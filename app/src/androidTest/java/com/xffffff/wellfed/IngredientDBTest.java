@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * The IngredientDBTest class is used to test the IngredientDB class.
+ *
+ * Intended device: Pixel 6 Pro API 22
  */
 @RunWith(AndroidJUnit4.class) public class IngredientDBTest {
     /**

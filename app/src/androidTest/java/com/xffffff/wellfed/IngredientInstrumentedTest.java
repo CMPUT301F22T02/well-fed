@@ -37,6 +37,8 @@ import org.junit.runner.RunWith;
  * Instrumented test for Ingredients page, which will execute on an Android
  * device.
  *
+ * Intended device: Pixel 6 Pro API 22
+ *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class) public class IngredientInstrumentedTest {

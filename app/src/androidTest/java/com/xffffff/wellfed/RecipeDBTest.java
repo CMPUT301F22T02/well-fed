@@ -21,6 +21,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Tests for the RecipeDB.
+ *
+ * Intended device: Pixel 6 Pro API 22
  */
 @RunWith(AndroidJUnit4.class) public class RecipeDBTest {
     /**

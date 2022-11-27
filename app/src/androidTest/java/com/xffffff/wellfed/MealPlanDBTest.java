@@ -32,6 +32,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * one function at once.
  * So, you will see some tests call delete methods, even when they are not
  * testing deletes.
+ *
+ * Intended device: Pixel 6 Pro API 22
  */
 public class MealPlanDBTest {
     /**
