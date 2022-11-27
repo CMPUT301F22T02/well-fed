@@ -45,7 +45,9 @@ public class RecipeIngredientSearch extends ActivityBase
         SortingFragment sortingFragment = new SortingFragment();
         sortingFragment.setListener(this);
         sortingFragment.setOptions(
-                Arrays.asList(new String[]{"description", "category"}));
+                Arrays.asList("description", "category"),
+                Arrays.asList("Description", "Category")
+                );
         this.getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_sort_container, sortingFragment).commit();
 
@@ -76,6 +78,10 @@ public class RecipeIngredientSearch extends ActivityBase
         finish();
     }
 
+    /**
+     * onClick method for the sort button
+     * @param field The field to sort by
+     */
     @Override
     public void onClick(String field) {
         adapter.changeQuery(field);

@@ -6,8 +6,12 @@ import android.util.Pair;
 import com.xffffff.wellfed.common.EditRecyclerViewFragment;
 import com.xffffff.wellfed.ingredient.Ingredient;
 
+/**
+ * The EditRecipeIngredientsFragment class is the fragment that allows the user
+ * to edit the ingredients of a recipe.
+ */
 public class EditRecipeIngredientsFragment
-        extends EditRecyclerViewFragment<Ingredient> {
+    extends EditRecyclerViewFragment<Ingredient> {
 
     /**
      * createOnEditIntent creates an intent to edit an ingredient.
@@ -17,7 +21,7 @@ public class EditRecipeIngredientsFragment
      */
     public Intent createOnEditIntent(Ingredient item) {
         Intent intent =
-                new Intent(getContext(), RecipeIngredientEditActivity.class);
+            new Intent(getContext(), RecipeIngredientEditActivity.class);
         intent.putExtra("item", item);
         return intent;
     }
@@ -40,8 +44,9 @@ public class EditRecipeIngredientsFragment
      *
      * @param result The result of the search activity.
      */
-    @Override public void onSearchActivityResult(
-            Pair<String, Ingredient> result) {
+    @Override
+    public void onSearchActivityResult(
+        Pair<String, Ingredient> result) {
         if (result == null) {
             return;
         }

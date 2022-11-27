@@ -33,31 +33,34 @@ import java.util.List;
  * @version 1.0.0
  */
 public class RecipeActivity extends ActivityBase
-        implements ConfirmDialog.OnConfirmListener {
+    implements ConfirmDialog.OnConfirmListener {
     /**
      * Launcher that launches RecipeEditActivity {@link RecipeEditActivity}
      */
     ActivityResultLauncher<Recipe> recipeEditLauncher =
-            registerForActivityResult(new RecipeEditContract(), result -> {
-                if (result == null) {
-                    return;
-                }
-                String type = result.first;
-                Recipe recipe = result.second;
+        registerForActivityResult(new RecipeEditContract(), result -> {
+            if (result == null) {
+                return;
+            }
+            String type = result.first;
+            Recipe recipe = result.second;
 
-                if (type.equals("edit")) {
-                    Intent intent = new Intent();
-                    intent.putExtra("item", recipe);
-                    intent.putExtra("type", "edit");
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
+            if (type.equals("edit")) {
+                Intent intent = new Intent();
+                intent.putExtra("item", recipe);
+                intent.putExtra("type", "edit");
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
 
-            });
+        });
     /**
      * stores the list of Ingredient{@link Ingredient}
      */
     private List<Ingredient> ingredientList;
+    /**
+     * Adapter for the RecyclerView that displays the list of Items
+     */
     private ItemDetailAdapter adapter;
     /**
      * stores the recipe {@link Recipe}
@@ -72,7 +75,7 @@ public class RecipeActivity extends ActivityBase
     @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(
-            Bundle savedInstanceState) {
+        Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
@@ -103,10 +106,10 @@ public class RecipeActivity extends ActivityBase
         }
 
         RecyclerView ingredientRv =
-                findViewById(R.id.recipe_ingredient_recycleViewer);
+            findViewById(R.id.recipe_ingredient_recycleViewer);
         ingredientRv.setAdapter(adapter);
         ingredientRv.setLayoutManager(
-                new LinearLayoutManager(RecipeActivity.this));
+            new LinearLayoutManager(RecipeActivity.this));
 
 
         if (viewonly) {
@@ -119,6 +122,10 @@ public class RecipeActivity extends ActivityBase
         fab.setOnClickListener(view -> recipeEditLauncher.launch(recipe));
     }
 
+    /**
+     * updateView - updates the view with the recipe information
+     * @param recipe the recipe to update the view with
+     */
     public void updateView(Recipe recipe) {
         // initialize the views
         TextView title = findViewById(R.id.recipe_title_textView);
