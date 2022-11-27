@@ -120,9 +120,12 @@ public class RecipeEditActivity extends EditActivityBase {
         title = findViewById(R.id.recipe_title);
         prepTime = findViewById(R.id.recipe_prep_time_textView);
         servings = findViewById(R.id.recipe_no_of_servings_textView);
-        servings.setRequireLong();
         commentsTextInput = findViewById(R.id.commentsTextInput);
         recipeCategory = findViewById(R.id.recipe_category);
+
+        servings.setRequireLong();
+        servings.setRequirePositiveNumber(true);
+        prepTime.setRequirePositiveNumber(true);
         recipeCategory.setSimpleItems(
                 new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer",
                         "Dessert"});
