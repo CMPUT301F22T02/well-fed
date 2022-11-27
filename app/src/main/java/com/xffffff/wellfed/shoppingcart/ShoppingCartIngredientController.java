@@ -60,7 +60,7 @@ public class ShoppingCartIngredientController {
         adapter = new ShoppingCartIngredientAdapter(db);
         storageIngredientDB = new StorageIngredientDB(connection);
         mealPlanDB = new MealPlanDB(connection);
-        UnitConverter unitConverter =
+        unitConverter =
                 new UnitConverter(activity.getApplicationContext());
         unitHelper = new UnitHelper(unitConverter);
         mealPlanController = new MealPlanController(activity);
@@ -96,9 +96,6 @@ public class ShoppingCartIngredientController {
     }
 
     public void generateShoppingCart() {
-        unitConverter =
-                new UnitConverter(activity.getApplicationContext());
-        unitHelper = new UnitHelper(unitConverter);
         HashMap<String, ArrayList<Pair<Integer, Double>>> required = new HashMap<>();
 
         mealPlanDB.getMealPlans((mealPlans, success) -> {
