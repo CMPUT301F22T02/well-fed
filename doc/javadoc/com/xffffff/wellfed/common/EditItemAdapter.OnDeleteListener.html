@@ -6,16 +6,15 @@
 <title>EditItemAdapter.OnDeleteListener (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -123,8 +122,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>Item</code> - the item that is being deleted</dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../recipe/EditRecipeIngredientsFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipeIngredientsFragment</a></code>, <code><a href="../recipe/EditRecipesFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipesFragment</a></code>, <code><a href="EditRecyclerViewFragment.html" title="class in com.xffffff.wellfed.common">EditRecyclerViewFragment</a></code></dd>
+<dd><code><a href="../ingredient/EditIngredientsFragment.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientsFragment</a></code>, <code><a href="../recipe/EditRecipesFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipesFragment</a></code>, <code><a href="EditRecyclerViewFragment.html" title="class in com.xffffff.wellfed.common">EditRecyclerViewFragment</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -132,6 +135,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public static interface <span class="typeNameLabel">EditItemAdapter.OnDeleteListener&lt;Item&gt;</span></pre>
+<div class="block">onDeleteListener is the interface that handles the delete button</div>
 </li>
 </ul>
 </div>
@@ -139,7 +143,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -168,7 +172,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->

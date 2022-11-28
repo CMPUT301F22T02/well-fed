@@ -6,16 +6,15 @@
 <title>MealPlanController (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -27,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -138,6 +137,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">MealPlanController</span>
 extends java.lang.Object
 implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="interface in com.xffffff.wellfed.common">DBAdapter.OnDataChangedListener</a></pre>
+<div class="block">The MealPlanController class controls the MealPlanActivity.</div>
 </li>
 </ul>
 </div>
@@ -145,7 +145,7 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -161,19 +161,25 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="MealPlanController.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnAdapterDataChangedListener</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onAdapterDataChangedListener is the interface that is called when the
+ data in the adapter changes.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="MealPlanController.OnDataChanged.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnDataChanged</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onDataChanged is the interface that is called when the data in the
+ controller changes.</div>
+</td>
 </tr>
 </table>
 </li>
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -196,7 +202,7 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -247,40 +253,43 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#scaleRecipe(com.xffffff.wellfed.recipe.Recipe,int)">scaleRecipe</a></span>&#8203;(<a href="../recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-           int&nbsp;mealPlanServings)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#scaleRecipe(com.xffffff.wellfed.recipe.Recipe,java.lang.Long)">scaleRecipe</a></span>&#8203;(<a href="../recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+           java.lang.Long&nbsp;mealPlanServings)</code></th>
 <td class="colLast">
 <div class="block">The scaleRecipe method for the MealPlanController.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdapter(com.xffffff.wellfed.mealplan.MealPlanAdapter)">setAdapter</a></span>&#8203;(<a href="MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a>&nbsp;adapter)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOnAdapterChangedListener(com.xffffff.wellfed.mealplan.MealPlanController.OnAdapterDataChangedListener)">setOnAdapterChangedListener</a></span>&#8203;(<a href="MealPlanController.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnAdapterDataChangedListener</a>&nbsp;listener)</code></th>
 <td class="colLast">
-<div class="block">The setAdapter method for the ingredient search screen.</div>
+<div class="block">setOnAdapterDataChangedListener sets the OnAdapterDataChangedListener
+ listener.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOnAdapterChangedListener(com.xffffff.wellfed.mealplan.MealPlanController.OnAdapterDataChangedListener)">setOnAdapterChangedListener</a></span>&#8203;(<a href="MealPlanController.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnAdapterDataChangedListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOnDataChanged(com.xffffff.wellfed.mealplan.MealPlanController.OnDataChanged)">setOnDataChanged</a></span>&#8203;(<a href="MealPlanController.OnDataChanged.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnDataChanged</a>&nbsp;onDataChanged)</code></th>
+<td class="colLast">
+<div class="block">setOnDataChanged sets the OnDataChanged listener.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOnDataChanged(com.xffffff.wellfed.mealplan.MealPlanController.OnDataChanged)">setOnDataChanged</a></span>&#8203;(<a href="MealPlanController.OnDataChanged.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnDataChanged</a>&nbsp;onDataChanged)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startListening(java.lang.String)">startListening</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">startListening starts listening for changes in the database for the
+ specified meal plan.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startListening(java.lang.String)">startListening</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stopListening()">stopListening</a></span>()</code></th>
+<td class="colLast">
+<div class="block">stopListening stops listening for changes in the database.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stopListening()">stopListening</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateMealPlan(com.xffffff.wellfed.mealplan.MealPlan)">updateMealPlan</a></span>&#8203;(<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>&nbsp;mealPlan)</code></th>
 <td class="colLast">
@@ -305,7 +314,7 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -330,7 +339,7 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -343,6 +352,11 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <li class="blockList">
 <h4>setOnDataChanged</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setOnDataChanged&#8203;(<a href="MealPlanController.OnDataChanged.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnDataChanged</a>&nbsp;onDataChanged)</pre>
+<div class="block">setOnDataChanged sets the OnDataChanged listener.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>onDataChanged</code> - the OnDataChanged listener</dd>
+</dl>
 </li>
 </ul>
 <a id="setOnAdapterChangedListener(com.xffffff.wellfed.mealplan.MealPlanController.OnAdapterDataChangedListener)">
@@ -352,6 +366,13 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <li class="blockList">
 <h4>setOnAdapterChangedListener</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setOnAdapterChangedListener&#8203;(<a href="MealPlanController.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnAdapterDataChangedListener</a>&nbsp;listener)</pre>
+<div class="block">setOnAdapterDataChangedListener sets the OnAdapterDataChangedListener
+ listener.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>listener</code> - the OnAdapterDataChangedListener
+ listener</dd>
+</dl>
 </li>
 </ul>
 <a id="startListening(java.lang.String)">
@@ -361,6 +382,12 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <li class="blockList">
 <h4>startListening</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;startListening&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">startListening starts listening for changes in the database for the
+ specified meal plan.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - the id of the meal plan</dd>
+</dl>
 </li>
 </ul>
 <a id="stopListening()">
@@ -370,6 +397,7 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <li class="blockList">
 <h4>stopListening</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;stopListening()</pre>
+<div class="block">stopListening stops listening for changes in the database.</div>
 </li>
 </ul>
 <a id="getAdapter()">
@@ -384,21 +412,6 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The adapter for the RecyclerView of meal plans.</dd>
-</dl>
-</li>
-</ul>
-<a id="setAdapter(com.xffffff.wellfed.mealplan.MealPlanAdapter)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAdapter</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAdapter&#8203;(<a href="MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a>&nbsp;adapter)</pre>
-<div class="block">The setAdapter method for the ingredient search screen. Sets the
- adapter for the RecyclerView of meal plans.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>adapter</code> - The adapter for the RecyclerView of meal plans.</dd>
 </dl>
 </li>
 </ul>
@@ -449,14 +462,14 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 </dl>
 </li>
 </ul>
-<a id="scaleRecipe(com.xffffff.wellfed.recipe.Recipe,int)">
+<a id="scaleRecipe(com.xffffff.wellfed.recipe.Recipe,java.lang.Long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>scaleRecipe</h4>
 <pre class="methodSignature">public&nbsp;<a href="../recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;scaleRecipe&#8203;(<a href="../recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                          int&nbsp;mealPlanServings)</pre>
+                          java.lang.Long&nbsp;mealPlanServings)</pre>
 <div class="block">The scaleRecipe method for the MealPlanController. Scales a recipe
  to the desired number of servings.</div>
 <dl>
@@ -490,6 +503,10 @@ implements <a href="../common/DBAdapter.OnDataChangedListener.html" title="inter
 <h4>getCurrentMealPlan</h4>
 <pre class="methodSignature">public&nbsp;android.util.Pair&lt;<a href="MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a>,&#8203;java.lang.Integer&gt;&nbsp;getCurrentMealPlan()</pre>
 <div class="block">Get today's meal plan</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>today's meal plan</dd>
+</dl>
 </li>
 </ul>
 </li>

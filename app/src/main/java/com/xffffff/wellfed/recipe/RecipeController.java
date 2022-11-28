@@ -37,6 +37,8 @@ public class RecipeController {
     /**
      * Constructor that initializes the db connection and the adapter for the
      * recipes
+     *
+     * @param activity the activity that the controller is controlling
      */
     public RecipeController(FragmentActivity activity) {
         this.activity = (ActivityBase) activity;

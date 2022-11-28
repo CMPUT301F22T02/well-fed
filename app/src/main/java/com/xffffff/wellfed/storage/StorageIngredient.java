@@ -27,6 +27,8 @@ public class StorageIngredient extends Ingredient {
 
     /**
      * Creates a new StorageIngredient object without data.
+     *
+     * @param description The description of the ingredient.
      */
     public StorageIngredient(String description) {
         super(description);
@@ -102,6 +104,8 @@ public class StorageIngredient extends Ingredient {
 
     /**
      * Sets the best before date of the ingredient in the storage.
+     *
+     * @param bestBefore The best before date of the ingredient in the storage
      */
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;

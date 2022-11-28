@@ -6,16 +6,15 @@
 <title>Serialized Form (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -98,7 +97,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="serializedFormContainer">
 <ul class="blockList">
 <li class="blockList">
-<section>
+<section role="region">
 <h2 title="Package">Package&nbsp;com.xffffff.wellfed.ingredient</h2>
 <ul class="blockList">
 <li class="blockList"><a id="com.xffffff.wellfed.ingredient.Ingredient">
@@ -139,53 +138,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
-<li class="blockList"><a id="com.xffffff.wellfed.ingredient.StorageIngredient">
-<!--   -->
-</a>
-<h3>Class <a href="com/xffffff/wellfed/ingredient/StorageIngredient.html" title="class in com.xffffff.wellfed.ingredient">com.xffffff.wellfed.ingredient.StorageIngredient</a> extends <a href="com/xffffff/wellfed/ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a> implements Serializable</h3>
-<ul class="blockList">
-<li class="blockList">
-<h3>Serialized Fields</h3>
-<ul class="blockList">
-<li class="blockList">
-<h4>amount</h4>
-<pre>java.lang.Double amount</pre>
-<div class="block">The amount of the ingredient in the storage.</div>
-</li>
-<li class="blockList">
-<h4>bestBefore</h4>
-<pre>java.util.Date bestBefore</pre>
-<div class="block">The best before date of the ingredient in the storage.</div>
-</li>
-<li class="blockList">
-<h4>category</h4>
-<pre>java.lang.String category</pre>
-<div class="block">The category of the ingredient.</div>
-</li>
-<li class="blockList">
-<h4>location</h4>
-<pre>java.lang.String location</pre>
-<div class="block">The location of the ingredient in the storage.</div>
-</li>
-<li class="blockList">
-<h4>storageId</h4>
-<pre>java.lang.String storageId</pre>
-<div class="block">The id of the storage ingredient.</div>
-</li>
-<li class="blockListLast">
-<h4>unit</h4>
-<pre>java.lang.String unit</pre>
-<div class="block">The unit of the ingredient in the storage.</div>
-</li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 </section>
 </li>
 <li class="blockList">
-<section>
+<section role="region">
 <h2 title="Package">Package&nbsp;com.xffffff.wellfed.mealplan</h2>
 <ul class="blockList">
 <li class="blockList"><a id="com.xffffff.wellfed.mealplan.MealPlan">
@@ -225,10 +182,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="blockList">
 <h4>servings</h4>
-<pre>java.lang.Integer servings</pre>
+<pre>java.lang.Long servings</pre>
 <div class="block">Holds the number of servings that a MealPlan serves. Any recipes
- should be scaled up to fit
- this number.</div>
+ should be scaled up to fit this number.</div>
 </li>
 <li class="blockListLast">
 <h4>title</h4>
@@ -248,7 +204,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </section>
 </li>
 <li class="blockList">
-<section>
+<section role="region">
 <h2 title="Package">Package&nbsp;com.xffffff.wellfed.recipe</h2>
 <ul class="blockList">
 <li class="blockList"><a id="com.xffffff.wellfed.recipe.Recipe">
@@ -286,12 +242,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="blockList">
 <h4>prepTimeMinutes</h4>
-<pre>java.lang.Integer prepTimeMinutes</pre>
+<pre>java.lang.Long prepTimeMinutes</pre>
 <div class="block">Holds the prep time in minutes for a Recipe.</div>
 </li>
 <li class="blockList">
 <h4>servings</h4>
-<pre>java.lang.Integer servings</pre>
+<pre>java.lang.Long servings</pre>
 <div class="block">Holds the number of servings that a Recipe makes.</div>
 </li>
 <li class="blockListLast">
@@ -307,7 +263,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </section>
 </li>
 <li class="blockList">
-<section>
+<section role="region">
 <h2 title="Package">Package&nbsp;com.xffffff.wellfed.shoppingcart</h2>
 <ul class="blockList">
 <li class="blockList"><a id="com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient">
@@ -327,6 +283,40 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>isPickedUp</h4>
 <pre>boolean isPickedUp</pre>
 <div class="block">Holds whether the ShoppingCartIngredient has been picked up.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</li>
+<li class="blockList">
+<section role="region">
+<h2 title="Package">Package&nbsp;com.xffffff.wellfed.storage</h2>
+<ul class="blockList">
+<li class="blockList"><a id="com.xffffff.wellfed.storage.StorageIngredient">
+<!--   -->
+</a>
+<h3>Class <a href="com/xffffff/wellfed/storage/StorageIngredient.html" title="class in com.xffffff.wellfed.storage">com.xffffff.wellfed.storage.StorageIngredient</a> extends <a href="com/xffffff/wellfed/ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a> implements Serializable</h3>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>bestBefore</h4>
+<pre>java.util.Date bestBefore</pre>
+<div class="block">The best before date of the ingredient in the storage.</div>
+</li>
+<li class="blockList">
+<h4>location</h4>
+<pre>java.lang.String location</pre>
+<div class="block">The location of the ingredient in the storage.</div>
+</li>
+<li class="blockListLast">
+<h4>storageId</h4>
+<pre>java.lang.String storageId</pre>
+<div class="block">The id of the storage ingredient.</div>
 </li>
 </ul>
 </li>

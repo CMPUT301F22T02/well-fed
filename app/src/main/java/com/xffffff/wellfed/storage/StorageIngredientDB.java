@@ -44,6 +44,8 @@ public class StorageIngredientDB {
 
     /**
      * Creates a reference to the Firebase DB.
+     *
+     * @param connection the DBConnection object
      */
     public StorageIngredientDB(DBConnection connection) {
         this.ingredientDB = new IngredientDB(connection);
@@ -170,6 +172,8 @@ public class StorageIngredientDB {
      * Updates a stored ingredient in the Firebase DB.
      *
      * @param storageIngredient the Ingredient containing the updated fields
+     * @param oldStorageIngredient the old ingredient
+     * @param ingredient        the ingredient to be added
      * @param listener          the listener to handle the result
      */
     public void updateStorageIngredient(StorageIngredient storageIngredient,
@@ -220,6 +224,7 @@ public class StorageIngredientDB {
      * Removes an ingredient from storage, but keeps the Ingredient reference
      *
      * @param storageIngredient the storageIngredient to remove
+     * @param listener         the listener to handle the result
      */
     public void deleteStorageIngredient(StorageIngredient storageIngredient,
                                         OnDeleteStorageIngredientListener listener) {
@@ -246,6 +251,7 @@ public class StorageIngredientDB {
      *           a StorageIngredient
      *           with a null description.
      *           when the onComplete listener is interrupted
+     * @param listener the listener to handle the result
      */
     public void getStorageIngredient(String id,
                                      OnGetStorageIngredientListener listener) {
@@ -291,17 +297,27 @@ public class StorageIngredientDB {
     /**
      * Gets a sorted query for StorageIngredients in Firestore
      *
+     * @param field the field to sort by
      * @return the query
      */
     public Query getSortedQuery(String field) {
         return this.collection.orderBy(field);
     }
 
+    /**
+     * getSearchedQuery returns a query for StorageIngredients in Firestore
+     * @param field the field to search by
+     * @return the query
+     */
     public Query getSearchQuery(String field) {
         return this.collection.orderBy("search-field")
                 .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
     }
 
+    /**
+     * getAllStorageIngredients returns all StorageIngredients in Firestore
+     * @param listener the listener to handle the result
+     */
     public void getAllStorageIngredients(OnAllIngredients listener) {
         // If collection is empty, return empty query
         if (this.collection == null) {

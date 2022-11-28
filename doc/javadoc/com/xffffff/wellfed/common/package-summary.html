@@ -6,16 +6,15 @@
 <title>com.xffffff.wellfed.common (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -106,46 +105,54 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colFirst" scope="row"><a href="AdapterDataObserver.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.common">AdapterDataObserver.OnAdapterDataChangedListener</a></th>
-<td class="colLast">
-<div class="block">The OnDataChangedListener interface requires a handler for changes in
- RecyclerView.Adapter data.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="ConfirmDialog.OnConfirmListener.html" title="interface in com.xffffff.wellfed.common">ConfirmDialog.OnConfirmListener</a></th>
 <td class="colLast">
 <div class="block">The OnQuitListener interface defines the onConfirm handler that is
  called when the user confirms.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="DBAdapter.OnDataChangedListener.html" title="interface in com.xffffff.wellfed.common">DBAdapter.OnDataChangedListener</a></th>
 <td class="colLast">
 <div class="block">The listener for data changes</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="EditItemAdapter.OnDeleteListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnDeleteListener</a>&lt;Item&gt;</th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onDeleteListener is the interface that handles the delete button</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="EditItemAdapter.OnEditListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnEditListener</a>&lt;Item&gt;</th>
+<td class="colLast">
+<div class="block">onEditListener is the interface that handles the edit button</div>
+</td>
 </tr>
 <tr class="altColor">
-<th class="colFirst" scope="row"><a href="EditItemAdapter.OnEditListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnEditListener</a>&lt;Item&gt;</th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="Launcher.html" title="interface in com.xffffff.wellfed.common">Launcher</a>&lt;Item&gt;</th>
 <td class="colLast">
 <div class="block">The Launcher class provides a method for launching an activity.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;T&gt;</th>
+<td class="colLast">
+<div class="block">This interface is used to handle the result of DB operation</div>
+</td>
+</tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="SearchInput.OnTextChange.html" title="interface in com.xffffff.wellfed.common">SearchInput.OnTextChange</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The OnTextChange interface defines the onTextChange handler
+ for the RequiredTextInputLayout class.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="SortingFragment.OnSortClick.html" title="interface in com.xffffff.wellfed.common">SortingFragment.OnSortClick</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">OnSortClick is the interface for the onSortClick listener</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -159,39 +166,32 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colFirst" scope="row"><a href="AdapterDataObserver.html" title="class in com.xffffff.wellfed.common">AdapterDataObserver</a></th>
-<td class="colLast">
-<div class="block">The AdapterDataObserver class extends RecyclerView.AdapterDataObserver to
- provide a listener for changes in RecyclerView.Adapter data.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="ConfirmDeleteDialog.html" title="class in com.xffffff.wellfed.common">ConfirmDeleteDialog</a></th>
 <td class="colLast">
 <div class="block">The ConfirmDeleteDialog class provides a dialog for confirming whether the
  user intends to delete an item.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="ConfirmDialog.html" title="class in com.xffffff.wellfed.common">ConfirmDialog</a></th>
 <td class="colLast">
 <div class="block">The ConfirmDialog class provides a dialog for confirming user intentions.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="ConfirmQuitDialog.html" title="class in com.xffffff.wellfed.common">ConfirmQuitDialog</a></th>
 <td class="colLast">
 <div class="block">The ConfirmQuitDialog class provides a dialog for confirming whether the
  user intends to quit the an activity where they have unsaved changes.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="DateUtil.html" title="class in com.xffffff.wellfed.common">DateUtil</a></th>
 <td class="colLast">
 <div class="block">The DateUtil class contains utility methods for dates.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="DBAdapter.html" title="class in com.xffffff.wellfed.common">DBAdapter</a>&lt;VH extends androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</th>
 <td class="colLast">
 <div class="block">The class DBAdapter is used to display documents from Firestore
@@ -199,49 +199,60 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  Create dynamic lists with RecyclerView.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="DBConnection.html" title="class in com.xffffff.wellfed.common">DBConnection</a></th>
 <td class="colLast">
 <div class="block">Connects to the DB, getting the users unique FirestoreID to identify them.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="DeleteButton.html" title="class in com.xffffff.wellfed.common">DeleteButton</a></th>
 <td class="colLast">
 <div class="block">The DeleteButton class attaches an OnClickListener to a Button that
  opens a deletion confirmation dialog.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="EditItemAdapter.html" title="class in com.xffffff.wellfed.common">EditItemAdapter</a>&lt;Item&gt;</th>
 <td class="colLast">
 <div class="block">Adapter that manages the view and data for the ingredients
  in the <a href="../recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe"><code>Recipe</code></a></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="EditItemAdapter.ItemViewHolder.html" title="class in com.xffffff.wellfed.common">EditItemAdapter.ItemViewHolder</a></th>
 <td class="colLast">
 <div class="block">Viewholder for the items</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="EditItemContract.html" title="class in com.xffffff.wellfed.common">EditItemContract</a>&lt;Item extends java.io.Serializable&gt;</th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The EditItemContract class is a contract that handles the
+ communication between the EditItemActivity and the
+ EditItemAdapter.</div>
+</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="EditRecyclerViewFragment.html" title="class in com.xffffff.wellfed.common">EditRecyclerViewFragment</a>&lt;Item extends java.io.Serializable&gt;</th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<th class="colFirst" scope="row"><a href="ItemAdapter.html" title="class in com.xffffff.wellfed.common">ItemAdapter</a>&lt;Item&gt;</th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The EditRecyclerViewFragment class is a fragment that displays a
+ list of items that can be edited.</div>
+</td>
 </tr>
 <tr class="rowColor">
-<th class="colFirst" scope="row"><a href="ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter</a></th>
-<td class="colLast">&nbsp;</td>
+<th class="colFirst" scope="row"><a href="ItemAdapter.html" title="class in com.xffffff.wellfed.common">ItemAdapter</a>&lt;Item&gt;</th>
+<td class="colLast">
+<div class="block">The class ItemAdapter is used to display items in a RecyclerView</div>
+</td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><a href="ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter</a></th>
+<td class="colLast">
+<div class="block">ItemDetailAdapter is the adapter for the item detail recycler view</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="RequiredDateTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredDateTextInputLayout</a></th>
 <td class="colLast">
 <div class="block">The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
@@ -249,41 +260,48 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  input dates.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="RequiredDropdownTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredDropdownTextInputLayout</a></th>
 <td class="colLast">
 <div class="block">The RequiredDropdownTextInputLayout class extends the RequiredTextInputLayout
  class to provide methods for compatibility with Dropdowns.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="RequiredNumberTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredNumberTextInputLayout</a></th>
 <td class="colLast">
 <div class="block">The RequiredNumberTextInputLayout class extends the RequiredTextInputLayout
  class with methods for performing number data validation.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="RequiredTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredTextInputLayout</a></th>
 <td class="colLast">
 <div class="block">The RequiredTextInputLayout class extends the TextInputLayout
  class with methods for performing data validation.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="SearchInput.html" title="class in com.xffffff.wellfed.common">SearchInput</a></th>
 <td class="colLast">
 <div class="block">The RequiredTextInputLayout class extends the TextInputLayout
  class with methods for performing data validation.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<th class="colFirst" scope="row"><a href="SearchItemContract.html" title="class in com.xffffff.wellfed.common">SearchItemContract</a>&lt;Item extends java.io.Serializable&gt;</th>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><a href="SearchItemContract.html" title="class in com.xffffff.wellfed.common">SearchItemContract</a>&lt;Item extends java.io.Serializable&gt;</th>
+<td class="colLast">
+<div class="block">The EditItemContract class is a contract that handles the
+ communication between the EditItemActivity and the
+ EditItemAdapter.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="SortingFragment.html" title="class in com.xffffff.wellfed.common">SortingFragment</a></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The SortingFragment class is a fragment that displays a list of
+ sorting options for the user to select from.</div>
+</td>
 </tr>
 </tbody>
 </table>

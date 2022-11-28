@@ -49,6 +49,8 @@ public class DBConnection {
      * Creates a new UUID for the user if they do not already have one.
      *
      * @param context: the context of the application
+     *
+     * @return the UUID of the user
      */
     protected String getUUID(Context context) {
         SharedPreferences sharedPreferences;

@@ -117,7 +117,6 @@ public class IngredientStorageController {
     /**
      * Get the search results from the DB
      * @param field the field to search by
-     * @return The search results
      */
     public void getSearchResults(String field) {
         Query query = db.getSearchQuery(field);

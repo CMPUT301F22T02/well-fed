@@ -6,16 +6,15 @@
 <title>ShoppingCartDB (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -27,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -146,7 +145,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -161,43 +160,16 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ShoppingCartDB.OnAddShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnAddShoppingCart</a></span></code></th>
-<td class="colLast">
-<div class="block">This interface is used to handle the result of adding of an ingredient
- to the shopping cart.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ShoppingCartDB.OnDelete.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnDelete</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ShoppingCartDB.OnGetShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnGetShoppingCart</a></span></code></th>
 <td class="colLast">
-<div class="block">This interface is used to handle the result of getting the shopping cart.</div>
+<div class="block">onDelete is an interface for the deleteIngredient method.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ShoppingCartDB.OnPickedUpChange.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnPickedUpChange</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ShoppingCartDB.OnRemoveShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnRemoveShoppingCart</a></span></code></th>
 <td class="colLast">
-<div class="block">This interface is used to handle the result of removing an ingredient
- from the shopping cart.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="ShoppingCartDB.OnUpdateShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnUpdateShoppingCart</a></span></code></th>
-<td class="colLast">
-<div class="block">This interface is used to handle the updating of the shopping cart
- cart with respect to the MealPlan and the Storage.</div>
+<div class="block">onPickedUpChange is an interface for the updateIngredient method.</div>
 </td>
 </tr>
 </table>
@@ -205,7 +177,7 @@ extends java.lang.Object</pre>
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -228,7 +200,7 @@ extends java.lang.Object</pre>
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -243,24 +215,24 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnAddShoppingCart)">addIngredient</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-             <a href="ShoppingCartDB.OnAddShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnAddShoppingCart</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.common.OnCompleteListener)">addIngredient</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+             <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Add an ingredient to the shopping cart.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addShoppingHelper(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnAddShoppingCart)">addShoppingHelper</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                 <a href="ShoppingCartDB.OnAddShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnAddShoppingCart</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addShoppingHelper(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.common.OnCompleteListener)">addShoppingHelper</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
+                 <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">addShoppingHelper is a helper method for addIngredient.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnRemoveShoppingCart)">deleteIngredient</a></span>&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient,
-                <a href="ShoppingCartDB.OnRemoveShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnRemoveShoppingCart</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.common.OnCompleteListener)">deleteIngredient</a></span>&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient,
+                <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Delete an ingredient from the shopping cart.</div>
 </td>
@@ -269,7 +241,9 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deleteIngredient(java.lang.String,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnDelete)">deleteIngredient</a></span>&#8203;(java.lang.String&nbsp;id,
                 <a href="ShoppingCartDB.OnDelete.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnDelete</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Delete all ingredients from the shopping cart.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
@@ -280,44 +254,41 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryByPickedUp(boolean)">getQueryByPickedUp</a></span>&#8203;(boolean&nbsp;pickedUp)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSearchQuery(java.lang.String)">getSearchQuery</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
 <div class="block">Search the shopping cart by the given query string.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShoppingCart(com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnGetShoppingCart)">getShoppingCart</a></span>&#8203;(<a href="ShoppingCartDB.OnGetShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnGetShoppingCart</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShoppingCart(com.xffffff.wellfed.common.OnCompleteListener)">getShoppingCart</a></span>&#8203;(<a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Get the shopping cart.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSortedQuery(java.lang.String)">getSortedQuery</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
 <div class="block">Sort the shopping cart by the given field.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#snapshotToShoppingCartIngredient(com.google.firebase.firestore.DocumentSnapshot)">snapshotToShoppingCartIngredient</a></span>&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;doc)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">snapshot to shopping cart ingredient converter</div>
+</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnAddShoppingCart)">updateIngredient</a></span>&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient,
-                <a href="ShoppingCartDB.OnAddShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnAddShoppingCart</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.common.OnCompleteListener)">updateIngredient</a></span>&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient,
+                <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Update an ingredient in the shopping cart.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateIngredient(java.lang.String,boolean,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnPickedUpChange)">updateIngredient</a></span>&#8203;(java.lang.String&nbsp;id,
                 boolean&nbsp;isPickedUp,
@@ -326,9 +297,9 @@ extends java.lang.Object</pre>
 <div class="block">Update an ingredient in the shopping cart.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateShoppingCart(com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnUpdateShoppingCart)">updateShoppingCart</a></span>&#8203;(<a href="ShoppingCartDB.OnUpdateShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnUpdateShoppingCart</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateShoppingCart(com.xffffff.wellfed.common.OnCompleteListener)">updateShoppingCart</a></span>&#8203;(<a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Update the shopping cart with the ingredients from the meal plan if
  not present in the StorageIngredientDB.</div>
@@ -352,7 +323,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -366,26 +337,30 @@ extends java.lang.Object</pre>
 <h4>ShoppingCartDB</h4>
 <pre>public&nbsp;ShoppingCartDB&#8203;(<a href="../common/DBConnection.html" title="class in com.xffffff.wellfed.common">DBConnection</a>&nbsp;connection)</pre>
 <div class="block">Constructor for the ShoppingCartDB.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>connection</code> - The DBConnection to use.</dd>
+</dl>
 </li>
 </ul>
 </li>
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnAddShoppingCart)">
+<a id="addIngredient(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addIngredient&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                          <a href="ShoppingCartDB.OnAddShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnAddShoppingCart</a>&nbsp;listener)</pre>
+                          <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</pre>
 <div class="block">Add an ingredient to the shopping cart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -394,14 +369,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="addShoppingHelper(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnAddShoppingCart)">
+<a id="addShoppingHelper(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addShoppingHelper</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addShoppingHelper&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient,
-                              <a href="ShoppingCartDB.OnAddShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnAddShoppingCart</a>&nbsp;listener)</pre>
+                              <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</pre>
 <div class="block">addShoppingHelper is a helper method for addIngredient.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -410,15 +385,20 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="updateIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnAddShoppingCart)">
+<a id="updateIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;updateIngredient&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient,
-                             <a href="ShoppingCartDB.OnAddShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnAddShoppingCart</a>&nbsp;listener)</pre>
+                             <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</pre>
 <div class="block">Update an ingredient in the shopping cart.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredient</code> - The ingredient to update in the shopping cart.</dd>
+<dd><code>listener</code> - The listener to call when the ingredient is updated.</dd>
+</dl>
 </li>
 </ul>
 <a id="updateIngredient(java.lang.String,boolean,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnPickedUpChange)">
@@ -431,27 +411,42 @@ extends java.lang.Object</pre>
                              boolean&nbsp;isPickedUp,
                              <a href="ShoppingCartDB.OnPickedUpChange.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnPickedUpChange</a>&nbsp;listener)</pre>
 <div class="block">Update an ingredient in the shopping cart.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The id of the ingredient to update in the shopping cart.</dd>
+<dd><code>isPickedUp</code> - The boolean to set the ingredient to.</dd>
+<dd><code>listener</code> - The listener to call when the ingredient is updated.</dd>
+</dl>
 </li>
 </ul>
-<a id="getShoppingCart(com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnGetShoppingCart)">
+<a id="getShoppingCart(com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getShoppingCart</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;getShoppingCart&#8203;(<a href="ShoppingCartDB.OnGetShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnGetShoppingCart</a>&nbsp;listener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;getShoppingCart&#8203;(<a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;java.util.ArrayList&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&gt;&nbsp;listener)</pre>
 <div class="block">Get the shopping cart.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>listener</code> - The listener to call when the shopping cart is retrieved.</dd>
+</dl>
 </li>
 </ul>
-<a id="deleteIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnRemoveShoppingCart)">
+<a id="deleteIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>deleteIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;deleteIngredient&#8203;(<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;ingredient,
-                             <a href="ShoppingCartDB.OnRemoveShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnRemoveShoppingCart</a>&nbsp;listener)</pre>
+                             <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&gt;&nbsp;listener)</pre>
 <div class="block">Delete an ingredient from the shopping cart.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredient</code> - The ingredient to delete from the shopping cart.</dd>
+<dd><code>listener</code> - The listener to call when the ingredient is deleted.</dd>
+</dl>
 </li>
 </ul>
 <a id="deleteIngredient(java.lang.String,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnDelete)">
@@ -462,17 +457,27 @@ extends java.lang.Object</pre>
 <h4>deleteIngredient</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;deleteIngredient&#8203;(java.lang.String&nbsp;id,
                              <a href="ShoppingCartDB.OnDelete.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnDelete</a>&nbsp;listener)</pre>
+<div class="block">Delete all ingredients from the shopping cart.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The id of the ingredient to delete from the shopping cart.</dd>
+<dd><code>listener</code> - The listener to call when the ingredient is deleted.</dd>
+</dl>
 </li>
 </ul>
-<a id="updateShoppingCart(com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnUpdateShoppingCart)">
+<a id="updateShoppingCart(com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateShoppingCart</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateShoppingCart&#8203;(<a href="ShoppingCartDB.OnUpdateShoppingCart.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnUpdateShoppingCart</a>&nbsp;listener)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateShoppingCart&#8203;(<a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a>&gt;&nbsp;listener)</pre>
 <div class="block">Update the shopping cart with the ingredients from the meal plan if
  not present in the StorageIngredientDB.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>listener</code> - The listener to call when the shopping cart is updated.</dd>
+</dl>
 </li>
 </ul>
 <a id="getQuery()">
@@ -521,15 +526,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getQueryByPickedUp(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getQueryByPickedUp</h4>
-<pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getQueryByPickedUp&#8203;(boolean&nbsp;pickedUp)</pre>
-</li>
-</ul>
 <a id="snapshotToShoppingCartIngredient(com.google.firebase.firestore.DocumentSnapshot)">
 <!--   -->
 </a>
@@ -537,6 +533,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>snapshotToShoppingCartIngredient</h4>
 <pre class="methodSignature">public&nbsp;<a href="ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a>&nbsp;snapshotToShoppingCartIngredient&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;doc)</pre>
+<div class="block">snapshot to shopping cart ingredient converter</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>doc</code> - snapshot</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>shopping cart ingredient</dd>
+</dl>
 </li>
 </ul>
 </li>

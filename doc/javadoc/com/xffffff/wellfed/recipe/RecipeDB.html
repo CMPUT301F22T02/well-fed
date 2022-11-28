@@ -6,16 +6,15 @@
 <title>RecipeDB (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -27,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -88,7 +87,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -133,52 +132,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">RecipeDB</span>
 extends java.lang.Object</pre>
+<div class="block">RecipeDB is a class that handles all the database operations for Recipe
+ objects.</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeDB.OnRecipeIngredientAdded.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeIngredientAdded</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="RecipeDB.OnUpdateRecipeReferenceCountListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeReferenceCountListener</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -201,7 +164,7 @@ extends java.lang.Object</pre>
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -216,8 +179,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">addRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-         <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">addRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Adds a recipe to the Recipe collection in db and any ingredients
  not already in Recipe Ingredients.</div>
@@ -225,24 +188,29 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipeAsync(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">addRecipeAsync</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
-              java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
-              <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-              <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipeHelper(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">addRecipeHelper</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
+               java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
+               <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+               <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Helper function that adds the Recipe document to db
+ once all transactions are finished.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipeHelper(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">addRecipeHelper</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
-               java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
-               <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-               <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRecipeIncrementCounter(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">addRecipeIncrementCounter</a></span>&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
+                         java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
+                         <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">addRecipeIncrementCounter is a helper method for addRecipe.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">delRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-         <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">delRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Deletes a recipe document with the id from the collection
  of recipes</div>
@@ -250,18 +218,23 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipeAsync(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.google.firebase.firestore.DocumentSnapshot,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">delRecipeAsync</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-              com.google.firebase.firestore.DocumentReference&nbsp;recipeRef,
-              com.google.firebase.firestore.DocumentSnapshot&nbsp;recipeDoc,
-              <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipeDecrementCounter(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.google.firebase.firestore.DocumentSnapshot,com.xffffff.wellfed.common.OnCompleteListener)">delRecipeDecrementCounter</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                         com.google.firebase.firestore.DocumentReference&nbsp;recipeRef,
+                         com.google.firebase.firestore.DocumentSnapshot&nbsp;recipeDoc,
+                         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Helper function for decrementing counter of every ingredient in the
+ deleted Recipe object.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipeHelper(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">delRecipeHelper</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delRecipeHelper(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.xffffff.wellfed.common.OnCompleteListener)">delRecipeHelper</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
                com.google.firebase.firestore.DocumentReference&nbsp;recipeRef,
-               <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+               <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Helper function for deleting the recipe document.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>com.google.firebase.firestore.DocumentReference</code></td>
@@ -273,75 +246,88 @@ extends java.lang.Object</pre>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuery()">getQuery</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets a query for Recipes in the db.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipe(java.lang.String,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">getRecipe</a></span>&#8203;(java.lang.String&nbsp;id,
-         <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipe(java.lang.String,com.xffffff.wellfed.common.OnCompleteListener)">getRecipe</a></span>&#8203;(java.lang.String&nbsp;id,
+         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Gets the Recipe object with the given id from the db.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSearchQuery(java.lang.String)">getSearchQuery</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Query for the search functionality.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>com.google.firebase.firestore.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSortQuery(java.lang.String)">getSortQuery</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets query from the db with Recipes sorted by given field.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#snapshotToRecipe(com.google.firebase.firestore.DocumentSnapshot)">snapshotToRecipe</a></span>&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;doc)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">updateRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-            <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">updateRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+            <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Updates the Recipe object in the DB</div>
 </td>
 </tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeDecrementCounter(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">updateRecipeDecrementCounter</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                            <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
+                            java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
+                            <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Helper method that decrements counter for each ingredient in the
+ old Recipe.</div>
+</td>
+</tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeAsync(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">updateRecipeAsync</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                 java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                 <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeFindOldRecipe(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">updateRecipeFindOldRecipe</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                         java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
+                         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">A helper method for updateRecipe() that finds the old recipe in the db.</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeAsync1(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">updateRecipeAsync1</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                  <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeHelper(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">updateRecipeHelper</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
                   java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                  <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeAsync2(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">updateRecipeAsync2</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                  <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
-                  java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                  <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeHelper(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">updateRecipeHelper</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                  java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                  <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</code></th>
+                  <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
 <td class="colLast">
 <div class="block">Given the Recipe object, updates it in the db.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateReferenceCount(com.xffffff.wellfed.recipe.Recipe,int,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeReferenceCountListener)">updateReferenceCount</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateRecipeIncrementCounter(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">updateRecipeIncrementCounter</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                            <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
+                            java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
+                            <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Helper method that increments counter for each ingredient in the
+ updated Recipe.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateReferenceCount(com.xffffff.wellfed.recipe.Recipe,int,com.xffffff.wellfed.common.OnCompleteListener)">updateReferenceCount</a></span>&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
                     int&nbsp;delta,
-                    <a href="RecipeDB.OnUpdateRecipeReferenceCountListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeReferenceCountListener</a>&nbsp;listener)</code></th>
-<td class="colLast">&nbsp;</td>
+                    <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</code></th>
+<td class="colLast">
+<div class="block">Updates the counter for a Recipe object in the db.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -361,7 +347,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -375,26 +361,30 @@ extends java.lang.Object</pre>
 <h4>RecipeDB</h4>
 <pre>public&nbsp;RecipeDB&#8203;(<a href="../common/DBConnection.html" title="class in com.xffffff.wellfed.common">DBConnection</a>&nbsp;connection)</pre>
 <div class="block">Create a RecipeDB object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>connection</code> - : the DBConnection object to connect to the database</dd>
+</dl>
 </li>
 </ul>
 </li>
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<a id="addRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addRecipe</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addRecipe&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                      <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+                      <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
 <div class="block">Adds a recipe to the Recipe collection in db and any ingredients
  not already in Recipe Ingredients. This method will set the Recipe id
  to the corresponding document id in the collection</div>
@@ -402,22 +392,32 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>recipe</code> - A Recipe object we want to add to the collection of Recipes
                and whose id we want to set</dd>
+<dd><code>listener</code> - : the listener to call when the operation is complete</dd>
 </dl>
 </li>
 </ul>
-<a id="addRecipeAsync(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<a id="addRecipeIncrementCounter(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>addRecipeAsync</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addRecipeAsync&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
-                           java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
-                           <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                           <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+<h4>addRecipeIncrementCounter</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addRecipeIncrementCounter&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
+                                      java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
+                                      <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                                      <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">addRecipeIncrementCounter is a helper method for addRecipe. It increments the
+ count of ingredients in the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipeMap</code> - A HashMap of the recipe to be added.</dd>
+<dd><code>ingredients</code> - A list of ingredients to be added.</dd>
+<dd><code>recipe</code> - The recipe to be added.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is added.</dd>
+</dl>
 </li>
 </ul>
-<a id="addRecipeHelper(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<a id="addRecipeHelper(java.util.HashMap,java.util.ArrayList,com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -426,27 +426,42 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;addRecipeHelper&#8203;(java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;recipeMap,
                             java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;ingredients,
                             <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                            <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+                            <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">Helper function that adds the Recipe document to db
+ once all transactions are finished.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipeMap</code> - A HashMap of the recipe to be added.</dd>
+<dd><code>ingredients</code> - A list of ingredients to be added.</dd>
+<dd><code>recipe</code> - The recipe to be added.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is added.</dd>
+</dl>
 </li>
 </ul>
-<a id="getRecipe(java.lang.String,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<a id="getRecipe(java.lang.String,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRecipe</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;getRecipe&#8203;(java.lang.String&nbsp;id,
-                      <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+                      <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">Gets the Recipe object with the given id from the db.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - The id of the Recipe to be retrieved.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is retrieved.</dd>
+</dl>
 </li>
 </ul>
-<a id="updateRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">
+<a id="updateRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateRecipe</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;updateRecipe&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                         <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</pre>
+                         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
 <div class="block">Updates the Recipe object in the DB</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -455,42 +470,67 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="updateRecipeAsync(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">
+<a id="updateRecipeFindOldRecipe(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>updateRecipeAsync</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateRecipeAsync&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                              java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                              <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</pre>
+<h4>updateRecipeFindOldRecipe</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateRecipeFindOldRecipe&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                                      java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
+                                      <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">A helper method for updateRecipe() that finds the old recipe in the db.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipe</code> - The new recipe to be updated.</dd>
+<dd><code>recipeIngredients</code> - The ingredients of the new recipe.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is updated.</dd>
+</dl>
 </li>
 </ul>
-<a id="updateRecipeAsync1(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">
+<a id="updateRecipeIncrementCounter(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>updateRecipeAsync1</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateRecipeAsync1&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                               <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
-                               java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                               <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</pre>
+<h4>updateRecipeIncrementCounter</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateRecipeIncrementCounter&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                                         <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
+                                         java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
+                                         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">Helper method that increments counter for each ingredient in the
+ updated Recipe.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipe</code> - The new recipe to be updated.</dd>
+<dd><code>foundRecipe</code> - The old recipe to be updated.</dd>
+<dd><code>recipeIngredients</code> - The ingredients of the new recipe.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is updated.</dd>
+</dl>
 </li>
 </ul>
-<a id="updateRecipeAsync2(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">
+<a id="updateRecipeDecrementCounter(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>updateRecipeAsync2</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateRecipeAsync2&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                               <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
-                               java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                               <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</pre>
+<h4>updateRecipeDecrementCounter</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateRecipeDecrementCounter&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                                         <a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;foundRecipe,
+                                         java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
+                                         <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">Helper method that decrements counter for each ingredient in the
+ old Recipe.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipe</code> - The new recipe to be updated.</dd>
+<dd><code>foundRecipe</code> - The old recipe to be updated.</dd>
+<dd><code>recipeIngredients</code> - The ingredients of the new recipe.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is updated.</dd>
+</dl>
 </li>
 </ul>
-<a id="updateRecipeHelper(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeListener)">
+<a id="updateRecipeHelper(com.xffffff.wellfed.recipe.Recipe,java.util.ArrayList,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -498,7 +538,7 @@ extends java.lang.Object</pre>
 <h4>updateRecipeHelper</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;updateRecipeHelper&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
                                java.util.ArrayList&lt;java.util.HashMap&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;recipeIngredients,
-                               <a href="RecipeDB.OnUpdateRecipeListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeListener</a>&nbsp;listener)</pre>
+                               <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
 <div class="block">Given the Recipe object, updates it in the db.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -509,35 +549,45 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="delRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<a id="delRecipe(com.xffffff.wellfed.recipe.Recipe,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>delRecipe</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;delRecipe&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                      <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+                      <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
 <div class="block">Deletes a recipe document with the id from the collection
  of recipes</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>recipe</code> - The recipe to delete.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is deleted.</dd>
 </dl>
 </li>
 </ul>
-<a id="delRecipeAsync(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.google.firebase.firestore.DocumentSnapshot,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<a id="delRecipeDecrementCounter(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.google.firebase.firestore.DocumentSnapshot,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>delRecipeAsync</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;delRecipeAsync&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
-                           com.google.firebase.firestore.DocumentReference&nbsp;recipeRef,
-                           com.google.firebase.firestore.DocumentSnapshot&nbsp;recipeDoc,
-                           <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+<h4>delRecipeDecrementCounter</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;delRecipeDecrementCounter&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
+                                      com.google.firebase.firestore.DocumentReference&nbsp;recipeRef,
+                                      com.google.firebase.firestore.DocumentSnapshot&nbsp;recipeDoc,
+                                      <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">Helper function for decrementing counter of every ingredient in the
+ deleted Recipe object.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipe</code> - The recipe to delete.</dd>
+<dd><code>recipeRef</code> - The reference to the recipe to delete.</dd>
+<dd><code>recipeDoc</code> - The document of the recipe to delete.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is deleted.</dd>
+</dl>
 </li>
 </ul>
-<a id="delRecipeHelper(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.xffffff.wellfed.recipe.RecipeDB.OnRecipeDone)">
+<a id="delRecipeHelper(com.xffffff.wellfed.recipe.Recipe,com.google.firebase.firestore.DocumentReference,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -545,7 +595,14 @@ extends java.lang.Object</pre>
 <h4>delRecipeHelper</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;delRecipeHelper&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
                             com.google.firebase.firestore.DocumentReference&nbsp;recipeRef,
-                            <a href="RecipeDB.OnRecipeDone.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnRecipeDone</a>&nbsp;listener)</pre>
+                            <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">Helper function for deleting the recipe document.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipe</code> - The recipe to delete.</dd>
+<dd><code>recipeRef</code> - The reference to the recipe document.</dd>
+<dd><code>listener</code> - The listener to be called when the recipe is deleted.</dd>
+</dl>
 </li>
 </ul>
 <a id="getDocumentReference(java.lang.String)">
@@ -564,15 +621,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="snapshotToRecipe(com.google.firebase.firestore.DocumentSnapshot)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>snapshotToRecipe</h4>
-<pre class="methodSignature">public&nbsp;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;snapshotToRecipe&#8203;(com.google.firebase.firestore.DocumentSnapshot&nbsp;doc)</pre>
-</li>
-</ul>
 <a id="getQuery()">
 <!--   -->
 </a>
@@ -580,6 +628,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getQuery</h4>
 <pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getQuery()</pre>
+<div class="block">Gets a query for Recipes in the db.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the query for Recipes in the db.</dd>
+</dl>
 </li>
 </ul>
 <a id="getSortQuery(java.lang.String)">
@@ -589,9 +642,16 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getSortQuery</h4>
 <pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getSortQuery&#8203;(java.lang.String&nbsp;field)</pre>
+<div class="block">Gets query from the db with Recipes sorted by given field.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - The field to sort by.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the query for Recipes in the db.</dd>
+</dl>
 </li>
 </ul>
-<a id="updateReferenceCount(com.xffffff.wellfed.recipe.Recipe,int,com.xffffff.wellfed.recipe.RecipeDB.OnUpdateRecipeReferenceCountListener)">
+<a id="updateReferenceCount(com.xffffff.wellfed.recipe.Recipe,int,com.xffffff.wellfed.common.OnCompleteListener)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -599,7 +659,14 @@ extends java.lang.Object</pre>
 <h4>updateReferenceCount</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;updateReferenceCount&#8203;(<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&nbsp;recipe,
                                  int&nbsp;delta,
-                                 <a href="RecipeDB.OnUpdateRecipeReferenceCountListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeDB.OnUpdateRecipeReferenceCountListener</a>&nbsp;listener)</pre>
+                                 <a href="../common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a>&gt;&nbsp;listener)</pre>
+<div class="block">Updates the counter for a Recipe object in the db.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>recipe</code> - The Recipe object to update.</dd>
+<dd><code>delta</code> - The amount to increment the counter by.</dd>
+<dd><code>listener</code> - The listener to be called when the counter is updated.</dd>
+</dl>
 </li>
 </ul>
 <a id="getSearchQuery(java.lang.String)">
@@ -609,6 +676,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getSearchQuery</h4>
 <pre class="methodSignature">public&nbsp;com.google.firebase.firestore.Query&nbsp;getSearchQuery&#8203;(java.lang.String&nbsp;field)</pre>
+<div class="block">Query for the search functionality.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - The keyword to search for.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Results matching the keyword.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -662,7 +736,7 @@ extends java.lang.Object</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
