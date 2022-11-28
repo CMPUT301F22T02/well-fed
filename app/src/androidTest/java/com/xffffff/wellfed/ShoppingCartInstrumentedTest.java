@@ -40,12 +40,15 @@ import java.util.Locale;
 @RunWith(JUnit4.class)
 public class ShoppingCartInstrumentedTest {
 
+    /**
+     * Holds the default timeout for Thread.sleep().
+     */
     int timeout = 1000;
 
     private void addIngredient(String description) throws InterruptedException {
         onView(withId(R.id.ingredient_storage_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
         closeSoftKeyboard();
@@ -76,7 +79,7 @@ public class ShoppingCartInstrumentedTest {
     private void addRecipe(String title) throws InterruptedException {
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText(title));
         closeSoftKeyboard();
@@ -111,7 +114,7 @@ public class ShoppingCartInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.addButton)).perform(click());
 
@@ -146,7 +149,7 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
 
@@ -160,18 +163,18 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
+        Thread.sleep(timeout); // for some reason closing soft keyboard has an animation.
         onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withText(recipe)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withText(ingredient)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
@@ -199,7 +202,7 @@ public class ShoppingCartInstrumentedTest {
 
         onView(withId(R.id.fab)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText(mealPlan));
 
@@ -213,15 +216,15 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
+        Thread.sleep(timeout); // for some reason closing soft keyboard has an animation.
         onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withText(recipe)).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
@@ -253,7 +256,7 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.meal_book_item)).perform(click());
     }
@@ -282,7 +285,7 @@ public class ShoppingCartInstrumentedTest {
         onView(withText("Delete")).perform(click());
         onView(withText("Delete")).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
     }
 
     @Rule
@@ -299,7 +302,7 @@ public class ShoppingCartInstrumentedTest {
     public void testAddingMealPlan() throws InterruptedException {
         addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(10000);
 
@@ -323,7 +326,7 @@ public class ShoppingCartInstrumentedTest {
         addMealPlan("Another Hearty Breakfast");
         addMealPlan("Another Another Hearty Breakfast");
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(10000);
 
@@ -371,7 +374,7 @@ public class ShoppingCartInstrumentedTest {
         addMealPlanAndIngredientAndRecipe(mealPlan1);
         addMealPlan(mealPlan2);
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(5000);
 
@@ -386,7 +389,7 @@ public class ShoppingCartInstrumentedTest {
 
         cleanUpMealPlan(mealPlan1);
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(5000);
 
@@ -407,9 +410,9 @@ public class ShoppingCartInstrumentedTest {
         addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
         onView(withId(R.id.shopping_cart_item)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withId(R.id.meal_book_item)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withId(R.id.shopping_cart_item)).perform(click());
 
         onView(withId(R.id.fragment_sort_container3)).perform(click());
@@ -553,17 +556,17 @@ public class ShoppingCartInstrumentedTest {
         onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
 
         onView(withId(R.id.meal_book_item)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withText("Hearty Breakfast")).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Sliced Bread")))))
                 .perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.edit_amountInput)).perform(clearText(), typeText("3"));
         Thread.sleep(2000);
@@ -607,12 +610,12 @@ public class ShoppingCartInstrumentedTest {
         onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
 
         onView(withId(R.id.ingredient_storage_item)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(allOf(withText("Sliced Bread"), withId(R.id.textView))).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy", Locale.US);
 
@@ -655,7 +658,7 @@ public class ShoppingCartInstrumentedTest {
 
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText("Eggs Over Easy"));
         closeSoftKeyboard();
@@ -690,7 +693,7 @@ public class ShoppingCartInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(2000);
@@ -705,7 +708,7 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.meal_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
 
         onView(withId(R.id.MealPlan_TitleEditInput)).perform(typeText("Hearty Breakfast"));
 
@@ -719,18 +722,18 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
+        Thread.sleep(timeout); // for some reason closing soft keyboard has an animation.
         onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withText(recipe)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withText(ingredient)).perform(click());
 
         onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
