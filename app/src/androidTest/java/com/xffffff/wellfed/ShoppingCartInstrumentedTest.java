@@ -4,6 +4,7 @@ import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -43,7 +44,7 @@ public class ShoppingCartInstrumentedTest {
     /**
      * Holds the default timeout for Thread.sleep().
      */
-    int timeout = 1000;
+    int timeout = 2000;
 
     /**
      * Adds an ingredient to ingredient storage.
@@ -89,7 +90,7 @@ public class ShoppingCartInstrumentedTest {
     private void addRecipe(String title) throws InterruptedException {
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
-        Thread.sleep(timeout);
+        Thread.sleep(timeout * 2L);
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText(title));
         closeSoftKeyboard();
@@ -277,6 +278,7 @@ public class ShoppingCartInstrumentedTest {
         onView(allOf(withText(description), withId(R.id.textView))).perform(click());
 
         onView(withId(R.id.ingredient_delete_button)).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         Thread.sleep(timeout);
@@ -296,7 +298,7 @@ public class ShoppingCartInstrumentedTest {
         onView(withText(title)).perform(click());
 
         onView(withId(R.id.recipe_delete_btn)).perform(click());
-
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         Thread.sleep(timeout);
@@ -316,6 +318,7 @@ public class ShoppingCartInstrumentedTest {
         onView(withText(title)).perform(click());
 
         onView(withText("Delete")).perform(click());
+        Thread.sleep(timeout);
         onView(withText("Delete")).perform(click());
 
         Thread.sleep(timeout);
@@ -649,7 +652,7 @@ public class ShoppingCartInstrumentedTest {
         Thread.sleep(timeout);
 
         onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText(ingredient)))))
-                .perform(click());
+                .perform(scrollTo(), click());
 
         Thread.sleep(timeout);
 
