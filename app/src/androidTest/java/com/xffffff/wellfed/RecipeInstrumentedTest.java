@@ -539,7 +539,7 @@ import org.junit.runner.RunWith;
 
         // asserting that chicken breast is still there with correct details
         onView(allOf(isDisplayed(), withId(R.id.recyclerView))).check(
-                matches(hasDescendant(withText("Chicken Breast"))));
+                matches(hasDescendant(withText("Chicken breast"))));
         onView(allOf(isDisplayed(), withId(R.id.recyclerView))).check(
                 matches(hasDescendant(withText("2.00 g"))));
 
