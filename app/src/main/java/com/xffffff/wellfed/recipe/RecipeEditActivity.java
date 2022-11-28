@@ -26,7 +26,9 @@ import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
 import com.xffffff.wellfed.common.RequiredNumberTextInputLayout;
 import com.xffffff.wellfed.common.RequiredTextInputLayout;
+import com.xffffff.wellfed.ingredient.EditIngredientsFragment;
 import com.xffffff.wellfed.ingredient.Ingredient;
+import com.xffffff.wellfed.ingredient.IngredientAdapter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -101,7 +103,7 @@ public class RecipeEditActivity extends EditActivityBase {
     /**
      * The fragment for editing recipe ingredients
      */
-    private EditRecipeIngredientsFragment ingredientEditFragment;
+    private EditIngredientsFragment ingredientEditFragment;
 
     /**
      * OnCreate method for the recipe edit activity.
@@ -135,8 +137,8 @@ public class RecipeEditActivity extends EditActivityBase {
                 new String[]{"Breakfast", "Lunch", "Dinner", "Appetizer",
                         "Dessert"});
 
-        ingredientEditFragment = new EditRecipeIngredientsFragment();
-        RecipeIngredientAdapter adapter = new RecipeIngredientAdapter();
+        ingredientEditFragment = new EditIngredientsFragment();
+        IngredientAdapter adapter = new IngredientAdapter();
         adapter.setItems(recipeIngredients);
         ingredientEditFragment.setAdapter(adapter);
         ingredientEditFragment.setTitle("Ingredients");

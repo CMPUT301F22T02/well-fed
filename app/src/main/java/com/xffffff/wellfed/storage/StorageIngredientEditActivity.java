@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.recipe;
+package com.xffffff.wellfed.storage;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,19 +7,23 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.xffffff.wellfed.EditActivityBase;
 import com.xffffff.wellfed.R;
+import com.xffffff.wellfed.common.ConfirmDialog;
+import com.xffffff.wellfed.common.DateUtil;
+import com.xffffff.wellfed.common.RequiredDateTextInputLayout;
 import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
 import com.xffffff.wellfed.common.RequiredNumberTextInputLayout;
 import com.xffffff.wellfed.common.RequiredTextInputLayout;
-import com.xffffff.wellfed.ingredient.Ingredient;
+import com.xffffff.wellfed.storage.StorageIngredient;
 import com.xffffff.wellfed.unit.UnitConverter;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
- * Activity which allows user to edit/add an existing recipe's ingredient
+ * The activity that represents editing an Ingredient.
  */
-public class RecipeIngredientEditActivity extends EditActivityBase {
-
+public class StorageIngredientEditActivity extends EditActivityBase
+        implements ConfirmDialog.OnConfirmListener {
     /**
      * RequiredTextInputLayout for the StorageIngredient's description.
      */
@@ -33,57 +37,74 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
      */
     private RequiredDropdownTextInputLayout unitInput;
     /**
+     * RequiredDropdownTextInputLayout for the StorageIngredient's location.
+     */
+    private RequiredDropdownTextInputLayout locationInput;
+    /**
+     * RequiredDateTextInputLayout for the StorageIngredient's expiration date.
+     */
+    private RequiredDateTextInputLayout bestBeforeInput;
+    /**
      * RequiredDropdownTextInputLayout for the StorageIngredient's category.
      */
     private RequiredDropdownTextInputLayout categoryInput;
     /**
      * StorageIngredient object for the ingredient.
      */
-    private Ingredient ingredient;
-
-    private boolean isEdit;
+    private StorageIngredient ingredient;
 
     /**
-     * OnCreate method for the activity.
+     * OnCreate method for the IngredientEdit activity. Is called when the
+     * activity is created.
      *
      * @param savedInstanceState Bundle object for the activity.
      */
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_recipe_ingredient_edit);
+        setContentView(R.layout.edit_ingredient);
         descriptionInput = findViewById(R.id.descriptionInput);
         amountInput = findViewById(R.id.amountInput);
         unitInput = findViewById(R.id.unitInput);
+        locationInput = findViewById(R.id.locationInput);
+        bestBeforeInput = findViewById(R.id.bestBeforeInput);
         categoryInput = findViewById(R.id.categoryInput);
-
-        this.amountInput.setRequirePositiveNumber(true);
 
         UnitConverter converter = new UnitConverter(getApplicationContext());
 
+        this.amountInput.setRequirePositiveNumber(true);
         this.categoryInput.setSimpleItems(
                 new String[]{"Fruit", "Dairy", "Protein"});
-        this.unitInput.setSimpleItems(converter.getUnits().toArray(new String[0]));
+        this.locationInput.setSimpleItems(
+                new String[]{"Fridge", "Freezer", "Pantry"});
+        this.unitInput.setSimpleItems(
+                converter.getUnits().toArray(new String[0]));
 
         // Get ingredient from intent
-        ingredient = (Ingredient) getIntent().getSerializableExtra("item");
+        ingredient = (StorageIngredient) getIntent().getSerializableExtra(
+                "ingredient");
+
 
         if (ingredient != null) {
             descriptionInput.setPlaceholderText(ingredient.getDescription());
+            amountInput.setPlaceholderText(
+                    String.valueOf(ingredient.getAmount()));
+            unitInput.setPlaceholderText(ingredient.getUnit());
+            if (ingredient.getLocation() != null) {
+                locationInput.setPlaceholderText(ingredient.getLocation());
+            }
             if (ingredient.getCategory() != null) {
                 categoryInput.setPlaceholderText(ingredient.getCategory());
             }
-            if (ingredient.getAmount() != null) {
-
-                amountInput.setPlaceholderText(
-                        ingredient.getAmount().toString());
-            } else {
-                isEdit = true;
-            }
-            if (ingredient.getUnit() != null) {
-                unitInput.setPlaceholderText(ingredient.getUnit());
+            if (ingredient.getBestBefore() != null) {
+                Date date = ingredient.getBestBefore();
+                DateUtil dateUtil = new DateUtil();
+                bestBeforeInput.setDate(date);
+                bestBeforeInput.setPlaceholderText(
+                        dateUtil.format(date, "yyyy" + "-MM-dd"));
             }
         }
+
 
         // Enable back button in action bar to go back to previous activity
         Objects.requireNonNull(getSupportActionBar())
@@ -96,7 +117,7 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
     }
 
     /**
-     * Checks if there are unsaved changes while editing the ingredient.
+     * Checks if there are any unsaved changes
      *
      * @return true if there are unsaved changes, false otherwise
      */
@@ -107,12 +128,17 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         if (amountInput.hasChanges()) {
             return true;
         }
-        return unitInput.hasChanges();
+        if (unitInput.hasChanges()) {
+            return true;
+        }
+        if (locationInput.hasChanges()) {
+            return true;
+        }
+        return bestBeforeInput.hasChanges();
     }
 
     /**
-     * Saves the ingredient created in the activity, and sets the activity
-     * result to the new Ingredient
+     * Method to save the ingredient.
      */
     private void onSave() {
         // Verify that all fields are filled
@@ -128,18 +154,26 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         if (!categoryInput.isValid()) {
             return;
         }
+        if (!locationInput.isValid()) {
+            return;
+        }
+        if (!bestBeforeInput.isValid()) {
+            return;
+        }
         String type = "edit";
-        if (ingredient == null || isEdit) {
-            ingredient = new Ingredient(descriptionInput.getText());
+        if (ingredient == null) {
+            ingredient = new StorageIngredient(descriptionInput.getText());
             type = "add";
         }
         ingredient.setDescription(descriptionInput.getText());
         ingredient.setAmount(amountInput.getDouble());
         ingredient.setUnit(unitInput.getText());
+        ingredient.setLocation(locationInput.getText());
         ingredient.setCategory(categoryInput.getText());
+        ingredient.setBestBefore(bestBeforeInput.getDate());
         Intent intent = new Intent();
         intent.putExtra("type", type);
-        intent.putExtra("item", ingredient);
+        intent.putExtra("ingredient", ingredient);
         setResult(Activity.RESULT_OK, intent);
         finish();
     }

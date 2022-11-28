@@ -3,18 +3,17 @@ package com.xffffff.wellfed.shoppingcart;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.xffffff.wellfed.common.DBConnection;
+import com.xffffff.wellfed.common.OnCompleteListener;
 import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.ingredient.IngredientDB;
-import com.xffffff.wellfed.ingredient.StorageIngredient;
-import com.xffffff.wellfed.ingredient.StorageIngredientDB;
+import com.xffffff.wellfed.storage.StorageIngredient;
+import com.xffffff.wellfed.storage.StorageIngredientDB;
 import com.xffffff.wellfed.mealplan.MealPlan;
 import com.xffffff.wellfed.mealplan.MealPlanDB;
 import com.xffffff.wellfed.recipe.Recipe;
-import com.xffffff.wellfed.recipe.RecipeDB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,9 +61,9 @@ public class ShoppingCartDB {
      * @param listener   The listener to call when the ingredient is added.
      */
     public void addIngredient(Ingredient ingredient,
-                              OnAddShoppingCart listener) {
+                              OnCompleteListener<ShoppingCartIngredient> listener) {
         if (ingredient == null) {
-            listener.onAddShoppingCart(null, false);
+            listener.onComplete(null, false);
             return;
         }
         ingredientDB.getIngredient(ingredient, (foundIngredient, success1) -> {
@@ -72,7 +71,7 @@ public class ShoppingCartDB {
                 ingredientDB.addIngredient(ingredient,
                     (addedIngredient, success) -> {
                         if (!success) {
-                            listener.onAddShoppingCart(null, false);
+                            listener.onComplete(null, false);
                         }
                         ingredient.setId(addedIngredient.getId());
                         addShoppingHelper(ingredient, listener);
@@ -93,7 +92,7 @@ public class ShoppingCartDB {
      * @param listener   The listener to call when the ingredient is added.
      */
     public void addShoppingHelper(Ingredient ingredient,
-                                  OnAddShoppingCart listener) {
+                                  OnCompleteListener<ShoppingCartIngredient> listener) {
         ShoppingCartIngredient shoppingCartIngredient =
             new ShoppingCartIngredient(ingredient.getDescription());
         shoppingCartIngredient.setCategory(ingredient.getCategory());
@@ -117,9 +116,9 @@ public class ShoppingCartDB {
 
         collection.add(storageIngredientMap).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                listener.onAddShoppingCart(null, false);
+                listener.onComplete(null, false);
             }
-            listener.onAddShoppingCart(shoppingCartIngredient, true);
+            listener.onComplete(shoppingCartIngredient, true);
         });
     }
 
@@ -127,13 +126,13 @@ public class ShoppingCartDB {
      * Update an ingredient in the shopping cart.
      */
     public void updateIngredient(ShoppingCartIngredient ingredient,
-                                 OnAddShoppingCart listener) {
+                                 OnCompleteListener<ShoppingCartIngredient> listener) {
         if (ingredient == null) {
-            listener.onAddShoppingCart(null, false);
+            listener.onComplete(null, false);
             return;
         }
         if (ingredient.getId() == null) {
-            listener.onAddShoppingCart(null, false);
+            listener.onComplete(null, false);
             return;
         }
 
@@ -148,9 +147,9 @@ public class ShoppingCartDB {
                 ingredient.isComplete,
                 "search-field", ingredient.getDescription().toLowerCase())
             .addOnSuccessListener(success -> {
-                listener.onAddShoppingCart(ingredient, true);
+                listener.onComplete(ingredient, true);
             }).addOnFailureListener(failure -> {
-                listener.onAddShoppingCart(null, false);
+                listener.onComplete(null, false);
             });
 
     }
@@ -185,10 +184,10 @@ public class ShoppingCartDB {
     /**
      * Get the shopping cart.
      */
-    public void getShoppingCart(OnGetShoppingCart listener) {
+    public void getShoppingCart(OnCompleteListener<ArrayList<ShoppingCartIngredient>> listener) {
         collection.get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                listener.onGetShoppingCart(null, false);
+                listener.onComplete(null, false);
                 return;
             }
             ArrayList<ShoppingCartIngredient> shoppingCart = new ArrayList<>();
@@ -205,7 +204,7 @@ public class ShoppingCartDB {
                     Boolean.TRUE.equals(document.getBoolean("complete")));
                 shoppingCart.add(ingredient);
             }
-            listener.onGetShoppingCart(shoppingCart, true);
+            listener.onComplete(shoppingCart, true);
         });
     }
 
@@ -213,14 +212,14 @@ public class ShoppingCartDB {
      * Delete an ingredient from the shopping cart.
      */
     public void deleteIngredient(ShoppingCartIngredient ingredient,
-                                 OnRemoveShoppingCart listener) {
+                                 OnCompleteListener<ShoppingCartIngredient> listener) {
         if (ingredient == null || ingredient.getId() == null) {
-            listener.onRemoveShoppingCart(null, false);
+            listener.onComplete(null, false);
             return;
         }
 
         collection.document(ingredient.getId()).delete().addOnCompleteListener(
-            task -> listener.onRemoveShoppingCart(ingredient,
+            task -> listener.onComplete(ingredient,
                 task.isSuccessful()));
     }
 
@@ -244,7 +243,7 @@ public class ShoppingCartDB {
      * Update the shopping cart with the ingredients from the meal plan if
      * not present in the StorageIngredientDB.
      */
-    public void updateShoppingCart(OnUpdateShoppingCart listener) {
+    public void updateShoppingCart(OnCompleteListener<ShoppingCart> listener) {
         mealPlanDB.getMealPlans((mealPlan, success) -> {
             if (success) {
                 storageIngredientDB.getAllStorageIngredients(
@@ -296,7 +295,7 @@ public class ShoppingCartDB {
                             }
                             updateShoppingCart(listener);
                         } else {
-                            listener.onUpdateShoppingCart(null, false);
+                            listener.onComplete(null, false);
                         }
                     });
             }
@@ -331,61 +330,6 @@ public class ShoppingCartDB {
     public Query getSearchQuery(String field) {
         return this.collection.orderBy("search-field")
             .startAt(field.toLowerCase()).endAt(field.toLowerCase() + '~');
-    }
-
-    /**
-     * This interface is used to handle the result of adding of an ingredient
-     * to the shopping cart.
-     */
-    public interface OnAddShoppingCart {
-        /**
-         * This method is called when the shopping cart is updated.
-         *
-         * @param success True if the shopping cart was updated successfully.
-         */
-        void onAddShoppingCart(ShoppingCartIngredient ingredient,
-                               boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of removing an ingredient
-     * from the shopping cart.
-     */
-    public interface OnRemoveShoppingCart {
-        /**
-         * This method is called when the shopping cart is updated.
-         *
-         * @param success True if the shopping cart was updated successfully.
-         */
-        void onRemoveShoppingCart(ShoppingCartIngredient ingredient,
-                                  boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of getting the shopping cart.
-     */
-    public interface OnGetShoppingCart {
-        /**
-         * This method is called when the shopping cart is retrieved.
-         *
-         * @param success True if the shopping cart was retrieved successfully.
-         */
-        void onGetShoppingCart(ArrayList<ShoppingCartIngredient> shoppingCart,
-                               boolean success);
-    }
-
-    /**
-     * This interface is used to handle the updating of the shopping cart
-     * cart with respect to the MealPlan and the Storage.
-     */
-    public interface OnUpdateShoppingCart {
-        /**
-         * This method is called when the shopping cart is updated.
-         *
-         * @param success True if the shopping cart was updated successfully.
-         */
-        void onUpdateShoppingCart(ShoppingCart shoppingCart, boolean success);
-
     }
 
     /**

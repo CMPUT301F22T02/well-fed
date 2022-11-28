@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.xffffff.wellfed.ingredient.IngredientStorageFragment;
+import com.xffffff.wellfed.storage.IngredientStorageFragment;
 import com.xffffff.wellfed.mealplan.MealBookFragment;
 import com.xffffff.wellfed.recipe.RecipeBookFragment;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartFragment;

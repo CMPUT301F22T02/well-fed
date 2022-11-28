@@ -254,7 +254,7 @@ import org.junit.runner.RunWith;
         addMockIngredient();
 
         // making sure it is visible
-        checkIngredientPresent("Ground Beef");
+        checkIngredientPresent("Ground beef");
     }
 
     /**
@@ -263,9 +263,9 @@ import org.junit.runner.RunWith;
     @Test public void testViewMultipleIngredients()
             throws InterruptedException {
         // adding the mock ingredient
-        String ingredient1 = "Ground Beef";
-        String ingredient2 = "Ground Chicken";
-        String ingredient3 = "Whole Turkey";
+        String ingredient1 = "Ground beef";
+        String ingredient2 = "Ground chicken";
+        String ingredient3 = "Whole turkey";
 
         typeMockIngredient(ingredient1);
         onView(withId(R.id.ingredient_save_button)).perform(click());
@@ -328,13 +328,13 @@ import org.junit.runner.RunWith;
         addMockIngredient();
 
         // finding the ingredient in the RecyclerView
-        onView(withText("Ground Beef")).perform(click());
+        onView(withText("Ground beef")).perform(click());
 
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
 
-        onView(withText("Ground Beef")).check(doesNotExist());
+        onView(withText("Ground beef")).check(doesNotExist());
     }
 
     /**
@@ -344,7 +344,7 @@ import org.junit.runner.RunWith;
             throws InterruptedException {
         addMockIngredient();
 
-        onView(withText("Ground Beef")).perform(click());
+        onView(withText("Ground beef")).perform(click());
 
         // deleting the ingredient
         onView(withId(R.id.ingredient_delete_button)).perform(click());
@@ -363,7 +363,7 @@ import org.junit.runner.RunWith;
     @Test public void testEditIngredient() throws InterruptedException {
         addMockIngredient();
 
-        onView(withText("Ground Beef")).perform(click());
+        onView(withText("Ground beef")).perform(click());
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
 
@@ -398,11 +398,11 @@ import org.junit.runner.RunWith;
         Thread.sleep(2000);
 
         // finding the ingredient in the RecyclerView
-        onView(withText("Ground Chicken")).perform(click());
+        onView(withText("Ground chicken")).perform(click());
 
         // checking the correctness of the ingredient by seeing if all text
         // is visible
-        onView(withText("Ground Chicken")).check(ViewAssertions.matches(
+        onView(withText("Ground chicken")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Poultry")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -459,7 +459,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
         Thread.sleep(2000);
-        checkIngredientPresent("Ground Beef");
+        checkIngredientPresent("Ground beef");
     }
 
     /**
@@ -471,7 +471,7 @@ import org.junit.runner.RunWith;
             throws InterruptedException {
         // testing adding and then exiting
         addMockIngredient();
-        onView(withText("Ground Beef")).perform(click());
+        onView(withText("Ground beef")).perform(click());
         onView(withId(R.id.ingredient_edit_button)).perform(click());
 
         Thread.sleep(2000);
@@ -494,7 +494,7 @@ import org.junit.runner.RunWith;
         Thread.sleep(2000);
 
         // deleting the ingredient
-        onView(withText("Ground Chicken")).perform(click());
+        onView(withText("Ground chicken")).perform(click());
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
     }
@@ -507,7 +507,7 @@ import org.junit.runner.RunWith;
     @Test public void testExitEdit() throws InterruptedException {
         // ensuring quit works, by editing our item and exiting
         addMockIngredient();
-        onView(withText("Ground Beef")).perform(click());
+        onView(withText("Ground beef")).perform(click());
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
 
@@ -521,9 +521,9 @@ import org.junit.runner.RunWith;
 
         // quitting and ensuring ground beef is the same
         onView(withText("Quit")).perform(click());
-        onView(withText("Ground Beef")).check(ViewAssertions.matches(
+        onView(withText("Ground beef")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        checkIngredientPresent("Ground Beef");
+        checkIngredientPresent("Ground beef");
 
     }
 
@@ -534,7 +534,7 @@ import org.junit.runner.RunWith;
      */
     @Test public void testCancelExitEdit() throws InterruptedException {
         addMockIngredient();
-        onView(withText("Ground Beef")).perform(click());
+        onView(withText("Ground beef")).perform(click());
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
 
@@ -553,8 +553,8 @@ import org.junit.runner.RunWith;
 
         // checking the correctness of the ingredient by seeing if all text
         // is visible
-        onView(withText("Ground Chicken")).perform(click());
-        onView(withText("Ground Chicken")).check(ViewAssertions.matches(
+        onView(withText("Ground chicken")).perform(click());
+        onView(withText("Ground chicken")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Meat")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -604,7 +604,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(3, click()));
         onView(withId(R.id.ingredient_name)).check(
-                matches(withText("Ground Beef")));
+                matches(withText("Ground beef")));
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
@@ -669,7 +669,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(4, click()));
         onView(withId(R.id.ingredient_name)).check(
-                matches(withText("Ground Beef")));
+                matches(withText("Ground beef")));
         pressBack();
 
         /*
@@ -683,7 +683,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_name)).check(
-                matches(withText("Ground Beef")));
+                matches(withText("Ground beef")));
         pressBack();
 
         onView(withId(R.id.ingredient_storage_list)).perform(
@@ -748,7 +748,7 @@ import org.junit.runner.RunWith;
         // assert none of the ingredients are visible
         assertTextNotVisible("Apple");
         assertTextNotVisible("Banana");
-        assertTextNotVisible("Ground Beef");
+        assertTextNotVisible("Ground beef");
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
 
@@ -760,7 +760,7 @@ import org.junit.runner.RunWith;
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Banana")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Ground Beef")).check(ViewAssertions.matches(
+        onView(withText("Ground beef")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
         onView(withText("Milk")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
@@ -776,7 +776,7 @@ import org.junit.runner.RunWith;
         Thread.sleep(1000);
 
         assertTextNotVisible("Apple");
-        assertTextNotVisible("Ground Beef");
+        assertTextNotVisible("Ground beef");
         assertTextNotVisible("Milk");
         assertTextNotVisible("Cheese");
         onView(withText("Banana")).check(ViewAssertions.matches(
@@ -797,7 +797,7 @@ import org.junit.runner.RunWith;
         assertTextNotVisible("Cheese");
         onView(withText("Banana")).check(ViewAssertions.matches(
                 withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        assertTextNotVisible("Ground Beef");
+        assertTextNotVisible("Ground beef");
 
         onView(allOf(isDisplayed(), withId(R.id.search_text))).perform(clearText());
 

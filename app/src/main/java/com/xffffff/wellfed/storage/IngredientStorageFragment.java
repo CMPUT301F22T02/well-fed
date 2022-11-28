@@ -1,10 +1,9 @@
-package com.xffffff.wellfed.ingredient;
+package com.xffffff.wellfed.storage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
@@ -17,6 +16,8 @@ import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.Launcher;
 import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
+import com.xffffff.wellfed.ingredient.IngredientContract;
+import com.xffffff.wellfed.ingredient.IngredientEditContract;
 
 import java.util.Arrays;
 
