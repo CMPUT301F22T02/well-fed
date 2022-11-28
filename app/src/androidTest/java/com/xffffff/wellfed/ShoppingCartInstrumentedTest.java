@@ -4,7 +4,7 @@ import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.swipeUp;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -109,26 +109,6 @@ public class ShoppingCartInstrumentedTest {
 
         onView(withId(R.id.addButton)).perform(click());
 
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Eggs"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_categoryInput)).perform(typeText("Protein"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_amountInput)).perform(click());
-        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        onView(withId(R.id.ingredient_save_button)).perform(click());
-        Thread.sleep(timeout);
-
-        onView(withId(R.id.addButton)).perform(click());
-
         onView(withId(R.id.edit_descriptionInput)).perform(typeText("Bacon"));
         closeSoftKeyboard();
 
@@ -159,7 +139,7 @@ public class ShoppingCartInstrumentedTest {
      * @throws InterruptedException when the thread.sleeps are interrupted
      */
     private void addMealPlan(String mealPlan) throws InterruptedException {
-        String recipe = "Eggs and Bacon";
+        String recipe = "Bacon Breakfast";
         String ingredient = "Sliced bread";
 
         onView(withId(R.id.meal_book_item)).perform(click());
@@ -213,7 +193,7 @@ public class ShoppingCartInstrumentedTest {
      * @throws InterruptedException when the thread.sleeps are interrupted
      */
     private void addMealPlanAndIngredientAndRecipe(String mealPlan) throws InterruptedException {
-        String recipe = "Eggs and Bacon";
+        String recipe = "Bacon Breakfast";
         String ingredient = "Sliced bread";
 
         onView(withId(R.id.meal_book_item)).perform(click());
@@ -354,8 +334,6 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(10000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
@@ -364,7 +342,7 @@ public class ShoppingCartInstrumentedTest {
         Thread.sleep(3000);
 
         cleanUpMealPlan("Hearty Breakfast");
-        cleanUpRecipe("Eggs and Bacon");
+        cleanUpRecipe("Bacon Breakfast");
         cleanUpIngredient(ingredient);
     }
 
@@ -383,8 +361,6 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(10000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("6.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("225.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText("Sliced bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
@@ -399,8 +375,7 @@ public class ShoppingCartInstrumentedTest {
     @Test
     public void testClickingOnShoppingCartItem() throws InterruptedException {
         String ingredient1 = "Bacon",
-                ingredient2 = "Eggs",
-                ingredient3 = "Sliced bread" ;
+                ingredient2 = "Sliced bread" ;
 
         addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
@@ -418,10 +393,6 @@ public class ShoppingCartInstrumentedTest {
         onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient2))))).perform(click());
         onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient2))))).check(matches(not(isChecked())));
 
-        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).perform(click());
-        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).check(matches(isChecked()));
-        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).perform(click());
-        onView(allOf(withId(R.id.checkBox), withParent(withChild(withText(ingredient3))))).check(matches(not(isChecked())));
         Thread.sleep(5000);
     }
 
@@ -443,8 +414,6 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(5000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("4.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("150.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
@@ -458,15 +427,13 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(5000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
         onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
 
         cleanUpMealPlan(mealPlan2);
-        cleanUpRecipe("Eggs and Bacon");
+        cleanUpRecipe("Bacon Breakfast");
         cleanUpIngredient(ingredient);
     }
 
@@ -495,11 +462,9 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_list)).
                 check(matches(ChildAtPositionMatcher.atPosition(0, hasDescendant(withText("Bacon")))));
 
-        onView(withId(R.id.shopping_cart_list)).
-                check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText("Eggs")))));
 
         onView(withId(R.id.shopping_cart_list)).
-                check(matches(ChildAtPositionMatcher.atPosition(2, hasDescendant(withText(ingredient)))));
+                check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText(ingredient)))));
 
         onView(withId(R.id.fragment_sort_container3)).perform(click());
         Thread.sleep(3000);
@@ -510,23 +475,9 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_list)).
                 check(matches(ChildAtPositionMatcher.atPosition(0, hasDescendant(withText(ingredient)))));
 
-        try{
-            onView(withId(R.id.shopping_cart_list)).
-                    check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText("Bacon")))));
-        }
-        catch (AssertionFailedError assertError){
-            onView(withId(R.id.shopping_cart_list)).
-                    check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText("Eggs")))));
-        }
+        onView(withId(R.id.shopping_cart_list)).
+                check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText("Bacon")))));
 
-        try{
-            onView(withId(R.id.shopping_cart_list)).
-                    check(matches(ChildAtPositionMatcher.atPosition(2, hasDescendant(withText("Bacon")))));
-        }
-        catch (AssertionFailedError assertError){
-            onView(withId(R.id.shopping_cart_list)).
-                    check(matches(ChildAtPositionMatcher.atPosition(2, hasDescendant(withText("Eggs")))));
-        }
     }
 
     /**
@@ -563,8 +514,6 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(10000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
@@ -578,17 +527,20 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(5000);
 
-        onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Eggs and Bacon")))))
+        swipeUp();
+        closeSoftKeyboard();
+        Thread.sleep(timeout);
+        onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Bacon")))))
                 .perform(click());
 
+        swipeUp();
         Thread.sleep(5000);
-
-        onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Eggs")))))
+        onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Bacon")))))
                 .perform(click());
 
         Thread.sleep(2000);
 
-        onView(withId(R.id.edit_amountInput)).perform(clearText(), typeText("5"));
+        onView(withId(R.id.edit_amountInput)).perform(clearText(), typeText("100"));
         Thread.sleep(2000);
         closeSoftKeyboard();
 
@@ -610,15 +562,13 @@ public class ShoppingCartInstrumentedTest {
 
         Thread.sleep(5000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("5.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
-        onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
+        onView(withText("100.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
         onView(withText("1.00 count | Bread")).check(matches(isDisplayed()));
 
         cleanUpMealPlan("Hearty Breakfast");
-        cleanUpRecipe("Eggs and Bacon");
+        cleanUpRecipe("Bacon Breakfast");
         cleanUpIngredient(ingredient);
     }
 
@@ -636,8 +586,6 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(10000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
@@ -652,7 +600,7 @@ public class ShoppingCartInstrumentedTest {
         Thread.sleep(timeout);
 
         onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText(ingredient)))))
-                .perform(scrollTo(), click());
+                .perform(click());
 
         Thread.sleep(timeout);
 
@@ -670,15 +618,13 @@ public class ShoppingCartInstrumentedTest {
 
         Thread.sleep(5000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText("Sliced bread"), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
         onView(withText("3.00 count | Bread")).check(matches(isDisplayed()));
 
         cleanUpMealPlan("Hearty Breakfast");
-        cleanUpRecipe("Eggs and Bacon");
+        cleanUpRecipe("Bacon Breakfast");
         cleanUpIngredient(ingredient);
     }
 
@@ -696,8 +642,6 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(10000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(matches(isDisplayed()));
@@ -733,15 +677,13 @@ public class ShoppingCartInstrumentedTest {
 
         Thread.sleep(5000);
 
-        onView(withText("Eggs")).check(matches(isDisplayed()));
-        onView(withText("2.00 count | Protein")).check(matches(isDisplayed()));
         onView(withText("Bacon")).check(matches(isDisplayed()));
         onView(withText("75.00 g | Protein")).check(matches(isDisplayed()));
         onView(Matchers.allOf(withText(ingredient), withId(R.id.shopping_cart_ingredient_description))).check(doesNotExist());
         onView(withText("3.00 count | Bread")).check(doesNotExist());
 
         cleanUpMealPlan("Hearty Breakfast");
-        cleanUpRecipe("Eggs and Bacon");
+        cleanUpRecipe("Bacon Breakfast");
         cleanUpIngredient(ingredient);
     }
 
