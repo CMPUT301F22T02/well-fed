@@ -520,7 +520,7 @@ public class MealPlanInstrumentedTest {
     public void testAddMealPlanWithRecipeAndIngredient() throws InterruptedException {
         String mealPlan = "Hearty Breakfast";
         String recipe = "Eggs and Bacon";
-        String ingredient = "Sliced Bread";
+        String ingredient = "Sliced bread";
 
         addRecipe(recipe);
         addIngredient(ingredient);
@@ -589,7 +589,7 @@ public class MealPlanInstrumentedTest {
     public void testViewMealPlan() throws InterruptedException {
         String mealPlan = "Hearty Breakfast";
         String recipe = "Eggs and Bacon";
-        String ingredient = "Sliced Bread";
+        String ingredient = "Sliced bread";
         addRecipe(recipe);
         addIngredient(ingredient);
 
@@ -666,7 +666,7 @@ public class MealPlanInstrumentedTest {
     @Test
     public void testAddInvalidMealPlan() throws InterruptedException {
         String recipe = "Eggs and Bacon";
-        String ingredient = "Sliced Bread";
+        String ingredient = "Sliced bread";
         addRecipe(recipe);
         addIngredient(ingredient);
 
@@ -775,7 +775,7 @@ public class MealPlanInstrumentedTest {
 
         onView(withText("Hearty Breakfast")).check(doesNotExist());
         cleanUpRecipe("Eggs and Bacon");
-        cleanUpIngredient("Sliced Bread");
+        cleanUpIngredient("Sliced bread");
     }
 
     /**
@@ -797,7 +797,7 @@ public class MealPlanInstrumentedTest {
 
         cleanUpMealPlan("Hearty Breakfast");
         cleanUpRecipe("Eggs and Bacon");
-        cleanUpIngredient("Sliced Bread");
+        cleanUpIngredient("Sliced bread");
     }
 
     /**
@@ -893,7 +893,7 @@ public class MealPlanInstrumentedTest {
         cleanUpRecipe(recipe);
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient(ingredient);
-        cleanUpIngredient("Sliced Bread");
+        cleanUpIngredient("Sliced bread");
     }
 
     /**
