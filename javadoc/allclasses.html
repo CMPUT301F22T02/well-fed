@@ -6,15 +6,16 @@
 <title>All Classes (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <h1 class="bar">All&nbsp;Classes</h1>
@@ -32,6 +33,7 @@
 <li><a href="com/xffffff/wellfed/common/DBConnection.html" title="class in com.xffffff.wellfed.common">DBConnection</a></li>
 <li><a href="com/xffffff/wellfed/common/DeleteButton.html" title="class in com.xffffff.wellfed.common">DeleteButton</a></li>
 <li><a href="com/xffffff/wellfed/EditActivityBase.html" title="class in com.xffffff.wellfed">EditActivityBase</a></li>
+<li><a href="com/xffffff/wellfed/ingredient/EditIngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientAdapter</a></li>
 <li><a href="com/xffffff/wellfed/ingredient/EditIngredientsFragment.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientsFragment</a></li>
 <li><a href="com/xffffff/wellfed/common/EditItemAdapter.html" title="class in com.xffffff.wellfed.common">EditItemAdapter</a></li>
 <li><a href="com/xffffff/wellfed/common/EditItemAdapter.ItemViewHolder.html" title="class in com.xffffff.wellfed.common">EditItemAdapter.ItemViewHolder</a></li>
@@ -42,19 +44,17 @@
 <li><a href="com/xffffff/wellfed/recipe/EditRecipesFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipesFragment</a></li>
 <li><a href="com/xffffff/wellfed/common/EditRecyclerViewFragment.html" title="class in com.xffffff.wellfed.common">EditRecyclerViewFragment</a></li>
 <li><a href="com/xffffff/wellfed/ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a></li>
-<li><a href="com/xffffff/wellfed/ingredient/IngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientAdapter</a></li>
 <li><a href="com/xffffff/wellfed/ingredient/IngredientContract.html" title="class in com.xffffff.wellfed.ingredient">IngredientContract</a></li>
 <li><a href="com/xffffff/wellfed/ingredient/IngredientDB.html" title="class in com.xffffff.wellfed.ingredient">IngredientDB</a></li>
+<li><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter</a></li>
 <li><a href="com/xffffff/wellfed/ingredient/IngredientEditActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientEditActivity</a></li>
 <li><a href="com/xffffff/wellfed/ingredient/IngredientEditContract.html" title="class in com.xffffff.wellfed.ingredient">IngredientEditContract</a></li>
-<li><a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearch</a></li>
+<li><a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchActivity</a></li>
 <li><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter</a></li>
-<li><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.ingredient"><span class="interfaceName">IngredientSearchAdapter.OnItemClickListener</span></a></li>
 <li><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter.ViewHolder</a></li>
 <li><a href="com/xffffff/wellfed/storage/IngredientStorageController.html" title="class in com.xffffff.wellfed.storage">IngredientStorageController</a></li>
 <li><a href="com/xffffff/wellfed/storage/IngredientStorageFragment.html" title="class in com.xffffff.wellfed.storage">IngredientStorageFragment</a></li>
 <li><a href="com/xffffff/wellfed/common/ItemAdapter.html" title="class in com.xffffff.wellfed.common">ItemAdapter</a></li>
-<li><a href="com/xffffff/wellfed/common/ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter</a></li>
 <li><a href="com/xffffff/wellfed/common/Launcher.html" title="interface in com.xffffff.wellfed.common"><span class="interfaceName">Launcher</span></a></li>
 <li><a href="com/xffffff/wellfed/MainActivity.html" title="class in com.xffffff.wellfed">MainActivity</a></li>
 <li><a href="com/xffffff/wellfed/unit/MassUnit.html" title="class in com.xffffff.wellfed.unit">MassUnit</a></li>
@@ -62,7 +62,6 @@
 <li><a href="com/xffffff/wellfed/mealplan/MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanActivity.html" title="class in com.xffffff.wellfed.mealplan">MealPlanActivity</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a></li>
-<li><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan"><span class="interfaceName">MealPlanAdapter.OnItemClickListener</span></a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanContract.html" title="class in com.xffffff.wellfed.mealplan">MealPlanContract</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanController.html" title="class in com.xffffff.wellfed.mealplan">MealPlanController</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanController.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.mealplan"><span class="interfaceName">MealPlanController.OnAdapterDataChangedListener</span></a></li>
@@ -73,13 +72,13 @@
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanIngredientItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanIngredientItemAdapter</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.ItemViewHolder.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter.ItemViewHolder</a></li>
-<li><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan"><span class="interfaceName">MealPlanItemAdapter.OnItemClickListener</span></a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanLinearLayoutManager.html" title="class in com.xffffff.wellfed.mealplan">MealPlanLinearLayoutManager</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanProxy.html" title="class in com.xffffff.wellfed.mealplan">MealPlanProxy</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanRecipeItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanRecipeItemAdapter</a></li>
 <li><a href="com/xffffff/wellfed/mealplan/MealPlanViewHolder.html" title="class in com.xffffff.wellfed.mealplan">MealPlanViewHolder</a></li>
 <li><a href="com/xffffff/wellfed/navigation/NavigationCollectionAdapter.html" title="class in com.xffffff.wellfed.navigation">NavigationCollectionAdapter</a></li>
 <li><a href="com/xffffff/wellfed/common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common"><span class="interfaceName">OnCompleteListener</span></a></li>
+<li><a href="com/xffffff/wellfed/common/OnItemClickListener.html" title="interface in com.xffffff.wellfed.common"><span class="interfaceName">OnItemClickListener</span></a></li>
 <li><a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a></li>
 <li><a href="com/xffffff/wellfed/recipe/RecipeActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeActivity</a></li>
 <li><a href="com/xffffff/wellfed/recipe/RecipeAdapter.html" title="class in com.xffffff.wellfed.recipe">RecipeAdapter</a></li>
@@ -93,7 +92,7 @@
 <li><a href="com/xffffff/wellfed/recipe/RecipeDB.html" title="class in com.xffffff.wellfed.recipe">RecipeDB</a></li>
 <li><a href="com/xffffff/wellfed/recipe/RecipeEditActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeEditActivity</a></li>
 <li><a href="com/xffffff/wellfed/recipe/RecipeEditContract.html" title="class in com.xffffff.wellfed.recipe">RecipeEditContract</a></li>
-<li><a href="com/xffffff/wellfed/recipe/RecipesSearch.html" title="class in com.xffffff.wellfed.recipe">RecipesSearch</a></li>
+<li><a href="com/xffffff/wellfed/recipe/RecipeSearchActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeSearchActivity</a></li>
 <li><a href="com/xffffff/wellfed/common/RequiredDateTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredDateTextInputLayout</a></li>
 <li><a href="com/xffffff/wellfed/common/RequiredDropdownTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredDropdownTextInputLayout</a></li>
 <li><a href="com/xffffff/wellfed/common/RequiredNumberTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredNumberTextInputLayout</a></li>
@@ -101,35 +100,23 @@
 <li><a href="com/xffffff/wellfed/common/SearchInput.html" title="class in com.xffffff.wellfed.common">SearchInput</a></li>
 <li><a href="com/xffffff/wellfed/common/SearchInput.OnTextChange.html" title="interface in com.xffffff.wellfed.common"><span class="interfaceName">SearchInput.OnTextChange</span></a></li>
 <li><a href="com/xffffff/wellfed/common/SearchItemContract.html" title="class in com.xffffff.wellfed.common">SearchItemContract</a></li>
-<li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></li>
+<li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></li>
 <li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDB</a></li>
-<li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnDelete.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="interfaceName">ShoppingCartDB.OnDelete</span></a></li>
 <li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnPickedUpChange.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="interfaceName">ShoppingCartDB.OnPickedUpChange</span></a></li>
-<li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDialog</a></li>
-<li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.OnConfirmListener.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="interfaceName">ShoppingCartDialog.OnConfirmListener</span></a></li>
 <li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartFragment.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartFragment</a></li>
 <li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a></li>
 <li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></li>
 <li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.OnCheckedListener.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="interfaceName">ShoppingCartIngredientAdapter.OnCheckedListener</span></a></li>
-<li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="interfaceName">ShoppingCartIngredientAdapter.OnItemClickListener</span></a></li>
-<li><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></li>
 <li><a href="com/xffffff/wellfed/common/SortingFragment.html" title="class in com.xffffff.wellfed.common">SortingFragment</a></li>
 <li><a href="com/xffffff/wellfed/common/SortingFragment.OnSortClick.html" title="interface in com.xffffff.wellfed.common"><span class="interfaceName">SortingFragment.OnSortClick</span></a></li>
 <li><a href="com/xffffff/wellfed/storage/StorageIngredient.html" title="class in com.xffffff.wellfed.storage">StorageIngredient</a></li>
 <li><a href="com/xffffff/wellfed/storage/StorageIngredientActivity.html" title="class in com.xffffff.wellfed.storage">StorageIngredientActivity</a></li>
 <li><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter</a></li>
-<li><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.storage"><span class="interfaceName">StorageIngredientAdapter.OnItemClickListener</span></a></li>
 <li><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter.ViewHolder</a></li>
 <li><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></li>
-<li><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAddStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="interfaceName">StorageIngredientDB.OnAddStorageIngredientListener</span></a></li>
-<li><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAllIngredients.html" title="interface in com.xffffff.wellfed.storage"><span class="interfaceName">StorageIngredientDB.OnAllIngredients</span></a></li>
-<li><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnDeleteStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="interfaceName">StorageIngredientDB.OnDeleteStorageIngredientListener</span></a></li>
-<li><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnGetStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="interfaceName">StorageIngredientDB.OnGetStorageIngredientListener</span></a></li>
-<li><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnUpdateStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="interfaceName">StorageIngredientDB.OnUpdateStorageIngredientListener</span></a></li>
 <li><a href="com/xffffff/wellfed/storage/StorageIngredientEditActivity.html" title="class in com.xffffff.wellfed.storage">StorageIngredientEditActivity</a></li>
 <li><a href="com/xffffff/wellfed/unit/Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a></li>
 <li><a href="com/xffffff/wellfed/unit/UnitConverter.html" title="class in com.xffffff.wellfed.unit">UnitConverter</a></li>
-<li><a href="com/xffffff/wellfed/unit/UnitHelper.html" title="class in com.xffffff.wellfed.unit">UnitHelper</a></li>
 <li><a href="com/xffffff/wellfed/unit/VolumeUnit.html" title="class in com.xffffff.wellfed.unit">VolumeUnit</a></li>
 </ul>
 </main>
