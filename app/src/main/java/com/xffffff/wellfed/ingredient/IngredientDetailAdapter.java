@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.common;
+package com.xffffff.wellfed.ingredient;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
-import com.xffffff.wellfed.ingredient.Ingredient;
+import com.xffffff.wellfed.common.ItemAdapter;
 
 import java.util.Locale;
 
 /**
  * ItemDetailAdapter is the adapter for the item detail recycler view
  */
-public class ItemDetailAdapter extends ItemAdapter {
+public class IngredientDetailAdapter extends ItemAdapter<Ingredient> {
     /**
      * onCreatedViewHolder inflates the view
      * @param parent activity that handles the ingredients
@@ -33,7 +33,7 @@ public class ItemDetailAdapter extends ItemAdapter {
         View itemView =
             layoutInflater.inflate(R.layout.view_holder_item, parent,
                 false);
-        return new ItemDetailAdapter.ViewHolder(itemView);
+        return new IngredientDetailAdapter.ViewHolder(itemView);
     }
 
     /**

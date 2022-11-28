@@ -28,7 +28,7 @@ import com.xffffff.wellfed.common.RequiredNumberTextInputLayout;
 import com.xffffff.wellfed.common.RequiredTextInputLayout;
 import com.xffffff.wellfed.ingredient.EditIngredientsFragment;
 import com.xffffff.wellfed.ingredient.Ingredient;
-import com.xffffff.wellfed.ingredient.IngredientAdapter;
+import com.xffffff.wellfed.ingredient.EditIngredientAdapter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -138,7 +138,7 @@ public class RecipeEditActivity extends EditActivityBase {
                         "Dessert"});
 
         ingredientEditFragment = new EditIngredientsFragment();
-        IngredientAdapter adapter = new IngredientAdapter();
+        EditIngredientAdapter adapter = new EditIngredientAdapter();
         adapter.setItems(recipeIngredients);
         ingredientEditFragment.setAdapter(adapter);
         ingredientEditFragment.setTitle("Ingredients");

@@ -20,7 +20,7 @@ import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ConfirmDialog;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.DeleteButton;
-import com.xffffff.wellfed.common.ItemDetailAdapter;
+import com.xffffff.wellfed.ingredient.IngredientDetailAdapter;
 import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class RecipeActivity extends ActivityBase
     /**
      * Adapter for the RecyclerView that displays the list of Items
      */
-    private ItemDetailAdapter adapter;
+    private IngredientDetailAdapter adapter;
     /**
      * stores the recipe {@link Recipe}
      */
@@ -81,7 +81,7 @@ public class RecipeActivity extends ActivityBase
 
         // Initialize the variables
         ingredientList = new ArrayList<>();
-        adapter = new ItemDetailAdapter();
+        adapter = new IngredientDetailAdapter();
         adapter.setItems(ingredientList);
         Intent intent = getIntent();
 
