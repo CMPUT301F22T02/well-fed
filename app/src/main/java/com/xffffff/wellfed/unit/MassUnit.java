@@ -14,10 +14,6 @@ public class MassUnit extends Unit {
      * The smallest unit for metric mass
      */
     public final static String smallestMetricUnit = "g";
-    /**
-     * The smallest unit for imperial mass
-     */
-    public final static String smallestImperialUnit = "oz";
 
     /**
      * The conversion factors for the mass units

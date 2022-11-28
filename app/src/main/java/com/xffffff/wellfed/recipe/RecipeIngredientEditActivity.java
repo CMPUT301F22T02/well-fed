@@ -143,6 +143,4 @@ public class RecipeIngredientEditActivity extends EditActivityBase {
         setResult(Activity.RESULT_OK, intent);
         finish();
     }
-
-
 }

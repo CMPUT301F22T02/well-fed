@@ -32,6 +32,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * one function at once.
  * So, you will see some tests call delete methods, even when they are not
  * testing deletes.
+ *
+ * Intended device: Pixel 6 Pro API 22
  */
 public class MealPlanDBTest {
     /**
@@ -419,6 +421,7 @@ public class MealPlanDBTest {
      */
     @Test public void testAddMultipleMealPlans() throws InterruptedException {
         MealPlan mealPlan = mockMealPlan();
+        mealPlan.addRecipe(mockRecipe());
         // CountDownLatch to wait for the meal plan to be added
         CountDownLatch addMealPlanLatch = new CountDownLatch(1);
         AtomicReference<MealPlan> addMealPlanRef = new AtomicReference<>();
@@ -435,6 +438,7 @@ public class MealPlanDBTest {
         assertTrue(mealPlan.isEqual(addMealPlanRef.get()));
 
         MealPlan mealPlan2 = mockMealPlan();
+        mealPlan2.addRecipe(mockRecipe());
         // CountDownLatch to wait for the meal plan to be added
         CountDownLatch addMealPlanLatch2 = new CountDownLatch(1);
         AtomicReference<MealPlan> addMealPlanRef2 = new AtomicReference<>();

@@ -121,10 +121,6 @@ import com.xffffff.wellfed.R;
  * The ConfirmDialog class provides a dialog for confirming user intentions.
  */
 public class ShoppingCartDialog {
-    /**
-     * Holds the AlertDialog dialog
-     */
-    private final AlertDialog dialog;
 
     /**
      * Constructs a ConfirmQuitDialog
@@ -138,20 +134,13 @@ public class ShoppingCartDialog {
     public ShoppingCartDialog(Context context, String title, String message,
                               String confirmButtonText,
                               ShoppingCartDialog.OnConfirmListener onConfirmListener) {
-        this.dialog = new MaterialAlertDialogBuilder(context,
-            style.ThemeOverlay_Material3_MaterialAlertDialog_Centered).setIcon(
-                R.drawable.ic_baseline_cancel_24).setTitle(title)
-            .setMessage(message).setNeutralButton("Cancel", null)
-            .setPositiveButton(confirmButtonText,
-                (dialog, which) -> onConfirmListener.onConfirm())
-            .setView(R.layout.dialog_shopping_cart).create();
-    }
-
-    /**
-     * Shows the dialog
-     */
-    public void show() {
-        this.dialog.show();
+        AlertDialog dialog1 = new MaterialAlertDialogBuilder(context,
+                style.ThemeOverlay_Material3_MaterialAlertDialog_Centered).setIcon(
+                        R.drawable.ic_baseline_cancel_24).setTitle(title)
+                .setMessage(message).setNeutralButton("Cancel", null)
+                .setPositiveButton(confirmButtonText,
+                        (dialog, which) -> onConfirmListener.onConfirm())
+                .setView(R.layout.dialog_shopping_cart).create();
     }
 
     /**

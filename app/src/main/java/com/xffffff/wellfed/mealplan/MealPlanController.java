@@ -5,7 +5,6 @@ import android.util.Pair;
 
 import com.google.firebase.firestore.ListenerRegistration;
 import com.xffffff.wellfed.ActivityBase;
-import com.xffffff.wellfed.common.AdapterDataObserver;
 import com.xffffff.wellfed.common.DBAdapter;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.DateUtil;
@@ -131,16 +130,6 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
      */
     public MealPlanAdapter getAdapter() {
         return adapter;
-    }
-
-    /**
-     * The setAdapter method for the ingredient search screen. Sets the
-     * adapter for the RecyclerView of meal plans.
-     *
-     * @param adapter The adapter for the RecyclerView of meal plans.
-     */
-    public void setAdapter(MealPlanAdapter adapter) {
-        this.adapter = adapter;
     }
 
     /**

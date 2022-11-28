@@ -37,6 +37,8 @@ import org.junit.runner.RunWith;
  * Instrumented test for Ingredients page, which will execute on an Android
  * device.
  *
+ * Intended device: Pixel 6 Pro API 22
+ *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class) public class IngredientInstrumentedTest {
@@ -57,9 +59,11 @@ import org.junit.runner.RunWith;
     /**
      * Performs all of the actions needed to type a complete ingredient.
      */
-    private void typeMockIngredient(String description) {
+    private void typeMockIngredient(String description) throws InterruptedException {
         // typing description input
         onView(withId(R.id.fab)).perform(click());
+
+        Thread.sleep(2000);
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(
                 typeText(description));
@@ -289,7 +293,7 @@ import org.junit.runner.RunWith;
     /**
      * Tests adding an incomplete Ingredient.
      */
-    @Test public void testIncompleteMessages() {
+    @Test public void testIncompleteMessages() throws InterruptedException {
         typeMockIngredient("Ground Beef");
 
         // testing the description error message
@@ -363,6 +367,7 @@ import org.junit.runner.RunWith;
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
 
+        Thread.sleep(2000);
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(
                 typeText("Ground Chicken"));
@@ -415,7 +420,7 @@ import org.junit.runner.RunWith;
     /**
      * Tests that the cancel confirmation message shows up when adding
      */
-    @Test public void testCancelConfirmationMessageAdd() {
+    @Test public void testCancelConfirmationMessageAdd() throws InterruptedException {
         // testing adding and then exiting
         typeMockIngredient("Ground Beef");
         pressBack();
@@ -468,6 +473,8 @@ import org.junit.runner.RunWith;
         addMockIngredient();
         onView(withText("Ground Beef")).perform(click());
         onView(withId(R.id.ingredient_edit_button)).perform(click());
+
+        Thread.sleep(2000);
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(
                 typeText("Ground Chicken"));
@@ -503,6 +510,8 @@ import org.junit.runner.RunWith;
         onView(withText("Ground Beef")).perform(click());
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
+
+        Thread.sleep(2000);
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(
                 typeText("Ground Chicken"));
@@ -528,6 +537,8 @@ import org.junit.runner.RunWith;
         onView(withText("Ground Beef")).perform(click());
 
         onView(withId(R.id.ingredient_edit_button)).perform(click());
+
+        Thread.sleep(2000);
         onView(withId(R.id.descriptionInputEditText)).perform(clearText());
         onView(withId(R.id.descriptionInputEditText)).perform(
                 typeText("Ground Chicken"));
@@ -562,7 +573,7 @@ import org.junit.runner.RunWith;
      * Note: These were refactored into one test, instead of many tests, one for each category.
      * The reason for this was because adding and deleting the data took a very long time.
      */
-    @Test public void testSort() {
+    @Test public void testSort() throws InterruptedException {
         // should be Apple, Banana, Cheese, Ground Beef, Milk
         add5Ingredients();
 
@@ -574,6 +585,7 @@ import org.junit.runner.RunWith;
                 .perform(click());
 
         // check that stuff is sorted
+        Thread.sleep(2000);
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_name)).check(matches(withText("Apple")));
@@ -607,6 +619,7 @@ import org.junit.runner.RunWith;
         onView(withText("Category")).inRoot(isPlatformPopup()).perform(click());
 
         // check that stuff is sorted
+        Thread.sleep(2000);
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // check for milk or cheese in either order
@@ -666,6 +679,7 @@ import org.junit.runner.RunWith;
         onView(withText("Location")).inRoot(isPlatformPopup()).perform(click());
 
         // check that stuff is sorted
+        Thread.sleep(2000);
         onView(withId(R.id.ingredient_storage_list)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.ingredient_name)).check(
@@ -789,6 +803,4 @@ import org.junit.runner.RunWith;
 
         delete5Ingredients();
     }
-
-
 }

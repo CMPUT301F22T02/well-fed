@@ -11,6 +11,7 @@ import java.util.UUID;
  * The main difference between this class and the DBConnection class is that
  * the DBConnection class requires the context to save the UUID, but this mock
  * connection class creates a new UUID (without saving it locally) for tests
+ *
  */
 public class MockDBConnection extends DBConnection {
     /**

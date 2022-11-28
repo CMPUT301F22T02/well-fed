@@ -104,22 +104,6 @@ public class SearchInput extends TextInputLayout
     }
 
     /**
-     * Validates that the EditText is non-empty.
-     * If it is empty, it displays an error message.
-     *
-     * @return true if the EditText is non-empty
-     */
-    private Boolean isNonEmpty() {
-        if (this.editText.getText().toString().isEmpty()) {
-            this.setError(this.getHint() + " is required");
-            return false;
-        } else {
-            this.setError(null);
-            return true;
-        }
-    }
-
-    /**
      * The beforeTextChanged handler is called when within s, the count
      * characters beginning at start are about to be replaced by new text
      * with length after

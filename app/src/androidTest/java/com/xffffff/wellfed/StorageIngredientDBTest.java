@@ -21,6 +21,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * DB test for StorageIngredients. Connects to the database and performs test queries.
+ *
+ * Intended device: Pixel 6 Pro API 22
  */
 @RunWith(AndroidJUnit4.class) public class StorageIngredientDBTest {
     /**

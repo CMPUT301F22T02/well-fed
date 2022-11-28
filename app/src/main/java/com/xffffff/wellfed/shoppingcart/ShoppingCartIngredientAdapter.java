@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
-import com.xffffff.wellfed.ingredient.StorageIngredient;
 
 import java.util.Locale;
 

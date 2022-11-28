@@ -16,10 +16,6 @@ public class CountUnit extends Unit {
     /**
      * The conversion factors for the count units
      */
-    public static final String smallestImperialUnit = "count";
-    /**
-     * The conversion factors for the count units
-     */
     public static final HashMap<String, Double> CONVERSION_FACTORS =
         new HashMap<>(Map.of("count", 1d));
     /**

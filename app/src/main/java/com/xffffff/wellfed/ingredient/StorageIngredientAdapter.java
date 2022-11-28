@@ -38,7 +38,7 @@ public class StorageIngredientAdapter
      * @param db the storage ingredient DB
      */
     public StorageIngredientAdapter(StorageIngredientDB db) {
-        super(db.getQuery());
+        super(db.getSortedQuery("best-before"));
         Log.d(TAG, "StorageIngredientAdapter:");
         this.db = db;
     }

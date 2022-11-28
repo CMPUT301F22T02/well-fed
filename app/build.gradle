@@ -29,6 +29,7 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     testOptions {
+        animationsDisabled true
         execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 }

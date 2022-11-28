@@ -26,7 +26,6 @@ import java.util.Arrays;
 public class RecipeIngredientSearch extends ActivityBase
         implements RecipeIngredientSearchAdapter.OnItemClickListener,
         SortingFragment.OnSortClick {
-    private RecyclerView ingredientRecycleView;
     private RecipeIngredientSearchAdapter adapter;
 
     /**
@@ -57,7 +56,7 @@ public class RecipeIngredientSearch extends ActivityBase
 
         adapter = new RecipeIngredientSearchAdapter(db);
         adapter.setListener(this);
-        ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
+        RecyclerView ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
         ingredientRecycleView.setAdapter(adapter);
         ingredientRecycleView.setLayoutManager(new LinearLayoutManager(this));
 

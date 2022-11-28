@@ -90,14 +90,6 @@ public class RequiredNumberTextInputLayout extends RequiredTextInputLayout {
     }
 
     /**
-     * Validate data to require a double
-     */
-    public void setRequireDouble() {
-        this.requireDouble = true;
-        this.requireLong = false;
-    }
-
-    /**
      * Validate data to require a long
      */
     public void setRequireLong() {
