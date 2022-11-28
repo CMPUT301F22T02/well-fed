@@ -13,6 +13,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.xffffff.wellfed.common.DBConnection;
+import com.xffffff.wellfed.common.OnCompleteListener;
 import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.ingredient.IngredientDB;
 
@@ -30,7 +31,7 @@ public class StorageIngredientDB {
     private final static String TAG = "StorageIngredientDB";
 
     /**
-     * Holds the instance of the Firebase Firestore DB.
+     * Holds the instance of the Firebase FireStore DB.
      */
     private final FirebaseFirestore db;
     /**
@@ -62,7 +63,7 @@ public class StorageIngredientDB {
      */
     public void addStorageIngredient(
             @NonNull StorageIngredient storageIngredient,
-            OnAddStorageIngredientListener listener) {
+            OnCompleteListener<StorageIngredient> listener) {
         Log.d(TAG, "addStorageIngredient:");
         ingredientDB.getIngredient(storageIngredient,
                 (foundIngredient, foundSuccess) -> {
@@ -95,7 +96,7 @@ public class StorageIngredientDB {
      */
     private void addStorageIngredient(StorageIngredient storageIngredient,
                                       Ingredient ingredient,
-                                      OnAddStorageIngredientListener listener) {
+                                      OnCompleteListener<StorageIngredient> listener) {
         Log.d(TAG, "addStorageIngredient:");
         storageIngredient.setId(ingredient.getId());
         HashMap<String, Object> storageIngredientMap = new HashMap<>();
@@ -117,12 +118,12 @@ public class StorageIngredientDB {
                     ingredientDB.updateReferenceCount(ingredient, 1,
                             (updatedIngredient, success) -> {
                                 Log.d(TAG, "updateReferenceCount:");
-                                listener.onAddStoredIngredient(
+                                listener.onComplete(
                                         storageIngredient, success);
                             });
                 }).addOnFailureListener(exception -> {
                     Log.d(TAG, "failure:");
-                    listener.onAddStoredIngredient(storageIngredient, false);
+                    listener.onComplete(storageIngredient, false);
                 });
     }
 
@@ -133,11 +134,11 @@ public class StorageIngredientDB {
      * @param listener          the listener to handle the result
      */
     public void updateStorageIngredient(StorageIngredient storageIngredient,
-                                        OnUpdateStorageIngredientListener listener) {
+                                        OnCompleteListener<StorageIngredient> listener) {
         getStorageIngredient(storageIngredient.getStorageId(),
                 (oldStorageIngredient, getSuccess1) -> {
                     if (!getSuccess1) {
-                        listener.onUpdateStorageIngredient(storageIngredient,
+                        listener.onComplete(storageIngredient,
                                 false);
                         return;
                     }
@@ -153,7 +154,7 @@ public class StorageIngredientDB {
                                         (addedIngredient, addSuccess) -> {
                                             Log.d(TAG, "addIngredient:");
                                             if (!addSuccess) {
-                                                listener.onUpdateStorageIngredient(
+                                                listener.onComplete(
                                                         storageIngredient,
                                                         false);
                                                 return;
@@ -179,7 +180,7 @@ public class StorageIngredientDB {
     public void updateStorageIngredient(StorageIngredient storageIngredient,
                                         StorageIngredient oldStorageIngredient,
                                         Ingredient ingredient,
-                                        OnUpdateStorageIngredientListener listener) {
+                                        OnCompleteListener<StorageIngredient> listener) {
         WriteBatch batch = db.batch();
         DocumentReference storageIngredientRef =
                 this.collection.document(storageIngredient.getStorageId());
@@ -204,18 +205,18 @@ public class StorageIngredientDB {
                 ingredientDB.updateReferenceCount(storageIngredient, 1,
                         (updatedIngredient2, success) -> {
                             if (!success) {
-                                listener.onUpdateStorageIngredient(
+                                listener.onComplete(
                                         storageIngredient, false);
                                 return;
                             }
                             ingredientDB.updateReferenceCount(
                                     oldStorageIngredient, -1,
-                                    (updatedIngredient3, success2) -> listener.onUpdateStorageIngredient(
+                                    (updatedIngredient3, success2) -> listener.onComplete(
                                             storageIngredient, success2));
                         });
             } else {
                 Log.d(TAG, "Failed to update storage ingredient");
-                listener.onUpdateStorageIngredient(storageIngredient, false);
+                listener.onComplete(storageIngredient, false);
             }
         });
     }
@@ -227,19 +228,19 @@ public class StorageIngredientDB {
      * @param listener         the listener to handle the result
      */
     public void deleteStorageIngredient(StorageIngredient storageIngredient,
-                                        OnDeleteStorageIngredientListener listener) {
+                                        OnCompleteListener<StorageIngredient> listener) {
         this.collection.document(storageIngredient.getStorageId()).delete()
                 .addOnSuccessListener(onDelete -> {
                     Log.d(TAG, "DocumentSnapshot successfully deleted!");
                     ingredientDB.updateReferenceCount(storageIngredient, -1,
                             (updatedIngredient, success) -> {
                                 Log.d(TAG, "updateReferenceCount:");
-                                listener.onDeleteStorageIngredient(
+                                listener.onComplete(
                                         storageIngredient, success);
                             });
                 }).addOnFailureListener(failure -> {
                     Log.d(TAG, "Failed to delete the storageIngredient");
-                    listener.onDeleteStorageIngredient(storageIngredient,
+                    listener.onComplete(storageIngredient,
                             false);
                 });
     }
@@ -254,7 +255,7 @@ public class StorageIngredientDB {
      * @param listener the listener to handle the result
      */
     public void getStorageIngredient(String id,
-                                     OnGetStorageIngredientListener listener) {
+                                     OnCompleteListener<StorageIngredient> listener) {
         this.collection.document(id).get()
                 .addOnSuccessListener(storedSnapshot -> {
                     if (storedSnapshot.exists()) {
@@ -262,11 +263,11 @@ public class StorageIngredientDB {
                         this.getStorageIngredient(storedSnapshot, listener);
                     } else {
                         Log.d(TAG, "Failed to get Stored Ingredient");
-                        listener.onGetStoredIngredient(null, false);
+                        listener.onComplete(null, false);
                     }
                 }).addOnFailureListener(failure -> {
                     Log.d(TAG, "Failed to get Stored Ingredient");
-                    listener.onGetStoredIngredient(null, false);
+                    listener.onComplete(null, false);
                 });
     }
 
@@ -277,7 +278,7 @@ public class StorageIngredientDB {
      * @param listener the listener to call when the ingredient is found
      */
     public void getStorageIngredient(DocumentSnapshot snapshot,
-                                     OnGetStorageIngredientListener listener) {
+                                     OnCompleteListener<StorageIngredient> listener) {
         StorageIngredient storageIngredient =
                 new StorageIngredient(snapshot.getString("Description"));
         storageIngredient.setStorageId(snapshot.getId());
@@ -291,11 +292,11 @@ public class StorageIngredientDB {
                 (DocumentReference) snapshot.get("Ingredient");
         assert ingredientReference != null;
         storageIngredient.setId(ingredientReference.getId());
-        listener.onGetStoredIngredient(storageIngredient, true);
+        listener.onComplete(storageIngredient, true);
     }
 
     /**
-     * Gets a sorted query for StorageIngredients in Firestore
+     * Gets a sorted query for StorageIngredients in FireStore
      *
      * @param field the field to sort by
      * @return the query
@@ -305,7 +306,7 @@ public class StorageIngredientDB {
     }
 
     /**
-     * getSearchedQuery returns a query for StorageIngredients in Firestore
+     * getSearchedQuery returns a query for StorageIngredients in FireStore
      * @param field the field to search by
      * @return the query
      */
@@ -315,19 +316,19 @@ public class StorageIngredientDB {
     }
 
     /**
-     * getAllStorageIngredients returns all StorageIngredients in Firestore
+     * getAllStorageIngredients returns all StorageIngredients in FireStore
      * @param listener the listener to handle the result
      */
-    public void getAllStorageIngredients(OnAllIngredients listener) {
+    public void getAllStorageIngredients(OnCompleteListener<ArrayList<StorageIngredient>> listener) {
         // If collection is empty, return empty query
         if (this.collection == null) {
-            listener.onAllIngredients(null, false);
+            listener.onComplete(null, false);
             return;
         }
         ArrayList<StorageIngredient> storageIngredients = new ArrayList<>();
         this.collection.get().addOnSuccessListener(queryDocumentSnapshots -> {
             if (queryDocumentSnapshots.size() == 0) {
-                listener.onAllIngredients(storageIngredients, true);
+                listener.onComplete(storageIngredients, true);
                 return;
             }
             AtomicInteger i = new AtomicInteger(queryDocumentSnapshots.size());
@@ -360,82 +361,11 @@ public class StorageIngredientDB {
                     storageIngredients.add(storageIngredient);
                     found.getAndAdd(1);
                     if (found.get() == i.get()) {
-                        listener.onAllIngredients(storageIngredients, true);
+                        listener.onComplete(storageIngredients, true);
                     }
                 }).addOnFailureListener(
-                        failure -> listener.onAllIngredients(null, false));
+                        failure -> listener.onComplete(null, false));
             }
         });
     }
-
-    /**
-     * This interface is used to handle the result of
-     * adding StorageIngredient to the db
-     */
-    public interface OnAddStorageIngredientListener {
-        /**
-         * Called when addStorageIngredient returns a result
-         *
-         * @param storageIngredient the storageIngredient added to the db,
-         *                          null if the storageIngredient was not added
-         * @param success           true if the operation is successful,
-         *                          false otherwise
-         */
-        void onAddStoredIngredient(StorageIngredient storageIngredient,
-                                   Boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of
-     * delete StorageIngredient to the db
-     */
-    public interface OnDeleteStorageIngredientListener {
-        /**
-         * Called when addStorageIngredient returns a result
-         *
-         * @param storageIngredient the storageIngredient deleted from the db
-         * @param success           true if the operation is successful, false
-         *                          otherwise
-         */
-        void onDeleteStorageIngredient(StorageIngredient storageIngredient,
-                                       Boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of
-     * finding StorageIngredient to the db
-     */
-    public interface OnGetStorageIngredientListener {
-        /**
-         * Called when addStorageIngredient returns a result
-         *
-         * @param storageIngredient the storageIngredient returned by the db
-         * @param success           true if the operation is successful, false
-         *                          otherwise
-         */
-        void onGetStoredIngredient(StorageIngredient storageIngredient,
-                                   Boolean success);
-    }
-
-    /**
-     * This interface is used to handle the result of
-     * finding StorageIngredient to the db
-     */
-    public interface OnUpdateStorageIngredientListener {
-        /**
-         * Called when addStorageIngredient returns a result
-         *
-         * @param storageIngredient the storageIngredient returned by the db
-         * @param success           true if the operation is successful, false
-         *                          otherwise
-         */
-        void onUpdateStorageIngredient(StorageIngredient storageIngredient,
-                                       Boolean success);
-    }
-
-    public interface OnAllIngredients {
-        void onAllIngredients(ArrayList<StorageIngredient> ingredients,
-                              boolean success);
-    }
-
 }
