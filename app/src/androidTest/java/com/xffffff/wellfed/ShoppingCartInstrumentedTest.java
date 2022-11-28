@@ -530,7 +530,7 @@ public class ShoppingCartInstrumentedTest {
         swipeUp();
         closeSoftKeyboard();
         Thread.sleep(timeout);
-        onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Bacon")))))
+        onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText("Bacon Breakfast")))))
                 .perform(click());
 
         swipeUp();
@@ -599,14 +599,15 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(timeout);
 
+        closeSoftKeyboard();
         onView(Matchers.allOf(withId(R.id.editButton), withParent(withChild(withText(ingredient)))))
                 .perform(click());
 
         Thread.sleep(timeout);
 
         onView(withId(R.id.edit_amountInput)).perform(clearText(), typeText("3"));
-        Thread.sleep(2000);
         closeSoftKeyboard();
+        Thread.sleep(2000);
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
