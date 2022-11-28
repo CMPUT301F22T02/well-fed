@@ -61,6 +61,7 @@ public class ShoppingCartInstrumentedTest {
     private void addIngredient(String description) throws InterruptedException {
         onView(withId(R.id.ingredient_storage_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.descriptionInputEditText)).perform(typeText(description));
         closeSoftKeyboard();
@@ -85,14 +86,13 @@ public class ShoppingCartInstrumentedTest {
 
         onView(withId(R.id.ingredient_save_button)).perform(click());
 
-        Thread.sleep(2000);
-
         onView(withId(R.id.meal_book_item)).perform(click());
     }
 
     private void addRecipe(String title) throws InterruptedException {
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
+        Thread.sleep(1000);
 
         onView(withId(R.id.edit_recipe_title)).perform(typeText(title));
         closeSoftKeyboard();
@@ -150,7 +150,6 @@ public class ShoppingCartInstrumentedTest {
         Thread.sleep(timeout);
 
         onView(withId(R.id.save_fab)).perform(click());
-
         Thread.sleep(2000);
 
         onView(withId(R.id.meal_book_item)).perform(click());
@@ -467,6 +466,8 @@ public class ShoppingCartInstrumentedTest {
 
         cleanUpMealPlan(mealPlan1);
 
+        Thread.sleep(1000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
         Thread.sleep(5000);
 
         onView(withText("Eggs")).check(matches(isDisplayed()));
