@@ -551,7 +551,6 @@ import org.junit.runner.RunWith;
 
     /**
      * Test editing the details of a Recipe
-     * TODO: deal with thread.sleep?
      */
     @Test public void testEditingARecipe() throws InterruptedException {
         typeMockRecipe("Egg Wrap");
@@ -565,6 +564,7 @@ import org.junit.runner.RunWith;
                 hasDescendant(withText("Egg Wrap")), click()));
 
         // press edit button
+        Thread.sleep(timeout);
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(timeout);
         // test editing each field individually
@@ -597,6 +597,7 @@ import org.junit.runner.RunWith;
                 matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
+        Thread.sleep(timeout);
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(timeout);
 
@@ -629,6 +630,7 @@ import org.junit.runner.RunWith;
                 matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
+        Thread.sleep(timeout);
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(timeout);
 
@@ -663,6 +665,7 @@ import org.junit.runner.RunWith;
                 matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
+        Thread.sleep(timeout);
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(timeout);
 
@@ -695,6 +698,7 @@ import org.junit.runner.RunWith;
                 matches(hasDescendant(withText("Egg | Protein"))));
 
         // press edit button
+        Thread.sleep(timeout);
         onView(withId(R.id.save_fab)).perform(click());
         Thread.sleep(timeout);
 
