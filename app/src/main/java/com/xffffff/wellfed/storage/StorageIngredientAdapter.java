@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.color.MaterialColors;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
+import com.xffffff.wellfed.common.OnItemClickListener;
+import com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient;
+import com.xffffff.wellfed.shoppingcart.ShoppingCartIngredientAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,14 +85,6 @@ public class StorageIngredientAdapter
         this.listener = listener;
     }
 
-
-    /**
-     * The on click listener interface for the adapter.
-     */
-    public interface OnItemClickListener {
-        void onItemClick(StorageIngredient storageIngredient);
-    }
-
     /**
      * The view holder class for the storage ingredient list.
      */
@@ -120,7 +115,7 @@ public class StorageIngredientAdapter
          * @param listener          the listener to set for the view holder
          */
         public void bind(StorageIngredient storageIngredient,
-                         OnItemClickListener listener) {
+                         OnItemClickListener<StorageIngredient> listener) {
             Log.d(TAG, "bind:");
             this.textView.setText(storageIngredient.getDescription());
             // Limit subtext to 15 characters for both category and location

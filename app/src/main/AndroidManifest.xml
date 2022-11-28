@@ -81,7 +81,7 @@
         </activity>
 
         <activity
-            android:name=".ingredient.IngredientSearch"
+            android:name=".ingredient.IngredientSearchActivity"
             android:exported="false"
             android:parentActivityName=".ingredient.IngredientEditActivity">
             <meta-data
@@ -89,7 +89,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".recipe.RecipesSearch"
+            android:name=".recipe.RecipeSearchActivity"
             android:exported="false"
             android:parentActivityName=".mealplan.MealPlanEditActivity">
             <meta-data

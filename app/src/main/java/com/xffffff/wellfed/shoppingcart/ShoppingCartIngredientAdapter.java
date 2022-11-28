@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
+import com.xffffff.wellfed.common.OnItemClickListener;
 
 import java.util.Locale;
 
@@ -23,7 +24,7 @@ import java.util.Locale;
  * </p>
  */
 public class ShoppingCartIngredientAdapter
-    extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
+        extends DBAdapter<ShoppingCartIngredientAdapter.ViewHolder> {
     /**
      * The shopping cart db to get the ingredients from.
      */
@@ -41,7 +42,8 @@ public class ShoppingCartIngredientAdapter
 
     private OnCheckedListener onCheckedListener;
 
-    public void setOnCheckedChangeListener(OnCheckedListener onCheckedListener) {
+    public void setOnCheckedChangeListener(
+            OnCheckedListener onCheckedListener) {
         this.onCheckedListener = onCheckedListener;
     }
 
@@ -52,16 +54,14 @@ public class ShoppingCartIngredientAdapter
      * @param viewType int for the adapter.
      * @return ViewHolder object for the adapter.
      */
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(
-        @NonNull ViewGroup parent, int viewType) {
+    @NonNull @Override public ViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View shoppingCartIngredientView =
-            inflater.inflate(R.layout.shopping_cart_ingredient, parent,
-                false);
+                inflater.inflate(R.layout.shopping_cart_ingredient, parent,
+                        false);
 
         return new ViewHolder(shoppingCartIngredientView);
     }
@@ -72,27 +72,33 @@ public class ShoppingCartIngredientAdapter
      * @param holder   ViewHolder object for the adapter.
      * @param position int for the adapter.
      */
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,
-                                 int position) {
+    @Override public void onBindViewHolder(@NonNull ViewHolder holder,
+                                           int position) {
         DocumentSnapshot doc = getSnapshot(position);
         ShoppingCartIngredient shoppingCartIngredient =
                 db.snapshotToShoppingCartIngredient(doc);
 
         holder.description.setText(shoppingCartIngredient.getDescription());
-        String amountText = String.format(Locale.CANADA, "%.2f", shoppingCartIngredient.getAmount());
-        holder.subtext.setText(amountText + " " + shoppingCartIngredient.getUnit() + " | "
-                + shoppingCartIngredient.getCategory());
+        String amountText = String.format(Locale.CANADA, "%.2f",
+                shoppingCartIngredient.getAmount());
+        holder.subtext.setText(
+                amountText + " " + shoppingCartIngredient.getUnit() + " | " +
+                        shoppingCartIngredient.getCategory());
         holder.checkBox.setChecked(shoppingCartIngredient.isPickedUp);
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (onCheckedListener == null) return;
-            onCheckedListener.onCheckBoxClick(getSnapshot(holder
-                    .getAdapterPosition()).getString("id"), isChecked);
+            if (onCheckedListener == null) {
+                return;
+            }
+            onCheckedListener.onCheckBoxClick(
+                    getSnapshot(holder.getAdapterPosition()).getString("id"),
+                    isChecked);
         });
 
         holder.view.setOnClickListener(v -> {
-            if (onItemClickListener == null | !holder.checkBox.isChecked()) return;
+            if (onItemClickListener == null | !holder.checkBox.isChecked()) {
+                return;
+            }
             onItemClickListener.onItemClick(shoppingCartIngredient);
         });
 
@@ -104,8 +110,7 @@ public class ShoppingCartIngredientAdapter
      *
      * @return int for the adapter.
      */
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return super.getItemCount();
     }
 
@@ -117,23 +122,17 @@ public class ShoppingCartIngredientAdapter
     }
 
     /**
-     * onItemClickListner interface for the ShoppingCartIngredientAdapter.
-     */
-    public interface OnItemClickListener {
-        void onItemClick(ShoppingCartIngredient shoppingCartIngredient);
-    }
-
-    /**
      * onItemClickListener object for the ShoppingCartIngredientAdapter.
      */
-    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener<ShoppingCartIngredient> onItemClickListener;
 
     /**
      * setOnItemClickListener method for the ShoppingCartIngredientAdapter.
      *
      * @param onItemClickListener OnItemClickListener object for the adapter.
      */
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(
+            OnItemClickListener<ShoppingCartIngredient> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -152,9 +151,9 @@ public class ShoppingCartIngredientAdapter
             super(itemView);
             view = itemView;
             description = itemView.findViewById(
-                R.id.shopping_cart_ingredient_description);
+                    R.id.shopping_cart_ingredient_description);
             subtext = itemView.findViewById(
-                R.id.shopping_cart_ingredient_subtext);
+                    R.id.shopping_cart_ingredient_subtext);
             checkBox = itemView.findViewById(R.id.checkBox);
         }
     }

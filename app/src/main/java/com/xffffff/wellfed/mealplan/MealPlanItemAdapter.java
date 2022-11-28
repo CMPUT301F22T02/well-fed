@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ItemAdapter;
+import com.xffffff.wellfed.common.OnItemClickListener;
 
 /**
  * The MealPlanItemAdapter class binds ArrayList to RecyclerView.
@@ -71,16 +72,6 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
     }
 
     /**
-     * OnItemClickListener interface. The listener for an item click in the
-     * RecyclerView.
-     *
-     * @param <Item> The type of item in the ArrayList.
-     */
-    public interface OnItemClickListener<Item> {
-        void onItemClick(Item item);
-    }
-
-    /**
      * ItemViewHolder class holds the view for the item.
      */
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -97,20 +88,20 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
             imageView = itemView.findViewById(R.id.imageView);
         }
 
-        public MaterialCardView getCardView() {
-            return cardView;
-        }
+public MaterialCardView getCardView() {
+return cardView;
+}
 
-        public TextView getPrimaryTextView() {
-            return primaryTextView;
-        }
+public TextView getPrimaryTextView() {
+return primaryTextView;
+}
 
-        public TextView getSecondaryTextView() {
-            return secondaryTextView;
-        }
+public TextView getSecondaryTextView() {
+return secondaryTextView;
+}
 
-        public ImageView getImageView() {
-            return imageView;
-        }
+public ImageView getImageView() {
+return imageView;
+}
     }
 }

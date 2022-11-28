@@ -23,7 +23,7 @@ import java.util.HashMap;
  * ShoppingCartIngredientController is a class that contains methods for
  * interacting with the shopping cart
  */
-public class ShoppingCartIngredientController {
+public class ShoppingCartController {
     /**
      * ShoppingCart adapter. This is used to update the recycler view.
      */
@@ -62,7 +62,7 @@ public class ShoppingCartIngredientController {
      *
      * @param activity The activity that the controller is attached to.
      */
-    public ShoppingCartIngredientController(Activity activity) {
+    public ShoppingCartController(Activity activity) {
         DBConnection connection = new DBConnection(activity.getApplicationContext());
         db = new ShoppingCartDB(connection);
         adapter = new ShoppingCartIngredientAdapter(db);
@@ -371,7 +371,8 @@ public class ShoppingCartIngredientController {
                         }
                 ));
             } else {
-                db.deleteIngredient(shoppingCartIngredient.getId(), (deleteSuccess -> {
+                db.deleteIngredient(shoppingCartIngredient.getId(),
+                        ((deleteIngredient, deleteSuccess) -> {
 
                 }));
             }

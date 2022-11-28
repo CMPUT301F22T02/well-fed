@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xffffff.wellfed.ActivityBase;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBConnection;
+import com.xffffff.wellfed.common.OnItemClickListener;
 import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
 
@@ -22,9 +23,9 @@ import java.util.Arrays;
  * in the user's ingredient storage, or previously added recipe ingredients
  * to add to a recipe
  */
-public class IngredientSearch extends ActivityBase
-        implements IngredientSearchAdapter.OnItemClickListener,
-        SortingFragment.OnSortClick {
+public class IngredientSearchActivity extends ActivityBase
+        implements OnItemClickListener<Ingredient>,
+                   SortingFragment.OnSortClick {
     private IngredientSearchAdapter adapter;
 
     /**

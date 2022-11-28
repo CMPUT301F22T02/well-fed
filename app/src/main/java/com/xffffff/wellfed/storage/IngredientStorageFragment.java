@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.Launcher;
+import com.xffffff.wellfed.common.OnItemClickListener;
 import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
 import com.xffffff.wellfed.ingredient.IngredientContract;
@@ -26,8 +27,7 @@ import java.util.Arrays;
  * ingredients in the user's storage.
  */
 public class IngredientStorageFragment extends Fragment
-        implements Launcher<StorageIngredient>,
-                   StorageIngredientAdapter.OnItemClickListener,
+        implements Launcher<StorageIngredient>, OnItemClickListener<StorageIngredient>,
                    SortingFragment.OnSortClick {
     /**
      * The recycler view for the ingredients.

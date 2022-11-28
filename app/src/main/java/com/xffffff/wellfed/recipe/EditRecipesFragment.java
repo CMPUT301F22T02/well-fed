@@ -30,7 +30,7 @@ public class EditRecipesFragment extends EditRecyclerViewFragment<Recipe> {
      * @return The intent to add a recipe.
      */
     public Intent createOnSearchIntent(Recipe item) {
-        Intent intent = new Intent(getContext(), RecipesSearch.class);
+        Intent intent = new Intent(getContext(), RecipeSearchActivity.class);
         intent.putExtra("item", item);
         return intent;
     }

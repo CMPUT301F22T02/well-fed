@@ -34,7 +34,7 @@ public class ShoppingCartFragment extends Fragment
     /**
      * Controller for the ingredients.
      */
-    private ShoppingCartIngredientController controller;
+    private ShoppingCartController controller;
     /**
      * Selected shopping cart ingredient.
      */
@@ -84,7 +84,7 @@ public class ShoppingCartFragment extends Fragment
     public View onCreateView(
         @NonNull LayoutInflater inflater, @Nullable ViewGroup container,
         @Nullable Bundle savedInstanceState) {
-        controller = new ShoppingCartIngredientController(requireActivity());
+        controller = new ShoppingCartController(requireActivity());
 
         adapter = controller.getAdapter();
         return inflater.inflate(R.layout.fragment_shopping_cart, container,
@@ -119,7 +119,7 @@ public class ShoppingCartFragment extends Fragment
             controller.updateCheckedStatus(id, isChecked);
         });
 
-        adapter.setOnItemClickListener(shoppingCartIngredient -> {
+        adapter.setOnItemClickListener((shoppingCartIngredient) -> {
             selectedShoppingCartIngredient = shoppingCartIngredient;
             String description = selectedShoppingCartIngredient.getDescription();
             StorageIngredient storageIngredient = new StorageIngredient(description);
