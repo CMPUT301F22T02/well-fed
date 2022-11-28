@@ -10,7 +10,7 @@ import java.util.Locale;
 /**
  * Adapter for a recipe ingredient, in the recyclerview for recipe ingredients
  */
-public class IngredientAdapter extends EditItemAdapter<Ingredient> {
+public class EditIngredientAdapter extends EditItemAdapter<Ingredient> {
 
     /**
      * Binds a viewholder to an ingredient

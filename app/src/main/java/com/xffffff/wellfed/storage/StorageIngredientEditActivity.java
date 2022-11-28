@@ -22,8 +22,7 @@ import java.util.Objects;
 /**
  * The activity that represents editing an Ingredient.
  */
-public class StorageIngredientEditActivity extends EditActivityBase
-        implements ConfirmDialog.OnConfirmListener {
+public class StorageIngredientEditActivity extends EditActivityBase {
     /**
      * RequiredTextInputLayout for the StorageIngredient's description.
      */

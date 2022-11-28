@@ -13,7 +13,7 @@ import com.xffffff.wellfed.common.RequiredDropdownTextInputLayout;
 import com.xffffff.wellfed.common.RequiredNumberTextInputLayout;
 import com.xffffff.wellfed.common.RequiredTextInputLayout;
 import com.xffffff.wellfed.ingredient.EditIngredientsFragment;
-import com.xffffff.wellfed.ingredient.IngredientAdapter;
+import com.xffffff.wellfed.ingredient.EditIngredientAdapter;
 import com.xffffff.wellfed.recipe.EditRecipesAdapter;
 import com.xffffff.wellfed.recipe.EditRecipesFragment;
 
@@ -43,7 +43,7 @@ public class MealPlanEditActivity extends EditActivityBase {
     /**
      * ingredientEditAdapter is the adapter to edit the ingredients.
      */
-    private IngredientAdapter ingredientEditAdapter;
+    private EditIngredientAdapter ingredientEditAdapter;
     /**
      * recipesEditAdapter is the adapter to edit the recipes.
      */
@@ -93,7 +93,7 @@ public class MealPlanEditActivity extends EditActivityBase {
 
         EditIngredientsFragment ingredientEditFragment =
                 new EditIngredientsFragment();
-        this.ingredientEditAdapter = new IngredientAdapter();
+        this.ingredientEditAdapter = new EditIngredientAdapter();
         ingredientEditFragment.setAdapter(this.ingredientEditAdapter);
         ingredientEditFragment.setTitle("Ingredients");
         getSupportFragmentManager().beginTransaction()
