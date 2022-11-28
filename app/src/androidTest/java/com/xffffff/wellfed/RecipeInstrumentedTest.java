@@ -749,7 +749,7 @@ import org.junit.runner.RunWith;
         // change all of the fields
         onView(withId(R.id.edit_descriptionInput)).perform(clearText());
         onView(withId(R.id.edit_descriptionInput)).perform(
-                typeText("Duck Egg"));
+                typeText("Duck egg"));
         closeSoftKeyboard();
 
         onView(withId(R.id.edit_categoryInput)).perform(clearText());
@@ -773,7 +773,7 @@ import org.junit.runner.RunWith;
         onView(withId(R.id.recyclerView)).check(
                 matches(hasDescendant(withText("3.00 count"))));
         onView(withId(R.id.recyclerView)).check(
-                matches(hasDescendant(withText("Duck Egg"))));
+                matches(hasDescendant(withText("Duck egg"))));
 
     }
 

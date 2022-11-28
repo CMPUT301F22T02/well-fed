@@ -188,7 +188,7 @@ public class MealPlanInstrumentedTest {
      */
     private void addMealPlan(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
-        String ingredient = "Sliced Bread";
+        String ingredient = "Sliced bread";
 
         onView(withId(R.id.meal_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
@@ -242,7 +242,7 @@ public class MealPlanInstrumentedTest {
      */
     private void addMealPlanAndIngredientAndRecipe(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
-        String ingredient = "Sliced Bread";
+        String ingredient = "Sliced bread";
 
         onView(withId(R.id.meal_book_item)).perform(click());
 
@@ -925,6 +925,6 @@ public class MealPlanInstrumentedTest {
         cleanUpMealPlan(thirdMeal);
         cleanUpMealPlan(fourthMeal);
         cleanUpRecipe("Eggs and Bacon");
-        cleanUpIngredient("Sliced Bread");
+        cleanUpIngredient("Sliced bread");
     }
 }
