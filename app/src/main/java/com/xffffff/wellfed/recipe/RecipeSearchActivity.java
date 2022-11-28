@@ -12,7 +12,7 @@ import com.xffffff.wellfed.R;
 /**
  * Activity which allows user to search for an existing Recipe
  */
-public class RecipesSearch extends ActivityBase {
+public class RecipeSearchActivity extends ActivityBase {
     /**
      * The onCreate method for the ingredient search screen.
      *

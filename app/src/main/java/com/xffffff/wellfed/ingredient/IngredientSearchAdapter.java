@@ -13,7 +13,7 @@ import com.xffffff.wellfed.common.DBAdapter;
 
 /**
  * Adapter that connects the RecyclerView and data for the ingredients
- * in the {@link IngredientSearch}
+ * in the {@link IngredientSearchActivity}
  */
 public class IngredientSearchAdapter
         extends DBAdapter<IngredientSearchAdapter.ViewHolder> {

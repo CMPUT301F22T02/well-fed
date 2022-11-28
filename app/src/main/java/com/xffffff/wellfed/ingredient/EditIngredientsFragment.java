@@ -31,7 +31,7 @@ public class EditIngredientsFragment
      * @return The intent to add an ingredient.
      */
     public Intent createOnSearchIntent(Ingredient item) {
-        Intent intent = new Intent(getContext(), IngredientSearch.class);
+        Intent intent = new Intent(getContext(), IngredientSearchActivity.class);
         intent.putExtra("item", item);
         return intent;
     }

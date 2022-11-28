@@ -97,20 +97,20 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
             imageView = itemView.findViewById(R.id.imageView);
         }
 
-        public MaterialCardView getCardView() {
-            return cardView;
-        }
+public MaterialCardView getCardView() {
+return cardView;
+}
 
-        public TextView getPrimaryTextView() {
-            return primaryTextView;
-        }
+public TextView getPrimaryTextView() {
+return primaryTextView;
+}
 
-        public TextView getSecondaryTextView() {
-            return secondaryTextView;
-        }
+public TextView getSecondaryTextView() {
+return secondaryTextView;
+}
 
-        public ImageView getImageView() {
-            return imageView;
-        }
+public ImageView getImageView() {
+return imageView;
+}
     }
 }

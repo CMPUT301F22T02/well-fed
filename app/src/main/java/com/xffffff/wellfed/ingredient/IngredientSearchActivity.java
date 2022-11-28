@@ -22,7 +22,7 @@ import java.util.Arrays;
  * in the user's ingredient storage, or previously added recipe ingredients
  * to add to a recipe
  */
-public class IngredientSearch extends ActivityBase
+public class IngredientSearchActivity extends ActivityBase
         implements IngredientSearchAdapter.OnItemClickListener,
         SortingFragment.OnSortClick {
     private IngredientSearchAdapter adapter;

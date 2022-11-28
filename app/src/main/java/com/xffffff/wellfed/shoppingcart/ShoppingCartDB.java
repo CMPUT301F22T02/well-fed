@@ -245,23 +245,14 @@ public class ShoppingCartDB {
      * @param id The id of the ingredient to delete from the shopping cart.
      * @param listener The listener to call when the ingredient is deleted.
      */
-    public void deleteIngredient(String id, OnDelete listener) {
+    public void deleteIngredient(String id, OnCompleteListener<ShoppingCartIngredient> listener) {
         if (id == null) {
-            listener.onDelete(false);
+            listener.onComplete(null, false);
             return;
         }
 
         collection.document(id).delete().addOnCompleteListener(
-                task -> listener.onDelete(task.isSuccessful()));
-    }
-
-    ;
-
-    /**
-     * onDelete is an interface for the deleteIngredient method.
-     */
-    public interface OnDelete {
-        void onDelete(boolean succeess);
+                task -> listener.onComplete(null, task.isSuccessful()));
     }
 
     /**

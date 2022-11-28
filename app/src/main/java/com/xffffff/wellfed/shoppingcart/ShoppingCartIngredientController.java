@@ -371,7 +371,8 @@ public class ShoppingCartIngredientController {
                         }
                 ));
             } else {
-                db.deleteIngredient(shoppingCartIngredient.getId(), (deleteSuccess -> {
+                db.deleteIngredient(shoppingCartIngredient.getId(),
+                        ((deleteIngredient, deleteSuccess) -> {
 
                 }));
             }
