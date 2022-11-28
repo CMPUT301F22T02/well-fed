@@ -31,6 +31,8 @@ public class ShoppingCartIngredientAdapter
 
     /**
      * Constructor for the adapter
+     *
+     * @param db the shopping cart db to get the ingredients from
      */
     public ShoppingCartIngredientAdapter(ShoppingCartDB db) {
         super(db.getQuery());

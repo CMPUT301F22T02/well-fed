@@ -6,16 +6,15 @@
 <title>MealPlanIngredientItemAdapter (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -148,6 +147,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">MealPlanIngredientItemAdapter</span>
 extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter</a>&lt;<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&gt;</pre>
+<div class="block">MealPlanIngredientItemAdapter is the adapter for the RecyclerView in the
+ MealPlanIngredientItemActivity. It holds a list of ingredients and displays
+ them in a list.</div>
 </li>
 </ul>
 </div>
@@ -155,7 +157,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -172,7 +174,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 </ul>
 </section>
 <!-- =========== FIELD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="field.summary">
 <!--   -->
@@ -189,7 +191,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -210,7 +212,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -228,8 +230,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">onBindViewHolder</a></span>&#8203;(androidx.recyclerview.widget.RecyclerView.ViewHolder&nbsp;holder1,
                 int&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">onBindViewHolder method binds a MealPlan object and a MealPlanViewHolder
- object.</div>
+<div class="block">onBindViewHolders binds the data to the view holder.</div>
 </td>
 </tr>
 </table>
@@ -271,7 +272,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -290,7 +291,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -305,9 +306,7 @@ extends <a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.m
 <pre class="methodSignature">public&nbsp;void&nbsp;onBindViewHolder&#8203;(@NonNull
                              androidx.recyclerview.widget.RecyclerView.ViewHolder&nbsp;holder1,
                              int&nbsp;position)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="MealPlanItemAdapter.html#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">MealPlanItemAdapter</a></code></span></div>
-<div class="block">onBindViewHolder method binds a MealPlan object and a MealPlanViewHolder
- object.</div>
+<div class="block">onBindViewHolders binds the data to the view holder.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="MealPlanItemAdapter.html#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">onBindViewHolder</a></code>&nbsp;in class&nbsp;<code><a href="MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter</a>&lt;<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&gt;</code></dd>

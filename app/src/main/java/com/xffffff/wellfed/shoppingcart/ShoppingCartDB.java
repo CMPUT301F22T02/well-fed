@@ -46,6 +46,8 @@ public class ShoppingCartDB {
 
     /**
      * Constructor for the ShoppingCartDB.
+     *
+     * @param connection The DBConnection to use.
      */
     public ShoppingCartDB(DBConnection connection) {
         this.ingredientDB = new IngredientDB(connection);
@@ -124,6 +126,9 @@ public class ShoppingCartDB {
 
     /**
      * Update an ingredient in the shopping cart.
+     *
+     * @param ingredient The ingredient to update in the shopping cart.
+     * @param listener  The listener to call when the ingredient is updated.
      */
     public void updateIngredient(ShoppingCartIngredient ingredient,
                                  OnCompleteListener<ShoppingCartIngredient> listener) {
@@ -157,6 +162,10 @@ public class ShoppingCartDB {
 
     /**
      * Update an ingredient in the shopping cart.
+     *
+     * @param id The id of the ingredient to update in the shopping cart.
+     * @param isPickedUp The boolean to set the ingredient to.
+     * @param listener  The listener to call when the ingredient is updated.
      */
     public void updateIngredient(String id, boolean isPickedUp,
                                  OnPickedUpChange listener) {
@@ -177,12 +186,17 @@ public class ShoppingCartDB {
 
     }
 
+    /**
+     * onPickedUpChange is an interface for the updateIngredient method.
+     */
     public interface OnPickedUpChange {
-        public void onPickedUpChange(boolean success);
+        void onPickedUpChange(boolean success);
     }
 
     /**
      * Get the shopping cart.
+     *
+     * @param listener The listener to call when the shopping cart is retrieved.
      */
     public void getShoppingCart(OnCompleteListener<ArrayList<ShoppingCartIngredient>> listener) {
         collection.get().addOnCompleteListener(task -> {
@@ -210,6 +224,9 @@ public class ShoppingCartDB {
 
     /**
      * Delete an ingredient from the shopping cart.
+     *
+     * @param ingredient The ingredient to delete from the shopping cart.
+     * @param listener The listener to call when the ingredient is deleted.
      */
     public void deleteIngredient(ShoppingCartIngredient ingredient,
                                  OnCompleteListener<ShoppingCartIngredient> listener) {
@@ -223,6 +240,11 @@ public class ShoppingCartDB {
                 task.isSuccessful()));
     }
 
+    /**
+     * Delete all ingredients from the shopping cart.
+     * @param id The id of the ingredient to delete from the shopping cart.
+     * @param listener The listener to call when the ingredient is deleted.
+     */
     public void deleteIngredient(String id, OnDelete listener) {
         if (id == null) {
             listener.onDelete(false);
@@ -235,13 +257,18 @@ public class ShoppingCartDB {
 
     ;
 
+    /**
+     * onDelete is an interface for the deleteIngredient method.
+     */
     public interface OnDelete {
-        public void onDelete(boolean succeess);
+        void onDelete(boolean succeess);
     }
 
     /**
      * Update the shopping cart with the ingredients from the meal plan if
      * not present in the StorageIngredientDB.
+     *
+     * @param listener The listener to call when the shopping cart is updated.
      */
     public void updateShoppingCart(OnCompleteListener<ShoppingCart> listener) {
         mealPlanDB.getMealPlans((mealPlan, success) -> {

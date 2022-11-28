@@ -6,16 +6,15 @@
 <title>DBAdapter (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -27,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -141,7 +140,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../mealplan/MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a></code>, <code><a href="../recipe/RecipeAdapter.html" title="class in com.xffffff.wellfed.recipe">RecipeAdapter</a></code>, <code><a href="../recipe/RecipeIngredientSearchAdapter.html" title="class in com.xffffff.wellfed.recipe">RecipeIngredientSearchAdapter</a></code>, <code><a href="../shoppingcart/ShoppingCartIngredientAdapter.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></code>, <code><a href="../ingredient/StorageIngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">StorageIngredientAdapter</a></code></dd>
+<dd><code><a href="../ingredient/IngredientSearchAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter</a></code>, <code><a href="../mealplan/MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a></code>, <code><a href="../recipe/RecipeAdapter.html" title="class in com.xffffff.wellfed.recipe">RecipeAdapter</a></code>, <code><a href="../shoppingcart/ShoppingCartIngredientAdapter.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></code>, <code><a href="../storage/StorageIngredientAdapter.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">DBAdapter&lt;VH extends androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</span>
@@ -159,7 +158,7 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -184,7 +183,7 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -198,14 +197,16 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.google.firebase.firestore.Query)">DBAdapter</a></span>&#8203;(com.google.firebase.firestore.Query&nbsp;query)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">DBAdapter constructor - sets the query and registers the listener</div>
+</td>
 </tr>
 </table>
 </li>
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -219,60 +220,68 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSnapshots()">clearSnapshots</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getItemCount()">getItemCount</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">getItemCount - gets the number of items</div>
+</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected com.google.firebase.firestore.DocumentSnapshot</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnapshot(int)">getSnapshot</a></span>&#8203;(int&nbsp;index)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">getSnapshot - gets the snapshot at the given position</div>
+</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected java.util.ArrayList&lt;com.google.firebase.firestore.DocumentSnapshot&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnapshots()">getSnapshots</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">getSnapshots - gets the snapshots</div>
+</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDataChanged(com.google.firebase.firestore.DocumentChange)">onDataChanged</a></span>&#8203;(com.google.firebase.firestore.DocumentChange&nbsp;change)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onDataChanged - called when the query is updated</div>
+</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">onEvent</a></span>&#8203;(com.google.firebase.firestore.QuerySnapshot&nbsp;documentSnapshots,
        com.google.firebase.firestore.FirebaseFirestoreException&nbsp;error)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onEvent - called when the query is updated</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOnDataChangedListener(com.xffffff.wellfed.common.DBAdapter.OnDataChangedListener)">setOnDataChangedListener</a></span>&#8203;(<a href="DBAdapter.OnDataChangedListener.html" title="interface in com.xffffff.wellfed.common">DBAdapter.OnDataChangedListener</a>&nbsp;onDataChangedListener)</code></th>
+<td class="colLast">
+<div class="block">setsOnDataChangedListener - sets the listener for data changes</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOnDataChangedListener(com.xffffff.wellfed.common.DBAdapter.OnDataChangedListener)">setOnDataChangedListener</a></span>&#8203;(<a href="DBAdapter.OnDataChangedListener.html" title="interface in com.xffffff.wellfed.common">DBAdapter.OnDataChangedListener</a>&nbsp;onDataChangedListener)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQuery(com.google.firebase.firestore.Query)">setQuery</a></span>&#8203;(com.google.firebase.firestore.Query&nbsp;query)</code></th>
+<td class="colLast">
+<div class="block">setQuery - sets the query and registers the listener</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQuery(com.google.firebase.firestore.Query)">setQuery</a></span>&#8203;(com.google.firebase.firestore.Query&nbsp;query)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startListening()">startListening</a></span>()</code></th>
+<td class="colLast">
+<div class="block">startListening - starts listening to the query</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSnapshots(java.util.List)">setSnapshots</a></span>&#8203;(java.util.List&lt;com.google.firebase.firestore.DocumentSnapshot&gt;&nbsp;snapshots)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startListening()">startListening</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stopListening()">stopListening</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">stopListening - stops listening to the query</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -299,7 +308,7 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -312,13 +321,18 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>DBAdapter</h4>
 <pre>public&nbsp;DBAdapter&#8203;(com.google.firebase.firestore.Query&nbsp;query)</pre>
+<div class="block">DBAdapter constructor - sets the query and registers the listener</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>query</code> - the query</dd>
+</dl>
 </li>
 </ul>
 </li>
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -331,6 +345,11 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>setOnDataChangedListener</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setOnDataChangedListener&#8203;(<a href="DBAdapter.OnDataChangedListener.html" title="interface in com.xffffff.wellfed.common">DBAdapter.OnDataChangedListener</a>&nbsp;onDataChangedListener)</pre>
+<div class="block">setsOnDataChangedListener - sets the listener for data changes</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>onDataChangedListener</code> - the listener</dd>
+</dl>
 </li>
 </ul>
 <a id="setQuery(com.google.firebase.firestore.Query)">
@@ -340,6 +359,11 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>setQuery</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setQuery&#8203;(com.google.firebase.firestore.Query&nbsp;query)</pre>
+<div class="block">setQuery - sets the query and registers the listener</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>query</code> - the query</dd>
+</dl>
 </li>
 </ul>
 <a id="onEvent(com.google.firebase.firestore.QuerySnapshot,com.google.firebase.firestore.FirebaseFirestoreException)">
@@ -352,9 +376,13 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
                     com.google.firebase.firestore.QuerySnapshot&nbsp;documentSnapshots,
                     @Nullable
                     com.google.firebase.firestore.FirebaseFirestoreException&nbsp;error)</pre>
+<div class="block">onEvent - called when the query is updated</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>onEvent</code>&nbsp;in interface&nbsp;<code>com.google.firebase.firestore.EventListener&lt;<a href="DBAdapter.html" title="type parameter in DBAdapter">VH</a> extends androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>documentSnapshots</code> - the query snapshot</dd>
+<dd><code>error</code> - the error</dd>
 </dl>
 </li>
 </ul>
@@ -365,6 +393,11 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>onDataChanged</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onDataChanged&#8203;(com.google.firebase.firestore.DocumentChange&nbsp;change)</pre>
+<div class="block">onDataChanged - called when the query is updated</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>change</code> - the document change</dd>
+</dl>
 </li>
 </ul>
 <a id="getSnapshot(int)">
@@ -374,15 +407,13 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>getSnapshot</h4>
 <pre class="methodSignature">protected&nbsp;com.google.firebase.firestore.DocumentSnapshot&nbsp;getSnapshot&#8203;(int&nbsp;index)</pre>
-</li>
-</ul>
-<a id="clearSnapshots()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearSnapshots</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;clearSnapshots()</pre>
+<div class="block">getSnapshot - gets the snapshot at the given position</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>index</code> - the position</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the snapshot</dd>
+</dl>
 </li>
 </ul>
 <a id="startListening()">
@@ -392,6 +423,7 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>startListening</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;startListening()</pre>
+<div class="block">startListening - starts listening to the query</div>
 </li>
 </ul>
 <a id="stopListening()">
@@ -401,6 +433,7 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>stopListening</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;stopListening()</pre>
+<div class="block">stopListening - stops listening to the query</div>
 </li>
 </ul>
 <a id="getSnapshots()">
@@ -410,15 +443,11 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>getSnapshots</h4>
 <pre class="methodSignature">protected&nbsp;java.util.ArrayList&lt;com.google.firebase.firestore.DocumentSnapshot&gt;&nbsp;getSnapshots()</pre>
-</li>
-</ul>
-<a id="setSnapshots(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSnapshots</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;setSnapshots&#8203;(java.util.List&lt;com.google.firebase.firestore.DocumentSnapshot&gt;&nbsp;snapshots)</pre>
+<div class="block">getSnapshots - gets the snapshots</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the snapshots</dd>
+</dl>
 </li>
 </ul>
 <a id="getItemCount()">
@@ -428,9 +457,12 @@ implements com.google.firebase.firestore.EventListener&lt;com.google.firebase.fi
 <li class="blockList">
 <h4>getItemCount</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;getItemCount()</pre>
+<div class="block">getItemCount - gets the number of items</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getItemCount</code>&nbsp;in class&nbsp;<code>androidx.recyclerview.widget.RecyclerView.Adapter&lt;<a href="DBAdapter.html" title="type parameter in DBAdapter">VH</a> extends androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the number of items</dd>
 </dl>
 </li>
 </ul>

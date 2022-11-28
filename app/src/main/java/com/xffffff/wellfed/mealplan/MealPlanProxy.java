@@ -17,6 +17,8 @@ public class MealPlanProxy extends MealPlan {
 
     /**
      * Get MealPlan
+     *
+     * @return MealPlan object
      */
     public MealPlan getMealPlan() {
         MealPlan mealPlan = new MealPlan(this.getTitle());

@@ -6,16 +6,15 @@
 <title>IngredientEditActivity (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -186,9 +185,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">IngredientEditActivity</span>
-extends <a href="../EditActivityBase.html" title="class in com.xffffff.wellfed">EditActivityBase</a>
-implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.xffffff.wellfed.common">ConfirmDialog.OnConfirmListener</a></pre>
-<div class="block">The activity that represents editing an Ingredient.</div>
+extends <a href="../EditActivityBase.html" title="class in com.xffffff.wellfed">EditActivityBase</a></pre>
+<div class="block">Activity which allows user to edit/add an existing recipe's ingredient</div>
 </li>
 </ul>
 </div>
@@ -196,7 +194,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -213,7 +211,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 </ul>
 </section>
 <!-- =========== FIELD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="field.summary">
 <!--   -->
@@ -244,7 +242,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -265,7 +263,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -282,14 +280,14 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasUnsavedChanges()">hasUnsavedChanges</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Checks if there are any unsaved changes</div>
+<div class="block">Checks if there are unsaved changes while editing the ingredient.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreate(android.os.Bundle)">onCreate</a></span>&#8203;(android.os.Bundle&nbsp;savedInstanceState)</code></th>
 <td class="colLast">
-<div class="block">OnCreate method for the IngredientEdit activity.</div>
+<div class="block">OnCreate method for the activity.</div>
 </td>
 </tr>
 </table>
@@ -371,13 +369,6 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.com.xffffff.wellfed.common.ConfirmDialog.OnConfirmListener">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;com.xffffff.wellfed.common.<a href="../common/ConfirmDialog.OnConfirmListener.html" title="interface in com.xffffff.wellfed.common">ConfirmDialog.OnConfirmListener</a></h3>
-<code><a href="../common/ConfirmDialog.OnConfirmListener.html#onConfirm()">onConfirm</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.android.view.Window.Callback">
 <!--   -->
 </a>
@@ -394,7 +385,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -413,7 +404,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -426,8 +417,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <li class="blockList">
 <h4>onCreate</h4>
 <pre class="methodSignature">protected&nbsp;void&nbsp;onCreate&#8203;(android.os.Bundle&nbsp;savedInstanceState)</pre>
-<div class="block">OnCreate method for the IngredientEdit activity. Is called when the
- activity is created.</div>
+<div class="block">OnCreate method for the activity.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../EditActivityBase.html#onCreate(android.os.Bundle)">onCreate</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.xffffff.wellfed">EditActivityBase</a></code></dd>
@@ -443,7 +433,7 @@ implements <a href="../common/ConfirmDialog.OnConfirmListener.html" title="inter
 <li class="blockList">
 <h4>hasUnsavedChanges</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;hasUnsavedChanges()</pre>
-<div class="block">Checks if there are any unsaved changes</div>
+<div class="block">Checks if there are unsaved changes while editing the ingredient.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../EditActivityBase.html#hasUnsavedChanges()">hasUnsavedChanges</a></code>&nbsp;in class&nbsp;<code><a href="../EditActivityBase.html" title="class in com.xffffff.wellfed">EditActivityBase</a></code></dd>

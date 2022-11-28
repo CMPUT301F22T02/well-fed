@@ -308,6 +308,8 @@ public class MealPlanDB {
      *
      * @param snapshot the snapshot of the MealPlan proxy object to be
      *                 retrieved.
+     *
+     * @return the MealPlan proxy object with the given snapshot.
      */
     public MealPlanProxy getMealPlanProxy(DocumentSnapshot snapshot) {
         MealPlanProxy mealPlan = new MealPlanProxy(snapshot.getString("title"));

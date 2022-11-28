@@ -112,6 +112,8 @@ public class MealPlan implements Serializable {
 
     /**
      * Sets the entire ArrayList of Ingredients in the MealPlan object.
+     *
+     * @param ingredients The ArrayList of Ingredients to be set.
      */
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients.clear();
@@ -157,6 +159,8 @@ public class MealPlan implements Serializable {
 
     /**
      * Sets the entire ArrayList of Recipes in the MealPlan object.
+     *
+     * @param recipes The ArrayList of Recipes to be set.
      */
     public void setRecipes(ArrayList<Recipe> recipes) {
         this.recipes.clear();

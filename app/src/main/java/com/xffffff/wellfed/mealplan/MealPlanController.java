@@ -227,6 +227,8 @@ public class MealPlanController implements DBAdapter.OnDataChangedListener {
 
     /**
      * Get today's meal plan
+     *
+     * @return today's meal plan
      */
     public Pair<MealPlan, Integer> getCurrentMealPlan() {
         Date today = new Date();

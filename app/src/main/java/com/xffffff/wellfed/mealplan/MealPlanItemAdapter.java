@@ -74,7 +74,7 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
      * OnItemClickListener interface. The listener for an item click in the
      * RecyclerView.
      *
-     * @param <Item>
+     * @param <Item> The type of item in the ArrayList.
      */
     public interface OnItemClickListener<Item> {
         void onItemClick(Item item);

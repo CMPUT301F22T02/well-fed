@@ -41,6 +41,8 @@ public class IngredientDB {
 
     /**
      * Constructs an IngredientDB object
+     *
+     * @param connection the DBConnection object to use
      */
     public IngredientDB(DBConnection connection) {
         db = connection.getDB();

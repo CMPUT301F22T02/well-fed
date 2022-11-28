@@ -118,6 +118,7 @@ public class DateUtil {
     /**
      * Returns the date of the last day of the week.
      *
+     * @param date the date
      * @return the date of the last day of the week
      */
     public Date getLastDayOfWeek(Date date) {
@@ -138,6 +139,7 @@ public class DateUtil {
     /**
      * Returns the date as a string in the format specified by the pattern
      *
+     * @param date    the date
      * @param pattern the pattern {@link SimpleDateFormat}
      * @return the date as a string in the format specified by the pattern
      */
@@ -153,6 +155,7 @@ public class DateUtil {
 
     /**
      * Returns true if the date is before today
+     * @param date the date
      * @return true if the date is before today
      */
     public Boolean beforeToday(Date date) {

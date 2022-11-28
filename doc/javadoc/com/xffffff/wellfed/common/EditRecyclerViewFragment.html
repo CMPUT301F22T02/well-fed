@@ -6,16 +6,15 @@
 <title>EditRecyclerViewFragment (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -136,17 +135,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>Item</code> - the type of item to edit</dd>
+</dl>
+<dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><code>android.content.ComponentCallbacks</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="EditItemAdapter.OnDeleteListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnDeleteListener</a>&lt;Item&gt;</code>, <code><a href="EditItemAdapter.OnEditListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnEditListener</a>&lt;Item&gt;</code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../recipe/EditRecipeIngredientsFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipeIngredientsFragment</a></code>, <code><a href="../recipe/EditRecipesFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipesFragment</a></code></dd>
+<dd><code><a href="../ingredient/EditIngredientsFragment.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientsFragment</a></code>, <code><a href="../recipe/EditRecipesFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipesFragment</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">EditRecyclerViewFragment&lt;Item extends java.io.Serializable&gt;</span>
 extends androidx.fragment.app.Fragment
 implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnEditListener</a>&lt;Item&gt;, <a href="EditItemAdapter.OnDeleteListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnDeleteListener</a>&lt;Item&gt;</pre>
+<div class="block">The EditRecyclerViewFragment class is a fragment that displays a
+ list of items that can be edited.</div>
 </li>
 </ul>
 </div>
@@ -154,7 +159,7 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -171,7 +176,7 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -192,7 +197,7 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -208,59 +213,82 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(Item)">add</a></span>&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">add adds an item to the list of items</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>abstract android.content.Intent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createOnEditIntent(Item)">createOnEditIntent</a></span>&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">createOnEditIntent creates an intent for the edit activity</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract android.content.Intent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createOnSearchIntent(Item)">createOnSearchIntent</a></span>&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">createOnSearchIntent creates an intent for the search activity</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasChanged()">hasChanged</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">hasChanged returns true if the list of items has changed</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>android.view.View</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">onCreateView</a></span>&#8203;(android.view.LayoutInflater&nbsp;inflater,
             android.view.ViewGroup&nbsp;container,
             android.os.Bundle&nbsp;savedInstanceState)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onCreateView inflates the view</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onDelete(Item)">onDelete</a></span>&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onDeleted is called when an item is deleted</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onEdit(Item)">onEdit</a></span>&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onEdit is called when an item is edited</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onSearch(Item)">onSearch</a></span>&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onSearch is called when an item is searched</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onSearchActivityResult(android.util.Pair)">onSearchActivityResult</a></span>&#8203;(android.util.Pair&lt;java.lang.String,&#8203;<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&gt;&nbsp;result)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onSearchActivityResult is an abstract method that is called when the
+ search activity returns</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdapter(com.xffffff.wellfed.common.EditItemAdapter)">setAdapter</a></span>&#8203;(<a href="EditItemAdapter.html" title="class in com.xffffff.wellfed.common">EditItemAdapter</a>&lt;<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&gt;&nbsp;adapter)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">setAdapter sets the adapter for the recycler view</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTitle(java.lang.String)">setTitle</a></span>&#8203;(java.lang.String&nbsp;title)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">setTitle sets the title string for the fragment</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -294,7 +322,7 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -313,7 +341,7 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -326,6 +354,11 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 <li class="blockList">
 <h4>setAdapter</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setAdapter&#8203;(<a href="EditItemAdapter.html" title="class in com.xffffff.wellfed.common">EditItemAdapter</a>&lt;<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&gt;&nbsp;adapter)</pre>
+<div class="block">setAdapter sets the adapter for the recycler view</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>adapter</code> - the adapter</dd>
+</dl>
 </li>
 </ul>
 <a id="setTitle(java.lang.String)">
@@ -335,6 +368,11 @@ implements <a href="EditItemAdapter.OnEditListener.html" title="interface in com
 <li class="blockList">
 <h4>setTitle</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setTitle&#8203;(java.lang.String&nbsp;title)</pre>
+<div class="block">setTitle sets the title string for the fragment</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>title</code> - the title string</dd>
+</dl>
 </li>
 </ul>
 <a id="onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)">
@@ -350,9 +388,16 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
                                       android.view.ViewGroup&nbsp;container,
                                       @Nullable
                                       android.os.Bundle&nbsp;savedInstanceState)</pre>
+<div class="block">onCreateView inflates the view</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onCreateView</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inflater</code> - the inflater</dd>
+<dd><code>container</code> - the container</dd>
+<dd><code>savedInstanceState</code> - the saved instance state</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the view</dd>
 </dl>
 </li>
 </ul>
@@ -365,6 +410,13 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>createOnEditIntent</h4>
 <pre class="methodSignature">public abstract&nbsp;android.content.Intent&nbsp;createOnEditIntent&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</pre>
+<div class="block">createOnEditIntent creates an intent for the edit activity</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>item</code> - the item to edit</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the intent</dd>
+</dl>
 </li>
 </ul>
 <a id="createOnSearchIntent(java.io.Serializable)">
@@ -376,6 +428,13 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>createOnSearchIntent</h4>
 <pre class="methodSignature">public abstract&nbsp;android.content.Intent&nbsp;createOnSearchIntent&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</pre>
+<div class="block">createOnSearchIntent creates an intent for the search activity</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>item</code> - the item to search</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the intent</dd>
+</dl>
 </li>
 </ul>
 <a id="onEdit(java.io.Serializable)">
@@ -387,9 +446,12 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>onEdit</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onEdit&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</pre>
+<div class="block">onEdit is called when an item is edited</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="EditItemAdapter.OnEditListener.html#onEdit(Item)">onEdit</a></code>&nbsp;in interface&nbsp;<code><a href="EditItemAdapter.OnEditListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnEditListener</a>&lt;<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a> extends java.io.Serializable&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>item</code> - the item to edit</dd>
 </dl>
 </li>
 </ul>
@@ -402,6 +464,11 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>onSearch</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onSearch&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</pre>
+<div class="block">onSearch is called when an item is searched</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>item</code> - the item to search</dd>
+</dl>
 </li>
 </ul>
 <a id="onDelete(java.io.Serializable)">
@@ -413,9 +480,12 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>onDelete</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onDelete&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</pre>
+<div class="block">onDeleted is called when an item is deleted</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="EditItemAdapter.OnDeleteListener.html#onDelete(Item)">onDelete</a></code>&nbsp;in interface&nbsp;<code><a href="EditItemAdapter.OnDeleteListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnDeleteListener</a>&lt;<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a> extends java.io.Serializable&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>item</code> - the item to delete</dd>
 </dl>
 </li>
 </ul>
@@ -426,6 +496,11 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>hasChanged</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;hasChanged()</pre>
+<div class="block">hasChanged returns true if the list of items has changed</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the list of items has changed</dd>
+</dl>
 </li>
 </ul>
 <a id="onSearchActivityResult(android.util.Pair)">
@@ -435,6 +510,12 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>onSearchActivityResult</h4>
 <pre class="methodSignature">public abstract&nbsp;void&nbsp;onSearchActivityResult&#8203;(android.util.Pair&lt;java.lang.String,&#8203;<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&gt;&nbsp;result)</pre>
+<div class="block">onSearchActivityResult is an abstract method that is called when the
+ search activity returns</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>result</code> - the result from the search activity</dd>
+</dl>
 </li>
 </ul>
 <a id="add(java.io.Serializable)">
@@ -446,6 +527,11 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>add</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;add&#8203;(<a href="EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a>&nbsp;item)</pre>
+<div class="block">add adds an item to the list of items</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>item</code> - the item to add</dd>
+</dl>
 </li>
 </ul>
 </li>

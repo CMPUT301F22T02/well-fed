@@ -48,11 +48,10 @@ public class RecipeDB {
 
     /**
      * Create a RecipeDB object
+     *
+     * @param connection: the DBConnection object to connect to the database
      */
     public RecipeDB(DBConnection connection) {
-        /**
-         * Holds a connection to the DB.
-         */
         db = connection.getDB();
         collection = connection.getCollection("Recipes");
         ingredientDB = new IngredientDB(connection);
@@ -65,7 +64,7 @@ public class RecipeDB {
      *
      * @param recipe A Recipe object we want to add to the collection of Recipes
      *               and whose id we want to set
-     * @return Returns the id of the Recipe document
+     * @param listener: the listener to call when the operation is complete
      */
     public void addRecipe(Recipe recipe, OnCompleteListener<Recipe> listener) {
 
@@ -423,6 +422,7 @@ public class RecipeDB {
      * of recipes
      *
      * @param recipe The recipe to delete.
+     * @param listener The listener to be called when the recipe is deleted.
      */
     public void delRecipe(Recipe recipe, OnCompleteListener<Recipe> listener) {
         DocumentReference recipeRef = this.collection.document(recipe.getId());
@@ -517,8 +517,8 @@ public class RecipeDB {
     /**
      * Gets query from the db with Recipes sorted by given field.
      *
-     * @param field
-     * @return
+     * @param field The field to sort by.
+     * @return the query for Recipes in the db.
      */
     public Query getSortQuery(String field) {
         return this.collection.orderBy(field);
@@ -527,9 +527,9 @@ public class RecipeDB {
     /**
      * Updates the counter for a Recipe object in the db.
      *
-     * @param recipe
-     * @param delta
-     * @param listener
+     * @param recipe The Recipe object to update.
+     * @param delta The amount to increment the counter by.
+     * @param listener The listener to be called when the counter is updated.
      */
     public void updateReferenceCount(Recipe recipe, int delta,
                                      OnCompleteListener<Recipe> listener) {
