@@ -40,13 +40,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.Launcher;
+import com.xffffff.wellfed.common.OnItemClickListener;
 
 /**
  * The fragment for the meal book. This fragment shows the meals in the meal
  * book. The user can add meals to the meal book by clicking on the add button.
  */
 public class MealBookFragment extends Fragment
-        implements Launcher<MealPlan>, MealPlanAdapter.OnItemClickListener {
+        implements Launcher<MealPlan>, OnItemClickListener<MealPlan> {
     /**
      * CallToActionTextView displays if the meal book is empty and if it is
      * it displays info to add meals to the meal book.

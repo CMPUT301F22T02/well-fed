@@ -35,6 +35,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
 import com.xffffff.wellfed.common.DateUtil;
+import com.xffffff.wellfed.common.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,7 +57,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
     /**
      * The listener for an item click in the RecyclerView
      */
-    private OnItemClickListener listener;
+    private OnItemClickListener<MealPlan> listener;
     /**
      * The dateUtil for the adapter
      */
@@ -102,7 +103,7 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
      *
      * @param listener the listener to set
      */
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener<MealPlan> listener) {
         this.listener = listener;
     }
 
@@ -210,12 +211,4 @@ public class MealPlanAdapter extends DBAdapter<MealPlanViewHolder> {
         holder.getWeekTextView().setText(weekLabel);
         holder.getWeekTextView().setVisibility(View.VISIBLE);
     }
-
-    /**
-     * The listener for an item click in the RecyclerView
-     */
-    public interface OnItemClickListener {
-        void onItemClick(MealPlan mealPlan);
-    }
-
 }

@@ -15,6 +15,7 @@ import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ConfirmDialog;
 import com.xffffff.wellfed.common.DateUtil;
 import com.xffffff.wellfed.common.DeleteButton;
+import com.xffffff.wellfed.common.OnItemClickListener;
 import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.recipe.RecipeActivity;
 
@@ -24,7 +25,7 @@ import com.xffffff.wellfed.recipe.RecipeActivity;
  */
 public class MealPlanActivity extends ActivityBase
         implements ConfirmDialog.OnConfirmListener,
-        MealPlanItemAdapter.OnItemClickListener<Recipe> {
+                   OnItemClickListener<Recipe> {
     /**
      * The ARG_MEAL_PLAN constant is the key for the meal plan extra.
      */

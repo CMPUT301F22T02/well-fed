@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
+import com.xffffff.wellfed.common.OnItemClickListener;
 
 /**
  * Adapter that connects the RecyclerView and data for the ingredients
@@ -78,13 +79,6 @@ public class IngredientSearchAdapter
      */
     public void setListener(OnItemClickListener listener) {
         this.listener = listener;
-    }
-
-    /**
-     * Interface for listeners that listen for clicks on an ingredient
-     */
-    public interface OnItemClickListener {
-        void onItemClick(Ingredient ingredient);
     }
 
     /**

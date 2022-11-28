@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ItemAdapter;
+import com.xffffff.wellfed.common.OnItemClickListener;
 
 /**
  * The MealPlanItemAdapter class binds ArrayList to RecyclerView.
@@ -68,16 +69,6 @@ public abstract class MealPlanItemAdapter<Item> extends ItemAdapter<Item> {
     public void setOnItemClickListener(
             OnItemClickListener<Item> onItemClickListener) {
         this.listener = onItemClickListener;
-    }
-
-    /**
-     * OnItemClickListener interface. The listener for an item click in the
-     * RecyclerView.
-     *
-     * @param <Item> The type of item in the ArrayList.
-     */
-    public interface OnItemClickListener<Item> {
-        void onItemClick(Item item);
     }
 
     /**

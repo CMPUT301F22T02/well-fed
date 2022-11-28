@@ -119,7 +119,7 @@ public class ShoppingCartFragment extends Fragment
             controller.updateCheckedStatus(id, isChecked);
         });
 
-        adapter.setOnItemClickListener(shoppingCartIngredient -> {
+        adapter.setOnItemClickListener((shoppingCartIngredient) -> {
             selectedShoppingCartIngredient = shoppingCartIngredient;
             String description = selectedShoppingCartIngredient.getDescription();
             StorageIngredient storageIngredient = new StorageIngredient(description);
