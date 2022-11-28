@@ -8,6 +8,9 @@ import android.util.Pair;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 
+import com.xffffff.wellfed.storage.StorageIngredient;
+import com.xffffff.wellfed.storage.StorageIngredientEditActivity;
+
 /**
  * A contract for creating intents to edit an Ingredient, and results of
  * these intents.
@@ -24,7 +27,7 @@ public class IngredientEditContract extends
      */
     @NonNull @Override public Intent createIntent(@NonNull Context context,
                                                   StorageIngredient storageIngredient) {
-        Intent intent = new Intent(context, IngredientEditActivity.class);
+        Intent intent = new Intent(context, StorageIngredientEditActivity.class);
         intent.putExtra("ingredient", storageIngredient);
         return intent;
     }

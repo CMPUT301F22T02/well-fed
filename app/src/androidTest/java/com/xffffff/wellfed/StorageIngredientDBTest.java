@@ -8,8 +8,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.xffffff.wellfed.ingredient.StorageIngredient;
-import com.xffffff.wellfed.ingredient.StorageIngredientDB;
+import com.xffffff.wellfed.storage.StorageIngredient;
+import com.xffffff.wellfed.storage.StorageIngredientDB;
 
 import org.junit.Before;
 import org.junit.Test;

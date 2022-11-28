@@ -51,13 +51,14 @@ public class IngredientTest {
         assertNull(mock.getDescription());
 
         // does it work with String objects?
-        String testString = "Orange";
+        String testString = "Orange JuIce";
+        String correctString = "Orange juice";
         mock.setDescription(testString);
-        assertEquals(testString, mock.getDescription());
+        assertEquals(correctString, mock.getDescription());
 
         // does it work with string literals?
-        mock.setDescription("Pear");
-        assertEquals("Pear", mock.getDescription());
+        mock.setDescription("Pear JUice");
+        assertEquals("Pear juice", mock.getDescription());
 
         // does it work when mockIngredient has a string already in it?
         Ingredient mock2 = mockIngredientTitled();
@@ -65,11 +66,11 @@ public class IngredientTest {
 
         // does it work with String objects?
         mock.setDescription(testString);
-        assertEquals(testString, mock.getDescription());
+        assertEquals(correctString, mock.getDescription());
 
         // does it work with string literals?
-        mock.setDescription("Pear");
-        assertEquals("Pear", mock.getDescription());
+        mock.setDescription("Pear JUice");
+        assertEquals("Pear juice", mock.getDescription());
     }
 
     /**
@@ -80,13 +81,14 @@ public class IngredientTest {
         assertNull(mock.getCategory());
 
         // does it work with String objects?
-        String testString = "Fruit";
+        String testString = "Fruit Candy";
+        String correctString = "Fruit candy";
         mock.setCategory(testString);
-        assertEquals(testString, mock.getCategory());
+        assertEquals(correctString, mock.getCategory());
 
         // does it work with string literals?
-        mock.setCategory("Vegetable");
-        assertEquals("Vegetable", mock.getCategory());
+        mock.setCategory("Vegetable Broth");
+        assertEquals("Vegetable broth", mock.getCategory());
     }
 
     /**

@@ -53,28 +53,7 @@ import java.util.Stack;
                 InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.xffffff.wellfed", appContext.getPackageName());
     }
-
-    /**
-     * Tests whether swipe navigation is working as intended.
-     */
-    @Test public void testSwipeNavigation() throws InterruptedException {
-        ViewAction[] swipes =
-                {swipeLeft(), swipeLeft(), swipeRight(), swipeRight(),
-                        swipeRight(), swipeRight(),};
-        int[] fragmentsIds =
-                {R.id.fragment_shopping_cart, R.id.fragment_shopping_cart,
-                        R.id.fragment_meal_book, R.id.fragment_recipe_book,
-                        R.id.fragment_ingredient_storage,
-                        R.id.fragment_ingredient_storage,};
-        onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
-        for (int i = 0; i < swipes.length; i++) {
-            onView(withId(R.id.pager)).perform(swipes[i]);
-            Thread.sleep(timeout);
-            onView(withId(fragmentsIds[i])).check(matches(isDisplayed()));
-            // TODO: test menu item tinting
-        }
-    }
-
+    
     /**
      * Tests whether bottom app bar navigation is working as intended.
      */
@@ -109,33 +88,5 @@ import java.util.Stack;
         onView(withId(R.id.fragment_ingredient_storage)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_recipe_book)).check(matches(not(isDisplayed())));
         onView(withId(R.id.fragment_meal_book)).check(matches(not(isDisplayed())));
-    }
-
-    /**
-     * Tests whether the back button is working as intended.
-     */
-    @Test public void testBackButtonNavigation() throws InterruptedException {
-        onView(withId(R.id.meal_book_item)).perform(click());
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.shopping_cart_item)).perform(click());
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.pager)).perform(swipeLeft());
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.ingredient_storage_item)).perform(click());
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.pager)).perform(swipeLeft());
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.fragment_recipe_book)).check(matches(isDisplayed()));
-        pressBack();
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.fragment_ingredient_storage)).check(
-                matches(isDisplayed()));
-        pressBack();
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.fragment_shopping_cart)).check(
-                matches(isDisplayed()));
-        pressBack();
-        Thread.sleep(timeout); // animation
-        onView(withId(R.id.fragment_meal_book)).check(matches(isDisplayed()));
     }
 }

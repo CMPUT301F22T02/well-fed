@@ -43,7 +43,7 @@ public class Ingredient implements Serializable {
      * @param description The description/title of an Ingredient
      */
     public Ingredient(String description) {
-        this.description = description;
+        setDescription(description);
     }
 
     /**
@@ -52,8 +52,8 @@ public class Ingredient implements Serializable {
      * @param ingredient The Ingredient object to be copied.
      */
     public Ingredient(Ingredient ingredient) {
-        this.description = ingredient.description;
-        this.category = ingredient.category;
+        setDescription(ingredient.description);
+        setCategory(ingredient.category);
         this.unit = ingredient.unit;
         this.amount = ingredient.amount;
         this.id = ingredient.id;
@@ -82,7 +82,12 @@ public class Ingredient implements Serializable {
      * @param category The category to add
      */
     public void setCategory(String category) {
-        this.category = category;
+        if (category == null) {
+            this.category = null;
+        } else {
+            this.category = category.substring(0, 1).toUpperCase() +
+                    category.substring(1).toLowerCase();
+        }
     }
 
     /**
@@ -99,10 +104,15 @@ public class Ingredient implements Serializable {
      * Sets the description (aka title) of an Ingredient
      *
      * @param description The String representing the description (aka title)
-     *                   of the Ingredient
+     *                    of the Ingredient
      */
     public void setDescription(String description) {
-        this.description = description;
+        if (description == null) {
+            this.description = null;
+        } else {
+            this.description = description.substring(0, 1).toUpperCase() +
+                    description.substring(1).toLowerCase();
+        }
     }
 
     /**

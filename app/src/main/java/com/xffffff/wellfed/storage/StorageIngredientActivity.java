@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.ingredient;
+package com.xffffff.wellfed.storage;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,13 +13,15 @@ import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.ConfirmDialog;
 import com.xffffff.wellfed.common.DateUtil;
 import com.xffffff.wellfed.common.DeleteButton;
+import com.xffffff.wellfed.ingredient.IngredientEditContract;
+import com.xffffff.wellfed.storage.StorageIngredient;
 
 import java.util.Objects;
 
 /**
  * Represents an Ingredient's information page.
  */
-public class IngredientActivity extends ActivityBase
+public class StorageIngredientActivity extends ActivityBase
         implements ConfirmDialog.OnConfirmListener {
     /**
      * ActivityResultLauncher for the IngredientEditActivity to edit an
@@ -73,7 +75,8 @@ public class IngredientActivity extends ActivityBase
         // Set ingredient quantity with id=ingredient_quantity_value
         TextView ingredientQuantity =
                 findViewById(R.id.ingredient_quantity_value);
-        ingredientQuantity.setText(ingredient.getAmountAndUnit());
+        ingredientQuantity.setText(ingredient.getAmount() + " " +
+                                   ingredient.getUnit());
 
         // Set ingredient location with id=ingredient_location_value
         TextView ingredientLocation =

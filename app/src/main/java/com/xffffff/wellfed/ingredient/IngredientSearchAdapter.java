@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.recipe;
+package com.xffffff.wellfed.ingredient;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBAdapter;
-import com.xffffff.wellfed.ingredient.Ingredient;
-import com.xffffff.wellfed.ingredient.IngredientDB;
 
 /**
  * Adapter that connects the RecyclerView and data for the ingredients
- * in the {@link RecipeIngredientSearch}
+ * in the {@link IngredientSearch}
  */
-public class RecipeIngredientSearchAdapter
-        extends DBAdapter<RecipeIngredientSearchAdapter.ViewHolder> {
+public class IngredientSearchAdapter
+        extends DBAdapter<IngredientSearchAdapter.ViewHolder> {
     /**
      * The Firebase Firestore database of ingredients
      */
@@ -34,7 +32,7 @@ public class RecipeIngredientSearchAdapter
      *
      * @param db the Ingredient database that the adapter is connected to
      */
-    public RecipeIngredientSearchAdapter(IngredientDB db) {
+    public IngredientSearchAdapter(IngredientDB db) {
         super(db.getQuery());
         this.db = db;
     }

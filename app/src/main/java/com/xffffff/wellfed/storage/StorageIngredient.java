@@ -1,5 +1,7 @@
-package com.xffffff.wellfed.ingredient;
+package com.xffffff.wellfed.storage;
 
+
+import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,30 +11,15 @@ import java.util.Objects;
  * An Ingredient represented in a user's storage, with added amount, unit,
  * location, and best before.
  */
-public class StorageIngredient extends Ingredient
-        implements Comparable<StorageIngredient> {
-    /**
-     * The amount of the ingredient in the storage.
-     */
-    private Double amount;
-    /**
-     * The unit of the ingredient in the storage.
-     */
-    private String unit;
-
+public class StorageIngredient extends Ingredient {
     /**
      * The location of the ingredient in the storage.
      */
     private String location;
-
     /**
      * The best before date of the ingredient in the storage.
      */
     private Date bestBefore;
-    /**
-     * The category of the ingredient.
-     */
-    private String category;
     /**
      * The id of the storage ingredient.
      */
@@ -41,8 +28,8 @@ public class StorageIngredient extends Ingredient
     /**
      * Creates a new StorageIngredient object without data.
      */
-    public StorageIngredient(String name) {
-        super(name);
+    public StorageIngredient(String description) {
+        super(description);
     }
 
     /**
@@ -58,8 +45,8 @@ public class StorageIngredient extends Ingredient
     public StorageIngredient(String description, Double amount, String unit,
                              String location, Date bestBefore) {
         super(description);
-        this.amount = amount;
-        this.unit = unit;
+        this.setAmount(amount);
+        this.setUnit(unit);
         this.location = location;
         this.bestBefore = bestBefore;
     }
@@ -79,59 +66,11 @@ public class StorageIngredient extends Ingredient
                              String location, Date bestBefore,
                              String category) {
         super(description);
-        this.amount = amount;
-        this.unit = unit;
+        this.setAmount(amount);
+        this.setUnit(unit);
         this.location = location;
         this.bestBefore = bestBefore;
-        this.category = category;
-    }
-
-    /**
-     * Get categories of the ingredient.
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * Set categories of the ingredient.
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    /**
-     * Gets the amount of the ingredient in the storage.
-     *
-     * @return The amount of the ingredient in the storage
-     */
-    public Double getAmount() {
-        return amount;
-    }
-
-    /**
-     * Sets the amount of the ingredient in the storage.
-     *
-     * @param amount The amount of the ingredient in the storage
-     */
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    /**
-     * Gets the unit of the ingredient in the storage.
-     *
-     * @return The unit of the ingredient in the storage
-     */
-    public String getUnit() {
-        return unit;
-    }
-
-    /**
-     * Sets the unit of the ingredient in the storage.
-     */
-    public void setUnit(String unit) {
-        this.unit = unit;
+        this.setCategory(category);
     }
 
     /**
@@ -153,26 +92,6 @@ public class StorageIngredient extends Ingredient
     }
 
     /**
-     * Gets the description (aka title) of an Ingredient
-     *
-     * @return The String representing the description (aka title) of the
-     * Ingredient
-     */
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    /**
-     * Sets the description (aka title) of an Ingredient
-     *
-     * @param description The String representing the description (aka title)
-     *                   of the Ingredient
-     */
-    public void setDescription(String description) {
-        super.setDescription(description);
-    }
-
-    /**
      * Gets the best before date of the ingredient in the storage.
      *
      * @return The best before date of the ingredient in the storage
@@ -186,25 +105,6 @@ public class StorageIngredient extends Ingredient
      */
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
-    }
-
-    /**
-     * Combines the amount and unit of the ingredient in the storage.
-     *
-     * @return The amount and unit of the ingredient in the storage
-     */
-    public String getAmountAndUnit() {
-        return amount + " " + unit;
-    }
-
-    /**
-     * Checks if the ingredient is equal to another ingredient.
-     *
-     * @param o The ingredient to compare to.
-     * @return True if the ingredients are equal, false otherwise.
-     */
-    @Override public int compareTo(StorageIngredient o) {
-        return this.getDescription().compareTo(o.getDescription());
     }
 
     /**
@@ -233,8 +133,6 @@ public class StorageIngredient extends Ingredient
                 ((StorageIngredient) o).getBestBefore()));
         flags.add(Objects.equals(this.getStorageId(),
                 ((StorageIngredient) o).getStorageId()));
-        flags.add(Objects.equals(this.getAmountAndUnit(),
-                ((StorageIngredient) o).getAmountAndUnit()));
 
         return !flags.contains(false);
     }

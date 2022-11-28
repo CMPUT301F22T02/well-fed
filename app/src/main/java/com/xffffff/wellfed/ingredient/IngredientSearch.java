@@ -1,4 +1,4 @@
-package com.xffffff.wellfed.recipe;
+package com.xffffff.wellfed.ingredient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,8 +13,6 @@ import com.xffffff.wellfed.R;
 import com.xffffff.wellfed.common.DBConnection;
 import com.xffffff.wellfed.common.SearchInput;
 import com.xffffff.wellfed.common.SortingFragment;
-import com.xffffff.wellfed.ingredient.Ingredient;
-import com.xffffff.wellfed.ingredient.IngredientDB;
 
 import java.util.Arrays;
 
@@ -23,10 +21,10 @@ import java.util.Arrays;
  * in the user's ingredient storage, or previously added recipe ingredients
  * to add to a recipe
  */
-public class RecipeIngredientSearch extends ActivityBase
-        implements RecipeIngredientSearchAdapter.OnItemClickListener,
+public class IngredientSearch extends ActivityBase
+        implements IngredientSearchAdapter.OnItemClickListener,
         SortingFragment.OnSortClick {
-    private RecipeIngredientSearchAdapter adapter;
+    private IngredientSearchAdapter adapter;
 
     /**
      * The onCreate method for the ingredient search screen.
@@ -54,7 +52,7 @@ public class RecipeIngredientSearch extends ActivityBase
         searchInput.setOnTextChange(s -> adapter.setQuery(db.getSearchQuery(s)));
 
 
-        adapter = new RecipeIngredientSearchAdapter(db);
+        adapter = new IngredientSearchAdapter(db);
         adapter.setListener(this);
         RecyclerView ingredientRecycleView = findViewById(R.id.ingredient_storage_list);
         ingredientRecycleView.setAdapter(adapter);
