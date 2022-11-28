@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 
 import com.xffffff.wellfed.mealplan.MealPlanEditActivity;
 
@@ -116,6 +117,15 @@ public class MealPlanInstrumentedTest {
      * @throws InterruptedException when the thread.sleeps are interrupted
      */
     private void addRecipe(String title) throws InterruptedException {
+        addRecipe(title, "1");
+    }
+
+    /**
+     * Adds a recipe to the recipe book.
+     * @param title the title of the recipe to add
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
+    private void addRecipe(String title, String servings) throws InterruptedException {
         onView(withId(R.id.recipe_book_item)).perform(click());
         onView(withId(R.id.fab)).perform(click());
         Thread.sleep(timeout);
@@ -126,7 +136,7 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("10"));
         closeSoftKeyboard();
 
-        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
+        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText(servings));
         closeSoftKeyboard();
 
         onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
@@ -187,6 +197,15 @@ public class MealPlanInstrumentedTest {
      * @throws InterruptedException when the thread.sleeps are interrupted
      */
     private void addMealPlan(String mealPlan) throws InterruptedException {
+        addMealPlan(mealPlan, "1");
+    }
+
+    /**
+     * Adds a meal plan to the meal planner.
+     * @param mealPlan the name of the meal plan to add to the planner
+     * @throws InterruptedException when the thread.sleeps are interrupted
+     */
+    private void addMealPlan(String mealPlan, String servings) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced bread";
 
@@ -204,7 +223,7 @@ public class MealPlanInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(click());
-        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
+        onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText(servings));
         closeSoftKeyboard();
 
         Thread.sleep(timeout); // for some reason closing soft keyboard has an animation.
@@ -539,14 +558,14 @@ public class MealPlanInstrumentedTest {
         onView(withId(R.id.MealPlan_NumberOfServingsEditInput)).perform(typeText("1"));
         closeSoftKeyboard();
 
-        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
+        Thread.sleep(timeout); // for some reason closing soft keyboard has an animation.
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         closeSoftKeyboard();
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(withText(recipe)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(timeout);
         onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
@@ -926,5 +945,35 @@ public class MealPlanInstrumentedTest {
         cleanUpMealPlan(fourthMeal);
         cleanUpRecipe("Eggs and Bacon");
         cleanUpIngredient("Sliced bread");
+    }
+
+    @Test
+    public void testRecipeScaling() throws InterruptedException {
+        addIngredient("Sliced bread");
+        addRecipe("Eggs and Bacon", "5");
+        addMealPlan("Hearty Breakfast", "10");
+
+        Thread.sleep(3000);
+
+        onView(withText("Hearty Breakfast")).perform(click());
+
+        Thread.sleep(3000);
+
+        onView(withText("Eggs and Bacon")).perform(click());
+
+        Thread.sleep(3000);
+
+        onView(withText("Servings: 10")).check(matches(isDisplayed()));
+        onView(withText("4.00 count")).check(matches(isDisplayed()));
+        onView(withText("150.00 g")).check(matches(isDisplayed()));
+
+        pressBack();
+        pressBack();
+
+        Thread.sleep(3000);
+
+        cleanUpMealPlan("Hearty Breakfast");
+        cleanUpIngredient("Sliced bread");
+        cleanUpRecipe("Eggs and Bacon");
     }
 }
