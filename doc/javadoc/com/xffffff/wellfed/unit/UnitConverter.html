@@ -6,15 +6,16 @@
 <title>UnitConverter (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -26,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -141,7 +142,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="field.summary">
 <!--   -->
@@ -175,7 +176,7 @@ extends java.lang.Object</pre>
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -199,7 +200,7 @@ extends java.lang.Object</pre>
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -213,13 +214,20 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>android.util.Pair&lt;java.lang.Double,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#availableUnits(com.xffffff.wellfed.ingredient.Ingredient)">availableUnits</a></span>&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</code></th>
+<td class="colLast">
+<div class="block">Converts ingredients to mass if possible</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build(java.lang.String)">build</a></span>&#8203;(java.lang.String&nbsp;unit)</code></th>
 <td class="colLast">
 <div class="block">build method builds a unit from a string</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convert(double,com.xffffff.wellfed.unit.Unit,com.xffffff.wellfed.unit.Unit)">convert</a></span>&#8203;(double&nbsp;value,
        <a href="Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a>&nbsp;from,
@@ -228,7 +236,7 @@ extends java.lang.Object</pre>
 <div class="block">The convert method converts a quantity from one unit to another unit</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convert(double,java.lang.String,com.xffffff.wellfed.unit.Unit,com.xffffff.wellfed.unit.Unit)">convert</a></span>&#8203;(double&nbsp;value,
        java.lang.String&nbsp;ingredient,
@@ -238,7 +246,15 @@ extends java.lang.Object</pre>
 <div class="block">The convert method converts a quantity from one unit to another unit</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>android.util.Pair&lt;java.lang.Double,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToSmallest(java.lang.String,java.lang.Double)">convertToSmallest</a></span>&#8203;(java.lang.String&nbsp;unitString,
+                 java.lang.Double&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Convert the given unit to the smallest unit in the unit system</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#format(double,java.lang.String,com.xffffff.wellfed.unit.Unit,com.xffffff.wellfed.unit.Unit)">format</a></span>&#8203;(double&nbsp;value,
       java.lang.String&nbsp;ingredient,
@@ -248,21 +264,21 @@ extends java.lang.Object</pre>
 <div class="block">The format method formats a quantity to a specified unit</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUnits()">getUnits</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets all of the units being used, out of count/mass/volume</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUnitsLike(com.xffffff.wellfed.unit.Unit)">getUnitsLike</a></span>&#8203;(<a href="Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a>&nbsp;unit)</code></th>
 <td class="colLast">
 <div class="block">getUnitsLike method gets all the units that are like the specified unit</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>android.util.Pair&lt;java.lang.Double,&#8203;<a href="Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#scaleUnit(double,com.xffffff.wellfed.unit.Unit)">scaleUnit</a></span>&#8203;(double&nbsp;value,
          <a href="Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a>&nbsp;unit)</code></th>
@@ -288,7 +304,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="field.detail">
 <!--   -->
@@ -320,7 +336,7 @@ extends java.lang.Object</pre>
 </ul>
 </section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -345,7 +361,7 @@ extends java.lang.Object</pre>
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -468,7 +484,7 @@ extends java.lang.Object</pre>
 <a id="getUnits()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getUnits</h4>
 <pre class="methodSignature">public&nbsp;java.util.ArrayList&lt;java.lang.String&gt;&nbsp;getUnits()</pre>
@@ -476,6 +492,41 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an arraylist of all units</dd>
+</dl>
+</li>
+</ul>
+<a id="convertToSmallest(java.lang.String,java.lang.Double)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>convertToSmallest</h4>
+<pre class="methodSignature">public&nbsp;android.util.Pair&lt;java.lang.Double,&#8203;java.lang.String&gt;&nbsp;convertToSmallest&#8203;(java.lang.String&nbsp;unitString,
+                                                                                    java.lang.Double&nbsp;value)</pre>
+<div class="block">Convert the given unit to the smallest unit in the unit system</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>unitString</code> - the unit to convert</dd>
+<dd><code>value</code> - the value of the unit</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the converted unit</dd>
+</dl>
+</li>
+</ul>
+<a id="availableUnits(com.xffffff.wellfed.ingredient.Ingredient)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>availableUnits</h4>
+<pre class="methodSignature">public&nbsp;android.util.Pair&lt;java.lang.Double,&#8203;java.lang.String&gt;&nbsp;availableUnits&#8203;(<a href="../ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a>&nbsp;ingredient)</pre>
+<div class="block">Converts ingredients to mass if possible</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ingredient</code> - assumes that ingredient has been converted using
+                   <a href="#convertToSmallest(java.lang.String,java.lang.Double)"><code>convertToSmallest(String, Double)</code></a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the converted ingredient</dd>
 </dl>
 </li>
 </ul>

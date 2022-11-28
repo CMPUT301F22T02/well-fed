@@ -6,15 +6,16 @@
 <title>All Classes (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -26,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":2,"i1":2,"i2":2,"i3":1,"i4":2,"i5":2,"i6":2,"i7":2,"i8":1,"i9":2,"i10":2,"i11":2,"i12":2,"i13":2,"i14":2,"i15":1,"i16":1,"i17":2,"i18":2,"i19":2,"i20":2,"i21":2,"i22":2,"i23":2,"i24":2,"i25":2,"i26":2,"i27":2,"i28":2,"i29":1,"i30":2,"i31":2,"i32":2,"i33":2,"i34":2,"i35":1,"i36":2,"i37":2,"i38":2,"i39":2,"i40":2,"i41":2,"i42":1,"i43":2,"i44":2,"i45":1,"i46":1,"i47":2,"i48":2,"i49":2,"i50":2,"i51":2,"i52":2,"i53":1,"i54":2,"i55":2,"i56":2,"i57":2,"i58":2,"i59":1,"i60":2,"i61":2,"i62":2,"i63":1,"i64":2,"i65":2,"i66":2,"i67":1,"i68":2,"i69":2,"i70":2,"i71":2,"i72":2,"i73":2,"i74":2,"i75":2,"i76":2,"i77":2,"i78":2,"i79":1,"i80":2,"i81":2,"i82":2,"i83":1,"i84":1,"i85":2,"i86":1,"i87":2,"i88":2,"i89":2,"i90":1,"i91":1,"i92":2,"i93":2,"i94":1,"i95":2,"i96":2,"i97":2,"i98":1,"i99":2,"i100":2,"i101":1,"i102":1,"i103":1,"i104":1,"i105":1,"i106":2,"i107":2,"i108":2,"i109":2,"i110":2};
+var data = {"i0":2,"i1":2,"i2":2,"i3":1,"i4":2,"i5":2,"i6":2,"i7":2,"i8":1,"i9":2,"i10":2,"i11":2,"i12":2,"i13":2,"i14":2,"i15":2,"i16":1,"i17":1,"i18":2,"i19":2,"i20":2,"i21":2,"i22":2,"i23":2,"i24":2,"i25":2,"i26":2,"i27":2,"i28":2,"i29":2,"i30":2,"i31":2,"i32":2,"i33":2,"i34":1,"i35":2,"i36":2,"i37":2,"i38":2,"i39":2,"i40":2,"i41":2,"i42":2,"i43":1,"i44":1,"i45":2,"i46":2,"i47":2,"i48":2,"i49":2,"i50":2,"i51":2,"i52":2,"i53":2,"i54":2,"i55":2,"i56":1,"i57":1,"i58":2,"i59":2,"i60":2,"i61":1,"i62":2,"i63":2,"i64":2,"i65":1,"i66":2,"i67":2,"i68":2,"i69":2,"i70":2,"i71":2,"i72":2,"i73":2,"i74":2,"i75":2,"i76":2,"i77":1,"i78":2,"i79":2,"i80":2,"i81":1,"i82":2,"i83":2,"i84":2,"i85":1,"i86":2,"i87":1,"i88":2,"i89":2,"i90":2,"i91":2,"i92":2,"i93":2,"i94":2,"i95":2,"i96":2};
 var tabs = {65535:["t0","All Classes"],1:["t1","Interface Summary"],2:["t2","Class Summary"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -190,38 +191,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </th>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><a href="com/xffffff/wellfed/ingredient/EditIngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientAdapter</a></td>
+<th class="colLast" scope="row">
+<div class="block">Adapter for a recipe ingredient, in the recyclerview for recipe ingredients</div>
+</th>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/ingredient/EditIngredientsFragment.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientsFragment</a></td>
 <th class="colLast" scope="row">
 <div class="block">The EditRecipeIngredientsFragment class is the fragment that allows the user
  to edit the ingredients of a recipe.</div>
 </th>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/EditItemAdapter.html" title="class in com.xffffff.wellfed.common">EditItemAdapter</a>&lt;<a href="com/xffffff/wellfed/common/EditItemAdapter.html" title="type parameter in EditItemAdapter">Item</a>&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">Adapter that manages the view and data for the ingredients
  in the <a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe"><code>Recipe</code></a></div>
 </th>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/EditItemAdapter.ItemViewHolder.html" title="class in com.xffffff.wellfed.common">EditItemAdapter.ItemViewHolder</a></td>
 <th class="colLast" scope="row">
 <div class="block">Viewholder for the items</div>
 </th>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/EditItemAdapter.OnDeleteListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnDeleteListener</a>&lt;<a href="com/xffffff/wellfed/common/EditItemAdapter.OnDeleteListener.html" title="type parameter in EditItemAdapter.OnDeleteListener">Item</a>&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">onDeleteListener is the interface that handles the delete button</div>
 </th>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/EditItemAdapter.OnEditListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnEditListener</a>&lt;<a href="com/xffffff/wellfed/common/EditItemAdapter.OnEditListener.html" title="type parameter in EditItemAdapter.OnEditListener">Item</a>&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">onEditListener is the interface that handles the edit button</div>
 </th>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/EditItemContract.html" title="class in com.xffffff.wellfed.common">EditItemContract</a>&lt;<a href="com/xffffff/wellfed/common/EditItemContract.html" title="type parameter in EditItemContract">Item</a> extends java.io.Serializable&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">The EditItemContract class is a contract that handles the
@@ -229,37 +236,31 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  EditItemAdapter.</div>
 </th>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/EditRecipesAdapter.html" title="class in com.xffffff.wellfed.recipe">EditRecipesAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">EditRecipesAdapter is the adapter for the RecyclerView in the
  EditRecipesActivity.</div>
 </th>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/EditRecipesFragment.html" title="class in com.xffffff.wellfed.recipe">EditRecipesFragment</a></td>
 <th class="colLast" scope="row">
 <div class="block">EditRecipesFragment class.</div>
 </th>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/EditRecyclerViewFragment.html" title="class in com.xffffff.wellfed.common">EditRecyclerViewFragment</a>&lt;<a href="com/xffffff/wellfed/common/EditRecyclerViewFragment.html" title="type parameter in EditRecyclerViewFragment">Item</a> extends java.io.Serializable&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">The EditRecyclerViewFragment class is a fragment that displays a
  list of items that can be edited.</div>
 </th>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class represents an Ingredient which can be used in many ways in a
  MealPlanning application.</div>
-</th>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientAdapter</a></td>
-<th class="colLast" scope="row">
-<div class="block">Adapter for a recipe ingredient, in the recyclerview for recipe ingredients</div>
 </th>
 </tr>
 <tr id="i23" class="rowColor">
@@ -277,37 +278,37 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </th>
 </tr>
 <tr id="i25" class="rowColor">
+<td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter</a></td>
+<th class="colLast" scope="row">
+<div class="block">ItemDetailAdapter is the adapter for the item detail recycler view</div>
+</th>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientEditActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientEditActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">Activity which allows user to edit/add an existing recipe's ingredient</div>
 </th>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientEditContract.html" title="class in com.xffffff.wellfed.ingredient">IngredientEditContract</a></td>
 <th class="colLast" scope="row">
 <div class="block">A contract for creating intents to edit an Ingredient, and results of
  these intents.</div>
 </th>
 </tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearch</a></td>
+<tr id="i28" class="altColor">
+<td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">Activity which allows user to search for an existing ingredient
  in the user's ingredient storage, or previously added recipe ingredients
  to add to a recipe</div>
 </th>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">Adapter that connects the RecyclerView and data for the ingredients
- in the <a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient"><code>IngredientSearch</code></a></div>
-</th>
-</tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientSearchAdapter.OnItemClickListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">Interface for listeners that listen for clicks on an ingredient</div>
+ in the <a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient"><code>IngredientSearchActivity</code></a></div>
 </th>
 </tr>
 <tr id="i30" class="altColor">
@@ -337,38 +338,32 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </th>
 </tr>
 <tr id="i34" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/common/ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter</a></td>
-<th class="colLast" scope="row">
-<div class="block">ItemDetailAdapter is the adapter for the item detail recycler view</div>
-</th>
-</tr>
-<tr id="i35" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/Launcher.html" title="interface in com.xffffff.wellfed.common">Launcher</a>&lt;<a href="com/xffffff/wellfed/common/Launcher.html" title="type parameter in Launcher">Item</a>&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">The Launcher class provides a method for launching an activity.</div>
 </th>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/MainActivity.html" title="class in com.xffffff.wellfed">MainActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">MainActivity is the main activity of the app
  It contains the bottom navigation bar and the floating action button</div>
 </th>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/unit/MassUnit.html" title="class in com.xffffff.wellfed.unit">MassUnit</a></td>
 <th class="colLast" scope="row">
 <div class="block">MassUnit is a class that contains all the mass units that are supported by
  the app</div>
 </th>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealBookFragment.html" title="class in com.xffffff.wellfed.mealplan">MealBookFragment</a></td>
 <th class="colLast" scope="row">
 <div class="block">The fragment for the meal book.</div>
 </th>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class represents a MealPlan, which contains recipes and ingredients
@@ -376,132 +371,126 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  specific date.</div>
 </th>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanActivity.html" title="class in com.xffffff.wellfed.mealplan">MealPlanActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">MealPlanActivity class.</div>
 </th>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanAdapter class binds ArrayList to RecyclerView.</div>
 </th>
 </tr>
-<tr id="i42" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemClickListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">The listener for an item click in the RecyclerView</div>
-</th>
-</tr>
-<tr id="i43" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanContract.html" title="class in com.xffffff.wellfed.mealplan">MealPlanContract</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanContract class is the contract for the MealPlanActivity.</div>
 </th>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanController.html" title="class in com.xffffff.wellfed.mealplan">MealPlanController</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanController class controls the MealPlanActivity.</div>
 </th>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanController.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnAdapterDataChangedListener</a></td>
 <th class="colLast" scope="row">
 <div class="block">onAdapterDataChangedListener is the interface that is called when the
  data in the adapter changes.</div>
 </th>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanController.OnDataChanged.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnDataChanged</a></td>
 <th class="colLast" scope="row">
 <div class="block">onDataChanged is the interface that is called when the data in the
  controller changes.</div>
 </th>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanDB.html" title="class in com.xffffff.wellfed.mealplan">MealPlanDB</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class is used to access the meal plan database.</div>
 </th>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanEditActivity.html" title="class in com.xffffff.wellfed.mealplan">MealPlanEditActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">MealPlanEditActivity class.</div>
 </th>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanEditContract.html" title="class in com.xffffff.wellfed.mealplan">MealPlanEditContract</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanContract class is the contract for the meal plan activity.</div>
 </th>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanIngredientItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanIngredientItemAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">MealPlanIngredientItemAdapter is the adapter for the RecyclerView in the
  MealPlanIngredientItemActivity.</div>
 </th>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter</a>&lt;<a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.html" title="type parameter in MealPlanItemAdapter">Item</a>&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanItemAdapter class binds ArrayList to RecyclerView.</div>
 </th>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.ItemViewHolder.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter.ItemViewHolder</a></td>
 <th class="colLast" scope="row">
 <div class="block">ItemViewHolder class holds the view for the item.</div>
 </th>
 </tr>
-<tr id="i53" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanItemAdapter.OnItemClickListener</a>&lt;<a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.OnItemClickListener.html" title="type parameter in MealPlanItemAdapter.OnItemClickListener">Item</a>&gt;</td>
-<th class="colLast" scope="row">
-<div class="block">OnItemClickListener interface.</div>
-</th>
-</tr>
-<tr id="i54" class="altColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanLinearLayoutManager.html" title="class in com.xffffff.wellfed.mealplan">MealPlanLinearLayoutManager</a></td>
 <th class="colLast" scope="row">
 <div class="block">The linear layout manager for the meal book fragment.</div>
 </th>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanProxy.html" title="class in com.xffffff.wellfed.mealplan">MealPlanProxy</a></td>
 <th class="colLast" scope="row">
 <div class="block">ProxyMealPlan class.</div>
 </th>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanRecipeItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanRecipeItemAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanRecipeItemAdapter class binds ArrayList to RecyclerView.</div>
 </th>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/mealplan/MealPlanViewHolder.html" title="class in com.xffffff.wellfed.mealplan">MealPlanViewHolder</a></td>
 <th class="colLast" scope="row">
 <div class="block">The MealPlanViewHolder class contains the layout for each individual
  item in the RecyclerView.</div>
 </th>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/navigation/NavigationCollectionAdapter.html" title="class in com.xffffff.wellfed.navigation">NavigationCollectionAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">NavigationCollectionAdapter is the adapter for the navigation collection
  that handles the fragments for each tab in the bottom navigation bar</div>
 </th>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/OnCompleteListener.html" title="interface in com.xffffff.wellfed.common">OnCompleteListener</a>&lt;<a href="com/xffffff/wellfed/common/OnCompleteListener.html" title="type parameter in OnCompleteListener">T</a>&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">This interface is used to handle the result of DB operation</div>
 </th>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i57" class="rowColor">
+<td class="colFirst"><a href="com/xffffff/wellfed/common/OnItemClickListener.html" title="interface in com.xffffff.wellfed.common">OnItemClickListener</a>&lt;<a href="com/xffffff/wellfed/common/OnItemClickListener.html" title="type parameter in OnItemClickListener">Item</a>&gt;</td>
+<th class="colLast" scope="row">
+<div class="block">OnItemClickListener interface.</div>
+</th>
+</tr>
+<tr id="i58" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a></td>
 <th class="colLast" scope="row">
 <div class="block">Represents a Recipe, which contains ingredients and instructions on how to
@@ -509,89 +498,89 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  a recipe.</div>
 </th>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">Activity that displays the view for Recipe, showing all of a Recipe's
  information</div>
 </th>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeAdapter.html" title="class in com.xffffff.wellfed.recipe">RecipeAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">Adapter for the recipes in the <a href="com/xffffff/wellfed/recipe/RecipeBookFragment.html" title="class in com.xffffff.wellfed.recipe"><code>RecipeBookFragment</code></a>
  Binds the view for each recipe to the data</div>
 </th>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeAdapter.RecipeLauncher.html" title="interface in com.xffffff.wellfed.recipe">RecipeAdapter.RecipeLauncher</a></td>
 <th class="colLast" scope="row">
 <div class="block">Interface for launching a new recipe activity.</div>
 </th>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.recipe">RecipeAdapter.ViewHolder</a></td>
 <th class="colLast" scope="row">
 <div class="block">Holds the views for the recipes</div>
 </th>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeBookFragment.html" title="class in com.xffffff.wellfed.recipe">RecipeBookFragment</a></td>
 <th class="colLast" scope="row">
 <div class="block">RecipeBookFragment displays a list of Recipes <a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe"><code>Recipe</code></a></div>
 </th>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeBookSelectFragment.html" title="class in com.xffffff.wellfed.recipe">RecipeBookSelectFragment</a></td>
 <th class="colLast" scope="row">
 <div class="block">RecipeBookSelectFragment is a version of RecipeBookFragment that allows
  the user to select a recipe</div>
 </th>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeBookSelectFragment.OnSelectedListener.html" title="interface in com.xffffff.wellfed.recipe">RecipeBookSelectFragment.OnSelectedListener</a></td>
 <th class="colLast" scope="row">
 <div class="block">Interface for recipe selected listener</div>
 </th>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeContract.html" title="class in com.xffffff.wellfed.recipe">RecipeContract</a></td>
 <th class="colLast" scope="row">
 <div class="block">Contract for launching new activities that return a Recipe</div>
 </th>
 </tr>
-<tr id="i69" class="rowColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeController.html" title="class in com.xffffff.wellfed.recipe">RecipeController</a></td>
 <th class="colLast" scope="row">
 <div class="block">Handles the business logic for the Recipes</div>
 </th>
 </tr>
-<tr id="i70" class="altColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeDB.html" title="class in com.xffffff.wellfed.recipe">RecipeDB</a></td>
 <th class="colLast" scope="row">
 <div class="block">RecipeDB is a class that handles all the database operations for Recipe
  objects.</div>
 </th>
 </tr>
-<tr id="i71" class="rowColor">
+<tr id="i69" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeEditActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeEditActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">Activity which allows user to edit an existing recipe</div>
 </th>
 </tr>
-<tr id="i72" class="altColor">
+<tr id="i70" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeEditContract.html" title="class in com.xffffff.wellfed.recipe">RecipeEditContract</a></td>
 <th class="colLast" scope="row">
 <div class="block">Contract for launching a RecipeEditActivity</div>
 </th>
 </tr>
-<tr id="i73" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipesSearch.html" title="class in com.xffffff.wellfed.recipe">RecipesSearch</a></td>
+<tr id="i71" class="rowColor">
+<td class="colFirst"><a href="com/xffffff/wellfed/recipe/RecipeSearchActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeSearchActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">Activity which allows user to search for an existing Recipe</div>
 </th>
 </tr>
-<tr id="i74" class="altColor">
+<tr id="i72" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/RequiredDateTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredDateTextInputLayout</a></td>
 <th class="colLast" scope="row">
 <div class="block">The RequiredDateTextInputLayout class extends the RequiredTextInputLayout
@@ -599,42 +588,42 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  input dates.</div>
 </th>
 </tr>
-<tr id="i75" class="rowColor">
+<tr id="i73" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/RequiredDropdownTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredDropdownTextInputLayout</a></td>
 <th class="colLast" scope="row">
 <div class="block">The RequiredDropdownTextInputLayout class extends the RequiredTextInputLayout
  class to provide methods for compatibility with Dropdowns.</div>
 </th>
 </tr>
-<tr id="i76" class="altColor">
+<tr id="i74" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/RequiredNumberTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredNumberTextInputLayout</a></td>
 <th class="colLast" scope="row">
 <div class="block">The RequiredNumberTextInputLayout class extends the RequiredTextInputLayout
  class with methods for performing number data validation.</div>
 </th>
 </tr>
-<tr id="i77" class="rowColor">
+<tr id="i75" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/RequiredTextInputLayout.html" title="class in com.xffffff.wellfed.common">RequiredTextInputLayout</a></td>
 <th class="colLast" scope="row">
 <div class="block">The RequiredTextInputLayout class extends the TextInputLayout
  class with methods for performing data validation.</div>
 </th>
 </tr>
-<tr id="i78" class="altColor">
+<tr id="i76" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/SearchInput.html" title="class in com.xffffff.wellfed.common">SearchInput</a></td>
 <th class="colLast" scope="row">
 <div class="block">The RequiredTextInputLayout class extends the TextInputLayout
  class with methods for performing data validation.</div>
 </th>
 </tr>
-<tr id="i79" class="rowColor">
+<tr id="i77" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/SearchInput.OnTextChange.html" title="interface in com.xffffff.wellfed.common">SearchInput.OnTextChange</a></td>
 <th class="colLast" scope="row">
 <div class="block">The OnTextChange interface defines the onTextChange handler
  for the RequiredTextInputLayout class.</div>
 </th>
 </tr>
-<tr id="i80" class="altColor">
+<tr id="i78" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/SearchItemContract.html" title="class in com.xffffff.wellfed.common">SearchItemContract</a>&lt;<a href="com/xffffff/wellfed/common/SearchItemContract.html" title="type parameter in SearchItemContract">Item</a> extends java.io.Serializable&gt;</td>
 <th class="colLast" scope="row">
 <div class="block">The EditItemContract class is a contract that handles the
@@ -642,50 +631,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  EditItemAdapter.</div>
 </th>
 </tr>
-<tr id="i81" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></td>
+<tr id="i79" class="rowColor">
+<td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></td>
 <th class="colLast" scope="row">
-<div class="block">This class represents a ShoppingCart, which represents a cart that
- ingredients are picked up in,
- and information is added to.</div>
+<div class="block">ShoppingCartIngredientController is a class that contains methods for
+ interacting with the shopping cart</div>
 </th>
 </tr>
-<tr id="i82" class="altColor">
+<tr id="i80" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDB</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class is the database for the shopping cart list</div>
 </th>
 </tr>
-<tr id="i83" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnDelete.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnDelete</a></td>
-<th class="colLast" scope="row">
-<div class="block">onDelete is an interface for the deleteIngredient method.</div>
-</th>
-</tr>
-<tr id="i84" class="altColor">
+<tr id="i81" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnPickedUpChange.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnPickedUpChange</a></td>
 <th class="colLast" scope="row">
 <div class="block">onPickedUpChange is an interface for the updateIngredient method.</div>
 </th>
 </tr>
-<tr id="i85" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDialog</a></td>
-<th class="colLast" scope="row">
-<div class="block">The ConfirmDialog class provides a dialog for confirming user intentions.</div>
-</th>
-</tr>
-<tr id="i86" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.OnConfirmListener.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDialog.OnConfirmListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">The OnQuitListener interface defines the onConfirm handler that is
- called when the user confirms.</div>
-</th>
-</tr>
-<tr id="i87" class="rowColor">
+<tr id="i82" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartFragment.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartFragment</a></td>
 <th class="colLast" scope="row">&nbsp;</th>
 </tr>
-<tr id="i88" class="altColor">
+<tr id="i83" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredient.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredient</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class represents a ShoppingCartIngredient, which are Ingredients that
@@ -693,139 +662,82 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  ShoppingCart.</div>
 </th>
 </tr>
-<tr id="i89" class="rowColor">
+<tr id="i84" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">This class is the adapter for the ingredients in the shopping cart list</div>
 </th>
 </tr>
-<tr id="i90" class="altColor">
+<tr id="i85" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.OnCheckedListener.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter.OnCheckedListener</a></td>
 <th class="colLast" scope="row">
 <div class="block">onCheckedListener interface for the ShoppingCartIngredientAdapter.</div>
 </th>
 </tr>
-<tr id="i91" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter.OnItemClickListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">onItemClickListner interface for the ShoppingCartIngredientAdapter.</div>
-</th>
-</tr>
-<tr id="i92" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></td>
-<th class="colLast" scope="row">
-<div class="block">ShoppingCartIngredientController is a class that contains methods for
- interacting with the shopping cart</div>
-</th>
-</tr>
-<tr id="i93" class="rowColor">
+<tr id="i86" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/SortingFragment.html" title="class in com.xffffff.wellfed.common">SortingFragment</a></td>
 <th class="colLast" scope="row">
 <div class="block">The SortingFragment class is a fragment that displays a list of
  sorting options for the user to select from.</div>
 </th>
 </tr>
-<tr id="i94" class="altColor">
+<tr id="i87" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/common/SortingFragment.OnSortClick.html" title="interface in com.xffffff.wellfed.common">SortingFragment.OnSortClick</a></td>
 <th class="colLast" scope="row">
 <div class="block">OnSortClick is the interface for the onSortClick listener</div>
 </th>
 </tr>
-<tr id="i95" class="rowColor">
+<tr id="i88" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredient.html" title="class in com.xffffff.wellfed.storage">StorageIngredient</a></td>
 <th class="colLast" scope="row">
 <div class="block">An Ingredient represented in a user's storage, with added amount, unit,
  location, and best before.</div>
 </th>
 </tr>
-<tr id="i96" class="altColor">
+<tr id="i89" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientActivity.html" title="class in com.xffffff.wellfed.storage">StorageIngredientActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">Represents an Ingredient's information page.</div>
 </th>
 </tr>
-<tr id="i97" class="rowColor">
+<tr id="i90" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter</a></td>
 <th class="colLast" scope="row">
 <div class="block">The adapter class for the storage ingredient list.</div>
 </th>
 </tr>
-<tr id="i98" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientAdapter.OnItemClickListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">The on click listener interface for the adapter.</div>
-</th>
-</tr>
-<tr id="i99" class="rowColor">
+<tr id="i91" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter.ViewHolder</a></td>
 <th class="colLast" scope="row">
 <div class="block">The view holder class for the storage ingredient list.</div>
 </th>
 </tr>
-<tr id="i100" class="altColor">
+<tr id="i92" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></td>
 <th class="colLast" scope="row">
 <div class="block">The StorageIngredientDB class is a database for the storage ingredients.</div>
 </th>
 </tr>
-<tr id="i101" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAddStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnAddStorageIngredientListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">This interface is used to handle the result of
- adding StorageIngredient to the db</div>
-</th>
-</tr>
-<tr id="i102" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAllIngredients.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnAllIngredients</a></td>
-<th class="colLast" scope="row">&nbsp;</th>
-</tr>
-<tr id="i103" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnDeleteStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnDeleteStorageIngredientListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">This interface is used to handle the result of
- delete StorageIngredient to the db</div>
-</th>
-</tr>
-<tr id="i104" class="altColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnGetStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnGetStorageIngredientListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">This interface is used to handle the result of
- finding StorageIngredient to the db</div>
-</th>
-</tr>
-<tr id="i105" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnUpdateStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnUpdateStorageIngredientListener</a></td>
-<th class="colLast" scope="row">
-<div class="block">This interface is used to handle the result of
- finding StorageIngredient to the db</div>
-</th>
-</tr>
-<tr id="i106" class="altColor">
+<tr id="i93" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/storage/StorageIngredientEditActivity.html" title="class in com.xffffff.wellfed.storage">StorageIngredientEditActivity</a></td>
 <th class="colLast" scope="row">
 <div class="block">The activity that represents editing an Ingredient.</div>
 </th>
 </tr>
-<tr id="i107" class="rowColor">
+<tr id="i94" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/unit/Unit.html" title="class in com.xffffff.wellfed.unit">Unit</a></td>
 <th class="colLast" scope="row">
 <div class="block">Unit is an abstract class that contains the conversion factor and unit</div>
 </th>
 </tr>
-<tr id="i108" class="altColor">
+<tr id="i95" class="rowColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/unit/UnitConverter.html" title="class in com.xffffff.wellfed.unit">UnitConverter</a></td>
 <th class="colLast" scope="row">
 <div class="block">UnitConverter is a class that converts units to other units
  It is used to convert units in the Ingredients and Recipe ingredients</div>
 </th>
 </tr>
-<tr id="i109" class="rowColor">
-<td class="colFirst"><a href="com/xffffff/wellfed/unit/UnitHelper.html" title="class in com.xffffff.wellfed.unit">UnitHelper</a></td>
-<th class="colLast" scope="row">
-<div class="block">UnitHelper is a helper class that contains methods for converting units</div>
-</th>
-</tr>
-<tr id="i110" class="altColor">
+<tr id="i96" class="altColor">
 <td class="colFirst"><a href="com/xffffff/wellfed/unit/VolumeUnit.html" title="class in com.xffffff.wellfed.unit">VolumeUnit</a></td>
 <th class="colLast" scope="row">
 <div class="block">VolumeUnit is an enum that contains all the volume units

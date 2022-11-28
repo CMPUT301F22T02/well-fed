@@ -6,15 +6,16 @@
 <title>Index (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -122,17 +123,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Add an ingredient to the shopping cart.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html#addIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient)">addIngredient(ShoppingCartIngredient)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></dt>
-<dd>
-<div class="block">Adds a ShoppingCartIngredient to the ShoppingCart.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/IngredientStorageController.html#addIngredient(com.xffffff.wellfed.storage.StorageIngredient)">addIngredient(StorageIngredient)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/IngredientStorageController.html" title="class in com.xffffff.wellfed.storage">IngredientStorageController</a></dt>
 <dd>
 <div class="block">Adds an StorageIngredient to adapter</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/Recipe.html#addIngredients(java.util.List)">addIngredients(List&lt;Ingredient&gt;)</a></span> - Method in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#addIngredientToStorage(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.storage.StorageIngredient)">addIngredientToStorage(ShoppingCartIngredient, StorageIngredient)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#addIngredientToStorage(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient,com.xffffff.wellfed.storage.StorageIngredient)">addIngredientToStorage(ShoppingCartIngredient, StorageIngredient)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>
 <div class="block">addIngredientToStorage adds the given ingredient to the storage.</div>
 </dd>
@@ -180,7 +177,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">addShoppingHelper is a helper method for addIngredient.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#addStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.storage.StorageIngredientDB.OnAddStorageIngredientListener)">addStorageIngredient(StorageIngredient, StorageIngredientDB.OnAddStorageIngredientListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#addStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.common.OnCompleteListener)">addStorageIngredient(StorageIngredient, OnCompleteListener&lt;StorageIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
 <div class="block">Adds an ingredient in storage to the Firebase DB.</div>
 </dd>
@@ -201,7 +198,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Checks whether the fields of the recipe currently being edited are
  valid or not.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/unit/UnitHelper.html#availableUnits(com.xffffff.wellfed.ingredient.Ingredient)">availableUnits(Ingredient)</a></span> - Method in class com.xffffff.wellfed.unit.<a href="com/xffffff/wellfed/unit/UnitHelper.html" title="class in com.xffffff.wellfed.unit">UnitHelper</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/unit/UnitConverter.html#availableUnits(com.xffffff.wellfed.ingredient.Ingredient)">availableUnits(Ingredient)</a></span> - Method in class com.xffffff.wellfed.unit.<a href="com/xffffff/wellfed/unit/UnitConverter.html" title="class in com.xffffff.wellfed.unit">UnitConverter</a></dt>
 <dd>
 <div class="block">Converts ingredients to mass if possible</div>
 </dd>
@@ -227,11 +224,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns true if the date is before today</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html#bind(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.ingredient.IngredientSearchAdapter.OnItemClickListener)">bind(Ingredient, IngredientSearchAdapter.OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter.ViewHolder</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html#bind(com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.common.OnItemClickListener)">bind(Ingredient, OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter.ViewHolder</a></dt>
 <dd>
 <div class="block">Binds an ingredient to a ViewHolder, to properly display the data</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.ViewHolder.html#bind(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.storage.StorageIngredientAdapter.OnItemClickListener)">bind(StorageIngredient, StorageIngredientAdapter.OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter.ViewHolder</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.ViewHolder.html#bind(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.common.OnItemClickListener)">bind(StorageIngredient, OnItemClickListener&lt;StorageIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter.ViewHolder</a></dt>
 <dd>
 <div class="block">Bind the storage ingredient to the view holder.</div>
 </dd>
@@ -331,7 +328,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The convert method converts a quantity from one unit to another unit</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/unit/UnitHelper.html#convertToSmallest(java.lang.String,java.lang.Double)">convertToSmallest(String, Double)</a></span> - Method in class com.xffffff.wellfed.unit.<a href="com/xffffff/wellfed/unit/UnitHelper.html" title="class in com.xffffff.wellfed.unit">UnitHelper</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/unit/UnitConverter.html#convertToSmallest(java.lang.String,java.lang.Double)">convertToSmallest(String, Double)</a></span> - Method in class com.xffffff.wellfed.unit.<a href="com/xffffff/wellfed/unit/UnitConverter.html" title="class in com.xffffff.wellfed.unit">UnitConverter</a></dt>
 <dd>
 <div class="block">Convert the given unit to the smallest unit in the unit system</div>
 </dd>
@@ -462,7 +459,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Deletes StorageIngredient from adapter</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html#deleteIngredient(java.lang.String,com.xffffff.wellfed.shoppingcart.ShoppingCartDB.OnDelete)">deleteIngredient(String, ShoppingCartDB.OnDelete)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html#deleteIngredient(java.lang.String,com.xffffff.wellfed.common.OnCompleteListener)">deleteIngredient(String, OnCompleteListener&lt;ShoppingCartIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDB</a></dt>
 <dd>
 <div class="block">Delete all ingredients from the shopping cart.</div>
 </dd>
@@ -478,7 +475,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Requests the database to delete a Recipe and handles the result</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#deleteStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.storage.StorageIngredientDB.OnDeleteStorageIngredientListener)">deleteStorageIngredient(StorageIngredient, StorageIngredientDB.OnDeleteStorageIngredientListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#deleteStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.common.OnCompleteListener)">deleteStorageIngredient(StorageIngredient, OnCompleteListener&lt;StorageIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
 <div class="block">Removes an ingredient from storage, but keeps the Ingredient reference</div>
 </dd>
@@ -527,6 +524,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  application</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/EditActivityBase.html#%3Cinit%3E()">EditActivityBase()</a></span> - Constructor for class com.xffffff.wellfed.<a href="com/xffffff/wellfed/EditActivityBase.html" title="class in com.xffffff.wellfed">EditActivityBase</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/xffffff/wellfed/ingredient/EditIngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">EditIngredientAdapter</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
+<dd>
+<div class="block">Adapter for a recipe ingredient, in the recyclerview for recipe ingredients</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/EditIngredientAdapter.html#%3Cinit%3E()">EditIngredientAdapter()</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/EditIngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartFragment.html#editIngredientLauncher">editIngredientLauncher</a></span> - Variable in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartFragment.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartFragment</a></dt>
 <dd>
@@ -636,7 +639,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">G</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#generateShoppingCart()">generateShoppingCart()</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#generateShoppingCart()">generateShoppingCart()</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>
 <div class="block">generateShoppingCart generates the shopping cart from the given meal
  plan and storage ingredients.</div>
@@ -645,7 +648,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">GetAdapter method for the MealPlanController.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#getAdapter()">getAdapter()</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#getAdapter()">getAdapter()</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>
 <div class="block">Gets the adapter.</div>
 </dd>
@@ -654,9 +657,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Gets the adapter that is used to display the ingredients in the list
  view.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getAllStorageIngredients(com.xffffff.wellfed.storage.StorageIngredientDB.OnAllIngredients)">getAllStorageIngredients(StorageIngredientDB.OnAllIngredients)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getAllStorageIngredients(com.xffffff.wellfed.common.OnCompleteListener)">getAllStorageIngredients(OnCompleteListener&lt;ArrayList&lt;StorageIngredient&gt;&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
-<div class="block">getAllStorageIngredients returns all StorageIngredients in Firestore</div>
+<div class="block">getAllStorageIngredients returns all StorageIngredients in FireStore</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/Ingredient.html#getAmount()">getAmount()</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/Ingredient.html" title="class in com.xffffff.wellfed.ingredient">Ingredient</a></dt>
 <dd>
@@ -770,11 +773,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Gets the Ingredient object at the specified index in a Recipe</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html#getIngredient(int)">getIngredient(int)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></dt>
-<dd>
-<div class="block">Gets a ShoppingCartIngredient from the ShoppingCart at the specified
- index.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientDB.html#getIngredient(com.google.firebase.firestore.DocumentReference,com.xffffff.wellfed.common.OnCompleteListener)">getIngredient(DocumentReference, OnCompleteListener&lt;Ingredient&gt;)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientDB.html" title="class in com.xffffff.wellfed.ingredient">IngredientDB</a></dt>
 <dd>
 <div class="block">Gets an ingredient from Firebase DB</div>
@@ -794,10 +792,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/Recipe.html#getIngredients()">getIngredients()</a></span> - Method in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a></dt>
 <dd>
 <div class="block">Gets the entire ArrayList of Ingredients that make up a Recipe</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html#getIngredients()">getIngredients()</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></dt>
-<dd>
-<div class="block">Gets the entire list of ShoppingCartIngredients in a ShoppingCart.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/DBAdapter.html#getItemCount()">getItemCount()</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/DBAdapter.html" title="class in com.xffffff.wellfed.common">DBAdapter</a></dt>
 <dd>
@@ -929,9 +923,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getSearchQuery(java.lang.String)">getSearchQuery(String)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
-<div class="block">getSearchedQuery returns a query for StorageIngredients in Firestore</div>
+<div class="block">getSearchedQuery returns a query for StorageIngredients in FireStore</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#getSearchResults(java.lang.String)">getSearchResults(String)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#getSearchResults(java.lang.String)">getSearchResults(String)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>
 <div class="block">getSearchResults returns the search results for the given query.</div>
 </dd>
@@ -967,7 +961,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getSortedQuery(java.lang.String)">getSortedQuery(String)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
-<div class="block">Gets a sorted query for StorageIngredients in Firestore</div>
+<div class="block">Gets a sorted query for StorageIngredients in FireStore</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/IngredientStorageController.html#getSortedResults(java.lang.String)">getSortedResults(String)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/IngredientStorageController.html" title="class in com.xffffff.wellfed.storage">IngredientStorageController</a></dt>
 <dd>
@@ -983,11 +977,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Get the database ID of a storage ingredient.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getStorageIngredient(com.google.firebase.firestore.DocumentSnapshot,com.xffffff.wellfed.storage.StorageIngredientDB.OnGetStorageIngredientListener)">getStorageIngredient(DocumentSnapshot, StorageIngredientDB.OnGetStorageIngredientListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getStorageIngredient(com.google.firebase.firestore.DocumentSnapshot,com.xffffff.wellfed.common.OnCompleteListener)">getStorageIngredient(DocumentSnapshot, OnCompleteListener&lt;StorageIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
 <div class="block">Gets an ingredient from the Firebase DB</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getStorageIngredient(java.lang.String,com.xffffff.wellfed.storage.StorageIngredientDB.OnGetStorageIngredientListener)">getStorageIngredient(String, StorageIngredientDB.OnGetStorageIngredientListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#getStorageIngredient(java.lang.String,com.xffffff.wellfed.common.OnCompleteListener)">getStorageIngredient(String, OnCompleteListener&lt;StorageIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
 <div class="block">Gets an ingredient from the Firebase DB</div>
 </dd>
@@ -1073,7 +1067,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Checks if there are any unsaved changes</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemDetailAdapter.ViewHolder.html#headline">headline</a></span> - Variable in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter.ViewHolder</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.ViewHolder.html#headline">headline</a></span> - Variable in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter.ViewHolder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/MainActivity.html#history">history</a></span> - Variable in class com.xffffff.wellfed.<a href="com/xffffff/wellfed/MainActivity.html" title="class in com.xffffff.wellfed">MainActivity</a></dt>
 <dd>
@@ -1104,12 +1098,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Creates a new Ingredient object that represents an Ingredient used for
  various meal purposes.</div>
 </dd>
-<dt><a href="com/xffffff/wellfed/ingredient/IngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientAdapter</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
-<dd>
-<div class="block">Adapter for a recipe ingredient, in the recyclerview for recipe ingredients</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientAdapter.html#%3Cinit%3E()">IngredientAdapter()</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientAdapter</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/xffffff/wellfed/ingredient/IngredientContract.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientContract</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
 <dd>
 <div class="block">A contract for creating intents to view an Ingredient, and results of
@@ -1131,6 +1119,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">The ingredient density map is a map of ingredient names to their
  densities in g/mL</div>
 </dd>
+<dt><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientDetailAdapter</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
+<dd>
+<div class="block">ItemDetailAdapter is the adapter for the item detail recycler view</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html#%3Cinit%3E()">IngredientDetailAdapter()</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientDetailAdapter.ViewHolder</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
+<dd>
+<div class="block">ViewHolder is the view holder for the item detail recycler view</div>
+</dd>
 <dt><a href="com/xffffff/wellfed/ingredient/IngredientEditActivity.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientEditActivity</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
 <dd>
 <div class="block">Activity which allows user to edit/add an existing recipe's ingredient</div>
@@ -1144,26 +1142,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientEditContract.html#%3Cinit%3E()">IngredientEditContract()</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientEditContract.html" title="class in com.xffffff.wellfed.ingredient">IngredientEditContract</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientSearch</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
+<dt><a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientSearchActivity</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
 <dd>
 <div class="block">Activity which allows user to search for an existing ingredient
  in the user's ingredient storage, or previously added recipe ingredients
  to add to a recipe</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearch.html#%3Cinit%3E()">IngredientSearch()</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearch</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html#%3Cinit%3E()">IngredientSearchActivity()</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchActivity</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientSearchAdapter</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
 <dd>
 <div class="block">Adapter that connects the RecyclerView and data for the ingredients
- in the <a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient"><code>IngredientSearch</code></a></div>
+ in the <a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient"><code>IngredientSearchActivity</code></a></div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html#%3Cinit%3E(com.xffffff.wellfed.ingredient.IngredientDB)">IngredientSearchAdapter(IngredientDB)</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter</a></dt>
 <dd>
 <div class="block">Creates a new RecipeIngredientSearchAdapter</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientSearchAdapter.OnItemClickListener</span></a> - Interface in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
-<dd>
-<div class="block">Interface for listeners that listen for clicks on an ingredient</div>
 </dd>
 <dt><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient"><span class="typeNameLink">IngredientSearchAdapter.ViewHolder</span></a> - Class in <a href="com/xffffff/wellfed/ingredient/package-summary.html">com.xffffff.wellfed.ingredient</a></dt>
 <dd>
@@ -1235,16 +1229,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemAdapter.html#%3Cinit%3E()">ItemAdapter()</a></span> - Constructor for class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemAdapter.html" title="class in com.xffffff.wellfed.common">ItemAdapter</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/xffffff/wellfed/common/ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common"><span class="typeNameLink">ItemDetailAdapter</span></a> - Class in <a href="com/xffffff/wellfed/common/package-summary.html">com.xffffff.wellfed.common</a></dt>
-<dd>
-<div class="block">ItemDetailAdapter is the adapter for the item detail recycler view</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemDetailAdapter.html#%3Cinit%3E()">ItemDetailAdapter()</a></span> - Constructor for class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/xffffff/wellfed/common/ItemDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.common"><span class="typeNameLink">ItemDetailAdapter.ViewHolder</span></a> - Class in <a href="com/xffffff/wellfed/common/package-summary.html">com.xffffff.wellfed.common</a></dt>
-<dd>
-<div class="block">ViewHolder is the view holder for the item detail recycler view</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemAdapter.html#items">items</a></span> - Variable in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemAdapter.html" title="class in com.xffffff.wellfed.common">ItemAdapter</a></dt>
 <dd>
 <div class="block">list of <a href="com/xffffff/wellfed/common/ItemAdapter.html" title="class in com.xffffff.wellfed.common"><code>ItemAdapter</code></a></div>
@@ -1363,10 +1347,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The constructor for the MealPlanAdapter</div>
 </dd>
-<dt><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan"><span class="typeNameLink">MealPlanAdapter.OnItemClickListener</span></a> - Interface in <a href="com/xffffff/wellfed/mealplan/package-summary.html">com.xffffff.wellfed.mealplan</a></dt>
-<dd>
-<div class="block">The listener for an item click in the RecyclerView</div>
-</dd>
 <dt><a href="com/xffffff/wellfed/mealplan/MealPlanContract.html" title="class in com.xffffff.wellfed.mealplan"><span class="typeNameLink">MealPlanContract</span></a> - Class in <a href="com/xffffff/wellfed/mealplan/package-summary.html">com.xffffff.wellfed.mealplan</a></dt>
 <dd>
 <div class="block">The MealPlanContract class is the contract for the MealPlanActivity.</div>
@@ -1427,10 +1407,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.ItemViewHolder.html" title="class in com.xffffff.wellfed.mealplan"><span class="typeNameLink">MealPlanItemAdapter.ItemViewHolder</span></a> - Class in <a href="com/xffffff/wellfed/mealplan/package-summary.html">com.xffffff.wellfed.mealplan</a></dt>
 <dd>
 <div class="block">ItemViewHolder class holds the view for the item.</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan"><span class="typeNameLink">MealPlanItemAdapter.OnItemClickListener</span></a>&lt;<a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.OnItemClickListener.html" title="type parameter in MealPlanItemAdapter.OnItemClickListener">Item</a>&gt; - Interface in <a href="com/xffffff/wellfed/mealplan/package-summary.html">com.xffffff.wellfed.mealplan</a></dt>
-<dd>
-<div class="block">OnItemClickListener interface.</div>
 </dd>
 <dt><a href="com/xffffff/wellfed/mealplan/MealPlanLinearLayoutManager.html" title="class in com.xffffff.wellfed.mealplan"><span class="typeNameLink">MealPlanLinearLayoutManager</span></a> - Class in <a href="com/xffffff/wellfed/mealplan/package-summary.html">com.xffffff.wellfed.mealplan</a></dt>
 <dd>
@@ -1501,12 +1477,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanController.OnAdapterDataChangedListener.html#onAdapterDataChanged(com.xffffff.wellfed.mealplan.MealPlan,int)">onAdapterDataChanged(MealPlan, int)</a></span> - Method in interface com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanController.OnAdapterDataChangedListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnAdapterDataChangedListener</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAddStorageIngredientListener.html#onAddStoredIngredient(com.xffffff.wellfed.storage.StorageIngredient,java.lang.Boolean)">onAddStoredIngredient(StorageIngredient, Boolean)</a></span> - Method in interface com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAddStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnAddStorageIngredientListener</a></dt>
-<dd>
-<div class="block">Called when addStorageIngredient returns a result</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAllIngredients.html#onAllIngredients(java.util.ArrayList,boolean)">onAllIngredients(ArrayList&lt;StorageIngredient&gt;, boolean)</a></span> - Method in interface com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAllIngredients.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnAllIngredients</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/EditActivityBase.html#onBackPressed()">onBackPressed()</a></span> - Method in class com.xffffff.wellfed.<a href="com/xffffff/wellfed/EditActivityBase.html" title="class in com.xffffff.wellfed">EditActivityBase</a></dt>
 <dd>
 <div class="block">onBackPress is called when the back button is pressed</div>
@@ -1524,13 +1494,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">onBindViewHolder - binds the view to the data</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemDetailAdapter.html#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">onBindViewHolder(RecyclerView.ViewHolder, int)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter</a></dt>
-<dd>
-<div class="block">onBindViewHolder binds the view to the data</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientAdapter.html#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">onBindViewHolder(RecyclerView.ViewHolder, int)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientAdapter</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/EditIngredientAdapter.html#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">onBindViewHolder(RecyclerView.ViewHolder, int)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/EditIngredientAdapter.html" title="class in com.xffffff.wellfed.ingredient">EditIngredientAdapter</a></dt>
 <dd>
 <div class="block">Binds a viewholder to an ingredient</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">onBindViewHolder(RecyclerView.ViewHolder, int)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter</a></dt>
+<dd>
+<div class="block">onBindViewHolder binds the view to the data</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanIngredientItemAdapter.html#onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder,int)">onBindViewHolder(RecyclerView.ViewHolder, int)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanIngredientItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanIngredientItemAdapter</a></dt>
 <dd>
@@ -1585,7 +1555,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/SortingFragment.OnSortClick.html#onClick(java.lang.String)">onClick(String)</a></span> - Method in interface com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/SortingFragment.OnSortClick.html" title="interface in com.xffffff.wellfed.common">SortingFragment.OnSortClick</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearch.html#onClick(java.lang.String)">onClick(String)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearch</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html#onClick(java.lang.String)">onClick(String)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchActivity</a></dt>
 <dd>
 <div class="block">onClick method for the sort button</div>
 </dd>
@@ -1626,10 +1596,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">method that stops the activity with a result
  when delete confirmation is complete</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.OnConfirmListener.html#onConfirm()">onConfirm()</a></span> - Method in interface com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.OnConfirmListener.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDialog.OnConfirmListener</a></dt>
-<dd>
-<div class="block">Handler for when the user confirms.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientActivity.html#onConfirm()">onConfirm()</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientActivity.html" title="class in com.xffffff.wellfed.storage">StorageIngredientActivity</a></dt>
 <dd>
 <div class="block">onConfirm method for the activity.</div>
@@ -1642,7 +1608,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">OnCreate method for the activity.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearch.html#onCreate(android.os.Bundle)">onCreate(Bundle)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearch</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html#onCreate(android.os.Bundle)">onCreate(Bundle)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchActivity</a></dt>
 <dd>
 <div class="block">The onCreate method for the ingredient search screen.</div>
 </dd>
@@ -1667,7 +1633,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">OnCreate method for the recipe edit activity.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/RecipesSearch.html#onCreate(android.os.Bundle)">onCreate(Bundle)</a></span> - Method in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/RecipesSearch.html" title="class in com.xffffff.wellfed.recipe">RecipesSearch</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/RecipeSearchActivity.html#onCreate(android.os.Bundle)">onCreate(Bundle)</a></span> - Method in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/RecipeSearchActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeSearchActivity</a></dt>
 <dd>
 <div class="block">The onCreate method for the ingredient search screen.</div>
 </dd>
@@ -1710,7 +1676,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">inflates the view</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemDetailAdapter.html#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder(ViewGroup, int)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemDetailAdapter.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html#onCreateViewHolder(android.view.ViewGroup,int)">onCreateViewHolder(ViewGroup, int)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter</a></dt>
 <dd>
 <div class="block">onCreatedViewHolder inflates the view</div>
 </dd>
@@ -1755,17 +1721,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanController.OnDataChanged.html#onDataChanged(com.xffffff.wellfed.mealplan.MealPlan)">onDataChanged(MealPlan)</a></span> - Method in interface com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanController.OnDataChanged.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanController.OnDataChanged</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnDelete.html#onDelete(boolean)">onDelete(boolean)</a></span> - Method in interface com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnDelete.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartDB.OnDelete</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/EditItemAdapter.OnDeleteListener.html#onDelete(Item)">onDelete(Item)</a></span> - Method in interface com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/EditItemAdapter.OnDeleteListener.html" title="interface in com.xffffff.wellfed.common">EditItemAdapter.OnDeleteListener</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/EditRecyclerViewFragment.html#onDelete(Item)">onDelete(Item)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/EditRecyclerViewFragment.html" title="class in com.xffffff.wellfed.common">EditRecyclerViewFragment</a></dt>
 <dd>
 <div class="block">onDeleted is called when an item is deleted</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnDeleteStorageIngredientListener.html#onDeleteStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,java.lang.Boolean)">onDeleteStorageIngredient(StorageIngredient, Boolean)</a></span> - Method in interface com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnDeleteStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnDeleteStorageIngredientListener</a></dt>
-<dd>
-<div class="block">Called when addStorageIngredient returns a result</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientActivity.html#onEdit(com.xffffff.wellfed.storage.StorageIngredient)">onEdit(StorageIngredient)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientActivity.html" title="class in com.xffffff.wellfed.storage">StorageIngredientActivity</a></dt>
 <dd>
@@ -1801,37 +1761,31 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Opens the MaterialDatePicker dialog when the TextInputLayout is focused.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnGetStorageIngredientListener.html#onGetStoredIngredient(com.xffffff.wellfed.storage.StorageIngredient,java.lang.Boolean)">onGetStoredIngredient(StorageIngredient, Boolean)</a></span> - Method in interface com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnGetStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnGetStorageIngredientListener</a></dt>
-<dd>
-<div class="block">Called when addStorageIngredient returns a result</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearch.html#onItemClick(com.xffffff.wellfed.ingredient.Ingredient)">onItemClick(Ingredient)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearch.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearch</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html#onItemClick(com.xffffff.wellfed.ingredient.Ingredient)">onItemClick(Ingredient)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchActivity.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchActivity</a></dt>
 <dd>
 <div class="block">Listener for when an item is clicked within the RecyclerView of
  ingredients</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.OnItemClickListener.html#onItemClick(com.xffffff.wellfed.ingredient.Ingredient)">onItemClick(Ingredient)</a></span> - Method in interface com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.ingredient">IngredientSearchAdapter.OnItemClickListener</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealBookFragment.html#onItemClick(com.xffffff.wellfed.mealplan.MealPlan)">onItemClick(MealPlan)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealBookFragment.html" title="class in com.xffffff.wellfed.mealplan">MealBookFragment</a></dt>
 <dd>
 <div class="block">onItemClick is called when the user clicks on a meal plan.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.OnItemClickListener.html#onItemClick(com.xffffff.wellfed.mealplan.MealPlan)">onItemClick(MealPlan)</a></span> - Method in interface com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanAdapter.OnItemClickListener</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanActivity.html#onItemClick(com.xffffff.wellfed.recipe.Recipe)">onItemClick(Recipe)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanActivity.html" title="class in com.xffffff.wellfed.mealplan">MealPlanActivity</a></dt>
 <dd>
 <div class="block">OnItemClick method.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.OnItemClickListener.html#onItemClick(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient)">onItemClick(ShoppingCartIngredient)</a></span> - Method in interface com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter.OnItemClickListener</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/IngredientStorageFragment.html#onItemClick(com.xffffff.wellfed.storage.StorageIngredient)">onItemClick(StorageIngredient)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/IngredientStorageFragment.html" title="class in com.xffffff.wellfed.storage">IngredientStorageFragment</a></dt>
 <dd>
 <div class="block">Launches the IngredientActivity to view an StorageIngredient.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.OnItemClickListener.html#onItemClick(com.xffffff.wellfed.storage.StorageIngredient)">onItemClick(StorageIngredient)</a></span> - Method in interface com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientAdapter.OnItemClickListener</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.OnItemClickListener.html#onItemClick(Item)">onItemClick(Item)</a></span> - Method in interface com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.mealplan">MealPlanItemAdapter.OnItemClickListener</a></dt>
-<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/OnItemClickListener.html#onItemClick(Item)">onItemClick(Item)</a></span> - Method in interface com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/OnItemClickListener.html" title="interface in com.xffffff.wellfed.common">OnItemClickListener</a></dt>
+<dd>
+<div class="block">Called on item click</div>
+</dd>
+<dt><a href="com/xffffff/wellfed/common/OnItemClickListener.html" title="interface in com.xffffff.wellfed.common"><span class="typeNameLink">OnItemClickListener</span></a>&lt;<a href="com/xffffff/wellfed/common/OnItemClickListener.html" title="type parameter in OnItemClickListener">Item</a>&gt; - Interface in <a href="com/xffffff/wellfed/common/package-summary.html">com.xffffff.wellfed.common</a></dt>
+<dd>
+<div class="block">OnItemClickListener interface.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ActivityBase.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected(MenuItem)</a></span> - Method in class com.xffffff.wellfed.<a href="com/xffffff/wellfed/ActivityBase.html" title="class in com.xffffff.wellfed">ActivityBase</a></dt>
 <dd>
 <div class="block">onOptionsItemSelect is called if a user wants to go back to the previous
@@ -1896,10 +1850,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The onTextChanged handler is called when within s, count characters
  beginning at start have just replaced old text that had length before.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnUpdateStorageIngredientListener.html#onUpdateStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,java.lang.Boolean)">onUpdateStorageIngredient(StorageIngredient, Boolean)</a></span> - Method in interface com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnUpdateStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage">StorageIngredientDB.OnUpdateStorageIngredientListener</a></dt>
-<dd>
-<div class="block">Called when addStorageIngredient returns a result</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/SortingFragment.html#onViewCreated(android.view.View,android.os.Bundle)">onViewCreated(View, Bundle)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/SortingFragment.html" title="class in com.xffffff.wellfed.common">SortingFragment</a></dt>
 <dd>
@@ -2076,11 +2026,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Recipes contains a list of Recipes <a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe"><code>Recipe</code></a></div>
 </dd>
-<dt><a href="com/xffffff/wellfed/recipe/RecipesSearch.html" title="class in com.xffffff.wellfed.recipe"><span class="typeNameLink">RecipesSearch</span></a> - Class in <a href="com/xffffff/wellfed/recipe/package-summary.html">com.xffffff.wellfed.recipe</a></dt>
+<dt><a href="com/xffffff/wellfed/recipe/RecipeSearchActivity.html" title="class in com.xffffff.wellfed.recipe"><span class="typeNameLink">RecipeSearchActivity</span></a> - Class in <a href="com/xffffff/wellfed/recipe/package-summary.html">com.xffffff.wellfed.recipe</a></dt>
 <dd>
 <div class="block">Activity which allows user to search for an existing Recipe</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/RecipesSearch.html#%3Cinit%3E()">RecipesSearch()</a></span> - Constructor for class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/RecipesSearch.html" title="class in com.xffffff.wellfed.recipe">RecipesSearch</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/RecipeSearchActivity.html#%3Cinit%3E()">RecipeSearchActivity()</a></span> - Constructor for class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/RecipeSearchActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeSearchActivity</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/RecipeAdapter.ViewHolder.html#recipeTitleTextView">recipeTitleTextView</a></span> - Variable in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/RecipeAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.recipe">RecipeAdapter.ViewHolder</a></dt>
 <dd>&nbsp;</dd>
@@ -2099,10 +2049,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/Recipe.html#removeIngredient(com.xffffff.wellfed.ingredient.Ingredient)">removeIngredient(Ingredient)</a></span> - Method in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/Recipe.html" title="class in com.xffffff.wellfed.recipe">Recipe</a></dt>
 <dd>
 <div class="block">Removes an Ingredient from being part of a Recipe</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html#removeIngredient(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient)">removeIngredient(ShoppingCartIngredient)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></dt>
-<dd>
-<div class="block">Removes a ShoppingCartIngredient from the ShoppingCart.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlan.html#removeRecipe(com.xffffff.wellfed.recipe.Recipe)">removeRecipe(Recipe)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlan.html" title="class in com.xffffff.wellfed.mealplan">MealPlan</a></dt>
 <dd>
@@ -2229,7 +2175,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">setAdapter sets the adapter for the recycler view</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#setAdapter(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredientAdapter)">setAdapter(ShoppingCartIngredientAdapter)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#setAdapter(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredientAdapter)">setAdapter(ShoppingCartIngredientAdapter)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>
 <div class="block">Sets adapter to the given adapter.</div>
 </dd>
@@ -2314,23 +2260,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the entire ArrayList of Ingredients in the MealPlan object.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html#setIngredients(java.util.ArrayList)">setIngredients(ArrayList&lt;ShoppingCartIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></dt>
-<dd>
-<div class="block">Set ingredients in the ShoppingCart.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/EditItemAdapter.html#setItems(java.util.List)">setItems(List&lt;Item&gt;)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/EditItemAdapter.html" title="class in com.xffffff.wellfed.common">EditItemAdapter</a></dt>
 <dd>
 <div class="block">setItems - sets the items</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemAdapter.html#setItems(java.util.List)">setItems(List&lt;Item&gt;)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemAdapter.html" title="class in com.xffffff.wellfed.common">ItemAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html#setListener(com.xffffff.wellfed.common.OnItemClickListener)">setListener(OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter</a></dt>
+<dd>
+<div class="block">Sets the on-click listener for the RecyclerView</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/SortingFragment.html#setListener(com.xffffff.wellfed.common.SortingFragment.OnSortClick)">setListener(SortingFragment.OnSortClick)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/SortingFragment.html" title="class in com.xffffff.wellfed.common">SortingFragment</a></dt>
 <dd>
 <div class="block">setListener sets the onSortClick listener for the fragment</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html#setListener(com.xffffff.wellfed.ingredient.IngredientSearchAdapter.OnItemClickListener)">setListener(IngredientSearchAdapter.OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter</a></dt>
-<dd>
-<div class="block">Sets the on-click listener for the RecyclerView</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/RecipeBookSelectFragment.html#setListener(com.xffffff.wellfed.recipe.RecipeBookSelectFragment.OnSelectedListener)">setListener(RecipeBookSelectFragment.OnSelectedListener)</a></span> - Method in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/RecipeBookSelectFragment.html" title="class in com.xffffff.wellfed.recipe">RecipeBookSelectFragment</a></dt>
 <dd>
@@ -2355,20 +2297,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">setsOnDataChangedListener - sets the listener for data changes</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.html#setOnItemClickListener(com.xffffff.wellfed.mealplan.MealPlanAdapter.OnItemClickListener)">setOnItemClickListener(MealPlanAdapter.OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.html#setOnItemClickListener(com.xffffff.wellfed.common.OnItemClickListener)">setOnItemClickListener(OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.html#setOnItemClickListener(com.xffffff.wellfed.common.OnItemClickListener)">setOnItemClickListener(OnItemClickListener&lt;MealPlan&gt;)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanAdapter</a></dt>
 <dd>
 <div class="block">Sets the listener for an item click in the Recyclerview</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.html#setOnItemClickListener(com.xffffff.wellfed.mealplan.MealPlanItemAdapter.OnItemClickListener)">setOnItemClickListener(MealPlanItemAdapter.OnItemClickListener&lt;Item&gt;)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter</a></dt>
-<dd>
-<div class="block">Sets the listener for an item click in the Recyclerview</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.html#setOnItemClickListener(com.xffffff.wellfed.shoppingcart.ShoppingCartIngredientAdapter.OnItemClickListener)">setOnItemClickListener(ShoppingCartIngredientAdapter.OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.html#setOnItemClickListener(com.xffffff.wellfed.common.OnItemClickListener)">setOnItemClickListener(OnItemClickListener&lt;ShoppingCartIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter</a></dt>
 <dd>
 <div class="block">setOnItemClickListener method for the ShoppingCartIngredientAdapter.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.html#setOnItemClickListener(com.xffffff.wellfed.storage.StorageIngredientAdapter.OnItemClickListener)">setOnItemClickListener(StorageIngredientAdapter.OnItemClickListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.html" title="class in com.xffffff.wellfed.storage">StorageIngredientAdapter</a></dt>
-<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.html#setOnItemClickListener(com.xffffff.wellfed.common.OnItemClickListener)">setOnItemClickListener(OnItemClickListener&lt;Item&gt;)</a></span> - Method in class com.xffffff.wellfed.mealplan.<a href="com/xffffff/wellfed/mealplan/MealPlanItemAdapter.html" title="class in com.xffffff.wellfed.mealplan">MealPlanItemAdapter</a></dt>
+<dd>
+<div class="block">Sets the listener for an item click in the Recyclerview</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/SearchInput.html#setOnTextChange(com.xffffff.wellfed.common.SearchInput.OnTextChange)">setOnTextChange(SearchInput.OnTextChange)</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/SearchInput.html" title="class in com.xffffff.wellfed.common">SearchInput</a></dt>
 <dd>
 <div class="block">setOnTextChange sets the onTextChange handler to the given handler</div>
@@ -2463,17 +2405,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the unit of an amount</div>
 </dd>
-<dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCart</span></a> - Class in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
+<dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartController</span></a> - Class in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
 <dd>
-<div class="block">This class represents a ShoppingCart, which represents a cart that
- ingredients are picked up in,
- and information is added to.</div>
+<div class="block">ShoppingCartIngredientController is a class that contains methods for
+ interacting with the shopping cart</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html#%3Cinit%3E()">ShoppingCart()</a></span> - Constructor for class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCart.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCart</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#%3Cinit%3E(android.app.Activity)">ShoppingCartController(Activity)</a></span> - Constructor for class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>
-<div class="block">Creates a ShoppingCart object representing a ShoppingCart that holds
- ShoppingCartIngredients
- to be picked up.</div>
+<div class="block">The constructor for the controller.</div>
 </dd>
 <dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html" title="class in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartDB</span></a> - Class in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
 <dd>
@@ -2483,26 +2422,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Constructor for the ShoppingCartDB.</div>
 </dd>
-<dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnDelete.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartDB.OnDelete</span></a> - Interface in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
-<dd>
-<div class="block">onDelete is an interface for the deleteIngredient method.</div>
-</dd>
 <dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.OnPickedUpChange.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartDB.OnPickedUpChange</span></a> - Interface in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
 <dd>
 <div class="block">onPickedUpChange is an interface for the updateIngredient method.</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.html" title="class in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartDialog</span></a> - Class in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
-<dd>
-<div class="block">The ConfirmDialog class provides a dialog for confirming user intentions.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.html#%3Cinit%3E(android.content.Context,java.lang.String,java.lang.String,java.lang.String,com.xffffff.wellfed.shoppingcart.ShoppingCartDialog.OnConfirmListener)">ShoppingCartDialog(Context, String, String, String, ShoppingCartDialog.OnConfirmListener)</a></span> - Constructor for class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDialog</a></dt>
-<dd>
-<div class="block">Constructs a ConfirmQuitDialog</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDialog.OnConfirmListener.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartDialog.OnConfirmListener</span></a> - Interface in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
-<dd>
-<div class="block">The OnQuitListener interface defines the onConfirm handler that is
- called when the user confirms.</div>
 </dd>
 <dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartFragment.html" title="class in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartFragment</span></a> - Class in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
 <dd>&nbsp;</dd>
@@ -2536,22 +2458,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">onCheckedListener interface for the ShoppingCartIngredientAdapter.</div>
 </dd>
-<dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartIngredientAdapter.OnItemClickListener</span></a> - Interface in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
-<dd>
-<div class="block">onItemClickListner interface for the ShoppingCartIngredientAdapter.</div>
-</dd>
 <dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartIngredientAdapter.ViewHolder</span></a> - Class in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
 <dd>
 <div class="block">ViewHolder class for the ShoppingCartIngredientAdapter.</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart"><span class="typeNameLink">ShoppingCartIngredientController</span></a> - Class in <a href="com/xffffff/wellfed/shoppingcart/package-summary.html">com.xffffff.wellfed.shoppingcart</a></dt>
-<dd>
-<div class="block">ShoppingCartIngredientController is a class that contains methods for
- interacting with the shopping cart</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#%3Cinit%3E(android.app.Activity)">ShoppingCartIngredientController(Activity)</a></span> - Constructor for class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
-<dd>
-<div class="block">The constructor for the controller.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ConfirmDialog.html#show()">show()</a></span> - Method in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ConfirmDialog.html" title="class in com.xffffff.wellfed.common">ConfirmDialog</a></dt>
 <dd>
@@ -2581,7 +2490,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Gets the sorted query of recipes.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#sortByField(java.lang.String)">sortByField(String)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#sortByField(java.lang.String)">sortByField(String)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>
 <div class="block">sortByField sorts the shopping cart by the given field.</div>
 </dd>
@@ -2646,10 +2555,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The constructor for the adapter.</div>
 </dd>
-<dt><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.OnItemClickListener.html" title="interface in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientAdapter.OnItemClickListener</span></a> - Interface in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
-<dd>
-<div class="block">The on click listener interface for the adapter.</div>
-</dd>
 <dt><a href="com/xffffff/wellfed/storage/StorageIngredientAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientAdapter.ViewHolder</span></a> - Class in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
 <dd>
 <div class="block">The view holder class for the storage ingredient list.</div>
@@ -2661,28 +2566,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#%3Cinit%3E(com.xffffff.wellfed.common.DBConnection)">StorageIngredientDB(DBConnection)</a></span> - Constructor for class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
 <div class="block">Creates a reference to the Firebase DB.</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAddStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientDB.OnAddStorageIngredientListener</span></a> - Interface in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
-<dd>
-<div class="block">This interface is used to handle the result of
- adding StorageIngredient to the db</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnAllIngredients.html" title="interface in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientDB.OnAllIngredients</span></a> - Interface in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnDeleteStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientDB.OnDeleteStorageIngredientListener</span></a> - Interface in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
-<dd>
-<div class="block">This interface is used to handle the result of
- delete StorageIngredient to the db</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnGetStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientDB.OnGetStorageIngredientListener</span></a> - Interface in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
-<dd>
-<div class="block">This interface is used to handle the result of
- finding StorageIngredient to the db</div>
-</dd>
-<dt><a href="com/xffffff/wellfed/storage/StorageIngredientDB.OnUpdateStorageIngredientListener.html" title="interface in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientDB.OnUpdateStorageIngredientListener</span></a> - Interface in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
-<dd>
-<div class="block">This interface is used to handle the result of
- finding StorageIngredient to the db</div>
 </dd>
 <dt><a href="com/xffffff/wellfed/storage/StorageIngredientEditActivity.html" title="class in com.xffffff.wellfed.storage"><span class="typeNameLink">StorageIngredientEditActivity</span></a> - Class in <a href="com/xffffff/wellfed/storage/package-summary.html">com.xffffff.wellfed.storage</a></dt>
 <dd>
@@ -2702,7 +2585,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">T</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemDetailAdapter.ViewHolder.html#title">title</a></span> - Variable in class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter.ViewHolder</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.ViewHolder.html#title">title</a></span> - Variable in class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter.ViewHolder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:U">
@@ -2738,21 +2621,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">The UnitConverter constructor initializes the ingredientDensityMap and
  units ArrayList</div>
 </dd>
-<dt><a href="com/xffffff/wellfed/unit/UnitHelper.html" title="class in com.xffffff.wellfed.unit"><span class="typeNameLink">UnitHelper</span></a> - Class in <a href="com/xffffff/wellfed/unit/package-summary.html">com.xffffff.wellfed.unit</a></dt>
-<dd>
-<div class="block">UnitHelper is a helper class that contains methods for converting units</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/unit/UnitHelper.html#%3Cinit%3E(com.xffffff.wellfed.unit.UnitConverter)">UnitHelper(UnitConverter)</a></span> - Constructor for class com.xffffff.wellfed.unit.<a href="com/xffffff/wellfed/unit/UnitHelper.html" title="class in com.xffffff.wellfed.unit">UnitHelper</a></dt>
-<dd>
-<div class="block">Constructor for the UnitHelper class that initializes the
- UnitConverter object with the given unit</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/unit/UnitConverter.html#units">units</a></span> - Variable in class com.xffffff.wellfed.unit.<a href="com/xffffff/wellfed/unit/UnitConverter.html" title="class in com.xffffff.wellfed.unit">UnitConverter</a></dt>
 <dd>
 <div class="block">The units ArrayList is an ArrayList of all the units that are
  supported by the app</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html#updateCheckedStatus(java.lang.String,boolean)">updateCheckedStatus(String, boolean)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientController</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html#updateCheckedStatus(java.lang.String,boolean)">updateCheckedStatus(String, boolean)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartController.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartController</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/recipe/RecipeActivity.html#updateImageView(java.lang.String)">updateImageView(String)</a></span> - Method in class com.xffffff.wellfed.recipe.<a href="com/xffffff/wellfed/recipe/RecipeActivity.html" title="class in com.xffffff.wellfed.recipe">RecipeActivity</a></dt>
 <dd>
@@ -2837,16 +2711,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Updates the counter for a Recipe object in the db.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html#updateShoppingCart(com.xffffff.wellfed.common.OnCompleteListener)">updateShoppingCart(OnCompleteListener&lt;ShoppingCart&gt;)</a></span> - Method in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartDB.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartDB</a></dt>
-<dd>
-<div class="block">Update the shopping cart with the ingredients from the meal plan if
- not present in the StorageIngredientDB.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#updateStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.storage.StorageIngredientDB.OnUpdateStorageIngredientListener)">updateStorageIngredient(StorageIngredient, StorageIngredientDB.OnUpdateStorageIngredientListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#updateStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.common.OnCompleteListener)">updateStorageIngredient(StorageIngredient, OnCompleteListener&lt;StorageIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
 <div class="block">Updates a stored ingredient in the Firebase DB.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#updateStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.storage.StorageIngredientDB.OnUpdateStorageIngredientListener)">updateStorageIngredient(StorageIngredient, StorageIngredient, Ingredient, StorageIngredientDB.OnUpdateStorageIngredientListener)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/storage/StorageIngredientDB.html#updateStorageIngredient(com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.storage.StorageIngredient,com.xffffff.wellfed.ingredient.Ingredient,com.xffffff.wellfed.common.OnCompleteListener)">updateStorageIngredient(StorageIngredient, StorageIngredient, Ingredient, OnCompleteListener&lt;StorageIngredient&gt;)</a></span> - Method in class com.xffffff.wellfed.storage.<a href="com/xffffff/wellfed/storage/StorageIngredientDB.html" title="class in com.xffffff.wellfed.storage">StorageIngredientDB</a></dt>
 <dd>
 <div class="block">Updates a stored ingredient in the Firebase DB.</div>
 </dd>
@@ -2872,7 +2741,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.ViewHolder.html#view">view</a></span> - Variable in class com.xffffff.wellfed.shoppingcart.<a href="com/xffffff/wellfed/shoppingcart/ShoppingCartIngredientAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.shoppingcart">ShoppingCartIngredientAdapter.ViewHolder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/common/ItemDetailAdapter.ViewHolder.html#%3Cinit%3E(android.view.View)">ViewHolder(View)</a></span> - Constructor for class com.xffffff.wellfed.common.<a href="com/xffffff/wellfed/common/ItemDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.common">ItemDetailAdapter.ViewHolder</a></dt>
+<dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.ViewHolder.html#%3Cinit%3E(android.view.View)">ViewHolder(View)</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientDetailAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient">IngredientDetailAdapter.ViewHolder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html#%3Cinit%3E(android.view.View)">ViewHolder(View)</a></span> - Constructor for class com.xffffff.wellfed.ingredient.<a href="com/xffffff/wellfed/ingredient/IngredientSearchAdapter.ViewHolder.html" title="class in com.xffffff.wellfed.ingredient">IngredientSearchAdapter.ViewHolder</a></dt>
 <dd>
