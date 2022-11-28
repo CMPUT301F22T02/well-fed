@@ -11,5 +11,5 @@ public interface OnCompleteListener<T> {
      * @param success true if the operation was successful,
      *                false otherwise.
      */
-    void onComplete(T item, boolean success);
+    void onComplete(T item, Boolean success);
 }
