@@ -6,16 +6,15 @@
 <title>EditItemContract (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -135,9 +134,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>Item</code> - the type of item to edit</dd>
+</dl>
 <hr>
 <pre>public class <span class="typeNameLabel">EditItemContract&lt;Item extends java.io.Serializable&gt;</span>
 extends androidx.activity.result.contract.ActivityResultContract&lt;android.content.Intent,&#8203;android.util.Pair&lt;java.lang.String,&#8203;Item&gt;&gt;</pre>
+<div class="block">The EditItemContract class is a contract that handles the
+ communication between the EditItemActivity and the
+ EditItemAdapter.</div>
 </li>
 </ul>
 </div>
@@ -145,7 +151,7 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;android.cont
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -162,7 +168,7 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;android.cont
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -183,7 +189,7 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;android.cont
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -200,13 +206,17 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;android.cont
 <td class="colFirst"><code>android.content.Intent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIntent(android.content.Context,android.content.Intent)">createIntent</a></span>&#8203;(android.content.Context&nbsp;context,
             android.content.Intent&nbsp;intent)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">createIntent creates the intent for the EditItemActivity</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>android.util.Pair&lt;java.lang.String,&#8203;<a href="EditItemContract.html" title="type parameter in EditItemContract">Item</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseResult(int,android.content.Intent)">parseResult</a></span>&#8203;(int&nbsp;i,
            android.content.Intent&nbsp;intent)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">parseResult parses the result from the EditItemActivity</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -233,7 +243,7 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;android.cont
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -252,7 +262,7 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;android.cont
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -268,9 +278,13 @@ extends androidx.activity.result.contract.ActivityResultContract&lt;android.cont
 public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
                                            android.content.Context&nbsp;context,
                                            android.content.Intent&nbsp;intent)</pre>
+<div class="block">createIntent creates the intent for the EditItemActivity</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>createIntent</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;android.content.Intent,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="EditItemContract.html" title="type parameter in EditItemContract">Item</a> extends java.io.Serializable&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>context</code> - the context of the activity</dd>
+<dd><code>intent</code> - the intent to edit</dd>
 </dl>
 </li>
 </ul>
@@ -283,9 +297,15 @@ public&nbsp;android.content.Intent&nbsp;createIntent&#8203;(@NonNull
 <pre class="methodSignature">public&nbsp;android.util.Pair&lt;java.lang.String,&#8203;<a href="EditItemContract.html" title="type parameter in EditItemContract">Item</a>&gt;&nbsp;parseResult&#8203;(int&nbsp;i,
                                                                   @Nullable
                                                                   android.content.Intent&nbsp;intent)</pre>
+<div class="block">parseResult parses the result from the EditItemActivity</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>parseResult</code>&nbsp;in class&nbsp;<code>androidx.activity.result.contract.ActivityResultContract&lt;android.content.Intent,&#8203;android.util.Pair&lt;java.lang.String,&#8203;<a href="EditItemContract.html" title="type parameter in EditItemContract">Item</a> extends java.io.Serializable&gt;&gt;</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>i</code> - the result code</dd>
+<dd><code>intent</code> - the intent</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result</dd>
 </dl>
 </li>
 </ul>

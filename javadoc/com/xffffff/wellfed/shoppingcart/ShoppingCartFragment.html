@@ -6,16 +6,15 @@
 <title>ShoppingCartFragment (app API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -150,7 +149,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -167,7 +166,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 </ul>
 </section>
 <!-- =========== FIELD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="field.summary">
 <!--   -->
@@ -181,7 +180,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/StorageIngredient.html" title="class in com.xffffff.wellfed.ingredient">StorageIngredient</a>&gt;</code></td>
+<td class="colFirst"><code>(package private) androidx.activity.result.ActivityResultLauncher&lt;<a href="../storage/StorageIngredient.html" title="class in com.xffffff.wellfed.storage">StorageIngredient</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editIngredientLauncher">editIngredientLauncher</a></span></code></th>
 <td class="colLast">
 <div class="block">ActivityResultLauncher for the IngredientAddActivity to add an
@@ -200,7 +199,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -221,7 +220,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -237,7 +236,9 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onClick(java.lang.String)">onClick</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onClick method for the sorting fragment.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>android.view.View</code></td>
@@ -251,7 +252,9 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onResume()">onResume</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">onResume method for the ShoppingCartFragment.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -293,7 +296,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="field.detail">
 <!--   -->
@@ -315,7 +318,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 <ul class="blockListLast">
 <li class="blockList">
 <h4>editIngredientLauncher</h4>
-<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="../ingredient/StorageIngredient.html" title="class in com.xffffff.wellfed.ingredient">StorageIngredient</a>&gt; editIngredientLauncher</pre>
+<pre>androidx.activity.result.ActivityResultLauncher&lt;<a href="../storage/StorageIngredient.html" title="class in com.xffffff.wellfed.storage">StorageIngredient</a>&gt; editIngredientLauncher</pre>
 <div class="block">ActivityResultLauncher for the IngredientAddActivity to add an
  ingredient.
  The result is a StorageIngredient.
@@ -326,7 +329,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 </ul>
 </section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -345,7 +348,7 @@ implements <a href="../common/SortingFragment.OnSortClick.html" title="interface
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section>
+<section role="region">
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -410,6 +413,7 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>onResume</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onResume()</pre>
+<div class="block">onResume method for the ShoppingCartFragment.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>onResume</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.Fragment</code></dd>
@@ -423,9 +427,12 @@ public&nbsp;android.view.View&nbsp;onCreateView&#8203;(@NonNull
 <li class="blockList">
 <h4>onClick</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;onClick&#8203;(java.lang.String&nbsp;field)</pre>
+<div class="block">onClick method for the sorting fragment.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../common/SortingFragment.OnSortClick.html#onClick(java.lang.String)">onClick</a></code>&nbsp;in interface&nbsp;<code><a href="../common/SortingFragment.OnSortClick.html" title="interface in com.xffffff.wellfed.common">SortingFragment.OnSortClick</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - The field to sort by.</dd>
 </dl>
 </li>
 </ul>
