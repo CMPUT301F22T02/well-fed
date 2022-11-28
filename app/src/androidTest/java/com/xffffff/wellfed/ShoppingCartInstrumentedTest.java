@@ -178,14 +178,14 @@ public class ShoppingCartInstrumentedTest {
         closeSoftKeyboard();
 
         Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
+        onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withText(recipe)).perform(click());
 
         Thread.sleep(1000);
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+        onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
         Thread.sleep(1000);
@@ -203,8 +203,6 @@ public class ShoppingCartInstrumentedTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.save_fab)).perform(click());
-
-        Thread.sleep(2000);
     }
 
     private void addMealPlanAndIngredients(String mealPlan) throws InterruptedException {
