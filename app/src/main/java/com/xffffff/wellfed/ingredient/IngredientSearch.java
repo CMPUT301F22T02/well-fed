@@ -3,6 +3,7 @@ package com.xffffff.wellfed.ingredient;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +36,9 @@ public class IngredientSearch extends ActivityBase
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_ingredient_storage);
+
+        TextView title = findViewById(R.id.ingredient_storage_title);
+        title.setText(R.string.ingredients);
 
         DBConnection connection = new DBConnection(getApplicationContext());
         IngredientDB db = new IngredientDB(connection);

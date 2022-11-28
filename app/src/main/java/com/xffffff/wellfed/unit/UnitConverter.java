@@ -6,6 +6,7 @@ import android.util.Pair;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.xffffff.wellfed.R;
+import com.xffffff.wellfed.ingredient.Ingredient;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -234,5 +235,54 @@ public class UnitConverter {
         Collections.sort(units, String.CASE_INSENSITIVE_ORDER);
         this.units = units;
         return units;
+    }
+
+    /**
+     * Convert the given unit to the smallest unit in the unit system
+     *
+     * @param unitString the unit to convert
+     * @param value      the value of the unit
+     * @return the converted unit
+     */
+    public Pair<Double, String> convertToSmallest(String unitString,
+                                                  Double value) {
+        Unit unit = build(unitString);
+        if (unit instanceof MassUnit) {
+            Double smallest = convert(value, unit,
+                build(MassUnit.smallestMetricUnit));
+            return new Pair<>(smallest, MassUnit.smallestMetricUnit);
+        } else if (unit instanceof VolumeUnit) {
+            Double smallest = convert(value, unit,
+                build(VolumeUnit.smallestMetricUnit));
+            return new Pair<>(smallest, VolumeUnit.smallestMetricUnit);
+        } else if (unit instanceof CountUnit) {
+            return new Pair<>(value, CountUnit.smallestMetricUnit);
+        } else {
+            throw new IllegalArgumentException(
+                "No Unit " + unitString + " exists");
+        }
+    }
+
+    /**
+     * Converts ingredients to mass if possible
+     *
+     * @param ingredient assumes that ingredient has been converted using
+     *                   {@link UnitConverter#convertToSmallest(String, Double)}
+     * @return the converted ingredient
+     */
+    public Pair<Double, String> availableUnits(Ingredient ingredient) {
+        Unit unit = build(ingredient.getUnit());
+        if (unit instanceof VolumeUnit) {
+            try {
+                Double amount = convert(ingredient.getAmount(),
+                    ingredient.getDescription(),
+                    build(VolumeUnit.smallestMetricUnit),
+                    build(MassUnit.smallestMetricUnit));
+                return new Pair<>(amount, MassUnit.smallestMetricUnit);
+            } catch (IllegalArgumentException e) {
+                return new Pair<>(ingredient.getAmount(), ingredient.getUnit());
+            }
+        }
+        return new Pair<>(ingredient.getAmount(), ingredient.getUnit());
     }
 }

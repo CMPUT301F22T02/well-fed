@@ -11,7 +11,6 @@ import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.storage.StorageIngredient;
 import com.xffffff.wellfed.mealplan.MealPlan;
 import com.xffffff.wellfed.recipe.Recipe;
-import com.xffffff.wellfed.shoppingcart.ShoppingCart;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartDB;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient;
 
@@ -140,13 +139,6 @@ public class ShoppingCartDBTest {
     }
 
     /**
-     * Creates a shopping cart for testing.
-     */
-    private ShoppingCart mockShoppingCart() {
-        return new ShoppingCart();
-    }
-
-    /**
      * Test adding ingredient to shopping cart.
      */
     @Test public void addIngredientTest() throws InterruptedException {
@@ -176,8 +168,6 @@ public class ShoppingCartDBTest {
     @Test public void addNullIngredientTest() throws InterruptedException {
         // Create a CountDownLatch to wait for the async calls to finish
         CountDownLatch latch = new CountDownLatch(1);
-        // Create a shopping cart
-        ShoppingCart shoppingCart = mockShoppingCart();
         // Add null ingredient to the shopping cart
         shoppingCartDB.addIngredient(null, (addedIngredient, success) -> {
             assertNull(addedIngredient);

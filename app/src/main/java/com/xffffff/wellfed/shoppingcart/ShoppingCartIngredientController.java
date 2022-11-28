@@ -15,7 +15,6 @@ import com.xffffff.wellfed.mealplan.MealPlanDB;
 import com.xffffff.wellfed.recipe.Recipe;
 import com.xffffff.wellfed.unit.Unit;
 import com.xffffff.wellfed.unit.UnitConverter;
-import com.xffffff.wellfed.unit.UnitHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,12 +42,6 @@ public class ShoppingCartIngredientController {
      * This is the db for the meal plans.
      */
     private final MealPlanDB mealPlanDB;
-
-    /**
-     * This is the unit helper class for the controller.
-     */
-    private UnitHelper unitHelper;
-
     /**
      * This is the unit converter class for the controller.
      */
@@ -77,7 +70,6 @@ public class ShoppingCartIngredientController {
         mealPlanDB = new MealPlanDB(connection);
         unitConverter =
                 new UnitConverter(activity.getApplicationContext());
-        unitHelper = new UnitHelper(unitConverter);
         mealPlanController = new MealPlanController(activity);
         dateUtil = new DateUtil();
     }
@@ -163,7 +155,7 @@ public class ShoppingCartIngredientController {
                         for (int i = 0; i < cart.size(); i++) {
                             ShoppingCartIngredient cartItem = cart.get(i);
                             Pair<Double, String> val =
-                                    bestUnitHelper(cartItem, unitHelper);
+                                    bestUnitHelper(cartItem);
 
                             inCart.put(val.second, i);
                         }
@@ -228,16 +220,15 @@ public class ShoppingCartIngredientController {
      * bestUnitHelper returns the best unit for the given ingredient.
      *
      * @param ingredient the ingredient to get the best unit for.
-     * @param unitHelper the unit helper to use.
      * @return the best unit for the given ingredient.
      */
-    private Pair<Double, String> bestUnitHelper(Ingredient ingredient, UnitHelper unitHelper) {
+    private Pair<Double, String> bestUnitHelper(Ingredient ingredient) {
         // reduce to smallest
-        Pair<Double, String> smallest = unitHelper.convertToSmallest(ingredient.getUnit(), ingredient.getAmount());
+        Pair<Double, String> smallest = unitConverter.convertToSmallest(ingredient.getUnit(), ingredient.getAmount());
         ingredient.setUnit(smallest.second);
         ingredient.setAmount(smallest.first);
 
-        Pair<Double, String> best = unitHelper.availableUnits(ingredient);
+        Pair<Double, String> best = unitConverter.availableUnits(ingredient);
         ingredient.setAmount(best.first);
         ingredient.setUnit(best.second);
 
@@ -272,8 +263,7 @@ public class ShoppingCartIngredientController {
     private void updateRequiredFromStorage(ArrayList<StorageIngredient> storedIngredients,
                                            HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         for (StorageIngredient stored : storedIngredients) {
-            Pair<Double, String> val =
-                    bestUnitHelper(stored, unitHelper);
+            Pair<Double, String> val = bestUnitHelper(stored);
             String uid = val.second;
             if (required.get(uid) != null) {
                 if (required.get(uid) != null) {
@@ -311,8 +301,7 @@ public class ShoppingCartIngredientController {
                                                  HashMap<String, ArrayList<Pair<Integer, Double>>> required) {
         String uid = ingredientUid(ingredient);
         if (required.get(uid) != null) {
-            Pair<Double, String> val =
-                    bestUnitHelper(ingredient, unitHelper);
+            Pair<Double, String> val = bestUnitHelper(ingredient);
             if (required.get(val.second) == null) {
                 ArrayList<Pair<Integer, Double>> listNeeded = new ArrayList<>();
                 listNeeded
@@ -323,8 +312,7 @@ public class ShoppingCartIngredientController {
                         .add(new Pair<Integer, Double>(dateUtil.format(mealPlan.getEatDate()), val.first));
             }
         } else {
-            Pair<Double, String> val =
-                    bestUnitHelper(ingredient, unitHelper);
+            Pair<Double, String> val = bestUnitHelper(ingredient);
             if (required.get(val.second) == null) {
                 ArrayList<Pair<Integer, Double>> listNeeded = new ArrayList<>();
                 listNeeded
@@ -360,11 +348,11 @@ public class ShoppingCartIngredientController {
     public void addIngredientToStorage(ShoppingCartIngredient shoppingCartIngredient,
                                        StorageIngredient storageIngredient) {
         Pair<Double, String> smallestShoppingIngredient =
-                unitHelper.convertToSmallest(shoppingCartIngredient.getUnit(),
+                unitConverter.convertToSmallest(shoppingCartIngredient.getUnit(),
                         shoppingCartIngredient.getAmount());
 
         Pair<Double, String> smallestStorageIngredient =
-                unitHelper.convertToSmallest(storageIngredient.getUnit(),
+                unitConverter.convertToSmallest(storageIngredient.getUnit(),
                         storageIngredient.getAmount());
 
         boolean isIngredientNeeded = (smallestShoppingIngredient.first -
