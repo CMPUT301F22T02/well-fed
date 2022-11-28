@@ -484,8 +484,56 @@ public class ShoppingCartInstrumentedTest {
     }
 
     @Test
-    public void testSortingWithItems(){
+    public void testSortingWithItems() throws InterruptedException {
+        addMealPlanAndIngredientAndRecipe("Hearty Breakfast");
 
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+        Thread.sleep(1000);
+        onView(withId(R.id.meal_book_item)).perform(click());
+        Thread.sleep(1000);
+        onView(withId(R.id.shopping_cart_item)).perform(click());
+
+        onView(withId(R.id.fragment_sort_container3)).perform(click());
+        Thread.sleep(3000);
+        onView(withText("Description")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        Thread.sleep(3000);
+
+        onView(withId(R.id.shopping_cart_list)).
+                check(matches(ChildAtPositionMatcher.atPosition(0, hasDescendant(withText("Bacon")))));
+
+        onView(withId(R.id.shopping_cart_list)).
+                check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText("Eggs")))));
+
+        onView(withId(R.id.shopping_cart_list)).
+                check(matches(ChildAtPositionMatcher.atPosition(2, hasDescendant(withText("Sliced Bread")))));
+
+        onView(withId(R.id.fragment_sort_container3)).perform(click());
+        Thread.sleep(3000);
+        onView(withText("Category")).inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+        Thread.sleep(3000);
+
+        onView(withId(R.id.shopping_cart_list)).
+                check(matches(ChildAtPositionMatcher.atPosition(0, hasDescendant(withText("Sliced Bread")))));
+
+        try{
+            onView(withId(R.id.shopping_cart_list)).
+                    check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText("Bacon")))));
+        }
+        catch (AssertionFailedError assertError){
+            onView(withId(R.id.shopping_cart_list)).
+                    check(matches(ChildAtPositionMatcher.atPosition(1, hasDescendant(withText("Eggs")))));
+        }
+
+        try{
+            onView(withId(R.id.shopping_cart_list)).
+                    check(matches(ChildAtPositionMatcher.atPosition(2, hasDescendant(withText("Bacon")))));
+        }
+        catch (AssertionFailedError assertError){
+            onView(withId(R.id.shopping_cart_list)).
+                    check(matches(ChildAtPositionMatcher.atPosition(2, hasDescendant(withText("Eggs")))));
+        }
     }
 
     @Test
