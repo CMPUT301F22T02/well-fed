@@ -27,14 +27,7 @@ import java.util.HashMap;
  * </p>
  */
 public class ShoppingCartDB {
-    /**
-     * Holds a reference to StorageIngredientDB.
-     */
-    private final StorageIngredientDB storageIngredientDB;
-    /**
-     * Holds a reference to MealPlanDB.
-     */
-    private final MealPlanDB mealPlanDB;
+
     /**
      * Holds the collection for the users
      */
@@ -51,8 +44,6 @@ public class ShoppingCartDB {
      */
     public ShoppingCartDB(DBConnection connection) {
         this.ingredientDB = new IngredientDB(connection);
-        this.storageIngredientDB = new StorageIngredientDB(connection);
-        this.mealPlanDB = new MealPlanDB(connection);
         this.collection = connection.getCollection("ShoppingCart");
     }
 
