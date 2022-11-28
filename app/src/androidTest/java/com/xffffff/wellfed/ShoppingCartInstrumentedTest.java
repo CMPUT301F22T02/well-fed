@@ -42,8 +42,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 
+import junit.framework.AssertionFailedError;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -204,7 +207,7 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.save_fab)).perform(click());
     }
 
-    private void addMealPlanAndIngredients(String mealPlan) throws InterruptedException {
+    private void addMealPlanAndIngredientAndRecipe(String mealPlan) throws InterruptedException {
         String recipe = "Eggs and Bacon";
         String ingredient = "Sliced Bread";
 
@@ -230,57 +233,15 @@ public class ShoppingCartInstrumentedTest {
         closeSoftKeyboard();
 
         Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
-        Thread.sleep(1000);
+        onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
 
         closeSoftKeyboard();
         Thread.sleep(1000);
         onView(withText(recipe)).perform(click());
 
-        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.recipeEditFragment)))).perform(click());
-        Thread.sleep(1000);
-        onView(withId(R.id.edit_recipe_title)).perform(typeText("Toast"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_prep_time_textEdit)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_no_of_servings_textEdit)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.recipe_category_textEdit)).perform(typeText("Breakfast"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.commentsEditText)).perform(typeText("Just Toast"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.addButton)).perform(click());
-        Thread.sleep(1000);
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Bread"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_categoryInput)).perform(typeText("Bread"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_amountInput)).perform(click());
-        onView(withId(R.id.edit_amountInput)).perform(typeText("2"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        onView(withId(R.id.ingredient_save_button)).perform(click());
-        Thread.sleep(1000);
-
-        onView(withId(R.id.save_fab)).perform(click());
-        Thread.sleep(2000);
-
-
         closeSoftKeyboard();
         Thread.sleep(1000);
-        onView(allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
+        onView(Matchers.allOf(withId(R.id.searchButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
 
         closeSoftKeyboard();
         Thread.sleep(2000);
@@ -297,38 +258,16 @@ public class ShoppingCartInstrumentedTest {
         onView(withId(R.id.ingredient_save_button)).perform(click());
         closeSoftKeyboard();
 
-        onView(allOf(withId(R.id.addButton), isDescendantOfA(withId(R.id.ingredientEditFragment)))).perform(click());
-
-        onView(withId(R.id.edit_descriptionInput)).perform(typeText("Celery"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_categoryInput)).perform(typeText("Fruit"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_amountInput)).perform(click());
-        onView(withId(R.id.edit_amountInput)).perform(typeText("1"));
-        closeSoftKeyboard();
-
-        onView(withId(R.id.edit_unitInput)).perform(click());
-        onView(withText("count")).inRoot(RootMatchers.isPlatformPopup())
-                .perform(click());
-        closeSoftKeyboard();
-
-        Thread.sleep(1000); // for some reason closing soft keyboard has an animation.
-        onView(withId(R.id.ingredient_save_button)).perform(click());
-        closeSoftKeyboard();
-
-        Thread.sleep(1000);
-
-
         onView(withId(R.id.save_fab)).perform(click());
     }
+
+
 
     private void cleanUpIngredient(String description) throws InterruptedException {
         Thread.sleep(timeout);
         onView(withId(R.id.ingredient_storage_item)).perform(click());
         Thread.sleep(timeout);
-        onView(withText(description)).perform(click());
+        onView(allOf(withText(description), withId(R.id.textView))).perform(click());
 
         onView(withId(R.id.ingredient_delete_button)).perform(click());
         onView(withText("Delete")).perform(click());
@@ -539,13 +478,13 @@ public class ShoppingCartInstrumentedTest {
     public void testSortingNoItems() throws InterruptedException {
         onView(withId(R.id.fragment_sort_container3)).perform(click());
         Thread.sleep(500);
-        onView(withText("description")).inRoot(RootMatchers.isPlatformPopup())
+        onView(withText("Description")).inRoot(RootMatchers.isPlatformPopup())
                 .perform(click());
         Thread.sleep(500);
 
         onView(withId(R.id.fragment_sort_container3)).perform(click());
         Thread.sleep(500);
-        onView(withText("category")).inRoot(RootMatchers.isPlatformPopup())
+        onView(withText("Category")).inRoot(RootMatchers.isPlatformPopup())
                 .perform(click());
         Thread.sleep(500);
     }
