@@ -947,6 +947,12 @@ public class MealPlanInstrumentedTest {
         cleanUpIngredient("Sliced bread");
     }
 
+    /**
+     * Tests recipe scaling of a MealPlan.
+     * Does this by adding a Recipe with 5 servings to a MealPlan of 10 servings.
+     * The Recipe's ingredients should be doubled.
+     * @throws InterruptedException
+     */
     @Test
     public void testRecipeScaling() throws InterruptedException {
         addIngredient("Sliced bread");
