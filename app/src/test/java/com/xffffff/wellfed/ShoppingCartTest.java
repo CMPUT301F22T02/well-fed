@@ -3,7 +3,6 @@ package com.xffffff.wellfed;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import com.xffffff.wellfed.shoppingcart.ShoppingCart;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient;
 
 import org.junit.Test;

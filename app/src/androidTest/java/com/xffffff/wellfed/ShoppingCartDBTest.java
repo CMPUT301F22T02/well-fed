@@ -11,7 +11,6 @@ import com.xffffff.wellfed.ingredient.Ingredient;
 import com.xffffff.wellfed.storage.StorageIngredient;
 import com.xffffff.wellfed.mealplan.MealPlan;
 import com.xffffff.wellfed.recipe.Recipe;
-import com.xffffff.wellfed.shoppingcart.ShoppingCart;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartDB;
 import com.xffffff.wellfed.shoppingcart.ShoppingCartIngredient;
 
